@@ -9,6 +9,9 @@
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "test": "craco test",
+    "test:coverage": "echo \"Not yet implemented\"",
+    "precommit": "npm run lint:fix",
+    "prepush": "npm run lint",
     "heroku-serve": "serve -s build -l 5000",
     "heroku-postbuild": "npm run build"
   },
