@@ -1,6 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
-import './index.css';
+import env from './app/utils/environment';
+import NAVSPA from './NAVSPA';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// if (env.isDevelopment) {
+//     require('./mock');
+// }
+
+NAVSPA.eksporter('veilarbvedtaksstottefs', App);
