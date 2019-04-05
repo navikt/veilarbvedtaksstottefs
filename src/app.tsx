@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Skjema from './components/skjema/skjema';
 
 interface AppProps {
   fnr: string;
@@ -7,11 +8,7 @@ interface AppProps {
 
 class App extends Component<AppProps> {
   render() {
-    return (
-      <div>
-        <p>Hello world</p>
-      </div>
-    );
+    return (<Skjema />);
   }
 }
 
