@@ -1,10 +1,13 @@
-import React from 'react';
-import App from './App';
-import env from './app/utils/environment';
+import * as React from 'react';
+import ReactDOM from 'react-dom';
+import App from './app';
 import NAVSPA from './NAVSPA';
+import env from './utils/environment';
+import { enhet, fnr } from './mock/kontekst';
 
-// if (env.isDevelopment) {
-//     require('./mock');
-// }
-
-NAVSPA.eksporter('veilarbvedtaksstottefs', App);
+if (env.isDevelopment) {
+    ReactDOM.render(<App fnr={fnr} enhet={enhet} />, document.getElementById('veilarbvedtaksstottefs'));
+    require('./mock');
+} else {
+    NAVSPA.eksporter('veilarbvedtaksstottefs', App);
+}
