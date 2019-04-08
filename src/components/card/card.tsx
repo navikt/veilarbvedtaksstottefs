@@ -9,7 +9,7 @@ interface CardProps {
 
 const Card: React.FunctionComponent<CardProps> = (props: CardProps) => {
     return (
-        <div className={cls("card", props.className)}>
+        <div className={cls('card', props.className)}>
             {props.children}
         </div>
     );

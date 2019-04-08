@@ -14,7 +14,7 @@ class Begrunnelse extends React.Component<{}, BegrunnelseState> {
 
     handleBegrunnelseChanged = (e: any) => {
         this.setState({ begrunnelseTekst: e.target.value });
-    };
+    }
 
     render() {
         const { begrunnelseTekst } = this.state;
@@ -24,7 +24,8 @@ class Begrunnelse extends React.Component<{}, BegrunnelseState> {
                     value={begrunnelseTekst}
                     label="Begrunnelse:"
                     maxLength={1000}
-                    onChange={this.handleBegrunnelseChanged}/>
+                    onChange={this.handleBegrunnelseChanged}
+                />
             </div>
         );
     }
