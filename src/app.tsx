@@ -8,7 +8,11 @@ interface AppProps {
 
 class App extends Component<AppProps> {
   render() {
-    return (<Skjema />);
+      return (
+          <div className="veilarbvedtaksstottefs">
+            <Skjema />
+          </div>
+      );
   }
 }
 
