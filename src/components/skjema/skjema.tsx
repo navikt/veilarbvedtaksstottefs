@@ -1,26 +1,78 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Card from '../card/card';
 import { Systemtittel } from 'nav-frontend-typografi';
-import Opplysninger from './opplysninger/opplysninger';
-import Hovedmal from './hovedmal/hovedmal';
-import Konklusjon from './konklusjon/konklusjon';
+import Opplysninger, { OpplysningType } from './opplysninger/opplysninger';
+import Hovedmal, { HovedmalType } from './hovedmal/hovedmal';
+import Innsatsgruppe, { InnsatsgruppeType } from './innsatsgruppe/innsatsgruppe';
 import Begrunnelse from './begrunnelse/begrunnelse';
 import Aksjoner from './aksjoner/aksjoner';
 import './skjema.less';
+import { OrNothing } from '../../utils/types/ornothing';
+import axios from 'axios';
 
-const Skjema: React.FunctionComponent = () => {
-    return (
-        <Card className="skjema">
-            <Systemtittel className="skjema__tittel">
-                Oppfølgingsvedtak (§ 14a)
-            </Systemtittel>
-            <Opplysninger/>
-            <Hovedmal/>
-            <Konklusjon/>
-            <Begrunnelse/>
-            <Aksjoner/>
-        </Card>
-    );
+interface SkjemaProps {
+    fnr: string;
+}
+
+type Opplysninger = {
+    [K in OpplysningType]: boolean;
 };
+
+interface SkjemaData {
+    opplysninger: OrNothing<Opplysninger>;
+    hovedmal: OrNothing<HovedmalType>;
+    innsatsgruppe: OrNothing<InnsatsgruppeType>;
+    begrunnelseTekst: string;
+}
+
+function Skjema ({fnr}: SkjemaProps) {
+    const [opplysninger, setOpplysninger] = useState<Opplysninger>({} as Opplysninger);
+    const [hovedmal, handleHovedmalChanged] = useState(null);
+    const [innsatsgruppe, handleKonklusjonChanged] = useState(null);
+    const [begrunnelseTekst, handleBegrunnelseChanged] = useState('');
+
+    async function putVedtakk(skjema: SkjemaData) {
+        return await axios.put(`/veilarbvedtaksstotte/api/vedtak?fnr=${fnr}`, skjema);
+    }
+
+    function handleSubmit (e: any) {
+        e.preventDefault();
+        const skjema: SkjemaData = {opplysninger, hovedmal, innsatsgruppe, begrunnelseTekst};
+        putVedtakk(skjema);
+
+    }
+
+    function handleOpplysningerChanged (e: React.ChangeEvent<HTMLInputElement>) {
+        e.persist();
+        setOpplysninger(prevOpplysninger => {
+            prevOpplysninger[e.target.name as OpplysningType] = e.target.checked;
+            return prevOpplysninger;
+        });
+    }
+
+    return (
+        <form>
+            <Card className="skjema">
+                <Systemtittel className="skjema__tittel">
+                    Oppfølgingsvedtak (§ 14a)
+                </Systemtittel>
+                <Opplysninger
+                    handleOpplysningerChanged={handleOpplysningerChanged}
+                />
+                <Hovedmal
+                    handleHovedmalChanged={handleHovedmalChanged}
+                />
+                <Innsatsgruppe
+                    handleKonklusjonChanged={handleKonklusjonChanged}
+                />
+                <Begrunnelse
+                    begrunnelseTekst={begrunnelseTekst}
+                    handleBegrunnelseChanged={handleBegrunnelseChanged}
+                />
+                <Aksjoner handleSubmit={handleSubmit}/>
+            </Card>
+        </form>
+    );
+}
 
 export default Skjema;
