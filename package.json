@@ -26,6 +26,7 @@
   ],
   "dependencies": {
     "@craco/craco": "^3.6.0",
+    "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "craco-less": "^1.7.0",
     "lodash.throttle": "^4.1.1",
