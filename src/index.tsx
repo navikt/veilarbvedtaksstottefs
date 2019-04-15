@@ -7,7 +7,7 @@ import { enhet, fnr } from './mock/kontekst';
 
 if (env.isDevelopment) {
     ReactDOM.render(<App fnr={fnr} enhet={enhet} />, document.getElementById('veilarbvedtaksstottefs'));
-    require('./mock');
+    require('./mock/index');
 } else {
     NAVSPA.eksporter('veilarbvedtaksstottefs', App);
 }
