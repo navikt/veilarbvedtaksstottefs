@@ -31,14 +31,18 @@ function Skjema ({fnr}: SkjemaProps) {
     const [innsatsgruppe, handleKonklusjonChanged] = useState(null);
     const [begrunnelseTekst, handleBegrunnelseChanged] = useState('');
 
-    async function putVedtakk(skjema: SkjemaData) {
-        return await axios.put(`/veilarbvedtaksstotte/api/vedtak?fnr=${fnr}`, skjema);
+    function putVedtakk(skjema: SkjemaData) {
+        axios.put(`/veilarbvedtaksstotte/api/vedtak?fnr=${fnr}`, skjema);
     }
 
     function handleSubmit (e: any) {
         e.preventDefault();
         const skjema: SkjemaData = {opplysninger, hovedmal, innsatsgruppe, begrunnelseTekst};
-        putVedtakk(skjema);
+        try {
+            putVedtakk(skjema);
+        } catch (e) {
+             console.log(e); // tslint:disable-line:no-console
+        }
 
     }
 
