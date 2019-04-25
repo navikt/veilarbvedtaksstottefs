@@ -32,7 +32,7 @@ function Skjema ({fnr}: SkjemaProps) {
     const [begrunnelseTekst, handleBegrunnelseChanged] = useState('');
 
     function putVedtakk(skjema: SkjemaData) {
-        axios.put(`/veilarbvedtaksstotte/api/vedtak?fnr=${fnr}`, skjema);
+        axios.put(`/veilarbvedtaksstotte/api/vedtak/${fnr}`, skjema);
     }
 
     function handleSubmit (e: any) {
