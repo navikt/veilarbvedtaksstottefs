@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import Card from '../card/card';
+import Card from '../components/card/card';
 import { Systemtittel } from 'nav-frontend-typografi';
-import Opplysninger, { OpplysningType } from './opplysninger/opplysninger';
-import Hovedmal, { HovedmalType } from './hovedmal/hovedmal';
-import Innsatsgruppe, { InnsatsgruppeType } from './innsatsgruppe/innsatsgruppe';
-import Begrunnelse from './begrunnelse/begrunnelse';
-import Aksjoner from './aksjoner/aksjoner';
+import Opplysninger, { OpplysningType } from '../components/skjema/opplysninger/opplysninger';
+import Hovedmal, { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
+import Innsatsgruppe, { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgruppe';
+import Begrunnelse from '../components/skjema/begrunnelse/begrunnelse';
+import Aksjoner from '../components/skjema/aksjoner/aksjoner';
 import './skjema.less';
-import { OrNothing } from '../../utils/types/ornothing';
 import axios from 'axios';
+import { OrNothing } from '../utils/types/ornothing';
 
 interface SkjemaProps {
     fnr: string;
