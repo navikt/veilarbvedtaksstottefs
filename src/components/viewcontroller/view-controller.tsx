@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
-import { ActionType, initialViewState, viewReducer } from './view-reducer';
-import { Hovedside } from '../../pages/hovedside';
+import React, {useReducer} from 'react';
+import {ActionType, initialViewState, viewReducer} from './view-reducer';
+import {Hovedside} from '../../pages/hovedside';
 import Skjema from '../../pages/skjema';
 
 function renderView(view: ActionType): ((props: any) => JSX.Element) {
@@ -9,19 +9,21 @@ function renderView(view: ActionType): ((props: any) => JSX.Element) {
             return Hovedside;
         case ActionType.UTKAST:
             return Skjema;
+        case ActionType.GJELDENE_VEDTAK:
+            return Hovedside;
         default:
             return Hovedside;
     }
 }
 
-const ViewDispatch = React.createContext<any>(null);
+export const ViewDispatch = React.createContext<any>(null);
 
 export function ViewController (props: {fnr: string}) {
     const [viewState, viewDispatch] = useReducer(viewReducer, initialViewState);
     const Component = renderView(viewState.view);
 
     return (
-        <ViewDispatch.Provider value={viewDispatch}>
+        <ViewDispatch.Provider value={{dispatch: viewDispatch}}>
             <Component fnr={props.fnr}/>
         </ViewDispatch.Provider>
     );

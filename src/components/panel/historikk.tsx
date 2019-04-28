@@ -2,7 +2,7 @@ import React from 'react';
 import { VedtakData } from '../../utils/types/vedtak';
 import { OrNothing } from '../../utils/types/ornothing';
 
-export function HistorikkPanel(props: {vedtakHistorikk: OrNothing<VedtakData []>}) {
+export function Historikk(props: {vedtakHistorikk: OrNothing<VedtakData []>}) {
    if (!props.vedtakHistorikk || props.vedtakHistorikk.length === 0) {
        return (
        <div className="panel">

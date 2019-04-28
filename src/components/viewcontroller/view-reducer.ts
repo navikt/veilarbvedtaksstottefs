@@ -1,7 +1,8 @@
 export enum ActionType {
     HOVEDSIDE,
     UTKAST,
-    FORHANDSVISNING
+    FORHANDSVISNING,
+    GJELDENE_VEDTAK
 }
 
 interface State {
