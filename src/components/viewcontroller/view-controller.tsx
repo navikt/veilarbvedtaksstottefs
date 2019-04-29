@@ -1,7 +1,8 @@
-import React, {useReducer} from 'react';
-import {ActionType, initialViewState, viewReducer} from './view-reducer';
-import {Hovedside} from '../../pages/hovedside';
+import React, { useReducer } from 'react';
+import { ActionType, initialViewState, viewReducer } from './view-reducer';
+import { Hovedside } from '../../pages/hovedside';
 import Skjema from '../../pages/skjema';
+import { VisGjeldeneVedtakk } from '../../pages/gjeldenevedtak';
 
 function renderView(view: ActionType): ((props: any) => JSX.Element) {
     switch (view) {
@@ -10,7 +11,7 @@ function renderView(view: ActionType): ((props: any) => JSX.Element) {
         case ActionType.UTKAST:
             return Skjema;
         case ActionType.GJELDENE_VEDTAK:
-            return Hovedside;
+            return VisGjeldeneVedtakk;
         default:
             return Hovedside;
     }

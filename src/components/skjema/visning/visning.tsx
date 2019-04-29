@@ -4,13 +4,13 @@ import { HovedmalVisning } from './hovedmal';
 import { BegrunnelseVisning } from './begrunnelse';
 import { InnsatsgruppeVisning } from './innsatsgruppe';
 
-export function SkjemaVisning (props: {skjema: VedtakData}) {
+export function VedtakVisning (props: {vedtak: VedtakData}) {
     return (
        <div className="">
         <section>
-            <HovedmalVisning hovedmal={props.skjema.hovedmal}/>
-            <InnsatsgruppeVisning innsatsgruppe={props.skjema.innsatsgruppe}/>
-            <BegrunnelseVisning begrunnelse={props.skjema.begrunnelse}/>
+            <HovedmalVisning hovedmal={props.vedtak.hovedmal}/>
+            <InnsatsgruppeVisning innsatsgruppe={props.vedtak.innsatsgruppe}/>
+            <BegrunnelseVisning begrunnelse={props.vedtak.begrunnelse}/>
         </section>
        </div>
     );
