@@ -44,7 +44,7 @@ function Skjema ({fnr}: SkjemaProps) {
         try {
             putVedtakk(skjema);
         } catch (e) {
-             console.log(e); // tslint:disable-line:no-console
+            console.log(e); // tslint:disable-line:no-console
         }
 
     }

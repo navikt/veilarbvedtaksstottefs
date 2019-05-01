@@ -1,26 +1,28 @@
 import React, { useContext } from 'react';
 import { VedtakData } from '../../utils/types/vedtak';
-import PanelBase from 'nav-frontend-paneler';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../utils/types/ornothing';
 import './panel.less';
 import { ViewDispatch } from '../viewcontroller/view-controller';
+import { VedtakstottePanel } from './vedtakstotte-panel';
+import { SistEndret } from './sist-endret';
+import { EndretAv } from './endret-av';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { ActionType } from '../viewcontroller/view-reducer';
 
 export function Utkast(props: {utkast: OrNothing<VedtakData>}) {
     const {dispatch} = useContext(ViewDispatch);
 
+    if (!props.utkast) {
+        return null;
+    }
     return (
-        <PanelBase border={true}>
-            <button className="panel--knapp" onClick={() => dispatch({view: ActionType.UTKAST})}>
-                {props.utkast
-                    ? <div>
-                        <Systemtittel>Utkast</Systemtittel>
-                        <Normaltekst> Lite tekst om utkast</Normaltekst>
-                    </div>
-                    : <Normaltekst> Lag nytt vedtak</Normaltekst>
-                }
-            </button>
-        </PanelBase>
+        <VedtakstottePanel tittel="Utkast til oppfølgingsvedtak">
+            <Undertittel>Utkast</Undertittel>
+            <Normaltekst>Her kommer det tekst at det er påbygynt vedtak</Normaltekst>
+            <SistEndret sistOppdatert={props.utkast.sistOppdatert}/>
+            <EndretAv endretAv={props.utkast.veileder}/>
+            <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Endre</Hovedknapp>
+        </VedtakstottePanel>
     );
 }

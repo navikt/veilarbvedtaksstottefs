@@ -1,5 +1,41 @@
+@import "~nav-frontend-core/less/_variabler";
+
 .veilarbvedtaksstottefs {
-  .panel--knapp {
-    border: none;
+
+  .vedtakstottepanel {
+    background-color: white;
+    border-radius: 0.6rem;
+    border: 1px solid @navGra20;
+    box-shadow: 0 1px 0 @navGra40;
+
+    &__tittel {
+      padding: 0.7rem 1rem;
+    }
+
+    &__content {
+      border-top: 1px solid @navLysGra;
+      padding: 1rem 2rem;
+
+      h2, .typo-normal {
+        margin-bottom: 1rem;
+      }
+
+      button {
+        margin-top: 1rem;
+        box-shadow: none;
+      }
+
+      .label {
+        color: #616061;
+        margin-right: 0.3rem;
+      }
+    }
+
   }
+
+  .vedtakstottepanel--gron {
+    border: 1px solid @navGronnLighten40;
+    box-shadow: none;
+  }
+
 }

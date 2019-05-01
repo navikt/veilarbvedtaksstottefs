@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../components/app-provider/app-provider';
-import Card from '../components/card/card';
 import { Historikk } from '../components/panel/historikk';
 import { Utkast } from '../components/panel/utkast';
 import { VedtakData } from '../utils/types/vedtak';
+import Grid from '../components/grid/grid';
+import { GjeldendeVedtakk } from '../components/panel/gjeldende-vedtakk';
 
 export function Hovedside () {
     const {vedtakUtkast, vedtak} = useContext(AppContext);
@@ -12,10 +13,11 @@ export function Hovedside () {
     const tidligereVedtak = vedtak.filter((v: VedtakData) => !v.gjeldende);
 
     return (
-        <Card className="skjema">
+        <Grid columns={2}>
             <Utkast utkast={vedtakUtkast}/>
             <Historikk vedtakHistorikk={tidligereVedtak}/>
-        </Card>
+            <GjeldendeVedtakk gjeldendeVedtak={gjeldendeVedtak}/>
+        </Grid>
     );
 
 }

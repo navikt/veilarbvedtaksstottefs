@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppProvider } from './components/app-provider/app-provider';
 import { ViewController } from './components/viewcontroller/view-controller';
+import './app.less';
 
 interface AppProps {
     fnr: string;
@@ -10,9 +11,11 @@ interface AppProps {
 function App (props: AppProps) {
     return (
         <div className="veilarbvedtaksstottefs">
-            <AppProvider fnr={props.fnr}>
-               <ViewController fnr={props.fnr}/>
-            </AppProvider>
+            <div className="veilarbvedtaksstottefs__content">
+                <AppProvider fnr={props.fnr}>
+                    <ViewController fnr={props.fnr}/>
+                </AppProvider>
+            </div>
         </div>
     );
 }

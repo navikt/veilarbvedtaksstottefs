@@ -3,6 +3,12 @@ import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsats
 
 type VedtakStatus = 'UTKAST' | 'SENDT';
 
+export interface Veileder {
+    ident: string;
+    enhetId: string;
+    enhetNavn: string;
+}
+
 export interface VedtakData {
     id: number;
     hovedmal: HovedmalType;
@@ -11,9 +17,5 @@ export interface VedtakData {
     sistOppdatert: string;
     begrunnelse: string;
     gjeldende: boolean;
-    veileder: {
-        ident: string;
-        enhetId: string;
-        enhetNavn: string;
-    };
+    veileder: Veileder;
 }
