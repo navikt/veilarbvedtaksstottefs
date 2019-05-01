@@ -1,5 +1,6 @@
 import React from 'react';
-import Skjema from './components/skjema/skjema';
+import { AppProvider } from './components/app-provider/app-provider';
+import { ViewController } from './components/viewcontroller/view-controller';
 
 interface AppProps {
     fnr: string;
@@ -9,7 +10,9 @@ interface AppProps {
 function App (props: AppProps) {
     return (
         <div className="veilarbvedtaksstottefs">
-            <Skjema fnr={props.fnr}/>
+            <AppProvider fnr={props.fnr}>
+               <ViewController fnr={props.fnr}/>
+            </AppProvider>
         </div>
     );
 }
