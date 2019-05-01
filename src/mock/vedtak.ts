@@ -9,7 +9,7 @@ const vedtak: VedtakData = {
     vedtakStatus: 'UTKAST',
     sistOppdatert: '2019-09-14',
     begrunnelse: 'herps derps',
-    gjeldende: true,
+    gjeldende: false,
     veileder: {
         ident: 'Z007',
         enhetId: '3666',

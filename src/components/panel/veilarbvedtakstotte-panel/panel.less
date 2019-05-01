@@ -1,0 +1,56 @@
+@import "../../../../node_modules/nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+  .vedtakstottepanel {
+    background-color: white;
+    border-radius: 0.6rem;
+    border: 1px solid @navGra20;
+    box-shadow: 0 1px 0 @navGra40;
+
+    &__tittel {
+      padding: 0.7rem 1rem;
+    }
+
+    &__content {
+      border-top: 1px solid @navLysGra;
+      padding: 2rem 3rem 2rem 2rem;
+
+      h2, .typo-normal {
+        margin-bottom: 1rem;
+      }
+
+      .knapp {
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  .vedtakstottepanel--gron {
+    border: 2px solid @navGronnLighten40;
+    border-radius: 0.6rem;
+    box-shadow: none;
+  }
+
+  .vedtakstottepanel--historisk {
+    margin-bottom: auto;
+    padding: 0;
+  }
+
+  .tidligerevedtakElement {
+    padding: 0.3rem;
+    border-top: 1px solid @navLysGra;
+    &__knapp{
+      width: 100%;
+      background-color: white;
+      border-color: white;
+      text-align: left;
+    }
+  }
+
+  .label {
+    color: #616061;
+    margin-right: 0.3rem;
+  }
+
+}
