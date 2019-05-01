@@ -10,6 +10,7 @@ export interface VedtakData {
     vedtakStatus: VedtakStatus;
     sistOppdatert: string;
     begrunnelse: string;
+    gjeldende: boolean;
     veileder: {
         ident: string;
         enhetId: string;

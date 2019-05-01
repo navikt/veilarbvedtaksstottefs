@@ -5,18 +5,24 @@ export enum ActionType {
     GJELDENE_VEDTAK
 }
 
-interface State {
+interface State<T> {
     view: ActionType;
+    props?: T;
 }
 
-interface Action {
+interface Action<T> {
     view: ActionType;
+    props?: T;
 }
 
 export const initialViewState = {
     view: ActionType.HOVEDSIDE,
+    props: undefined,
 };
 
-export const viewReducer = (state: State, action: Action) => {
-    return {view: action.view};
-};
+export function viewReducer<T> (state: State<T>, action: Action<T>) {
+    return {
+        view: action.view,
+        props: action.props
+    };
+}

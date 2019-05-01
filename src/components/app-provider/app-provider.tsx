@@ -3,32 +3,39 @@ import { VedtakData } from '../../utils/types/vedtak';
 import fetchHook, { Status } from '../../utils/hooks/fetch-hook';
 import { OrNothing } from '../../utils/types/ornothing';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
 
 export interface AppState {
     vedtakUtkast: OrNothing<VedtakData>;
-    gjeldeneVedtak: OrNothing<VedtakData>;
-    vedtakHistorikk: OrNothing<VedtakData[]>;
+    vedtak: VedtakData[];
 }
 
 const initialState = {
     vedtakUtkast: null,
-    gjeldeneVedtak: null,
-    vedtakHistorikk: null,
+    vedtak: [],
 };
+
+export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
 
 export const AppContext = React.createContext<AppState>(initialState);
 
 export function AppProvider (props: {fnr: string, children: any}) {
-    const vedtakUtkast = fetchHook<VedtakData>(`/veilarbvedtaksstotte/api/vedtak/${props.fnr}/utkast`);
-    const gjeldeneVedtak = fetchHook<VedtakData>(`/veilarbvedtaksstotte/api/vedtak/${props.fnr}/gjeldene`);
-    const vedtakHistorikk = fetchHook<VedtakData[]>(`/veilarbvedtaksstotte/api/vedtak/${props.fnr}/historikk`);
+    const vedtakUtkast = fetchHook<VedtakData>(`${VEILARBVEDTAKSSTOTTE_API}/${props.fnr}/utkast`);
+    const vedtak = fetchHook<VedtakData[]>(`${VEILARBVEDTAKSSTOTTE_API}/${props.fnr}/vedtak`);
 
-    if (vedtakUtkast.status !== Status.DONE || vedtakHistorikk.status !== Status.DONE || gjeldeneVedtak.status !== Status.DONE) {
+    const vedtakUtkastStatus = vedtakUtkast.status;
+    const vedtakStatus = vedtak.status;
+
+    if (vedtakUtkastStatus === Status.LOADING || vedtakStatus === Status.LOADING) {
         return <NavFrontendSpinner type="XL"/>;
     }
 
+    if (vedtakUtkastStatus === Status.ERROR || vedtakStatus === Status.ERROR) {
+        return <AlertStripeFeilSolid> Noe gikk galt </AlertStripeFeilSolid>;
+    }
+
     return (
-        <AppContext.Provider value={{vedtakUtkast: vedtakUtkast.data, gjeldeneVedtak: gjeldeneVedtak.data, vedtakHistorikk: vedtakHistorikk.data}}>
+        <AppContext.Provider value={{vedtakUtkast: vedtakUtkast.data, vedtak: vedtak.data || []}}>
             {props.children}
         </AppContext.Provider>
     );

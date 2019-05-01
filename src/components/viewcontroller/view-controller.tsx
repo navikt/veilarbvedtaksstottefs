@@ -25,7 +25,7 @@ export function ViewController (props: {fnr: string}) {
 
     return (
         <ViewDispatch.Provider value={{dispatch: viewDispatch}}>
-            <Component fnr={props.fnr}/>
+            <Component fnr={props.fnr} props={viewState.props}/>
         </ViewDispatch.Provider>
     );
 }
