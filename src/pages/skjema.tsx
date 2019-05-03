@@ -10,6 +10,8 @@ import './skjema.less';
 import axios from 'axios';
 import { OrNothing } from '../utils/types/ornothing';
 import { AppContext } from '../components/app-provider/app-provider';
+import { ViewDispatch } from '../components/viewcontroller/view-controller';
+import { ActionType } from '../components/viewcontroller/view-reducer';
 
 interface SkjemaProps {
     fnr: string;
@@ -23,26 +25,27 @@ interface SkjemaData {
     opplysninger: OrNothing<Opplysninger>;
     hovedmal: OrNothing<HovedmalType>;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
-    begrunnelseTekst: string;
+    begrunnelse: string;
 }
 
 function Skjema ({fnr}: SkjemaProps) {
     const {vedtakUtkast} = useContext(AppContext);
+    const {dispatch} = useContext(ViewDispatch);
 
     const [opplysninger, setOpplysninger] = useState<Opplysninger>({} as Opplysninger);
     const [hovedmal, handleHovedmalChanged] = useState(vedtakUtkast && vedtakUtkast.hovedmal);
     const [innsatsgruppe, handleKonklusjonChanged] = useState(vedtakUtkast && vedtakUtkast.innsatsgruppe);
-    const [begrunnelseTekst, handleBegrunnelseChanged] = useState(vedtakUtkast && vedtakUtkast.begrunnelse || '');
+    const [begrunnelse, handleBegrunnelseChanged] = useState(vedtakUtkast && vedtakUtkast.begrunnelse || '');
 
     function putVedtakk(skjema: SkjemaData) {
-        axios.put(`/veilarbvedtaksstotte/api/${fnr}/utkast`, skjema);
+        return axios.put(`/veilarbvedtaksstotte/api/${fnr}/utkast`, skjema);
     }
 
     function handleSubmit (e: any) {
         e.preventDefault();
-        const skjema: SkjemaData = {opplysninger, hovedmal, innsatsgruppe, begrunnelseTekst};
+        const skjema: SkjemaData = {opplysninger, hovedmal, innsatsgruppe, begrunnelse};
         try {
-            putVedtakk(skjema);
+            putVedtakk(skjema).then(() =>  dispatch({view: ActionType.HOVEDSIDE}));
         } catch (e) {
             console.log(e); // tslint:disable-line:no-console
         }
@@ -76,7 +79,7 @@ function Skjema ({fnr}: SkjemaProps) {
                         innsatsgruppe={innsatsgruppe}
                     />
                     <Begrunnelse
-                        begrunnelseTekst={begrunnelseTekst}
+                        begrunnelseTekst={begrunnelse}
                         handleBegrunnelseChanged={handleBegrunnelseChanged}
                     />
                     <Aksjoner handleSubmit={handleSubmit}/>
