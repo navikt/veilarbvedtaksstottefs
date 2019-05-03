@@ -24,21 +24,9 @@ function Grid (props: Props) {
         rowGap: '1rem',
     };
 
-    const placedChildren = React.Children.map((props.children as ReactElement[]), (child: ReactElement, index: number) => {
-        const rawRow = Math.floor(index / props.columns) + 1;
-        const rawColumn = (index % props.columns) + 1;
-
-        const row = rawRow + (rawRow - 1);
-        const column = rawColumn + (rawColumn - 1);
-
-        const childStyle = { gridColumn: column, msGridColumn: column, gridRow: row, msGridRow: row };
-
-        return React.cloneElement(child, { style: Object.assign({}, child.props.style, childStyle) });
-    });
-
     return (
         <div className={`grid ${props.className ? props.className : ''}`} style={style}>
-            {placedChildren}
+            {props.children}
         </div>
     );
 }

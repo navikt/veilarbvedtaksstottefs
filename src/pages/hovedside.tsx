@@ -5,6 +5,7 @@ import { Utkast } from '../components/panel/utkast';
 import { VedtakData } from '../utils/types/vedtak';
 import Grid from '../components/grid/grid';
 import { GjeldendeVedtak } from '../components/panel/gjeldende-vedtak';
+import './hovedside.less';
 
 export function Hovedside () {
     const {vedtakUtkast, vedtak} = useContext(AppContext);
@@ -15,8 +16,8 @@ export function Hovedside () {
     return (
         <Grid columns={2}>
             <Utkast utkast={vedtakUtkast}/>
-            <TidligereVedtak vedtakHistorikk={tidligereVedtak}/>
             <GjeldendeVedtak gjeldendeVedtak={gjeldendeVedtak} utkast={vedtakUtkast}/>
+            <TidligereVedtak vedtakHistorikk={tidligereVedtak}/>
         </Grid>
     );
 

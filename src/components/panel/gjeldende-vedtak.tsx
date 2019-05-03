@@ -9,9 +9,9 @@ import { SistEndret } from './sist-endret';
 import { EndretAv } from './endret-av';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { OrNothing } from '../../utils/types/ornothing';
-import { innsatsgrupper } from '../skjema/innsatsgruppe/innsatsgruppe';
+import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
 
-const BEGRUNNELSE_MAX_LENGTH = 50;
+const BEGRUNNELSE_MAX_LENGTH = 100;
 
 export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, utkast: OrNothing<VedtakData>}) {
     const {dispatch} = useContext(ViewDispatch);
@@ -22,7 +22,7 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
 
     if (!props.gjeldendeVedtak) {
         return (
-            <VedtakstottePanel tittel="Gjeldende oppfølgingsvedtak">
+            <VedtakstottePanel tittel="Gjeldende oppfølgingsvedtak" className="gjeldende vedtakstottepanel--orange">
                 <div className="vedtakstottepanel__content">
                     <Undertittel>Ingen tidligare oppfolgingsvedtak</Undertittel>
                     <Normaltekst>Denne brukeren har ingen tidligare oppfølgingsvedtak (§ 14a)</Normaltekst>
@@ -33,7 +33,7 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
     }
 
     const gjeldendeVedtak =  props.gjeldendeVedtak;
-    const innsatsgruppe = innsatsgrupper.find(i => i.value === gjeldendeVedtak.innsatsgruppe);
+    const innsatsgruppe = getInnsatsgruppeNavn(gjeldendeVedtak.innsatsgruppe);
     const begrunnelseTekst = gjeldendeVedtak.begrunnelse.length > BEGRUNNELSE_MAX_LENGTH
             ? `${gjeldendeVedtak.begrunnelse.substring(0, BEGRUNNELSE_MAX_LENGTH)}... `
             : `${gjeldendeVedtak.begrunnelse} `;
@@ -41,10 +41,10 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
     return (
         <VedtakstottePanel tittel="Gjeldende oppfølgingsvedtak" className="vedtakstottepanel--gron">
             <div className="vedtakstottepanel__content">
-                <Undertittel>{innsatsgruppe && innsatsgruppe.label}</Undertittel>
+                <Undertittel>{innsatsgruppe}</Undertittel>
                 <Normaltekst>{begrunnelseTekst}</Normaltekst>
-                <SistEndret sistOppdatert={props.gjeldendeVedtak.sistOppdatert}/>
-                <EndretAv endretAv={props.gjeldendeVedtak.veileder}/>
+                <SistEndret sistOppdatert={gjeldendeVedtak.sistOppdatert}/>
+                <EndretAv endretAv={gjeldendeVedtak.veileder}/>
                 <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Lag nytt vedtak</Hovedknapp>
             </div>
         </VedtakstottePanel>

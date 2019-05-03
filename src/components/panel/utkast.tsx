@@ -17,7 +17,7 @@ export function Utkast(props: {utkast: OrNothing<VedtakData>}) {
         return null;
     }
     return (
-        <VedtakstottePanel tittel="Utkast til oppfølgingsvedtak">
+        <VedtakstottePanel tittel="Utkast til oppfølgingsvedtak" className="utkast">
             <div className="vedtakstottepanel__content">
                 <Undertittel>Utkast</Undertittel>
                 <Normaltekst>Her kommer det tekst at det er påbygynt vedtak</Normaltekst>
