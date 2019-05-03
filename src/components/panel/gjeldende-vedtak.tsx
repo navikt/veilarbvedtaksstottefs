@@ -39,7 +39,7 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
             : `${gjeldendeVedtak.begrunnelse} `;
 
     return (
-        <VedtakstottePanel tittel="Gjeldende oppfølgingsvedtak" className="vedtakstottepanel--gron">
+        <VedtakstottePanel tittel="Gjeldende oppfølgingsvedtak" className="gjeldende vedtakstottepanel--gron">
             <div className="vedtakstottepanel__content">
                 <Undertittel>{innsatsgruppe}</Undertittel>
                 <Normaltekst>{begrunnelseTekst}</Normaltekst>

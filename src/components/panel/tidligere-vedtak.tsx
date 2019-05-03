@@ -7,7 +7,7 @@ import { TidligereVedtakElement } from './tidligere-vedtak-element';
 export function TidligereVedtak(props: {vedtakHistorikk: VedtakData []}) {
     if (props.vedtakHistorikk.length === 0) {
         return (
-            <VedtakstottePanel tittel="Tidligare oppfølgingsvedtak">
+            <VedtakstottePanel tittel="Tidligare oppfølgingsvedtak" className="tidligere">
                 <div className="vedtakstottepanel__content">
                     <Undertittel>Ingen tidligare oppfolgingsvedtak</Undertittel>
                     <Normaltekst>Denne brukeren har ingen tidligare oppfølgingsvedtak (§ 14a)</Normaltekst>
