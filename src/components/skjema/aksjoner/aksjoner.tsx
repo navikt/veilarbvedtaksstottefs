@@ -6,7 +6,7 @@ function Aksjoner (props: {handleSubmit: (e: any) => void} ) {
     return (
         <div className="aksjoner">
             <Knapp htmlType="submit" onClick={props.handleSubmit}>
-                Send vedtak
+                Lagre utkast
             </Knapp>
         </div>
     );
