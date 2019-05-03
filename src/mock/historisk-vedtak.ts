@@ -2,18 +2,18 @@ import  { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgr
 import { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
 import { VedtakData } from '../utils/types/vedtak';
 
-const vedtak: VedtakData = {
+const historisk: VedtakData = {
     id: 1,
     hovedmal: HovedmalType.BEHOLDE_ARBEID,
     innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
     vedtakStatus: 'UTKAST',
     sistOppdatert: '2019-09-14',
-    begrunnelse: 'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
-    gjeldende: true,
+    begrunnelse: 'herps derps herps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
+    gjeldende: false,
     veileder: {
         ident: 'Z007',
         enhetId: '3666',
         enhetNavn: 'Gotham City',
     },
 };
-export default vedtak;
+export default historisk;

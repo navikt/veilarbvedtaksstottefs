@@ -44,7 +44,7 @@ function Skjema ({fnr}: SkjemaProps) {
         try {
             putVedtakk(skjema);
         } catch (e) {
-             console.log(e); // tslint:disable-line:no-console
+            console.log(e); // tslint:disable-line:no-console
         }
 
     }
@@ -58,29 +58,32 @@ function Skjema ({fnr}: SkjemaProps) {
     }
 
     return (
-        <form>
-            <Card className="skjema">
-                <Systemtittel className="skjema__tittel">
-                    Oppfølgingsvedtak (§ 14a)
-                </Systemtittel>
-                <Opplysninger
-                    handleOpplysningerChanged={handleOpplysningerChanged}
-                />
-                <Hovedmal
-                    handleHovedmalChanged={handleHovedmalChanged}
-                    hovedmal={hovedmal}
-                />
-                <Innsatsgruppe
-                    handleKonklusjonChanged={handleKonklusjonChanged}
-                    innsatsgruppe={innsatsgruppe}
-                />
-                <Begrunnelse
-                    begrunnelseTekst={begrunnelseTekst}
-                    handleBegrunnelseChanged={handleBegrunnelseChanged}
-                />
-                <Aksjoner handleSubmit={handleSubmit}/>
-            </Card>
-        </form>
+        <>
+            <form>
+                <Card className="skjema">
+                    <Systemtittel className="skjema__tittel">
+                        Oppfølgingsvedtak (§ 14a)
+                    </Systemtittel>
+                    <Opplysninger
+                        handleOpplysningerChanged={handleOpplysningerChanged}
+                    />
+                    <Hovedmal
+                        handleHovedmalChanged={handleHovedmalChanged}
+                        hovedmal={hovedmal}
+                    />
+                    <Innsatsgruppe
+                        handleKonklusjonChanged={handleKonklusjonChanged}
+                        innsatsgruppe={innsatsgruppe}
+                    />
+                    <Begrunnelse
+                        begrunnelseTekst={begrunnelseTekst}
+                        handleBegrunnelseChanged={handleBegrunnelseChanged}
+                    />
+                    <Aksjoner handleSubmit={handleSubmit}/>
+                </Card>
+            </form>
+
+        </>
     );
 }
 
