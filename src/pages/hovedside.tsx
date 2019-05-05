@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { AppContext } from '../components/app-provider/app-provider';
 import { TidligereVedtak } from '../components/panel/tidligere-vedtak';
 import { Utkast } from '../components/panel/utkast';
@@ -8,15 +8,15 @@ import { GjeldendeVedtak } from '../components/panel/gjeldende-vedtak';
 import './hovedside.less';
 
 export function Hovedside () {
-    const {vedtakUtkast, vedtak} = useContext(AppContext);
+    const {utkast, vedtak} = useContext(AppContext);
 
-    const gjeldendeVedtak = vedtak.find((v: VedtakData) => v.gjeldende);
-    const tidligereVedtak = vedtak.filter((v: VedtakData) => !v.gjeldende);
+    const gjeldendeVedtak = useMemo(() => vedtak.data.find((v: VedtakData) => v.gjeldende), [vedtak.data]);
+    const tidligereVedtak = useMemo(() => vedtak.data.filter((v: VedtakData) => !v.gjeldende), [vedtak.data]);
 
     return (
         <Grid columns={2}>
-            <Utkast utkast={vedtakUtkast}/>
-            <GjeldendeVedtak gjeldendeVedtak={gjeldendeVedtak} utkast={vedtakUtkast}/>
+            <Utkast utkast={utkast.data}/>
+            <GjeldendeVedtak gjeldendeVedtak={gjeldendeVedtak} utkast={utkast.data}/>
             <TidligereVedtak vedtakHistorikk={tidligereVedtak}/>
         </Grid>
     );

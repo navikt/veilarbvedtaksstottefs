@@ -12,6 +12,7 @@ import { OrNothing } from '../utils/types/ornothing';
 import { AppContext } from '../components/app-provider/app-provider';
 import { ViewDispatch } from '../components/viewcontroller/view-controller';
 import { ActionType } from '../components/viewcontroller/view-reducer';
+import { Status } from '../utils/hooks/fetch-hook';
 
 interface SkjemaProps {
     fnr: string;
@@ -29,13 +30,15 @@ interface SkjemaData {
 }
 
 function Skjema ({fnr}: SkjemaProps) {
-    const {vedtakUtkast} = useContext(AppContext);
+    const {utkast, setUtkast} = useContext(AppContext);
     const {dispatch} = useContext(ViewDispatch);
 
+    const utkastData = utkast.data;
+
     const [opplysninger, setOpplysninger] = useState<Opplysninger>({} as Opplysninger);
-    const [hovedmal, handleHovedmalChanged] = useState(vedtakUtkast && vedtakUtkast.hovedmal);
-    const [innsatsgruppe, handleKonklusjonChanged] = useState(vedtakUtkast && vedtakUtkast.innsatsgruppe);
-    const [begrunnelse, handleBegrunnelseChanged] = useState(vedtakUtkast && vedtakUtkast.begrunnelse || '');
+    const [hovedmal, handleHovedmalChanged] = useState( utkastData && utkastData.hovedmal);
+    const [innsatsgruppe, handleKonklusjonChanged] = useState(utkastData && utkastData.innsatsgruppe);
+    const [begrunnelse, handleBegrunnelseChanged] = useState(utkastData && utkastData.begrunnelse || '');
 
     function putVedtakk(skjema: SkjemaData) {
         return axios.put(`/veilarbvedtaksstotte/api/${fnr}/utkast`, skjema);
@@ -45,7 +48,10 @@ function Skjema ({fnr}: SkjemaProps) {
         e.preventDefault();
         const skjema: SkjemaData = {opplysninger, hovedmal, innsatsgruppe, begrunnelse};
         try {
-            putVedtakk(skjema).then(() =>  dispatch({view: ActionType.HOVEDSIDE}));
+            putVedtakk(skjema).then(() =>  {
+                setUtkast(prevState => ({...prevState, status: Status.NOT_STARTED}));
+                dispatch({view: ActionType.HOVEDSIDE});
+            });
         } catch (e) {
             console.log(e); // tslint:disable-line:no-console
         }
