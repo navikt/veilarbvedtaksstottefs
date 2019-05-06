@@ -1,18 +1,18 @@
 import React, { useContext, useState } from 'react';
-import Card from '../components/card/card';
+import Card from '../../components/card/card';
 import { Systemtittel } from 'nav-frontend-typografi';
-import Opplysninger, { OpplysningType } from '../components/skjema/opplysninger/opplysninger';
-import Hovedmal, { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
-import Innsatsgruppe, { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgruppe';
-import Begrunnelse from '../components/skjema/begrunnelse/begrunnelse';
-import Aksjoner from '../components/skjema/aksjoner/aksjoner';
+import Opplysninger, { OpplysningType } from '../../components/skjema/opplysninger/opplysninger';
+import Hovedmal, { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
+import Innsatsgruppe, { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
+import Begrunnelse from '../../components/skjema/begrunnelse/begrunnelse';
+import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
 import './skjema.less';
 import axios from 'axios';
-import { OrNothing } from '../utils/types/ornothing';
-import { AppContext } from '../components/app-provider/app-provider';
-import { ViewDispatch } from '../components/viewcontroller/view-controller';
-import { ActionType } from '../components/viewcontroller/view-reducer';
-import { Status } from '../utils/hooks/fetch-hook';
+import { OrNothing } from '../../utils/types/ornothing';
+import { AppContext } from '../../components/app-provider/app-provider';
+import { ViewDispatch } from '../../components/viewcontroller/view-controller';
+import { ActionType } from '../../components/viewcontroller/view-reducer';
+import { Status } from '../../utils/hooks/fetch-hook';
 
 interface SkjemaProps {
     fnr: string;
@@ -55,13 +55,12 @@ function Skjema ({fnr}: SkjemaProps) {
         } catch (e) {
             console.log(e); // tslint:disable-line:no-console
         }
-
     }
 
     function handleOpplysningerChanged (e: React.ChangeEvent<HTMLInputElement>) {
         e.persist();
         setOpplysninger(prevOpplysninger => {
-            prevOpplysninger[e.target.name as OpplysningType] = e.target.checked;
+            prevOpplysninger[e.target.value as OpplysningType] = e.target.checked;
             return prevOpplysninger;
         });
     }
@@ -73,9 +72,6 @@ function Skjema ({fnr}: SkjemaProps) {
                     <Systemtittel className="skjema__tittel">
                         Oppfølgingsvedtak (§ 14a)
                     </Systemtittel>
-                    <Opplysninger
-                        handleOpplysningerChanged={handleOpplysningerChanged}
-                    />
                     <Hovedmal
                         handleHovedmalChanged={handleHovedmalChanged}
                         hovedmal={hovedmal}
@@ -87,6 +83,9 @@ function Skjema ({fnr}: SkjemaProps) {
                     <Begrunnelse
                         begrunnelseTekst={begrunnelse}
                         handleBegrunnelseChanged={handleBegrunnelseChanged}
+                    />
+                    <Opplysninger
+                        handleOpplysningerChanged={handleOpplysningerChanged}
                     />
                     <Aksjoner handleSubmit={handleSubmit}/>
                 </Card>

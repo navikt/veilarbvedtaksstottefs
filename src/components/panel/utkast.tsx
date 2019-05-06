@@ -9,6 +9,7 @@ import { SistEndret } from './sist-endret';
 import { EndretAv } from './endret-av';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { ActionType } from '../viewcontroller/view-reducer';
+import { ReactComponent as UtkastIkon } from './utkast.svg';
 
 export function Utkast(props: {utkast: OrNothing<VedtakData>}) {
     const {dispatch} = useContext(ViewDispatch);
@@ -19,11 +20,14 @@ export function Utkast(props: {utkast: OrNothing<VedtakData>}) {
     return (
         <VedtakstottePanel tittel="Utkast til oppfølgingsvedtak" className="utkast">
             <div className="vedtakstottepanel__content">
-                <Undertittel>Utkast</Undertittel>
-                <Normaltekst>Her kommer det tekst at det er påbygynt vedtak</Normaltekst>
-                <SistEndret sistOppdatert={props.utkast.sistOppdatert}/>
-                <EndretAv endretAv={props.utkast.veileder}/>
-                <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Endre</Hovedknapp>
+                <UtkastIkon className="vedtakstottepanel__ikon"/>
+                <div>
+                    <Undertittel>Utkast</Undertittel>
+                    <Normaltekst>Her kommer det tekst at det er påbygynt vedtak</Normaltekst>
+                    <SistEndret sistOppdatert={props.utkast.sistOppdatert}/>
+                    <EndretAv endretAv={props.utkast.veileder}/>
+                    <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Endre</Hovedknapp>
+                </div>
             </div>
         </VedtakstottePanel>
     );

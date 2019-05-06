@@ -1,10 +1,10 @@
 import React, { useContext, useMemo } from 'react';
-import { AppContext } from '../components/app-provider/app-provider';
-import { TidligereVedtak } from '../components/panel/tidligere-vedtak';
-import { Utkast } from '../components/panel/utkast';
-import { VedtakData } from '../utils/types/vedtak';
-import Grid from '../components/grid/grid';
-import { GjeldendeVedtak } from '../components/panel/gjeldende-vedtak';
+import { AppContext } from '../../components/app-provider/app-provider';
+import { TidligereVedtak } from '../../components/panel/tidligere-vedtak';
+import { Utkast } from '../../components/panel/utkast';
+import { VedtakData } from '../../utils/types/vedtak';
+import Grid from '../../components/grid/grid';
+import { GjeldendeVedtak } from '../../components/panel/gjeldende-vedtak';
 import './hovedside.less';
 
 export function Hovedside () {

@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
-import { Checkbox } from 'nav-frontend-skjema';
+import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import './opplysninger.less';
 
 export enum OpplysningType {
     BRUKERENS_CV = 'brukerens_cv',
-    BRUKERENS_SVAR_VED_REGISTRERING = 'brukerens_svar_ved_registrering'
+    BRUKERENS_JOBBPROFIL = 'brukerens_jobbprofil',
+    BRUKERENS_SVAR_VED_REGISTRERING = 'brukerens_svar_ved_registrering',
+    BRUKERENS_EGENVURDERING = 'brukerens_egenvurdering',
+
 }
 
 interface OpplysningerProps {
@@ -18,11 +21,23 @@ function Opplysninger(props: OpplysningerProps) {
     const opplysninger = [
         {
             label: 'Brukerens CV',
-            name: OpplysningType.BRUKERENS_CV,
+            value: OpplysningType.BRUKERENS_CV,
+            checked: false
         },
         {
             label: 'Brukerens svar ved registrering hos NAV',
-            name: OpplysningType.BRUKERENS_SVAR_VED_REGISTRERING,
+            value: OpplysningType.BRUKERENS_SVAR_VED_REGISTRERING,
+            checked: false
+        },
+        {
+            label: 'Brukerens jobbprofil på nav.no',
+            value: OpplysningType.BRUKERENS_JOBBPROFIL,
+            checked: false
+        },
+        {
+            label: 'Brukerens egenvurdering',
+            value: OpplysningType.BRUKERENS_EGENVURDERING,
+            checked: false
         },
     ];
 
@@ -31,18 +46,14 @@ function Opplysninger(props: OpplysningerProps) {
             <Undertittel className="opplysninger__tittel">
                 Opplysninger det legges vekt på i vurderingen
             </Undertittel>
-            {
-                opplysninger.map((opplysning, index) =>
-                    <Checkbox
-                        key={index}
-                        name={opplysning.name}
-                        label={opplysning.label}
-                        onChange={handleOpplysningerChanged}
-                    />
-                )
-            }
+            <CheckboksPanelGruppe
+                checkboxes={opplysninger}
+                legend="Marker hvilke opplysninger du har lalgt vekt på"
+                onChange={(e, value) => handleOpplysningerChanged(e)}
+                className="opplysninger"
+            />
         </div>
     );
-};
+}
 
 export default Opplysninger;

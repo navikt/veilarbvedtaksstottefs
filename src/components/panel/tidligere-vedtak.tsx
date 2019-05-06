@@ -18,6 +18,7 @@ export function TidligereVedtak(props: {vedtakHistorikk: VedtakData []}) {
 
     return (
         <VedtakstottePanel tittel="Tidligare oppfølgingsvedtak" className="tidligere vedtakstottepanel--historisk">
+            <ul>
             {props.vedtakHistorikk.map(tidligereVedtak =>
                 <TidligereVedtakElement
                     key={tidligereVedtak.sistOppdatert}
@@ -25,6 +26,7 @@ export function TidligereVedtak(props: {vedtakHistorikk: VedtakData []}) {
                     innsatsgruppe={tidligereVedtak.innsatsgruppe}
                 />
             )}
+            </ul>
         </VedtakstottePanel>
     );
 }
