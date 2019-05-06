@@ -5,7 +5,7 @@ import { VedtakData } from '../utils/types/vedtak';
 
 export function VisGjeldeneVedtakk() {
     const {vedtak} = useContext(AppContext);
-    const gjeldendeVedtak = vedtak.find((v: VedtakData) => v.gjeldende);
+    const gjeldendeVedtak = vedtak.data.find((v: VedtakData) => v.gjeldende);
 
     if (gjeldendeVedtak) {
         return <VedtakVisning vedtak={gjeldendeVedtak}/>;

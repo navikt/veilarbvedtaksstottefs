@@ -3,9 +3,15 @@ import axios from 'axios';
 import { OrNothing } from '../types/ornothing';
 
 export enum Status {
-    LOADING,
-    DONE,
-    ERROR
+    NOT_STARTED = 'NOT_STARTED',
+    LOADING = 'LOADING',
+    DONE = 'DONE',
+    ERROR = 'ERROR'
+}
+
+interface FetchState<T> {
+    data: OrNothing<T>;
+    status: Status;
 }
 
 const initialState = {
@@ -13,7 +19,7 @@ const initialState = {
     data: null
 };
 
-function fetchHook<T> (url: string, deps?: any) {
+function fetchHook<T> (url: string) {
     const [state, setState] = useState<{data: OrNothing<T>, status: Status}>(initialState);
 
     const fetchData = async () => {
@@ -22,7 +28,7 @@ function fetchHook<T> (url: string, deps?: any) {
             if (res.status) {
                 setState({status: Status.DONE, data: res.data});
             } else {
-                setState({...state, status: Status.ERROR});
+                setState({status: Status.ERROR, data: null});
             }
         } catch (e) {
             setState({...state, status: Status.ERROR});
@@ -31,7 +37,7 @@ function fetchHook<T> (url: string, deps?: any) {
 
     useEffect(() => {
         fetchData();
-    }, [deps]);
+    }, []);
 
     return state;
 }
