@@ -10,6 +10,8 @@ import { EndretAv } from './endret-av';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { OrNothing } from '../../utils/types/ornothing';
 import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
+import { ReactComponent as IngenVedtakIcon } from './ingen_vedtak.svg';
+import { ReactComponent as FullfortVedtakIcon } from './fullfort.svg';
 
 const BEGRUNNELSE_MAX_LENGTH = 100;
 
@@ -24,9 +26,12 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
         return (
             <VedtakstottePanel tittel="Gjeldende oppfølgingsvedtak" className="gjeldende vedtakstottepanel--orange">
                 <div className="vedtakstottepanel__content">
-                    <Undertittel>Ingen tidligare oppfolgingsvedtak</Undertittel>
-                    <Normaltekst>Denne brukeren har ingen gjeldende oppfølgingsvedtak (§ 14a)</Normaltekst>
-                    <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Lag nytt vedtak</Hovedknapp>
+                    <IngenVedtakIcon className="vedtakstottepanel__ikon"/>
+                    <div>
+                        <Undertittel>Ingen tidligare oppfolgingsvedtak</Undertittel>
+                        <Normaltekst>Denne brukeren har ingen gjeldende oppfølgingsvedtak (§ 14a)</Normaltekst>
+                        <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Lag nytt vedtak</Hovedknapp>
+                    </div>
                 </div>
             </VedtakstottePanel>
         );
@@ -35,17 +40,20 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
     const gjeldendeVedtak =  props.gjeldendeVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(gjeldendeVedtak.innsatsgruppe);
     const begrunnelseTekst = gjeldendeVedtak.begrunnelse.length > BEGRUNNELSE_MAX_LENGTH
-            ? `${gjeldendeVedtak.begrunnelse.substring(0, BEGRUNNELSE_MAX_LENGTH)}... `
-            : `${gjeldendeVedtak.begrunnelse} `;
+        ? `${gjeldendeVedtak.begrunnelse.substring(0, BEGRUNNELSE_MAX_LENGTH)}... `
+        : `${gjeldendeVedtak.begrunnelse} `;
 
     return (
         <VedtakstottePanel tittel="Gjeldende oppfølgingsvedtak" className="gjeldende vedtakstottepanel--gron">
             <div className="vedtakstottepanel__content">
-                <Undertittel>{innsatsgruppe}</Undertittel>
-                <Normaltekst>{begrunnelseTekst}</Normaltekst>
-                <SistEndret sistOppdatert={gjeldendeVedtak.sistOppdatert}/>
-                <EndretAv endretAv={gjeldendeVedtak.veileder}/>
-                <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Lag nytt vedtak</Hovedknapp>
+                <FullfortVedtakIcon className="vedtakstottepanel__ikon"/>
+                <div>
+                    <Undertittel>{innsatsgruppe}</Undertittel>
+                    <Normaltekst>{begrunnelseTekst}</Normaltekst>
+                    <SistEndret sistOppdatert={gjeldendeVedtak.sistOppdatert}/>
+                    <EndretAv endretAv={gjeldendeVedtak.veileder}/>
+                    <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Lag nytt vedtak</Hovedknapp>
+                </div>
             </div>
         </VedtakstottePanel>
     );
