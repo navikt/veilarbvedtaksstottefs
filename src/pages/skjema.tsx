@@ -55,13 +55,12 @@ function Skjema ({fnr}: SkjemaProps) {
         } catch (e) {
             console.log(e); // tslint:disable-line:no-console
         }
-
     }
 
     function handleOpplysningerChanged (e: React.ChangeEvent<HTMLInputElement>) {
         e.persist();
         setOpplysninger(prevOpplysninger => {
-            prevOpplysninger[e.target.name as OpplysningType] = e.target.checked;
+            prevOpplysninger[e.target.value as OpplysningType] = e.target.checked;
             return prevOpplysninger;
         });
     }
@@ -73,9 +72,6 @@ function Skjema ({fnr}: SkjemaProps) {
                     <Systemtittel className="skjema__tittel">
                         Oppfølgingsvedtak (§ 14a)
                     </Systemtittel>
-                    <Opplysninger
-                        handleOpplysningerChanged={handleOpplysningerChanged}
-                    />
                     <Hovedmal
                         handleHovedmalChanged={handleHovedmalChanged}
                         hovedmal={hovedmal}
@@ -87,6 +83,9 @@ function Skjema ({fnr}: SkjemaProps) {
                     <Begrunnelse
                         begrunnelseTekst={begrunnelse}
                         handleBegrunnelseChanged={handleBegrunnelseChanged}
+                    />
+                    <Opplysninger
+                        handleOpplysningerChanged={handleOpplysningerChanged}
                     />
                     <Aksjoner handleSubmit={handleSubmit}/>
                 </Card>

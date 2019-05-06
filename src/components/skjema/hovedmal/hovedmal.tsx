@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
 import './hovedmal.less';
-import { Radio } from 'nav-frontend-skjema';
+import { Radio, RadioPanelGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
 
 export enum HovedmalType {
@@ -16,24 +15,18 @@ interface HovedmalProps {
 
 function Hovedmal(props: HovedmalProps) {
     const{ handleHovedmalChanged, hovedmal } = props;
+
     return (
         <div className="hovedmal">
-            <Undertittel className="hovedmal__tittel">
-                Hovedmål
-            </Undertittel>
-            <Radio
-                label="Skaffe arbeid"
+            <RadioPanelGruppe
+                legend="Hovedmal"
                 name="hovedmal"
-                value={HovedmalType.SKAFFE_ARBEID}
-                onChange={e => handleHovedmalChanged(e.target.value)}
-                checked={hovedmal === HovedmalType.SKAFFE_ARBEID}
-            />
-            <Radio
-                label="Beholde arbeid"
-                name="hovedmal"
-                value={HovedmalType.BEHOLDE_ARBEID}
-                onChange={e => handleHovedmalChanged(e.target.value)}
-                checked={hovedmal === HovedmalType.BEHOLDE_ARBEID}
+                radios={[
+                    {label: 'Skaffe arbeid', value: HovedmalType.SKAFFE_ARBEID},
+                    {label: 'Beholde arbeid', value: HovedmalType.BEHOLDE_ARBEID}
+                ]}
+                onChange={(e, value) => handleHovedmalChanged(value)}
+                checked={hovedmal || ''}
             />
         </div>
     );

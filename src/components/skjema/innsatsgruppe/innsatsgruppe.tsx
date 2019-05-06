@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
-import { Radio } from 'nav-frontend-skjema';
+import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
 
@@ -53,7 +52,6 @@ export const innsatsgrupper = [
     }
 ];
 
-
 interface InnsatsgruppeProps {
     handleKonklusjonChanged: (e: any) => void;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
@@ -63,19 +61,13 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
     const {handleKonklusjonChanged, innsatsgruppe} = props;
     return (
         <div className="konklusjon">
-            <Undertittel className="konklusjon__tittel">
-                Konklusjon og veien videre
-            </Undertittel>
-            {innsatsgrupper.map((innsatsgruppeObject, index) =>
-                <Radio
-                    key={index}
-                    label={innsatsgruppeObject.label}
-                    value={innsatsgruppeObject.value}
-                    name="innsatsgruppe"
-                    onChange={e => handleKonklusjonChanged(e.target.value)}
-                    checked={innsatsgruppe === innsatsgruppeObject.value}
-                />
-            )}
+          <RadioPanelGruppe
+            onChange={(e, value) => handleKonklusjonChanged(value)}
+            radios={innsatsgrupper}
+            name="innsatsgruppe"
+            legend="Insatsgruppe"
+            checked={innsatsgruppe || ''}
+          />
         </div>
     );
 }

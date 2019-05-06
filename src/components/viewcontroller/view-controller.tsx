@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { ActionType, initialViewState, viewReducer } from './view-reducer';
-import { Hovedside } from '../../pages/hovedside';
+import { Hovedside } from '../../pages/hovedside/hovedside';
 import Skjema from '../../pages/skjema';
 import { VisGjeldeneVedtakk } from '../../pages/gjeldenevedtak';
 
