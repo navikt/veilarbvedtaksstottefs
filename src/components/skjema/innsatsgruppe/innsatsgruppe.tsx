@@ -60,15 +60,14 @@ interface InnsatsgruppeProps {
 function Innsatsgruppe (props: InnsatsgruppeProps) {
     const {handleKonklusjonChanged, innsatsgruppe} = props;
     return (
-        <div className="konklusjon">
           <RadioPanelGruppe
             onChange={(e, value) => handleKonklusjonChanged(value)}
             radios={innsatsgrupper}
             name="innsatsgruppe"
-            legend="Insatsgruppe"
+            legend="Insatsgruppe: "
             checked={innsatsgruppe || ''}
+            className="innsatsgruppe"
           />
-        </div>
     );
 }
 

@@ -17,18 +17,17 @@ function Hovedmal(props: HovedmalProps) {
     const{ handleHovedmalChanged, hovedmal } = props;
 
     return (
-        <div className="hovedmal">
-            <RadioPanelGruppe
-                legend="Hovedmal"
-                name="hovedmal"
-                radios={[
-                    {label: 'Skaffe arbeid', value: HovedmalType.SKAFFE_ARBEID},
-                    {label: 'Beholde arbeid', value: HovedmalType.BEHOLDE_ARBEID}
-                ]}
-                onChange={(e, value) => handleHovedmalChanged(value)}
-                checked={hovedmal || ''}
-            />
-        </div>
+        <RadioPanelGruppe
+            legend="Hovedmal: "
+            name="hovedmal"
+            radios={[
+                {label: 'Skaffe arbeid', value: HovedmalType.SKAFFE_ARBEID},
+                {label: 'Beholde arbeid', value: HovedmalType.BEHOLDE_ARBEID}
+            ]}
+            onChange={(e, value) => handleHovedmalChanged(value)}
+            checked={hovedmal || ''}
+            className="hovedmal"
+        />
     );
 }
 

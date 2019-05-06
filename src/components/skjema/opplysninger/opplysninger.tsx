@@ -50,6 +50,7 @@ function Opplysninger(props: OpplysningerProps) {
                 checkboxes={opplysninger}
                 legend="Marker hvilke opplysninger du har lalgt vekt på"
                 onChange={(e, value) => handleOpplysningerChanged(e)}
+                className="opplysninger"
             />
         </div>
     );
