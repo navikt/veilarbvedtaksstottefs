@@ -52,7 +52,9 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
                     <Normaltekst>{begrunnelseTekst}</Normaltekst>
                     <SistEndret sistOppdatert={gjeldendeVedtak.sistOppdatert}/>
                     <EndretAv endretAv={gjeldendeVedtak.veileder}/>
-                    <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Lag nytt vedtak</Hovedknapp>
+                    {!props.utkast &&
+                        <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Lag nytt vedtak</Hovedknapp>
+                    }
                 </div>
             </div>
         </VedtakstottePanel>
