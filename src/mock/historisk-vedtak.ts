@@ -4,12 +4,12 @@ import { VedtakData } from '../utils/types/vedtak';
 
 const historisk: VedtakData[] = [
     {
-        id: 1,
+        id: 2,
         hovedmal: HovedmalType.BEHOLDE_ARBEID,
         innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
         vedtakStatus: 'SENDT',
-        sistOppdatert: '2019-09-14',
-        begrunnelse: 'herps derps herps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
+        sistOppdatert: '2019-04-03T12:58:43.716393+02:00',
+        begrunnelse: 'herps derps herps',
         gjeldende: false,
         veileder: {
             ident: 'Z007',
@@ -18,11 +18,11 @@ const historisk: VedtakData[] = [
         },
     },
     {
-        id: 2,
+        id: 3,
         hovedmal: HovedmalType.SKAFFE_ARBEID,
         innsatsgruppe: InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS,
         vedtakStatus: 'SENDT',
-        sistOppdatert: '2018-03-06',
+        sistOppdatert: '2018-08-05T09:55:43.716393+02:00',
         begrunnelse: 'herp derp',
         gjeldende: false,
         veileder: {
@@ -32,4 +32,5 @@ const historisk: VedtakData[] = [
         },
     }
 ];
+
 export default historisk;

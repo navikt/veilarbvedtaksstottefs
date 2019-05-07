@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState} from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { VedtakData } from '../../utils/types/vedtak';
 import { Status } from '../../utils/hooks/fetch-hook';
 import { OrNothing } from '../../utils/types/ornothing';
@@ -29,8 +29,8 @@ const initialState = {
         status: Status.NOT_STARTED,
         data: []
     },
-    setVedtak: () => {}, // tslint-disable-line no-empty
-    setUtkast: () => {}, // tslint-disable-line no-empty
+    setVedtak: () => {}, // tslint:disable-line no-empty
+    setUtkast: () => {}, // tslint:disable-line no-empty
 };
 
 export const AppContext = React.createContext<AppState>(initialState);

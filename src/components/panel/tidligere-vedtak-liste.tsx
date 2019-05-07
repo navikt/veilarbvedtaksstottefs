@@ -2,9 +2,10 @@ import React from 'react';
 import { VedtakData } from '../../utils/types/vedtak';
 import { VedtakstottePanel } from './veilarbvedtakstotte-panel/vedtakstotte-panel';
 import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import './tidligere-vedtak-liste.less';
 import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
+import { formatDate } from '../../utils/date-utils';
+import './tidligere-vedtak-liste.less';
 
 export function TidligereVedtakListe(props: {vedtakHistorikk: VedtakData []}) {
     if (props.vedtakHistorikk.length === 0) {
@@ -45,7 +46,7 @@ function TidligereVedtak (props: {tidligereVedtak: VedtakData}) {
                 <div>
                     <Element>Oppfølgingvedtak: {innsatsgruppe}</Element>
                     <Undertekst>
-                        <span className="label">Sendt:</span>{tidligereVedtak.sistOppdatert}
+                        <span className="label">Sendt:</span>{formatDate(tidligereVedtak.sistOppdatert)}
                     </Undertekst>
                 </div>
                 <HoyreChevron className="tidligere-vedtak__chevron"/>

@@ -4,6 +4,10 @@ import App from './app';
 import NAVSPA from './NAVSPA';
 import env from './utils/environment';
 import { enhet, fnr } from './mock/kontekst';
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/nb';
+
+dayjs.locale('nb');
 
 if (env.isDevelopment) {
     ReactDOM.render(<App fnr={fnr} enhet={enhet} />, document.getElementById('veilarbvedtaksstottefs'));
