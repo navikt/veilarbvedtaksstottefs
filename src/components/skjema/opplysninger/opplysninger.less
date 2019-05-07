@@ -1,14 +1,27 @@
 
 .veilarbvedtaksstottefs {
 	.opplysninger {
-		margin-bottom: 2rem;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 0.5fr 0.5fr 0.5fr;
+		grid-column-gap: 0.5rem;
 
-		.inputPanelGruppe__inner {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-template-rows: auto auto;
-			grid-column-gap: 0.5rem;
-			grid-row-gap: 0.5rem;
+		.egneoppsninger {
+			button {
+				border: none;
+				background-color: inherit;
+			}
+
+			.inputfeldt {
+				background-color: inherit;
+				border: none;
+				line-height: 2rem;
+			}
+			.inputfeldt:focus {
+				background-color: white;
+				border: none;
+				line-height: 2rem;
+			}
 		}
 	}
 }

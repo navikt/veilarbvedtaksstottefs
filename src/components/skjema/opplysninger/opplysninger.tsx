@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
-import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import './opplysninger.less';
+import { Checkbox } from 'nav-frontend-skjema';
+import { SkjemaElement } from '../skjemaelement/skjemaelement';
+import { EgneOpplysninger } from './egneopplysninger';
 
 export enum OpplysningType {
     BRUKERENS_CV = 'brukerens_cv',
@@ -21,38 +22,43 @@ function Opplysninger(props: OpplysningerProps) {
     const opplysninger = [
         {
             label: 'Brukerens CV',
-            value: OpplysningType.BRUKERENS_CV,
-            checked: false
+            name: OpplysningType.BRUKERENS_CV,
         },
         {
             label: 'Brukerens svar ved registrering hos NAV',
             value: OpplysningType.BRUKERENS_SVAR_VED_REGISTRERING,
-            checked: false
         },
         {
             label: 'Brukerens jobbprofil på nav.no',
-            value: OpplysningType.BRUKERENS_JOBBPROFIL,
-            checked: false
+            name: OpplysningType.BRUKERENS_JOBBPROFIL,
         },
         {
             label: 'Brukerens egenvurdering',
-            value: OpplysningType.BRUKERENS_EGENVURDERING,
-            checked: false
+            name: OpplysningType.BRUKERENS_EGENVURDERING,
         },
     ];
 
+    const ForhandsdefinieradeOppplysninger = () => {
+        return (
+            <>
+                {opplysninger.map((opplysning, index) =>
+                    <Checkbox
+                        key={index}
+                        name={opplysning.name}
+                        label={opplysning.label}
+                        onChange={handleOpplysningerChanged}
+                        className="inputPanel checkboksPanel"
+                    />
+                )}
+            </>
+        );
+    };
+
     return (
-        <div className="opplysninger">
-            <Undertittel className="opplysninger__tittel">
-                Opplysninger det legges vekt på i vurderingen
-            </Undertittel>
-            <CheckboksPanelGruppe
-                checkboxes={opplysninger}
-                legend="Marker hvilke opplysninger du har lalgt vekt på"
-                onChange={(e, value) => handleOpplysningerChanged(e)}
-                className="opplysninger"
-            />
-        </div>
+        <SkjemaElement tittel="Opplysninger" className="opplysninger">
+            <ForhandsdefinieradeOppplysninger/>
+            <EgneOpplysninger/>
+        </SkjemaElement>
     );
 }
 

@@ -66,32 +66,27 @@ function Skjema ({fnr}: SkjemaProps) {
     }
 
     return (
-        <>
-            <form>
-                <Card className="skjema">
-                    <Systemtittel className="skjema__tittel">
-                        Oppfølgingsvedtak (§ 14a)
-                    </Systemtittel>
-                    <Hovedmal
-                        handleHovedmalChanged={handleHovedmalChanged}
-                        hovedmal={hovedmal}
-                    />
-                    <Innsatsgruppe
-                        handleKonklusjonChanged={handleKonklusjonChanged}
-                        innsatsgruppe={innsatsgruppe}
-                    />
-                    <Begrunnelse
-                        begrunnelseTekst={begrunnelse}
-                        handleBegrunnelseChanged={handleBegrunnelseChanged}
-                    />
-                    <Opplysninger
-                        handleOpplysningerChanged={handleOpplysningerChanged}
-                    />
-                    <Aksjoner handleSubmit={handleSubmit}/>
-                </Card>
-            </form>
-
-        </>
+        <Card className="skjema">
+            <Systemtittel className="skjema__tittel">
+                Oppfølgingsvedtak (§ 14a)
+            </Systemtittel>
+            <Hovedmal
+                handleHovedmalChanged={handleHovedmalChanged}
+                hovedmal={hovedmal}
+            />
+            <Innsatsgruppe
+                handleKonklusjonChanged={handleKonklusjonChanged}
+                innsatsgruppe={innsatsgruppe}
+            />
+            <Begrunnelse
+                begrunnelseTekst={begrunnelse}
+                handleBegrunnelseChanged={handleBegrunnelseChanged}
+            />
+            <Opplysninger
+                handleOpplysningerChanged={handleOpplysningerChanged}
+            />
+            <Aksjoner handleSubmit={handleSubmit}/>
+        </Card>
     );
 }
 
