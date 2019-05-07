@@ -7,7 +7,7 @@ const vedtak: VedtakData = {
     hovedmal: HovedmalType.BEHOLDE_ARBEID,
     innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
     vedtakStatus: 'UTKAST',
-    sistOppdatert: '2019-09-14',
+    sistOppdatert: '2019-05-02T12:58:43.716393+02:00',
     begrunnelse: 'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
     gjeldende: true,
     veileder: {
