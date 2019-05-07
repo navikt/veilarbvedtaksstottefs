@@ -1,0 +1,28 @@
+@import "../../../node_modules/nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.vedtak-historikk-liste {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		&__item {
+			border-top: 1px solid @navLysGra;
+			padding: 0.5rem 0 1rem 0.7rem;
+			cursor: pointer;
+		}
+
+		.tidligere-vedtak {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			padding: 0.3rem;
+
+			&__chevron {
+				margin: auto 1rem auto 0;
+			}
+
+		}
+	}
+}
