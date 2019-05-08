@@ -1,5 +1,6 @@
 import React from 'react';
 import { keyCodes } from 'nav-frontend-js-utils';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 interface VisopplysningProps {
     tekst: string;
@@ -9,17 +10,17 @@ interface VisopplysningProps {
 
 export function VisOpplysning(props: VisopplysningProps) {
 
-    function handleOnKeyPress(e: any) {
+    function handleOnKeyDown(e: any) {
         if (e.keyCode === keyCodes.enter) {
             props.handleOpplysning();
         }
     }
 
     return (
-        <li tabIndex={0}>
-            <span onClick={props.handleOpplysning} onKeyPress={handleOnKeyPress}>
+        <li tabIndex={0} onClick={props.handleOpplysning} onKeyDown={handleOnKeyDown}>
+            <Normaltekst>
                 {props.tekst}
-            </span>
+            </Normaltekst>
         </li>
     );
 }

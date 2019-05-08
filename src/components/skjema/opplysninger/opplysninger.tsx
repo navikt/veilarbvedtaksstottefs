@@ -2,7 +2,7 @@ import * as React from 'react';
 import './opplysninger.less';
 import { Checkbox } from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { EgneOpplysninger } from './egneopplysninger';
+import { AndreOpplysninger } from './andre-opplysninger';
 
 export enum OpplysningType {
     BRUKERENS_CV = 'brukerens_cv',
@@ -40,7 +40,7 @@ function Opplysninger(props: OpplysningerProps) {
 
     const ForhandsdefinieradeOppplysninger = () => {
         return (
-            <>
+            <div className="opplysninger">
                 {opplysninger.map((opplysning, index) =>
                     <Checkbox
                         key={index}
@@ -50,14 +50,14 @@ function Opplysninger(props: OpplysningerProps) {
                         className="inputPanel checkboksPanel"
                     />
                 )}
-            </>
+            </div>
         );
     };
 
     return (
-        <SkjemaElement tittel="Opplysninger" className="opplysninger">
+        <SkjemaElement tittel="Opplysninger">
             <ForhandsdefinieradeOppplysninger/>
-            <EgneOpplysninger/>
+            <AndreOpplysninger/>
         </SkjemaElement>
     );
 }

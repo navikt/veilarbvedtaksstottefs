@@ -1,26 +1,16 @@
-
+@import "../../../../node_modules/nav-frontend-core/less/_variabler";
 .veilarbvedtaksstottefs {
 	.opplysninger {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 0.5fr 0.5fr 0.5fr;
 		grid-column-gap: 0.5rem;
 
-		.egneoppsninger {
-			button {
-				border: none;
-				background-color: inherit;
-			}
-
-			.inputfeldt {
-				background-color: inherit;
-				border: none;
-				line-height: 2rem;
-			}
-			.inputfeldt:focus {
-				background-color: white;
-				border: none;
-				line-height: 2rem;
+		.andreopplysninger {
+			margin-top: 1rem;
+			.leggtil {
+				display: flex;
+				color: @navMorkGra;
+				border-bottom: 1px solid @navGra40;
 			}
 		}
 	}
