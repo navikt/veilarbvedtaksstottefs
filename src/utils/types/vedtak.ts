@@ -18,4 +18,6 @@ export interface VedtakData {
     begrunnelse: string;
     gjeldende: boolean;
     veileder: Veileder;
+    opplysninger: any;
+    andreopplysninger: string[];
 }

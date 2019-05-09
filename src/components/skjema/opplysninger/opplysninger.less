@@ -1,14 +1,17 @@
-
+@import "../../../../node_modules/nav-frontend-core/less/_variabler";
 .veilarbvedtaksstottefs {
 	.opplysninger {
-		margin-bottom: 2rem;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-column-gap: 0.5rem;
 
-		.inputPanelGruppe__inner {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-template-rows: auto auto;
-			grid-column-gap: 0.5rem;
-			grid-row-gap: 0.5rem;
+		.andreopplysninger {
+			margin-top: 1rem;
+			.leggtil {
+				display: flex;
+				color: @navMorkGra;
+				border-bottom: 1px solid @navGra40;
+			}
 		}
 	}
 }

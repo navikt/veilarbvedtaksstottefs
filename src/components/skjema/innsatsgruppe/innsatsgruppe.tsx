@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { RadioPanelGruppe } from 'nav-frontend-skjema';
+import { Radio, RadioPanelGruppe } from 'nav-frontend-skjema';
 import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
+import { Undertittel } from 'nav-frontend-typografi';
+import { SkjemaElement } from '../skjemaelement/skjemaelement';
 
 export enum InnsatsgruppeType {
     STANDARD_INNSATS = 'STANDARD_INNSATS',
@@ -43,13 +45,14 @@ export const innsatsgrupper = [
         value: InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS,
     },
     {
+        label: 'Varig nedsatt arbeidsevne (varig tilpasset innsats)',
+        value: InnsatsgruppeType.VARIG_TILPASSET_INNSATS
+    },
+    {
         label: 'Gradert varig nedsatt arbeidsevne (gradert varig tilpasset innsats)',
         value: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS
     },
-    {
-        label: 'Varig nedsatt arbeidsevne (varig tilpasset innsats)',
-        value: InnsatsgruppeType.VARIG_TILPASSET_INNSATS
-    }
+
 ];
 
 interface InnsatsgruppeProps {
@@ -60,14 +63,19 @@ interface InnsatsgruppeProps {
 function Innsatsgruppe (props: InnsatsgruppeProps) {
     const {handleKonklusjonChanged, innsatsgruppe} = props;
     return (
-          <RadioPanelGruppe
-            onChange={(e, value) => handleKonklusjonChanged(value)}
-            radios={innsatsgrupper}
-            name="innsatsgruppe"
-            legend="Insatsgruppe: "
-            checked={innsatsgruppe || ''}
-            className="innsatsgruppe"
-          />
+        <SkjemaElement tittel="Innsatsgruppe" className="innsatsgruppe">
+            {innsatsgrupper.map((innsatsgruppeObject, index) =>
+                <Radio
+                    key={index}
+                    label={innsatsgruppeObject.label}
+                    value={innsatsgruppeObject.value}
+                    name="innsatsgruppe"
+                    onChange={e => handleKonklusjonChanged(e.target.value)}
+                    checked={innsatsgruppe === innsatsgruppeObject.value}
+                    className="inputPanel radioPanel"
+                />
+            )}
+        </SkjemaElement>
     );
 }
 

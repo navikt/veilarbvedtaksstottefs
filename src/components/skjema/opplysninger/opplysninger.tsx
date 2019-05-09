@@ -1,18 +1,21 @@
 import * as React from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
-import { CheckboksPanelGruppe } from 'nav-frontend-skjema';
 import './opplysninger.less';
+import { Checkbox } from 'nav-frontend-skjema';
+import { SkjemaElement } from '../skjemaelement/skjemaelement';
+import { AndreOpplysninger } from './andre-opplysninger';
 
 export enum OpplysningType {
-    BRUKERENS_CV = 'brukerens_cv',
-    BRUKERENS_JOBBPROFIL = 'brukerens_jobbprofil',
-    BRUKERENS_SVAR_VED_REGISTRERING = 'brukerens_svar_ved_registrering',
-    BRUKERENS_EGENVURDERING = 'brukerens_egenvurdering',
+    BRUKERENS_CV = 'CV',
+    BRUKERENS_JOBBPROFIL = 'JOBBPROFIL',
+    BRUKERENS_SVAR_VED_REGISTRERING = 'REGISTRERINGSINFO',
+    BRUKERENS_EGENVURDERING = 'EGENVURDERING',
 
 }
 
 interface OpplysningerProps {
     handleOpplysningerChanged: (e: any) => void;
+    handleAndraOpplysningerChanged: (e: any) => void;
+    andreOpplysninger: string[];
 }
 
 function Opplysninger(props: OpplysningerProps) {
@@ -21,38 +24,46 @@ function Opplysninger(props: OpplysningerProps) {
     const opplysninger = [
         {
             label: 'Brukerens CV',
-            value: OpplysningType.BRUKERENS_CV,
-            checked: false
+            name: OpplysningType.BRUKERENS_CV,
         },
         {
             label: 'Brukerens svar ved registrering hos NAV',
-            value: OpplysningType.BRUKERENS_SVAR_VED_REGISTRERING,
-            checked: false
+            name: OpplysningType.BRUKERENS_SVAR_VED_REGISTRERING,
         },
         {
             label: 'Brukerens jobbprofil på nav.no',
-            value: OpplysningType.BRUKERENS_JOBBPROFIL,
-            checked: false
+            name: OpplysningType.BRUKERENS_JOBBPROFIL,
         },
         {
             label: 'Brukerens egenvurdering',
-            value: OpplysningType.BRUKERENS_EGENVURDERING,
-            checked: false
+            name: OpplysningType.BRUKERENS_EGENVURDERING,
         },
     ];
 
+    const ForhandsdefinieradeOppplysninger = () => {
+        return (
+            <div className="opplysninger">
+                {opplysninger.map((opplysning, index) =>
+                    <Checkbox
+                        key={index}
+                        name={opplysning.name}
+                        label={opplysning.label}
+                        onChange={handleOpplysningerChanged}
+                        className="inputPanel checkboksPanel"
+                    />
+                )}
+            </div>
+        );
+    };
+
     return (
-        <div className="opplysninger">
-            <Undertittel className="opplysninger__tittel">
-                Opplysninger det legges vekt på i vurderingen
-            </Undertittel>
-            <CheckboksPanelGruppe
-                checkboxes={opplysninger}
-                legend="Marker hvilke opplysninger du har lalgt vekt på"
-                onChange={(e, value) => handleOpplysningerChanged(e)}
-                className="opplysninger"
+        <SkjemaElement tittel="Opplysninger">
+            <ForhandsdefinieradeOppplysninger/>
+            <AndreOpplysninger
+                andreopplysninger={props.andreOpplysninger}
+                setAndreOpplysninger={props.handleAndraOpplysningerChanged}
             />
-        </div>
+        </SkjemaElement>
     );
 }
 
