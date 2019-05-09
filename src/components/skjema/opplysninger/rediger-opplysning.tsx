@@ -11,6 +11,7 @@ export function RedigerOpplysning(props: OpplysningProps) {
     const[tekst, setTekst] = useState(props.tekst);
 
     return (
+       <div className="andreopplysninger__rediger">
         <Input
             type="text"
             className="inputfeldt"
@@ -25,5 +26,6 @@ export function RedigerOpplysning(props: OpplysningProps) {
                 }}
             }
         />
+       </div>
     );
 }

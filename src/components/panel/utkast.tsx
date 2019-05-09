@@ -25,7 +25,7 @@ export function Utkast(props: {utkast: OrNothing<VedtakData>}) {
                     <Undertittel>Utkast</Undertittel>
                     <Normaltekst>Her kommer det tekst at det er påbygynt vedtak</Normaltekst>
                     <SistEndret sistOppdatert={props.utkast.sistOppdatert}/>
-                    <EndretAv endretAv={props.utkast.veileder}/>
+                    <EndretAv veilederEnhetId={props.utkast.veilederEnhetId} veilederIdent={props.utkast.veilederIdent}/>
                     <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Endre</Hovedknapp>
                 </div>
             </div>

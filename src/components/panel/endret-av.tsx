@@ -1,13 +1,12 @@
 import React from 'react';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Veileder } from '../../utils/types/vedtak';
 
-export function EndretAv(props: {endretAv: Veileder}) {
+export function EndretAv(props: {veilederEnhetId: string, veilederIdent: string}) {
     return (
         <div style={{display: 'flex'}}>
             <Undertekst className="label">Endret av: </Undertekst>
-            <Undertekst>{props.endretAv.ident}</Undertekst>
-            <Undertekst>{props.endretAv.enhetId}, {props.endretAv.enhetNavn}</Undertekst>
+            <Undertekst>{props.veilederIdent}</Undertekst>
+            <Undertekst>{props.veilederEnhetId}</Undertekst>
         </div>
     );
 }

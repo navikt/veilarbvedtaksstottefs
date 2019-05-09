@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as LeggTilIkon } from './legg-til.svg';
 import { RedigerOpplysning } from './rediger-opplysning';
 import { VisOpplysning } from './visopplysning';
@@ -13,9 +13,9 @@ export function AndreOpplysninger (props: AndreOpplysningerProps) {
     const [redigeringModusIndeks, setRedigeringModusIndeks ] = useState<number>( -1);
     const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning ] = useState<boolean>( true);
 
-    function handleSlettOpplysningClicked (tekst: string) {
+    function handleSlettOpplysningClicked (index: number) {
         setRedigeringModusIndeks(-1);
-        props.setAndreOpplysninger(prevOpplysninger => prevOpplysninger.filter(opplysning => opplysning !== tekst));
+        props.setAndreOpplysninger(prevOpplysninger => prevOpplysninger.filter((opplysning, idx) => idx !== index));
     }
 
     function onHandleTekstSubmit (tekst: string, indeks: number) {
@@ -37,7 +37,7 @@ export function AndreOpplysninger (props: AndreOpplysningerProps) {
                         ? <VisOpplysning
                             tekst={opplysning}
                             handleOpplysning={() => setRedigeringModusIndeks(index)}
-                            slettOpplysning={() => handleSlettOpplysningClicked(opplysning)}
+                            slettOpplysning={() => handleSlettOpplysningClicked(index)}
                         />
                         : <RedigerOpplysning
                             tekst={opplysning}
@@ -47,7 +47,7 @@ export function AndreOpplysninger (props: AndreOpplysningerProps) {
                 )}
             </ul>
             {visLeggTilNyOpplysning
-                ? <div tabIndex={0} role="button" aria-labelledby="legg til opplysning" onClick={() => setVisLeggTilNyOpplysning(false)} className="skjemaelement leggtil">
+                ? <div tabIndex={0} role="button" aria-labelledby="legg til opplysning" onClick={() => setVisLeggTilNyOpplysning(false)} className="skjemaelement andreopplysninger__leggtil">
                     <LeggTilIkon/>
                     <label className="skjemaelement__label">Legg til</label>
                 </div>
