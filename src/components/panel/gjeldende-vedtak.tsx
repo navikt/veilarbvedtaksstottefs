@@ -12,14 +12,23 @@ import { OrNothing } from '../../utils/types/ornothing';
 import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { ReactComponent as IngenVedtakIcon } from './ingen_vedtak.svg';
 import { ReactComponent as FullfortVedtakIcon } from './fullfort.svg';
+import axios from 'axios';
 
 const BEGRUNNELSE_MAX_LENGTH = 100;
 
-export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, utkast: OrNothing<VedtakData>}) {
+export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, utkast: OrNothing<VedtakData>, fnr: string}) {
     const {dispatch} = useContext(ViewDispatch);
 
     if (!props.gjeldendeVedtak && props.utkast) {
         return null;
+    }
+
+    function lagNyttVedtakUtkast () {
+        return axios.post(`/veilarbvedtaksstotte/api/${props.fnr}/utkast`);
+    }
+
+    function lagNyttVedtakUtkastOgRedirectTilUtkast () {
+        lagNyttVedtakUtkast().then(() => dispatch({view: ActionType.UTKAST}));
     }
 
     if (!props.gjeldendeVedtak) {
@@ -30,7 +39,7 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
                     <div>
                         <Undertittel>Ingen tidligare oppfolgingsvedtak</Undertittel>
                         <Normaltekst>Denne brukeren har ingen gjeldende oppfølgingsvedtak (§ 14a)</Normaltekst>
-                        <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Lag nytt vedtak</Hovedknapp>
+                        <Hovedknapp onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>Lag nytt vedtak</Hovedknapp>
                     </div>
                 </div>
             </VedtakstottePanel>
@@ -53,7 +62,7 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
                     <SistEndret sistOppdatert={gjeldendeVedtak.sistOppdatert}/>
                     <EndretAv endretAv={gjeldendeVedtak.veileder}/>
                     {!props.utkast &&
-                        <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Lag nytt vedtak</Hovedknapp>
+                        <Hovedknapp onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>Lag nytt vedtak</Hovedknapp>
                     }
                 </div>
             </div>

@@ -4,6 +4,28 @@
 	.skjema {
 		margin: 1rem auto 0 auto;
 
+		&__tilbakeknapp {
+			color: @navBla;
+			text-decoration: none;
+			font-family: Source Sans Pro, Arial, sans-serif;
+			padding: 0;
+
+			&--chevron {
+				margin-bottom: 0.25rem;
+			}
+
+			&:hover {
+				.visittkortfs__tilbakelenke--tekst {
+					border-bottom: 1px solid @navBla;
+				}
+			}
+		}
+
+		&__tilbakeknapp:hover {
+			border: none;
+			padding: 0;
+		}
+
 		&__tittel {
 			margin-bottom: 2rem;
 		}
