@@ -6,21 +6,7 @@ import axios from 'axios';
 export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
 
 export function DataFetcher (props: {fnr: string, children: any}) {
-    const {setUtkast, setVedtak, utkast, vedtak} = useContext(AppContext);
-
-    const fetchUtkastData = async () => {
-        setUtkast(prevState => ({...prevState, status: Status.LOADING}));
-        try {
-            const res = await axios.get(`${VEILARBVEDTAKSSTOTTE_API}/${props.fnr}/utkast`);
-            if (res.status) {
-                setUtkast({status: Status.DONE, data: res.data});
-            } else {
-                setUtkast(prevState => ({...prevState, status: Status.ERROR}));
-            }
-        } catch (e) {
-            setUtkast(prevState => ({...prevState, status: Status.ERROR}));
-        }
-    };
+    const {setVedtak, vedtak} = useContext(AppContext);
 
     const fetchVedtakData = async () => {
         setVedtak(prevState => ({...prevState, status: Status.LOADING}));
@@ -35,12 +21,6 @@ export function DataFetcher (props: {fnr: string, children: any}) {
             setVedtak(prevState => ({...prevState, status: Status.ERROR}));
         }
     };
-
-    useEffect(() => {
-        if (utkast.status === Status.NOT_STARTED) {
-            fetchUtkastData();
-        }
-    }, [utkast.status]);
 
     useEffect(() => {
         if (vedtak.status === Status.NOT_STARTED) {

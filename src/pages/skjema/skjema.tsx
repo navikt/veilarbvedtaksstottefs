@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import Card from '../../components/card/card';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Opplysninger, { OpplysningType } from '../../components/skjema/opplysninger/opplysninger';
@@ -13,6 +13,8 @@ import { AppContext } from '../../components/app-provider/app-provider';
 import { ViewDispatch } from '../../components/viewcontroller/view-controller';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { Status } from '../../utils/hooks/fetch-hook';
+import { VedtakData } from '../../utils/types/vedtak';
+import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 
 interface SkjemaProps {
     fnr: string;
@@ -31,29 +33,27 @@ interface SkjemaData {
 }
 
 function Skjema ({fnr}: SkjemaProps) {
-    const {utkast, setUtkast} = useContext(AppContext);
+    const {vedtak, setVedtak} = useContext(AppContext);
     const {dispatch} = useContext(ViewDispatch);
+    const utkast = useMemo(() => vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST'), [vedtak.data]);
 
-    const utkastData = utkast.data;
-
-    const opplysningData = byggOpplysningsObject(utkastData && utkastData.opplysninger) || {} as Opplysninger ;
+    const opplysningData = byggOpplysningsObject(utkast && utkast.opplysninger) || {} as Opplysninger ;
     const [opplysninger, setOpplysninger] = useState<Opplysninger>(opplysningData);
-    const [hovedmal, handleHovedmalChanged] = useState( utkastData && utkastData.hovedmal);
-    const [innsatsgruppe, handleKonklusjonChanged] = useState(utkastData && utkastData.innsatsgruppe);
-    const [begrunnelse, handleBegrunnelseChanged] = useState(utkastData && utkastData.begrunnelse || '');
-    const [andreOpplysninger, handleAndreopplysninger] = useState(utkastData && utkastData.andreopplysninger || []);
+    const [hovedmal, handleHovedmalChanged] = useState( utkast && utkast.hovedmal);
+    const [innsatsgruppe, handleKonklusjonChanged] = useState(utkast && utkast.innsatsgruppe);
+    const [begrunnelse, handleBegrunnelseChanged] = useState(utkast && utkast.begrunnelse || '');
+    const [andreOpplysninger, handleAndreopplysninger] = useState(utkast && utkast.andreopplysninger || []);
 
     function putVedtakk(skjema: SkjemaData) {
         return axios.put(`/veilarbvedtaksstotte/api/${fnr}/utkast`, skjema);
     }
 
     function byggOpplysningsObject (opplysningerListe: string []) {
-        return opplysningerListe.reduce((acc: Opplysninger, opplysning ) => {
+        return (opplysningerListe ? opplysningerListe : []).reduce((acc: Opplysninger, opplysning ) => {
             acc[opplysning as OpplysningType] = true;
             return acc;
         }, {} as Opplysninger);
     }
-
 
     function byggOpplysningliste (opplysningerObj: Opplysninger) {
         return Object.entries(opplysningerObj).reduce((acc, [key, value]) => value ? [...acc, key as OpplysningType] : acc, [] as OpplysningType[]);
@@ -64,7 +64,7 @@ function Skjema ({fnr}: SkjemaProps) {
         const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
         try {
             putVedtakk(skjema).then(() =>  {
-                setUtkast(prevState => ({...prevState, status: Status.NOT_STARTED}));
+                setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
                 dispatch({view: ActionType.HOVEDSIDE});
             });
         } catch (e) {
@@ -81,29 +81,32 @@ function Skjema ({fnr}: SkjemaProps) {
     }
 
     return (
-        <Card className="skjema">
-            <Systemtittel className="skjema__tittel">
-                Oppfølgingsvedtak (§ 14a)
-            </Systemtittel>
-            <Hovedmal
-                handleHovedmalChanged={handleHovedmalChanged}
-                hovedmal={hovedmal}
-            />
-            <Innsatsgruppe
-                handleKonklusjonChanged={handleKonklusjonChanged}
-                innsatsgruppe={innsatsgruppe}
-            />
-            <Begrunnelse
-                begrunnelseTekst={begrunnelse}
-                handleBegrunnelseChanged={handleBegrunnelseChanged}
-            />
-            <Opplysninger
-                handleOpplysningerChanged={handleOpplysningerChanged}
-                handleAndraOpplysningerChanged={handleAndreopplysninger}
-                andreOpplysninger={andreOpplysninger}
-            />
-            <Aksjoner handleSubmit={handleSubmit}/>
-        </Card>
+        <>
+            <TilbakeKnapp tilbake={(e) => handleSubmit(e)}/>
+            <Card className="skjema">
+                <Systemtittel className="skjema__tittel">
+                    Oppfølgingsvedtak (§ 14a)
+                </Systemtittel>
+                <Hovedmal
+                    handleHovedmalChanged={handleHovedmalChanged}
+                    hovedmal={hovedmal}
+                />
+                <Innsatsgruppe
+                    handleKonklusjonChanged={handleKonklusjonChanged}
+                    innsatsgruppe={innsatsgruppe}
+                />
+                <Begrunnelse
+                    begrunnelseTekst={begrunnelse}
+                    handleBegrunnelseChanged={handleBegrunnelseChanged}
+                />
+                <Opplysninger
+                    handleOpplysningerChanged={handleOpplysningerChanged}
+                    handleAndraOpplysningerChanged={handleAndreopplysninger}
+                    andreOpplysninger={andreOpplysninger}
+                />
+                <Aksjoner handleSubmit={handleSubmit}/>
+            </Card>
+        </>
     );
 }
 

@@ -5,13 +5,30 @@
 		grid-template-columns: 1fr 1fr;
 		grid-column-gap: 0.5rem;
 
-		.andreopplysninger {
-			margin-top: 1rem;
-			.leggtil {
-				display: flex;
-				color: @navMorkGra;
-				border-bottom: 1px solid @navGra40;
+	}
+
+	.andreopplysninger {
+		margin-top: 1rem;
+		&__vis {
+			display: flex;
+			flex-direction: row;
+
+			.fjern {
+				margin-left: 2rem;
+				font-weight: 700;
+				text-transform: none;
+				padding: 0 2rem;
+				text-decoration: underline;
 			}
+		}
+		&__leggtil {
+			display: flex;
+			color: @navMorkGra;
+			border-bottom: 1px solid @navGra40;
+			max-width: 50%;
+		}
+		&__rediger{
+			max-width: 50%;
 		}
 	}
 }
