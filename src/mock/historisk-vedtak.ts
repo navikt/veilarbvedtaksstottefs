@@ -13,11 +13,8 @@ const historisk: VedtakData[] = [
         begrunnelse: 'herps derps herps',
         opplysninger: {},
         gjeldende: false,
-        veileder: {
-            ident: 'Z007',
-            enhetId: '3666',
-            enhetNavn: 'Gotham City',
-        },
+        veilederEnhetId: 'Gotham City',
+        veilederIdent: 'Z007',
     },
     {
         id: 3,
@@ -29,11 +26,8 @@ const historisk: VedtakData[] = [
         begrunnelse: 'herp derp',
         andreopplysninger: [],
         gjeldende: false,
-        veileder: {
-            ident: 'Z007',
-            enhetId: '3666',
-            enhetNavn: 'Gotham City',
-        },
+        veilederEnhetId: 'Gotham City',
+        veilederIdent: 'Z007'
     }
 ];
 
