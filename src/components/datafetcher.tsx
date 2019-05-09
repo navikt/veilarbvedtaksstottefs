@@ -1,9 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Status } from '../utils/hooks/fetch-hook';
 import { AppContext } from './app-provider/app-provider';
-import axios from 'axios';
-
-export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
+import VeilarbVedtakkstotteApi from '../api/veilarbvedtakkstotte-api';
 
 export function DataFetcher (props: {fnr: string, children: any}) {
     const {setVedtak, vedtak} = useContext(AppContext);
@@ -11,7 +9,7 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     const fetchVedtakData = async () => {
         setVedtak(prevState => ({...prevState, status: Status.LOADING}));
         try {
-            const res = await axios.get(`${VEILARBVEDTAKSSTOTTE_API}/${props.fnr}/vedtak`);
+            const res = await VeilarbVedtakkstotteApi.hentVedtak(props.fnr);
             if (res.status) {
                 setVedtak({status: Status.DONE, data: res.data});
             } else {
