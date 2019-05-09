@@ -6,10 +6,12 @@ const historisk: VedtakData[] = [
     {
         id: 2,
         hovedmal: HovedmalType.BEHOLDE_ARBEID,
+        andreopplysninger: [],
         innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
         vedtakStatus: 'SENDT',
         sistOppdatert: '2019-04-03T12:58:43.716393+02:00',
         begrunnelse: 'herps derps herps',
+        opplysninger: {},
         gjeldende: false,
         veileder: {
             ident: 'Z007',
@@ -22,8 +24,10 @@ const historisk: VedtakData[] = [
         hovedmal: HovedmalType.SKAFFE_ARBEID,
         innsatsgruppe: InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS,
         vedtakStatus: 'SENDT',
+        opplysninger: {},
         sistOppdatert: '2018-08-05T09:55:43.716393+02:00',
         begrunnelse: 'herp derp',
+        andreopplysninger: [],
         gjeldende: false,
         veileder: {
             ident: 'Z007',

@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ReactComponent as LeggTilIkon } from './legg-til.svg';
 import { RedigerOpplysning } from './rediger-opplysning';
 import { VisOpplysning } from './visopplysning';
 import { Undertittel } from 'nav-frontend-typografi';
 
-export function AndreOpplysninger () {
-    const [opplysninger, setOpplysninger ] = useState<string[]>( []);
+interface AndreOpplysningerProps {
+    andreopplysninger: string[];
+    setAndreOpplysninger: (prevopplysninger: string[] | ((prevopplysninger: string[]) => void)) => void;
+}
+
+export function AndreOpplysninger (props: AndreOpplysningerProps) {
     const [redigeringModusIndeks, setRedigeringModusIndeks ] = useState<number>( -1);
     const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning ] = useState<boolean>( true);
 
     function handleSlettOpplysningClicked (tekst: string) {
         setRedigeringModusIndeks(-1);
-        setOpplysninger(prevOpplysninger => prevOpplysninger.filter(opplysning => opplysning !== tekst));
+        props.setAndreOpplysninger(prevOpplysninger => prevOpplysninger.filter(opplysning => opplysning !== tekst));
     }
 
     function onHandleTekstSubmit (tekst: string, indeks: number) {
         if (tekst.trim() !== '') {
-            const nyOpplysninger = [...opplysninger];
+            const nyOpplysninger = [...props.andreopplysninger];
             nyOpplysninger[indeks] = tekst;
-            setOpplysninger(nyOpplysninger);
+            props.setAndreOpplysninger(nyOpplysninger);
             setRedigeringModusIndeks(-1);
         }
         setVisLeggTilNyOpplysning(true);
@@ -28,7 +32,7 @@ export function AndreOpplysninger () {
         <div className="andreopplysninger">
             <Undertittel>Andre opplysninger (Samtalsreferat, Dialog, Medisinsk dokumentasjon)</Undertittel>
             <ul>
-                {opplysninger.map((opplysning, index) =>
+                {props.andreopplysninger.map((opplysning, index) =>
                     redigeringModusIndeks !== index
                         ? <VisOpplysning
                             tekst={opplysning}
@@ -47,7 +51,7 @@ export function AndreOpplysninger () {
                     <LeggTilIkon/>
                     <label className="skjemaelement__label">Legg til</label>
                 </div>
-                : <RedigerOpplysning tekst={''} onTekstSubmit={(tekst) => onHandleTekstSubmit(tekst, opplysninger.length)}/>}
+                : <RedigerOpplysning tekst={''} onTekstSubmit={(tekst) => onHandleTekstSubmit(tekst, props.andreopplysninger.length)}/>}
         </div>
     );
 }

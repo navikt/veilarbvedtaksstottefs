@@ -23,10 +23,11 @@ type Opplysninger = {
 };
 
 interface SkjemaData {
-    opplysninger: OrNothing<Opplysninger>;
+    opplysninger: string[];
     hovedmal: OrNothing<HovedmalType>;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
     begrunnelse: string;
+    andreOpplysninger: string[];
 }
 
 function Skjema ({fnr}: SkjemaProps) {
@@ -35,18 +36,32 @@ function Skjema ({fnr}: SkjemaProps) {
 
     const utkastData = utkast.data;
 
-    const [opplysninger, setOpplysninger] = useState<Opplysninger>({} as Opplysninger);
+    const opplysningData = byggOpplysningsObject(utkastData && utkastData.opplysninger) || {} as Opplysninger ;
+    const [opplysninger, setOpplysninger] = useState<Opplysninger>(opplysningData);
     const [hovedmal, handleHovedmalChanged] = useState( utkastData && utkastData.hovedmal);
     const [innsatsgruppe, handleKonklusjonChanged] = useState(utkastData && utkastData.innsatsgruppe);
     const [begrunnelse, handleBegrunnelseChanged] = useState(utkastData && utkastData.begrunnelse || '');
+    const [andreOpplysninger, handleAndreopplysninger] = useState(utkastData && utkastData.andreopplysninger || []);
 
     function putVedtakk(skjema: SkjemaData) {
         return axios.put(`/veilarbvedtaksstotte/api/${fnr}/utkast`, skjema);
     }
 
+    function byggOpplysningsObject (opplysningerListe: string []) {
+        return opplysningerListe.reduce((acc: Opplysninger, opplysning ) => {
+            acc[opplysning as OpplysningType] = true;
+            return acc;
+        }, {} as Opplysninger);
+    }
+
+
+    function byggOpplysningliste (opplysningerObj: Opplysninger) {
+        return Object.entries(opplysningerObj).reduce((acc, [key, value]) => value ? [...acc, key as OpplysningType] : acc, [] as OpplysningType[]);
+    }
+
     function handleSubmit (e: any) {
         e.preventDefault();
-        const skjema: SkjemaData = {opplysninger, hovedmal, innsatsgruppe, begrunnelse};
+        const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
         try {
             putVedtakk(skjema).then(() =>  {
                 setUtkast(prevState => ({...prevState, status: Status.NOT_STARTED}));
@@ -60,7 +75,7 @@ function Skjema ({fnr}: SkjemaProps) {
     function handleOpplysningerChanged (e: React.ChangeEvent<HTMLInputElement>) {
         e.persist();
         setOpplysninger(prevOpplysninger => {
-            prevOpplysninger[e.target.value as OpplysningType] = e.target.checked;
+            prevOpplysninger[e.target.name as OpplysningType] = e.target.checked;
             return prevOpplysninger;
         });
     }
@@ -84,6 +99,8 @@ function Skjema ({fnr}: SkjemaProps) {
             />
             <Opplysninger
                 handleOpplysningerChanged={handleOpplysningerChanged}
+                handleAndraOpplysningerChanged={handleAndreopplysninger}
+                andreOpplysninger={andreOpplysninger}
             />
             <Aksjoner handleSubmit={handleSubmit}/>
         </Card>

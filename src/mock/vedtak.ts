@@ -10,6 +10,8 @@ const vedtak: VedtakData = {
     sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
     begrunnelse: 'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
     gjeldende: true,
+    andreopplysninger: [],
+    opplysninger: {},
     veileder: {
         ident: 'Z007',
         enhetId: '3666',

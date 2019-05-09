@@ -5,15 +5,17 @@ import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { AndreOpplysninger } from './andre-opplysninger';
 
 export enum OpplysningType {
-    BRUKERENS_CV = 'brukerens_cv',
-    BRUKERENS_JOBBPROFIL = 'brukerens_jobbprofil',
-    BRUKERENS_SVAR_VED_REGISTRERING = 'brukerens_svar_ved_registrering',
-    BRUKERENS_EGENVURDERING = 'brukerens_egenvurdering',
+    BRUKERENS_CV = 'CV',
+    BRUKERENS_JOBBPROFIL = 'JOBBPROFIL',
+    BRUKERENS_SVAR_VED_REGISTRERING = 'REGISTRERINGSINFO',
+    BRUKERENS_EGENVURDERING = 'EGENVURDERING',
 
 }
 
 interface OpplysningerProps {
     handleOpplysningerChanged: (e: any) => void;
+    handleAndraOpplysningerChanged: (e: any) => void;
+    andreOpplysninger: string[];
 }
 
 function Opplysninger(props: OpplysningerProps) {
@@ -26,7 +28,7 @@ function Opplysninger(props: OpplysningerProps) {
         },
         {
             label: 'Brukerens svar ved registrering hos NAV',
-            value: OpplysningType.BRUKERENS_SVAR_VED_REGISTRERING,
+            name: OpplysningType.BRUKERENS_SVAR_VED_REGISTRERING,
         },
         {
             label: 'Brukerens jobbprofil på nav.no',
@@ -57,7 +59,10 @@ function Opplysninger(props: OpplysningerProps) {
     return (
         <SkjemaElement tittel="Opplysninger">
             <ForhandsdefinieradeOppplysninger/>
-            <AndreOpplysninger/>
+            <AndreOpplysninger
+                andreopplysninger={props.andreOpplysninger}
+                setAndreOpplysninger={props.handleAndraOpplysningerChanged}
+            />
         </SkjemaElement>
     );
 }
