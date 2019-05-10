@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Card from '../../components/card/card';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Opplysninger, { OpplysningType } from '../../components/skjema/opplysninger/opplysninger';
 import Hovedmal, { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import Innsatsgruppe, { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
@@ -15,12 +15,15 @@ import { Status } from '../../utils/hooks/fetch-hook';
 import { VedtakData } from '../../utils/types/vedtak';
 import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import  VeilarbVedtakkstotteApi from '../../api/veilarbvedtakkstotte-api';
+import { byggOpplysningliste, byggOpplysningsObject } from '../../components/skjema/skjema-utils';
+import { useTimer } from '../../utils/hooks/useTimer';
+import { EtikettInfo } from 'nav-frontend-etiketter';
 
 interface SkjemaProps {
     fnr: string;
 }
 
-type Opplysninger = {
+export type Opplysninger = {
     [K in OpplysningType]: boolean;
 };
 
@@ -32,21 +35,11 @@ export interface SkjemaData {
     andreOpplysninger: string[];
 }
 
-function byggOpplysningsObject (opplysningerListe: string []) {
-    return (opplysningerListe ? opplysningerListe : []).reduce((acc: Opplysninger, opplysning ) => {
-        acc[opplysning as OpplysningType] = true;
-        return acc;
-    }, {} as Opplysninger);
-}
-
-function byggOpplysningliste (opplysningerObj: Opplysninger) {
-    return Object.entries(opplysningerObj).reduce((acc, [key, value]) => value ? [...acc, key as OpplysningType] : acc, [] as OpplysningType[]);
-}
-
 function Skjema ({fnr}: SkjemaProps) {
     const {vedtak, setVedtak} = useContext(AppContext);
     const {dispatch} = useContext(ViewDispatch);
-    const utkast = useMemo(() => vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST'), [vedtak.data]);
+
+    const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
 
     const opplysningData = byggOpplysningsObject(utkast && utkast.opplysninger);
     const [opplysninger, setOpplysninger] = useState<Opplysninger>(opplysningData);
@@ -54,19 +47,32 @@ function Skjema ({fnr}: SkjemaProps) {
     const [innsatsgruppe, handleKonklusjonChanged] = useState(utkast && utkast.innsatsgruppe);
     const [begrunnelse, handleBegrunnelseChanged] = useState(utkast && utkast.begrunnelse || '');
     const [andreOpplysninger, handleAndreopplysninger] = useState(utkast && utkast.andreopplysninger || []);
+    const [sistLagret, setSistLagret] = useState('');
 
-    const timer = useRef<number | undefined>();
+    useTimer(oppdaterSistEndret, 2000, [opplysninger, hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger]);
+
+    function sendDataTilBackend () {
+        const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
+        return VeilarbVedtakkstotteApi.putVedtakUtkast(fnr, skjema);
+    }
+
+    function oppdaterSistEndret () {
+        sendDataTilBackend().then(() => {
+            const date = new Date();
+            const dato = date.toISOString().slice(0, 10);
+            const tid = date.toLocaleTimeString('no');
+            setSistLagret(`${dato} ${tid}`);
+        });
+    }
 
     function handleSubmit (e?: any) {
-        const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
-        try {
-            VeilarbVedtakkstotteApi.putVedtakUtkast(fnr, skjema).then(() =>  {
-                setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
-                dispatch({view: ActionType.HOVEDSIDE});
-            });
-        } catch (e) {
-            console.log(e); // tslint:disable-line:no-console
-        }
+        e.preventDefault();
+        sendDataTilBackend().then(() =>  {
+            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+            dispatch({view: ActionType.HOVEDSIDE});
+        }).catch (error => {
+            console.log(error); // tslint:disable-line:no-console
+        });
     }
 
     function handleOpplysningerChanged (e: React.ChangeEvent<HTMLInputElement>) {
@@ -77,23 +83,13 @@ function Skjema ({fnr}: SkjemaProps) {
         });
     }
 
-    useEffect(() => {
-        if (!timer.current) {
-            timer.current = window.setTimeout(() => {
-                const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
-                VeilarbVedtakkstotteApi.putVedtakUtkast(fnr, skjema);
-            }, 5000);
-        }
-        return () => {
-            clearTimeout(timer.current);
-            timer.current = undefined;
-        };
-    }, [hovedmal, opplysninger, innsatsgruppe, begrunnelse, andreOpplysninger]);
-
     return (
-        <>
+        <div className="skjema">
+            <div className="skjema__info">
             <TilbakeKnapp tilbake={() =>  dispatch({view: ActionType.HOVEDSIDE})}/>
-            <Card className="skjema">
+                {sistLagret && <EtikettInfo><Normaltekst>{`Sist lagret : ${sistLagret}`}</Normaltekst></EtikettInfo>}
+            </div>
+            <Card >
                 <Systemtittel className="skjema__tittel">
                     Oppfølgingsvedtak (§ 14a)
                 </Systemtittel>
@@ -116,7 +112,7 @@ function Skjema ({fnr}: SkjemaProps) {
                 />
                 <Aksjoner handleSubmit={handleSubmit}/>
             </Card>
-        </>
+        </div>
     );
 }
 
