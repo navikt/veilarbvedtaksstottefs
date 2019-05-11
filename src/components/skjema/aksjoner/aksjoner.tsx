@@ -1,16 +1,24 @@
 import * as React from 'react';
 import './aksjoner.less';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-function Aksjoner (props: {handleSubmit: (e: any) => void} ) {
+interface AksjonerProps {
+    handleSubmit: (e: any) => void;
+    handleLagreOgTilbake: (e: any) => void;
+}
+
+function Aksjoner (props: AksjonerProps) {
     return (
         <div className="aksjoner">
             <Hovedknapp htmlType="submit" onClick={props.handleSubmit}>
-                Forhåndsvis vedtaksbrev
+                Til innsending
             </Hovedknapp>
-            <Knapp>
-                Forhåndsvis og send
+            <Knapp htmlType="submit" onClick={props.handleLagreOgTilbake}>
+                Lagre og gå tilbake
             </Knapp>
+            <Flatknapp>
+                Slett
+            </Flatknapp>
         </div>
     );
 

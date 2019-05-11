@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "/veilarbvedtaksstottefs",
+  "proxy": "http://localhost:8080",
   "scripts": {
-    "start": "craco start",
+    "run:live-server": "live-server --cors --entry-file=./pdf/test.pdf",
+    "start":"concurrently --kill-others \"npm run run:live-server\" \"craco start\"",
     "build": "craco build",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
@@ -55,6 +57,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-pdf": "^4.0.5",
     "react-scripts": "^2.1.8",
     "typescript": "3.4.1"
   },
@@ -65,6 +68,8 @@
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
     "axios-mock-adapter": "^1.16.0",
+    "concurrently": "^4.1.0",
+    "live-server": "^1.2.1",
     "serve": "^10.1.2",
     "tslint": "^5.14.0",
     "tslint-react": "^4.0.0"
