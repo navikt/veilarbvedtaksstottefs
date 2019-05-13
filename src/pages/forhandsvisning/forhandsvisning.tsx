@@ -13,7 +13,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 const veilarbvedtakkUrl = (fnr: string) => process.env.NODE_ENV === 'development'
     ? 'http://localhost:8080/test.pdf'
-    : VeilarbVedtakkstotteApi.hentForhandsvisning(fnr);
+    : VeilarbVedtakkstotteApi.hentForhandsvisningURL(fnr);
 
 export function TilInnsending (props: {fnr: string}) {
     const [numPages, setPages] = useState(0);
@@ -47,8 +47,6 @@ export function TilInnsending (props: {fnr: string}) {
                     <Document
                         file={{url: veilarbvedtakkUrl(props.fnr)}}
                         onLoadSuccess={(object: {numPages: number}) => setPages(object.numPages)}
-                        onLoadError={(error: any) => console.log('onloadError', error)} // tslint:disable-line:no-console
-                        onSourceError={(error: any) => console.log('onSourceError', error)}// tslint:disable-line:no-console
                     >
                         <Pages/>
                     </Document>
