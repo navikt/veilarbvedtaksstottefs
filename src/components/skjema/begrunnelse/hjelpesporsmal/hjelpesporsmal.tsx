@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Element } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../../innsatsgruppe/innsatsgruppe';
 import { HovedmalType } from '../../hovedmal/hovedmal';
 import ManglerData from './sporsmal/mangler-data';
-import StandardSkaffe from './sporsmal/standard-beholde';
+import StandardSkaffe from './sporsmal/standard-skaffe';
 import StandardBeholde from './sporsmal/standard-beholde';
 import SituasjonsbestemtSkaffe from './sporsmal/situasjonsbestemt-skaffe';
 import SituasjonsbestemtBeholde from './sporsmal/situasjonsbestemt-beholde';
@@ -26,8 +25,8 @@ function finnRiktigSporsmal(innsatsgruppe: OrNothing<InnsatsgruppeType>, hovedma
         return innsatsgruppe === _innsatsgruppe && hovedmal === _hovedmal;
     };
 
-    if (!innsatsgruppe || !hovedmal) {
-        return <ManglerData />;
+    if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
+        return <Varig />;
     } else if (harGruppeOgMal(InnsatsgruppeType.STANDARD_INNSATS, HovedmalType.SKAFFE_ARBEID)) {
         return <StandardSkaffe />;
     } else if (harGruppeOgMal(InnsatsgruppeType.STANDARD_INNSATS, HovedmalType.BEHOLDE_ARBEID)) {
@@ -44,11 +43,9 @@ function finnRiktigSporsmal(innsatsgruppe: OrNothing<InnsatsgruppeType>, hovedma
         return <GradertVarigSkaffe />;
     } else if (harGruppeOgMal(InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS, HovedmalType.BEHOLDE_ARBEID)) {
         return <GradertVarigBeholde />;
-    } else if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
-        return <Varig />;
+    } else {
+        return <ManglerData />;
     }
-
-    return null;
 
 }
 
