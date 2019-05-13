@@ -6,7 +6,7 @@
   "proxy": "http://localhost:8080",
   "scripts": {
     "run:live-server": "live-server --cors --entry-file=./pdf/testbrev1.pdf",
-    "start":"concurrently --kill-others \"npm run run:live-server\" \"craco start\"",
+    "start": "concurrently --kill-others \"npm run run:live-server\" \"craco start\"",
     "build": "craco build",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
