@@ -47,6 +47,8 @@ export function TilInnsending (props: {fnr: string}) {
                     <Document
                         file={{url: veilarbvedtakkUrl(props.fnr)}}
                         onLoadSuccess={(object: {numPages: number}) => setPages(object.numPages)}
+                        onLoadError={(error: any) => console.log('onloadError', error)} // tslint:disable-line:no-console
+                        onSourceError={(error: any) => console.log('onSourceError', error)}// tslint:disable-line:no-console
                     >
                         <Pages/>
                     </Document>
