@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Card from '../../components/card/card';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Opplysninger, { OpplysningType } from '../../components/skjema/opplysninger/opplysninger';
@@ -56,6 +56,11 @@ function Skjema ({fnr}: SkjemaProps) {
         return VeilarbVedtakkstotteApi.putVedtakUtkast(fnr, skjema);
     }
 
+    function dispatchFetchVedtakOgRedirectTilHovedside () {
+        setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+        dispatch({view: ActionType.HOVEDSIDE});
+    }
+
     function oppdaterSistEndret () {
         sendDataTilBackend().then(() => {
             const date = new Date();
@@ -77,10 +82,17 @@ function Skjema ({fnr}: SkjemaProps) {
 
     function handleLagreOgTilbake (e?: any) {
         e.preventDefault();
-        sendDataTilBackend().then(() =>  {
-            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
-            dispatch({view: ActionType.HOVEDSIDE});
-        }).catch (error => {
+        sendDataTilBackend()
+            .then(dispatchFetchVedtakOgRedirectTilHovedside)
+            .catch (error => {
+                console.log(error); // tslint:disable-line:no-console
+            });
+    }
+
+    function handleSlett() {
+        VeilarbVedtakkstotteApi.slettUtkast(fnr)
+            .then(dispatchFetchVedtakOgRedirectTilHovedside)
+            .catch (error => {
             console.log(error); // tslint:disable-line:no-console
         });
     }
@@ -97,10 +109,7 @@ function Skjema ({fnr}: SkjemaProps) {
         <div className="skjema">
             <div className="skjema__info">
                 <TilbakeKnapp
-                    tilbake={() =>  {
-                        setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
-                        dispatch({view: ActionType.HOVEDSIDE});
-                    }}
+                    tilbake={dispatchFetchVedtakOgRedirectTilHovedside}
                 />
                 {sistLagret && <EtikettInfo><Normaltekst>{`Sist lagret : ${sistLagret}`}</Normaltekst></EtikettInfo>}
             </div>
@@ -128,6 +137,7 @@ function Skjema ({fnr}: SkjemaProps) {
                 <Aksjoner
                     handleSubmit={handleSubmit}
                     handleLagreOgTilbake={handleLagreOgTilbake}
+                    handleSlett={handleSlett}
                 />
             </Card>
         </div>
