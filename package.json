@@ -34,6 +34,7 @@
     "classnames": "^2.2.6",
     "craco-less": "^1.7.0",
     "dayjs": "^1.8.13",
+    "lodash": "^4.17.11",
     "lodash.throttle": "^4.1.1",
     "nav-frontend-alertstriper": "^2.0.4",
     "nav-frontend-alertstriper-style": "^1.0.3",
