@@ -3,6 +3,7 @@ import { ActionType, initialViewState, viewReducer } from './view-reducer';
 import { Hovedside } from '../../pages/hovedside/hovedside';
 import Skjema from '../../pages/skjema/skjema';
 import { VisGjeldeneVedtakk } from '../../pages/gjeldenevedtak';
+import { TilInnsending } from '../../pages/forhandsvisning/forhandsvisning';
 
 function renderView(view: ActionType): ((props: any) => JSX.Element) {
     switch (view) {
@@ -12,6 +13,8 @@ function renderView(view: ActionType): ((props: any) => JSX.Element) {
             return Skjema;
         case ActionType.GJELDENE_VEDTAK:
             return VisGjeldeneVedtakk;
+        case ActionType.INNSENDING:
+            return TilInnsending;
         default:
             return Hovedside;
     }

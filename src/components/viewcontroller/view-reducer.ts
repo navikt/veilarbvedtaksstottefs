@@ -1,7 +1,7 @@
 export enum ActionType {
     HOVEDSIDE,
     UTKAST,
-    FORHANDSVISNING,
+    INNSENDING,
     GJELDENE_VEDTAK
 }
 

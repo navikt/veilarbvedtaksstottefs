@@ -69,6 +69,16 @@ function Skjema ({fnr}: SkjemaProps) {
         e.preventDefault();
         sendDataTilBackend().then(() =>  {
             setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+            dispatch({view: ActionType.INNSENDING});
+        }).catch (error => {
+            console.log(error); // tslint:disable-line:no-console
+        });
+    }
+
+    function handleLagreOgTilbake (e?: any) {
+        e.preventDefault();
+        sendDataTilBackend().then(() =>  {
+            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
             dispatch({view: ActionType.HOVEDSIDE});
         }).catch (error => {
             console.log(error); // tslint:disable-line:no-console
@@ -115,7 +125,10 @@ function Skjema ({fnr}: SkjemaProps) {
                     handleAndraOpplysningerChanged={handleAndreopplysninger}
                     andreOpplysninger={andreOpplysninger}
                 />
-                <Aksjoner handleSubmit={handleSubmit}/>
+                <Aksjoner
+                    handleSubmit={handleSubmit}
+                    handleLagreOgTilbake={handleLagreOgTilbake}
+                />
             </Card>
         </div>
     );
