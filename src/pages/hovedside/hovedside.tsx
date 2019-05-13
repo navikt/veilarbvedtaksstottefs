@@ -10,9 +10,9 @@ import './hovedside.less';
 export function Hovedside (props: {fnr: string}) {
     const {vedtak} = useContext(AppContext);
 
-    const gjeldendeVedtak = useMemo(() => vedtak.data.find((v: VedtakData) => v.gjeldende), [vedtak.data]);
-    const tidligereVedtak = useMemo(() => vedtak.data.filter((v: VedtakData) => !v.gjeldende), [vedtak.data]);
-    const utkast = useMemo(() => vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST'), [vedtak.data]);
+    const gjeldendeVedtak = vedtak.data.find((v: VedtakData) => v.gjeldende);
+    const tidligereVedtak = vedtak.data.filter((v: VedtakData) => !v.gjeldende && v.vedtakStatus === 'SENDT');
+    const utkast =  vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
 
     return (
         <Grid columns={2}>
