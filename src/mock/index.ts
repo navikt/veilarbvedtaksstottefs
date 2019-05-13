@@ -7,6 +7,7 @@ const mock = new MockAdapter(axios);
 
 mock.onGet('/veilarbvedtaksstotte/api/00123456789/vedtak').reply(200, [vedtak, ...historisk]);
 mock.onPut('/veilarbvedtaksstotte/api/00123456789/utkast').reply(204);
+mock.onDelete('/veilarbvedtaksstotte/api/00123456789/utkast').reply(204);
 mock.onPost('/veilarbvedtaksstotte/api/00123456789/vedtak/send').reply(204);
 mock.onPost('/veilarbvedtaksstotte/api/00123456789/utkast').reply(204);
 

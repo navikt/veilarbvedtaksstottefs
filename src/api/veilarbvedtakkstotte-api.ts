@@ -8,8 +8,9 @@ export interface VeilarbVedtakkstotteApi {
     putVedtakUtkast: (fnr: string, skjema: SkjemaData) => AxiosPromise<void>;
     hentVedtak: (fnr: string) => AxiosPromise<VedtakData[]>;
     hentForhandsvisning: (fnr: string) => AxiosPromise<any[]>; //bytearray??
-    sendVedtak: (fnr: string) => AxiosPromise<void>;
-    //Egentligen DokumentSendtDTO meeen trenger vi dette??
+    sendVedtak: (fnr: string) => AxiosPromise<void>;     //Egentligen DokumentSendtDTO meeen trenger vi dette??
+    slettUtkast: (fnr: string) => AxiosPromise<void>;
+
 }
 
 function putVedtakUtkast(fnr: string, skjema: SkjemaData) {
@@ -28,9 +29,14 @@ function sendVedtak (fnr: string) {
     return axios.post(`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/vedtak/send`);
 }
 
+function slettUtkast(fnr: string) {
+    return axios.delete(`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/utkast`);
+}
+
 export default {
     putVedtakUtkast,
     hentVedtak,
     hentForhandsvisning,
     sendVedtak,
+    slettUtkast,
 } as VeilarbVedtakkstotteApi;
