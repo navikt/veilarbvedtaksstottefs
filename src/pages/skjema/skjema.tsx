@@ -126,6 +126,8 @@ function Skjema ({fnr}: SkjemaProps) {
                     innsatsgruppe={innsatsgruppe}
                 />
                 <Begrunnelse
+                    innsatsgruppe={innsatsgruppe}
+                    hovedmal={hovedmal}
                     begrunnelseTekst={begrunnelse}
                     handleBegrunnelseChanged={handleBegrunnelseChanged}
                 />
