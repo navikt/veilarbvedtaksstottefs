@@ -1,11 +1,11 @@
 import React from 'react';
-import { HovedmalType } from '../hovedmal/hovedmal';
+import { getHovedmalNavn, HovedmalType } from '../hovedmal/hovedmal';
 
 export function HovedmalVisning(props: {hovedmal: HovedmalType}) {
     return (
         <div>
-          <label>Hovedmal</label>
-            <span>{props.hovedmal}</span>
+          <label>Hovedmal:</label>
+            <span>{getHovedmalNavn(props.hovedmal)}</span>
         </div>
     );
 }

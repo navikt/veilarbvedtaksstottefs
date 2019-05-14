@@ -6,12 +6,10 @@ import { InnsatsgruppeVisning } from './innsatsgruppe';
 
 export function VedtakVisning (props: {vedtak: VedtakData}) {
     return (
-       <div className="">
         <section>
             <HovedmalVisning hovedmal={props.vedtak.hovedmal}/>
             <InnsatsgruppeVisning innsatsgruppe={props.vedtak.innsatsgruppe}/>
             <BegrunnelseVisning begrunnelse={props.vedtak.begrunnelse}/>
         </section>
-       </div>
     );
 }
