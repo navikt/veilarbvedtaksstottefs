@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useState } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
 import VeilarbVedtakkstotteApi from '../../api/veilarbvedtakkstotte-api';
 import './forhandsvisning.less';
@@ -15,14 +15,14 @@ const veilarbvedtakkUrl = (fnr: string) => process.env.NODE_ENV === 'development
     : VeilarbVedtakkstotteApi.hentForhandsvisningURL(fnr);
 
 export function TilInnsending (props: {fnr: string}) {
-    const numPages = useRef<number>(0);
+    const [numPages, setPages] = useState(0);
     const {dispatch} = useContext(ViewDispatch);
     const {setVedtak} = useContext(AppContext);
 
     const Pages = () => {
         return (
             <>
-                {Array(1).fill(0).map((elem, index) =>
+                {Array(numPages).fill(0).map((elem, index) =>
                     <Page key={index} pageNumber={index + 1} width={800}/>)}
             </>
         );
@@ -45,7 +45,7 @@ export function TilInnsending (props: {fnr: string}) {
                 <div className="forhandsvisning__pdfcontent">
                     <Document
                         file={{url: veilarbvedtakkUrl(props.fnr)}}
-                        onLoadSuccess={(document: any) => numPages.current = document.numPages}
+                        onLoadSuccess={(object: {numPages: number}) => setPages(object.numPages)}
                     >
                         <Pages/>
                     </Document>
