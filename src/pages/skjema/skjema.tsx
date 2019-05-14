@@ -15,9 +15,10 @@ import { Status } from '../../utils/hooks/fetch-hook';
 import { VedtakData } from '../../utils/types/vedtak';
 import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import  VeilarbVedtakkstotteApi from '../../api/veilarbvedtakkstotte-api';
-import { byggOpplysningliste, byggOpplysningsObject } from '../../components/skjema/skjema-utils';
+import { byggOpplysningliste, byggOpplysningsObject, validerSkjema } from '../../components/skjema/skjema-utils';
 import { useTimer } from '../../utils/hooks/useTimer';
 import { EtikettInfo } from 'nav-frontend-etiketter';
+import { SkjemaFeil } from '../../utils/types/skjema-feil';
 
 interface SkjemaProps {
     fnr: string;
@@ -48,11 +49,11 @@ function Skjema ({fnr}: SkjemaProps) {
     const [begrunnelse, handleBegrunnelseChanged] = useState(utkast && utkast.begrunnelse || '');
     const [andreOpplysninger, handleAndreopplysninger] = useState(utkast && utkast.andreopplysninger || []);
     const [sistLagret, setSistLagret] = useState('');
+    const [errors, setErrors] = useState<SkjemaFeil>({});
 
     useTimer(oppdaterSistEndret, 2000, [opplysninger, hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger]);
 
-    function sendDataTilBackend () {
-        const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
+    function sendDataTilBackend (skjema: SkjemaData) {
         return VeilarbVedtakkstotteApi.putVedtakUtkast(fnr, skjema);
     }
 
@@ -62,7 +63,8 @@ function Skjema ({fnr}: SkjemaProps) {
     }
 
     function oppdaterSistEndret () {
-        sendDataTilBackend().then(() => {
+        const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
+        sendDataTilBackend(skjema).then(() => {
             const date = new Date();
             const dato = date.toISOString().slice(0, 10);
             const tid = date.toLocaleTimeString('no');
@@ -72,7 +74,13 @@ function Skjema ({fnr}: SkjemaProps) {
 
     function handleSubmit (e?: any) {
         e.preventDefault();
-        sendDataTilBackend().then(() =>  {
+        const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
+        const skjemaFeil = validerSkjema(skjema);
+        if (Object.entries(skjemaFeil).filter(feilmelding => !feilmelding).length > 0) {
+            setErrors(skjemaFeil);
+            return;
+        }
+        sendDataTilBackend(skjema).then(() =>  {
             setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
             dispatch({view: ActionType.INNSENDING});
         }).catch (error => {
@@ -82,7 +90,8 @@ function Skjema ({fnr}: SkjemaProps) {
 
     function handleLagreOgTilbake (e?: any) {
         e.preventDefault();
-        sendDataTilBackend()
+        const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
+        sendDataTilBackend(skjema)
             .then(dispatchFetchVedtakOgRedirectTilHovedside)
             .catch (error => {
                 console.log(error); // tslint:disable-line:no-console
@@ -120,6 +129,7 @@ function Skjema ({fnr}: SkjemaProps) {
                 <Hovedmal
                     handleHovedmalChanged={handleHovedmalChanged}
                     hovedmal={hovedmal}
+                    hovedmalfeil={errors.hovedmal}
                 />
                 <Innsatsgruppe
                     handleKonklusjonChanged={handleKonklusjonChanged}
@@ -130,6 +140,7 @@ function Skjema ({fnr}: SkjemaProps) {
                     hovedmal={hovedmal}
                     begrunnelseTekst={begrunnelse}
                     handleBegrunnelseChanged={handleBegrunnelseChanged}
+                    begrunnelsefeil={errors.begrunnelse}
                 />
                 <Opplysninger
                     handleOpplysningerChanged={handleOpplysningerChanged}

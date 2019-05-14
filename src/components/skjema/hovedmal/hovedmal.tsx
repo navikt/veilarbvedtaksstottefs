@@ -1,8 +1,7 @@
 import * as React from 'react';
 import './hovedmal.less';
-import { Radio, RadioPanelGruppe } from 'nav-frontend-skjema';
+import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { Undertittel } from 'nav-frontend-typografi';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 
 export enum HovedmalType {
@@ -13,11 +12,13 @@ export enum HovedmalType {
 interface HovedmalProps {
     handleHovedmalChanged: (e: any) => void;
     hovedmal: OrNothing<HovedmalType>;
+    hovedmalfeil?: string;
 }
 
 function Hovedmal(props: HovedmalProps) {
     const{ handleHovedmalChanged, hovedmal } = props;
     return (
+       <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding : props.hovedmalfeil} : undefined}>
         <SkjemaElement tittel="Hovedmål" className="hovedmal">
             <Radio
                 label="Skaffe arbeid"
@@ -36,6 +37,7 @@ function Hovedmal(props: HovedmalProps) {
                 className="inputPanel radioPanel"
             />
         </SkjemaElement>
+       </SkjemaGruppe>
     );
 }
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Textarea } from 'nav-frontend-skjema';
+import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { OrNothing } from '../../../utils/types/ornothing';
@@ -12,11 +12,13 @@ interface BegrunnelseProps  {
     handleBegrunnelseChanged: (e: any) => void;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
     hovedmal: OrNothing<HovedmalType>;
+    begrunnelsefeil?: string;
 }
 
 function Begrunnelse (props: BegrunnelseProps) {
     const { begrunnelseTekst, handleBegrunnelseChanged, innsatsgruppe, hovedmal } = props;
     return (
+       <SkjemaGruppe feil={props.begrunnelsefeil ? {feilmelding : props.begrunnelsefeil} : undefined}>
         <SkjemaElement tittel="Begrunnelse" className="begrunnelse">
             <Textarea
                 value={begrunnelseTekst}
@@ -29,6 +31,7 @@ function Begrunnelse (props: BegrunnelseProps) {
                 <Hjelpesporsmal innsatsgruppe={innsatsgruppe} hovedmal={hovedmal}/>
             </div>
         </SkjemaElement>
+       </SkjemaGruppe>
     );
 
 }
