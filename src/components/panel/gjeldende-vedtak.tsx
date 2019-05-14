@@ -6,7 +6,7 @@ import { VedtakData } from '../../utils/types/vedtak';
 import { VedtakstottePanel } from './veilarbvedtakstotte-panel/vedtakstotte-panel';
 import { SistEndret } from './sist-endret';
 import { EndretAv } from './endret-av';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { OrNothing } from '../../utils/types/ornothing';
 import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { ReactComponent as IngenVedtakIcon } from './ingen_vedtak.svg';
@@ -66,6 +66,7 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
                     {!props.utkast &&
                         <Hovedknapp onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>Lag nytt vedtak</Hovedknapp>
                     }
+                    <Knapp onClick={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: gjeldendeVedtak.id}})}>Vis vedtak</Knapp>
                 </div>
             </div>
         </VedtakstottePanel>

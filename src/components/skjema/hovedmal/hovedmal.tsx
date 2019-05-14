@@ -15,29 +15,40 @@ interface HovedmalProps {
     hovedmalfeil?: string;
 }
 
+export const getHovedmalNavn = (h: HovedmalType) => {
+    const hovedmalobjekt = hovedmalliste.find(hovedmal => hovedmal.value === h);
+    return (hovedmalobjekt && hovedmalobjekt.label) || '';
+};
+
+const hovedmalliste = [
+    {
+        label: 'Skaffe arbeid',
+        value: HovedmalType.SKAFFE_ARBEID
+    },
+    {
+        label: 'Beholde arbeid',
+        value: HovedmalType.BEHOLDE_ARBEID
+    },
+];
+
 function Hovedmal(props: HovedmalProps) {
     const{ handleHovedmalChanged, hovedmal } = props;
     return (
-       <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding : props.hovedmalfeil} : undefined}>
-        <SkjemaElement tittel="Hovedmål" className="hovedmal">
-            <Radio
-                label="Skaffe arbeid"
-                name="hovedmal"
-                value={HovedmalType.SKAFFE_ARBEID}
-                onChange={e => handleHovedmalChanged(e.target.value)}
-                checked={hovedmal === HovedmalType.SKAFFE_ARBEID}
-                className="inputPanel radioPanel"
-            />
-            <Radio
-                label="Beholde arbeid"
-                name="hovedmal"
-                value={HovedmalType.BEHOLDE_ARBEID}
-                onChange={e => handleHovedmalChanged(e.target.value)}
-                checked={hovedmal === HovedmalType.BEHOLDE_ARBEID}
-                className="inputPanel radioPanel"
-            />
-        </SkjemaElement>
-       </SkjemaGruppe>
+        <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding : props.hovedmalfeil} : undefined}>
+            <SkjemaElement tittel="Hovedmål" className="hovedmal">
+                {hovedmalliste.map((mal, idx) =>
+                    <Radio
+                        key={idx}
+                        label={mal.label}
+                        name="hovedmal"
+                        value={mal.value}
+                        onChange={e => handleHovedmalChanged(e.target.value)}
+                        checked={hovedmal === mal.value}
+                        className="inputPanel radioPanel"
+                    />
+                )}
+            </SkjemaElement>
+        </SkjemaGruppe>
     );
 }
 
