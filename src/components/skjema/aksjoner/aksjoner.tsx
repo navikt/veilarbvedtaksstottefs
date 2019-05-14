@@ -16,7 +16,7 @@ function Aksjoner (props: AksjonerProps) {
                 <Hovedknapp htmlType="submit" onClick={props.handleSubmit}>
                     Til innsending
                 </Hovedknapp>
-                <Knapp htmlType="submit" onClick={props.handleLagreOgTilbake}>
+                <Knapp htmlType="button" onClick={props.handleLagreOgTilbake}>
                     Lagre og gå tilbake
                 </Knapp>
             </div>

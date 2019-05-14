@@ -76,7 +76,7 @@ function Skjema ({fnr}: SkjemaProps) {
         e.preventDefault();
         const skjema: SkjemaData = {opplysninger: byggOpplysningliste(opplysninger), hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger};
         const skjemaFeil = validerSkjema(skjema);
-        if (Object.entries(skjemaFeil).filter(feilmelding => !feilmelding).length > 0) {
+        if (Object.entries(skjemaFeil).filter(feilmelding => feilmelding).length > 0) {
             setErrors(skjemaFeil);
             return;
         }
@@ -134,6 +134,7 @@ function Skjema ({fnr}: SkjemaProps) {
                 <Innsatsgruppe
                     handleKonklusjonChanged={handleKonklusjonChanged}
                     innsatsgruppe={innsatsgruppe}
+                    innsatgruppefeil={errors.innsatsgruppe}
                 />
                 <Begrunnelse
                     innsatsgruppe={innsatsgruppe}
@@ -146,6 +147,7 @@ function Skjema ({fnr}: SkjemaProps) {
                     handleOpplysningerChanged={handleOpplysningerChanged}
                     handleAndraOpplysningerChanged={handleAndreopplysninger}
                     andreOpplysninger={andreOpplysninger}
+                    opplysningerfeil={errors.opplysninger}
                 />
                 <Aksjoner
                     handleSubmit={handleSubmit}

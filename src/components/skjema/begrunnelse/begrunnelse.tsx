@@ -7,6 +7,8 @@ import { HovedmalType } from '../hovedmal/hovedmal';
 import Hjelpesporsmal from './hjelpesporsmal/hjelpesporsmal';
 import './begrunnelse.less';
 
+export const BEGRUNNELSE_MAX_LENGTH = 2000;
+
 interface BegrunnelseProps  {
     begrunnelseTekst: string;
     handleBegrunnelseChanged: (e: any) => void;
@@ -24,7 +26,7 @@ function Begrunnelse (props: BegrunnelseProps) {
                 value={begrunnelseTekst}
                 label=""
                 placeholder="Skriv inn begrunnelsen for vedtaket"
-                maxLength={1000}
+                maxLength={BEGRUNNELSE_MAX_LENGTH}
                 onChange={(e: any) => handleBegrunnelseChanged(e.target.value)}
             />
             <div>
