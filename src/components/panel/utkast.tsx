@@ -3,13 +3,13 @@ import { VedtakData } from '../../utils/types/vedtak';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../utils/types/ornothing';
 import './veilarbvedtakstotte-panel/panel.less';
-import { ViewDispatch } from '../viewcontroller/view-controller';
 import { VedtakstottePanel } from './veilarbvedtakstotte-panel/vedtakstotte-panel';
 import { SistEndret } from './sist-endret';
 import { EndretAv } from './endret-av';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { ActionType } from '../viewcontroller/view-reducer';
 import { ReactComponent as UtkastIkon } from './utkast.svg';
+import { ViewDispatch } from '../app-provider/app-provider';
 
 export function Utkast(props: {utkast: OrNothing<VedtakData>}) {
     const {dispatch} = useContext(ViewDispatch);

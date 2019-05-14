@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { ViewDispatch } from '../viewcontroller/view-controller';
 import { ActionType } from '../viewcontroller/view-reducer';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
@@ -13,8 +12,9 @@ import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { ReactComponent as IngenVedtakIcon } from './ingen_vedtak.svg';
 import { ReactComponent as FullfortVedtakIcon } from './fullfort.svg';
 import axios from 'axios';
+import { ViewDispatch } from '../app-provider/app-provider';
 
-const BEGRUNNELSE_MAX_LENGTH = 100;
+const BEGRUNNELSE_VISNING_MAX_LENGTH = 100;
 
 export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, utkast: OrNothing<VedtakData>, fnr: string}) {
     const {dispatch} = useContext(ViewDispatch);
@@ -49,8 +49,8 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
     const gjeldendeVedtak =  props.gjeldendeVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(gjeldendeVedtak.innsatsgruppe);
     const begrunnelseTekst = gjeldendeVedtak.begrunnelse
-        ? gjeldendeVedtak.begrunnelse.length > BEGRUNNELSE_MAX_LENGTH
-            ? `${gjeldendeVedtak.begrunnelse.substring(0, BEGRUNNELSE_MAX_LENGTH)}... `
+        ? gjeldendeVedtak.begrunnelse.length > BEGRUNNELSE_VISNING_MAX_LENGTH
+            ? `${gjeldendeVedtak.begrunnelse.substring(0, BEGRUNNELSE_VISNING_MAX_LENGTH)}... `
             : `${gjeldendeVedtak.begrunnelse} `
         : 'Ingen begrunnelse';
 

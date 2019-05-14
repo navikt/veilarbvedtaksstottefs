@@ -1,13 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
 import VeilarbVedtakkstotteApi from '../../api/veilarbvedtakkstotte-api';
 import './forhandsvisning.less';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
-import { ViewDispatch } from '../../components/viewcontroller/view-controller';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { Status } from '../../utils/hooks/fetch-hook';
-import { AppContext } from '../../components/app-provider/app-provider';
+import { AppContext, ViewDispatch } from '../../components/app-provider/app-provider';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -16,14 +15,14 @@ const veilarbvedtakkUrl = (fnr: string) => process.env.NODE_ENV === 'development
     : VeilarbVedtakkstotteApi.hentForhandsvisningURL(fnr);
 
 export function TilInnsending (props: {fnr: string}) {
-    const [numPages, setPages] = useState(0);
+    const numPages = useRef<number>(0);
     const {dispatch} = useContext(ViewDispatch);
     const {setVedtak} = useContext(AppContext);
 
     const Pages = () => {
         return (
             <>
-                {Array(numPages).fill(0).map((elem, index) =>
+                {Array(1).fill(0).map((elem, index) =>
                     <Page key={index} pageNumber={index + 1} width={800}/>)}
             </>
         );
@@ -46,7 +45,7 @@ export function TilInnsending (props: {fnr: string}) {
                 <div className="forhandsvisning__pdfcontent">
                     <Document
                         file={{url: veilarbvedtakkUrl(props.fnr)}}
-                        onLoadSuccess={(object: {numPages: number}) => setPages(object.numPages)}
+                        onLoadSuccess={(document: any) => numPages.current = document.numPages}
                     >
                         <Pages/>
                     </Document>
