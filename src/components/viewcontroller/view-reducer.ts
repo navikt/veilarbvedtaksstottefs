@@ -1,8 +1,8 @@
 export enum ActionType {
-    HOVEDSIDE,
-    UTKAST,
-    INNSENDING,
-    GJELDENE_VEDTAK
+    HOVEDSIDE = 'HOVEDSIDE',
+    UTKAST = 'UTKAST',
+    INNSENDING = 'INNSENDING',
+    GJELDENE_VEDTAK = 'GJELDENE_VEDTAK'
 }
 
 interface State<T> {

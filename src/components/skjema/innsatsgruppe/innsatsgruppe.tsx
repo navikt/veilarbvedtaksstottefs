@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Radio, RadioPanelGruppe } from 'nav-frontend-skjema';
+import {Radio, RadioPanelGruppe, SkjemaGruppe} from 'nav-frontend-skjema';
 import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Undertittel } from 'nav-frontend-typografi';
@@ -58,24 +58,27 @@ export const innsatsgrupper = [
 interface InnsatsgruppeProps {
     handleKonklusjonChanged: (e: any) => void;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
+    innsatgruppefeil?: string;
 }
 
 function Innsatsgruppe (props: InnsatsgruppeProps) {
     const {handleKonklusjonChanged, innsatsgruppe} = props;
     return (
-        <SkjemaElement tittel="Innsatsgruppe" className="innsatsgruppe">
-            {innsatsgrupper.map((innsatsgruppeObject, index) =>
-                <Radio
-                    key={index}
-                    label={innsatsgruppeObject.label}
-                    value={innsatsgruppeObject.value}
-                    name="innsatsgruppe"
-                    onChange={e => handleKonklusjonChanged(e.target.value)}
-                    checked={innsatsgruppe === innsatsgruppeObject.value}
-                    className="inputPanel radioPanel"
-                />
-            )}
-        </SkjemaElement>
+        <SkjemaGruppe feil={props.innsatgruppefeil ? {feilmelding : props.innsatgruppefeil} : undefined}>
+            <SkjemaElement tittel="Innsatsgruppe" className="innsatsgruppe">
+                {innsatsgrupper.map((innsatsgruppeObject, index) =>
+                    <Radio
+                        key={index}
+                        label={innsatsgruppeObject.label}
+                        value={innsatsgruppeObject.value}
+                        name="innsatsgruppe"
+                        onChange={e => handleKonklusjonChanged(e.target.value)}
+                        checked={innsatsgruppe === innsatsgruppeObject.value}
+                        className="inputPanel radioPanel"
+                    />
+                )}
+            </SkjemaElement>
+        </SkjemaGruppe>
     );
 }
 
