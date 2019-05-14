@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './opplysninger.less';
-import { Checkbox } from 'nav-frontend-skjema';
+import {Checkbox, SkjemaGruppe} from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { AndreOpplysninger } from './andre-opplysninger';
 
@@ -16,6 +16,7 @@ interface OpplysningerProps {
     handleOpplysningerChanged: (e: any) => void;
     handleAndraOpplysningerChanged: (e: any) => void;
     andreOpplysninger: string[];
+    opplysningerfeil?: string;
 }
 
 function Opplysninger(props: OpplysningerProps) {
@@ -57,6 +58,7 @@ function Opplysninger(props: OpplysningerProps) {
     };
 
     return (
+       <SkjemaGruppe feil={props.opplysningerfeil ? {feilmelding: props.opplysningerfeil} : undefined}>
         <SkjemaElement tittel="Opplysninger">
             <ForhandsdefinieradeOppplysninger/>
             <AndreOpplysninger
@@ -64,6 +66,7 @@ function Opplysninger(props: OpplysningerProps) {
                 setAndreOpplysninger={props.handleAndraOpplysningerChanged}
             />
         </SkjemaElement>
+       </SkjemaGruppe>
     );
 }
 

@@ -48,9 +48,11 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
 
     const gjeldendeVedtak =  props.gjeldendeVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(gjeldendeVedtak.innsatsgruppe);
-    const begrunnelseTekst = gjeldendeVedtak.begrunnelse.length > BEGRUNNELSE_MAX_LENGTH
-        ? `${gjeldendeVedtak.begrunnelse.substring(0, BEGRUNNELSE_MAX_LENGTH)}... `
-        : `${gjeldendeVedtak.begrunnelse} `;
+    const begrunnelseTekst = gjeldendeVedtak.begrunnelse
+        ? gjeldendeVedtak.begrunnelse.length > BEGRUNNELSE_MAX_LENGTH
+            ? `${gjeldendeVedtak.begrunnelse.substring(0, BEGRUNNELSE_MAX_LENGTH)}... `
+            : `${gjeldendeVedtak.begrunnelse} `
+        : 'Ingen begrunnelse';
 
     return (
         <VedtakstottePanel tittel="Gjeldende oppfølgingsvedtak" className="gjeldende vedtakstottepanel--gron">

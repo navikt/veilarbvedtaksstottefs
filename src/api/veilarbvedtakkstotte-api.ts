@@ -7,7 +7,7 @@ export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
 export interface VeilarbVedtakkstotteApi {
     putVedtakUtkast: (fnr: string, skjema: SkjemaData) => AxiosPromise<void>;
     hentVedtak: (fnr: string) => AxiosPromise<VedtakData[]>;
-    hentForhandsvisning: (fnr: string) => AxiosPromise<any[]>; //bytearray??
+    hentForhandsvisningURL: (fnr: string) => string; //bytearray??
     sendVedtak: (fnr: string) => AxiosPromise<void>;     //Egentligen DokumentSendtDTO meeen trenger vi dette??
     slettUtkast: (fnr: string) => AxiosPromise<void>;
 
@@ -21,8 +21,8 @@ function hentVedtak(fnr: string) {
     return axios.get(`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/vedtak`);
 }
 
-function hentForhandsvisning(fnr: string) {
-    return axios.get(`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/utkast/pdf`);
+function hentForhandsvisningURL(fnr: string) {
+    return `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/utkast/pdf`;
 }
 
 function sendVedtak (fnr: string) {
@@ -36,7 +36,7 @@ function slettUtkast(fnr: string) {
 export default {
     putVedtakUtkast,
     hentVedtak,
-    hentForhandsvisning,
+    hentForhandsvisningURL,
     sendVedtak,
     slettUtkast,
 } as VeilarbVedtakkstotteApi;
