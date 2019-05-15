@@ -40,24 +40,21 @@ export function VedleggVisning (props: VedleggVisningProps) {
         <>
             <TilbakeKnapp tilbake={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}})}/>
             <section className="vedlegg">
-                <Sidetittel>Øyblikksbilde</Sidetittel>
-                <Card className="vedlegg-card">
-                    <Innholdstittel tag="h2" className="vedlegg-card__header">CV</Innholdstittel>
-                    <JsonViewer json={finnOpplysning(OpplysningType.CV, opplysninger.data)}/>
-                </Card>
-                <Card className="vedlegg-card">
-                    <h1 className="vedlegg-card__header">Jobbprofil</h1>
-                    <JsonViewer json={finnOpplysning(OpplysningType.JOBBPROFIL, opplysninger.data)}/>
-                </Card>
-                <Card className="vedlegg-card">
-                    <h1 className="vedlegg-card__header">Registrering</h1>
-                    <JsonViewer json={finnOpplysning(OpplysningType.REGISTRERINGSINFO, opplysninger.data)}/>
-                </Card>
-                <Card className="vedlegg-card">
-                    <h1 className="vedlegg-card__header">Egenvurdering</h1>
-                    <JsonViewer json={finnOpplysning(OpplysningType.EGENVURDERING, opplysninger.data)}/>
-                </Card>
+                <Sidetittel>Brukerinformasjon på vedtakstidspunktet</Sidetittel>
+                <VedleggCard tittel="CV" json={finnOpplysning(OpplysningType.CV, opplysninger.data)}/>
+                <VedleggCard tittel="Jobbprofil" json={finnOpplysning(OpplysningType.JOBBPROFIL, opplysninger.data)}/>
+                <VedleggCard tittel="Registrering" json={finnOpplysning(OpplysningType.REGISTRERINGSINFO, opplysninger.data)}/>
+                <VedleggCard tittel="Egenvurdering" json={finnOpplysning(OpplysningType.EGENVURDERING, opplysninger.data)}/>
             </section>
         </>
+    );
+}
+
+function VedleggCard({tittel, json}: { tittel: string, json: string | null}) {
+    return (
+        <Card className="vedlegg-card">
+            <Innholdstittel tag="h2" className="vedlegg-card__header">{tittel}</Innholdstittel>
+            <JsonViewer json={json}/>
+        </Card>
     );
 }
