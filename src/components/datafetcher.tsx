@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Status } from '../utils/hooks/fetch-hook';
+import { Status } from '../utils/hooks/useFetch';
 import { AppContext } from './app-provider/app-provider';
 import VeilarbVedtakkstotteApi from '../api/veilarbvedtakkstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
@@ -32,9 +32,7 @@ export function DataFetcher (props: {fnr: string, children: any}) {
 
     if (status === 'NOT_STARTED' || status === 'LOADING') {
         return <NavFrontendSpinner type="XL"/>;
-    }
-
-    if (status === 'ERROR') {
+    } else if (status === 'ERROR') {
         return <AlertStripeFeilSolid>Noe gikk galt, prøv igjen</AlertStripeFeilSolid>;
     }
 

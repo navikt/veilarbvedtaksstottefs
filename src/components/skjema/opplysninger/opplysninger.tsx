@@ -5,11 +5,10 @@ import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { AndreOpplysninger } from './andre-opplysninger';
 
 export enum OpplysningType {
-    BRUKERENS_CV = 'CV',
-    BRUKERENS_JOBBPROFIL = 'JOBBPROFIL',
-    BRUKERENS_SVAR_VED_REGISTRERING = 'REGISTRERINGSINFO',
-    BRUKERENS_EGENVURDERING = 'EGENVURDERING',
-
+    CV = 'CV',
+    JOBBPROFIL = 'JOBBPROFIL',
+    REGISTRERINGSINFO = 'REGISTRERINGSINFO',
+    EGENVURDERING = 'EGENVURDERING',
 }
 
 interface OpplysningerProps {
@@ -25,19 +24,19 @@ function Opplysninger(props: OpplysningerProps) {
     const opplysninger = [
         {
             label: 'Brukerens CV',
-            name: OpplysningType.BRUKERENS_CV,
+            name: OpplysningType.CV,
         },
         {
             label: 'Brukerens svar ved registrering hos NAV',
-            name: OpplysningType.BRUKERENS_SVAR_VED_REGISTRERING,
+            name: OpplysningType.REGISTRERINGSINFO,
         },
         {
             label: 'Brukerens jobbprofil på nav.no',
-            name: OpplysningType.BRUKERENS_JOBBPROFIL,
+            name: OpplysningType.JOBBPROFIL,
         },
         {
             label: 'Brukerens egenvurdering',
-            name: OpplysningType.BRUKERENS_EGENVURDERING,
+            name: OpplysningType.EGENVURDERING,
         },
     ];
 

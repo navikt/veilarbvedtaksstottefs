@@ -2,6 +2,7 @@ export enum ActionType {
     HOVEDSIDE = 'HOVEDSIDE',
     UTKAST = 'UTKAST',
     INNSENDING = 'INNSENDING',
+    VIS_VEDLEGG = 'VIS_VEDLEGG',
     VIS_VEDTAK = 'VIS_VEDTAK'
 }
 

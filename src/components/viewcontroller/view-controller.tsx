@@ -5,6 +5,7 @@ import Skjema from '../../pages/skjema/skjema';
 import { VisVedtak } from '../../pages/visvedtak';
 import { TilInnsending } from '../../pages/forhandsvisning/forhandsvisning';
 import { ViewDispatch } from '../app-provider/app-provider';
+import { VedleggVisning } from '../../pages/vedlegg-visning/vedlegg-visning';
 
 function renderView(view: ActionType): ((props: any) => JSX.Element) {
     switch (view) {
@@ -16,15 +17,17 @@ function renderView(view: ActionType): ((props: any) => JSX.Element) {
             return VisVedtak;
         case ActionType.INNSENDING:
             return TilInnsending;
+        case ActionType.VIS_VEDLEGG:
+            return VedleggVisning;
         default:
-            return Skjema;
+            return Hovedside;
     }
 }
 
 export function ViewController (props: {fnr: string}) {
     const {viewState} = useContext(ViewDispatch);
     const Component = renderView(viewState.view);
-    
+
     return (
         <Component {...Object.assign(viewState.props || {}, {fnr: props.fnr})}/>
     );
