@@ -38,7 +38,7 @@ function objToReact(obj: {}) {
                             }
                         </div>
                     );
-                } else if (isType(value,'object')) {
+                } else if (isType(value, 'object')) {
                     return (
                         <div key={key}>
                             <JsonKey keyText={key}/>

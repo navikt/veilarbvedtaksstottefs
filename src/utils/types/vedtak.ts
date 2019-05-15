@@ -3,7 +3,6 @@ import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsats
 
 type VedtakStatus = 'UTKAST' | 'SENDT';
 
-
 export interface VedtakData {
     id: number;
     hovedmal: HovedmalType;

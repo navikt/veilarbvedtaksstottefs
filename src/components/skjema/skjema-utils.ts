@@ -2,8 +2,8 @@ import  { OpplysningType } from './opplysninger/opplysninger';
 import { Opplysninger, SkjemaData } from '../../pages/skjema/skjema';
 import { InnsatsgruppeType } from './innsatsgruppe/innsatsgruppe';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
-import {BEGRUNNELSE_MAX_LENGTH} from "./begrunnelse/begrunnelse";
-import {OrNothing} from "../../utils/types/ornothing";
+import { BEGRUNNELSE_MAX_LENGTH } from './begrunnelse/begrunnelse';
+import { OrNothing } from '../../utils/types/ornothing';
 
 export function byggOpplysningsObject (opplysningerListe: string []) {
     return (opplysningerListe ? opplysningerListe : []).reduce((acc: Opplysninger, opplysning ) => {
