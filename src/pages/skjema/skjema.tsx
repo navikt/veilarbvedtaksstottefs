@@ -10,7 +10,7 @@ import './skjema.less';
 import { OrNothing } from '../../utils/types/ornothing';
 import { AppContext, ViewDispatch } from '../../components/app-provider/app-provider';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { Status } from '../../utils/hooks/fetch-hook';
+import { Status } from '../../utils/hooks/useFetch';
 import { VedtakData } from '../../utils/types/vedtak';
 import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import  VeilarbVedtakkstotteApi from '../../api/veilarbvedtakkstotte-api';

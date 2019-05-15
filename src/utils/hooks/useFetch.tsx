@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { OrNothing } from '../types/ornothing';
 
 export enum Status {
@@ -19,18 +19,19 @@ const initialState = {
     data: null
 };
 
-function fetchHook<T> (url: string) {
-    const [state, setState] = useState<{data: OrNothing<T>, status: Status}>(initialState);
+function useFetch<T> (config: AxiosRequestConfig) {
+    const [state, setState] = useState<FetchState<T>>(initialState);
 
     const fetchData = async () => {
         try {
-            const res = await axios.get(url);
+            const res = await axios(config);
             if (res.status) {
                 setState({status: Status.DONE, data: res.data});
             } else {
                 setState({status: Status.ERROR, data: null});
             }
         } catch (e) {
+            console.error(e); // tslint:disable-line
             setState({...state, status: Status.ERROR});
         }
     };
@@ -42,4 +43,4 @@ function fetchHook<T> (url: string) {
     return state;
 }
 
-export default fetchHook;
+export default useFetch;

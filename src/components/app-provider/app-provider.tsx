@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useReducer, useState } from 'react';
 import { VedtakData } from '../../utils/types/vedtak';
-import { Status } from '../../utils/hooks/fetch-hook';
+import { Status } from '../../utils/hooks/useFetch';
 import { initialViewState, viewReducer } from '../viewcontroller/view-reducer';
 
 export interface AppState {

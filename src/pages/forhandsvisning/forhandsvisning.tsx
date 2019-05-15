@@ -5,7 +5,7 @@ import './forhandsvisning.less';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { Status } from '../../utils/hooks/fetch-hook';
+import { Status } from '../../utils/hooks/useFetch';
 import { AppContext, ViewDispatch } from '../../components/app-provider/app-provider';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
