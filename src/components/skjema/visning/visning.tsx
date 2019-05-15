@@ -16,7 +16,7 @@ export function VedtakVisning (props: {vedtak: VedtakData}) {
             <HovedmalVisning hovedmal={props.vedtak.hovedmal}/>
             <InnsatsgruppeVisning innsatsgruppe={props.vedtak.innsatsgruppe}/>
             <BegrunnelseVisning begrunnelse={props.vedtak.begrunnelse}/>
-            <Knapp onClick={() => dispatch({view: ActionType.VIS_VEDLEGG, props: {vedtakId: props.vedtak.id,}})}>
+            <Knapp onClick={() => dispatch({view: ActionType.VIS_VEDLEGG, props: {vedtakId: props.vedtak.id, }})}>
                 Brukerinformasjon på vedtakstidspunktet
             </Knapp>
         </section>

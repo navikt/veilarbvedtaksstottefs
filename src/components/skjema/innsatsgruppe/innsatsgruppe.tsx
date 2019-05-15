@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Radio, RadioPanelGruppe, SkjemaGruppe} from 'nav-frontend-skjema';
+import { Radio, RadioPanelGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Undertittel } from 'nav-frontend-typografi';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './opplysninger.less';
-import {Checkbox, SkjemaGruppe} from 'nav-frontend-skjema';
+import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { AndreOpplysninger } from './andre-opplysninger';
 
