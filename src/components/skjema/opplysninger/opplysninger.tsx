@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './opplysninger.less';
-import {Checkbox, SkjemaGruppe} from 'nav-frontend-skjema';
+import { CheckboksPanel } from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { AndreOpplysninger } from './andre-opplysninger';
 
@@ -45,12 +45,11 @@ function Opplysninger(props: OpplysningerProps) {
         return (
             <div className="opplysninger">
                 {opplysninger.map((opplysning, index) =>
-                    <Checkbox
+                    <CheckboksPanel
+                        checked={false}
                         key={index}
-                        name={opplysning.name}
                         label={opplysning.label}
                         onChange={handleOpplysningerChanged}
-                        className="inputPanel checkboksPanel"
                     />
                 )}
             </div>
@@ -58,15 +57,17 @@ function Opplysninger(props: OpplysningerProps) {
     };
 
     return (
-       <SkjemaGruppe feil={props.opplysningerfeil ? {feilmelding: props.opplysningerfeil} : undefined}>
-        <SkjemaElement tittel="Opplysninger">
+        <SkjemaElement
+            tittel="Opplysninger"
+            value={props.andreOpplysninger[0]}
+            feil={props.opplysningerfeil}
+        >
             <ForhandsdefinieradeOppplysninger/>
             <AndreOpplysninger
                 andreopplysninger={props.andreOpplysninger}
                 setAndreOpplysninger={props.handleAndraOpplysningerChanged}
             />
         </SkjemaElement>
-       </SkjemaGruppe>
     );
 }
 

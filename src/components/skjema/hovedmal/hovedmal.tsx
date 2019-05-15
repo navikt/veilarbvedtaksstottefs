@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './hovedmal.less';
-import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
+import { RadioPanel } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 
@@ -15,7 +15,7 @@ interface HovedmalProps {
     hovedmalfeil?: string;
 }
 
-export const getHovedmalNavn = (h: HovedmalType) => {
+export const getHovedmalNavn = (h: OrNothing<HovedmalType>) => {
     const hovedmalobjekt = hovedmalliste.find(hovedmal => hovedmal.value === h);
     return (hovedmalobjekt && hovedmalobjekt.label) || '';
 };
@@ -33,22 +33,33 @@ const hovedmalliste = [
 
 function Hovedmal(props: HovedmalProps) {
     const{ handleHovedmalChanged, hovedmal } = props;
+
+    const HovedmalRadioButtons = (injectedProps: any) => (
+        <div className="hovedmal">
+            {hovedmalliste.map((mal, idx) =>
+                <RadioPanel
+                    key={idx}
+                    label={mal.label}
+                    name="hovedmal"
+                    value={mal.value}
+                    onChange={(e: any) => {
+                        handleHovedmalChanged(e.target.value);
+                        injectedProps.lukkSkjemaElement();
+                    }}
+                    checked={hovedmal === mal.value}
+                />
+            )}
+        </div>
+    );
+
     return (
-        <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding : props.hovedmalfeil} : undefined}>
-            <SkjemaElement tittel="Hovedmål" className="hovedmal">
-                {hovedmalliste.map((mal, idx) =>
-                    <Radio
-                        key={idx}
-                        label={mal.label}
-                        name="hovedmal"
-                        value={mal.value}
-                        onChange={e => handleHovedmalChanged(e.target.value)}
-                        checked={hovedmal === mal.value}
-                        className="inputPanel radioPanel"
-                    />
-                )}
-            </SkjemaElement>
-        </SkjemaGruppe>
+        <SkjemaElement
+            tittel="Hovedmål"
+            value={getHovedmalNavn(hovedmal)}
+            feil={props.hovedmalfeil}
+        >
+            <HovedmalRadioButtons/>
+        </SkjemaElement>
     );
 }
 
