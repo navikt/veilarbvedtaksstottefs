@@ -7,7 +7,7 @@ import features from './features';
 
 const mock = new MockAdapter(axios);
 
-mock.onGet(/\/veilarbvedtaksstottefs\/api\/feature\/.*/).reply(200, features);
+mock.onGet(/\/veilarbpersonflatefs\/api\/feature\/.*/).reply(200, features);
 mock.onGet(/\/veilarbvedtaksstotte\/api\/\d+\/opplysninger\/\d+/).reply(200, vedlegg);
 mock.onGet('/veilarbvedtaksstotte/api/00123456789/vedtak').reply(200, [vedtak, ...historisk]);
 mock.onPut('/veilarbvedtaksstotte/api/00123456789/utkast').reply(204);
