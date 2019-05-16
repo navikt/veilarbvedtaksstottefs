@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { Radio, RadioPanelGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
+import { RadioPanel } from 'nav-frontend-skjema';
 import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { Undertittel } from 'nav-frontend-typografi';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 
 export enum InnsatsgruppeType {
@@ -13,22 +12,9 @@ export enum InnsatsgruppeType {
     VARIG_TILPASSET_INNSATS = 'VARIG_TILPASSET_INNSATS'
 }
 
-export const getInnsatsgruppeNavn = (i: InnsatsgruppeType) => {
-    switch (i) {
-        case InnsatsgruppeType.STANDARD_INNSATS:
-            return 'Gode muligheter (standard innsats)';
-        case InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS:
-            return 'Trenger veiledning (situasjonsbestemt innsats)';
-        case InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS:
-            return 'Nedsatt arbeidsevne (spesielt tilpasset innsats)';
-        case InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS:
-            return 'Gradert varig nedsatt arbeidsevne (gradert varig tilpasset innsats)';
-        case  InnsatsgruppeType.VARIG_TILPASSET_INNSATS:
-            return 'Varig nedsatt arbeidsevne (varig tilpasset innsats)';
-        default :
-            return null;
-    }
-
+export const getInnsatsgruppeNavn = (innsatsgruppeType: OrNothing<InnsatsgruppeType>) => {
+    const innsatsgruppe = innsatsgrupper.find(elem => elem.value === innsatsgruppeType);
+    return innsatsgruppe && innsatsgruppe.label;
 };
 
 export const innsatsgrupper = [
@@ -56,30 +42,53 @@ export const innsatsgrupper = [
 ];
 
 interface InnsatsgruppeProps {
-    handleKonklusjonChanged: (e: any) => void;
+    handleInnsatsgruppeChanged: (e: any) => void;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
     innsatgruppefeil?: string;
 }
 
 function Innsatsgruppe (props: InnsatsgruppeProps) {
-    const {handleKonklusjonChanged, innsatsgruppe} = props;
     return (
-        <SkjemaGruppe feil={props.innsatgruppefeil ? {feilmelding : props.innsatgruppefeil} : undefined}>
-            <SkjemaElement tittel="Innsatsgruppe" className="innsatsgruppe">
-                {innsatsgrupper.map((innsatsgruppeObject, index) =>
-                    <Radio
-                        key={index}
-                        label={innsatsgruppeObject.label}
-                        value={innsatsgruppeObject.value}
-                        name="innsatsgruppe"
-                        onChange={e => handleKonklusjonChanged(e.target.value)}
-                        checked={innsatsgruppe === innsatsgruppeObject.value}
-                        className="inputPanel radioPanel"
-                    />
-                )}
-            </SkjemaElement>
-        </SkjemaGruppe>
+        <SkjemaElement
+            tittel="Innsatsgruppe"
+            value={getInnsatsgruppeNavn(props.innsatsgruppe)}
+            feil={props.innsatgruppefeil}
+        >
+            {(lukkSkjema) =>
+                <InnsatsgruppeRadioButtons
+                    lukkSkjema={lukkSkjema}
+                    handleInnsatsgruppeChanged={props.handleInnsatsgruppeChanged}
+                    innsatsgruppe={props.innsatsgruppe}
+                />
+            }
+        </SkjemaElement>
     );
 }
 
 export default Innsatsgruppe;
+
+interface InnsatsgruppeRadioProps {
+    handleInnsatsgruppeChanged: (e: any) => void;
+    innsatsgruppe: OrNothing<InnsatsgruppeType>;
+    lukkSkjema: () => void;
+}
+
+function InnsatsgruppeRadioButtons (props: InnsatsgruppeRadioProps ) {
+    return (
+        <div className="innsatsgruppe">
+            {innsatsgrupper.map((innsatsgruppeObject, index) =>
+                <RadioPanel
+                    key={index}
+                    label={innsatsgruppeObject.label}
+                    value={innsatsgruppeObject.value}
+                    name="innsatsgruppe"
+                    onChange={(e: any) => {
+                        props.handleInnsatsgruppeChanged(e.target.value);
+                        props.lukkSkjema();
+                    }}
+                    checked={props.innsatsgruppe === innsatsgruppeObject.value}
+                />
+            )}
+        </div>
+    );
+}

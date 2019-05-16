@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
+import { Textarea } from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { OrNothing } from '../../../utils/types/ornothing';
@@ -20,20 +20,22 @@ interface BegrunnelseProps  {
 function Begrunnelse (props: BegrunnelseProps) {
     const { begrunnelseTekst, handleBegrunnelseChanged, innsatsgruppe, hovedmal } = props;
     return (
-       <SkjemaGruppe feil={props.begrunnelsefeil ? {feilmelding : props.begrunnelsefeil} : undefined}>
-        <SkjemaElement tittel="Begrunnelse" className="begrunnelse">
-            <Textarea
-                value={begrunnelseTekst}
-                label=""
-                placeholder="Skriv inn begrunnelsen for vedtaket"
-                maxLength={BEGRUNNELSE_MAX_LENGTH}
-                onChange={(e: any) => handleBegrunnelseChanged(e.target.value)}
-            />
-            <div>
+        <SkjemaElement
+            tittel="Begrunnelse"
+            feil={props.begrunnelsefeil}
+            value={props.begrunnelseTekst}
+        >
+            <div className="begrunnelse">
+                <Textarea
+                    value={begrunnelseTekst}
+                    label=""
+                    placeholder="Skriv inn begrunnelsen for vedtaket"
+                    maxLength={BEGRUNNELSE_MAX_LENGTH}
+                    onChange={(e: any) => handleBegrunnelseChanged(e.target.value)}
+                />
                 <Hjelpesporsmal innsatsgruppe={innsatsgruppe} hovedmal={hovedmal}/>
             </div>
         </SkjemaElement>
-       </SkjemaGruppe>
     );
 
 }

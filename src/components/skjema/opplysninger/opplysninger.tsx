@@ -1,8 +1,10 @@
 import * as React from 'react';
 import './opplysninger.less';
-import { Checkbox, SkjemaGruppe } from 'nav-frontend-skjema';
-import { SkjemaElement } from '../skjemaelement/skjemaelement';
+import { CheckboksPanel } from 'nav-frontend-skjema';
+import { EMDASH, SkjemaElement } from '../skjemaelement/skjemaelement';
 import { AndreOpplysninger } from './andre-opplysninger';
+import { ValgtOpplysninger } from '../../../pages/skjema/skjema';
+import { byggOpplysningliste } from '../skjema-utils';
 
 export enum OpplysningType {
     CV = 'CV',
@@ -16,6 +18,7 @@ interface OpplysningerProps {
     handleAndraOpplysningerChanged: (e: any) => void;
     andreOpplysninger: string[];
     opplysningerfeil?: string;
+    opplysninger: ValgtOpplysninger;
 }
 
 function Opplysninger(props: OpplysningerProps) {
@@ -44,29 +47,41 @@ function Opplysninger(props: OpplysningerProps) {
         return (
             <div className="opplysninger">
                 {opplysninger.map((opplysning, index) =>
-                    <Checkbox
+                    <CheckboksPanel
+                        checked={props.opplysninger[opplysning.name]}
                         key={index}
-                        name={opplysning.name}
+                        inputProps={{value: opplysning.name}}
                         label={opplysning.label}
-                        onChange={handleOpplysningerChanged}
-                        className="inputPanel checkboksPanel"
+                        onChange={(e: any) => handleOpplysningerChanged(e)}
                     />
                 )}
             </div>
         );
     };
 
+    const samladeOpplysninger = (byggOpplysningliste(props.opplysninger)as string[]).concat(props.andreOpplysninger);
+    const harOpplysninger = samladeOpplysninger.length > 0;
     return (
-       <SkjemaGruppe feil={props.opplysningerfeil ? {feilmelding: props.opplysningerfeil} : undefined}>
-        <SkjemaElement tittel="Opplysninger">
+        <SkjemaElement
+            tittel="Opplysninger"
+            value={harOpplysninger ? <LagOpplysningsListe samladeOpplysninger={samladeOpplysninger}/> : null}
+            feil={props.opplysningerfeil}
+        >
             <ForhandsdefinieradeOppplysninger/>
             <AndreOpplysninger
                 andreopplysninger={props.andreOpplysninger}
                 setAndreOpplysninger={props.handleAndraOpplysningerChanged}
             />
         </SkjemaElement>
-       </SkjemaGruppe>
     );
 }
 
 export default Opplysninger;
+
+function LagOpplysningsListe (props: {samladeOpplysninger: string[]}) {
+    return (
+        <ul>
+            {props.samladeOpplysninger.map((opplysning, idx) => <li key={idx}>{opplysning}</li>)}
+        </ul>
+    );
+}

@@ -23,7 +23,7 @@ interface SkjemaProps {
     fnr: string;
 }
 
-export type Opplysninger = {
+export type ValgtOpplysninger = {
     [K in OpplysningType]: boolean;
 };
 
@@ -42,9 +42,9 @@ function Skjema ({fnr}: SkjemaProps) {
     const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
 
     const opplysningData = byggOpplysningsObject(utkast && utkast.opplysninger);
-    const [opplysninger, setOpplysninger] = useState<Opplysninger>(opplysningData);
+    const [opplysninger, setOpplysninger] = useState<ValgtOpplysninger>(opplysningData);
     const [hovedmal, handleHovedmalChanged] = useState( utkast && utkast.hovedmal);
-    const [innsatsgruppe, handleKonklusjonChanged] = useState(utkast && utkast.innsatsgruppe);
+    const [innsatsgruppe, handleInnsatsgruppeChanged] = useState(utkast && utkast.innsatsgruppe);
     const [begrunnelse, handleBegrunnelseChanged] = useState(utkast && utkast.begrunnelse || '');
     const [andreOpplysninger, handleAndreopplysninger] = useState(utkast && utkast.andreopplysninger || []);
     const [sistLagret, setSistLagret] = useState('');
@@ -106,9 +106,8 @@ function Skjema ({fnr}: SkjemaProps) {
     }
 
     function handleOpplysningerChanged (e: React.ChangeEvent<HTMLInputElement>) {
-        e.persist();
         setOpplysninger(prevOpplysninger => {
-            prevOpplysninger[e.target.name as OpplysningType] = e.target.checked;
+            prevOpplysninger[e.target.value as OpplysningType] = e.target.checked;
             return prevOpplysninger;
         });
     }
@@ -131,7 +130,7 @@ function Skjema ({fnr}: SkjemaProps) {
                     hovedmalfeil={errors.hovedmal}
                 />
                 <Innsatsgruppe
-                    handleKonklusjonChanged={handleKonklusjonChanged}
+                    handleInnsatsgruppeChanged={handleInnsatsgruppeChanged}
                     innsatsgruppe={innsatsgruppe}
                     innsatgruppefeil={errors.innsatsgruppe}
                 />
@@ -147,6 +146,7 @@ function Skjema ({fnr}: SkjemaProps) {
                     handleAndraOpplysningerChanged={handleAndreopplysninger}
                     andreOpplysninger={andreOpplysninger}
                     opplysningerfeil={errors.opplysninger}
+                    opplysninger={opplysninger}
                 />
                 <Aksjoner
                     handleSubmit={handleSubmit}
