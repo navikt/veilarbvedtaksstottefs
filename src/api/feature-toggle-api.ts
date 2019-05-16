@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 
-export const FEATURE_TOGGLE_URL = '/veilarbvedtaksstottefs/api/feature';
+export const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
 
 export const PRELANSERING_TOGGLE = 'veilarbvedtaksstottefs.prelansering';
 export const ALL_TOGGLES = [PRELANSERING_TOGGLE];
