@@ -35,4 +35,46 @@
 		}
 	}
 
+	.innspill {
+		margin-top: 3rem;
+		padding-top: 5rem;
+		padding-bottom: 5rem;
+
+		border: @navOransje 2px solid;
+		border-radius: 8px;
+		background-color: white;
+
+		&__tittel {
+			text-align: center;
+		}
+
+		&__navn {
+			margin: 2rem auto;
+			width: 60%;
+		}
+
+		&__navn-valg {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+
+			:nth-child(even) {
+				margin-left: 1rem;
+			}
+
+			> * {
+				margin-top: 0.5rem;
+				margin-bottom: 0.5rem;
+			}
+		}
+
+		&__besvarelse {
+			margin: 0 auto;
+			width: 60%;
+		}
+
+		&__fritekst {
+			height: 10rem !important;
+		}
+	}
+
 }

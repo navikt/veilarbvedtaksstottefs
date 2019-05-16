@@ -1,47 +1,50 @@
 @import "~nav-frontend-core/less/_variabler";
 .veilarbvedtaksstottefs {
 
-  .skjemaelement {
-    margin-top: 1.5rem;
-    display: grid;
-    grid-template-columns: 0.3fr 1.8fr;
-    border-bottom: 1px solid @navGra40;
-    padding-bottom: 3rem;
+  .skjema {
 
-    &__redigering {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      margin-bottom: 1rem;
-    }
+    .skjemaelement {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: 0.3fr 1.8fr;
+      border-bottom: 1px solid @navGra40;
+      padding-bottom: 3rem;
 
-    &__visning {
-      display: flex;
-      justify-content: space-between;
+      &__redigering {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+      }
 
-      ul {
-        margin: 0;
+      &__visning {
+        display: flex;
+        justify-content: space-between;
+
+        ul {
+          margin: 0;
+        }
+      }
+
+      &__innhold {
+        display: grid;
+        grid-template-rows: auto auto;
+      }
+
+      .toggle--knapp {
+        border: none;
+        text-transform: none;
+      }
+
+      .toggle--knapp:hover {
+        border: none;
+        text-decoration: underline;
+        background-color: initial;
+        color: @navBla;
+
       }
     }
 
-    &__innhold {
-      display: grid;
-      grid-template-rows: auto auto;
-    }
-
-    .toggle--knapp {
-      border: none;
-      text-transform: none;
-    }
-
-    .toggle--knapp:hover {
-      border: none;
-      text-decoration: underline;
-      background-color: initial;
-      color: @navBla;
-
-    }
   }
-
 
 }
