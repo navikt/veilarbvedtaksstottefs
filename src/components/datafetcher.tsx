@@ -3,7 +3,7 @@ import { Status } from '../utils/hooks/useFetch';
 import { AppContext } from './app-provider/app-provider';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
-import Api from '../api/api';
+import VedtaksstotteApi from '../api/vedtaksstotte-api';
 
 export function DataFetcher (props: {fnr: string, children: any}) {
     const {setVedtak, vedtak} = useContext(AppContext);
@@ -11,7 +11,7 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     const fetchVedtakData = async () => {
         setVedtak(prevState => ({...prevState, status: Status.LOADING}));
         try {
-            const res = await Api.hentVedtak(props.fnr);
+            const res = await VedtaksstotteApi.hentVedtak(props.fnr);
             if (res.status) {
                 setVedtak({status: Status.DONE, data: res.data});
             } else {

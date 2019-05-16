@@ -1,22 +1,25 @@
 import React from 'react';
 import { AppProvider } from './components/app-provider/app-provider';
 import { ViewController } from './components/viewcontroller/view-controller';
-import './app.less';
 import { DataFetcher } from './components/datafetcher';
+import { PrelanseringSjekk } from './components/prelansering-sjekk';
+import './app.less';
 
 interface AppProps {
     fnr: string;
     enhet: string;
 }
 
-function App (props: AppProps) {
+function App(props: AppProps) {
     return (
         <div className="veilarbvedtaksstottefs">
             <div className="veilarbvedtaksstottefs__content">
                 <AppProvider>
-                    <DataFetcher fnr={props.fnr}>
-                        <ViewController fnr={props.fnr}/>
-                    </DataFetcher>
+                    <PrelanseringSjekk>
+                        <DataFetcher fnr={props.fnr}>
+                            <ViewController fnr={props.fnr}/>
+                        </DataFetcher>
+                    </PrelanseringSjekk>
                 </AppProvider>
             </div>
         </div>

@@ -17,7 +17,7 @@ import { byggOpplysningliste, byggOpplysningsObject, validerSkjema } from '../..
 import { useTimer } from '../../utils/hooks/useTimer';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
-import Api from '../../api/api';
+import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 
 interface SkjemaProps {
     fnr: string;
@@ -53,7 +53,7 @@ function Skjema ({fnr}: SkjemaProps) {
     useTimer(oppdaterSistEndret, 2000, [opplysninger, hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger]);
 
     function sendDataTilBackend (skjema: SkjemaData) {
-        return Api.putVedtakUtkast(fnr, skjema);
+        return VedtaksstotteApi.putVedtakUtkast(fnr, skjema);
     }
 
     function dispatchFetchVedtakOgRedirectTilHovedside () {
@@ -98,7 +98,7 @@ function Skjema ({fnr}: SkjemaProps) {
     }
 
     function handleSlett() {
-        Api.slettUtkast(fnr)
+        VedtaksstotteApi.slettUtkast(fnr)
             .then(dispatchFetchVedtakOgRedirectTilHovedside)
             .catch (error => {
             console.log(error); // tslint:disable-line:no-console
