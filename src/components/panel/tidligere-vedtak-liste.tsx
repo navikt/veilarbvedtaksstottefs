@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { VedtakData } from '../../utils/types/vedtak';
 import { VedtakstottePanel } from './veilarbvedtakstotte-panel/vedtakstotte-panel';
-import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import { formatDate } from '../../utils/date-utils';
 import './tidligere-vedtak-liste.less';
 import { ViewDispatch } from '../app-provider/app-provider';
 import { ActionType } from '../viewcontroller/view-reducer';
+import { Dato } from './dato';
+import { Veileder } from './veileder';
 
 export function TidligereVedtakListe(props: {vedtakHistorikk: VedtakData []}) {
     if (props.vedtakHistorikk.length === 0) {
@@ -48,9 +49,8 @@ function TidligereVedtak (props: {tidligereVedtak: VedtakData}) {
             <div className="tidligere-vedtak">
                 <div>
                     <Element>Oppfølgingvedtak: {innsatsgruppe}</Element>
-                    <Undertekst>
-                        <span className="label">Sendt:</span>{formatDate(tidligereVedtak.sistOppdatert)}
-                    </Undertekst>
+                    <Dato sistOppdatert={tidligereVedtak.sistOppdatert} formatType="short" text="Dato"/>
+                    <Veileder enhetId={tidligereVedtak.veilederEnhetId} ident={tidligereVedtak.veilederIdent} text="Fattet av"/>
                 </div>
                 <HoyreChevron className="tidligere-vedtak__chevron"/>
             </div>

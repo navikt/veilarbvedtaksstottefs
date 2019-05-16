@@ -13,11 +13,11 @@ import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { Status } from '../../utils/hooks/useFetch';
 import { VedtakData } from '../../utils/types/vedtak';
 import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
-import  VeilarbVedtakkstotteApi from '../../api/veilarbvedtakkstotte-api';
 import { byggOpplysningliste, byggOpplysningsObject, validerSkjema } from '../../components/skjema/skjema-utils';
 import { useTimer } from '../../utils/hooks/useTimer';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
+import Api from '../../api/api';
 
 interface SkjemaProps {
     fnr: string;
@@ -53,7 +53,7 @@ function Skjema ({fnr}: SkjemaProps) {
     useTimer(oppdaterSistEndret, 2000, [opplysninger, hovedmal, innsatsgruppe, begrunnelse, andreOpplysninger]);
 
     function sendDataTilBackend (skjema: SkjemaData) {
-        return VeilarbVedtakkstotteApi.putVedtakUtkast(fnr, skjema);
+        return Api.putVedtakUtkast(fnr, skjema);
     }
 
     function dispatchFetchVedtakOgRedirectTilHovedside () {
@@ -98,7 +98,7 @@ function Skjema ({fnr}: SkjemaProps) {
     }
 
     function handleSlett() {
-        VeilarbVedtakkstotteApi.slettUtkast(fnr)
+        Api.slettUtkast(fnr)
             .then(dispatchFetchVedtakOgRedirectTilHovedside)
             .catch (error => {
             console.log(error); // tslint:disable-line:no-console
