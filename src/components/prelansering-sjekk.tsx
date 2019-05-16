@@ -6,8 +6,6 @@ import { Prelansering } from '../pages/prelansering/prelansering';
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
     const features = useFetch<Features>(FeatureToggleApi.lagHentFeaturesConfig());
 
-    console.log(features); // tslint:disable-line'
-
     if (features.status !== Status.DONE) {
         return null;
 

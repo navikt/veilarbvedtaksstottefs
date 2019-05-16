@@ -1,10 +1,38 @@
-
+@import "~nav-frontend-core/less/_variabler";
 
 .veilarbvedtaksstottefs {
 
 	.prelansering {
-		background-color: white;
-		border-radius: 5px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		background-color: @navBla;
+		border-radius: 8px;
+		color: white;
+		overflow-x: hidden;
+		padding: 4rem 0 2rem 6rem;
+
+		&__tittel {
+			margin-bottom: 1.5rem;
+		}
+
+		&__tekst1 {
+			font-size: 18px;
+			margin-bottom: 1rem;
+			width: 28rem;
+		}
+
+		&__tekst2 {
+			font-size: 18px;
+			width: 28rem;
+		}
+
+		&__bilde {
+			margin-top: -1.5rem;
+			margin-right: -7rem;
+			height: 360px;
+		}
 	}
 
 }
