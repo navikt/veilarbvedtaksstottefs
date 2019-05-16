@@ -3,7 +3,7 @@ import { SkjemaData } from '../pages/skjema/skjema';
 
 export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
 
-class Api {
+class VedtaksstotteApi {
 
     static lagNyttVedtakUtkast(fnr: string) {
         return axios.post(`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/utkast`);
@@ -31,4 +31,4 @@ class Api {
 
 }
 
-export default Api;
+export default VedtaksstotteApi;

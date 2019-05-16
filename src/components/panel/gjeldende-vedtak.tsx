@@ -12,7 +12,7 @@ import { ReactComponent as IngenVedtakIcon } from './ingen_vedtak.svg';
 import { ReactComponent as FullfortVedtakIcon } from './fullfort.svg';
 import { ViewDispatch } from '../app-provider/app-provider';
 import { Veileder } from './veileder';
-import Api from '../../api/api';
+import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 
 const BEGRUNNELSE_VISNING_MAX_LENGTH = 100;
 
@@ -24,7 +24,7 @@ export function GjeldendeVedtak(props: {gjeldendeVedtak: OrNothing<VedtakData>, 
     }
 
     function lagNyttVedtakUtkastOgRedirectTilUtkast () {
-        Api.lagNyttVedtakUtkast(props.fnr).then(() => dispatch({view: ActionType.UTKAST}));
+        VedtaksstotteApi.lagNyttVedtakUtkast(props.fnr).then(() => dispatch({view: ActionType.UTKAST}));
     }
 
     if (!props.gjeldendeVedtak) {

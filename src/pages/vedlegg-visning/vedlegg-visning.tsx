@@ -3,7 +3,7 @@ import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { ViewDispatch } from '../../components/app-provider/app-provider';
 import useFetch, { Status } from '../../utils/hooks/useFetch';
-import { VEILARBVEDTAKSSTOTTE_API } from '../../api/api';
+import { VEILARBVEDTAKSSTOTTE_API } from '../../api/vedtaksstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../components/json-viewer/json-viewer';
