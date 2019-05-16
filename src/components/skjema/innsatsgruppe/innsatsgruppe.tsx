@@ -42,15 +42,39 @@ export const innsatsgrupper = [
 ];
 
 interface InnsatsgruppeProps {
-    handleKonklusjonChanged: (e: any) => void;
+    handleInnsatsgruppeChanged: (e: any) => void;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
     innsatgruppefeil?: string;
 }
 
 function Innsatsgruppe (props: InnsatsgruppeProps) {
-    const {handleKonklusjonChanged, innsatsgruppe} = props;
+    return (
+        <SkjemaElement
+            tittel="Innsatsgruppe"
+            value={getInnsatsgruppeNavn(props.innsatsgruppe)}
+            feil={props.innsatgruppefeil}
+        >
+            {(lukkSkjema) =>
+                <InnsatsgruppeRadioButtons
+                    lukkSkjema={lukkSkjema}
+                    handleInnsatsgruppeChanged={props.handleInnsatsgruppeChanged}
+                    innsatsgruppe={props.innsatsgruppe}
+                />
+            }
+        </SkjemaElement>
+    );
+}
 
-    const InnsatsgruppeRadioButtons = (injectedProps: any) => (
+export default Innsatsgruppe;
+
+interface InnsatsgruppeRadioProps {
+    handleInnsatsgruppeChanged: (e: any) => void;
+    innsatsgruppe: OrNothing<InnsatsgruppeType>;
+    lukkSkjema: () => void;
+}
+
+function InnsatsgruppeRadioButtons (props: InnsatsgruppeRadioProps ) {
+    return (
         <div className="innsatsgruppe">
             {innsatsgrupper.map((innsatsgruppeObject, index) =>
                 <RadioPanel
@@ -59,24 +83,12 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
                     value={innsatsgruppeObject.value}
                     name="innsatsgruppe"
                     onChange={(e: any) => {
-                        handleKonklusjonChanged(e.target.value);
-                        injectedProps.lukkSkjemaElement();
+                        props.handleInnsatsgruppeChanged(e.target.value);
+                        props.lukkSkjema();
                     }}
-                    checked={innsatsgruppe === innsatsgruppeObject.value}
+                    checked={props.innsatsgruppe === innsatsgruppeObject.value}
                 />
             )}
         </div>
     );
-
-    return (
-        <SkjemaElement
-            tittel="Innsatsgruppe"
-            value={getInnsatsgruppeNavn(innsatsgruppe)}
-            feil={props.innsatgruppefeil}
-        >
-            <InnsatsgruppeRadioButtons/>
-        </SkjemaElement>
-    );
 }
-
-export default Innsatsgruppe;

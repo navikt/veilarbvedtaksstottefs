@@ -32,9 +32,33 @@ const hovedmalliste = [
 ];
 
 function Hovedmal(props: HovedmalProps) {
-    const{ handleHovedmalChanged, hovedmal } = props;
+    return (
+        <SkjemaElement
+            tittel="Hovedmål"
+            value={getHovedmalNavn(props.hovedmal)}
+            feil={props.hovedmalfeil}
+        >
+            {(lukkSkjema) =>
+                <HovedmalRadioButtons
+                    lukkSkjema={lukkSkjema}
+                    handleHovedmalChanged={props.handleHovedmalChanged}
+                    hovedmal={props.hovedmal}
+                />
+            }
+        </SkjemaElement>
+    );
+}
 
-    const HovedmalRadioButtons = (injectedProps: any) => (
+export default Hovedmal;
+
+interface HovedmalRadioButtonsProps {
+    handleHovedmalChanged: (e: any) => void;
+    hovedmal: OrNothing<HovedmalType>;
+    lukkSkjema: () => void;
+}
+
+function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
+    return (
         <div className="hovedmal">
             {hovedmalliste.map((mal, idx) =>
                 <RadioPanel
@@ -43,24 +67,12 @@ function Hovedmal(props: HovedmalProps) {
                     name="hovedmal"
                     value={mal.value}
                     onChange={(e: any) => {
-                        handleHovedmalChanged(e.target.value);
-                        injectedProps.lukkSkjemaElement();
+                        props.handleHovedmalChanged(e.target.value);
+                        props.lukkSkjema();
                     }}
-                    checked={hovedmal === mal.value}
+                    checked={props.hovedmal === mal.value}
                 />
             )}
         </div>
     );
-
-    return (
-        <SkjemaElement
-            tittel="Hovedmål"
-            value={getHovedmalNavn(hovedmal)}
-            feil={props.hovedmalfeil}
-        >
-            <HovedmalRadioButtons/>
-        </SkjemaElement>
-    );
 }
-
-export default Hovedmal;

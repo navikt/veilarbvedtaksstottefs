@@ -1,4 +1,4 @@
-@import "../../../../node_modules/nav-frontend-core/less/_variabler";
+@import "~nav-frontend-core/less/_variabler";
 .veilarbvedtaksstottefs {
 
   .skjemaelement {
@@ -8,19 +8,38 @@
     border-bottom: 1px solid @navGra40;
     padding-bottom: 3rem;
 
+    &__redigering {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+    }
+
+    &__visning {
+      display: flex;
+      justify-content: space-between;
+
+      ul {
+        margin: 0;
+      }
+    }
+
     &__innhold {
       display: grid;
       grid-template-rows: auto auto;
     }
 
-    .endre--knapp {
+    .toggle--knapp {
       border: none;
-      float: right;
+      text-transform: none;
     }
 
-    .endre--knapp:hover {
+    .toggle--knapp:hover {
       border: none;
       text-decoration: underline;
+      background-color: initial;
+      color: @navBla;
+
     }
   }
 

@@ -1,8 +1,10 @@
 import * as React from 'react';
 import './opplysninger.less';
 import { CheckboksPanel } from 'nav-frontend-skjema';
-import { SkjemaElement } from '../skjemaelement/skjemaelement';
+import { EMDASH, SkjemaElement } from '../skjemaelement/skjemaelement';
 import { AndreOpplysninger } from './andre-opplysninger';
+import { ValgtOpplysninger } from '../../../pages/skjema/skjema';
+import { byggOpplysningliste } from '../skjema-utils';
 
 export enum OpplysningType {
     CV = 'CV',
@@ -16,6 +18,7 @@ interface OpplysningerProps {
     handleAndraOpplysningerChanged: (e: any) => void;
     andreOpplysninger: string[];
     opplysningerfeil?: string;
+    opplysninger: ValgtOpplysninger;
 }
 
 function Opplysninger(props: OpplysningerProps) {
@@ -45,20 +48,23 @@ function Opplysninger(props: OpplysningerProps) {
             <div className="opplysninger">
                 {opplysninger.map((opplysning, index) =>
                     <CheckboksPanel
-                        checked={false}
+                        checked={props.opplysninger[opplysning.name]}
                         key={index}
+                        inputProps={{value: opplysning.name}}
                         label={opplysning.label}
-                        onChange={handleOpplysningerChanged}
+                        onChange={(e: any) => handleOpplysningerChanged(e)}
                     />
                 )}
             </div>
         );
     };
 
+    const samladeOpplysninger = (byggOpplysningliste(props.opplysninger)as string[]).concat(props.andreOpplysninger);
+    const harOpplysninger = samladeOpplysninger.length > 0;
     return (
         <SkjemaElement
             tittel="Opplysninger"
-            value={props.andreOpplysninger[0]}
+            value={harOpplysninger ? <LagOpplysningsListe samladeOpplysninger={samladeOpplysninger}/> : null}
             feil={props.opplysningerfeil}
         >
             <ForhandsdefinieradeOppplysninger/>
@@ -71,3 +77,11 @@ function Opplysninger(props: OpplysningerProps) {
 }
 
 export default Opplysninger;
+
+function LagOpplysningsListe (props: {samladeOpplysninger: string[]}) {
+    return (
+        <ul>
+            {props.samladeOpplysninger.map((opplysning, idx) => <li key={idx}>{opplysning}</li>)}
+        </ul>
+    );
+}
