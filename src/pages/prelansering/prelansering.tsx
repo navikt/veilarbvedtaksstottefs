@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Card from '../../components/card/card';
-import { Element, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Innholdstittel, Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import prelanseringBilde from './prelansering.png';
 import { RadioPanel, Textarea } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
-import './prelansering.less';
 import { logEvent } from '../../utils/frontend-logger';
+import hjerteBilde from './hjerte.svg';
+import './prelansering.less';
 
 enum FaneNavn {
     OPPFOLGINGSVEDTAK_14A = 'OPPFOLGINGSVEDTAK_14A',
@@ -37,32 +38,34 @@ const HAR_SENDT_INNSPILL_KEY = 'har_sendt_innspill';
 const INNSPILL_TAG = 'veilarbvedtaksstottefs.innspill';
 
 export function Prelansering() {
-    const [faneNavn, setFaneNavn] = useState();
+    const [harSendt, setHarSendt] = useState(false);
+    const [faneNavn, setFaneNavn] = useState(null);
     const [fritekst, setFritekst] = useState('');
     const harSendtTidligere = localStorage.getItem(HAR_SENDT_INNSPILL_KEY) != null;
 
     const handleFaneNavnChanged = (e: any) => {
-        setFaneNavn(e.target.value)
+        setFaneNavn(e.target.value);
     };
 
     const handleFritekstChanged = (e: any) => {
-        setFritekst(e.target.value)
+        setFritekst(e.target.value);
     };
 
     const handleSendInnspillClicked = () => {
-        const navn = faneNavn ? faneNavnListe.find(n => n.value === faneNavn) : null;
 
-        if (navn || fritekst != '') {
-            logEvent(INNSPILL_TAG, { faneNavn: navn, fritekst});
+        if (faneNavn || fritekst !== '') {
+            logEvent(INNSPILL_TAG, { faneNavn, fritekst});
         }
 
+        setHarSendt(true);
         localStorage.setItem(HAR_SENDT_INNSPILL_KEY, 'true');
     };
 
     return (
         <>
            <PrelanseringInfo/>
-            {harSendtTidligere ? null :
+            {harSendt ? <TakkMelding/> : null}
+            {harSendtTidligere || harSendt ? null :
                 <Innspill
                     faneNavn={faneNavn}
                     fritekst={fritekst}
@@ -98,16 +101,16 @@ const PrelanseringInfo = () => (
 );
 
 const Innspill = ({ faneNavn, fritekst, handleFaneNavnChanged, handleFritekstChanged, handleSendInnspillClicked}:
-                      {faneNavn: FaneNavn | undefined, fritekst: string, handleFaneNavnChanged: (e: any) => void,
+                      {faneNavn: FaneNavn | null, fritekst: string, handleFaneNavnChanged: (e: any) => void,
                           handleFritekstChanged: (e: any) => void, handleSendInnspillClicked: () => void  }) => (
     <Card className="innspill">
         <Innholdstittel className="innspill__tittel">
             Kom med dine innspill
         </Innholdstittel>
         <section className="innspill__navn">
-            <Element>
+            <Undertittel>
                 Hva skal fanen hete?
-            </Element>
+            </Undertittel>
             <Normaltekst className="innspill__navn--ingress">
                 Vi bruker innspillet til å navngi fanen. Svaret er anonymt.
             </Normaltekst>
@@ -125,9 +128,9 @@ const Innspill = ({ faneNavn, fritekst, handleFaneNavnChanged, handleFritekstCha
             </div>
         </section>
         <section className="innspill__besvarelse">
-            <Element>
+            <Undertittel>
                 Hva lurer du på om den nye løsningen?
-            </Element>
+            </Undertittel>
             <Normaltekst>
                 Vi bruker innspillet ditt til å forberede innføringen av løsningen. Svaret er anonymt.
             </Normaltekst>
@@ -135,11 +138,26 @@ const Innspill = ({ faneNavn, fritekst, handleFaneNavnChanged, handleFritekstCha
                 value={fritekst}
                 label={null}
                 onChange={handleFritekstChanged}
+                maxLength={500}
                 className="innspill__fritekst skjemaelement__input textarea--medMeta"
             />
             <Knapp onClick={handleSendInnspillClicked}>
                 Send
             </Knapp>
         </section>
+    </Card>
+);
+
+const TakkMelding = () => (
+    <Card className="takk-melding">
+        <img src={hjerteBilde} alt="Hjerte" className="takk-melding__ikon"/>
+        <div className="takk-melding__tekst">
+            <Systemtittel className="takk-melding__tittel">
+                Takk for din tilbakemelding!
+            </Systemtittel>
+            <Normaltekst>
+                Dine innspill hjelper oss å forbedre løsningen og vi vil kontinuerlig jobbe videre med forbedringer.
+            </Normaltekst>
+        </div>
     </Card>
 );
