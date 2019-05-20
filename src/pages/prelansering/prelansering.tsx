@@ -34,6 +34,7 @@ const faneNavnListe = [
     },
 ];
 
+const FRITEKST_MAX_LENGTH = 500;
 const HAR_SENDT_INNSPILL_KEY = 'har_sendt_innspill';
 const INNSPILL_TAG = 'veilarbvedtaksstottefs.innspill';
 
@@ -48,7 +49,11 @@ export function Prelansering() {
     };
 
     const handleFritekstChanged = (e: any) => {
-        setFritekst(e.target.value);
+        let tekst = e.target.value;
+        if (tekst.length > FRITEKST_MAX_LENGTH) {
+            tekst = tekst.substr(0, FRITEKST_MAX_LENGTH);
+        }
+        setFritekst(tekst);
     };
 
     const handleSendInnspillClicked = () => {
@@ -107,13 +112,15 @@ const Innspill = ({ faneNavn, fritekst, handleFaneNavnChanged, handleFritekstCha
             Kom med dine innspill
         </Innholdstittel>
         <section className="innspill__navn">
-            <Undertittel>
-                Hva skal fanen hete?
-            </Undertittel>
-            <Normaltekst className="innspill__navn--ingress">
-                Vi bruker innspillet til å navngi fanen. Svaret er anonymt.
-            </Normaltekst>
-            <div className="innspill__navn--valg">
+            <label form="fanenavn-form">
+                <Undertittel>
+                    Hva skal fanen hete?
+                </Undertittel>
+                <Normaltekst className="innspill__navn--ingress">
+                    Vi bruker innspillet til å navngi fanen. Svaret er anonymt.
+                </Normaltekst>
+            </label>
+            <form id="fanenavn-form" className="innspill__navn--valg">
                 {faneNavnListe.map((mal, idx) =>
                     <RadioPanel
                         key={idx}
@@ -124,18 +131,18 @@ const Innspill = ({ faneNavn, fritekst, handleFaneNavnChanged, handleFritekstCha
                         checked={mal.value === faneNavn}
                     />
                 )}
-            </div>
+            </form>
         </section>
         <section className="innspill__besvarelse">
-            <Undertittel>
-                Hva lurer du på om den nye løsningen?
-            </Undertittel>
-            <Normaltekst>
-                Vi bruker innspillet ditt til å forberede innføringen av løsningen. Svaret er anonymt.
-            </Normaltekst>
             <Textarea
                 value={fritekst}
-                label={null}
+                label={[
+                    (<Undertittel>
+                        Hva lurer du på om den nye løsningen?
+                    </Undertittel>),
+                    (<Normaltekst>
+                        Vi bruker innspillet ditt til å forberede innføringen av løsningen. Svaret er anonymt.
+                    </Normaltekst>)]}
                 onChange={handleFritekstChanged}
                 maxLength={500}
                 className="innspill__fritekst skjemaelement__input textarea--medMeta"
