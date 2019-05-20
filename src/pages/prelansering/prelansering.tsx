@@ -39,7 +39,7 @@ const INNSPILL_TAG = 'veilarbvedtaksstottefs.innspill';
 
 export function Prelansering() {
     const [harSendt, setHarSendt] = useState(false);
-    const [faneNavn, setFaneNavn] = useState();
+    const [faneNavn, setFaneNavn] = useState(null);
     const [fritekst, setFritekst] = useState('');
     const harSendtTidligere = localStorage.getItem(HAR_SENDT_INNSPILL_KEY) != null;
 
@@ -52,10 +52,8 @@ export function Prelansering() {
     };
 
     const handleSendInnspillClicked = () => {
-        const navn = faneNavn ? faneNavnListe.find(n => n.value === faneNavn) : null;
-
-        if (navn || fritekst !== '') {
-            logEvent(INNSPILL_TAG, { faneNavn: navn, fritekst});
+        if (faneNavn || fritekst !== '') {
+            logEvent(INNSPILL_TAG, { faneNavn, fritekst});
         }
 
         setHarSendt(true);
@@ -102,7 +100,7 @@ const PrelanseringInfo = () => (
 );
 
 const Innspill = ({ faneNavn, fritekst, handleFaneNavnChanged, handleFritekstChanged, handleSendInnspillClicked}:
-                      {faneNavn: FaneNavn | undefined, fritekst: string, handleFaneNavnChanged: (e: any) => void,
+                      {faneNavn: FaneNavn | null, fritekst: string, handleFaneNavnChanged: (e: any) => void,
                           handleFritekstChanged: (e: any) => void, handleSendInnspillClicked: () => void  }) => (
     <Card className="innspill">
         <Innholdstittel className="innspill__tittel">
