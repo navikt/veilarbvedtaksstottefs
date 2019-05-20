@@ -52,7 +52,6 @@ export function Prelansering() {
     };
 
     const handleSendInnspillClicked = () => {
-
         if (faneNavn || fritekst !== '') {
             logEvent(INNSPILL_TAG, { faneNavn, fritekst});
         }
