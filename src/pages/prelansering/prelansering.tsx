@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '../../components/card/card';
 import { Element, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import prelanseringBilde from './prelansering.png';
 import { RadioPanel, Textarea } from 'nav-frontend-skjema';
-import './prelansering.less';
 import { Knapp } from 'nav-frontend-knapper';
+import './prelansering.less';
+import { logEvent } from '../../utils/frontend-logger';
 
 enum FaneNavn {
     OPPFOLGINGSVEDTAK_14A = 'OPPFOLGINGSVEDTAK_14A',
@@ -32,72 +33,113 @@ const faneNavnListe = [
     },
 ];
 
+const HAR_SENDT_INNSPILL_KEY = 'har_sendt_innspill';
+const INNSPILL_TAG = 'veilarbvedtaksstottefs.innspill';
+
 export function Prelansering() {
+    const [faneNavn, setFaneNavn] = useState();
+    const [fritekst, setFritekst] = useState('');
+    const harSendtTidligere = localStorage.getItem(HAR_SENDT_INNSPILL_KEY) != null;
+
+    const handleFaneNavnChanged = (e: any) => {
+        setFaneNavn(e.target.value)
+    };
+
+    const handleFritekstChanged = (e: any) => {
+        setFritekst(e.target.value)
+    };
+
+    const handleSendInnspillClicked = () => {
+        const navn = faneNavn ? faneNavnListe.find(n => n.value === faneNavn) : null;
+
+        if (navn || fritekst != '') {
+            logEvent(INNSPILL_TAG, { faneNavn: navn, fritekst});
+        }
+
+        localStorage.setItem(HAR_SENDT_INNSPILL_KEY, 'true');
+    };
+
     return (
         <>
-            <Card className="prelansering">
-                <div>
-                    <Innholdstittel>
-                        Her kommer ny løsning for
-                    </Innholdstittel>
-                    <Innholdstittel className="prelansering__tittel">
-                        behovs- og arbeidsevnevurdering
-                    </Innholdstittel>
-                    <Normaltekst className="prelansering__tekst1">
-                        Vi slår sammen oppfølgingsvedtaket (§14 a) og arbeidsevnevurderingen i en samlet løsning. Det
-                        betyr at for de av brukerne som skal ha en arbeidsevnevurdering, skrives denne i
-                        begrunnelsesfeltet i oppfølgingsvedtaket.
-                    </Normaltekst>
-                    <Normaltekst className="prelansering__tekst2">
-                        Når den nye løsningen kommer skal vi ikke lenger skrive det tidligere
-                        arbeidsevnevurderingsdokumentet i Arena, og vi skal heller ikke fatte oppfølgingsvedtaket i Arena.
-                    </Normaltekst>
-                </div>
-                <img src={prelanseringBilde} className="prelansering__bilde"/>
-            </Card>
-
-            <Card className="innspill">
-                <Innholdstittel className="innspill__tittel">
-                    Kom med dine innspill
-                </Innholdstittel>
-                <section className="innspill__navn">
-                    <Element>
-                        Hva skal fanen hete?
-                    </Element>
-                    <Normaltekst>
-                        Vi bruker innspillet til å navngi fanen. Svaret er anonymt.
-                    </Normaltekst>
-                    <div className="innspill__navn-valg">
-                        {faneNavnListe.map((mal, idx) =>
-                            <RadioPanel
-                                key={idx}
-                                label={mal.label}
-                                name="hovedmal"
-                                value={mal.value}
-                                onChange={() => {}}
-                                checked={false}
-                            />
-                        )}
-                    </div>
-                </section>
-                <section className="innspill__besvarelse">
-                    <Element>
-                        Hva lurer du på om den nye løsningen?
-                    </Element>
-                    <Normaltekst>
-                        Vi bruker innspillet ditt til å forberede innføringen av løsningen. Svaret er anonymt.
-                    </Normaltekst>
-                    <Textarea
-                        value=""
-                        label={null}
-                        onChange={() => {}}
-                        className="innspill__fritekst skjemaelement__input textarea--medMeta"
-                    />
-                    <Knapp>
-                        Send
-                    </Knapp>
-                </section>
-            </Card>
+           <PrelanseringInfo/>
+            {harSendtTidligere ? null :
+                <Innspill
+                    faneNavn={faneNavn}
+                    fritekst={fritekst}
+                    handleFaneNavnChanged={handleFaneNavnChanged}
+                    handleFritekstChanged={handleFritekstChanged}
+                    handleSendInnspillClicked={handleSendInnspillClicked}
+                />}
         </>
     );
 }
+
+const PrelanseringInfo = () => (
+    <Card className="prelansering">
+        <div>
+            <Innholdstittel>
+                Her kommer ny løsning for
+            </Innholdstittel>
+            <Innholdstittel className="prelansering__tittel">
+                behovs- og arbeidsevnevurdering
+            </Innholdstittel>
+            <Normaltekst className="prelansering__tekst1">
+                Vi slår sammen oppfølgingsvedtaket (§14 a) og arbeidsevnevurderingen i en samlet løsning. Det
+                betyr at for de av brukerne som skal ha en arbeidsevnevurdering, skrives denne i
+                begrunnelsesfeltet i oppfølgingsvedtaket.
+            </Normaltekst>
+            <Normaltekst className="prelansering__tekst2">
+                Når den nye løsningen kommer skal vi ikke lenger skrive det tidligere
+                arbeidsevnevurderingsdokumentet i Arena, og vi skal heller ikke fatte oppfølgingsvedtaket i Arena.
+            </Normaltekst>
+        </div>
+        <img src={prelanseringBilde} className="prelansering__bilde"/>
+    </Card>
+);
+
+const Innspill = ({ faneNavn, fritekst, handleFaneNavnChanged, handleFritekstChanged, handleSendInnspillClicked}:
+                      {faneNavn: FaneNavn | undefined, fritekst: string, handleFaneNavnChanged: (e: any) => void,
+                          handleFritekstChanged: (e: any) => void, handleSendInnspillClicked: () => void  }) => (
+    <Card className="innspill">
+        <Innholdstittel className="innspill__tittel">
+            Kom med dine innspill
+        </Innholdstittel>
+        <section className="innspill__navn">
+            <Element>
+                Hva skal fanen hete?
+            </Element>
+            <Normaltekst className="innspill__navn--ingress">
+                Vi bruker innspillet til å navngi fanen. Svaret er anonymt.
+            </Normaltekst>
+            <div className="innspill__navn--valg">
+                {faneNavnListe.map((mal, idx) =>
+                    <RadioPanel
+                        key={idx}
+                        label={mal.label}
+                        name="fanenavn"
+                        value={mal.value}
+                        onChange={handleFaneNavnChanged}
+                        checked={mal.value === faneNavn}
+                    />
+                )}
+            </div>
+        </section>
+        <section className="innspill__besvarelse">
+            <Element>
+                Hva lurer du på om den nye løsningen?
+            </Element>
+            <Normaltekst>
+                Vi bruker innspillet ditt til å forberede innføringen av løsningen. Svaret er anonymt.
+            </Normaltekst>
+            <Textarea
+                value={fritekst}
+                label={null}
+                onChange={handleFritekstChanged}
+                className="innspill__fritekst skjemaelement__input textarea--medMeta"
+            />
+            <Knapp onClick={handleSendInnspillClicked}>
+                Send
+            </Knapp>
+        </section>
+    </Card>
+);
