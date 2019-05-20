@@ -101,14 +101,14 @@ function Skjema ({fnr}: SkjemaProps) {
         Api.slettUtkast(fnr)
             .then(dispatchFetchVedtakOgRedirectTilHovedside)
             .catch (error => {
-            console.log(error); // tslint:disable-line:no-console
-        });
+                console.log(error); // tslint:disable-line:no-console
+            });
     }
 
     function handleOpplysningerChanged (e: React.ChangeEvent<HTMLInputElement>) {
-        setOpplysninger(prevOpplysninger => {
-            prevOpplysninger[e.target.value as OpplysningType] = e.target.checked;
-            return prevOpplysninger;
+        setOpplysninger(prevState => {
+            prevState[e.target.name as OpplysningType] = e.target.checked;
+            return Object.assign({}, prevState);
         });
     }
 

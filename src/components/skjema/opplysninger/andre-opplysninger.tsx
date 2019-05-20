@@ -38,6 +38,7 @@ export function AndreOpplysninger (props: AndreOpplysningerProps) {
                             tekst={opplysning}
                             handleOpplysning={() => setRedigeringModusIndeks(index)}
                             slettOpplysning={() => handleSlettOpplysningClicked(index)}
+                            key={index}
                         />
                         : <RedigerOpplysning
                             tekst={opplysning}
