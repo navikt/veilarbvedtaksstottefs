@@ -29,6 +29,10 @@ class VedtaksstotteApi {
         return axios.delete(`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/utkast`);
     }
 
+    static hentVedtakPdfURL(fnr: string, dokumentInfoId: string, journalpostId: string) {
+        return `${VEILARBVEDTAKSSTOTTE_API}/${fnr}?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
+    }
+
 }
 
 export default VedtaksstotteApi;

@@ -6,6 +6,7 @@ import { VisVedtak } from '../../pages/visvedtak';
 import { TilInnsending } from '../../pages/forhandsvisning/forhandsvisning';
 import { ViewDispatch } from '../app-provider/app-provider';
 import { VedleggVisning } from '../../pages/vedlegg-visning/vedlegg-visning';
+import { VedtakbrevPdfVisning } from '../../pages/vedtakbrevpdf-visning/vedtakbrevpdf-visning';
 
 function renderView(view: ActionType): ((props: any) => JSX.Element) {
     switch (view) {
@@ -19,6 +20,8 @@ function renderView(view: ActionType): ((props: any) => JSX.Element) {
             return TilInnsending;
         case ActionType.VIS_VEDLEGG:
             return VedleggVisning;
+        case ActionType.VIS_VEDTAK_PDF:
+            return VedtakbrevPdfVisning;
         default:
             return Hovedside;
     }

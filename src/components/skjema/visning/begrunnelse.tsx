@@ -1,10 +1,11 @@
 import React from 'react';
+import { EMDASH } from '../skjemaelement/skjemaelement';
 
 export function BegrunnelseVisning(props: {begrunnelse: string}) {
     return (
-        <div>
+        <section>
             <label>Begrunnelse: </label>
-            <span>{props.begrunnelse}</span>
-        </div>
+            <p>{props.begrunnelse ? props.begrunnelse : EMDASH}</p>
+        </section>
     );
 }

@@ -3,9 +3,9 @@ import { getInnsatsgruppeNavn, InnsatsgruppeType } from '../innsatsgruppe/innsat
 
 export function InnsatsgruppeVisning(props: {innsatsgruppe: InnsatsgruppeType}) {
     return (
-        <div>
+        <section>
             <label>Innsatsgruppe: </label>
             <span>{getInnsatsgruppeNavn(props.innsatsgruppe)}</span>
-        </div>
+        </section>
     );
 }

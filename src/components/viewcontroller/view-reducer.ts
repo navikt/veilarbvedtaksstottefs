@@ -3,7 +3,8 @@ export enum ActionType {
     UTKAST = 'UTKAST',
     INNSENDING = 'INNSENDING',
     VIS_VEDLEGG = 'VIS_VEDLEGG',
-    VIS_VEDTAK = 'VIS_VEDTAK'
+    VIS_VEDTAK = 'VIS_VEDTAK',
+    VIS_VEDTAK_PDF = 'VIS_VEDTAK_PDF'
 }
 
 interface State<T> {

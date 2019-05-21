@@ -38,11 +38,11 @@ export function TilInnsending (props: {fnr: string}) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="forhandsvisning">
-                <div className="forhandsvisning__tittel">
+            <div className="pdfvisning">
+                <div className="pdfvisning__tittel">
                     <Undertittel> Forhandsvisning av vedtaksbrevet</Undertittel>
                 </div>
-                <div className="forhandsvisning__pdfcontent">
+                <div className="pdfvisning__pdfcontent">
                     <Document
                         file={{url: veilarbvedtakkUrl(props.fnr)}}
                         onLoadSuccess={(object: {numPages: number}) => setPages(object.numPages)}
@@ -50,7 +50,7 @@ export function TilInnsending (props: {fnr: string}) {
                         <Pages/>
                     </Document>
                 </div>
-                <div className="forhandsvisning__aksjoner">
+                <div className="pdfvisning__aksjoner">
                     <Hovedknapp className="btn--mr3" htmlType="submit">Send</Hovedknapp>
                     <Flatknapp className="btn--ml3" htmlType="button" onClick={() => dispatch({view: ActionType.UTKAST})}>Tilbake til utkast</Flatknapp>
                 </div>

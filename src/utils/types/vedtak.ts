@@ -15,4 +15,6 @@ export interface VedtakData {
     veilederIdent: string;
     opplysninger: any;
     andreopplysninger: string[];
+    journalpostId?: string;
+    dokumentInfoId?: string;
 }
