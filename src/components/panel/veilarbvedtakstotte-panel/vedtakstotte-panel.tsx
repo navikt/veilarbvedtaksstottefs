@@ -11,7 +11,7 @@ export function VedtakstottePanel (props: {tittel: string, children: React.React
             <div className="vedtakstottepanel__tittel">
                 <Undertittel>{props.tittel}</Undertittel>
             </div>
-                {props.children}
+            {props.children}
         </div>
     );
 }

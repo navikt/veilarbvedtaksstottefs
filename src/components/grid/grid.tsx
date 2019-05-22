@@ -20,7 +20,7 @@ function Grid (props: Props) {
         gridTemplateRows: rows,
         msGridColumns: columns,
         msGridRows: rows,
-        columnGap: '0.5rem',
+        columnGap: '1rem',
         rowGap: '1rem',
     };
 

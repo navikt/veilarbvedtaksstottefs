@@ -1,29 +1,33 @@
 import React, { useContext } from 'react';
-import { VedtakData } from '../../utils/types/vedtak';
-import { VedtakstottePanel } from './veilarbvedtakstotte-panel/vedtakstotte-panel';
+import { VedtakData } from '../../../utils/types/vedtak';
+import { VedtakstottePanel } from '../veilarbvedtakstotte-panel/vedtakstotte-panel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
+import { getInnsatsgruppeNavn } from '../../skjema/innsatsgruppe/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import './tidligere-vedtak-liste.less';
-import { ViewDispatch } from '../app-provider/app-provider';
-import { ActionType } from '../viewcontroller/view-reducer';
-import { Dato } from './dato';
-import { Veileder } from './veileder';
+import './tidligere-vedtak-panel.less';
+import { ViewDispatch } from '../../app-provider/app-provider';
+import { ActionType } from '../../viewcontroller/view-reducer';
+import { Dato } from '../dato';
+import { Veileder } from '../veileder';
+import emptyBox from './empty-box.svg';
 
-export function TidligereVedtakListe(props: {vedtakHistorikk: VedtakData []}) {
+export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData []}) {
     if (props.vedtakHistorikk.length === 0) {
         return (
-            <VedtakstottePanel tittel="Tidligere oppfølgingsvedtak" className="tidligere">
-                <div className="vedtakstottepanel__content">
+            <VedtakstottePanel tittel="Tidligere oppfølgingsvedtak">
+                <section className="ingen-vedtak">
+                    <img src={emptyBox} alt="Illustrasjon av tom eske" className="ingen-vedtak__bilde"/>
                     <Undertittel>Ingen tidligere oppfølgingsvedtak</Undertittel>
-                    <Normaltekst>Denne brukeren har ingen tidligere oppfølgingsvedtak (§ 14a)</Normaltekst>
-                </div>
+                    <Normaltekst className="ingen-vedtak__forklaring">
+                        Tidligere oppfølgingsvedtak (§ 14a) i ny løsning vil være tilgjengelig her
+                    </Normaltekst>
+                </section>
             </VedtakstottePanel>
         );
     }
 
     return (
-        <VedtakstottePanel tittel="Tidligere oppfølgingsvedtak" className="tidligere vedtakstottepanel--historisk">
+        <VedtakstottePanel tittel="Tidligere oppfølgingsvedtak">
             <ul className="vedtak-historikk-liste">
                 {props.vedtakHistorikk.map((tidligereVedtak, idx) =>
                     <TidligereVedtak

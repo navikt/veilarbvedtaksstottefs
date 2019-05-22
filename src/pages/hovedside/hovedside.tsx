@@ -1,6 +1,6 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import { AppContext } from '../../components/app-provider/app-provider';
-import { TidligereVedtakListe } from '../../components/panel/tidligere-vedtak-liste';
+import { TidligereVedtakPanel } from '../../components/panel/tidligere-vedtak-panel/tidligere-vedtak-panel';
 import { Utkast } from '../../components/panel/utkast';
 import { VedtakData } from '../../utils/types/vedtak';
 import Grid from '../../components/grid/grid';
@@ -18,7 +18,7 @@ export function Hovedside (props: {fnr: string}) {
         <Grid columns={2}>
             <Utkast utkast={utkast}/>
             <GjeldendeVedtak gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
-            <TidligereVedtakListe vedtakHistorikk={tidligereVedtak}/>
+            <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
         </Grid>
     );
 
