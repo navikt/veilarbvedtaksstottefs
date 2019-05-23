@@ -4,8 +4,13 @@ import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { VisOpplysning } from './visopplysning';
 import { RedigerOpplysning } from './rediger-opplysning';
 import { useState } from 'react';
-import { ReactComponent as LeggTilIkon } from './legg-til.svg';
-import { Opplysning } from '../skjema';
+import { LeggTilOpplysning } from './leggtil-opplysning';
+import { useContext } from 'react';
+import { SkjemaContext } from '../../providers/skjema-provider';
+
+export type Opplysning = {
+    [key: string]: boolean
+};
 
 export enum OpplysningType {
     CV = 'CV',
@@ -15,9 +20,6 @@ export enum OpplysningType {
 }
 
 interface OpplysningerProps {
-    handleOpplysningerChanged: (index: number, opplysning: Opplysning) => void;
-    handleOpplysningerChecked: (opplysning: Opplysning) => void;
-    opplysninger: Opplysning[];
     opplysningerfeil?: string;
 }
 
@@ -25,14 +27,43 @@ function Opplysninger(props: OpplysningerProps) {
     const [redigeringModusIndeks, setRedigeringModusIndeks ] = useState<number>( -1);
     const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning ] = useState<boolean>( true);
 
-    const harOpplysninger = props.opplysninger.some(opplysning => Object.values(opplysning)[0]);
+    const { opplysninger, setOpplysninger } = useContext(SkjemaContext);
 
-    const samladeOpplysninger = props.opplysninger.reduce((acc, opplysning) => {
+    const harOpplysninger = opplysninger.some(opplysning => Object.values(opplysning)[0]);
+
+    const samladeOpplysninger = opplysninger.reduce((acc, opplysning) => {
         if (Object.values(opplysning)[0]) {
             return [...acc, Object.keys(opplysning)[0]];
         }
         return acc;
     }, [] as string[]);
+
+    function handleOpplysningerChanged (index: number, opplysning: Opplysning) {
+        if (Object.keys(opplysning)[0].trim()) {
+            setOpplysninger(prevState => {
+                if (index === prevState.length) {
+                    return [...prevState, opplysning];
+                }
+                return prevState.map((prevOpplysning, idx) => {
+                    if (idx === index) {
+                        return opplysning;
+                    }
+                    return prevOpplysning;
+                });
+            });
+        }
+    }
+
+    function handleOpplysningerChecked (opplysning: Opplysning) {
+        setOpplysninger(prevState => {
+            return prevState.map(prevOpplysning => {
+                if (Object.keys(prevOpplysning)[0] === Object.keys(opplysning)[0]) {
+                    return opplysning;
+                }
+                return prevOpplysning;
+            });
+        });
+    }
 
     return (
         <SkjemaElement
@@ -41,33 +72,30 @@ function Opplysninger(props: OpplysningerProps) {
             feil={props.opplysningerfeil}
         >
            <div className="opplysninger">
-            {props.opplysninger.map((opplysning, index) =>
+            {opplysninger.map((opplysning, index) =>
                 redigeringModusIndeks !== index
                     ? <VisOpplysning
                         opplysning={opplysning}
                         handleOpplysning={() => setRedigeringModusIndeks(index)}
                         key={index}
-                        onChange={props.handleOpplysningerChecked}
+                        onChange={handleOpplysningerChecked}
                     />
                     : <RedigerOpplysning
                         opplysning={opplysning}
                         onTekstSubmit={(endretOpplysning) => {
                             setRedigeringModusIndeks(-1);
-                            props.handleOpplysningerChanged(index, endretOpplysning);
+                            handleOpplysningerChanged(index, endretOpplysning);
                         }}
                         key={index}
                         onTekstCancel={() => setRedigeringModusIndeks(-1)}
                     />
             )}
             {visLeggTilNyOpplysning
-                ? <div tabIndex={0} role="button" aria-labelledby="legg til opplysning" onClick={() => setVisLeggTilNyOpplysning(false)} className="inputPanel leggtil">
-                    <LeggTilIkon className="leggtil__ikon"/>
-                    <span className="inputPanel__label">Legg til</span>
-                </div>
+                ? <LeggTilOpplysning leggTilOpplysning={() => setVisLeggTilNyOpplysning(false)}/>
                 : <RedigerOpplysning
                     opplysning={{'': true}}
                     onTekstSubmit={(endretOpplysning) => {
-                        props.handleOpplysningerChanged(props.opplysninger.length, endretOpplysning);
+                        handleOpplysningerChanged(opplysninger.length, endretOpplysning);
                         setVisLeggTilNyOpplysning(true);
                     }}
                     onTekstCancel={() => setVisLeggTilNyOpplysning(true)}

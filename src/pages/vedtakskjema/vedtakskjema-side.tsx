@@ -1,7 +1,7 @@
-import { skjemaIsNotEmpty, validerSkjema } from '../../components/skjema/skjema-utils';
+import { mapTilTekstliste, skjemaIsNotEmpty, validerSkjema } from '../../components/skjema/skjema-utils';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import { useContext, useState } from 'react';
-import { AppContext, ViewDispatch } from '../../components/app-provider/app-provider';
+import { AppContext, ViewDispatch } from '../../components/providers/app-provider';
 import { Status } from '../../utils/hooks/useFetch';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { useTimer } from '../../utils/hooks/useTimer';
@@ -14,8 +14,8 @@ import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsats
 import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { VedtakData } from '../../utils/types/vedtak';
 import Skjema from '../../components/skjema/skjema';
+import { SkjemaContext } from '../../components/providers/skjema-provider';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -28,22 +28,15 @@ interface SkjemaAksjonerProps {
     fnr: string;
 }
 
-const initialSkjemaData = {
-    opplysninger: undefined,
-    hovedmal: undefined,
-    innsatsgruppe: undefined,
-    begrunnelse: ''
-};
-
-export function Vedtakskjema ({fnr}: SkjemaAksjonerProps) {
+export function VedtakskjemaSide ({fnr}: SkjemaAksjonerProps) {
     const {dispatch} = useContext(ViewDispatch);
-    const {vedtak, setVedtak } = useContext(AppContext);
-    const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST') || initialSkjemaData;
-    const [sistLagret, setSistLagret] = useState('');
+    const {setVedtak} = useContext(AppContext);
+    const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [errors, setErrors] = useState<SkjemaFeil>({});
-    const [skjemaObjekt, setSkjema] = useState<SkjemaData>(utkast);
 
-    useTimer(() => oppdaterSistEndret(skjemaObjekt), 2000, [skjemaObjekt]);
+    const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
+
+    useTimer(() => oppdaterSistEndret(vedtakskjema), 2000, [vedtakskjema]);
 
     function sendDataTilBackend (skjema: SkjemaData) {
         return VedtaksstotteApi.putVedtakUtkast(fnr, skjema);
@@ -77,7 +70,7 @@ export function Vedtakskjema ({fnr}: SkjemaAksjonerProps) {
                 const date = new Date();
                 const dato = date.toISOString().slice(0, 10);
                 const tid = date.toLocaleTimeString('no');
-                setSistLagret(`${dato} ${tid}`);
+                setSistOppdatert(`${dato} ${tid}`);
             });
         }
     }
@@ -98,19 +91,15 @@ export function Vedtakskjema ({fnr}: SkjemaAksjonerProps) {
     }
 
     return (
-        <form className="skjema" onSubmit={(e) => handleSubmit(e, skjemaObjekt)}>
+        <form className="skjema" onSubmit={(e) => handleSubmit(e, vedtakskjema)}>
             <div className="skjema__topp">
                 <TilbakeKnapp tilbake={dispatchFetchVedtakOgRedirectTilHovedside}/>
-                {sistLagret && <EtikettInfo><Normaltekst>{`Sist lagret : ${sistLagret}`}</Normaltekst></EtikettInfo>}
+                {sistOppdatert && <EtikettInfo><Normaltekst>{`Sist lagret : ${sistOppdatert}`}</Normaltekst></EtikettInfo>}
             </div>
-            <Skjema
-                utkast={skjemaObjekt}
-                errors={errors}
-                setSkjema={setSkjema}
-            />
+            <Skjema errors={errors}/>
             <Aksjoner
-                handleSubmit={(e) => handleSubmit(e, skjemaObjekt)}
-                handleLagreOgTilbake={(e) => handleLagreOgTilbake(e, skjemaObjekt)}
+                handleSubmit={(e) => handleSubmit(e, vedtakskjema)}
+                handleLagreOgTilbake={(e) => handleLagreOgTilbake(e, vedtakskjema)}
                 handleSlett={handleSlett}
             />
         </form>

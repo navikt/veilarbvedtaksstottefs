@@ -3,17 +3,17 @@ import { ActionType } from './view-reducer';
 import { Hovedside } from '../../pages/hovedside/hovedside';
 import { VisVedtak } from '../../pages/visvedtak';
 import { TilInnsending } from '../../pages/forhandsvisning/forhandsvisning';
-import { ViewDispatch } from '../app-provider/app-provider';
+import { ViewDispatch } from '../providers/app-provider';
 import { VedleggVisning } from '../../pages/vedlegg-visning/vedlegg-visning';
 import { VedtakbrevPdfVisning } from '../../pages/vedtakbrevpdf-visning/vedtakbrevpdf-visning';
-import { Vedtakskjema } from '../../pages/skjema/vedtakskjema';
+import { VedtakskjemaSide } from '../../pages/vedtakskjema/vedtakskjema-side';
 
 function renderView(view: ActionType): ((props: any) => JSX.Element) {
     switch (view) {
         case ActionType.HOVEDSIDE:
             return Hovedside;
         case ActionType.UTKAST:
-            return Vedtakskjema;
+            return VedtakskjemaSide;
         case ActionType.VIS_VEDTAK:
             return VisVedtak;
         case ActionType.INNSENDING:

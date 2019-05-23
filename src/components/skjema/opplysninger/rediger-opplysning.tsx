@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Textarea } from 'nav-frontend-skjema';
 import { Flatknapp } from 'nav-frontend-knapper';
-import { Opplysning } from '../skjema';
+import { Opplysning } from './opplysninger';
 
 interface OpplysningProps {
     opplysning: Opplysning;

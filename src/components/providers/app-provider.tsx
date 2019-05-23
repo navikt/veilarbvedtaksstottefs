@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useReducer, useState } from 'react';
 import { VedtakData } from '../../utils/types/vedtak';
 import { Status } from '../../utils/hooks/useFetch';
 import { initialViewState, viewReducer } from '../viewcontroller/view-reducer';
+import { SkjemaProvider } from './skjema-provider';
 
 export interface AppState {
     setVedtak: Dispatch<SetStateAction<FetchVedtak>>;
@@ -31,7 +32,9 @@ export function AppProvider (props: {children: React.ReactNode}) {
     return (
         <AppContext.Provider value={{vedtak, setVedtak}}>
             <ViewDispatch.Provider value={{viewState: viewState, dispatch: viewDispatch}}>
-                {props.children}
+                <SkjemaProvider>
+                    {props.children}
+                </SkjemaProvider>
             </ViewDispatch.Provider>
         </AppContext.Provider>
     );

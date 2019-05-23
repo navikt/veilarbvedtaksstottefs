@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Status } from '../utils/hooks/useFetch';
-import { AppContext } from './app-provider/app-provider';
+import { AppContext } from './providers/app-provider';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
 import VedtaksstotteApi from '../api/vedtaksstotte-api';

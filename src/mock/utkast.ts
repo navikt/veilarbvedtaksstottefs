@@ -10,8 +10,7 @@ const utkast: VedtakData = {
     sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
     begrunnelse: 'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
     gjeldende: true,
-    andreopplysninger: [],
-    opplysninger: {},
+    opplysninger: ['Brukerens CV datert fdskfdksfl', 'Din mamma'],
     veilederIdent: 'Z007',
     veilederEnhetId: 'Gotham city',
 };

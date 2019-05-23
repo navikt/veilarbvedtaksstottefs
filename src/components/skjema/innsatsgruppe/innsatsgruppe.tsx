@@ -3,6 +3,8 @@ import { RadioPanel } from 'nav-frontend-skjema';
 import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
+import { useContext } from 'react';
+import { SkjemaContext } from '../../providers/skjema-provider';
 
 export enum InnsatsgruppeType {
     STANDARD_INNSATS = 'STANDARD_INNSATS',
@@ -42,23 +44,22 @@ export const innsatsgrupper = [
 ];
 
 interface InnsatsgruppeProps {
-    handleInnsatsgruppeChanged: (e: any) => void;
-    innsatsgruppe: OrNothing<InnsatsgruppeType>;
     innsatgruppefeil?: string;
 }
 
 function Innsatsgruppe (props: InnsatsgruppeProps) {
+    const {innsatsgruppe, setInnsatsgruppe} = useContext(SkjemaContext);
     return (
         <SkjemaElement
             tittel="Innsatsgruppe"
-            value={getInnsatsgruppeNavn(props.innsatsgruppe)}
+            value={getInnsatsgruppeNavn(innsatsgruppe)}
             feil={props.innsatgruppefeil}
         >
             {(lukkSkjema) =>
                 <InnsatsgruppeRadioButtons
                     lukkSkjema={lukkSkjema}
-                    handleInnsatsgruppeChanged={props.handleInnsatsgruppeChanged}
-                    innsatsgruppe={props.innsatsgruppe}
+                    handleInnsatsgruppeChanged={setInnsatsgruppe}
+                    innsatsgruppe={innsatsgruppe}
                 />
             }
         </SkjemaElement>

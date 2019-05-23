@@ -1,7 +1,8 @@
 import React from 'react';
 import { CheckboksPanel } from 'nav-frontend-skjema';
 import { Flatknapp } from 'nav-frontend-knapper';
-import { Opplysning } from '../skjema';
+import { Opplysning } from './opplysninger';
+import { ReactComponent as RedigerOpplysningIkon } from './rediger.svg';
 
 interface VisopplysningProps {
     opplysning: Opplysning;
@@ -20,7 +21,9 @@ export function VisOpplysning(props: VisopplysningProps) {
                 value={tekst}
                 onChange={(e: any) => props.onChange(props.opplysning[tekst] = e.target.checked)}
             />
-            <Flatknapp onClick={props.handleOpplysning}>Endre</Flatknapp>
+            <button className="redigeropplysning-knapp" onClick={props.handleOpplysning}>
+                <RedigerOpplysningIkon aria-labelledby="redigerIkonId"/>
+            </button>
         </div>
     );
 }

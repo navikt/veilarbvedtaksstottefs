@@ -5,7 +5,7 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import './tidligere-vedtak-liste.less';
-import { ViewDispatch } from '../app-provider/app-provider';
+import { ViewDispatch } from '../providers/app-provider';
 import { ActionType } from '../viewcontroller/view-reducer';
 import { Dato } from './dato';
 import { Veileder } from './veileder';

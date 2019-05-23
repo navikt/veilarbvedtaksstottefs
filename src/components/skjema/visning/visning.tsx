@@ -5,7 +5,7 @@ import { BegrunnelseVisning } from './begrunnelse';
 import { InnsatsgruppeVisning } from './innsatsgruppe';
 import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { ActionType } from '../../viewcontroller/view-reducer';
-import { ViewDispatch } from '../../app-provider/app-provider';
+import { ViewDispatch } from '../../providers/app-provider';
 import './visning.less';
 import { Sidetittel } from 'nav-frontend-typografi';
 import { Opplysninger } from './opplysninger';
@@ -16,7 +16,7 @@ export function VedtakVisning (props: {vedtak: VedtakData}) {
         <div className="vedtaksvisnig">
             <Sidetittel tag="h3">Oppfølgingsvedtak</Sidetittel>
             <HovedmalVisning hovedmal={props.vedtak.hovedmal}/>
-            <Opplysninger opplysninger={props.vedtak.andreopplysninger}/>
+            <Opplysninger opplysninger={props.vedtak.opplysninger}/>
             <InnsatsgruppeVisning innsatsgruppe={props.vedtak.innsatsgruppe}/>
             <BegrunnelseVisning begrunnelse={props.vedtak.begrunnelse}/>
             <div className="vedtaksvisnig__aksjoner">

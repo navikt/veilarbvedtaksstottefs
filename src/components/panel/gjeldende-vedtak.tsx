@@ -10,7 +10,7 @@ import { OrNothing } from '../../utils/types/ornothing';
 import { getInnsatsgruppeNavn } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { ReactComponent as IngenVedtakIcon } from './ingen_vedtak.svg';
 import { ReactComponent as FullfortVedtakIcon } from './fullfort.svg';
-import { ViewDispatch } from '../app-provider/app-provider';
+import { ViewDispatch } from '../providers/app-provider';
 import { Veileder } from './veileder';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 

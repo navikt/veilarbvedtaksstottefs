@@ -1,43 +1,62 @@
-
 import { InnsatsgruppeType } from './innsatsgruppe/innsatsgruppe';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import { BEGRUNNELSE_MAX_LENGTH } from './begrunnelse/begrunnelse';
 import { OrNothing } from '../../utils/types/ornothing';
-import { SkjemaData } from '../../pages/skjema/vedtakskjema';
-import { Opplysning } from './skjema';
+import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
+import { Opplysning } from './opplysninger/opplysninger';
 
 const defaultOpplysningsliste =
     [
-        {'Brukerens CV': false},
-        {'Brukerens svar ved registrering hos NAV': false},
-        {'Brukerens jobbprofil på nav.no': false },
-        {'Brukerens egenvurdering': false},
+        'Brukerens CV',
+        'Brukerens svar ved registrering hos NAV',
+        'Brukerens jobbprofil på nav.no',
+        'Brukerens egenvurdering',
     ];
 
-export function skjemaIsNotEmpty (skjema: SkjemaData) {
- return skjema.hovedmal
-     || skjema.innsatsgruppe
-     || (skjema.opplysninger && (skjema.opplysninger as string[]).length > 0 )
-     || skjema.begrunnelse.trim();
+export function mergeMedDefaultOpplysninger(opplysningerListe?: string []): Opplysning[] {
+    const filtretDefaultFraBackend = filtrerDefaultOpplysningerFraBackend(opplysningerListe);
+    const defaultObjekt = byggOpplysningsObjektliste(false, filtretDefaultFraBackend);
+    const opplysningslisteObjekt = byggOpplysningsObjektliste(true, opplysningerListe);
+    return defaultObjekt.concat(opplysningslisteObjekt);
+
 }
 
-export function byggOpplysningsObject (opplysningerListe?: string []) {
-    return opplysningerListe
-        ? opplysningerListe.reduce((acc, opplysning ) => {
-            let opplysningsObjekt = {} as Opplysning;
-            opplysningsObjekt[opplysning] = true;
-            return [...acc, opplysningsObjekt];
-        }, [] as Opplysning[])
+function sjekkHvisOpplysningStartedMedDefaultOpplysning(opplysningerListe: string[], defaultOpplysning: string ) {
+    return opplysningerListe.some(opplysning => opplysning.trim().toLowerCase().startsWith(defaultOpplysning.trim().toLowerCase()));
+}
+
+function filtrerDefaultOpplysningerFraBackend (opplysningerListe?: string []) {
+    return opplysningerListe ?
+        defaultOpplysningsliste
+            .filter(defaultOpplysning => !sjekkHvisOpplysningStartedMedDefaultOpplysning(opplysningerListe, defaultOpplysning))
         : defaultOpplysningsliste;
 }
 
-export function byggOpplysningliste (opplysninger: Opplysning[]) {
+function byggOpplysningsObjektliste (verdi: boolean, opplysningerListe?: string []) {
+    if (!opplysningerListe) {
+        return [];
+    }
+    return opplysningerListe.reduce((acc, opplysning ) => {
+        let opplysningsObjekt = {} as Opplysning;
+        opplysningsObjekt[opplysning] = verdi;
+        return [...acc, opplysningsObjekt];
+    }, [] as Opplysning[]);
+}
+
+export function mapTilTekstliste (opplysninger: Opplysning[]) {
     return opplysninger.reduce((acc, opplysning) => {
         if (Object.values(opplysning)[0]) {
             return [...acc, Object.keys(opplysning)[0]];
         }
         return acc;
     }, [] as string[]);
+}
+
+export function skjemaIsNotEmpty (skjema: SkjemaData) {
+    return skjema.hovedmal
+        || skjema.innsatsgruppe
+        || (skjema.opplysninger && (skjema.opplysninger as string[]).length > 0 )
+        || skjema.begrunnelse.trim();
 }
 
 function maSkriveBegrunnelseGittInnsatsgruppe (innsatsgruppe: OrNothing<InnsatsgruppeType>) {
