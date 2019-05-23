@@ -31,7 +31,13 @@ function Begrunnelse (props: BegrunnelseProps) {
                     label=""
                     placeholder="Skriv inn begrunnelsen for vedtaket"
                     maxLength={BEGRUNNELSE_MAX_LENGTH}
-                    onChange={(e: any) => handleBegrunnelseChanged(e.target.value)}
+                    onChange={(e: any) => {
+                        let nyBegrunnelse = e.target.value;
+                        if (nyBegrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
+                            nyBegrunnelse = nyBegrunnelse.substr(0, BEGRUNNELSE_MAX_LENGTH);
+                        }
+                        handleBegrunnelseChanged(nyBegrunnelse);
+                    }}
                 />
                 <Hjelpesporsmal innsatsgruppe={innsatsgruppe} hovedmal={hovedmal}/>
             </div>

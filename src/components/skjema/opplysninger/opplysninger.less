@@ -1,34 +1,66 @@
-@import "../../../../node_modules/nav-frontend-core/less/_variabler";
+@import "~nav-frontend-core/less/_variabler";
+@import "../../../variabler.less";
+
 .veilarbvedtaksstottefs {
 	.opplysninger {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-column-gap: 0.5rem;
-		grid-row-gap: 0.5rem;
-	}
+		padding: 0 5rem;
 
-	.andreopplysninger {
-		margin-top: 1rem;
-		&__vis {
+		.visopplysning {
+			margin-top: 0.5rem;
+			display: grid;
+			grid-template-columns: 1fr 0.2fr;
+			border: 1px solid @navGra60;
+			border-radius: 0.23rem;
+
+			.inputPanel {
+				border: none;
+				box-shadow: none;
+			}
+
+			.inputPanel--checked {
+				background-color: white;
+			}
+
+			button {
+				border-radius: 0;
+			}
+
+		}
+
+		.leggtil {
 			display: flex;
-			flex-direction: row;
-
-			.fjern {
-				margin-left: 2rem;
-				font-weight: 700;
-				text-transform: none;
-				padding: 0 2rem;
-				text-decoration: underline;
+			padding: 1rem 1rem 1rem 1rem;
+			margin-top: 0.5rem;
+			.inputPanel__label:before {
+				background-color: initial;
+			}
+			.inputPanel__label {
+				margin-left: 0.4rem;
+			}
+			&__ikon {
+				padding: 0.2rem;
 			}
 		}
-		&__leggtil {
-			display: flex;
-			color: @navMorkGra;
-			border-bottom: 1px solid @navGra40;
-			max-width: 50%;
-		}
-		&__rediger{
-			max-width: 50%;
+
+		.rediger {
+			margin-top: 0.5rem;
+			background-color: @gra;
+			padding: 0.5rem;
+			.textarea__container {
+				.skjemaelement__input {
+					font-family: Source Sans Pro, Arial, sans-serif;
+					font-size: 1rem;
+				}
+			}
+			&__aksjoner {
+				display: flex;
+				justify-content: flex-end;
+				button {
+					text-transform: none;
+					text-decoration: underline;
+				}
+			}
 		}
 	}
 }

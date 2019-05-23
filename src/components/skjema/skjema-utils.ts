@@ -1,19 +1,43 @@
-import  { OpplysningType } from './opplysninger/opplysninger';
-import { ValgtOpplysninger, SkjemaData } from '../../pages/skjema/skjema';
+
 import { InnsatsgruppeType } from './innsatsgruppe/innsatsgruppe';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import { BEGRUNNELSE_MAX_LENGTH } from './begrunnelse/begrunnelse';
 import { OrNothing } from '../../utils/types/ornothing';
+import { SkjemaData } from '../../pages/skjema/vedtakskjema';
+import { Opplysning } from './skjema';
 
-export function byggOpplysningsObject (opplysningerListe: string []) {
-    return (opplysningerListe ? opplysningerListe : []).reduce((acc: ValgtOpplysninger, opplysning ) => {
-        acc[opplysning as OpplysningType] = true;
-        return acc;
-    }, {} as ValgtOpplysninger);
+const defaultOpplysningsliste =
+    [
+        {'Brukerens CV': false},
+        {'Brukerens svar ved registrering hos NAV': false},
+        {'Brukerens jobbprofil på nav.no': false },
+        {'Brukerens egenvurdering': false},
+    ];
+
+export function skjemaIsNotEmpty (skjema: SkjemaData) {
+ return skjema.hovedmal
+     || skjema.innsatsgruppe
+     || (skjema.opplysninger && (skjema.opplysninger as string[]).length > 0 )
+     || skjema.begrunnelse.trim();
 }
 
-export function byggOpplysningliste (opplysningerObj: ValgtOpplysninger) {
-    return Object.entries(opplysningerObj).reduce((acc, [key, value]) => value ? [...acc, key as OpplysningType] : acc, [] as OpplysningType[]);
+export function byggOpplysningsObject (opplysningerListe?: string []) {
+    return opplysningerListe
+        ? opplysningerListe.reduce((acc, opplysning ) => {
+            let opplysningsObjekt = {} as Opplysning;
+            opplysningsObjekt[opplysning] = true;
+            return [...acc, opplysningsObjekt];
+        }, [] as Opplysning[])
+        : defaultOpplysningsliste;
+}
+
+export function byggOpplysningliste (opplysninger: Opplysning[]) {
+    return opplysninger.reduce((acc, opplysning) => {
+        if (Object.values(opplysning)[0]) {
+            return [...acc, Object.keys(opplysning)[0]];
+        }
+        return acc;
+    }, [] as string[]);
 }
 
 function maSkriveBegrunnelseGittInnsatsgruppe (innsatsgruppe: OrNothing<InnsatsgruppeType>) {
@@ -29,10 +53,6 @@ export function validerSkjema(skjema: SkjemaData) {
 
     if (!skjema.hovedmal) {
         errors.hovedmal = 'Mangler hovedmal';
-    }
-
-    if (skjema.andreOpplysninger.length === 0 && skjema.opplysninger.length === 0) {
-        errors.opplysninger = 'Mangler opplysninger';
     }
 
     const begrunnelse = skjema.begrunnelse.trim();
