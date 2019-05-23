@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React  from 'react';
 import './grid.less';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {

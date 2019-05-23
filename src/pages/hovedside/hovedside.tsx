@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../components/app-provider/app-provider';
-import { TidligereVedtakPanel } from '../../components/panel/tidligere-vedtak-panel/tidligere-vedtak-panel';
-import { Utkast } from '../../components/panel/utkast';
+import { TidligereVedtakPanel } from '../../components/panel/tidligere-vedtak/tidligere-vedtak-panel';
+import { UtkastPanel } from '../../components/panel/utkast/utkast-panel';
 import { VedtakData } from '../../utils/types/vedtak';
-import Grid from '../../components/grid/grid';
-import { GjeldendeVedtak } from '../../components/panel/gjeldende-vedtak';
+import { GjeldendeVedtak } from '../../components/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
+import { NyttVedtakPanel } from '../../components/panel/nytt-vedtak/nytt-vedtak-panel';
 import './hovedside.less';
 
 export function Hovedside (props: {fnr: string}) {
@@ -15,11 +15,12 @@ export function Hovedside (props: {fnr: string}) {
     const utkast =  vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
 
     return (
-        <Grid columns={2}>
-            <Utkast utkast={utkast}/>
-            <GjeldendeVedtak gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
+        <div className="hovedside">
+            <GjeldendeVedtak gjeldendeVedtak={gjeldendeVedtak}/>
+            <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
+            <UtkastPanel utkast={utkast}/>
             <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
-        </Grid>
+        </div>
     );
 
 }

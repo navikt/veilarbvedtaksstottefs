@@ -1,50 +1,54 @@
 import React, { useContext } from 'react';
 import { VedtakData } from '../../../utils/types/vedtak';
-import { VedtakstottePanel } from '../veilarbvedtakstotte-panel/vedtakstotte-panel';
+import { Panel } from '../panel/panel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { getInnsatsgruppeNavn } from '../../skjema/innsatsgruppe/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import './tidligere-vedtak-panel.less';
 import { ViewDispatch } from '../../app-provider/app-provider';
 import { ActionType } from '../../viewcontroller/view-reducer';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
 import emptyBox from './empty-box.svg';
+import './tidligere-vedtak-panel.less';
 
 export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData []}) {
     if (props.vedtakHistorikk.length === 0) {
-        return (
-            <VedtakstottePanel tittel="Tidligere oppfølgingsvedtak">
-                <section className="ingen-vedtak">
-                    <img src={emptyBox} alt="Illustrasjon av tom eske" className="ingen-vedtak__bilde"/>
-                    <Undertittel>Ingen tidligere oppfølgingsvedtak</Undertittel>
-                    <Normaltekst className="ingen-vedtak__forklaring">
-                        Tidligere oppfølgingsvedtak (§ 14a) i ny løsning vil være tilgjengelig her
-                    </Normaltekst>
-                </section>
-            </VedtakstottePanel>
-        );
+        return <IngenTidligereVedtak/>;
     }
 
+    return <HarTidligereVedtak vedtakHistorikk={props.vedtakHistorikk}/>
+}
+
+function IngenTidligereVedtak() {
     return (
-        <VedtakstottePanel tittel="Tidligere oppfølgingsvedtak">
+        <Panel tittel="Tidligere oppfølgingsvedtak" className="tidligere-vedtak-panel">
+            <section className="ingen-vedtak">
+                <img src={emptyBox} alt="Illustrasjon av tom eske" className="ingen-vedtak__bilde"/>
+                <Undertittel>Ingen tidligere oppfølgingsvedtak</Undertittel>
+                <Normaltekst className="ingen-vedtak__forklaring">
+                    Tidligere oppfølgingsvedtak (§ 14a) i ny løsning vil være tilgjengelig her
+                </Normaltekst>
+            </section>
+        </Panel>
+    );
+}
+
+function HarTidligereVedtak({vedtakHistorikk}: {vedtakHistorikk: VedtakData []}) {
+    return (
+        <Panel tittel="Tidligere oppfølgingsvedtak" className="tidligere-vedtak-panel">
             <ul className="vedtak-historikk-liste">
-                {props.vedtakHistorikk.map((tidligereVedtak, idx) =>
+                {vedtakHistorikk.map((tidligereVedtak, idx) =>
                     <TidligereVedtak
                         key={idx}
                         tidligereVedtak={tidligereVedtak}
                     />
                 )}
             </ul>
-        </VedtakstottePanel>
+        </Panel>
     );
 }
 
-function handleTidligereVedtakClicked(dispatch: any, tidligereVedtak: VedtakData) {
-    dispatch({view: ActionType.VIS_VEDTAK, props: {id: tidligereVedtak.id}});
-}
-
-function TidligereVedtak (props: {tidligereVedtak: VedtakData}) {
+function TidligereVedtak(props: {tidligereVedtak: VedtakData}) {
     const {dispatch} = useContext(ViewDispatch);
     const tidligereVedtak = props.tidligereVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(tidligereVedtak.innsatsgruppe);
@@ -60,4 +64,8 @@ function TidligereVedtak (props: {tidligereVedtak: VedtakData}) {
             </div>
         </li>
     );
+}
+
+function handleTidligereVedtakClicked(dispatch: any, tidligereVedtak: VedtakData) {
+    dispatch({view: ActionType.VIS_VEDTAK, props: {id: tidligereVedtak.id}});
 }
