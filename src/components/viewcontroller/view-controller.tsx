@@ -3,7 +3,7 @@ import { ActionType } from './view-reducer';
 import { Hovedside } from '../../pages/hovedside/hovedside';
 import { VisVedtak } from '../../pages/visvedtak';
 import { TilInnsending } from '../../pages/forhandsvisning/forhandsvisning';
-import { ViewDispatch } from '../providers/app-provider';
+import { ViewDispatch } from '../providers/view-provider';
 import { VedleggVisning } from '../../pages/vedlegg-visning/vedlegg-visning';
 import { VedtakbrevPdfVisning } from '../../pages/vedtakbrevpdf-visning/vedtakbrevpdf-visning';
 import { VedtakskjemaSide } from '../../pages/vedtakskjema/vedtakskjema-side';

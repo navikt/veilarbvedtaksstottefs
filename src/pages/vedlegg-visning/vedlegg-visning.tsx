@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { ViewDispatch } from '../../components/providers/app-provider';
-import useFetch, { Status } from '../../utils/hooks/useFetch';
+import { ViewDispatch } from '../../components/providers/view-provider';
+import { useFetch } from '../../utils/hooks/useFetch';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../api/vedtaksstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
@@ -13,6 +13,7 @@ import { OpplysningType } from '../../components/skjema/opplysninger/opplysninge
 import { OrNothing } from '../../utils/types/ornothing';
 import { Innholdstittel, Sidetittel } from 'nav-frontend-typografi';
 import './vedlegg-visning.less';
+import { Status } from '../../utils/fetch-utils';
 
 interface VedleggVisningProps {
     vedtakId: number;

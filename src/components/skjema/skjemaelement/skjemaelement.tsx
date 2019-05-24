@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import './skjemaelement.less';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import Tekstomrade from 'nav-frontend-tekstomrade';
+import './skjemaelement.less';
 
 interface SkjemaElementProps<T> {
     tittel: string;

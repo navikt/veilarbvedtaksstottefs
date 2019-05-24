@@ -1,46 +1,39 @@
 import { useEffect, useState } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
-import { OrNothing } from '../types/ornothing';
+import { AppFetchState, useFetchState } from '../../components/providers/fetch-provider';
+import { FetchState, initialFetchState, Status } from '../fetch-utils';
 
-export enum Status {
-    NOT_STARTED = 'NOT_STARTED',
-    LOADING = 'LOADING',
-    DONE = 'DONE',
-    ERROR = 'ERROR'
-}
-
-interface FetchState<T> {
-    data: OrNothing<T>;
-    status: Status;
-}
-
-const initialState = {
-    status: Status.LOADING,
-    data: null
+export const fetchData = async (config: AxiosRequestConfig, setState: Function) => {
+    setState({status: Status.LOADING, data: null});
+    try {
+        const res = await axios(config);
+        if (res.status) {
+            setState({status: Status.DONE, data: res.data});
+        } else {
+            setState({status: Status.ERROR, data: null});
+        }
+    } catch (e) {
+        console.error(e); // tslint:disable-line
+        setState({status: Status.ERROR, data: null});
+    }
 };
 
-function useFetch<T> (config: AxiosRequestConfig) {
-    const [state, setState] = useState<FetchState<T>>(initialState);
-
-    const fetchData = async () => {
-        try {
-            const res = await axios(config);
-            if (res.status) {
-                setState({status: Status.DONE, data: res.data});
-            } else {
-                setState({status: Status.ERROR, data: null});
-            }
-        } catch (e) {
-            console.error(e); // tslint:disable-line
-            setState({...state, status: Status.ERROR});
-        }
-    };
+export function useGlobalFetch<T>(config: AxiosRequestConfig, name: keyof AppFetchState): FetchState<T> {
+    const [state, setState] = useFetchState(name);
 
     useEffect(() => {
-        fetchData();
+        fetchData(config, setState);
+    }, []);
+
+    return state as any;
+}
+
+export function useFetch<T> (config: AxiosRequestConfig): FetchState<T> {
+    const [state, setState] = useState<FetchState<T>>(initialFetchState);
+
+    useEffect(() => {
+        fetchData(config, setState);
     }, []);
 
     return state;
 }
-
-export default useFetch;

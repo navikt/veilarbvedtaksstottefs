@@ -1,8 +1,6 @@
 import { mapTilTekstliste, skjemaIsNotEmpty, validerSkjema } from '../../components/skjema/skjema-utils';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import { useContext, useState } from 'react';
-import { AppContext, ViewDispatch } from '../../components/providers/app-provider';
-import { Status } from '../../utils/hooks/useFetch';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { useTimer } from '../../utils/hooks/useTimer';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
@@ -16,6 +14,9 @@ import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Skjema from '../../components/skjema/skjema';
 import { SkjemaContext } from '../../components/providers/skjema-provider';
+import { ViewDispatch } from '../../components/providers/view-provider';
+import { useFetchState } from '../../components/providers/fetch-provider';
+import { Status } from '../../utils/fetch-utils';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -30,7 +31,7 @@ interface SkjemaAksjonerProps {
 
 export function VedtakskjemaSide ({fnr}: SkjemaAksjonerProps) {
     const {dispatch} = useContext(ViewDispatch);
-    const {setVedtak} = useContext(AppContext);
+    const [vedtak, setVedtak] = useFetchState('vedtak');
     const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [errors, setErrors] = useState<SkjemaFeil>({});
 
