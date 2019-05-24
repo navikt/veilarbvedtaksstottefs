@@ -1,38 +1,28 @@
-import React, { useContext, useEffect } from 'react';
-import { Status } from '../utils/hooks/useFetch';
-import { AppContext } from './providers/app-provider';
+import React, { useEffect } from 'react';
+import { fetchData, useGlobalFetch } from '../utils/hooks/useFetch';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
 import VedtaksstotteApi from '../api/vedtaksstotte-api';
+import OppfolgingApi from '../api/oppfolging-api';
+import { isAnyFailed, isAnyLoading, Status } from '../utils/fetch-utils';
+import { useFetchState } from './providers/fetch-provider';
 
 export function DataFetcher (props: {fnr: string, children: any}) {
-    const {setVedtak, vedtak} = useContext(AppContext);
+    const underOppfolging = useGlobalFetch(OppfolgingApi.lagUnderOppfolgingConfig(props.fnr), 'underOppfolging');
+    const [vedtak, setVedtak] = useFetchState('vedtak');
 
-    const fetchVedtakData = async () => {
-        setVedtak(prevState => ({...prevState, status: Status.LOADING}));
-        try {
-            const res = await VedtaksstotteApi.hentVedtak(props.fnr);
-            if (res.status) {
-                setVedtak({status: Status.DONE, data: res.data});
-            } else {
-                setVedtak(prevState => ({...prevState, status: Status.ERROR}));
-            }
-        } catch (e) {
-            setVedtak(prevState => ({...prevState, status: Status.ERROR}));
-        }
-    };
+    console.log(vedtak); // tslint:disable-line
 
     useEffect(() => {
         if (vedtak.status === Status.NOT_STARTED) {
-            fetchVedtakData();
+            console.log('fetching'); // tslint:disable-line
+            fetchData(VedtaksstotteApi.lagHentVedtakConfig(props.fnr), setVedtak);
         }
     }, [vedtak.status]);
 
-    const status = vedtak.status;
-
-    if (status === 'NOT_STARTED' || status === 'LOADING') {
+    if (isAnyLoading(vedtak.status, underOppfolging.status)) {
         return <NavFrontendSpinner type="XL"/>;
-    } else if (status === 'ERROR') {
+    } else if (isAnyFailed(vedtak.status, underOppfolging.status)) {
         return <AlertStripeFeilSolid>Noe gikk galt, prøv igjen</AlertStripeFeilSolid>;
     }
 
