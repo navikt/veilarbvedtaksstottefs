@@ -10,12 +10,14 @@ import VedtaksstotteApi from '../../../api/vedtaksstotte-api';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import leggTilVedtakBilde from './legg-til-vedtak.svg';
 import './nytt-vedtak-panel.less';
+import { useFetchState } from '../../providers/fetch-provider';
 
 export function NyttVedtakPanel(props: {utkast: OrNothing<VedtakData>, gjeldendeVedtak: OrNothing<VedtakData>, fnr: string}) {
+    const [underOppfolgingData] = useFetchState('underOppfolging');
     const {dispatch} = useContext(ViewDispatch);
     const { utkast, gjeldendeVedtak, fnr } = props;
 
-    if (utkast) {
+    if (utkast || !underOppfolgingData.data.underOppfolging) {
         return null;
     }
 
