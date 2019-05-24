@@ -1,21 +1,28 @@
-import React from 'react';
-import { useGlobalFetch } from '../utils/hooks/useFetch';
+import React, { useEffect } from 'react';
+import { fetchData, useGlobalFetch } from '../utils/hooks/useFetch';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
 import VedtaksstotteApi from '../api/vedtaksstotte-api';
 import OppfolgingApi from '../api/oppfolging-api';
-import { isAnyFailed, isAnyLoading } from '../utils/fetch-utils';
+import { isAnyFailed, isAnyLoading, Status } from '../utils/fetch-utils';
+import { useFetchState } from './providers/fetch-provider';
 
 export function DataFetcher (props: {fnr: string, children: any}) {
-    const vedtakData = useGlobalFetch(VedtaksstotteApi.lagHentVedtakConfig(props.fnr), 'vedtak');
     const underOppfolging = useGlobalFetch(OppfolgingApi.lagUnderOppfolgingConfig(props.fnr), 'underOppfolging');
+    const [vedtak, setVedtak] = useFetchState('vedtak');
 
-    console.log(vedtakData); // tslint:disable-line
-    console.log(underOppfolging); // tslint:disable-line
+    console.log(vedtak); // tslint:disable-line
 
-    if (isAnyLoading(vedtakData.status, underOppfolging.status)) {
+    useEffect(() => {
+        if (vedtak.status === Status.NOT_STARTED) {
+            console.log('fetching'); // tslint:disable-line
+            fetchData(VedtaksstotteApi.lagHentVedtakConfig(props.fnr), setVedtak);
+        }
+    }, [vedtak.status]);
+
+    if (isAnyLoading(vedtak.status, underOppfolging.status)) {
         return <NavFrontendSpinner type="XL"/>;
-    } else if (isAnyFailed(vedtakData.status, underOppfolging.status)) {
+    } else if (isAnyFailed(vedtak.status, underOppfolging.status)) {
         return <AlertStripeFeilSolid>Noe gikk galt, prøv igjen</AlertStripeFeilSolid>;
     }
 

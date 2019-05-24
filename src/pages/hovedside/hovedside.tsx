@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TidligereVedtakPanel } from '../../components/panel/tidligere-vedtak/tidligere-vedtak-panel';
 import { UtkastPanel } from '../../components/panel/utkast/utkast-panel';
 import { VedtakData } from '../../utils/types/vedtak';
 import { GjeldendeVedtak } from '../../components/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
 import { NyttVedtakPanel } from '../../components/panel/nytt-vedtak/nytt-vedtak-panel';
-import './hovedside.less';
 import { useFetchState } from '../../components/providers/fetch-provider';
+import './hovedside.less';
 
 export function Hovedside (props: {fnr: string}) {
     const [vedtak] = useFetchState('vedtak');

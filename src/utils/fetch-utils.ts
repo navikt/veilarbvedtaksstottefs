@@ -11,7 +11,7 @@ export interface FetchState<T> {
 }
 
 export const initialFetchState: FetchState<any> = {
-    status: Status.LOADING,
+    status: Status.NOT_STARTED,
     data: null
 };
 

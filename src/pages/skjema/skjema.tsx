@@ -38,7 +38,7 @@ export interface SkjemaData {
 }
 
 function Skjema ({fnr}: SkjemaProps) {
-    const [vedtak] = useFetchState('vedtak');
+    const [vedtak, setVedtak] = useFetchState('vedtak');
     const {dispatch} = useContext(ViewDispatch);
 
     const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
@@ -59,7 +59,7 @@ function Skjema ({fnr}: SkjemaProps) {
     }
 
     function dispatchFetchVedtakOgRedirectTilHovedside () {
-        //setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+        setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
         dispatch({view: ActionType.HOVEDSIDE});
     }
 
@@ -82,7 +82,7 @@ function Skjema ({fnr}: SkjemaProps) {
             return;
         }
         sendDataTilBackend(skjema).then(() =>  {
-            //setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
             dispatch({view: ActionType.INNSENDING});
         }).catch (error => {
             console.log(error); // tslint:disable-line:no-console

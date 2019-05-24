@@ -3,7 +3,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { AppFetchState, useFetchState } from '../../components/providers/fetch-provider';
 import { FetchState, initialFetchState, Status } from '../fetch-utils';
 
-const fetchData = async (config: AxiosRequestConfig, setState: Function) => {
+export const fetchData = async (config: AxiosRequestConfig, setState: Function) => {
+    setState({status: Status.LOADING, data: null});
     try {
         const res = await axios(config);
         if (res.status) {

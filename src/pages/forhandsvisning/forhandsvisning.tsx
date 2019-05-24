@@ -6,6 +6,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { ViewDispatch } from '../../components/providers/view-provider';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
+import { useFetchState } from '../../components/providers/fetch-provider';
+import { Status } from '../../utils/fetch-utils';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -15,6 +17,7 @@ const veilarbvedtakkUrl = (fnr: string) => process.env.NODE_ENV === 'development
 
 export function TilInnsending (props: {fnr: string}) {
     const [numPages, setPages] = useState(0);
+    const [vedtak, setVedtak] = useFetchState('vedtak');
     const {dispatch} = useContext(ViewDispatch);
 
     const Pages = () => {
@@ -29,7 +32,7 @@ export function TilInnsending (props: {fnr: string}) {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
-            // setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
             dispatch({view: ActionType.HOVEDSIDE});
         });
     };
