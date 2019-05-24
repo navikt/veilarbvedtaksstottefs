@@ -3,6 +3,8 @@ import { RadioPanel } from 'nav-frontend-skjema';
 import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
+import { useContext } from 'react';
+import { SkjemaContext } from '../../providers/skjema-provider';
 
 export enum InnsatsgruppeType {
     STANDARD_INNSATS = 'STANDARD_INNSATS',
@@ -19,46 +21,45 @@ export const getInnsatsgruppeNavn = (innsatsgruppeType: OrNothing<InnsatsgruppeT
 
 export const innsatsgrupper = [
     {
-        label: 'Gode muligheter (standard innsats)',
+        label: 'Standard innsats (gode muligheter)',
         value: InnsatsgruppeType.STANDARD_INNSATS
     },
     {
-        label: 'Trenger veiledning (situasjonsbestemt innsats)',
+        label: 'Situasjonsbestemt innsats (trenger veiledning)',
         value: InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS,
     },
     {
-        label: 'Nedsatt arbeidsevne (spesielt tilpasset innsats)',
+        label: 'Spesielt tilpasset innsats (nedsatt arbeidsevne)',
         value: InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS,
     },
     {
-        label: 'Varig nedsatt arbeidsevne (varig tilpasset innsats)',
+        label: 'Gradert varig tilpasset innsats (gradert varig nedsatt arbeidsevne)',
         value: InnsatsgruppeType.VARIG_TILPASSET_INNSATS
     },
     {
-        label: 'Gradert varig nedsatt arbeidsevne (gradert varig tilpasset innsats)',
+        label: 'Gradert varig tilpasset innsats (gradert varig nedsatt arbeidsevne)',
         value: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS
     },
 
 ];
 
 interface InnsatsgruppeProps {
-    handleInnsatsgruppeChanged: (e: any) => void;
-    innsatsgruppe: OrNothing<InnsatsgruppeType>;
     innsatgruppefeil?: string;
 }
 
 function Innsatsgruppe (props: InnsatsgruppeProps) {
+    const {innsatsgruppe, setInnsatsgruppe} = useContext(SkjemaContext);
     return (
         <SkjemaElement
             tittel="Innsatsgruppe"
-            value={getInnsatsgruppeNavn(props.innsatsgruppe)}
+            value={getInnsatsgruppeNavn(innsatsgruppe)}
             feil={props.innsatgruppefeil}
         >
             {(lukkSkjema) =>
                 <InnsatsgruppeRadioButtons
                     lukkSkjema={lukkSkjema}
-                    handleInnsatsgruppeChanged={props.handleInnsatsgruppeChanged}
-                    innsatsgruppe={props.innsatsgruppe}
+                    handleInnsatsgruppeChanged={setInnsatsgruppe}
+                    innsatsgruppe={innsatsgruppe}
                 />
             }
         </SkjemaElement>

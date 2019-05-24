@@ -1,10 +1,16 @@
 import * as React from 'react';
 import './opplysninger.less';
-import { CheckboksPanel } from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { AndreOpplysninger } from './andre-opplysninger';
-import { ValgtOpplysninger } from '../../../pages/skjema/skjema';
-import { byggOpplysningliste } from '../skjema-utils';
+import { VisOpplysning } from './visopplysning';
+import { RedigerOpplysning } from './rediger-opplysning';
+import { useState } from 'react';
+import { LeggTilOpplysning } from './leggtil-opplysning';
+import { useContext } from 'react';
+import { SkjemaContext } from '../../providers/skjema-provider';
+
+export type Opplysning = {
+    [key: string]: boolean
+};
 
 export enum OpplysningType {
     CV = 'CV',
@@ -13,41 +19,51 @@ export enum OpplysningType {
     EGENVURDERING = 'EGENVURDERING',
 }
 
-const OPPLYSNINGER = [
-    {
-        label: 'Brukerens CV',
-        name: OpplysningType.CV,
-    },
-    {
-        label: 'Brukerens svar ved registrering hos NAV',
-        name: OpplysningType.REGISTRERINGSINFO,
-    },
-    {
-        label: 'Brukerens jobbprofil på nav.no',
-        name: OpplysningType.JOBBPROFIL,
-    },
-    {
-        label: 'Brukerens egenvurdering',
-        name: OpplysningType.EGENVURDERING,
-    },
-];
-
 interface OpplysningerProps {
-    handleOpplysningerChanged: (e: any) => void;
-    handleAndraOpplysningerChanged: (e: any) => void;
-    andreOpplysninger: string[];
     opplysningerfeil?: string;
-    opplysninger: ValgtOpplysninger;
 }
 
 function Opplysninger(props: OpplysningerProps) {
-    const valgeOpplysninger = byggOpplysningliste(props.opplysninger).map(opplysning =>  {
-        const obj  = OPPLYSNINGER.find(elem => elem.name  === opplysning);
-        return obj && obj.label;
-    });
+    const [redigeringModusIndeks, setRedigeringModusIndeks ] = useState<number>( -1);
+    const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning ] = useState<boolean>( true);
 
-    const samladeOpplysninger = props.andreOpplysninger.concat(valgeOpplysninger as string[]);
-    const harOpplysninger = samladeOpplysninger.length > 0;
+    const { opplysninger, setOpplysninger } = useContext(SkjemaContext);
+
+    const harOpplysninger = opplysninger.some(opplysning => Object.values(opplysning)[0]);
+
+    const samladeOpplysninger = opplysninger.reduce((acc, opplysning) => {
+        if (Object.values(opplysning)[0]) {
+            return [...acc, Object.keys(opplysning)[0]];
+        }
+        return acc;
+    }, [] as string[]);
+
+    function handleOpplysningerChanged (index: number, opplysning: Opplysning) {
+        if (Object.keys(opplysning)[0].trim()) {
+            setOpplysninger(prevState => {
+                if (index === prevState.length) {
+                    return [...prevState, opplysning];
+                }
+                return prevState.map((prevOpplysning, idx) => {
+                    if (idx === index) {
+                        return opplysning;
+                    }
+                    return prevOpplysning;
+                });
+            });
+        }
+    }
+
+    function handleOpplysningerChecked (opplysning: Opplysning) {
+        setOpplysninger(prevState => {
+            return prevState.map(prevOpplysning => {
+                if (Object.keys(prevOpplysning)[0] === Object.keys(opplysning)[0]) {
+                    return opplysning;
+                }
+                return prevOpplysning;
+            });
+        });
+    }
 
     return (
         <SkjemaElement
@@ -55,35 +71,42 @@ function Opplysninger(props: OpplysningerProps) {
             value={harOpplysninger ? <LagOpplysningsListe samladeOpplysninger={samladeOpplysninger}/> : null}
             feil={props.opplysningerfeil}
         >
-            <ForhandsdefinieradeOppplysninger
-                handleOpplysningerChanged={props.handleOpplysningerChanged}
-                opplysninger={props.opplysninger}
-            />
-            <AndreOpplysninger
-                andreopplysninger={props.andreOpplysninger}
-                setAndreOpplysninger={props.handleAndraOpplysningerChanged}
-            />
+           <div className="opplysninger">
+            {opplysninger.map((opplysning, index) =>
+                redigeringModusIndeks !== index
+                    ? <VisOpplysning
+                        opplysning={opplysning}
+                        handleOpplysning={() => setRedigeringModusIndeks(index)}
+                        key={index}
+                        onChange={handleOpplysningerChecked}
+                    />
+                    : <RedigerOpplysning
+                        opplysning={opplysning}
+                        onTekstSubmit={(endretOpplysning) => {
+                            setRedigeringModusIndeks(-1);
+                            handleOpplysningerChanged(index, endretOpplysning);
+                        }}
+                        key={index}
+                        onTekstCancel={() => setRedigeringModusIndeks(-1)}
+                    />
+            )}
+            {visLeggTilNyOpplysning
+                ? <LeggTilOpplysning leggTilOpplysning={() => setVisLeggTilNyOpplysning(false)}/>
+                : <RedigerOpplysning
+                    opplysning={{'': true}}
+                    onTekstSubmit={(endretOpplysning) => {
+                        handleOpplysningerChanged(opplysninger.length, endretOpplysning);
+                        setVisLeggTilNyOpplysning(true);
+                    }}
+                    onTekstCancel={() => setVisLeggTilNyOpplysning(true)}
+                />
+            }
+          </div>
         </SkjemaElement>
     );
 }
 
 export default Opplysninger;
-
-const ForhandsdefinieradeOppplysninger = (props: {handleOpplysningerChanged: (e: any) => void, opplysninger: ValgtOpplysninger}) => {
-    return (
-        <div className="opplysninger">
-            {OPPLYSNINGER.map((opplysning, index) =>
-                <CheckboksPanel
-                    checked={props.opplysninger[opplysning.name]}
-                    key={index}
-                    inputProps={{name: opplysning.name}}
-                    label={opplysning.label}
-                    onChange={(e: any) => props.handleOpplysningerChanged(e)}
-                />
-            )}
-        </div>
-    );
-};
 
 function LagOpplysningsListe (props: {samladeOpplysninger: string[]}) {
     return (

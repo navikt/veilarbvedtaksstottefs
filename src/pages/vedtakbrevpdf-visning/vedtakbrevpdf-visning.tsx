@@ -1,6 +1,6 @@
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import { useContext, useState } from 'react';
-import { AppContext, ViewDispatch } from '../../components/app-provider/app-provider';
+import { AppContext, ViewDispatch } from '../../components/providers/app-provider';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { Undertittel } from 'nav-frontend-typografi';
 import { pdfjs, Document, Page } from 'react-pdf';

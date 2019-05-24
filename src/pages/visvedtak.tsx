@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AppContext, ViewDispatch } from '../components/app-provider/app-provider';
+import { AppContext, ViewDispatch } from '../components/providers/app-provider';
 import { VedtakVisning } from '../components/skjema/visning/visning';
 import { VedtakData } from '../utils/types/vedtak';
 import { TilbakeKnapp } from '../components/skjema/tilbakeknapp';

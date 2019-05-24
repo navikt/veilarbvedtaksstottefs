@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SkjemaData } from '../pages/skjema/skjema';
+import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 
 export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
 

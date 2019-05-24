@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppProvider } from './components/app-provider/app-provider';
+import { AppProvider } from './components/providers/app-provider';
 import { ViewController } from './components/viewcontroller/view-controller';
 import { DataFetcher } from './components/datafetcher';
 import { PrelanseringSjekk } from './components/prelansering-sjekk';

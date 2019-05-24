@@ -9,7 +9,7 @@ import { Veileder } from './veileder';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { ActionType } from '../viewcontroller/view-reducer';
 import { ReactComponent as UtkastIkon } from './utkast.svg';
-import { ViewDispatch } from '../app-provider/app-provider';
+import { ViewDispatch } from '../providers/app-provider';
 
 export function Utkast(props: {utkast: OrNothing<VedtakData>}) {
     const {dispatch} = useContext(ViewDispatch);

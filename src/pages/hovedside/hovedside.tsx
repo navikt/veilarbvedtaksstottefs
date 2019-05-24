@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import { AppContext } from '../../components/app-provider/app-provider';
+import { AppContext } from '../../components/providers/app-provider';
 import { TidligereVedtakListe } from '../../components/panel/tidligere-vedtak-liste';
 import { Utkast } from '../../components/panel/utkast';
 import { VedtakData } from '../../utils/types/vedtak';
