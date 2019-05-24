@@ -5,6 +5,7 @@ import Hjelpesporsmal from './hjelpesporsmal/hjelpesporsmal';
 import './begrunnelse.less';
 import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
+import { AlertStripeInfo }  from 'nav-frontend-alertstriper';
 
 export const BEGRUNNELSE_MAX_LENGTH = 2000;
 
@@ -21,6 +22,8 @@ function Begrunnelse (props: BegrunnelseProps) {
             value={begrunnelse}
         >
             <div className="begrunnelse">
+                <AlertStripeInfo>Ved standard innsats(gode muligheter)er det ikke obligatorisk begrunnelse</AlertStripeInfo>
+                <div className="begrunnelse-boks">
                 <Textarea
                     value={begrunnelse}
                     label=""
@@ -34,10 +37,11 @@ function Begrunnelse (props: BegrunnelseProps) {
                         setBegrunnelse(nyBegrunnelse);
                     }}
                 />
-                <Hjelpesporsmal innsatsgruppe={innsatsgruppe} hovedmal={hovedmal}/>
+                    <Hjelpesporsmal innsatsgruppe={innsatsgruppe} hovedmal={hovedmal}/>
+                </div>
             </div>
         </SkjemaElement>
-    );
+);
 
 }
 

@@ -6,6 +6,54 @@
 		display: grid;
 		padding: 0 5rem;
 
+		.sist-endret {
+			background-color: @navGronnLighten80;
+		}
+
+		.bekreftelseboks {
+			box-sizing: border-box;
+			padding: 1rem 0.5rem;
+			background: white;
+			width: 20%;
+			right: 3rem;
+			box-shadow: 0 1px 3px 1px @navGra40;
+			border-radius: 0.25rem;
+
+			.bekreftelse {
+				display: flex;
+				flex-direction: column;
+				padding: 0 1rem 0 2.5rem;
+				&__ikon {
+					margin-left: 1rem;
+				}
+				span {
+					font-weight: 600;
+					font-size: 1.2rem;
+				}
+			}
+		}
+
+		.bekreftelseboks::after{
+			content: "";
+			position: absolute;
+			width: 0;
+			height: 0;
+			margin-left: -0.5em;
+			bottom: -2em;
+			left: 40%;
+			box-sizing: border-box;
+
+			border: 1em solid #aaa49b;
+			border-color: transparent transparent white white;
+
+			transform-origin: 0 0;
+			transform: rotate(-45deg);
+
+			box-shadow: -2px 2px 1px 0px #aaa49b;
+
+		}
+
+
 		.visopplysning {
 			margin-top: 0.5rem;
 			display: grid;
@@ -19,19 +67,20 @@
 			}
 
 			.inputPanel--checked {
-				background-color: white;
+				background-color: inherit;
 			}
 
 			.redigeropplysning-knapp {
 				border-radius: 0.25rem;
-				background-color: white;
+				background-color: inherit;
 				border: none;
 				cursor: pointer;
+				z-index: 1000;
 			}
 
 			.redigeropplysning-knapp:hover {
 				border-radius: 0.25rem;
-				background-color: white;
+				background-color: inherit;
 				border: none;
 
 				svg {

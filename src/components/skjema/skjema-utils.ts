@@ -7,9 +7,8 @@ import { Opplysning } from './opplysninger/opplysninger';
 
 const defaultOpplysningsliste =
     [
-        'Brukerens CV',
         'Brukerens svar ved registrering hos NAV',
-        'Brukerens jobbprofil på nav.no',
+        'Brukerens CV/Jobbprofil på nav.no',
         'Brukerens egenvurdering',
     ];
 

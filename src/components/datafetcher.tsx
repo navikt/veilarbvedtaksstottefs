@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Status } from '../utils/hooks/useFetch';
 import { AppContext } from './providers/app-provider';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import VedtaksstotteApi from '../api/vedtaksstotte-api';
 
 export function DataFetcher (props: {fnr: string, children: any}) {
@@ -33,7 +33,7 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     if (status === 'NOT_STARTED' || status === 'LOADING') {
         return <NavFrontendSpinner type="XL"/>;
     } else if (status === 'ERROR') {
-        return <AlertStripeFeilSolid>Noe gikk galt, prøv igjen</AlertStripeFeilSolid>;
+        return <AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 
     return props.children;

@@ -36,8 +36,6 @@ export function VedtakskjemaSide ({fnr}: SkjemaAksjonerProps) {
 
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
-    useTimer(() => oppdaterSistEndret(vedtakskjema), 2000, [vedtakskjema]);
-
     function sendDataTilBackend (skjema: SkjemaData) {
         return VedtaksstotteApi.putVedtakUtkast(fnr, skjema);
     }
@@ -96,7 +94,7 @@ export function VedtakskjemaSide ({fnr}: SkjemaAksjonerProps) {
                 <TilbakeKnapp tilbake={dispatchFetchVedtakOgRedirectTilHovedside}/>
                 {sistOppdatert && <EtikettInfo><Normaltekst>{`Sist lagret : ${sistOppdatert}`}</Normaltekst></EtikettInfo>}
             </div>
-            <Skjema errors={errors}/>
+            <Skjema errors={errors} oppdaterSistEndret={oppdaterSistEndret}/>
             <Aksjoner
                 handleSubmit={(e) => handleSubmit(e, vedtakskjema)}
                 handleLagreOgTilbake={(e) => handleLagreOgTilbake(e, vedtakskjema)}
