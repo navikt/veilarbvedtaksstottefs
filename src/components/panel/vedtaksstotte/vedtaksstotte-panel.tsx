@@ -8,7 +8,7 @@ interface VedtaksstottePanelProps {
     undertittel: string;
     imgSrc: string;
     tekstKomponent: React.ReactNode;
-    knappKomponent: React.ReactNode;
+    knappKomponent?: React.ReactNode;
     panelKlasse?: string;
 }
 

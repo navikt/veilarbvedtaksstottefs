@@ -11,16 +11,36 @@ import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import fullfortVedtakIcon from './fullfort.svg';
 import './gjeldende-vedtak-panel.less';
+import { useFetchState } from '../../providers/fetch-provider';
+import { Normaltekst } from 'nav-frontend-typografi';
+import ingenVedtakBilde from '../nytt-vedtak/ingen_vedtak.svg';
 
-export function GjeldendeVedtak(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
+export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
 
     if (!props.gjeldendeVedtak) {
         return null;
     }
 
-    const {dispatch} = useContext(ViewDispatch);
     const {id, innsatsgruppe, sistOppdatert, veilederEnhetId, veilederIdent} = props.gjeldendeVedtak;
+    const [underOppfolgingData] = useFetchState('underOppfolging');
+    const {dispatch} = useContext(ViewDispatch);
     const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
+
+    if (!underOppfolgingData.data.underOppfolging) {
+        return (
+            <VedtaksstottePanel
+                tittel="Gjeldende oppfølgingsvedtak"
+                undertittel="Ingen gjeldende oppfølgingsvedtak"
+                imgSrc={ingenVedtakBilde}
+                panelKlasse="ikke-under-oppfolging-panel"
+                tekstKomponent={
+                    <Normaltekst>
+                        Denne brukeren er ikke under oppfølging.
+                    </Normaltekst>
+                }
+            />
+        );
+    }
 
     return (
         <VedtaksstottePanel
