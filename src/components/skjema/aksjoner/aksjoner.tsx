@@ -14,7 +14,7 @@ function Aksjoner (props: AksjonerProps) {
         <div className="aksjoner">
             <div className="aksjoner__lagre">
                 <Hovedknapp htmlType="submit" onClick={props.handleSubmit}>
-                    Til innsending
+                    Forhåndsvis og ferdigstill
                 </Hovedknapp>
                 <Knapp htmlType="button" onClick={props.handleLagreOgTilbake}>
                     Lagre og gå tilbake
