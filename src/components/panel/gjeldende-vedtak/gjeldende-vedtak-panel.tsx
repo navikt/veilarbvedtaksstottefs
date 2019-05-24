@@ -17,14 +17,7 @@ import ingenVedtakBilde from '../nytt-vedtak/ingen_vedtak.svg';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
 
-    if (!props.gjeldendeVedtak) {
-        return null;
-    }
-
-    const {id, innsatsgruppe, sistOppdatert, veilederEnhetId, veilederIdent} = props.gjeldendeVedtak;
     const [underOppfolgingData] = useFetchState('underOppfolging');
-    const {dispatch} = useContext(ViewDispatch);
-    const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
 
     if (!underOppfolgingData.data.underOppfolging) {
         return (
@@ -40,7 +33,13 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
                 }
             />
         );
+    } else if (!props.gjeldendeVedtak) {
+        return null;
     }
+
+    const {id, innsatsgruppe, sistOppdatert, veilederEnhetId, veilederIdent} = props.gjeldendeVedtak;
+    const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
+    const {dispatch} = useContext(ViewDispatch);
 
     return (
         <VedtaksstottePanel
