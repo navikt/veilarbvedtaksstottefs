@@ -1,9 +1,11 @@
 import React from 'react';
-import { AppProvider } from './components/providers/app-provider';
+import { ViewProvider } from './components/providers/view-provider';
 import { ViewController } from './components/viewcontroller/view-controller';
 import { DataFetcher } from './components/datafetcher';
 import { PrelanseringSjekk } from './components/prelansering-sjekk';
+import { FetchProvider } from './components/providers/fetch-provider';
 import './app.less';
+import { SkjemaProvider } from './components/providers/skjema-provider';
 
 interface AppProps {
     fnr: string;
@@ -14,13 +16,17 @@ function App(props: AppProps) {
     return (
         <div className="veilarbvedtaksstottefs">
             <div className="veilarbvedtaksstottefs__content">
-                <AppProvider>
-                    <PrelanseringSjekk>
-                        <DataFetcher fnr={props.fnr}>
-                            <ViewController fnr={props.fnr}/>
-                        </DataFetcher>
-                    </PrelanseringSjekk>
-                </AppProvider>
+                <FetchProvider>
+                    <ViewProvider>
+                        <PrelanseringSjekk>
+                            <DataFetcher fnr={props.fnr}>
+                                <SkjemaProvider>
+                                    <ViewController fnr={props.fnr}/>
+                                </SkjemaProvider>
+                            </DataFetcher>
+                        </PrelanseringSjekk>
+                    </ViewProvider>
+                </FetchProvider>
             </div>
         </div>
     );

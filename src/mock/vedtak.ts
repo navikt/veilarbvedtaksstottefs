@@ -3,7 +3,7 @@ import { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
 import { VedtakData } from '../utils/types/vedtak';
 
 const vedtak: VedtakData = {
-    id: 1,
+    id: 4,
     hovedmal: HovedmalType.BEHOLDE_ARBEID,
     innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
     vedtakStatus: 'SENDT',

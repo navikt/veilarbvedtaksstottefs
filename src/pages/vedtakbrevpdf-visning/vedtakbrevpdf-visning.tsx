@@ -1,11 +1,11 @@
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
-import { useContext, useState } from 'react';
-import { AppContext, ViewDispatch } from '../../components/providers/app-provider';
+import React, { useContext, useState } from 'react';
+import { ViewDispatch } from '../../components/providers/view-provider';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { Undertittel } from 'nav-frontend-typografi';
-import { pdfjs, Document, Page } from 'react-pdf';
-import React from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
 import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
+import { useFetchState } from '../../components/providers/fetch-provider';
 
 const veilarbvedtakUrl = (fnr: string, dokumentInfoId?: string, journalpostId?: string) => process.env.NODE_ENV === 'development'
     ? 'http://localhost:8080/test.pdf'
@@ -14,7 +14,7 @@ const veilarbvedtakUrl = (fnr: string, dokumentInfoId?: string, journalpostId?: 
 export function VedtakbrevPdfVisning (props: {fnr: string, vedtakId: number}) {
     const [numPages, setPages] = useState(0);
     const {dispatch} = useContext(ViewDispatch);
-    const {vedtak} = useContext(AppContext);
+    const [vedtak] = useFetchState('vedtak');
     const vedtaksObjekt = vedtak.data.find(v => v.id === props.vedtakId);
 
     const journalpostId = vedtaksObjekt && vedtaksObjekt.journalpostId;

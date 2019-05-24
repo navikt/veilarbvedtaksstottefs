@@ -2,129 +2,148 @@
 @import "../../../variabler.less";
 
 .veilarbvedtaksstottefs {
-	.opplysninger {
-		display: grid;
-		padding: 0 5rem;
+  .opplysninger {
+    display: grid;
+    padding: 0 5rem;
 
-		.sist-endret {
-			background-color: @navGronnLighten80;
-		}
+    .sist-endret {
+      background-color: @navGronnLighten80;
+    }
 
-		.bekreftelseboks {
-			box-sizing: border-box;
-			padding: 1rem 0.5rem;
-			background: white;
-			width: 20%;
-			right: 3rem;
-			box-shadow: 0 1px 3px 1px @navGra40;
-			border-radius: 0.25rem;
+    .bekreftelseboks {
+      box-sizing: border-box;
+      padding: 1rem 0.5rem;
+      background: white;
+      width: 20%;
+      right: 3rem;
+      box-shadow: 0 1px 3px 1px @navGra40;
+      border-radius: 0.25rem;
 
-			.bekreftelse {
-				display: flex;
-				flex-direction: column;
-				padding: 0 1rem 0 2.5rem;
-				&__ikon {
-					margin-left: 1rem;
-				}
-				span {
-					font-weight: 600;
-					font-size: 1.2rem;
-				}
-			}
-		}
+      .bekreftelse {
+        display: flex;
+        flex-direction: column;
+        padding: 0 1rem 0 2.5rem;
+        &__ikon {
+          margin-left: 1rem;
+        }
+        span {
+          font-weight: 600;
+          font-size: 1.2rem;
+        }
+      }
+    }
 
-		.bekreftelseboks::after{
-			content: "";
-			position: absolute;
-			width: 0;
-			height: 0;
-			margin-left: -0.5em;
-			bottom: -2em;
-			left: 40%;
-			box-sizing: border-box;
+    .bekreftelseboks::after{
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      margin-left: -0.5em;
+      bottom: -2em;
+      left: 40%;
+      box-sizing: border-box;
 
-			border: 1em solid #aaa49b;
-			border-color: transparent transparent white white;
+      border: 1em solid #aaa49b;
+      border-color: transparent transparent white white;
 
-			transform-origin: 0 0;
-			transform: rotate(-45deg);
+      transform-origin: 0 0;
+      transform: rotate(-45deg);
 
-			box-shadow: -2px 2px 1px 0px #aaa49b;
+      box-shadow: -2px 2px 1px 0px #aaa49b;
 
-		}
+    }
 
+    .visopplysning {
+      margin-top: 0.5rem;
+      display: grid;
+      grid-template-columns: 1fr 0.1fr;
 
-		.visopplysning {
-			margin-top: 0.5rem;
-			display: grid;
-			grid-template-columns: 1fr 0.1fr;
-			border: 1px solid @navGra60;
-			border-radius: 0.23rem;
+      .inputPanel {
+        border-right: 1px transparent;
+        border-radius: 0.25rem 0 0 0.25rem;
+      }
+      .inputPanel:hover{
+        border: 1px solid #0067C5;
+        border-radius: 0.25rem
+      }
 
-			.inputPanel {
-				border: none;
-				box-shadow: none;
-			}
+      .inputPanel--checked {
+        background-color: white;
+        border-bottom: 1px solid @navGra60;
+        border-top: 1px solid @navGra60;
+        border-left: 1px solid @navGra60;
+      }
+      .redigeropplysning-knapp {
+        background-color: inherit;
+        cursor: pointer;
+        z-index: 1000;
+        border-bottom: 1px solid @navGra60;
+        border-top: 1px solid @navGra60;
+        border-right: 1px solid @navGra60;
+        border-left: none;
+        border-radius: 0 0.25rem 0.25rem 0;
+      }
 
-			.inputPanel--checked {
-				background-color: inherit;
-			}
+      .redigeropplysning-knapp:hover {
+        background-color: inherit;
+        svg {
+          g {
+            stroke: @navBla
+          }
+        }
+      }
+      .redigeropplysning-knapp:focus {
+        box-shadow: 0 0 0 3px #254b6d;
+        border: 1px transparent;
+        outline-color: #254b6d;
+        color: transparent;
+      }
 
-			.redigeropplysning-knapp {
-				border-radius: 0.25rem;
-				background-color: inherit;
-				border: none;
-				cursor: pointer;
-				z-index: 1000;
-			}
+      .redigeropplysning-knapp:hover {
+        border: 1px solid #0067C5;
+        box-shadow: #B7B1A9 0 2px 1px 0;
+        border-radius: 0.25rem;
+      }
 
-			.redigeropplysning-knapp:hover {
-				border-radius: 0.25rem;
-				background-color: inherit;
-				border: none;
+    }
 
-				svg {
-					g {
-						stroke: @navBla
-					}
-				}
-			}
+    .leggtil {
+      display: flex;
+      padding: 1rem 1rem 1rem 1rem;
+      margin-top: 0.5rem;
+      .inputPanel__label:before {
+        background-color: initial;
+      }
+      .inputPanel__label {
+        margin-left: 0.4rem;
+      }
+      &__ikon {
+        padding: 0.2rem;
+      }
+    }
 
-		}
+    .leggtil:focus {
+      box-shadow: 0 0 0 3px #254b6d;
+    }
 
-		.leggtil {
-			display: flex;
-			padding: 1rem 1rem 1rem 1rem;
-			margin-top: 0.5rem;
-			.inputPanel__label:before {
-				background-color: initial;
-			}
-			.inputPanel__label {
-				margin-left: 0.4rem;
-			}
-			&__ikon {
-				padding: 0.2rem;
-			}
-		}
-
-		.rediger {
-			margin-top: 0.5rem;
-			background-color: @gra;
-			padding: 0.5rem;
-			.textarea__container {
-				.skjemaelement__input {
-					font-family: Source Sans Pro, Arial, sans-serif;
-					font-size: 1rem;
-				}
-			}
-			&__aksjoner {
-				display: flex;
-				justify-content: flex-end;
-				button {
-					text-transform: none;
-					text-decoration: underline;
-				}
-			}
-		}
-	}
+    .rediger {
+      margin-top: 0.5rem;
+      background-color: @gra;
+      padding: 0.5rem;
+      .textarea__container {
+        .skjemaelement__input {
+          font-family: Source Sans Pro, Arial, sans-serif;
+          font-size: 1rem;
+        }
+      }
+      &__aksjoner {
+        display: flex;
+        justify-content: flex-end;
+        button {
+          text-transform: none;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
 }

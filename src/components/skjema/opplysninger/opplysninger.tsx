@@ -45,12 +45,11 @@ function Opplysninger(props: OpplysningerProps) {
     }
 
     function setTimer () {
-        if (timer.current === 0) {
-            timer.current = window.setTimeout(() => setSistEndretIndeks(-1), 1500);
-        } else {
+        if (timer.current !== 0) {
             window.clearTimeout(timer.current);
-            timer.current = window.setTimeout(() => setSistEndretIndeks(-1), 1500);
         }
+        timer.current = window.setTimeout(() => setSistEndretIndeks(-1), 1500);
+
     }
 
     function handleOpplysningerChanged (index: number, opplysning: Opplysning) {
