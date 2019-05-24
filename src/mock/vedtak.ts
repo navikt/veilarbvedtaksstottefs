@@ -3,15 +3,14 @@ import { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
 import { VedtakData } from '../utils/types/vedtak';
 
 const vedtak: VedtakData = {
-    id: 1,
+    id: 4,
     hovedmal: HovedmalType.BEHOLDE_ARBEID,
     innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
-    vedtakStatus: 'UTKAST',
+    vedtakStatus: 'SENDT',
     sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
     begrunnelse: 'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
     gjeldende: true,
-    andreopplysninger: [],
-    opplysninger: {},
+    opplysninger: [],
     veilederIdent: 'Z007',
     veilederEnhetId: 'Gotham city',
 };

@@ -3,6 +3,8 @@ import './hovedmal.less';
 import { RadioPanel } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
+import { useContext } from 'react';
+import { SkjemaContext } from '../../providers/skjema-provider';
 
 export enum HovedmalType {
     SKAFFE_ARBEID = 'SKAFFE_ARBEID',
@@ -10,8 +12,6 @@ export enum HovedmalType {
 }
 
 interface HovedmalProps {
-    handleHovedmalChanged: (e: any) => void;
-    hovedmal: OrNothing<HovedmalType>;
     hovedmalfeil?: string;
 }
 
@@ -32,17 +32,18 @@ const hovedmalliste = [
 ];
 
 function Hovedmal(props: HovedmalProps) {
+    const {hovedmal, setHovedmal} = useContext(SkjemaContext);
     return (
         <SkjemaElement
             tittel="Hovedmål"
-            value={getHovedmalNavn(props.hovedmal)}
+            value={getHovedmalNavn(hovedmal)}
             feil={props.hovedmalfeil}
         >
             {(lukkSkjema) =>
                 <HovedmalRadioButtons
                     lukkSkjema={lukkSkjema}
-                    handleHovedmalChanged={props.handleHovedmalChanged}
-                    hovedmal={props.hovedmal}
+                    handleHovedmalChanged={setHovedmal}
+                    hovedmal={hovedmal}
                 />
             }
         </SkjemaElement>

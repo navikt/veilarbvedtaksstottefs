@@ -5,6 +5,7 @@ import { DataFetcher } from './components/datafetcher';
 import { PrelanseringSjekk } from './components/prelansering-sjekk';
 import { FetchProvider } from './components/providers/fetch-provider';
 import './app.less';
+import { SkjemaProvider } from './components/providers/skjema-provider';
 
 interface AppProps {
     fnr: string;
@@ -19,7 +20,9 @@ function App(props: AppProps) {
                     <ViewProvider>
                         <PrelanseringSjekk>
                             <DataFetcher fnr={props.fnr}>
-                                <ViewController fnr={props.fnr}/>
+                                <SkjemaProvider>
+                                    <ViewController fnr={props.fnr}/>
+                                </SkjemaProvider>
                             </DataFetcher>
                         </PrelanseringSjekk>
                     </ViewProvider>

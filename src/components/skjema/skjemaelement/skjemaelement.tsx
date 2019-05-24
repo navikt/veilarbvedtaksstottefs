@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import './skjemaelement.less';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { Knapp } from 'nav-frontend-knapper';
+import Tekstomrade from 'nav-frontend-tekstomrade';
+import './skjemaelement.less';
 
 interface SkjemaElementProps<T> {
     tittel: string;
@@ -27,7 +27,7 @@ export function SkjemaElement<T>(props: SkjemaElementProps<T>) {
     }
 
     return (
-        <SkjemaGruppe feil={props.feil ? {feilmelding : props.feil} : undefined} className="skjemaelement">
+        <SkjemaGruppe feil={props.feil ? {feilmelding : props.feil} : undefined} className="vedtaksskjemaelement">
             <legend>{`${props.tittel}:`}</legend>
             { isOpen
                 ? <RedigeringsModus lukkSkjemaElement={lukkSkjemaElement} children={props.children}/>
@@ -38,33 +38,40 @@ export function SkjemaElement<T>(props: SkjemaElementProps<T>) {
 }
 
 function RedigeringsModus(props: {lukkSkjemaElement: () => void, className?: string, children: (JSX.Element[] | JSX.Element) | ((lukkSkjemaElement: () => void) => (JSX.Element[] | JSX.Element)) }) {
-    const className = classNames('skjemaelement__innhold', props.className);
+    const className = classNames('vedtaksskjemaelement__innhold', props.className);
     return (
-        <div className={className}>
-            <div className="skjemaelement__redigering">
-                <Knapp onClick={props.lukkSkjemaElement} className="toggle--knapp">Lukk</Knapp>
+        <>
+            <div className={className}>
+                {typeof props.children === 'function'
+                    ? props.children(props.lukkSkjemaElement)
+                    : props.children
+                }
             </div>
-            {typeof props.children === 'function'
-                ? props.children(props.lukkSkjemaElement)
-                : props.children
-            }
-        </div>
+            <div>
+                <button
+                    onClick={props.lukkSkjemaElement}
+                    className="toggle--knapp btn--lenke"
+                >
+                    Lukk
+                </button>
+            </div>
+        </>
     );
 }
 
 function VisningsModus<T>(props: {value?: React.ReactNode, apneSkjemaElement: () => void }) {
     return (
-        <div className="skjemaelement__visning">
+        <div className="vedtaksskjemaelement__visning">
             { props.value
                 ? typeof props.value === 'string'
-                    ? <span>{props.value}</span>
+                    ? <Tekstomrade>{props.value}</Tekstomrade>
                     : props.value
                 : <span>{EMDASH}</span>
             }
             <div>
-                <Knapp className="toggle--knapp" onClick={props.apneSkjemaElement}>
+                <button className="toggle--knapp btn--lenke" onClick={props.apneSkjemaElement}>
                     Endre
-                </Knapp>
+                </button>
             </div>
         </div>
     );

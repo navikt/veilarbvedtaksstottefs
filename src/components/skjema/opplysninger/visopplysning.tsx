@@ -1,30 +1,29 @@
 import React from 'react';
-import { keyCodes } from 'nav-frontend-js-utils';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { CheckboksPanel } from 'nav-frontend-skjema';
 import { Flatknapp } from 'nav-frontend-knapper';
+import { Opplysning } from './opplysninger';
+import { ReactComponent as RedigerOpplysningIkon } from './rediger.svg';
 
 interface VisopplysningProps {
-    tekst: string;
+    opplysning: Opplysning;
     handleOpplysning: () => void;
-    slettOpplysning: () => void;
+    onChange: (opplysning: Opplysning) => void;
 }
 
 export function VisOpplysning(props: VisopplysningProps) {
-
-    function handleOnKeyDown(e: any) {
-        if (e.keyCode === keyCodes.enter) {
-            props.handleOpplysning();
-        }
-    }
-
+    const checked =  Object.values(props.opplysning)[0];
+    const tekst =  Object.keys(props.opplysning)[0];
     return (
-        <li tabIndex={0} onClick={props.handleOpplysning} onKeyDown={handleOnKeyDown}>
-            <div className="andreopplysninger__vis">
-                <Normaltekst>
-                    {props.tekst}
-                </Normaltekst>
-                <Flatknapp className="fjern" onClick={props.slettOpplysning}>Slett</Flatknapp>
-            </div>
-        </li>
+        <div className="visopplysning">
+            <CheckboksPanel
+                checked={checked}
+                label={tekst}
+                value={tekst}
+                onChange={(e: any) => props.onChange(props.opplysning[tekst] = e.target.checked)}
+            />
+            <button className="redigeropplysning-knapp" onClick={props.handleOpplysning}>
+                <RedigerOpplysningIkon aria-labelledby="redigerIkonId"/>
+            </button>
+        </div>
     );
 }

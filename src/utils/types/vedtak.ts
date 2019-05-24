@@ -13,8 +13,7 @@ export interface VedtakData {
     gjeldende: boolean;
     veilederEnhetId: string;
     veilederIdent: string;
-    opplysninger: any;
-    andreopplysninger: string[];
+    opplysninger: string[];
     journalpostId?: string;
     dokumentInfoId?: string;
 }
