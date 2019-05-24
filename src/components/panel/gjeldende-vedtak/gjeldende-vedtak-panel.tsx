@@ -13,7 +13,7 @@ import fullfortVedtakIcon from './fullfort.svg';
 import './gjeldende-vedtak-panel.less';
 import { useFetchState } from '../../providers/fetch-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
-import ingenVedtakBilde from '../nytt-vedtak/ingen_vedtak.svg';
+import ingenVedtakBilde from './ingen-vedtak.svg';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
 
