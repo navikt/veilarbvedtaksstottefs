@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { pdfjs, Document, Page } from 'react-pdf';
+import { Document, Page, pdfjs } from 'react-pdf';
 import './forhandsvisning.less';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { Status } from '../../utils/hooks/useFetch';
-import { AppContext, ViewDispatch } from '../../components/app-provider/app-provider';
+import { ViewDispatch } from '../../components/providers/view-provider';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -17,7 +16,6 @@ const veilarbvedtakkUrl = (fnr: string) => process.env.NODE_ENV === 'development
 export function TilInnsending (props: {fnr: string}) {
     const [numPages, setPages] = useState(0);
     const {dispatch} = useContext(ViewDispatch);
-    const {setVedtak} = useContext(AppContext);
 
     const Pages = () => {
         return (
@@ -31,7 +29,7 @@ export function TilInnsending (props: {fnr: string}) {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
-            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+            // setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
             dispatch({view: ActionType.HOVEDSIDE});
         });
     };

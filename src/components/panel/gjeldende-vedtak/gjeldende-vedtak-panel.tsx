@@ -6,7 +6,7 @@ import { Dato } from '../dato';
 import { Knapp } from 'nav-frontend-knapper';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { getInnsatsgruppeNavn } from '../../skjema/innsatsgruppe/innsatsgruppe';
-import { ViewDispatch } from '../../app-provider/app-provider';
+import { ViewDispatch } from '../../providers/view-provider';
 import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import fullfortVedtakIcon from './fullfort.svg';

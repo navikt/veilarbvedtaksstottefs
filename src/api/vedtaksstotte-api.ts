@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { SkjemaData } from '../pages/skjema/skjema';
+import { OPPFOLGING_URL } from './oppfolging-api';
 
 export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
 
@@ -11,6 +12,12 @@ class VedtaksstotteApi {
 
     static putVedtakUtkast(fnr: string, skjema: SkjemaData) {
         return axios.put(`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/utkast`, skjema);
+    }
+
+    static lagHentVedtakConfig(fnr: string): AxiosRequestConfig {
+        return {
+            url: `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/vedtak`
+        };
     }
 
     static hentVedtak(fnr: string) {

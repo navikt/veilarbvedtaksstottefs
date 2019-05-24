@@ -5,7 +5,7 @@ import { BegrunnelseVisning } from './begrunnelse';
 import { InnsatsgruppeVisning } from './innsatsgruppe';
 import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { ActionType } from '../../viewcontroller/view-reducer';
-import { ViewDispatch } from '../../app-provider/app-provider';
+import { ViewDispatch } from '../../providers/view-provider';
 import './visning.less';
 import { Sidetittel } from 'nav-frontend-typografi';
 import { Opplysninger } from './opplysninger';

@@ -1,38 +1,21 @@
-import React, { useContext, useEffect } from 'react';
-import { Status } from '../utils/hooks/useFetch';
-import { AppContext } from './app-provider/app-provider';
+import React from 'react';
+import { useGlobalFetch } from '../utils/hooks/useFetch';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
 import VedtaksstotteApi from '../api/vedtaksstotte-api';
+import OppfolgingApi from '../api/oppfolging-api';
+import { isAnyFailed, isAnyLoading } from '../utils/fetch-utils';
 
 export function DataFetcher (props: {fnr: string, children: any}) {
-    const {setVedtak, vedtak} = useContext(AppContext);
+    const vedtakData = useGlobalFetch(VedtaksstotteApi.lagHentVedtakConfig(props.fnr), 'vedtak');
+    const underOppfolging = useGlobalFetch(OppfolgingApi.lagUnderOppfolgingConfig(props.fnr), 'underOppfolging');
 
-    const fetchVedtakData = async () => {
-        setVedtak(prevState => ({...prevState, status: Status.LOADING}));
-        try {
-            const res = await VedtaksstotteApi.hentVedtak(props.fnr);
-            if (res.status) {
-                setVedtak({status: Status.DONE, data: res.data});
-            } else {
-                setVedtak(prevState => ({...prevState, status: Status.ERROR}));
-            }
-        } catch (e) {
-            setVedtak(prevState => ({...prevState, status: Status.ERROR}));
-        }
-    };
+    console.log(vedtakData); // tslint:disable-line
+    console.log(underOppfolging); // tslint:disable-line
 
-    useEffect(() => {
-        if (vedtak.status === Status.NOT_STARTED) {
-            fetchVedtakData();
-        }
-    }, [vedtak.status]);
-
-    const status = vedtak.status;
-
-    if (status === 'NOT_STARTED' || status === 'LOADING') {
+    if (isAnyLoading(vedtakData.status, underOppfolging.status)) {
         return <NavFrontendSpinner type="XL"/>;
-    } else if (status === 'ERROR') {
+    } else if (isAnyFailed(vedtakData.status, underOppfolging.status)) {
         return <AlertStripeFeilSolid>Noe gikk galt, prøv igjen</AlertStripeFeilSolid>;
     }
 

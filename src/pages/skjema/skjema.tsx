@@ -8,9 +8,8 @@ import Begrunnelse from '../../components/skjema/begrunnelse/begrunnelse';
 import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
 import './skjema.less';
 import { OrNothing } from '../../utils/types/ornothing';
-import { AppContext, ViewDispatch } from '../../components/app-provider/app-provider';
+import { ViewDispatch } from '../../components/providers/view-provider';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { Status } from '../../utils/hooks/useFetch';
 import { VedtakData } from '../../utils/types/vedtak';
 import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import { byggOpplysningliste, byggOpplysningsObject, validerSkjema } from '../../components/skjema/skjema-utils';
@@ -18,6 +17,9 @@ import { useTimer } from '../../utils/hooks/useTimer';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
+import { Status } from '../../utils/fetch-utils';
+import { useGlobalFetch } from '../../utils/hooks/useFetch';
+import { useFetchState } from '../../components/providers/fetch-provider';
 
 interface SkjemaProps {
     fnr: string;
@@ -36,7 +38,7 @@ export interface SkjemaData {
 }
 
 function Skjema ({fnr}: SkjemaProps) {
-    const {vedtak, setVedtak} = useContext(AppContext);
+    const [vedtak] = useFetchState('vedtak');
     const {dispatch} = useContext(ViewDispatch);
 
     const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
@@ -57,7 +59,7 @@ function Skjema ({fnr}: SkjemaProps) {
     }
 
     function dispatchFetchVedtakOgRedirectTilHovedside () {
-        setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+        //setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
         dispatch({view: ActionType.HOVEDSIDE});
     }
 
@@ -80,7 +82,7 @@ function Skjema ({fnr}: SkjemaProps) {
             return;
         }
         sendDataTilBackend(skjema).then(() =>  {
-            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+            //setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
             dispatch({view: ActionType.INNSENDING});
         }).catch (error => {
             console.log(error); // tslint:disable-line:no-console

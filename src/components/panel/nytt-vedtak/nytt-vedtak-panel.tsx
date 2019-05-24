@@ -5,7 +5,7 @@ import React from 'react';
 import { VedtakData } from '../../../utils/types/vedtak';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { ViewDispatch } from '../../app-provider/app-provider';
+import { ViewDispatch } from '../../providers/view-provider';
 import VedtaksstotteApi from '../../../api/vedtaksstotte-api';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import ingenVedtakBilde from './ingen_vedtak.svg';

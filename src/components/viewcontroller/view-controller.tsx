@@ -4,7 +4,7 @@ import { Hovedside } from '../../pages/hovedside/hovedside';
 import Skjema from '../../pages/skjema/skjema';
 import { VisVedtak } from '../../pages/visvedtak';
 import { TilInnsending } from '../../pages/forhandsvisning/forhandsvisning';
-import { ViewDispatch } from '../app-provider/app-provider';
+import { ViewDispatch } from '../providers/view-provider';
 import { VedleggVisning } from '../../pages/vedlegg-visning/vedlegg-visning';
 import { VedtakbrevPdfVisning } from '../../pages/vedtakbrevpdf-visning/vedtakbrevpdf-visning';
 

@@ -7,7 +7,7 @@ import { Veileder } from '../veileder';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { ActionType } from '../../viewcontroller/view-reducer';
 import utkastIkon from './utkast.svg';
-import { ViewDispatch } from '../../app-provider/app-provider';
+import { ViewDispatch } from '../../providers/view-provider';
 import './utkast-panel.less';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 

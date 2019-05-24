@@ -4,7 +4,7 @@ import { Panel } from '../panel/panel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { getInnsatsgruppeNavn } from '../../skjema/innsatsgruppe/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import { ViewDispatch } from '../../app-provider/app-provider';
+import { ViewDispatch } from '../../providers/view-provider';
 import { ActionType } from '../../viewcontroller/view-reducer';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
