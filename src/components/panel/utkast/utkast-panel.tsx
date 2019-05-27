@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { VedtakData } from '../../../utils/types/vedtak';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
@@ -23,7 +22,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
     return (
         <VedtaksstottePanel
             tittel="Utkast til oppfølgingsvedtak"
-            undertittel="Utkast til oppfølgingsvedtak"
+            undertittel="Utkast"
             imgSrc={utkastIkon}
             panelKlasse="utkast-panel"
             tekstKomponent={

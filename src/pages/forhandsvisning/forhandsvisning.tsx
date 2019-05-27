@@ -8,6 +8,8 @@ import { ViewDispatch } from '../../components/providers/view-provider';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import { useFetchState } from '../../components/providers/fetch-provider';
 import { Status } from '../../utils/fetch-utils';
+import cls from 'classnames';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -17,6 +19,7 @@ const veilarbvedtakkUrl = (fnr: string) => process.env.NODE_ENV === 'development
 
 export function TilInnsending (props: {fnr: string}) {
     const [numPages, setPages] = useState(0);
+    const [isSending, setIsSending] = useState(false);
     const [vedtak, setVedtak] = useFetchState('vedtak');
     const {dispatch} = useContext(ViewDispatch);
 
@@ -31,9 +34,18 @@ export function TilInnsending (props: {fnr: string}) {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
+
+        if (isSending) {
+            return;
+        }
+
+        setIsSending(true);
         VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
-            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+            setIsSending(false);
+            setVedtak({status: Status.NOT_STARTED, data: null as any});
             dispatch({view: ActionType.HOVEDSIDE});
+        }).catch(() => {
+            setIsSending(false);
         });
     };
 
@@ -52,8 +64,12 @@ export function TilInnsending (props: {fnr: string}) {
                     </Document>
                 </div>
                 <div className="pdfvisning__aksjoner">
-                    <Hovedknapp className="btn--mr3" htmlType="submit">Send</Hovedknapp>
-                    <Flatknapp className="btn--ml3" htmlType="button" onClick={() => dispatch({view: ActionType.UTKAST})}>Tilbake til utkast</Flatknapp>
+                    <Hovedknapp className={cls("btn--mr3", { "pdfvisning__knapp-sender": isSending })} htmlType="submit">
+                        {isSending ? <NavFrontendSpinner type='S' /> : 'Send'}
+                    </Hovedknapp>
+                    <Flatknapp className="btn--ml3" htmlType="button" onClick={() => dispatch({view: ActionType.UTKAST})}>
+                        Tilbake til utkast
+                    </Flatknapp>
                 </div>
             </div>
         </form>

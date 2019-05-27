@@ -16,9 +16,9 @@ export function Hovedside (props: {fnr: string}) {
 
     return (
         <div className="hovedside">
+            <UtkastPanel utkast={utkast}/>
             <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
             <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
-            <UtkastPanel utkast={utkast}/>
             <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
         </div>
     );
