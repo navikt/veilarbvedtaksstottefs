@@ -11,11 +11,8 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     const underOppfolging = useGlobalFetch(OppfolgingApi.lagUnderOppfolgingConfig(props.fnr), 'underOppfolging');
     const [vedtak, setVedtak] = useFetchState('vedtak');
 
-    console.log(vedtak); // tslint:disable-line
-
     useEffect(() => {
         if (vedtak.status === Status.NOT_STARTED) {
-            console.log('fetching'); // tslint:disable-line
             fetchData(VedtaksstotteApi.lagHentVedtakConfig(props.fnr), setVedtak);
         }
     }, [vedtak.status]);

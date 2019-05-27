@@ -1,7 +1,7 @@
 import UnderOppfolging from '../utils/types/under-oppfolging';
 
 const underOppfolging: UnderOppfolging = {
-    underOppfolging: false
+    underOppfolging: true
 };
 
 export default underOppfolging;
