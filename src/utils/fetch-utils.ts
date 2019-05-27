@@ -16,9 +16,9 @@ export const initialFetchState: FetchState<any> = {
 };
 
 export const isAnyLoading = (...statuses: Status[]): boolean  => {
-    return statuses.findIndex(s => s === Status.LOADING || s === Status.NOT_STARTED) >= 0;
+    return statuses.some(s => s === Status.LOADING || s === Status.NOT_STARTED);
 };
 
 export const isAnyFailed = (...statuses: Status[]): boolean  => {
-    return statuses.findIndex(s => s === Status.ERROR) >= 0;
+    return statuses.some(s => s === Status.ERROR);
 };
