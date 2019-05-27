@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { fetchData, useGlobalFetch } from '../utils/hooks/useFetch';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import VedtaksstotteApi from '../api/vedtaksstotte-api';
 import OppfolgingApi from '../api/oppfolging-api';
 import { isAnyFailed, isAnyLoading, Status } from '../utils/fetch-utils';
@@ -20,7 +20,7 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     if (isAnyLoading(vedtak.status, underOppfolging.status)) {
         return <NavFrontendSpinner type="XL"/>;
     } else if (isAnyFailed(vedtak.status, underOppfolging.status)) {
-        return <AlertStripeFeilSolid>Noe gikk galt, prøv igjen</AlertStripeFeilSolid>;
+        return <AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 
     return props.children;

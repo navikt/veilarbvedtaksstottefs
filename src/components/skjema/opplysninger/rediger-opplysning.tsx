@@ -16,7 +16,7 @@ export function RedigerOpplysning(props: OpplysningProps) {
 
     function onSubmit() {
         let obj = {} as Opplysning;
-        obj[tekst] = Object.values(props.opplysning)[0];
+        obj[tekst] = true;
         props.onTekstSubmit(obj);
     }
 

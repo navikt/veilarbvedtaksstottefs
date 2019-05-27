@@ -5,7 +5,7 @@ import { ViewDispatch } from '../../components/providers/view-provider';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../api/vedtaksstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { AlertStripeFeilSolid } from 'nav-frontend-alertstriper';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../components/json-viewer/json-viewer';
 import { Opplysning } from '../../utils/types/opplysning';
 import Card from '../../components/card/card';
@@ -34,7 +34,7 @@ export function VedleggVisning (props: VedleggVisningProps) {
     if (opplysninger.status === Status.LOADING || opplysninger.status === Status.NOT_STARTED) {
         return <NavFrontendSpinner type="XL"/>;
     } else if (opplysninger.status === Status.ERROR) {
-        return <AlertStripeFeilSolid>Noe gikk galt, prøv igjen</AlertStripeFeilSolid>;
+        return <AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 
     return (

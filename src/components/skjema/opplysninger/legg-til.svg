@@ -1,11 +1,14 @@
 
-<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version:
-6.00 Build 0) -->
-<svg contentScriptType="text/ecmascript" zoomAndPan="magnify"
-     xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css"
-     id="Filled_Version" enable-background="new 0 0 24 24" version="1.1"
-     xml:space="preserve" width="18px" preserveAspectRatio="xMidYMid meet"
-     viewBox="5 0 15 24" height="18px" xmlns="http://www.w3.org/2000/svg"
-     x="-10px" y="0px">
-    <path fill="#78706A"
-          d="M23,11H13V1.001C13,0.448,12.574,0,12.021,0l0,0c-0.553,0-1,0.447-1,0.999L11.012,11H1c-0.553,0-1,0.447-1,1  c0,0.552,0.447,1,1,1h10.01L11,22.999c-0.001,0.552,0.446,1,0.998,1.001h0.001c0.552,0,1-0.447,1.001-0.999V13h10  c0.552,0,1-0.448,1-1C24,11.447,23.552,11,23,11z"/></svg>
+<svg contentScriptType="text/ecmascript" width="26"
+     xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify"
+     contentStyleType="text/css" viewBox="0 0 24 24" height="26"
+     preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+     version="1.0">
+    <title id="leggtilkilde">Legg til kilde</title>
+    <desc id="leggtilkildedesc">Mulighet før att legge til andre kildeopplysninger</desc>
+    <g fill="none" stroke-miterlimit="10" stroke="#78706A"
+       stroke-linejoin="round" stroke-linecap="round">
+        <circle r="11" cx="11.5" cy="11.5"/>
+        <path d="M11.5 5.5v12M17.5 11.5h-12"/>
+    </g>
+</svg>
