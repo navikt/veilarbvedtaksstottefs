@@ -3,11 +3,14 @@
 
   .skjema {
 
+    .vedtaksskjemaelement:not(:last-child){
+      border-bottom: 1px solid @navGra40;
+    }
+
     .vedtaksskjemaelement {
       margin-top: 1.5rem;
       display: grid;
       grid-template-columns: 0.3fr 1.8fr 0.3fr;
-      border-bottom: 1px solid @navGra40;
       padding-bottom: 3rem;
 
       &__redigering {
