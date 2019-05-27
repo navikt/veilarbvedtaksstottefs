@@ -4,6 +4,8 @@
      contentStyleType="text/css" viewBox="0 0 24 24" height="26"
      preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
      version="1.0">
+    <title id="leggtilkilde">Legg til kilde</title>
+    <desc id="leggtilkildedesc">Mulighet før att legge til andre kildeopplysninger</desc>
     <g fill="none" stroke-miterlimit="10" stroke="#78706A"
        stroke-linejoin="round" stroke-linecap="round">
         <circle r="11" cx="11.5" cy="11.5"/>

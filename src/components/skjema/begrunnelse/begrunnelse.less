@@ -2,20 +2,28 @@
 
 .veilarbvedtaksstottefs {
 	.begrunnelse {
-
+		display: grid;
+		grid-column-gap: 1rem;
+		grid-template-columns: 0.65fr 0.35fr;
+		grid-template-rows: auto auto;
 		padding: 0 2rem;
+		grid-row-gap: 2rem;
 
-		.begrunnelse-boks {
-			display: grid;
-			grid-column-gap: 1rem;
-			grid-template-columns: 0.65fr 0.35fr;
-
-			.textarea__container {
-				.skjemaelement__input {
-					min-height: 33rem;
-					font-family: Source Sans Pro, Arial, sans-serif;
-					font-size: 1rem;
-				}
+		.alertstripe {
+			grid-column-start: 1;
+			grid-row-start: 1;
+		}
+		.hjelpesporsmal {
+			grid-column-start: 2;
+			grid-row-start: 2;
+		}
+		.textarea__container {
+			grid-column-start: 1;
+			grid-row-start: 2;
+			.skjemaelement__input {
+				min-height: 33rem;
+				font-family: Source Sans Pro, Arial, sans-serif;
+				font-size: 1rem;
 			}
 		}
 

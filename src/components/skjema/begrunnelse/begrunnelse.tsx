@@ -23,7 +23,6 @@ function Begrunnelse (props: BegrunnelseProps) {
         >
             <div className="begrunnelse">
                 <AlertStripeInfo>Ved standard innsats(gode muligheter)er det ikke obligatorisk begrunnelse</AlertStripeInfo>
-                <div className="begrunnelse-boks">
                 <Textarea
                     value={begrunnelse}
                     label=""
@@ -38,7 +37,6 @@ function Begrunnelse (props: BegrunnelseProps) {
                     }}
                 />
                     <Hjelpesporsmal innsatsgruppe={innsatsgruppe} hovedmal={hovedmal}/>
-                </div>
             </div>
         </SkjemaElement>
 );
