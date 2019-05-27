@@ -64,10 +64,14 @@ export function TilInnsending (props: {fnr: string}) {
                     </Document>
                 </div>
                 <div className="pdfvisning__aksjoner">
-                    <Hovedknapp className={cls("btn--mr3", { "pdfvisning__knapp-sender": isSending })} htmlType="submit">
-                        {isSending ? <NavFrontendSpinner type='S' /> : 'Send'}
+                    <Hovedknapp className="btn--mr3 pdfvisning__knapp-sender" spinner={isSending} htmlType="submit">
+                        Send
                     </Hovedknapp>
-                    <Flatknapp className="btn--ml3" htmlType="button" onClick={() => dispatch({view: ActionType.UTKAST})}>
+                    <Flatknapp
+                        className="btn--ml3"
+                        htmlType="button"
+                        onClick={() => dispatch({view: ActionType.UTKAST})}
+                    >
                         Tilbake til utkast
                     </Flatknapp>
                 </div>
