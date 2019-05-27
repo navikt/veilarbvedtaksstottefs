@@ -33,7 +33,7 @@ export const innsatsgrupper = [
         value: InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS,
     },
     {
-        label: 'Gradert varig tilpasset innsats (gradert varig nedsatt arbeidsevne)',
+        label: 'Varig tilpasset innsats (varig nedsatt arbeidsevne)',
         value: InnsatsgruppeType.VARIG_TILPASSET_INNSATS
     },
     {
