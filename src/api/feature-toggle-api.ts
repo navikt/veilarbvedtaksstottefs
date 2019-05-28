@@ -3,11 +3,14 @@ import { AxiosRequestConfig } from 'axios';
 export const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
 
 export const PRELANSERING_TOGGLE = 'veilarbvedtaksstottefs.prelansering';
-export const ALL_TOGGLES = [PRELANSERING_TOGGLE];
+export const VEDTAK_I_GOSYS_TOGGLE = 'veilarbvedtaksstottefs.vedtakigosys';
+export const ALL_TOGGLES = [PRELANSERING_TOGGLE, VEDTAK_I_GOSYS_TOGGLE];
 
-export interface Features {
-    [PRELANSERING_TOGGLE]: boolean;
-}
+type ALL_FEATURES = 'veilarbvedtaksstottefs.prelansering' | 'veilarbvedtaksstottefs.vedtakigosys';
+
+export type Features = {
+    [K in ALL_FEATURES]: boolean ;
+};
 
 class FeatureToggleApi {
 
