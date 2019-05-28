@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { createGlobalState } from 'react-hooks-global-state';
 import { VedtakData } from '../../utils/types/vedtak';
 import UnderOppfolging from '../../utils/types/under-oppfolging';

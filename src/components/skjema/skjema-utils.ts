@@ -7,9 +7,9 @@ import { Opplysning } from './opplysninger/opplysninger';
 
 const defaultOpplysningsliste =
     [
-        'Brukerens svar ved registrering hos NAV',
-        'Brukerens CV/Jobbprofil på nav.no',
-        'Brukerens egenvurdering',
+        'Svarene dine fra da du registrerte deg.',
+        'CV-en og jobbprofilen din.',
+        'Egenvurderingigen din.',
     ];
 
 export function mergeMedDefaultOpplysninger(opplysningerListe?: string []): Opplysning[] {
