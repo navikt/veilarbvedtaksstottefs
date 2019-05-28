@@ -14,8 +14,7 @@ interface AppProps {
 
 function App(props: AppProps) {
     return (
-        <div className="veilarbvedtaksstottefs">
-            <div className="veilarbvedtaksstottefs__content">
+        <main className="veilarbvedtaksstottefs">
                 <FetchProvider>
                     <ViewProvider>
                         <DataFetcher fnr={props.fnr}>
@@ -27,8 +26,7 @@ function App(props: AppProps) {
                         </DataFetcher>
                     </ViewProvider>
                 </FetchProvider>
-            </div>
-        </div>
+            </main>
     );
 }
 

@@ -5,6 +5,7 @@ import { VedtakData } from '../../utils/types/vedtak';
 import { GjeldendeVedtakPanel } from '../../components/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
 import { NyttVedtakPanel } from '../../components/panel/nytt-vedtak/nytt-vedtak-panel';
 import { useFetchState } from '../../components/providers/fetch-provider';
+import Page from '../page/page';
 import './hovedside.less';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { OrNothing } from '../../utils/types/ornothing';
@@ -26,12 +27,12 @@ export function Hovedside (props: {fnr: string}) {
                 tidligereVedtak={tidligereVedtak}
                 visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
             />
-            <div className="hovedside">
+            <Page className="hovedside">
                 <UtkastPanel utkast={utkast}/>
                 <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
                 <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
                 <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
-            </div>
+            </Page>
         </>
     );
 
