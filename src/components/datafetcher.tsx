@@ -18,9 +18,9 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     }, [vedtak.status]);
 
     if (isAnyLoading(vedtak.status, underOppfolging.status)) {
-        return <NavFrontendSpinner type="XL"/>;
+        return (<div className="page-spinner"><NavFrontendSpinner type="XL"/></div>);
     } else if (isAnyFailed(vedtak.status, underOppfolging.status)) {
-        return <AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil>;
+        return (<div className="page-alert"><AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil></div>);
     }
 
     return props.children;
