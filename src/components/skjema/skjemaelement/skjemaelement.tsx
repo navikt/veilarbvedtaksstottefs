@@ -41,38 +41,40 @@ function RedigeringsModus(props: {lukkSkjemaElement: () => void, className?: str
     const className = classNames('vedtaksskjemaelement__innhold', props.className);
     return (
         <>
-            <div className={className}>
-                {typeof props.children === 'function'
-                    ? props.children(props.lukkSkjemaElement)
-                    : props.children
-                }
-            </div>
-            <div>
-                <button
-                    onClick={props.lukkSkjemaElement}
-                    className="toggle--knapp btn--lenke"
-                >
-                    Lukk
-                </button>
-            </div>
+        <div className={className}>
+            {typeof props.children === 'function'
+                ? props.children(props.lukkSkjemaElement)
+                : props.children
+            }
+        </div>
+        <div>
+            <button
+                onClick={props.lukkSkjemaElement}
+                className="toggle--knapp btn--lenke"
+            >
+                Lukk
+            </button>
+        </div>
         </>
     );
 }
 
 function VisningsModus<T>(props: {value?: React.ReactNode, apneSkjemaElement: () => void }) {
     return (
-        <div className="vedtaksskjemaelement__visning">
-            { props.value
-                ? typeof props.value === 'string'
-                    ? <Tekstomrade>{props.value}</Tekstomrade>
-                    : props.value
-                : <span>{EMDASH}</span>
-            }
+        <>
+            <div className="vedtaksskjemaelement__visning">
+                { props.value
+                    ? typeof props.value === 'string'
+                        ? <Tekstomrade>{props.value}</Tekstomrade>
+                        : props.value
+                    : <span>{EMDASH}</span>
+                }
+            </div>
             <div>
                 <button className="toggle--knapp btn--lenke" onClick={props.apneSkjemaElement}>
                     Endre
                 </button>
             </div>
-        </div>
+        </>
     );
 }
