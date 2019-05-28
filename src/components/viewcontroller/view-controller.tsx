@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ActionType } from './view-reducer';
 import { Hovedside } from '../../pages/hovedside/hovedside';
 import { VisVedtak } from '../../pages/visvedtak';
-import { TilInnsending } from '../../pages/forhandsvisning/forhandsvisning';
+import { Forhandsvisning } from '../../pages/forhandsvisning/forhandsvisning';
 import { ViewDispatch } from '../providers/view-provider';
 import { VedleggVisning } from '../../pages/vedlegg-visning/vedlegg-visning';
 import { VedtakbrevPdfVisning } from '../../pages/vedtakbrevpdf-visning/vedtakbrevpdf-visning';
@@ -17,7 +17,7 @@ function renderView(view: ActionType): ((props: any) => JSX.Element) {
         case ActionType.VIS_VEDTAK:
             return VisVedtak;
         case ActionType.INNSENDING:
-            return TilInnsending;
+            return Forhandsvisning;
         case ActionType.VIS_VEDLEGG:
             return VedleggVisning;
         case ActionType.VIS_VEDTAK_PDF:

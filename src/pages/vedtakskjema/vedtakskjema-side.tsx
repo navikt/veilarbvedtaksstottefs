@@ -2,7 +2,6 @@ import { mapTilTekstliste, skjemaIsNotEmpty, validerSkjema } from '../../compone
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import { useContext, useState } from 'react';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { useTimer } from '../../utils/hooks/useTimer';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import React from 'react';
 import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
@@ -17,6 +16,7 @@ import { SkjemaContext } from '../../components/providers/skjema-provider';
 import { ViewDispatch } from '../../components/providers/view-provider';
 import { useFetchState } from '../../components/providers/fetch-provider';
 import { Status } from '../../utils/fetch-utils';
+import Page from '../page/page';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -29,7 +29,7 @@ interface SkjemaAksjonerProps {
     fnr: string;
 }
 
-export function VedtakskjemaSide ({fnr}: SkjemaAksjonerProps) {
+export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     const {dispatch} = useContext(ViewDispatch);
     const [vedtak, setVedtak] = useFetchState('vedtak');
     const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
@@ -37,20 +37,20 @@ export function VedtakskjemaSide ({fnr}: SkjemaAksjonerProps) {
 
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
-    function sendDataTilBackend (skjema: SkjemaData) {
+    function sendDataTilBackend(skjema: SkjemaData) {
         return VedtaksstotteApi.putVedtakUtkast(fnr, skjema);
     }
 
-    function dispatchFetchVedtakOgRedirectTilHovedside () {
+    function dispatchFetchVedtakOgRedirectTilHovedside() {
         setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
         dispatch({view: ActionType.HOVEDSIDE});
     }
 
-    function handleLagreOgTilbake (e: any, skjema: SkjemaData) {
+    function handleLagreOgTilbake(e: any, skjema: SkjemaData) {
         e.preventDefault();
         sendDataTilBackend(skjema)
             .then(dispatchFetchVedtakOgRedirectTilHovedside)
-            .catch (error => {
+            .catch(error => {
                 console.log(error); // tslint:disable-line:no-console
             });
     }
@@ -58,13 +58,13 @@ export function VedtakskjemaSide ({fnr}: SkjemaAksjonerProps) {
     function handleSlett() {
         VedtaksstotteApi.slettUtkast(fnr)
             .then(dispatchFetchVedtakOgRedirectTilHovedside)
-            .catch (error => {
+            .catch(error => {
                 console.log(error); // tslint:disable-line:no-console
             });
     }
 
-    function oppdaterSistEndret (skjema: SkjemaData) {
-     if (skjemaIsNotEmpty(skjema)) {
+    function oppdaterSistEndret(skjema: SkjemaData) {
+        if (skjemaIsNotEmpty(skjema)) {
             sendDataTilBackend(skjema).then(() => {
                 const date = new Date();
                 const dato = date.toISOString().slice(0, 10);
@@ -74,33 +74,36 @@ export function VedtakskjemaSide ({fnr}: SkjemaAksjonerProps) {
         }
     }
 
-    function handleSubmit (e: any, skjema: SkjemaData ) {
+    function handleSubmit(e: any, skjema: SkjemaData) {
         e.preventDefault();
         const skjemaFeil = validerSkjema(skjema);
         if (Object.entries(skjemaFeil).filter(feilmelding => feilmelding).length > 0) {
             setErrors(skjemaFeil);
             return;
         }
-        sendDataTilBackend(skjema).then(() =>  {
+        sendDataTilBackend(skjema).then(() => {
             setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
             dispatch({view: ActionType.INNSENDING});
-        }).catch (error => {
+        }).catch(error => {
             console.log(error); // tslint:disable-line:no-console
         });
     }
 
     return (
-        <form className="skjema" onSubmit={(e) => handleSubmit(e, vedtakskjema)}>
-            <div className="skjema__topp">
-                <TilbakeKnapp tilbake={dispatchFetchVedtakOgRedirectTilHovedside}/>
-                {sistOppdatert && <EtikettInfo><Normaltekst>{`Sist lagret : ${sistOppdatert}`}</Normaltekst></EtikettInfo>}
-            </div>
-            <Skjema errors={errors} oppdaterSistEndret={oppdaterSistEndret}/>
-            <Aksjoner
-                handleSubmit={(e) => handleSubmit(e, vedtakskjema)}
-                handleLagreOgTilbake={(e) => handleLagreOgTilbake(e, vedtakskjema)}
-                handleSlett={handleSlett}
-            />
-        </form>
+        <Page>
+            <form className="skjema" onSubmit={(e) => handleSubmit(e, vedtakskjema)}>
+                <div className="skjema__topp">
+                    <TilbakeKnapp tilbake={dispatchFetchVedtakOgRedirectTilHovedside}/>
+                    {sistOppdatert &&
+                    <EtikettInfo><Normaltekst>{`Sist lagret : ${sistOppdatert}`}</Normaltekst></EtikettInfo>}
+                </div>
+                <Skjema errors={errors} oppdaterSistEndret={oppdaterSistEndret}/>
+                <Aksjoner
+                    handleSubmit={(e) => handleSubmit(e, vedtakskjema)}
+                    handleLagreOgTilbake={(e) => handleLagreOgTilbake(e, vedtakskjema)}
+                    handleSlett={handleSlett}
+                />
+            </form>
+        </Page>
     );
 }

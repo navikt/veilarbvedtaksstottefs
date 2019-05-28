@@ -14,21 +14,19 @@ interface AppProps {
 
 function App(props: AppProps) {
     return (
-        <div className="veilarbvedtaksstottefs">
-            <div className="veilarbvedtaksstottefs__content">
-                <FetchProvider>
-                    <ViewProvider>
-                        <PrelanseringSjekk>
-                            <DataFetcher fnr={props.fnr}>
-                                <SkjemaProvider>
-                                    <ViewController fnr={props.fnr}/>
-                                </SkjemaProvider>
-                            </DataFetcher>
-                        </PrelanseringSjekk>
-                    </ViewProvider>
-                </FetchProvider>
-            </div>
-        </div>
+        <main className="veilarbvedtaksstottefs">
+            <FetchProvider>
+                <ViewProvider>
+                    <PrelanseringSjekk>
+                        <DataFetcher fnr={props.fnr}>
+                            <SkjemaProvider>
+                                <ViewController fnr={props.fnr}/>
+                            </SkjemaProvider>
+                        </DataFetcher>
+                    </PrelanseringSjekk>
+                </ViewProvider>
+            </FetchProvider>
+        </main>
     );
 }
 

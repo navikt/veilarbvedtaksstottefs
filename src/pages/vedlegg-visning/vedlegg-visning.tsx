@@ -14,6 +14,7 @@ import { OrNothing } from '../../utils/types/ornothing';
 import { Innholdstittel, Sidetittel } from 'nav-frontend-typografi';
 import './vedlegg-visning.less';
 import { Status } from '../../utils/fetch-utils';
+import Page from '../page/page';
 
 interface VedleggVisningProps {
     vedtakId: number;
@@ -32,13 +33,13 @@ export function VedleggVisning (props: VedleggVisningProps) {
     });
 
     if (opplysninger.status === Status.LOADING || opplysninger.status === Status.NOT_STARTED) {
-        return <NavFrontendSpinner type="XL"/>;
+        return (<div className="page-spinner"><NavFrontendSpinner type="XL"/></div>);
     } else if (opplysninger.status === Status.ERROR) {
-        return <AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil>;
+        return (<div className="page-alert"><AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil></div>);
     }
 
     return (
-        <>
+        <Page>
             <TilbakeKnapp tilbake={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}})}/>
             <section className="vedlegg">
                 <Sidetittel>Brukerinformasjon på vedtakstidspunktet</Sidetittel>
@@ -47,7 +48,7 @@ export function VedleggVisning (props: VedleggVisningProps) {
                 <VedleggCard tittel="Registrering" json={finnOpplysning(OpplysningType.REGISTRERINGSINFO, opplysninger.data)}/>
                 <VedleggCard tittel="Egenvurdering" json={finnOpplysning(OpplysningType.EGENVURDERING, opplysninger.data)}/>
             </section>
-        </>
+        </Page>
     );
 }
 

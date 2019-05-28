@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Card from '../../components/card/card';
-import { Element, Innholdstittel, Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import prelanseringBilde from './prelansering.png';
 import { RadioPanel, Textarea } from 'nav-frontend-skjema';
 import { Knapp } from 'nav-frontend-knapper';
 import { logEvent } from '../../utils/frontend-logger';
 import hjerteBilde from './hjerte.svg';
 import './prelansering.less';
+import Page from '../page/page';
 
 enum FaneNavn {
     OPPFOLGINGSVEDTAK_14A = 'OPPFOLGINGSVEDTAK_14A',
@@ -66,7 +67,7 @@ export function Prelansering() {
     };
 
     return (
-        <>
+        <Page>
            <PrelanseringInfo/>
             {harSendt ? <TakkMelding/> : null}
             {harSendtTidligere || harSendt ? null :
@@ -77,7 +78,7 @@ export function Prelansering() {
                     handleFritekstChanged={handleFritekstChanged}
                     handleSendInnspillClicked={handleSendInnspillClicked}
                 />}
-        </>
+        </Page>
     );
 }
 
