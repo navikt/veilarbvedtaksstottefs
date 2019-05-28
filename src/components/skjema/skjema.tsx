@@ -1,6 +1,4 @@
 import React, { useContext } from 'react';
-import Card from '../../components/card/card';
-import { Systemtittel } from 'nav-frontend-typografi';
 import Opplysninger from '../../components/skjema/opplysninger/opplysninger';
 import Hovedmal from '../../components/skjema/hovedmal/hovedmal';
 import Innsatsgruppe from '../../components/skjema/innsatsgruppe/innsatsgruppe';
@@ -24,15 +22,12 @@ function Skjema ({errors, oppdaterSistEndret}: SkjemaProps) {
 
     useTimer(() => oppdaterSistEndret(vedtakskjema), 2000, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
     return (
-        <Card >
-            <Systemtittel className="skjema__tittel">
-                Oppfølgingsvedtak (§ 14a)
-            </Systemtittel>
+        <>
             <Opplysninger opplysningerfeil={errors.opplysninger}/>
             <Begrunnelse begrunnelsefeil={errors.begrunnelse}/>
             <Innsatsgruppe innsatgruppefeil={errors.innsatsgruppe}/>
             <Hovedmal hovedmalfeil={errors.hovedmal}/>
-        </Card>
+        </>
     );
 }
 

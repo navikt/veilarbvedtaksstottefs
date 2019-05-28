@@ -8,6 +8,7 @@ import { LeggTilOpplysning } from './leggtil-opplysning';
 import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { ReactComponent as OksirkelIkon } from './ok-sirkel.svg';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 export type Opplysning = {
     [key: string]: boolean
@@ -88,6 +89,7 @@ function Opplysninger(props: OpplysningerProps) {
             feil={props.opplysningerfeil}
         >
             <div className="opplysninger">
+                <Normaltekst>Kilder slik de vil vises i vedtaksbrevet</Normaltekst>
                 {opplysninger.map((opplysning, index) =>
                     redigeringModusIndeks !== index
                         ? <VisOpplysning

@@ -8,9 +8,9 @@ const utkast: VedtakData = {
     innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
     vedtakStatus: 'UTKAST',
     sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
-    begrunnelse: 'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
+    begrunnelse: '',
     gjeldende: false,
-    opplysninger: ['Brukerens CV datert fdskfdksfl', 'Din mamma'],
+    opplysninger: ['Møtestøtte'],
     veilederIdent: 'Z007',
     veilederEnhetId: 'Gotham city',
 };
