@@ -12,7 +12,7 @@ const mock = new MockAdapter(axios);
 mock.onGet(/\/veilarbpersonflatefs\/api\/feature\/.*/).reply(200, features);
 mock.onGet(/\/veilarbvedtaksstotte\/api\/\d+\/opplysninger\/\d+/).reply(200, vedlegg);
 mock.onGet(/\/veilarboppfolging\/api\/underoppfolging\?fnr=\d+/).reply(200, underOppfolging);
-mock.onGet('/veilarbvedtaksstotte/api/00123456789/vedtak').reply(200, [utkast]);
+mock.onGet('/veilarbvedtaksstotte/api/00123456789/vedtak').reply(200, [utkast, vedtak, ...historisk]);
 mock.onPut('/veilarbvedtaksstotte/api/00123456789/utkast').reply(204);
 mock.onDelete('/veilarbvedtaksstotte/api/00123456789/utkast').reply(204);
 mock.onPost('/veilarbvedtaksstotte/api/00123456789/vedtak/send').reply(204);

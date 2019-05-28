@@ -15,18 +15,18 @@ interface AppProps {
 function App(props: AppProps) {
     return (
         <main className="veilarbvedtaksstottefs">
-                <FetchProvider>
-                    <ViewProvider>
-                        <DataFetcher fnr={props.fnr}>
-                            <PrelanseringSjekk>
-                                <SkjemaProvider>
-                                    <ViewController fnr={props.fnr}/>
-                                </SkjemaProvider>
-                            </PrelanseringSjekk>
-                        </DataFetcher>
-                    </ViewProvider>
-                </FetchProvider>
-            </main>
+            <FetchProvider>
+                <ViewProvider>
+                    <DataFetcher fnr={props.fnr}>
+                        <PrelanseringSjekk>
+                            <SkjemaProvider>
+                                <ViewController fnr={props.fnr}/>
+                            </SkjemaProvider>
+                        </PrelanseringSjekk>
+                    </DataFetcher>
+                </ViewProvider>
+            </FetchProvider>
+        </main>
     );
 }
 

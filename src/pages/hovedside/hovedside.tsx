@@ -21,25 +21,25 @@ export function Hovedside (props: {fnr: string}) {
     const visAlertrstripefeatureToggle = features.data[VEDTAK_I_GOSYS_TOGGLE];
 
     return (
-        <>
+        <Page>
             <AlertStripeVedtakIArena
                 gjeldendeVedtak={gjeldendeVedtak}
                 tidligereVedtak={tidligereVedtak}
                 visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
             />
-            <Page className="hovedside">
+            <div className="hovedside">
                 <UtkastPanel utkast={utkast}/>
                 <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
                 <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
                 <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
-            </Page>
-        </>
+            </div>
+        </Page>
     );
 
 }
 
 function AlertStripeVedtakIArena (props: {visAlertrstripefeatureToggle: boolean, gjeldendeVedtak: OrNothing<VedtakData>, tidligereVedtak: VedtakData[]}) {
-    if (props.visAlertrstripefeatureToggle && (!props.gjeldendeVedtak || props.tidligereVedtak.length === 0)) {
+    if (props.visAlertrstripefeatureToggle && (!props.gjeldendeVedtak && props.tidligereVedtak.length === 0)) {
         return (
             <AlertStripeInfo>
                 Oppfølgingsvedtak utført i Arena før lansering av ny vedtaksstøtte kan hentes og vises i Gosys.

@@ -6,12 +6,10 @@ export const PRELANSERING_TOGGLE = 'veilarbvedtaksstottefs.prelansering';
 export const VEDTAK_I_GOSYS_TOGGLE = 'veilarbvedtaksstottefs.vedtakigosys';
 export const ALL_TOGGLES = [PRELANSERING_TOGGLE, VEDTAK_I_GOSYS_TOGGLE];
 
-type ALL_FEATURES = 'veilarbvedtaksstottefs.prelansering' | 'veilarbvedtaksstottefs.vedtakigosys';
-
-export type Features = {
-    [K in ALL_FEATURES]: boolean ;
-};
-
+export interface Features {
+    [PRELANSERING_TOGGLE]: boolean;
+    [VEDTAK_I_GOSYS_TOGGLE]: boolean;
+}
 class FeatureToggleApi {
 
     static lagHentFeaturesConfig(): AxiosRequestConfig {
