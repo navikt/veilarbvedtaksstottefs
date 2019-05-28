@@ -52,7 +52,7 @@ export function Forhandsvisning(props: { fnr: string }) {
 
     return (
         <div className="pdfvisning">
-            <div className="pdfvisning__tittel">
+            <div className="pdfvisning__header">
                 <Undertittel> Forhåndsvisning av vedtaksbrevet</Undertittel>
             </div>
             <Document

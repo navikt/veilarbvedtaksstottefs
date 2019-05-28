@@ -5,12 +5,15 @@
 	.pdfvisning {
 		background-color: @grayModia;
 
-		&__tittel {
+		&__header {
 			display: flex;
 			justify-content: center;
 			background-color: #1D1D1D;
 			color: white;
 			padding: 0.75rem 0;
+			position: sticky;
+			top: 0;
+			z-index: 300;
 		}
 
 		&__loader {
