@@ -5,7 +5,7 @@ import { VisVedtak } from '../../pages/visvedtak';
 import { Forhandsvisning } from '../../pages/forhandsvisning/forhandsvisning';
 import { ViewDispatch } from '../providers/view-provider';
 import { OyblikksbildeVisning } from '../../pages/oyblikksbilde-visning/oyblikksbilde-visning';
-import { VedtakbrevPdfVisning } from '../../pages/vedtakbrevpdf-visning/vedtakbrevpdf-visning';
+import { VedtaksbrevVisning } from '../../pages/vedtaksbrev-visning/vedtaksbrev-visning';
 import { VedtakskjemaSide } from '../../pages/vedtakskjema/vedtakskjema-side';
 
 function renderView(view: ActionType): ((props: any) => JSX.Element) {
@@ -21,7 +21,7 @@ function renderView(view: ActionType): ((props: any) => JSX.Element) {
         case ActionType.VIS_VEDLEGG:
             return OyblikksbildeVisning;
         case ActionType.VIS_VEDTAK_PDF:
-            return VedtakbrevPdfVisning;
+            return VedtaksbrevVisning;
         default:
             return Hovedside;
     }

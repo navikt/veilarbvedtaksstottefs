@@ -2,65 +2,25 @@
 
 .veilarbvedtaksstottefs {
 
-	.pdfvisning {
-		background-color: @grayModia;
+	.forhandsvisning__aksjoner {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		width: 600px;
+		margin: 0 auto;
 
-		&__header {
-			display: flex;
-			justify-content: center;
-			background-color: #1D1D1D;
-			color: white;
-			padding: 0.75rem 0;
-			position: sticky;
-			top: 0;
-			z-index: 300;
+		> * {
+			width: 16rem;
 		}
 
-		&__loader {
-			padding-top: 5rem;
-			height: 2264px; //Takes the same space as two pages
+		:last-child {
+			margin-left: 1rem;
 		}
-
-		&__document {
-			width: 800px;
-			margin: 2rem auto 0 auto;
-			padding-bottom: 6rem;
-
-			> * :not(:last-child) {
-				margin-bottom: 0.5rem;
-			}
-		}
-
-		&__footer {
-			position: fixed;
-			left: 0;
-			bottom: 0;
-			background-color: white;
-			width: 100%;
-			padding: 1rem 0;
-			box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2);
-		}
-
-		&__aksjoner {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			width: 600px;
-			margin: 0 auto;
-
-			> * {
-				width: 16rem;
-			}
-
-			:last-child {
-				margin-left: 1rem;
-			}
-		}
-
-		&__knapp-sender {
-			color: white;
-			background-color: @navBla;
-		}
-
 	}
+
+	.forhandsvisning__knapp-sender {
+		color: white;
+		background-color: @navBla;
+	}
+
 }
