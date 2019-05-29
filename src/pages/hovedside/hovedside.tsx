@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { TidligereVedtakPanel } from '../../components/panel/tidligere-vedtak/tidligere-vedtak-panel';
 import { UtkastPanel } from '../../components/panel/utkast/utkast-panel';
 import { VedtakData } from '../../utils/types/vedtak';

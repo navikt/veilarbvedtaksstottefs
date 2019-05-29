@@ -9,6 +9,7 @@ import { useFetchState } from '../../components/providers/fetch-provider';
 import { Status } from '../../utils/fetch-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import './forhandsvisning.less';
+import { FeilModal } from '../../components/modal/feil-modal';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -55,6 +56,13 @@ export function Forhandsvisning(props: { fnr: string }) {
             <div className="pdfvisning__header">
                 <Undertittel> Forhåndsvisning av vedtaksbrevet</Undertittel>
             </div>
+            <FeilModal
+                onRequestClose={() => console.log('hello')}
+                tittel="Problemer med å sende"
+                innehold="Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken."
+                contentLabel="derps"
+                isOpen={true}
+            />
             <Document
                 className="pdfvisning__document"
                 file={{url: veilarbvedtakkUrl(props.fnr)}}
