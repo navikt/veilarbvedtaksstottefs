@@ -10,7 +10,7 @@ import underOppfolging from './under-oppfolging';
 const mock = new MockAdapter(axios);
 
 mock.onGet(/\/veilarbpersonflatefs\/api\/feature\/.*/).reply(200, features);
-mock.onGet(/\/veilarbvedtaksstotte\/api\/\d+\/opplysninger\/\d+/).reply(200, vedlegg);
+mock.onGet(/\/veilarbvedtaksstotte\/api\/\d+\/oyblikksbilde\/\d+/).reply(200, vedlegg);
 mock.onGet(/\/veilarboppfolging\/api\/underoppfolging\?fnr=\d+/).reply(200, underOppfolging);
 mock.onGet('/veilarbvedtaksstotte/api/00123456789/vedtak').reply(200, [vedtak, utkast, ...historisk]);
 mock.onPut('/veilarbvedtaksstotte/api/00123456789/utkast').reply(204);
