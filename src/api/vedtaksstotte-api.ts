@@ -39,6 +39,12 @@ class VedtaksstotteApi {
         return `${VEILARBVEDTAKSSTOTTE_API}/${fnr}?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
     }
 
+    static hentOyblikksbilde(fnr: string, vedtakId: number): AxiosRequestConfig {
+        return {
+            url: `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/oyblikksbilde/${vedtakId}`
+        };
+    }
+
 }
 
 export default VedtaksstotteApi;

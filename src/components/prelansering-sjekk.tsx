@@ -1,15 +1,10 @@
 import React, { PropsWithChildren } from 'react';
-import { useFetch } from '../utils/hooks/useFetch';
-import FeatureToggleApi, { Features, PRELANSERING_TOGGLE } from '../api/feature-toggle-api';
 import { Prelansering } from '../pages/prelansering/prelansering';
-import { Status } from '../utils/fetch-utils';
+import { useFetchState } from './providers/fetch-provider';
+import { PRELANSERING_TOGGLE } from '../api/feature-toggle-api';
 
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
-    const features = useFetch<Features>(FeatureToggleApi.lagHentFeaturesConfig());
-
-    if (features.status !== Status.DONE) {
-        return null;
-    }
+    const [features, setFeatures] = useFetchState('features');
 
     return features.data![PRELANSERING_TOGGLE] ? <Prelansering/> : props.children;
 }
