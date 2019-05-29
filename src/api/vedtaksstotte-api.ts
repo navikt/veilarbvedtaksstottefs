@@ -41,7 +41,7 @@ class VedtaksstotteApi {
 
     static hentOyblikksbilde(fnr: string, vedtakId: number): AxiosRequestConfig {
         return {
-            url: `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/opplysninger/${vedtakId}`
+            url: `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/oyblikksbilde/${vedtakId}`
         };
     }
 
