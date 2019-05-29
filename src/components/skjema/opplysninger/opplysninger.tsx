@@ -14,13 +14,6 @@ export type Opplysning = {
     [key: string]: boolean
 };
 
-export enum OpplysningType {
-    CV = 'CV',
-    JOBBPROFIL = 'JOBBPROFIL',
-    REGISTRERINGSINFO = 'REGISTRERINGSINFO',
-    EGENVURDERING = 'EGENVURDERING',
-}
-
 interface OpplysningerProps {
     opplysningerfeil?: string;
 }

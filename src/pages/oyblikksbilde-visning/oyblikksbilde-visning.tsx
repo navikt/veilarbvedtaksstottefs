@@ -3,38 +3,36 @@ import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { ViewDispatch } from '../../components/providers/view-provider';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { VEILARBVEDTAKSSTOTTE_API } from '../../api/vedtaksstotte-api';
+import VedtaksstotteApi  from '../../api/vedtaksstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../components/json-viewer/json-viewer';
-import { Opplysning } from '../../utils/types/opplysning';
+import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
 import Card from '../../components/card/card';
-import { OpplysningType } from '../../components/skjema/opplysninger/opplysninger';
 import { OrNothing } from '../../utils/types/ornothing';
 import { Innholdstittel, Sidetittel } from 'nav-frontend-typografi';
-import './vedlegg-visning.less';
 import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
+import KildeType from '../../utils/types/kilde-type';
+import './oyblikksbilde-visning.less';
 
 interface VedleggVisningProps {
     vedtakId: number;
     fnr: string;
 }
 
-function finnOpplysning(opplysningType: OpplysningType, opplysninger: OrNothing<Opplysning[]>): string | null {
-    const opplysning = opplysninger ? opplysninger.find(o => o.opplysningsType === opplysningType) : null;
-    return opplysning ? opplysning.json : null;
+function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
+    const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.kildeType === kildeType) : null;
+    return oyblikksbilde ? oyblikksbilde.json : null;
 }
 
-export function VedleggVisning (props: VedleggVisningProps) {
+export function OyblikksbildeVisning (props: VedleggVisningProps) {
     const {dispatch} = useContext(ViewDispatch);
-    const opplysninger = useFetch<Opplysning[]>({
-        url: `${VEILARBVEDTAKSSTOTTE_API}/${props.fnr}/opplysninger/${props.vedtakId}`
-    });
+    const oyblikksbilder = useFetch<Oyblikksbilde[]>(VedtaksstotteApi.hentOyblikksbilde(props.fnr, props.vedtakId));
 
-    if (opplysninger.status === Status.LOADING || opplysninger.status === Status.NOT_STARTED) {
+    if (oyblikksbilder.status === Status.LOADING || oyblikksbilder.status === Status.NOT_STARTED) {
         return (<div className="page-spinner"><NavFrontendSpinner type="XL"/></div>);
-    } else if (opplysninger.status === Status.ERROR) {
+    } else if (oyblikksbilder.status === Status.ERROR) {
         return (<div className="page-alert"><AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil></div>);
     }
 
@@ -43,10 +41,9 @@ export function VedleggVisning (props: VedleggVisningProps) {
             <TilbakeKnapp tilbake={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}})}/>
             <section className="vedlegg">
                 <Sidetittel>Brukerinformasjon på vedtakstidspunktet</Sidetittel>
-                <VedleggCard tittel="CV" json={finnOpplysning(OpplysningType.CV, opplysninger.data)}/>
-                <VedleggCard tittel="Jobbprofil" json={finnOpplysning(OpplysningType.JOBBPROFIL, opplysninger.data)}/>
-                <VedleggCard tittel="Registrering" json={finnOpplysning(OpplysningType.REGISTRERINGSINFO, opplysninger.data)}/>
-                <VedleggCard tittel="Egenvurdering" json={finnOpplysning(OpplysningType.EGENVURDERING, opplysninger.data)}/>
+                <VedleggCard tittel="CV og Jobbprofil" json={finnOyblikksbilde(KildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)}/>
+                <VedleggCard tittel="Registrering" json={finnOyblikksbilde(KildeType.REGISTRERINGSINFO, oyblikksbilder.data)}/>
+                <VedleggCard tittel="Egenvurdering" json={finnOyblikksbilde(KildeType.EGENVURDERING, oyblikksbilder.data)}/>
             </section>
         </Page>
     );
