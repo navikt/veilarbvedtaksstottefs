@@ -22,7 +22,7 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     if (isAnyLoading(vedtak.status, underOppfolging.status, features.status)) {
         return (<div className="page-spinner"><NavFrontendSpinner type="XL"/></div>);
     } else if (isAnyFailed(vedtak.status, underOppfolging.status)) {
-        return (<div className="page-alert"><AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil></div>);
+        return (<div className="vedtaksstotte-alert"><AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil></div>);
     }
 
     return props.children;

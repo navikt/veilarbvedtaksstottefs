@@ -1,20 +1,21 @@
 import React from 'react';
 import './json-viewer.less';
-import { func } from 'prop-types';
 
 interface JsonViewerProps {
     json: string | null;
 }
 
 export default function JsonViewer(props: JsonViewerProps) {
-    if (!props.json) {
+    const obj = !props.json ? null : JSON.parse(props.json);
+    return objToReact(obj);
+}
+
+function objToReact(obj: {} | null) {
+
+    if (obj == null || typeof obj !== 'object') {
         return <p>Ingen data</p>;
     }
 
-    return objToReact(JSON.parse(props.json));
-}
-
-function objToReact(obj: {}) {
     return (
         <>
             {Object.entries(obj).map(([key, value], idx) => {
