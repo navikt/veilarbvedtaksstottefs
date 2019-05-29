@@ -16,7 +16,7 @@ export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData []}) {
         return <IngenTidligereVedtak/>;
     }
 
-    return <HarTidligereVedtak vedtakHistorikk={props.vedtakHistorikk}/>
+    return <HarTidligereVedtak vedtakHistorikk={props.vedtakHistorikk}/>;
 }
 
 function IngenTidligereVedtak() {
