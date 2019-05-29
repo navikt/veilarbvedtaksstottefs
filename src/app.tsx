@@ -17,13 +17,13 @@ function App(props: AppProps) {
         <main className="veilarbvedtaksstottefs">
             <FetchProvider>
                 <ViewProvider>
-                    <PrelanseringSjekk>
-                        <DataFetcher fnr={props.fnr}>
+                    <DataFetcher fnr={props.fnr}>
+                        <PrelanseringSjekk>
                             <SkjemaProvider>
                                 <ViewController fnr={props.fnr}/>
                             </SkjemaProvider>
-                        </DataFetcher>
-                    </PrelanseringSjekk>
+                        </PrelanseringSjekk>
+                    </DataFetcher>
                 </ViewProvider>
             </FetchProvider>
         </main>
