@@ -7,7 +7,6 @@ import { useRef, useState } from 'react';
 import { LeggTilOpplysning } from './leggtil-opplysning';
 import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
-import { ReactComponent as OksirkelIkon } from './ok-sirkel.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 export type Opplysning = {
@@ -124,7 +123,6 @@ function Opplysninger(props: OpplysningerProps) {
                         }}
                     />
                 }
-                <BekreftelseBoks listeLength={opplysninger.length + 1} sistEndretIndeks={sistEndretIndeks} redigeringModusIndeks={redigeringModusIndeks}/>
             </div>
         </SkjemaElement>
     );
@@ -137,20 +135,5 @@ function LagOpplysningsListe (props: {samladeOpplysninger: string[]}) {
         <ul>
             {props.samladeOpplysninger.map((opplysning, idx) => <li key={idx}>{opplysning}</li>)}
         </ul>
-    );
-}
-
-function BekreftelseBoks (props: {sistEndretIndeks: number, listeLength: number, redigeringModusIndeks: number}) {
-    if (props.sistEndretIndeks < 0 || props.redigeringModusIndeks >= 0 ) {
-        return null;
-    }
-
-    return (
-        <div  className="bekreftelseboks" style={{bottom: `calc(5.5rem + 4rem * (${(props.listeLength)} - ${props.sistEndretIndeks}))`, position: 'relative'}}>
-            <div className="bekreftelse">
-                <OksirkelIkon className="bekreftelse__ikon"/>
-                <span> Lagt til</span>
-            </div>
-        </div>
     );
 }
