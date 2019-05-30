@@ -27,7 +27,7 @@ function PdfViewer(props: PdfViewerProps) {
             </div>
             <Document
                 className="pdfvisning__document"
-                file={{url: "fsdfsd" + props.url}}
+                file={{url: props.url}}
                 loading={<PdfLoader/>}
                 error={<PdfError/>}
                 onLoadSuccess={(object: { numPages: number }) => setPages(object.numPages)}
@@ -50,7 +50,6 @@ const PdfError = () => {
         </div>
     );
 };
-
 
 const PdfLoader = () => {
     return (

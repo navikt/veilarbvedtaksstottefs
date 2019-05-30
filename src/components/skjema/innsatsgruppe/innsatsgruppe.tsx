@@ -21,11 +21,11 @@ export const getInnsatsgruppeNavn = (innsatsgruppeType: OrNothing<InnsatsgruppeT
 
 export const innsatsgrupper = [
     {
-        label: 'Gode muligheter (Standard innsats)',
+        label: 'Standard innsats (gode muligheter)',
         value: InnsatsgruppeType.STANDARD_INNSATS
     },
     {
-        label: 'Gradert varig nedsatt arbeidsevne (Gradert varig tilpasset innsats)',
+        label: 'Delvis varig nedsatt arbeidsevne ()',
         value: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS
     },
     {

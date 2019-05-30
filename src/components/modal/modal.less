@@ -2,19 +2,23 @@
   .ReactModal__Content {
     overflow: visible;
     width: 448px;
-    padding: 0 1rem 1rem 1rem;
+    padding: 0 1rem;
     text-align: center;
 
     svg {
-      margin-top: -1.5rem; //placerar en ikon med størrelsen 48x48 i mitten
+      margin-top: -2rem; //placerar en ikon med størrelsen 64x64 i mitten
     }
 
-    h3 {
-      margin-bottom: 1rem;
+    .knapp {
+      margin-top: 1.5rem;
     }
 
     .modal__innehold {
-      padding: 2rem 1rem 2rem 0rem;
+      padding: 2rem 3rem;
+    }
+
+    .modal__innehold > * {
+      margin-bottom: 0.5rem;
     }
   }
 }

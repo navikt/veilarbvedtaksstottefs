@@ -7,7 +7,6 @@ import { useRef, useState } from 'react';
 import { LeggTilOpplysning } from './leggtil-opplysning';
 import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
-import { ReactComponent as OksirkelIkon } from './ok-sirkel.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 export type Opplysning = {
@@ -148,7 +147,6 @@ function BekreftelseBoks (props: {sistEndretIndeks: number, listeLength: number,
     return (
         <div  className="bekreftelseboks" style={{bottom: `calc(5.5rem + 4rem * (${(props.listeLength)} - ${props.sistEndretIndeks}))`, position: 'relative'}}>
             <div className="bekreftelse">
-                <OksirkelIkon className="bekreftelse__ikon"/>
                 <span> Lagt til</span>
             </div>
         </div>
