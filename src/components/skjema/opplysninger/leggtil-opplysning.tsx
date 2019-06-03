@@ -12,7 +12,7 @@ export function LeggTilOpplysning (props: {leggTilOpplysning: () => void}) {
             aria-describedby="leggtilkildedesc"
         >
             <LeggTilIkon className="leggtil__ikon" aria-labelledby="leggtilkilde"/>
-            <span className="inputPanel__label">Legg til</span>
+            <span className="inputPanel__label">Legg til andre kilder</span>
         </div>
     );
 }

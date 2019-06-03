@@ -4,114 +4,127 @@
 .veilarbvedtaksstottefs {
   .opplysninger {
     display: grid;
-    padding: 0 5rem;
+    grid-column-gap: 2rem;
+    grid-template-columns: 0.65fr 0.35fr;
+    grid-template-rows: auto auto;
+    padding: 0 2rem;
+    grid-row-gap: 0.5rem;
 
-    .sist-endret {
-      background-color: @navGronnLighten80;
+    .hjelpetekster {
+      grid-column-start: 2;
+      grid-row-start: 2;
     }
 
-    .visopplysning {
-      margin-top: 1rem;
-
-      .inputPanel {
-        border-radius: 0.25rem;
-        background-color: inherit;
+    &__innhold {
+      grid-column-start: 1;
+      grid-row-start: 2;
+      .sist-endret {
+        background-color: @navGronnLighten80;
       }
 
-      .inputPanel--checked {
-        background-color: white;
-        border: 1px solid @navGra60;
-        border-radius: 0.25rem;
-      }
-    }
+      .visopplysning {
+        margin-bottom: 1rem;
 
-    .kanRedigeres {
+        .inputPanel {
+          border-radius: 0.25rem;
+          background-color: inherit;
+        }
 
-      display: grid;
-      grid-template-columns: 1fr 0.1fr;
-
-      .inputPanel {
-        border-right: 1px transparent;
-        border-radius: 0.25rem 0 0 0.25rem;
-        background-color: inherit;
-      }
-      .inputPanel:hover{
-        border: 1px solid #0067C5;
-        border-radius: 0.25rem
+        .inputPanel--checked {
+          background-color: white;
+          border: 1px solid @navGra60;
+          border-radius: 0.25rem;
+        }
       }
 
-      .inputPanel--checked {
-        border-bottom: 1px solid @navGra60;
-        border-top: 1px solid @navGra60;
-        border-left: 1px solid @navGra60;
-      }
-      .redigeropplysning-knapp {
-        background-color: inherit;
-        cursor: pointer;
-        z-index: 1000;
-        border-bottom: 1px solid @navGra60;
-        border-top: 1px solid @navGra60;
-        border-right: 1px solid @navGra60;
-        border-left: none;
-        border-radius: 0 0.25rem 0.25rem 0;
-      }
+      .kanRedigeres {
 
-      .redigeropplysning-knapp:hover {
-        background-color: inherit;
-        svg {
-          g {
-            stroke: @navBla
+        display: grid;
+        grid-template-columns: 1fr 0.1fr;
+
+        .inputPanel {
+          border-right: 1px transparent;
+          border-radius: 0.25rem 0 0 0.25rem;
+          background-color: inherit;
+        }
+        .inputPanel:hover {
+          border: 1px solid #0067C5;
+          border-radius: 0.25rem
+        }
+
+        .inputPanel--checked {
+          border-bottom: 1px solid @navGra60;
+          border-top: 1px solid @navGra60;
+          border-left: 1px solid @navGra60;
+        }
+        .redigeropplysning-knapp {
+          background-color: inherit;
+          cursor: pointer;
+          z-index: 1000;
+          border-bottom: 1px solid @navGra60;
+          border-top: 1px solid @navGra60;
+          border-right: 1px solid @navGra60;
+          border-left: none;
+          border-radius: 0 0.25rem 0.25rem 0;
+        }
+
+        .redigeropplysning-knapp:hover {
+          background-color: inherit;
+          svg {
+            g {
+              stroke: @navBla
+            }
           }
         }
-      }
-      .redigeropplysning-knapp:focus {
-        box-shadow: 0 0 0 3px #254b6d;
-        border: 1px transparent;
-        outline-color: #254b6d;
-        color: transparent;
+        .redigeropplysning-knapp:focus {
+          box-shadow: 0 0 0 3px #254b6d;
+          border: 1px transparent;
+          outline-color: #254b6d;
+          color: transparent;
+        }
+
+        .redigeropplysning-knapp:hover {
+          border: 1px solid #0067C5;
+          box-shadow: #B7B1A9 0 2px 1px 0;
+          border-radius: 0.25rem;
+        }
+
       }
 
-      .redigeropplysning-knapp:hover {
-        border: 1px solid #0067C5;
-        box-shadow: #B7B1A9 0 2px 1px 0;
-        border-radius: 0.25rem;
-      }
-
-    }
-
-    .leggtil {
-      display: flex;
-      padding: 1rem 1rem 1rem 1rem;
-      margin-top: 1rem;
-      .inputPanel__label {
-        margin-left: 0.4rem;
-      }
-      .inputPanel__label:before {
-        border:none;
-        background-color: initial;
-      }
-    }
-
-    .leggtil:focus {
-      box-shadow: 0 0 0 3px #254b6d;
-    }
-
-    .rediger {
-      margin-top: 0.5rem;
-      background-color: @gra;
-      padding: 0.5rem;
-      .textarea__container {
-        .skjemaelement__input {
-          font-family: Source Sans Pro, Arial, sans-serif;
-          font-size: 1rem;
+      .leggtil {
+        display: flex;
+        padding: 1rem 1rem 1rem 1rem;
+        margin-top: 1rem;
+        .inputPanel__label {
+          margin-left: 0.4rem;
+        }
+        .inputPanel__label:before {
+          border: none;
+          background-color: initial;
         }
       }
-      &__aksjoner {
-        display: flex;
-        justify-content: flex-end;
-        button {
-          text-transform: none;
-          text-decoration: underline;
+
+      .leggtil:focus {
+        box-shadow: 0 0 0 3px #254b6d;
+      }
+
+      .rediger {
+        margin-top: 0.5rem;
+        background-color: @gra;
+        padding: 0.5rem;
+        .textarea__container {
+          .skjemaelement__input {
+            font-family: Source Sans Pro, Arial, sans-serif;
+            font-size: 1rem;
+          }
+        }
+        &__aksjoner {
+          display: flex;
+          justify-content: flex-end;
+          button {
+            text-transform: none;
+            text-decoration: underline;
+          }
         }
       }
     }
