@@ -36,7 +36,7 @@ class VedtaksstotteApi {
     }
 
     static hentVedtakPdfURL(fnr: string, dokumentInfoId: string, journalpostId: string) {
-        return `${VEILARBVEDTAKSSTOTTE_API}/${fnr}?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
+        return `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/vedtak/pdf?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
     }
 
     static hentOyblikksbilde(fnr: string, vedtakId: number): AxiosRequestConfig {
