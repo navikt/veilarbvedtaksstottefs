@@ -18,6 +18,8 @@ import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import { formatDateTime } from '../../utils/date-utils';
+import { ModalViewDispatch } from '../../components/providers/modal-provider';
+import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -32,6 +34,7 @@ interface SkjemaAksjonerProps {
 
 export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     const {dispatch} = useContext(ViewDispatch);
+    const {modalViewDispatch} = useContext(ModalViewDispatch);
     const [vedtak, setVedtak] = useFetchState('vedtak');
     const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [errors, setErrors] = useState<SkjemaFeil>({});
@@ -45,6 +48,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     function dispatchFetchVedtakOgRedirectTilHovedside() {
         setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
         dispatch({view: ActionType.HOVEDSIDE});
+        modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_LAGRET_SUKSESS});
     }
 
     function handleLagreOgTilbake(e: any, skjema: SkjemaData) {

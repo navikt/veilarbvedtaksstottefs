@@ -7,6 +7,7 @@ import { FetchProvider } from './components/providers/fetch-provider';
 import { SkjemaProvider } from './components/providers/skjema-provider';
 import { NasjonalTilgangSjekk } from './components/sjekk/nasjonal-tilgang-sjekk';
 import './app.less';
+import { ModalViewProvider } from './components/providers/modal-provider';
 
 interface AppProps {
     fnr: string;
@@ -18,6 +19,7 @@ function App(props: AppProps) {
         <main className="veilarbvedtaksstottefs">
             <FetchProvider>
                 <ViewProvider>
+                   <ModalViewProvider>
                     <NasjonalTilgangSjekk fnr={props.fnr}>
                         <DataFetcher fnr={props.fnr}>
                             <PrelanseringSjekk>
@@ -27,6 +29,7 @@ function App(props: AppProps) {
                             </PrelanseringSjekk>
                         </DataFetcher>
                     </NasjonalTilgangSjekk>
+                   </ModalViewProvider>
                 </ViewProvider>
             </FetchProvider>
         </main>

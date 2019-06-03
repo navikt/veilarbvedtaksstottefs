@@ -5,6 +5,8 @@ import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { utkastetSkalKvalitetssikrets } from '../skjema-utils';
 
 export enum InnsatsgruppeType {
     STANDARD_INNSATS = 'STANDARD_INNSATS',
@@ -50,6 +52,7 @@ interface InnsatsgruppeProps {
 
 function Innsatsgruppe (props: InnsatsgruppeProps) {
     const {innsatsgruppe, setInnsatsgruppe} = useContext(SkjemaContext);
+    const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
     return (
         <SkjemaElement
             tittel="Innsatsgruppe"
@@ -57,11 +60,18 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
             feil={props.innsatgruppefeil}
         >
             {(lukkSkjema) =>
-                <InnsatsgruppeRadioButtons
-                    lukkSkjema={lukkSkjema}
-                    handleInnsatsgruppeChanged={setInnsatsgruppe}
-                    innsatsgruppe={innsatsgruppe}
-                />
+                <>
+                    <InnsatsgruppeRadioButtons
+                        lukkSkjema={lukkSkjema}
+                        handleInnsatsgruppeChanged={setInnsatsgruppe}
+                        innsatsgruppe={innsatsgruppe}
+                    />
+                    {kvalitetssikresVarsel &&
+                    <AlertStripeAdvarsel className="innsatsgruppe-advarsel">
+                        Ved delvis varig tilpasset innsats og varig tilpasset innsats må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
+                    </AlertStripeAdvarsel>
+                    }
+                </>
             }
         </SkjemaElement>
     );

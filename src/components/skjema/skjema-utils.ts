@@ -88,3 +88,7 @@ export function validerSkjema(skjema: SkjemaData) {
 
     return errors;
 }
+
+export function utkastetSkalKvalitetssikrets (innsatsgruppe?: InnsatsgruppeType) {
+    return innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS || innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
+}
