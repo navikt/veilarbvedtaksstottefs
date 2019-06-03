@@ -17,6 +17,7 @@ import { useFetchState } from '../../components/providers/fetch-provider';
 import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import Card from '../../components/card/card';
+import { formatDateTime } from '../../utils/date-utils';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -66,10 +67,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     function oppdaterSistEndret(skjema: SkjemaData) {
         if (skjemaIsNotEmpty(skjema)) {
             sendDataTilBackend(skjema).then(() => {
-                const date = new Date();
-                const dato = date.toISOString().slice(0, 10);
-                const tid = date.toLocaleTimeString('no');
-                setSistOppdatert(`${dato} ${tid}`);
+                setSistOppdatert(new Date().toISOString());
             });
         }
     }
@@ -96,7 +94,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
                 <form onSubmit={(e) => handleSubmit(e, vedtakskjema)}>
                     <Card>
                         <div className="skjema__topp">
-                            {sistOppdatert && <Normaltekst>{`Sist lagret : ${sistOppdatert}`}</Normaltekst>}
+                            {sistOppdatert && <Normaltekst>{`Sist lagret : ${formatDateTime(sistOppdatert)}`}</Normaltekst>}
                         </div>
                         <Systemtittel className="skjema__tittel">
                             Oppfølgingsvedtak (§ 14a)
