@@ -10,6 +10,7 @@ interface SkjemaElementProps<T> {
     className?: string;
     value?: React.ReactNode;
     feil?: string;
+    skalKunViseRedigeringsModus?: boolean;
 }
 
 const emdashCharacterCode = 8212;
@@ -29,32 +30,38 @@ export function SkjemaElement<T>(props: SkjemaElementProps<T>) {
     return (
         <SkjemaGruppe feil={props.feil ? {feilmelding : props.feil} : undefined} className="vedtaksskjemaelement">
             <legend>{`${props.tittel}:`}</legend>
-            { isOpen
-                ? <RedigeringsModus lukkSkjemaElement={lukkSkjemaElement} children={props.children}/>
+            { isOpen || props.skalKunViseRedigeringsModus
+                ? <RedigeringsModus skalKunViseRedigeringsModus={props.skalKunViseRedigeringsModus}lukkSkjemaElement={lukkSkjemaElement} children={props.children}/>
                 : <VisningsModus<T> value={props.value} apneSkjemaElement={apneSkjemaElement}/>
             }
         </SkjemaGruppe>
     );
 }
 
-function RedigeringsModus(props: {lukkSkjemaElement: () => void, className?: string, children: (JSX.Element[] | JSX.Element) | ((lukkSkjemaElement: () => void) => (JSX.Element[] | JSX.Element)) }) {
+function RedigeringsModus(props: {
+    skalKunViseRedigeringsModus?: boolean,
+    lukkSkjemaElement: () => void,
+    className?: string,
+    children: (JSX.Element[] | JSX.Element) | ((lukkSkjemaElement: () => void) => (JSX.Element[] | JSX.Element))
+}) {
     const className = classNames('vedtaksskjemaelement__innhold', props.className);
     return (
         <>
-        <div className={className}>
-            {typeof props.children === 'function'
-                ? props.children(props.lukkSkjemaElement)
-                : props.children
-            }
-        </div>
-        <div>
-            <button
-                onClick={props.lukkSkjemaElement}
-                className="toggle--knapp btn--lenke"
-            >
-                Lukk
-            </button>
-        </div>
+            <div className={className}>
+                {typeof props.children === 'function'
+                    ? props.children(props.lukkSkjemaElement)
+                    : props.children
+                }
+            </div>
+            {!props.skalKunViseRedigeringsModus && <div>
+                <button
+                    onClick={props.lukkSkjemaElement}
+                    className="toggle--knapp btn--lenke"
+                    type="button"
+                >
+                    Lukk
+                </button>
+            </div> }
         </>
     );
 }
@@ -71,7 +78,7 @@ function VisningsModus<T>(props: {value?: React.ReactNode, apneSkjemaElement: ()
                 }
             </div>
             <div>
-                <button className="toggle--knapp btn--lenke" onClick={props.apneSkjemaElement}>
+                <button type="button" className="toggle--knapp btn--lenke" onClick={props.apneSkjemaElement}>
                     Endre
                 </button>
             </div>
