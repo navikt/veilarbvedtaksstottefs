@@ -9,7 +9,7 @@ import 'dayjs/locale/nb';
 
 dayjs.locale('nb');
 
-if (env.isDevelopment) {
+if (env.isDevelopment || env.isRunningOnHeroku) {
     ReactDOM.render(<App fnr={fnr} enhet={enhet} />, document.getElementById('veilarbvedtaksstottefs'));
     require('./mock/index');
 } else {
