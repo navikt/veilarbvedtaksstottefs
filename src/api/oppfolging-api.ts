@@ -10,6 +10,12 @@ class OppfolgingApi {
         };
     }
 
+    static lagHentTilgangTilBrukersKontor(fnr: string): AxiosRequestConfig {
+        return {
+            url: `${OPPFOLGING_URL}/oppfolging/veilederTilgang?fnr=${fnr}`
+        };
+    }
+
 }
 
 export default OppfolgingApi;

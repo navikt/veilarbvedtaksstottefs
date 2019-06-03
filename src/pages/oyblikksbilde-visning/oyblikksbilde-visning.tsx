@@ -31,9 +31,9 @@ export function OyblikksbildeVisning (props: VedleggVisningProps) {
     const oyblikksbilder = useFetch<Oyblikksbilde[]>(VedtaksstotteApi.hentOyblikksbilde(props.fnr, props.vedtakId));
 
     if (oyblikksbilder.status === Status.LOADING || oyblikksbilder.status === Status.NOT_STARTED) {
-        return (<div className="vedtaksstotte-spinner"><NavFrontendSpinner type="XL"/></div>);
+        return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;
     } else if (oyblikksbilder.status === Status.ERROR) {
-        return (<div className="vedtaksstotte-alert"><AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil></div>);
+        return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 
     return (

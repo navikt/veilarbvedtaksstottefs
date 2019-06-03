@@ -20,9 +20,9 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     }, [vedtak.status]);
 
     if (isAnyLoading(vedtak.status, underOppfolging.status, features.status)) {
-        return (<div className="page-spinner"><NavFrontendSpinner type="XL"/></div>);
-    } else if (isAnyFailed(vedtak.status, underOppfolging.status)) {
-        return (<div className="vedtaksstotte-alert"><AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil></div>);
+        return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;
+    } else if (isAnyFailed(vedtak.status, underOppfolging.status, features.status)) {
+        return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 
     return props.children;
