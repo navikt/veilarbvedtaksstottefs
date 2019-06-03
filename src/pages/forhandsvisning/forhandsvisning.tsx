@@ -75,7 +75,7 @@ export function Forhandsvisning(props: { fnr: string }) {
                         className="forhandsvisning__knapp-sender"
                         spinner={isSending}
                     >
-                        Send
+                        Send til bruker
                     </Hovedknapp>
                     <Knapp
                         htmlType="button"

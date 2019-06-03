@@ -10,51 +10,23 @@
       background-color: @navGronnLighten80;
     }
 
-    .bekreftelseboks {
-      box-sizing: border-box;
-      padding: 1rem 0.5rem;
-      background: white;
-      width: 20%;
-      right: 3rem;
-      box-shadow: 0 1px 3px 1px @navGra40;
-      border-radius: 0.25rem;
+    .visopplysning {
+      margin-top: 1rem;
 
-      .bekreftelse {
-        display: flex;
-        flex-direction: column;
-        padding: 0 1rem 0 2.5rem;
-        &__ikon {
-          margin-left: 1rem;
-        }
-        span {
-          font-weight: 600;
-          font-size: 1.2rem;
-        }
+      .inputPanel {
+        border-radius: 0.25rem;
+        background-color: inherit;
+      }
+
+      .inputPanel--checked {
+        background-color: white;
+        border: 1px solid @navGra60;
+        border-radius: 0.25rem;
       }
     }
 
-    .bekreftelseboks::after{
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 0;
-      margin-left: -0.5em;
-      bottom: -2em;
-      left: 40%;
-      box-sizing: border-box;
+    .kanRedigeres {
 
-      border: 1em solid #aaa49b;
-      border-color: transparent transparent white white;
-
-      transform-origin: 0 0;
-      transform: rotate(-45deg);
-
-      box-shadow: -2px 2px 1px 0px #aaa49b;
-
-    }
-
-    .visopplysning {
-      margin-top: 1rem;
       display: grid;
       grid-template-columns: 1fr 0.1fr;
 

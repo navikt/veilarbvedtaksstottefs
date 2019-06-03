@@ -5,37 +5,41 @@ import { OrNothing } from '../../utils/types/ornothing';
 import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
 import { Opplysning } from './opplysninger/opplysninger';
 
-const defaultOpplysningsliste =
+export const defaultOpplysningsliste =
     [
-        'Svarene dine fra da du registrerte deg.',
-        'CV-en og jobbprofilen din.',
-        'Egenvurderingigen din.',
+        'Svarene dine fra da du registrerte deg',
+        'CV-en og jobbprofilen din',
+        'Svarene dine om behov for veiledning',
     ];
 
 export function mergeMedDefaultOpplysninger(opplysningerListe?: string []): Opplysning[] {
-    const filtretDefaultFraBackend = filtrerDefaultOpplysningerFraBackend(opplysningerListe);
-    const defaultObjekt = byggOpplysningsObjektliste(false, filtretDefaultFraBackend);
+    const defaultObjekt = byggDefaultOpplysningsObjektliste(opplysningerListe);
     const opplysningslisteObjekt = byggOpplysningsObjektliste(true, opplysningerListe);
     return defaultObjekt.concat(opplysningslisteObjekt);
-
 }
 
-function sjekkHvisOpplysningStartedMedDefaultOpplysning(opplysningerListe: string[], defaultOpplysning: string ) {
-    return opplysningerListe.some(opplysning => opplysning.trim().toLowerCase().startsWith(defaultOpplysning.trim().toLowerCase()));
+export function erDefaultOpplysning (opplysning: string) {
+    return defaultOpplysningsliste.some(defaultOpplysning => defaultOpplysning === opplysning);
 }
 
-function filtrerDefaultOpplysningerFraBackend (opplysningerListe?: string []) {
-    return opplysningerListe ?
-        defaultOpplysningsliste
-            .filter(defaultOpplysning => !sjekkHvisOpplysningStartedMedDefaultOpplysning(opplysningerListe, defaultOpplysning))
-        : defaultOpplysningsliste;
+function byggDefaultOpplysningsObjektliste(opplysningerListe?: string[]) {
+    return defaultOpplysningsliste.reduce((acc, defaultOpplysning) => {
+        let opplysningsObjekt = {} as Opplysning;
+        opplysningsObjekt[defaultOpplysning] = opplysningerListe &&
+            opplysningerListe.some(opplysning => opplysning === defaultOpplysning) || false;
+        return [...acc, opplysningsObjekt];
+    }, [] as Opplysning[]);
 }
 
 function byggOpplysningsObjektliste (verdi: boolean, opplysningerListe?: string []) {
     if (!opplysningerListe) {
         return [];
     }
-    return opplysningerListe.reduce((acc, opplysning ) => {
+
+    const filtretOpplysningsListe = opplysningerListe
+        .filter(opplysning => ! defaultOpplysningsliste.some(defaultOpplysning => opplysning === defaultOpplysning));
+
+    return filtretOpplysningsListe.reduce((acc, opplysning ) => {
         let opplysningsObjekt = {} as Opplysning;
         opplysningsObjekt[opplysning] = verdi;
         return [...acc, opplysningsObjekt];
