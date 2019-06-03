@@ -11,7 +11,7 @@ export function LeggTilOpplysning (props: {leggTilOpplysning: () => void}) {
             className="inputPanel leggtil"
             aria-describedby="leggtilkildedesc"
         >
-            <LeggTilIkon className="leggtil__ikon"/>
+            <LeggTilIkon className="leggtil__ikon" aria-labelledby="leggtilkilde"/>
             <span className="inputPanel__label">Legg til</span>
         </div>
     );

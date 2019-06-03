@@ -2,16 +2,26 @@ import * as React from 'react';
 import './aksjoner.less';
 import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ReactComponent as SlettIkon } from './slett.svg';
+import { useState } from 'react';
+import { VarselModal } from '../../modal/varsel-modal';
+import { Systemtittel } from 'nav-frontend-typografi';
+import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 
 interface AksjonerProps {
     handleSubmit: (e: any) => void;
     handleLagreOgTilbake: (e: any) => void;
-    handleSlett: (e: any) => void;
+    handleSlett: () => void;
 }
 
 function Aksjoner (props: AksjonerProps) {
+    const [isSlettModalOpen, setIsSlettModalOpen] = useState(false);
     return (
         <div className="aksjoner">
+            <SlettModal
+                isSlettModalOpen={isSlettModalOpen}
+                onRequestClose={() => setIsSlettModalOpen(false)}
+                slettVedtak={props.handleSlett}
+            />
             <div className="aksjoner__lagre">
                 <Hovedknapp htmlType="submit" onClick={props.handleSubmit}>
                     Forhåndsvis og ferdigstill
@@ -21,14 +31,32 @@ function Aksjoner (props: AksjonerProps) {
                 </Knapp>
             </div>
             <div className="aksjoner__slett">
-            <Flatknapp htmlType="button" onClick={props.handleSlett}>
-                <SlettIkon/>
-                <span>Slett</span>
-            </Flatknapp>
+                <Flatknapp htmlType="button" onClick={() => setIsSlettModalOpen(true)}>
+                    <SlettIkon/>
+                    <span>Slett</span>
+                </Flatknapp>
             </div>
         </div>
     );
 
+}
+
+function SlettModal (props: {onRequestClose: () => void, isSlettModalOpen: boolean, slettVedtak: () => void}) {
+    return (
+        <VarselModal
+            isOpen={props.isSlettModalOpen}
+            contentLabel="Bekreft slett utkast"
+            onRequestClose={props.onRequestClose}
+            type="ADVARSEL"
+        >
+            <Systemtittel>Slett vedtak</Systemtittel>
+            <Normaltekst>Er du sikker på du vil slette vedtaket?</Normaltekst>
+            <div>
+                <Hovedknapp className="btn--mr1" onClick={props.slettVedtak}>Slett</Hovedknapp>
+                <Flatknapp onClick={props.onRequestClose}> Avbryt</Flatknapp>
+            </div>
+        </VarselModal>
+    );
 }
 
 export default Aksjoner;

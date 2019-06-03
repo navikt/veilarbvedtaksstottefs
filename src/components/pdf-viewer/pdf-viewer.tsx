@@ -51,7 +51,6 @@ const PdfError = () => {
     );
 };
 
-
 const PdfLoader = () => {
     return (
         <div className="pdfvisning__loader">
