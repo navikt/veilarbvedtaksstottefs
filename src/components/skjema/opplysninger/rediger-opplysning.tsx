@@ -23,7 +23,7 @@ export function RedigerOpplysning(props: OpplysningProps) {
     return (
         <div className="rediger">
             <Textarea
-                label={'Skriv inn andre kilder, f.eks. samtalereferat, dialogmeldinger eller helseopplysninger.'}
+                label="Skriv inn andre kilder, f.eks. samtalereferat, dialogmeldinger eller helseopplysninger."
                 value={tekst}
                 maxLength={OPPLYSNING_MAX_LENGTH}
                 onChange={(e: any) => {
