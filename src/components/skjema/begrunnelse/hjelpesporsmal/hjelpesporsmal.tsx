@@ -12,7 +12,7 @@ import SpesieltTilpassetBeholde from './sporsmal/spesielt-tilpasset-beholde';
 import GradertVarigSkaffe from './sporsmal/gradert-varig-skaffe';
 import GradertVarigBeholde from './sporsmal/gradert-varig-beholde';
 import Varig from './sporsmal/varig';
-import './hjelpesporsmal.less';
+import { Hjelpetekster } from '../../hjelpetekster/hjelpetekster';
 
 interface HjelpesporsmalProps  {
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
@@ -52,10 +52,9 @@ function finnRiktigSporsmal(innsatsgruppe: OrNothing<InnsatsgruppeType>, hovedma
 function Hjelpesporsmal (props: HjelpesporsmalProps) {
     const { innsatsgruppe, hovedmal } = props;
     return (
-        <section className="hjelpesporsmal">
-            <span className="hjelpesporsmal__tittel">Hjelpespørsmål:</span>
+        <Hjelpetekster>
             {finnRiktigSporsmal(innsatsgruppe, hovedmal)}
-        </section>
+        </Hjelpetekster>
     );
 }
 

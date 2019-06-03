@@ -53,7 +53,7 @@ function SlettModal (props: {onRequestClose: () => void, isSlettModalOpen: boole
             <Normaltekst>Er du sikker på du vil slette vedtaket?</Normaltekst>
             <div>
                 <Hovedknapp className="btn--mr1" onClick={props.slettVedtak}>Slett</Hovedknapp>
-                <Flatknapp onClick={props.onRequestClose}> Avbryt</Flatknapp>
+                <Knapp onClick={props.onRequestClose}> Avbryt</Knapp>
             </div>
         </VarselModal>
     );

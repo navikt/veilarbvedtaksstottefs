@@ -8,6 +8,7 @@ import { LeggTilOpplysning } from './leggtil-opplysning';
 import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
+import { OpplysningerHjelpeTekster } from './hjelpetekst-opplysninger';
 
 export type Opplysning = {
     [key: string]: boolean
@@ -76,12 +77,13 @@ function Opplysninger(props: OpplysningerProps) {
 
     return (
         <SkjemaElement
-            tittel="Opplysninger"
+            tittel="Kilder"
             value={harOpplysninger ? <LagOpplysningsListe samladeOpplysninger={samladeOpplysninger}/> : null}
             feil={props.opplysningerfeil}
         >
             <div className="opplysninger">
                 <Normaltekst>Kilder slik de vil vises i vedtaksbrevet</Normaltekst>
+                <div className="opplysninger__innhold">
                 {opplysninger.map((opplysning, index) =>
                     redigeringModusIndeks !== index
                         ? <VisOpplysning
@@ -123,6 +125,8 @@ function Opplysninger(props: OpplysningerProps) {
                         }}
                     />
                 }
+                </div>
+                <OpplysningerHjelpeTekster/>
             </div>
         </SkjemaElement>
     );

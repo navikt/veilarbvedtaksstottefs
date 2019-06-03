@@ -41,7 +41,7 @@ export function Hovedside (props: {fnr: string}) {
 function AlertStripeVedtakIArena (props: {visAlertrstripefeatureToggle: boolean, gjeldendeVedtak: OrNothing<VedtakData>, tidligereVedtak: VedtakData[]}) {
     if (props.visAlertrstripefeatureToggle && (!props.gjeldendeVedtak && props.tidligereVedtak.length === 0)) {
         return (
-            <AlertStripeInfo>
+            <AlertStripeInfo className="blokk-xs">
                 Oppfølgingsvedtak utført i Arena før lansering av ny vedtaksstøtte kan hentes og vises i Gosys.
             </AlertStripeInfo>
         );

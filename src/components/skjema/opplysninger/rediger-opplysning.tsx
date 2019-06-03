@@ -23,7 +23,7 @@ export function RedigerOpplysning(props: OpplysningProps) {
     return (
         <div className="rediger">
             <Textarea
-                label="Exempevis møtesreferat datert 21/11-2029"
+                label="Skriv inn andre kilder, f.eks. samtalereferat, dialogmeldinger eller helseopplysninger."
                 value={tekst}
                 maxLength={OPPLYSNING_MAX_LENGTH}
                 onChange={(e: any) => {
@@ -36,8 +36,8 @@ export function RedigerOpplysning(props: OpplysningProps) {
                 autoFocus={true}
             />
             <div className="rediger__aksjoner">
-                <Flatknapp onClick={props.onTekstCancel}>Avbryt</Flatknapp>
                 <Flatknapp onClick={onSubmit}> Ferdig</Flatknapp>
+                <Flatknapp onClick={props.onTekstCancel}>Avbryt</Flatknapp>
             </div>
         </div>
     );
