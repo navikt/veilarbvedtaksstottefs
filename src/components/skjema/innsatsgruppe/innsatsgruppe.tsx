@@ -21,26 +21,27 @@ export const getInnsatsgruppeNavn = (innsatsgruppeType: OrNothing<InnsatsgruppeT
 
 export const innsatsgrupper = [
     {
-        label: 'Gode muligheter (Standard innsats)',
+        label: 'Standard innsats (Gode muligheter)',
         value: InnsatsgruppeType.STANDARD_INNSATS
     },
     {
-        label: 'Gradert varig nedsatt arbeidsevne (Gradert varig tilpasset innsats)',
-        value: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS
+        label: 'Situasjonsbestemt innsats (Trenger veiledning)',
+        value: InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS,
     },
     {
-        label: 'Trenger veiledning (Situasjonsbestemt innsats)',
-        value: InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS,
+        label: 'Spesielt tilpasset innsats (Nedsatt arbeidsevne)',
+        value: InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS,
+    },
+    {
+        label: 'Delvis varig tilpasset innsats (Delvis varig nedsatt arbeidsevne)',
+        value: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS
     },
 
     {
-        label: 'Delvis varig nedsatt arbeidsevne (Delvis varig tilpasset innsats)',
+        label: 'Varig tilpasset innsats (Varig nedsatt arbeidsevne)',
         value: InnsatsgruppeType.VARIG_TILPASSET_INNSATS
     },
-    {
-        label: 'Nedsatt arbeidsevne (Spesielt tilpasset innsats)',
-        value: InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS,
-    },
+
 ];
 
 interface InnsatsgruppeProps {
