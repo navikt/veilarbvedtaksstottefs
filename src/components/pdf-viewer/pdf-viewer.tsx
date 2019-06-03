@@ -44,9 +44,7 @@ export default PdfViewer;
 const PdfError = () => {
     return (
         <div className="pdfvisning__error">
-            <div className="vedtaksstotte-alert">
-                <AlertStripeFeil>Klarte ikke å laste inn PDF, prøv igjen</AlertStripeFeil>
-            </div>
+            <AlertStripeFeil className="vedtaksstotte-alert">Klarte ikke å laste inn PDF, prøv igjen</AlertStripeFeil>
         </div>
     );
 };
@@ -55,14 +53,12 @@ const PdfError = () => {
 const PdfLoader = () => {
     return (
         <div className="pdfvisning__loader">
-            <div className="vedtaksstotte-spinner">
-                <NavFrontendSpinner type="XL"/>
-            </div>
+            <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>
         </div>
     );
 };
 
-const Pages = (props: {numPages: number}) => {
+const Pages = (props: { numPages: number }) => {
     return (
         <>
             {Array(props.numPages).fill(0).map((elem, index) =>

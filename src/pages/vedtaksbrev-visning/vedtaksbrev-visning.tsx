@@ -11,14 +11,13 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import './vedtaksbrev-visning.less'
 
-
 export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
     const {dispatch} = useContext(ViewDispatch);
     const [vedtak] = useFetchState('vedtak');
     const vedtaksObjekt = vedtak.data.find(v => v.id === props.vedtakId);
 
     if (!vedtaksObjekt) {
-        return (<div className="vedtaksstotte-alert"><AlertStripeFeil>Noe gikk galt, prøv igjen</AlertStripeFeil></div>);
+        return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 
     const journalpostId = vedtaksObjekt.journalpostId as string;
