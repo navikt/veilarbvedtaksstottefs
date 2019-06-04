@@ -5,12 +5,16 @@
 		flex-direction: row;
 		justify-content: space-between;
 
+		> :not(:first-child) {
+			margin-left: 1rem;
+		}
+
 		> * {
-			width: 49%;
+			width: 50%;
 		}
 
 		.vedtak-paneler {
-			> :last-child {
+			> :not(:first-child) {
 				margin-top: 1rem;
 			}
 		}
