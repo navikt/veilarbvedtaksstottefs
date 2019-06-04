@@ -91,7 +91,6 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     return (
         <Page>
             <div className="skjema">
-                <TilbakeKnapp tilbake={dispatchFetchVedtakOgRedirectTilHovedside}/>
                 <form onSubmit={(e) => handleSubmit(e, vedtakskjema)}>
                     <Card>
                         <div className="skjema__topp">
