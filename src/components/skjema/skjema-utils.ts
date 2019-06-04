@@ -83,7 +83,7 @@ export function validerSkjema(skjema: SkjemaData) {
     }
 
     if (begrunnelse.length > BEGRUNNELSE_MAX_LENGTH && maSkriveBegrunnelseGittInnsatsgruppe(innsatsgruppe)) {
-        errors.begrunnelse = 'Begrunnelsen må vare 2000 teign';
+        errors.begrunnelse = " "; // Feilmelding blir vist i tekstområdet istedenfor
     }
 
     return errors;

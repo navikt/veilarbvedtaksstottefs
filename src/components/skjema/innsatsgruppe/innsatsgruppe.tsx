@@ -67,7 +67,7 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
             />
             {kvalitetssikresVarsel &&
             <AlertStripeAdvarsel className="innsatsgruppe-advarsel">
-                    Ved delvis varig tilpasset innsats og varig tilpasset innsats må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
+                Ved <b>delvis varig tilpasset innsats</b> og <b>varig tilpasset innsats</b> må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
             </AlertStripeAdvarsel>
             }
         </SkjemaElement>

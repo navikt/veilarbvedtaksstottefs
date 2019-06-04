@@ -8,7 +8,7 @@ import { Hjelpetekster } from '../hjelpetekster/hjelpetekster';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './begrunnelse.less';
 
-export const BEGRUNNELSE_MAX_LENGTH = 2000;
+export const BEGRUNNELSE_MAX_LENGTH = 4000;
 
 interface BegrunnelseProps {
     begrunnelsefeil?: string;
@@ -16,6 +16,10 @@ interface BegrunnelseProps {
 
 function Begrunnelse(props: BegrunnelseProps) {
     const {begrunnelse, setBegrunnelse} = useContext(SkjemaContext);
+    const erBegrunnelseForLang = begrunnelse && begrunnelse.length > BEGRUNNELSE_MAX_LENGTH;
+    const feil = {
+        feilmelding: `Du kan maksimalt skrive ${BEGRUNNELSE_MAX_LENGTH} tegn`
+    };
     return (
         <SkjemaElement
             tittel="Begrunnelse"
@@ -23,20 +27,16 @@ function Begrunnelse(props: BegrunnelseProps) {
             value={begrunnelse}
         >
             <div className="begrunnelse">
-                <AlertStripeInfo>Ved standard innsats(gode muligheter)er det ikke obligatorisk
-                    begrunnelse</AlertStripeInfo>
+                <AlertStripeInfo>
+                    Ved standard innsats(gode muligheter) er det ikke obligatorisk begrunnelse
+                </AlertStripeInfo>
                 <Textarea
                     value={begrunnelse}
                     label=""
                     placeholder="Skriv inn begrunnelsen for vedtaket"
                     maxLength={BEGRUNNELSE_MAX_LENGTH}
-                    onChange={(e: any) => {
-                        let nyBegrunnelse = e.target.value;
-                        if (nyBegrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
-                            nyBegrunnelse = nyBegrunnelse.substr(0, BEGRUNNELSE_MAX_LENGTH);
-                        }
-                        setBegrunnelse(nyBegrunnelse);
-                    }}
+                    onChange={(e: any) => setBegrunnelse(e.target.value)}
+                    feil={erBegrunnelseForLang ? feil : undefined}
                 />
                 <Hjelpetekster>
                     <Normaltekst>
