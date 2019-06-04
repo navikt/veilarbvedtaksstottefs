@@ -45,7 +45,7 @@ function Hovedmal(props: HovedmalProps) {
             skalKunViseRedigeringsModus={erVarigTilpassetInnsats}
         >
             { erVarigTilpassetInnsats
-                ?  <AlertStripeInfo>Hovedmål kan ikke velges ved varig tillpasset innsats (varig nedsatt arbeidsevne)</AlertStripeInfo>
+                ?  <AlertStripeInfo>Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt arbeidsevne)</AlertStripeInfo>
                 : <HovedmalRadioButtons
                     handleHovedmalChanged={setHovedmal}
                     hovedmal={hovedmal}

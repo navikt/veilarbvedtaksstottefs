@@ -6,8 +6,11 @@ import env from './utils/environment';
 import { enhet, fnr } from './mock/kontekst';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/nb';
+import ModalWrapper from 'nav-frontend-modal';
 
 dayjs.locale('nb');
+
+ModalWrapper.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
 if (env.isDevelopment || env.isRunningOnHeroku) {
     ReactDOM.render(<App fnr={fnr} enhet={enhet} />, document.getElementById('veilarbvedtaksstottefs'));
