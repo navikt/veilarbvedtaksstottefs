@@ -56,13 +56,10 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
             value={getInnsatsgruppeNavn(innsatsgruppe)}
             feil={props.innsatgruppefeil}
         >
-            {(lukkSkjema) =>
-                <InnsatsgruppeRadioButtons
-                    lukkSkjema={lukkSkjema}
-                    handleInnsatsgruppeChanged={setInnsatsgruppe}
-                    innsatsgruppe={innsatsgruppe}
-                />
-            }
+            <InnsatsgruppeRadioButtons
+                handleInnsatsgruppeChanged={setInnsatsgruppe}
+                innsatsgruppe={innsatsgruppe}
+            />
         </SkjemaElement>
     );
 }
@@ -72,7 +69,6 @@ export default Innsatsgruppe;
 interface InnsatsgruppeRadioProps {
     handleInnsatsgruppeChanged: (e: any) => void;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
-    lukkSkjema: () => void;
 }
 
 function InnsatsgruppeRadioButtons (props: InnsatsgruppeRadioProps ) {
@@ -84,10 +80,7 @@ function InnsatsgruppeRadioButtons (props: InnsatsgruppeRadioProps ) {
                     label={innsatsgruppeObject.label}
                     value={innsatsgruppeObject.value}
                     name="innsatsgruppe"
-                    onChange={(e: any) => {
-                        props.handleInnsatsgruppeChanged(e.target.value);
-                        props.lukkSkjema();
-                    }}
+                    onChange={(e: any) => props.handleInnsatsgruppeChanged(e.target.value)}
                     checked={props.innsatsgruppe === innsatsgruppeObject.value}
                 />
             )}
