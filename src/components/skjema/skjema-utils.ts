@@ -74,7 +74,7 @@ export function validerSkjema(skjema: SkjemaData) {
     }
 
     if (!skjema.hovedmal) {
-        errors.hovedmal = 'Mangler hovedmal';
+        errors.hovedmal = 'Mangler hovedmål';
     }
 
     const begrunnelse = skjema.begrunnelse.trim();
