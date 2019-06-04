@@ -1,6 +1,6 @@
 import { mapTilTekstliste, skjemaIsNotEmpty, validerSkjema } from '../../components/skjema/skjema-utils';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import React from 'react';
@@ -35,8 +35,16 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     const [vedtak, setVedtak] = useFetchState('vedtak');
     const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [errors, setErrors] = useState<SkjemaFeil>({});
+    const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
+
+    useEffect(() => {
+        if (harForsoktAttSende) {
+            const skjemaFeil = validerSkjema(vedtakskjema);
+            setErrors(skjemaFeil);
+            }
+    }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
     function sendDataTilBackend(skjema: SkjemaData) {
         return VedtaksstotteApi.putVedtakUtkast(fnr, skjema);
@@ -74,6 +82,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
 
     function handleSubmit(e: any, skjema: SkjemaData) {
         e.preventDefault();
+        setHarForsoktAttSende(true);
         const skjemaFeil = validerSkjema(skjema);
         if (Object.entries(skjemaFeil).filter(feilmelding => feilmelding).length > 0) {
             setErrors(skjemaFeil);
