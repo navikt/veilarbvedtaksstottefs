@@ -11,6 +11,10 @@ class Environment {
     get isDevelopment() {
         return this.nodeEnv === 'development';
     }
+
+    get isRunningOnHeroku() {
+        return window.location.hostname.endsWith('herokuapp.com');
+    }
 }
 
 const env = new Environment();

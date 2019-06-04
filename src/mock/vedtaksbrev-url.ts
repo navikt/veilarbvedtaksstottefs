@@ -1,2 +1,2 @@
-const vedtaksBrevUrl = 'http://localhost:8080/test.pdf';
+const vedtaksBrevUrl = '/testbrev.pdf';
 export default vedtaksBrevUrl;

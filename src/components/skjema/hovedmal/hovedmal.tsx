@@ -44,15 +44,10 @@ function Hovedmal(props: HovedmalProps) {
             feil={props.hovedmalfeil}
             skalKunViseRedigeringsModus={erVarigTilpassetInnsats}
         >
-            {(lukkSkjema) =>
-                erVarigTilpassetInnsats
-                    ?  <AlertStripeInfo>Hovedmål kan ikke velges ved varig tillpasset innsats (varig nedsatt arbeidsevne)</AlertStripeInfo>
-                    : <HovedmalRadioButtons
-                        lukkSkjema={lukkSkjema}
-                        handleHovedmalChanged={setHovedmal}
-                        hovedmal={hovedmal}
-                    />
-            }
+            <HovedmalRadioButtons
+                handleHovedmalChanged={setHovedmal}
+                hovedmal={hovedmal}
+            />
         </SkjemaElement>
     );
 }
@@ -62,7 +57,6 @@ export default Hovedmal;
 interface HovedmalRadioButtonsProps {
     handleHovedmalChanged: (e: any) => void;
     hovedmal: OrNothing<HovedmalType>;
-    lukkSkjema: () => void;
 }
 
 function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
@@ -74,10 +68,7 @@ function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
                     label={mal.label}
                     name="hovedmal"
                     value={mal.value}
-                    onChange={(e: any) => {
-                        props.handleHovedmalChanged(e.target.value);
-                        props.lukkSkjema();
-                    }}
+                    onChange={(e: any) => props.handleHovedmalChanged(e.target.value)}
                     checked={props.hovedmal === mal.value}
                 />
             )}

@@ -6,7 +6,7 @@ import './skjemaelement.less';
 
 interface SkjemaElementProps<T> {
     tittel: string;
-    children: (JSX.Element[] | JSX.Element) | ((lukkSkjemaElement: () => void) => (JSX.Element[] | JSX.Element));
+    children: JSX.Element[] | JSX.Element;
     className?: string;
     value?: React.ReactNode;
     feil?: string;
@@ -42,26 +42,22 @@ function RedigeringsModus(props: {
     skalKunViseRedigeringsModus?: boolean,
     lukkSkjemaElement: () => void,
     className?: string,
-    children: (JSX.Element[] | JSX.Element) | ((lukkSkjemaElement: () => void) => (JSX.Element[] | JSX.Element))
+    children: (JSX.Element[] | JSX.Element)
 }) {
     const className = classNames('vedtaksskjemaelement__innhold', props.className);
     return (
         <>
-            <div className={className}>
-                {typeof props.children === 'function'
-                    ? props.children(props.lukkSkjemaElement)
-                    : props.children
-                }
-            </div>
-            {!props.skalKunViseRedigeringsModus && <div>
-                <button
-                    onClick={props.lukkSkjemaElement}
-                    className="toggle--knapp btn--lenke"
-                    type="button"
-                >
-                    Lukk
-                </button>
-            </div> }
+        <div className={className}>
+            {props.children}
+        </div>
+            {!props.skalKunViseRedigeringsModus &&<div>
+            <button
+                onClick={props.lukkSkjemaElement}
+                className="toggle--knapp btn--lenke"
+            >
+                Lukk
+            </button>
+        </div>}
         </>
     );
 }
