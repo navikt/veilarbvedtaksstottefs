@@ -49,13 +49,15 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     function dispatchFetchVedtakOgRedirectTilHovedside() {
         setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
         dispatch({view: ActionType.HOVEDSIDE});
-        modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_LAGRET_SUKSESS});
     }
 
     function handleLagreOgTilbake(e: any, skjema: SkjemaData) {
         e.preventDefault();
         sendDataTilBackend(skjema)
-            .then(dispatchFetchVedtakOgRedirectTilHovedside)
+            .then(() => {
+                dispatchFetchVedtakOgRedirectTilHovedside();
+                modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_LAGRET_SUKSESS});
+            })
             .catch(error => {
                 console.log(error); // tslint:disable-line:no-console
             });
