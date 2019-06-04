@@ -6,7 +6,7 @@ import './skjemaelement.less';
 
 interface SkjemaElementProps<T> {
     tittel: string;
-    children: JSX.Element[] | JSX.Element;
+    children: React.ReactNode;
     className?: string;
     value?: React.ReactNode;
     feil?: string;
@@ -42,7 +42,7 @@ function RedigeringsModus(props: {
     skalKunViseRedigeringsModus?: boolean,
     lukkSkjemaElement: () => void,
     className?: string,
-    children: (JSX.Element[] | JSX.Element)
+    children: React.ReactNode
 }) {
     const className = classNames('vedtaksskjemaelement__innhold', props.className);
     return (
@@ -50,7 +50,8 @@ function RedigeringsModus(props: {
             <div className={className}>
                 {props.children}
             </div>
-            {!props.skalKunViseRedigeringsModus &&<div>
+            {!props.skalKunViseRedigeringsModus &&
+            <div>
                 <button
                     onClick={props.lukkSkjemaElement}
                     className="toggle--knapp btn--lenke"
