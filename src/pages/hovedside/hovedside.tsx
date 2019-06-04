@@ -28,10 +28,14 @@ export function Hovedside (props: {fnr: string}) {
                 visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
             />
             <div className="hovedside">
-                <UtkastPanel utkast={utkast}/>
-                <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
-                <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
-                <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
+                <div className="vedtak-paneler">
+                    <UtkastPanel utkast={utkast}/>
+                    <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
+                    <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
+                </div>
+                <div>
+                    <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
+                </div>
             </div>
         </Page>
     );
