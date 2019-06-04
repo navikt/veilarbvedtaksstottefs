@@ -29,7 +29,6 @@ export function SuksessModalLagretUtkast () {
             contentLabel="Vedtaket sendt til bruker"
             onRequestClose={() => modalViewDispatch({modalView: null})}
             type="SUKSESS"
-            closeButton={false}
         >
             <Systemtittel>Du har lagret utkastet</Systemtittel>
             <Normaltekst>Du kan når som helst fortsette med vedtaket og det blir automatiskt lagret underveis.</Normaltekst>
