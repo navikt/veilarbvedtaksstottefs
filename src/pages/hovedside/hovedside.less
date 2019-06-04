@@ -1,9 +1,13 @@
 .veilarbvedtaksstottefs {
 
 	.hovedside {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-gap: 1rem;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		> * {
+			width: 49%;
+		}
 
 		.vedtak-paneler {
 			> :last-child {
