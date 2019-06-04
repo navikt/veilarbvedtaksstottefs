@@ -47,17 +47,17 @@ function RedigeringsModus(props: {
     const className = classNames('vedtaksskjemaelement__innhold', props.className);
     return (
         <>
-        <div className={className}>
-            {props.children}
-        </div>
+            <div className={className}>
+                {props.children}
+            </div>
             {!props.skalKunViseRedigeringsModus &&<div>
-            <button
-                onClick={props.lukkSkjemaElement}
-                className="toggle--knapp btn--lenke"
-            >
-                Lukk
-            </button>
-        </div>}
+                <button
+                    onClick={props.lukkSkjemaElement}
+                    className="toggle--knapp btn--lenke"
+                >
+                    Lukk
+                </button>
+            </div>}
         </>
     );
 }

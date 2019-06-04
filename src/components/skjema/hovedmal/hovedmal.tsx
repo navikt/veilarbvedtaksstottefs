@@ -44,10 +44,13 @@ function Hovedmal(props: HovedmalProps) {
             feil={props.hovedmalfeil}
             skalKunViseRedigeringsModus={erVarigTilpassetInnsats}
         >
-            <HovedmalRadioButtons
-                handleHovedmalChanged={setHovedmal}
-                hovedmal={hovedmal}
-            />
+            { erVarigTilpassetInnsats
+                ?  <AlertStripeInfo>Hovedmål kan ikke velges ved varig tillpasset innsats (varig nedsatt arbeidsevne)</AlertStripeInfo>
+                : <HovedmalRadioButtons
+                    handleHovedmalChanged={setHovedmal}
+                    hovedmal={hovedmal}
+                />
+            }
         </SkjemaElement>
     );
 }
