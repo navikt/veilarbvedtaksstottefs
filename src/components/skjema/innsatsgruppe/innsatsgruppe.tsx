@@ -50,6 +50,7 @@ interface InnsatsgruppeProps {
 
 function Innsatsgruppe (props: InnsatsgruppeProps) {
     const {innsatsgruppe, setInnsatsgruppe} = useContext(SkjemaContext);
+    const {setHovedmal} = useContext(SkjemaContext);
     return (
         <SkjemaElement
             tittel="Innsatsgruppe"
@@ -59,6 +60,7 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
             <InnsatsgruppeRadioButtons
                 handleInnsatsgruppeChanged={setInnsatsgruppe}
                 innsatsgruppe={innsatsgruppe}
+                setHovedmal={setHovedmal}
             />
         </SkjemaElement>
     );
@@ -68,6 +70,7 @@ export default Innsatsgruppe;
 
 interface InnsatsgruppeRadioProps {
     handleInnsatsgruppeChanged: (e: any) => void;
+    setHovedmal: (e: any) => void;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
 }
 
@@ -80,7 +83,13 @@ function InnsatsgruppeRadioButtons (props: InnsatsgruppeRadioProps ) {
                     label={innsatsgruppeObject.label}
                     value={innsatsgruppeObject.value}
                     name="innsatsgruppe"
-                    onChange={(e: any) => props.handleInnsatsgruppeChanged(e.target.value)}
+                    onChange={(e: any) => {
+                        const innsatsgruppe = e.target.value;
+                        props.handleInnsatsgruppeChanged(innsatsgruppe);
+                        if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
+                            props.setHovedmal(null);
+                        }
+                    }}
                     checked={props.innsatsgruppe === innsatsgruppeObject.value}
                 />
             )}
