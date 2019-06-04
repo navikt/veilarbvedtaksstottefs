@@ -8,7 +8,7 @@ import { Opplysning } from './opplysninger/opplysninger';
 export const defaultOpplysningsliste =
     [
         'Svarene dine fra da du registrerte deg',
-        'CV-en og jobbprofilen din',
+        'CV-en/jobbprofilen din på nav.no',
         'Svarene dine om behov for veiledning',
     ];
 

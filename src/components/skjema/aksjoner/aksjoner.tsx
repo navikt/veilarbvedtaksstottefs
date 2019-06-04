@@ -32,8 +32,8 @@ function Aksjoner (props: AksjonerProps) {
             </div>
             <div className="aksjoner__slett">
                 <Flatknapp htmlType="button" onClick={() => setIsSlettModalOpen(true)}>
-                    <SlettIkon/>
-                    <span>Slett</span>
+                    <SlettIkon className="aksjoner__slett-ikon"/>
+                    Slett
                 </Flatknapp>
             </div>
         </div>

@@ -23,22 +23,26 @@ export function Hovedside (props: {fnr: string}) {
     const visAlertrstripefeatureToggle = features.data[VEDTAK_I_GOSYS_TOGGLE];
 
     return (
-        <>
-            <Page>
-                <AlertStripeVedtakIArena
-                    gjeldendeVedtak={gjeldendeVedtak}
-                    tidligereVedtak={tidligereVedtak}
-                    visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
-                />
-                <div className="hovedside">
+      <>
+        <Page>
+            <AlertStripeVedtakIArena
+                gjeldendeVedtak={gjeldendeVedtak}
+                tidligereVedtak={tidligereVedtak}
+                visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
+            />
+            <div className="hovedside">
+                <div className="vedtak-paneler">
                     <UtkastPanel utkast={utkast}/>
                     <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
                     <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
+                </div>
+                <div>
                     <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
                 </div>
+            </div>
             </Page>
-            <SuksessModalInnsending/>
-            <SuksessModalLagretUtkast/>
+          <SuksessModalInnsending/>
+          <SuksessModalLagretUtkast/>
         </>
     );
 

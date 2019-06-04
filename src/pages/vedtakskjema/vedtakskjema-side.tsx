@@ -18,6 +18,7 @@ import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import { formatDateTime } from '../../utils/date-utils';
+import Footer from '../../components/footer/footer';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
 
@@ -94,22 +95,24 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     return (
         <Page>
             <div className="skjema">
-                <TilbakeKnapp tilbake={dispatchFetchVedtakOgRedirectTilHovedside}/>
                 <form onSubmit={(e) => handleSubmit(e, vedtakskjema)}>
                     <Card>
                         <div className="skjema__topp">
-                            {sistOppdatert && <Normaltekst>{`Sist lagret : ${formatDateTime(sistOppdatert)}`}</Normaltekst>}
+                            {sistOppdatert &&
+                            <Normaltekst>{`Sist lagret : ${formatDateTime(sistOppdatert)}`}</Normaltekst>}
                         </div>
                         <Systemtittel className="skjema__tittel">
                             Oppfølgingsvedtak (§ 14a)
                         </Systemtittel>
                         <Skjema errors={errors} oppdaterSistEndret={oppdaterSistEndret}/>
                     </Card>
-                    <Aksjoner
-                        handleSubmit={(e) => handleSubmit(e, vedtakskjema)}
-                        handleLagreOgTilbake={(e) => handleLagreOgTilbake(e, vedtakskjema)}
-                        handleSlett={handleSlett}
-                    />
+                    <Footer>
+                        <Aksjoner
+                            handleSubmit={(e) => handleSubmit(e, vedtakskjema)}
+                            handleLagreOgTilbake={(e) => handleLagreOgTilbake(e, vedtakskjema)}
+                            handleSlett={handleSlett}
+                        />
+                    </Footer>
                 </form>
             </div>
         </Page>
