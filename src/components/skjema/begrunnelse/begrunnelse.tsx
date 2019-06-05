@@ -1,20 +1,38 @@
 import * as React from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import './begrunnelse.less';
 import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';
+import { useEffect } from 'react';
+import { validerBegrunnelsebegrunnelseMaxLengthTekst } from '../skjema-utils';
 
-export const BEGRUNNELSE_MAX_LENGTH = 2000;
+export const BEGRUNNELSE_MAX_LENGTH = 4000;
 
 interface BegrunnelseProps {
     begrunnelsefeil?: string;
 }
 
 function Begrunnelse(props: BegrunnelseProps) {
-    const {begrunnelse, setBegrunnelse} = useContext(SkjemaContext);
+    const {begrunnelse, setBegrunnelse, skjemaFeil} = useContext(SkjemaContext);
+    const [begrunnelseFeil, setBegrunnelseFeil] = useState(skjemaFeil.begrunnelse);
+
+    useEffect(() => {
+        const errors = validerBegrunnelsebegrunnelseMaxLengthTekst(begrunnelse);
+        if (errors.begrunnelse) {
+           setBegrunnelseFeil(errors.begrunnelse);
+           return;
+        }
+        setBegrunnelseFeil(undefined);
+        return;
+    }, [begrunnelse]);
+
+    useEffect(() => {
+        setBegrunnelseFeil(skjemaFeil.begrunnelse);
+    }, [skjemaFeil.begrunnelse]);
+
     return (
         <SkjemaElement
             tittel="Begrunnelse"
@@ -23,19 +41,13 @@ function Begrunnelse(props: BegrunnelseProps) {
             <div className="begrunnelse">
                 <AlertStripeInfo>Ved standard innsats(gode muligheter)er det ikke obligatorisk
                     begrunnelse</AlertStripeInfo>
-                <SkjemaGruppe feil={props.begrunnelsefeil ? {feilmelding : props.begrunnelsefeil} : undefined} className="begrunnelse__container">
+                <SkjemaGruppe feil={begrunnelseFeil ? {feilmelding : begrunnelseFeil} : undefined} className="begrunnelse__container">
                 <Textarea
                     value={begrunnelse}
                     label=""
                     placeholder="Skriv inn begrunnelsen for vedtaket"
                     maxLength={BEGRUNNELSE_MAX_LENGTH}
-                    onChange={(e: any) => {
-                        let nyBegrunnelse = e.target.value;
-                        if (nyBegrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
-                            nyBegrunnelse = nyBegrunnelse.substr(0, BEGRUNNELSE_MAX_LENGTH);
-                        }
-                        setBegrunnelse(nyBegrunnelse);
-                    }}
+                    onChange={(e: any) => setBegrunnelse(e.target.value)}
                 />
                 </SkjemaGruppe>
                 <BegrunnelseHjelpeTekster/>

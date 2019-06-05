@@ -6,6 +6,7 @@ import { HovedmalType } from '../skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { Opplysning } from '../skjema/opplysninger/opplysninger';
 import { useFetchState } from './fetch-provider';
+import { SkjemaFeil } from '../../utils/types/skjema-feil';
 
 const initialSkjemaData = {
     opplysninger: undefined,
@@ -21,11 +22,13 @@ interface SkjemaContextProps {
     innsatsgruppe: InnsatsgruppeType | undefined ;
     begrunnelse: string;
     sistOppdatert: string;
+    skjemaFeil: SkjemaFeil;
     setOpplysninger: Dispatch<SetStateAction<Opplysning[]>>;
     setHovedmal: Dispatch<SetStateAction<HovedmalType|undefined>>;
     setInnsatsgruppe: Dispatch<SetStateAction<InnsatsgruppeType|undefined>>;
     setBegrunnelse: Dispatch<SetStateAction<string>>;
     setSistOppdatert: Dispatch<SetStateAction<string>>;
+    setSkjemaFeil: Dispatch<SetStateAction<SkjemaFeil>>;
 }
 
 export const SkjemaContext = React.createContext<SkjemaContextProps>({} as SkjemaContextProps);
@@ -39,6 +42,7 @@ export function SkjemaProvider(props: {children: React.ReactNode}) {
     const [innsatsgruppe, setInnsatsgruppe] = useState(utkast.innsatsgruppe);
     const [begrunnelse, setBegrunnelse] = useState(utkast.begrunnelse || '');
     const [sistOppdatert, setSistOppdatert] = useState<string>('');
+    const [skjemaFeil, setSkjemaFeil] = useState<SkjemaFeil>({});
 
     useEffect(() => {
         setHovedmal(utkast.hovedmal);
@@ -60,7 +64,9 @@ export function SkjemaProvider(props: {children: React.ReactNode}) {
                 begrunnelse,
                 setBegrunnelse,
                 sistOppdatert,
-                setSistOppdatert
+                setSistOppdatert,
+                skjemaFeil,
+                setSkjemaFeil,
             }}
         >
             {props.children}

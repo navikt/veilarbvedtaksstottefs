@@ -1,10 +1,12 @@
-import { mapTilTekstliste, skjemaIsNotEmpty, validerSkjema } from '../../components/skjema/skjema-utils';
+import {
+    mapTilTekstliste,
+    skjemaIsNotEmpty,
+    validerSkjema
+} from '../../components/skjema/skjema-utils';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import { useContext, useEffect, useState } from 'react';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import React from 'react';
-import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
@@ -37,16 +39,15 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     const {dispatch} = useContext(ViewDispatch);
     const {modalViewDispatch} = useContext(ModalViewDispatch);
     const [vedtak, setVedtak] = useFetchState('vedtak');
-    const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
-    const [errors, setErrors] = useState<SkjemaFeil>({});
+    const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert, skjemaFeil, setSkjemaFeil} = useContext(SkjemaContext);
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
     useEffect(() => {
         if (harForsoktAttSende) {
-            const skjemaFeil = validerSkjema(vedtakskjema);
-            setErrors(skjemaFeil);
+            const errors = validerSkjema(vedtakskjema);
+            setSkjemaFeil(errors);
             }
     }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
@@ -90,9 +91,9 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     function handleSubmit(e: any, skjema: SkjemaData) {
         e.preventDefault();
         setHarForsoktAttSende(true);
-        const skjemaFeil = validerSkjema(skjema);
-        if (Object.entries(skjemaFeil).filter(feilmelding => feilmelding).length > 0) {
-            setErrors(skjemaFeil);
+        const errors = validerSkjema(skjema);
+        if (Object.entries(errors).filter(feilmelding => feilmelding).length > 0) {
+            setSkjemaFeil(errors);
             return;
         }
         sendDataTilBackend(skjema).then(() => {
@@ -115,7 +116,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
                         <Systemtittel className="skjema__tittel">
                             Oppfølgingsvedtak (§ 14a)
                         </Systemtittel>
-                        <Skjema errors={errors} oppdaterSistEndret={oppdaterSistEndret}/>
+                        <Skjema errors={skjemaFeil} oppdaterSistEndret={oppdaterSistEndret}/>
                     </Card>
                     <Footer>
                         <Aksjoner
