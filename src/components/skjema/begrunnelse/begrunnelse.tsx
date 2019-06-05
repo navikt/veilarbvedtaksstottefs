@@ -16,8 +16,8 @@ interface BegrunnelseProps {
 }
 
 function Begrunnelse(props: BegrunnelseProps) {
-    const {begrunnelse, setBegrunnelse, skjemaFeil} = useContext(SkjemaContext);
-    const [begrunnelseFeil, setBegrunnelseFeil] = useState(skjemaFeil.begrunnelse);
+    const {begrunnelse, setBegrunnelse} = useContext(SkjemaContext);
+    const [begrunnelseFeil, setBegrunnelseFeil] = useState(props.begrunnelsefeil);
 
     useEffect(() => {
         const errors = validerBegrunnelsebegrunnelseMaxLengthTekst(begrunnelse);
@@ -25,8 +25,8 @@ function Begrunnelse(props: BegrunnelseProps) {
     }, [begrunnelse]);
 
     useEffect(() => {
-        setBegrunnelseFeil(skjemaFeil.begrunnelse);
-    }, [skjemaFeil.begrunnelse]);
+        setBegrunnelseFeil(props.begrunnelsefeil);
+    }, [props.begrunnelsefeil]);
 
     return (
         <SkjemaElement

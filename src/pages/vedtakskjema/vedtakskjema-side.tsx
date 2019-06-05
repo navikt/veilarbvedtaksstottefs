@@ -23,6 +23,7 @@ import { formatDateTime } from '../../utils/date-utils';
 import Footer from '../../components/footer/footer';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
+import { SkjemaFeil } from '../../utils/types/skjema-feil';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -39,8 +40,9 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     const {dispatch} = useContext(ViewDispatch);
     const {modalViewDispatch} = useContext(ModalViewDispatch);
     const [vedtak, setVedtak] = useFetchState('vedtak');
-    const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert, skjemaFeil, setSkjemaFeil} = useContext(SkjemaContext);
+    const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
+    const [skjemaFeil, setSkjemaFeil] = useState<SkjemaFeil>({});
 
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
