@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import './hovedmal.less';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
+import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 export enum HovedmalType {
     SKAFFE_ARBEID = 'SKAFFE_ARBEID',
@@ -33,16 +35,23 @@ const hovedmalliste = [
 
 function Hovedmal(props: HovedmalProps) {
     const {hovedmal, setHovedmal} = useContext(SkjemaContext);
+    const {innsatsgruppe} = useContext(SkjemaContext);
+    const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
     return (
         <SkjemaElement
             tittel="Hovedmål"
             value={getHovedmalNavn(hovedmal)}
+            skalKunViseRedigeringsModus={erVarigTilpassetInnsats}
         >
             <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding: props.hovedmalfeil} : undefined}>
-                <HovedmalRadioButtons
-                    handleHovedmalChanged={setHovedmal}
-                    hovedmal={hovedmal}
-                />
+                {erVarigTilpassetInnsats
+                    ? <AlertStripeInfo>Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt
+                        arbeidsevne)</AlertStripeInfo>
+                    : <HovedmalRadioButtons
+                        handleHovedmalChanged={setHovedmal}
+                        hovedmal={hovedmal}
+                    />
+                }
             </SkjemaGruppe>
         </SkjemaElement>
     );

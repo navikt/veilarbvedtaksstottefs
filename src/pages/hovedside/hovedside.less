@@ -1,14 +1,23 @@
 .veilarbvedtaksstottefs {
 
-  .hovedside {
-    display: grid;
-    grid-template-rows: auto auto;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
-  }
+	.hovedside {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 
-  .tidligere-vedtak-panel {
-    grid-column-start: 2;
-    grid-row-start: 1;
-  }
+		> :not(:first-child) {
+			margin-left: 1rem;
+		}
+
+		> * {
+			width: 50%;
+		}
+
+		.vedtak-paneler {
+			> :not(:first-child) {
+				margin-top: 1rem;
+			}
+		}
+	}
+
 }

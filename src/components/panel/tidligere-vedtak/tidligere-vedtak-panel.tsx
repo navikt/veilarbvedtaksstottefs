@@ -11,7 +11,7 @@ import { Veileder } from '../veileder';
 import emptyBox from './empty-box.svg';
 import './tidligere-vedtak-panel.less';
 
-export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData []}) {
+export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData[]}) {
     if (props.vedtakHistorikk.length === 0) {
         return <IngenTidligereVedtak/>;
     }
@@ -21,7 +21,7 @@ export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData []}) {
 
 function IngenTidligereVedtak() {
     return (
-        <Panel tittel="Tidligere oppfølgingsvedtak" className="tidligere-vedtak-panel">
+        <Panel tittel="Tidligere oppfølgingsvedtak" className="ingen-tidligere-vedtak-panel">
             <section className="ingen-vedtak">
                 <img src={emptyBox} alt="Illustrasjon av tom eske" className="ingen-vedtak__bilde"/>
                 <Undertittel>Ingen tidligere oppfølgingsvedtak</Undertittel>

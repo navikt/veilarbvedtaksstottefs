@@ -8,7 +8,7 @@ import { Opplysning } from './opplysninger/opplysninger';
 export const defaultOpplysningsliste =
     [
         'Svarene dine fra da du registrerte deg',
-        'CV-en og jobbprofilen din',
+        'CV-en/jobbprofilen din på nav.no',
         'Svarene dine om behov for veiledning',
     ];
 
@@ -91,4 +91,8 @@ export function validerSkjema(skjema: SkjemaData) {
     }
 
     return errors;
+}
+
+export function utkastetSkalKvalitetssikrets (innsatsgruppe?: InnsatsgruppeType) {
+    return innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS || innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
 }

@@ -10,6 +10,8 @@ import './hovedside.less';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { OrNothing } from '../../utils/types/ornothing';
 import { VEDTAK_I_GOSYS_TOGGLE } from '../../api/feature-toggle-api';
+import { SuksessModalInnsending } from './sukssessmodal-innsending';
+import { SuksessModalLagretUtkast } from './suksessmodal-lagret';
 
 export function Hovedside (props: {fnr: string}) {
     const [vedtak] = useFetchState('vedtak');
@@ -21,6 +23,7 @@ export function Hovedside (props: {fnr: string}) {
     const visAlertrstripefeatureToggle = features.data[VEDTAK_I_GOSYS_TOGGLE];
 
     return (
+      <>
         <Page>
             <AlertStripeVedtakIArena
                 gjeldendeVedtak={gjeldendeVedtak}
@@ -28,12 +31,19 @@ export function Hovedside (props: {fnr: string}) {
                 visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
             />
             <div className="hovedside">
-                <UtkastPanel utkast={utkast}/>
-                <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
-                <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
-                <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
+                <div className="vedtak-paneler">
+                    <UtkastPanel utkast={utkast}/>
+                    <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
+                    <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
+                </div>
+                <div>
+                    <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
+                </div>
             </div>
-        </Page>
+            </Page>
+          <SuksessModalInnsending/>
+          <SuksessModalLagretUtkast/>
+        </>
     );
 
 }

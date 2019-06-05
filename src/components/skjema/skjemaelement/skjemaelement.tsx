@@ -9,6 +9,7 @@ interface SkjemaElementProps<T> {
     className?: string;
     value?: React.ReactNode;
     feil?: string;
+    skalKunViseRedigeringsModus?: boolean;
 }
 
 const emdashCharacterCode = 8212;
@@ -28,21 +29,27 @@ export function SkjemaElement<T>(props: SkjemaElementProps<T>) {
     return (
         <div className="vedtaksskjemaelement">
             <legend>{`${props.tittel}:`}</legend>
-            { isOpen
-                ? <RedigeringsModus lukkSkjemaElement={lukkSkjemaElement} children={props.children}/>
+            { isOpen || props.skalKunViseRedigeringsModus
+                ? <RedigeringsModus skalKunViseRedigeringsModus={props.skalKunViseRedigeringsModus}lukkSkjemaElement={lukkSkjemaElement} children={props.children}/>
                 : <VisningsModus<T> value={props.value} apneSkjemaElement={apneSkjemaElement}/>
             }
         </div>
     );
 }
 
-function RedigeringsModus(props: {lukkSkjemaElement: () => void, className?: string, children: React.ReactNode }) {
+function RedigeringsModus(props: {
+    skalKunViseRedigeringsModus?: boolean,
+    lukkSkjemaElement: () => void,
+    className?: string,
+    children: React.ReactNode
+}) {
     const className = classNames('vedtaksskjemaelement__innhold', props.className);
     return (
         <>
             <div className={className}>
                 {props.children}
             </div>
+            {!props.skalKunViseRedigeringsModus &&
             <div>
                 <button
                     onClick={props.lukkSkjemaElement}
@@ -50,7 +57,7 @@ function RedigeringsModus(props: {lukkSkjemaElement: () => void, className?: str
                 >
                     Lukk
                 </button>
-            </div>
+            </div>}
         </>
     );
 }
@@ -67,7 +74,7 @@ function VisningsModus<T>(props: {value?: React.ReactNode, apneSkjemaElement: ()
                 }
             </div>
             <div>
-                <button className="toggle--knapp btn--lenke" onClick={props.apneSkjemaElement}>
+                <button type="button" className="toggle--knapp btn--lenke" onClick={props.apneSkjemaElement}>
                     Endre
                 </button>
             </div>

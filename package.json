@@ -3,10 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "/veilarbvedtaksstottefs",
-  "proxy": "http://localhost:8080",
   "scripts": {
-    "run:live-server": "live-server --cors --entry-file=./pdf/testbrev1.pdf",
-    "start": "concurrently --kill-others \"npm run run:live-server\" \"craco start\"",
+    "start": "craco start",
     "build": "craco build",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
@@ -14,8 +12,7 @@
     "test:coverage": "echo \"Not yet implemented\"",
     "precommit": "npm run lint:fix",
     "prepush": "npm run lint",
-    "heroku-serve": "serve -s build -l 5000",
-    "heroku-postbuild": "npm run build"
+    "heroku-serve": "node heroku-server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,7 +52,7 @@
     "nav-frontend-modal-style": "^0.3.29",
     "nav-frontend-paneler": "^1.0.15",
     "nav-frontend-paneler-style": "^0.3.15",
-    "nav-frontend-skjema": "^1.0.64",
+    "nav-frontend-skjema": "^1.0.67",
     "nav-frontend-skjema-style": "^1.0.40",
     "nav-frontend-spinner": "^1.0.18",
     "nav-frontend-spinner-style": "^0.2.5",
@@ -79,9 +76,7 @@
     "@types/react-dom": "^16.8.3",
     "@types/react-modal": "^3.8.2",
     "axios-mock-adapter": "^1.16.0",
-    "concurrently": "^4.1.0",
-    "live-server": "^1.2.1",
-    "serve": "^10.1.2",
+    "express": "^4.17.1",
     "tslint": "^5.14.0",
     "tslint-react": "^4.0.0"
   }

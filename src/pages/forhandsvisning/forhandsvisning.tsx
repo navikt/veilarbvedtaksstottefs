@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
+import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
 import { ViewDispatch } from '../../components/providers/view-provider';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import { useFetchState } from '../../components/providers/fetch-provider';
@@ -15,14 +16,23 @@ import { VarselModal } from '../../components/modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../api/feature-toggle-api';
+import { ModalViewDispatch } from '../../components/providers/modal-provider';
+import { utkastetSkalKvalitetssikrets } from '../../components/skjema/skjema-utils';
+import { KvalitetsSikringModalInnsending } from './kvalitetssikring';
+import { VedtakData } from '../../utils/types/vedtak';
 
 export function Forhandsvisning(props: { fnr: string }) {
     const [isSending, setIsSending] = useState(false);
     const [isFeilModalOpen, setIsFeilModalOpen] = useState(false);
-    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+    const [isKvalitetsSikringsModalOpen, setIsKvalitetsSikringsModalOpen] = useState(false);
+
     const {dispatch} = useContext(ViewDispatch);
+    const {modalViewDispatch} = useContext(ModalViewDispatch);
 
     const [vedtak, setVedtak] = useFetchState('vedtak');
+    const utkast =  vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
+    const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(utkast && utkast.innsatsgruppe);
+
     const [features, setFeatures] = useFetchState('features');
 
     const stoppeInnsendingfeatureToggle = features.data[STOPPE_VEDTAKSINNSENDING_TOGGLE];
@@ -35,14 +45,10 @@ export function Forhandsvisning(props: { fnr: string }) {
     const tilbakeTilHovedsiden = () => {
         setVedtak({status: Status.NOT_STARTED, data: null as any});
         dispatch({view: ActionType.HOVEDSIDE});
+        modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_SENT_SUKSESS});
     };
 
-    const handleOnSendClicked = () => {
-        if (stoppeInnsendingfeatureToggle) {
-            setIsFeilModalOpen(true);
-            return;
-        }
-
+    const sendVedtak = () => {
         if (isSending) {
             return;
         }
@@ -50,42 +56,59 @@ export function Forhandsvisning(props: { fnr: string }) {
         setIsSending(true);
         VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
             setIsSending(false);
-            setIsSuccessModalOpen(true);
+            tilbakeTilHovedsiden();
         }).catch(() => {
             setIsSending(false);
             setIsFeilModalOpen(true);
         });
     };
 
+    const handleOnSendClicked = () => {
+
+        if (stoppeInnsendingfeatureToggle) {
+            setIsFeilModalOpen(true);
+            return;
+        }
+
+        if (kvalitetssikresVarsel) {
+            setIsKvalitetsSikringsModalOpen(true);
+            return;
+        }
+        sendVedtak();
+    };
+
     return (
-        <PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet">
+        <>
             <FeilModalInnsending
                 isFeilModalOpen={isFeilModalOpen}
                 onRequestClose={() => setIsFeilModalOpen(false)}
                 tilbakeTilSkjema={tilbakeTilSkjema}
             />
-            <SuksessModalInnsending
-                isSuccesModalOpen={isSuccessModalOpen}
-                onRequestClose={tilbakeTilHovedsiden}
+            <KvalitetsSikringModalInnsending
+                onRequestClose={() => setIsKvalitetsSikringsModalOpen(false)}
+                isModalOpen={isKvalitetsSikringsModalOpen}
+                sendVedtak={sendVedtak}
             />
-            <Footer>
-                <div className="forhandsvisning__aksjoner">
-                    <Hovedknapp
-                        onClick={handleOnSendClicked}
-                        className="forhandsvisning__knapp-sender"
-                        spinner={isSending}
-                    >
-                        Send til bruker
-                    </Hovedknapp>
-                    <Knapp
-                        htmlType="button"
-                        onClick={tilbakeTilSkjema}
-                    >
-                        Tilbake til utkast
-                    </Knapp>
-                </div>
-            </Footer>
-        </PdfViewer>
+            <PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet">
+                <Footer>
+                    <div className="forhandsvisning__aksjoner">
+                        <Hovedknapp
+                            onClick={handleOnSendClicked}
+                            className="forhandsvisning__knapp-sender"
+                            spinner={isSending}
+                        >
+                            Send til bruker
+                        </Hovedknapp>
+                        <Knapp
+                            htmlType="button"
+                            onClick={tilbakeTilSkjema}
+                        >
+                            Tilbake til utkast
+                        </Knapp>
+                    </div>
+                </Footer>
+            </PdfViewer>
+        </>
     );
 }
 
@@ -100,20 +123,6 @@ function FeilModalInnsending (props: {onRequestClose: () => void, isFeilModalOpe
             <Systemtittel>Problemer med å sende</Systemtittel>
             <Normaltekst>Det er problemer med å sende vedtak før øyeblikket. Vi jobber med å løse saken</Normaltekst>
             <Knapp onClick={props.tilbakeTilSkjema}>Tilbake til vedtakskjema</Knapp>
-        </VarselModal>
-    );
-}
-
-function SuksessModalInnsending (props: {onRequestClose: () => void, isSuccesModalOpen: boolean}) {
-    return (
-        <VarselModal
-            isOpen={props.isSuccesModalOpen}
-            contentLabel="Vedtaket sendt til bruker"
-            onRequestClose={props.onRequestClose}
-            type="SUKSESS"
-        >
-            <Systemtittel>Vedtak sendt til bruker</Systemtittel>
-            <Normaltekst>Du finner innholdet i vedtaket på fanen for oppfølgingsvedtak. Brukeren får vedtaksbrevet digitalt eller i posten</Normaltekst>
         </VarselModal>
     );
 }
