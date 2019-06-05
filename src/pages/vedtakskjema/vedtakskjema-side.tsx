@@ -1,10 +1,12 @@
-import { mapTilTekstliste, skjemaIsNotEmpty, validerSkjema } from '../../components/skjema/skjema-utils';
+import {
+    mapTilTekstliste,
+    skjemaIsNotEmpty,
+    validerSkjema
+} from '../../components/skjema/skjema-utils';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import React from 'react';
-import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
@@ -21,6 +23,7 @@ import { formatDateTime } from '../../utils/date-utils';
 import Footer from '../../components/footer/footer';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
+import { SkjemaFeil } from '../../utils/types/skjema-feil';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -38,9 +41,17 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     const {modalViewDispatch} = useContext(ModalViewDispatch);
     const [vedtak, setVedtak] = useFetchState('vedtak');
     const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
-    const [errors, setErrors] = useState<SkjemaFeil>({});
+    const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
+    const [skjemaFeil, setSkjemaFeil] = useState<SkjemaFeil>({});
 
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
+
+    useEffect(() => {
+        if (harForsoktAttSende) {
+            const errors = validerSkjema(vedtakskjema);
+            setSkjemaFeil(errors);
+            }
+    }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
     function sendDataTilBackend(skjema: SkjemaData) {
         return VedtaksstotteApi.putVedtakUtkast(fnr, skjema);
@@ -81,9 +92,10 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
 
     function handleSubmit(e: any, skjema: SkjemaData) {
         e.preventDefault();
-        const skjemaFeil = validerSkjema(skjema);
-        if (Object.entries(skjemaFeil).filter(feilmelding => feilmelding).length > 0) {
-            setErrors(skjemaFeil);
+        setHarForsoktAttSende(true);
+        const errors = validerSkjema(skjema);
+        if (Object.entries(errors).filter(feilmelding => feilmelding).length > 0) {
+            setSkjemaFeil(errors);
             return;
         }
         sendDataTilBackend(skjema).then(() => {
@@ -106,7 +118,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
                         <Systemtittel className="skjema__tittel">
                             Oppfølgingsvedtak (§ 14a)
                         </Systemtittel>
-                        <Skjema errors={errors} oppdaterSistEndret={oppdaterSistEndret}/>
+                        <Skjema errors={skjemaFeil} oppdaterSistEndret={oppdaterSistEndret}/>
                     </Card>
                     <Footer>
                         <Aksjoner

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import './skjemaelement.less';
 
@@ -28,13 +27,13 @@ export function SkjemaElement<T>(props: SkjemaElementProps<T>) {
     }
 
     return (
-        <SkjemaGruppe feil={props.feil ? {feilmelding : props.feil} : undefined} className="vedtaksskjemaelement">
+        <div className="vedtaksskjemaelement">
             <legend>{`${props.tittel}:`}</legend>
             { isOpen || props.skalKunViseRedigeringsModus
                 ? <RedigeringsModus skalKunViseRedigeringsModus={props.skalKunViseRedigeringsModus}lukkSkjemaElement={lukkSkjemaElement} children={props.children}/>
                 : <VisningsModus<T> value={props.value} apneSkjemaElement={apneSkjemaElement}/>
             }
-        </SkjemaGruppe>
+        </div>
     );
 }
 

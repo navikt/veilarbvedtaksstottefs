@@ -62,8 +62,8 @@ export function skjemaIsNotEmpty (skjema: SkjemaData) {
         || skjema.begrunnelse.trim();
 }
 
-function maSkriveBegrunnelseGittInnsatsgruppe (innsatsgruppe: OrNothing<InnsatsgruppeType>) {
-    return (innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS || innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS);
+export function maSkriveBegrunnelseGittInnsatsgruppe (innsatsgruppe: OrNothing<InnsatsgruppeType>) {
+    return innsatsgruppe !== InnsatsgruppeType.STANDARD_INNSATS;
 }
 
 export function validerSkjema(skjema: SkjemaData) {
@@ -73,19 +73,31 @@ export function validerSkjema(skjema: SkjemaData) {
         errors.innsatsgruppe = 'Mangler innsatsgruppe';
     }
 
-    if (!skjema.hovedmal) {
-        errors.hovedmal = 'Mangler hovedmal';
+    if (!skjema.hovedmal && innsatsgruppe !== InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
+        errors.hovedmal = 'Mangler hovedmål';
     }
 
     const begrunnelse = skjema.begrunnelse.trim();
-    if (!begrunnelse && maSkriveBegrunnelseGittInnsatsgruppe(innsatsgruppe) ) {
+
+    if (!begrunnelse && maSkriveBegrunnelseGittInnsatsgruppe(innsatsgruppe)) {
         errors.begrunnelse = 'Mangler begrunnelse';
     }
 
-    if (begrunnelse.length > BEGRUNNELSE_MAX_LENGTH && maSkriveBegrunnelseGittInnsatsgruppe(innsatsgruppe)) {
-        errors.begrunnelse = 'Begrunnelsen må vare 2000 teign';
+    const begrunnelsefeil = validerBegrunnelsebegrunnelseMaxLengthTekst(begrunnelse);
+    Object.assign(errors, begrunnelsefeil);
+
+    if (!skjema.opplysninger || skjema.opplysninger.length < 1) {
+        errors.opplysninger = 'Mangler kilder';
     }
 
+    return errors;
+}
+
+export function validerBegrunnelsebegrunnelseMaxLengthTekst (begrunnelse: string) {
+    let errors: SkjemaFeil = {};
+    if (begrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
+        errors.begrunnelse =  `Du kan maksimalt skrive ${BEGRUNNELSE_MAX_LENGTH} tegn`;
+    }
     return errors;
 }
 

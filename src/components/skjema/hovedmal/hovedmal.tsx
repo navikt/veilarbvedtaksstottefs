@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import './hovedmal.less';
-import { RadioPanel } from 'nav-frontend-skjema';
+import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { SkjemaContext } from '../../providers/skjema-provider';
@@ -41,16 +41,18 @@ function Hovedmal(props: HovedmalProps) {
         <SkjemaElement
             tittel="Hovedmål"
             value={getHovedmalNavn(hovedmal)}
-            feil={props.hovedmalfeil}
             skalKunViseRedigeringsModus={erVarigTilpassetInnsats}
         >
-            { erVarigTilpassetInnsats
-                ?  <AlertStripeInfo>Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt arbeidsevne)</AlertStripeInfo>
-                : <HovedmalRadioButtons
-                    handleHovedmalChanged={setHovedmal}
-                    hovedmal={hovedmal}
-                />
-            }
+            <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding: props.hovedmalfeil} : undefined}>
+                {erVarigTilpassetInnsats
+                    ? <AlertStripeInfo>Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt
+                        arbeidsevne)</AlertStripeInfo>
+                    : <HovedmalRadioButtons
+                        handleHovedmalChanged={setHovedmal}
+                        hovedmal={hovedmal}
+                    />
+                }
+            </SkjemaGruppe>
         </SkjemaElement>
     );
 }

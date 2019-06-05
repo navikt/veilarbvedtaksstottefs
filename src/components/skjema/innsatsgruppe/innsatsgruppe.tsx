@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RadioPanel } from 'nav-frontend-skjema';
+import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
@@ -58,16 +58,17 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
         <SkjemaElement
             tittel="Innsatsgruppe"
             value={getInnsatsgruppeNavn(innsatsgruppe)}
-            feil={props.innsatgruppefeil}
         >
-            <InnsatsgruppeRadioButtons
-                handleInnsatsgruppeChanged={setInnsatsgruppe}
-                innsatsgruppe={innsatsgruppe}
-                setHovedmal={setHovedmal}
-            />
+            <SkjemaGruppe feil={props.innsatgruppefeil ? {feilmelding : props.innsatgruppefeil} : undefined}>
+                <InnsatsgruppeRadioButtons
+                    handleInnsatsgruppeChanged={setInnsatsgruppe}
+                    innsatsgruppe={innsatsgruppe}
+                    setHovedmal={setHovedmal}
+                />
+            </SkjemaGruppe>
             {kvalitetssikresVarsel &&
             <AlertStripeAdvarsel className="innsatsgruppe-advarsel">
-                    Ved delvis varig tilpasset innsats og varig tilpasset innsats må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
+                    Ved <b>delvis varig tilpasset innsats</b> og <b>varig tilpasset innsats</b> må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
             </AlertStripeAdvarsel>
             }
         </SkjemaElement>

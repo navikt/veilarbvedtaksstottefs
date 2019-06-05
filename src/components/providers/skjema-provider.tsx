@@ -6,6 +6,7 @@ import { HovedmalType } from '../skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { Opplysning } from '../skjema/opplysninger/opplysninger';
 import { useFetchState } from './fetch-provider';
+import { SkjemaFeil } from '../../utils/types/skjema-feil';
 
 const initialSkjemaData = {
     opplysninger: undefined,
@@ -60,7 +61,7 @@ export function SkjemaProvider(props: {children: React.ReactNode}) {
                 begrunnelse,
                 setBegrunnelse,
                 sistOppdatert,
-                setSistOppdatert
+                setSistOppdatert,
             }}
         >
             {props.children}

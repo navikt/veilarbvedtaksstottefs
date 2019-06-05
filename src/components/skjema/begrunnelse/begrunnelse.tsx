@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { Textarea } from 'nav-frontend-skjema';
+import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { Hjelpetekster } from '../hjelpetekster/hjelpetekster';
-import { Normaltekst } from 'nav-frontend-typografi';
 import './begrunnelse.less';
+import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';
+import { useEffect } from 'react';
+import { validerBegrunnelsebegrunnelseMaxLengthTekst } from '../skjema-utils';
 
-export const BEGRUNNELSE_MAX_LENGTH = 2000;
+export const BEGRUNNELSE_MAX_LENGTH = 4000;
 
 interface BegrunnelseProps {
     begrunnelsefeil?: string;
@@ -16,50 +17,35 @@ interface BegrunnelseProps {
 
 function Begrunnelse(props: BegrunnelseProps) {
     const {begrunnelse, setBegrunnelse} = useContext(SkjemaContext);
+    const [begrunnelseFeil, setBegrunnelseFeil] = useState(props.begrunnelsefeil);
+
+    useEffect(() => {
+        const errors = validerBegrunnelsebegrunnelseMaxLengthTekst(begrunnelse);
+        setBegrunnelseFeil(errors.begrunnelse);
+    }, [begrunnelse]);
+
+    useEffect(() => {
+        setBegrunnelseFeil(props.begrunnelsefeil);
+    }, [props.begrunnelsefeil]);
+
     return (
         <SkjemaElement
             tittel="Begrunnelse"
-            feil={props.begrunnelsefeil}
             value={begrunnelse}
         >
             <div className="begrunnelse">
                 <AlertStripeInfo>Ved standard innsats(gode muligheter)er det ikke obligatorisk
                     begrunnelse</AlertStripeInfo>
+                <SkjemaGruppe feil={begrunnelseFeil ? {feilmelding : begrunnelseFeil} : undefined} className="begrunnelse__container">
                 <Textarea
                     value={begrunnelse}
                     label=""
                     placeholder="Skriv inn begrunnelsen for vedtaket"
                     maxLength={BEGRUNNELSE_MAX_LENGTH}
-                    onChange={(e: any) => {
-                        let nyBegrunnelse = e.target.value;
-                        if (nyBegrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
-                            nyBegrunnelse = nyBegrunnelse.substr(0, BEGRUNNELSE_MAX_LENGTH);
-                        }
-                        setBegrunnelse(nyBegrunnelse);
-                    }}
+                    onChange={(e: any) => setBegrunnelse(e.target.value)}
                 />
-                <Hjelpetekster>
-                    <Normaltekst>
-                        Spørsmål som kan være til nytte når du skal gjøre vurderingen din:
-                    </Normaltekst>
-                    <ul>
-                        <li>Hva tenker denne personen selv om mulighetene sine til å være eller komme i jobb?</li>
-                        <li>Hvilke typer arbeid ønsker denne personen seg og hva er realistisk ut fra dagens
-                            arbeidsmarked?
-                        </li>
-                        <li>Hva slags veiledning trenger denne personen?</li>
-                        <li>Er arbeidsevnen nedsatt, og hvorfor?</li>
-                        <li>
-                            Trenger denne personen:
-                            <ul>
-                                <li>yrkes- og/eller karriereveiledning?</li>
-                                <li>arbeidsrettede aktiviteter og tiltak?</li>
-                                <li>behandling eller oppfølging fra helsevesenet?</li>
-                            </ul>
-                        </li>
-                        <li>Hva har dere blitt enige om?</li>
-                    </ul>
-                </Hjelpetekster>
+                </SkjemaGruppe>
+                <BegrunnelseHjelpeTekster/>
             </div>
         </SkjemaElement>
     );
