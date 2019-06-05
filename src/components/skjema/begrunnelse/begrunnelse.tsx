@@ -21,12 +21,7 @@ function Begrunnelse(props: BegrunnelseProps) {
 
     useEffect(() => {
         const errors = validerBegrunnelsebegrunnelseMaxLengthTekst(begrunnelse);
-        if (errors.begrunnelse) {
-           setBegrunnelseFeil(errors.begrunnelse);
-           return;
-        }
-        setBegrunnelseFeil(undefined);
-        return;
+        setBegrunnelseFeil(errors.begrunnelse);
     }, [begrunnelse]);
 
     useEffect(() => {
