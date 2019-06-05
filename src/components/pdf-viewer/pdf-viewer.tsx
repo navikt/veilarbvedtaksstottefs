@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Undertittel } from 'nav-frontend-typografi';
@@ -13,30 +13,39 @@ interface PdfViewerProps {
     children?: React.ReactNode;
 }
 
-function PdfViewer(props: PdfViewerProps) {
-    const [numPages, setPages] = useState(0);
+interface PdfViewerState {
+    numPages: number;
+}
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
+    constructor(props: PdfViewerProps) {
+        super(props);
+        this.state = {numPages : 0};
+    }
 
-    return (
-        <div className="pdfvisning">
-            <div className="pdfvisning__header">
-                <Undertittel>{props.title}</Undertittel>
+    shouldComponentUpdate(nextProps: PdfViewerProps, nextState: PdfViewerState) {
+       return !(this.props.url === nextProps.url && this.state.numPages === nextState.numPages);
+    }
+
+    render () {
+        return (
+            <div className="pdfvisning">
+                <div className="pdfvisning__header">
+                    <Undertittel>{this.props.title}</Undertittel>
+                </div>
+                <Document
+                    className="pdfvisning__document"
+                    file={{url: this.props.url}}
+                    loading={<PdfLoader/>}
+                    error={<PdfError/>}
+                    onLoadSuccess={(object: { numPages: number }) => this.setState({numPages: object.numPages})}
+                >
+                    <Pages numPages={this.state.numPages}/>
+                </Document>
+                {this.props.children}
             </div>
-            <Document
-                className="pdfvisning__document"
-                file={{url: props.url}}
-                loading={<PdfLoader/>}
-                error={<PdfError/>}
-                onLoadSuccess={(object: { numPages: number }) => setPages(object.numPages)}
-            >
-                <Pages numPages={numPages}/>
-            </Document>
-            {props.children}
-        </div>
-    );
+        );
+    }
 }
 
 export default PdfViewer;
