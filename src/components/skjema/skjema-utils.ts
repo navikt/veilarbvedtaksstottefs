@@ -73,7 +73,7 @@ export function validerSkjema(skjema: SkjemaData) {
         errors.innsatsgruppe = 'Mangler innsatsgruppe';
     }
 
-    if (!skjema.hovedmal) {
+    if (!skjema.hovedmal && innsatsgruppe !== InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
         errors.hovedmal = 'Mangler hovedmål';
     }
 

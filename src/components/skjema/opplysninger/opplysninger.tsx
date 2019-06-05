@@ -108,25 +108,25 @@ function Opplysninger(props: OpplysningerProps) {
                                 />
                         )}
                     </SkjemaGruppe>
-                        {visLeggTilNyOpplysning
-                            ? <LeggTilOpplysning
-                                leggTilOpplysning={() => {
-                                    setVisLeggTilNyOpplysning(false);
-                                    window.clearTimeout(timer.current);
-                                    nullstilState();
-                                }}
-                            />
-                            : <RedigerOpplysning
-                                opplysning={{'': true}}
-                                onTekstSubmit={(endretOpplysning) => {
-                                    handleOpplysningerChanged(opplysninger.length, endretOpplysning);
-                                    setVisLeggTilNyOpplysning(true);
-                                }}
-                                onTekstCancel={() => {
-                                    setVisLeggTilNyOpplysning(true);
-                                }}
-                            />
-                        }
+                    {visLeggTilNyOpplysning
+                        ? <LeggTilOpplysning
+                            leggTilOpplysning={() => {
+                                setVisLeggTilNyOpplysning(false);
+                                window.clearTimeout(timer.current);
+                                nullstilState();
+                            }}
+                        />
+                        : <RedigerOpplysning
+                            opplysning={{'': true}}
+                            onTekstSubmit={(endretOpplysning) => {
+                                handleOpplysningerChanged(opplysninger.length, endretOpplysning);
+                                setVisLeggTilNyOpplysning(true);
+                            }}
+                            onTekstCancel={() => {
+                                setVisLeggTilNyOpplysning(true);
+                            }}
+                        />
+                    }
                 </div>
                 <OpplysningerHjelpeTekster/>
             </div>
