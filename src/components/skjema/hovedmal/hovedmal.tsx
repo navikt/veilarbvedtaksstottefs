@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './hovedmal.less';
-import { RadioPanel } from 'nav-frontend-skjema';
+import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { useContext } from 'react';
@@ -37,15 +37,13 @@ function Hovedmal(props: HovedmalProps) {
         <SkjemaElement
             tittel="Hovedmål"
             value={getHovedmalNavn(hovedmal)}
-            feil={props.hovedmalfeil}
         >
-            {(lukkSkjema) =>
+            <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding: props.hovedmalfeil} : undefined}>
                 <HovedmalRadioButtons
-                    lukkSkjema={lukkSkjema}
                     handleHovedmalChanged={setHovedmal}
                     hovedmal={hovedmal}
                 />
-            }
+            </SkjemaGruppe>
         </SkjemaElement>
     );
 }
@@ -55,7 +53,6 @@ export default Hovedmal;
 interface HovedmalRadioButtonsProps {
     handleHovedmalChanged: (e: any) => void;
     hovedmal: OrNothing<HovedmalType>;
-    lukkSkjema: () => void;
 }
 
 function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
@@ -67,10 +64,7 @@ function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
                     label={mal.label}
                     name="hovedmal"
                     value={mal.value}
-                    onChange={(e: any) => {
-                        props.handleHovedmalChanged(e.target.value);
-                        props.lukkSkjema();
-                    }}
+                    onChange={(e: any) => props.handleHovedmalChanged(e.target.value)}
                     checked={props.hovedmal === mal.value}
                 />
             )}

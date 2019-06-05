@@ -86,5 +86,9 @@ export function validerSkjema(skjema: SkjemaData) {
         errors.begrunnelse = 'Begrunnelsen må vare 2000 teign';
     }
 
+    if (!skjema.opplysninger || skjema.opplysninger.length < 1) {
+        errors.opplysninger = 'Mangler kilder';
+    }
+
     return errors;
 }

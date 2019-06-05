@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RadioPanel } from 'nav-frontend-skjema';
+import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
@@ -54,15 +54,13 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
         <SkjemaElement
             tittel="Innsatsgruppe"
             value={getInnsatsgruppeNavn(innsatsgruppe)}
-            feil={props.innsatgruppefeil}
         >
-            {(lukkSkjema) =>
+            <SkjemaGruppe feil={props.innsatgruppefeil ? {feilmelding : props.innsatgruppefeil} : undefined}>
                 <InnsatsgruppeRadioButtons
-                    lukkSkjema={lukkSkjema}
                     handleInnsatsgruppeChanged={setInnsatsgruppe}
                     innsatsgruppe={innsatsgruppe}
                 />
-            }
+            </SkjemaGruppe>
         </SkjemaElement>
     );
 }
@@ -72,7 +70,6 @@ export default Innsatsgruppe;
 interface InnsatsgruppeRadioProps {
     handleInnsatsgruppeChanged: (e: any) => void;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
-    lukkSkjema: () => void;
 }
 
 function InnsatsgruppeRadioButtons (props: InnsatsgruppeRadioProps ) {
@@ -84,10 +81,7 @@ function InnsatsgruppeRadioButtons (props: InnsatsgruppeRadioProps ) {
                     label={innsatsgruppeObject.label}
                     value={innsatsgruppeObject.value}
                     name="innsatsgruppe"
-                    onChange={(e: any) => {
-                        props.handleInnsatsgruppeChanged(e.target.value);
-                        props.lukkSkjema();
-                    }}
+                    onChange={(e: any) => props.handleInnsatsgruppeChanged(e.target.value)}
                     checked={props.innsatsgruppe === innsatsgruppeObject.value}
                 />
             )}

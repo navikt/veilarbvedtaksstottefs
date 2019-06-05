@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import './skjemaelement.less';
 
 interface SkjemaElementProps<T> {
     tittel: string;
-    children: (JSX.Element[] | JSX.Element) | ((lukkSkjemaElement: () => void) => (JSX.Element[] | JSX.Element));
+    children: React.ReactNode;
     className?: string;
     value?: React.ReactNode;
     feil?: string;
@@ -27,34 +26,31 @@ export function SkjemaElement<T>(props: SkjemaElementProps<T>) {
     }
 
     return (
-        <SkjemaGruppe feil={props.feil ? {feilmelding : props.feil} : undefined} className="vedtaksskjemaelement">
+        <div className="vedtaksskjemaelement">
             <legend>{`${props.tittel}:`}</legend>
             { isOpen
                 ? <RedigeringsModus lukkSkjemaElement={lukkSkjemaElement} children={props.children}/>
                 : <VisningsModus<T> value={props.value} apneSkjemaElement={apneSkjemaElement}/>
             }
-        </SkjemaGruppe>
+        </div>
     );
 }
 
-function RedigeringsModus(props: {lukkSkjemaElement: () => void, className?: string, children: (JSX.Element[] | JSX.Element) | ((lukkSkjemaElement: () => void) => (JSX.Element[] | JSX.Element)) }) {
+function RedigeringsModus(props: {lukkSkjemaElement: () => void, className?: string, children: React.ReactNode }) {
     const className = classNames('vedtaksskjemaelement__innhold', props.className);
     return (
         <>
-        <div className={className}>
-            {typeof props.children === 'function'
-                ? props.children(props.lukkSkjemaElement)
-                : props.children
-            }
-        </div>
-        <div>
-            <button
-                onClick={props.lukkSkjemaElement}
-                className="toggle--knapp btn--lenke"
-            >
-                Lukk
-            </button>
-        </div>
+            <div className={className}>
+                {props.children}
+            </div>
+            <div>
+                <button
+                    onClick={props.lukkSkjemaElement}
+                    className="toggle--knapp btn--lenke"
+                >
+                    Lukk
+                </button>
+            </div>
         </>
     );
 }

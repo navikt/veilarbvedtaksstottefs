@@ -9,6 +9,7 @@ import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OpplysningerHjelpeTekster } from './hjelpetekst-opplysninger';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 export type Opplysning = {
     [key: string]: boolean
@@ -79,52 +80,53 @@ function Opplysninger(props: OpplysningerProps) {
         <SkjemaElement
             tittel="Kilder"
             value={harOpplysninger ? <LagOpplysningsListe samladeOpplysninger={samladeOpplysninger}/> : null}
-            feil={props.opplysningerfeil}
         >
             <div className="opplysninger">
                 <Normaltekst>Kilder slik de vil vises i vedtaksbrevet</Normaltekst>
                 <div className="opplysninger__innhold">
-                {opplysninger.map((opplysning, index) =>
-                    redigeringModusIndeks !== index
-                        ? <VisOpplysning
-                            opplysning={opplysning}
-                            handleOpplysning={() => {
-                                setRedigeringModusIndeks(index);
-                                setVisLeggTilNyOpplysning(true);
-                            }}
-                            key={index}
-                            onChange={handleOpplysningerChecked}
-                            erSistEndretIndeks={index === sistEndretIndeks}
-                        />
-                        : <RedigerOpplysning
-                            opplysning={opplysning}
-                            onTekstSubmit={(endretOpplysning) => {
-                                setRedigeringModusIndeks(-1);
-                                handleOpplysningerChanged(index, endretOpplysning);
-                            }}
-                            key={index}
-                            onTekstCancel={nullstilState}
-                        />
-                )}
-                {visLeggTilNyOpplysning
-                    ? <LeggTilOpplysning
-                        leggTilOpplysning={() => {
-                            setVisLeggTilNyOpplysning(false);
-                            window.clearTimeout(timer.current);
-                            nullstilState();
-                        }}
-                    />
-                    : <RedigerOpplysning
-                        opplysning={{'': true}}
-                        onTekstSubmit={(endretOpplysning) => {
-                            handleOpplysningerChanged(opplysninger.length, endretOpplysning);
-                            setVisLeggTilNyOpplysning(true);
-                        }}
-                        onTekstCancel={() => {
-                            setVisLeggTilNyOpplysning(true);
-                        }}
-                    />
-                }
+                    <SkjemaGruppe feil={props.opplysningerfeil ?  {feilmelding : props.opplysningerfeil} : undefined}>
+                        {opplysninger.map((opplysning, index) =>
+                            redigeringModusIndeks !== index
+                                ? <VisOpplysning
+                                    opplysning={opplysning}
+                                    handleOpplysning={() => {
+                                        setRedigeringModusIndeks(index);
+                                        setVisLeggTilNyOpplysning(true);
+                                    }}
+                                    key={index}
+                                    onChange={handleOpplysningerChecked}
+                                    erSistEndretIndeks={index === sistEndretIndeks}
+                                />
+                                : <RedigerOpplysning
+                                    opplysning={opplysning}
+                                    onTekstSubmit={(endretOpplysning) => {
+                                        setRedigeringModusIndeks(-1);
+                                        handleOpplysningerChanged(index, endretOpplysning);
+                                    }}
+                                    key={index}
+                                    onTekstCancel={nullstilState}
+                                />
+                        )}
+                    </SkjemaGruppe>
+                        {visLeggTilNyOpplysning
+                            ? <LeggTilOpplysning
+                                leggTilOpplysning={() => {
+                                    setVisLeggTilNyOpplysning(false);
+                                    window.clearTimeout(timer.current);
+                                    nullstilState();
+                                }}
+                            />
+                            : <RedigerOpplysning
+                                opplysning={{'': true}}
+                                onTekstSubmit={(endretOpplysning) => {
+                                    handleOpplysningerChanged(opplysninger.length, endretOpplysning);
+                                    setVisLeggTilNyOpplysning(true);
+                                }}
+                                onTekstCancel={() => {
+                                    setVisLeggTilNyOpplysning(true);
+                                }}
+                            />
+                        }
                 </div>
                 <OpplysningerHjelpeTekster/>
             </div>
