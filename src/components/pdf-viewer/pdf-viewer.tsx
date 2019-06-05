@@ -1,16 +1,15 @@
 import React from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Undertittel } from 'nav-frontend-typografi';
 import './pdf-viewer.less';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 interface PdfViewerProps {
     url: string;
     title: string;
-    children?: React.ReactNode;
 }
 
 interface PdfViewerState {
@@ -42,7 +41,6 @@ class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
                 >
                     <Pages numPages={this.state.numPages}/>
                 </Document>
-                {this.props.children}
             </div>
         );
     }

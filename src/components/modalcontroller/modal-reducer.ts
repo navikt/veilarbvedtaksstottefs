@@ -3,6 +3,8 @@ import { OrNothing } from '../../utils/types/ornothing';
 export enum ModalActionType {
     MODAL_VEDTAK_SENT_SUKSESS = 'MODAL_VEDTAK_SENT_SUKSESS',
     MODAL_VEDTAK_LAGRET_SUKSESS = 'MODAL_VEDTAK_LAGRET_SUKSESS',
+    MODAL_LASTER_DATA = 'MODAL_LASTER_DATA',
+    MODAL_KVALITETSSIKRING = 'MODAL_KVALITETSSIKRING',
 }
 
 interface State<T> {

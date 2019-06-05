@@ -20,11 +20,10 @@ import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { utkastetSkalKvalitetssikrets } from '../../components/skjema/skjema-utils';
 import { KvalitetsSikringModalInnsending } from './kvalitetssikring';
 import { VedtakData } from '../../utils/types/vedtak';
+import { SpinnerModal } from '../../components/modal/spinner-modal';
 
 export function Forhandsvisning(props: { fnr: string }) {
-    const [isSending, setIsSending] = useState(false);
     const [isFeilModalOpen, setIsFeilModalOpen] = useState(false);
-    const [isKvalitetsSikringsModalOpen, setIsKvalitetsSikringsModalOpen] = useState(false);
 
     const {dispatch} = useContext(ViewDispatch);
     const {modalViewDispatch} = useContext(ModalViewDispatch);
@@ -49,16 +48,11 @@ export function Forhandsvisning(props: { fnr: string }) {
     };
 
     const sendVedtak = () => {
-        if (isSending) {
-            return;
-        }
+        modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
 
-        setIsSending(true);
         VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
-            setIsSending(false);
             tilbakeTilHovedsiden();
         }).catch(() => {
-            setIsSending(false);
             setIsFeilModalOpen(true);
         });
     };
@@ -71,7 +65,7 @@ export function Forhandsvisning(props: { fnr: string }) {
         }
 
         if (kvalitetssikresVarsel) {
-            setIsKvalitetsSikringsModalOpen(true);
+            modalViewDispatch({modalView: ModalActionType.MODAL_KVALITETSSIKRING});
             return;
         }
         sendVedtak();
@@ -84,30 +78,25 @@ export function Forhandsvisning(props: { fnr: string }) {
                 onRequestClose={() => setIsFeilModalOpen(false)}
                 tilbakeTilSkjema={tilbakeTilSkjema}
             />
-            <KvalitetsSikringModalInnsending
-                onRequestClose={() => setIsKvalitetsSikringsModalOpen(false)}
-                isModalOpen={isKvalitetsSikringsModalOpen}
-                sendVedtak={sendVedtak}
-            />
-            <PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet">
-                <Footer>
-                    <div className="forhandsvisning__aksjoner">
-                        <Hovedknapp
-                            onClick={handleOnSendClicked}
-                            className="forhandsvisning__knapp-sender"
-                            spinner={isSending}
-                        >
-                            Send til bruker
-                        </Hovedknapp>
-                        <Knapp
-                            htmlType="button"
-                            onClick={tilbakeTilSkjema}
-                        >
-                            Tilbake til utkast
-                        </Knapp>
-                    </div>
-                </Footer>
-            </PdfViewer>
+            <KvalitetsSikringModalInnsending sendVedtak={sendVedtak}/>
+            <SpinnerModal/>
+            <PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet"/>
+            <Footer>
+                <div className="forhandsvisning__aksjoner">
+                    <Hovedknapp
+                        onClick={handleOnSendClicked}
+                        className="forhandsvisning__knapp-sender"
+                    >
+                        Send til bruker
+                    </Hovedknapp>
+                    <Knapp
+                        htmlType="button"
+                        onClick={tilbakeTilSkjema}
+                    >
+                        Tilbake til utkast
+                    </Knapp>
+                </div>
+            </Footer>
         </>
     );
 }

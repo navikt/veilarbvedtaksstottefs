@@ -9,7 +9,7 @@ import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import './vedtaksbrev-visning.less'
+import './vedtaksbrev-visning.less';
 
 export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
     const {dispatch} = useContext(ViewDispatch);
@@ -27,7 +27,8 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
         : VedtaksstotteApi.hentVedtakPdfURL(props.fnr, dokumentInfoId, journalpostId);
 
     return (
-        <PdfViewer url={url} title="Visning av vedtaksbrev">
+       <>
+        <PdfViewer url={url} title="Visning av vedtaksbrev"/>
             <Footer>
                 <div className="vedtaksbrev-visning__aksjoner">
                     <Hovedknapp
@@ -37,7 +38,6 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
                     </Hovedknapp>
                 </div>
             </Footer>
-        </PdfViewer>
+        </>
     );
 }
-
