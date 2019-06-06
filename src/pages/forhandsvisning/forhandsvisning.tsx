@@ -20,8 +20,7 @@ import { VedtakData } from '../../utils/types/vedtak';
 import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { OrNothing } from '../../utils/types/ornothing';
 import { FeilModalInnsending } from './feilmodal';
-import { logEvent } from '../../utils/frontend-logger';
-import { APP_NAME } from '../../utils/constants';
+import { logMetrikk } from '../../utils/frontend-logger';
 
 export function Forhandsvisning(props: { fnr: string }) {
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
@@ -42,7 +41,7 @@ export function Forhandsvisning(props: { fnr: string }) {
 
     const tilbakeTilSkjema  = () => {
         dispatch({view: ActionType.UTKAST});
-        logEvent(`${APP_NAME}.metrikker.tilbake-fra-forhandsvisning`);
+        logMetrikk('tilbake-fra-forhandsvisning');
     };
 
     useEffect(() => {
@@ -72,7 +71,7 @@ export function Forhandsvisning(props: { fnr: string }) {
             tilbakeTilHovedsiden();
         }).catch((err) => {
             modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
-            logEvent(`${APP_NAME}.metrikker.feil-ved-sending`, err);
+            logMetrikk('feil-ved-sending', err);
         });
     };
 

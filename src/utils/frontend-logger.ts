@@ -1,3 +1,5 @@
+import { APP_NAME } from './constants';
+
 const frontendlogger =  (window as any).frontendlogger;
 
 export const logEvent = (logTag: string, fields?: {}, tags?: {}): void => {
@@ -6,4 +8,8 @@ export const logEvent = (logTag: string, fields?: {}, tags?: {}): void => {
     } else {
         console.log('Event', logTag, 'Fields:', fields, 'Tags:', tags); // tslint:disable-line
     }
+};
+
+export const logMetrikk = (metrikkNavn: string, fields?: {}, tags?: {}): void => {
+    logEvent(`${APP_NAME}.metrikker.${metrikkNavn}`, fields, tags);
 };

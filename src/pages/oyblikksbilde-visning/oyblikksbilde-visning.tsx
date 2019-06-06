@@ -15,8 +15,7 @@ import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import KildeType from '../../utils/types/kilde-type';
 import './oyblikksbilde-visning.less';
-import { logEvent } from '../../utils/frontend-logger';
-import { APP_NAME } from '../../utils/constants';
+import { logMetrikk } from '../../utils/frontend-logger';
 
 interface VedleggVisningProps {
     vedtakId: number;
@@ -32,9 +31,7 @@ export function OyblikksbildeVisning (props: VedleggVisningProps) {
     const {dispatch} = useContext(ViewDispatch);
     const oyblikksbilder = useFetch<Oyblikksbilde[]>(VedtaksstotteApi.hentOyblikksbilde(props.fnr, props.vedtakId));
 
-    useEffect(() => {
-        logEvent(`${APP_NAME}.metrikker.vis-oyblikksbilde`);
-    }, []);
+    useEffect(() => logMetrikk('vis-oyblikksbilde'), []);
 
     if (oyblikksbilder.status === Status.LOADING || oyblikksbilder.status === Status.NOT_STARTED) {
         return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;

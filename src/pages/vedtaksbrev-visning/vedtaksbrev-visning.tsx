@@ -15,8 +15,7 @@ import { ModalActionType } from '../../components/modalcontroller/modal-reducer'
 import { FeilModalInnsending } from '../forhandsvisning/feilmodal';
 import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
-import { logEvent } from '../../utils/frontend-logger';
-import { APP_NAME } from '../../utils/constants';
+import { logMetrikk } from '../../utils/frontend-logger';
 
 export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
     const {dispatch} = useContext(ViewDispatch);
@@ -25,9 +24,7 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
     const {modalViewDispatch} = useContext(ModalViewDispatch);
 
-    useEffect(() => {
-        logEvent(`${APP_NAME}.metrikker.vis-vedtaksbrev`);
-    }, []);
+    useEffect(() => logMetrikk('vis-vedtaksbrev'), []);
 
     if (!vedtaksObjekt) {
         return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;

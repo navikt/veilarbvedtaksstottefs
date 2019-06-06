@@ -14,8 +14,7 @@ import './gjeldende-vedtak-panel.less';
 import { useFetchState } from '../../providers/fetch-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
 import ingenVedtakBilde from './ingen-vedtak.svg';
-import { logEvent } from '../../../utils/frontend-logger';
-import { APP_NAME } from '../../../utils/constants';
+import { logMetrikk } from '../../../utils/frontend-logger';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
 
@@ -45,7 +44,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 
     const handleVisVedtakClicked = () => {
         dispatch({view: ActionType.VIS_VEDTAK, props: {id}});
-        logEvent(`${APP_NAME}.metrikker.vis-gjeldende-vedtak`);
+        logMetrikk('vis-gjeldende-vedtak');
     };
 
     return (
