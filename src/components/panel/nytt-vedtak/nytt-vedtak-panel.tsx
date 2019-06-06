@@ -11,6 +11,8 @@ import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import leggTilVedtakBilde from './legg-til-vedtak.svg';
 import './nytt-vedtak-panel.less';
 import { useFetchState } from '../../providers/fetch-provider';
+import { logEvent } from '../../../utils/frontend-logger';
+import { APP_NAME } from '../../../utils/constants';
 
 export function NyttVedtakPanel(props: {utkast: OrNothing<VedtakData>, gjeldendeVedtak: OrNothing<VedtakData>, fnr: string}) {
     const [underOppfolgingData] = useFetchState('underOppfolging');
@@ -70,4 +72,5 @@ function NyttVedtakHarGjeldende({fnr, dispatch}: NyttVedtakProps) {
 
 function lagNyttVedtakUtkastOgRedirectTilUtkast(fnr: string, dispatch: Function) {
     VedtaksstotteApi.lagNyttVedtakUtkast(fnr).then(() => dispatch({view: ActionType.UTKAST}));
+    logEvent(`${APP_NAME}.metrikker.vis-tidligere-vedtak`);
 }

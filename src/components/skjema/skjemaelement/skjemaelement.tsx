@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import './skjemaelement.less';
+import { logEvent } from '../../../utils/frontend-logger';
+import { APP_NAME } from '../../../utils/constants';
 
 interface SkjemaElementProps<T> {
     tittel: string;
@@ -44,6 +46,10 @@ function RedigeringsModus(props: {
     children: React.ReactNode
 }) {
     const className = classNames('vedtaksskjemaelement__innhold', props.className);
+    const handleLukkBtnClicked = () => {
+        props.lukkSkjemaElement();
+        logEvent(`${APP_NAME}.metrikker.lukk-skjema-element`);
+    };
     return (
         <>
             <div className={className}>
@@ -52,7 +58,7 @@ function RedigeringsModus(props: {
             {!props.skalKunViseRedigeringsModus &&
             <div>
                 <button
-                    onClick={props.lukkSkjemaElement}
+                    onClick={handleLukkBtnClicked}
                     className="toggle--knapp btn--lenke"
                 >
                     Lukk
@@ -63,6 +69,10 @@ function RedigeringsModus(props: {
 }
 
 function VisningsModus<T>(props: {value?: React.ReactNode, apneSkjemaElement: () => void }) {
+    const handleEndreBtnClicked = () => {
+        props.apneSkjemaElement();
+        logEvent(`${APP_NAME}.metrikker.apne-skjema-element`);
+    };
     return (
         <>
             <div className="vedtaksskjemaelement__visning">
@@ -74,7 +84,7 @@ function VisningsModus<T>(props: {value?: React.ReactNode, apneSkjemaElement: ()
                 }
             </div>
             <div>
-                <button type="button" className="toggle--knapp btn--lenke" onClick={props.apneSkjemaElement}>
+                <button type="button" className="toggle--knapp btn--lenke" onClick={handleEndreBtnClicked}>
                     Endre
                 </button>
             </div>

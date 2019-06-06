@@ -20,6 +20,8 @@ import { VedtakData } from '../../utils/types/vedtak';
 import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { OrNothing } from '../../utils/types/ornothing';
 import { FeilModalInnsending } from './feilmodal';
+import { logEvent } from '../../utils/frontend-logger';
+import { APP_NAME } from '../../utils/constants';
 
 export function Forhandsvisning(props: { fnr: string }) {
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
@@ -38,7 +40,10 @@ export function Forhandsvisning(props: { fnr: string }) {
         ? vedtaksBrevUrl
         : VedtaksstotteApi.hentForhandsvisningURL(props.fnr);
 
-    const tilbakeTilSkjema  = () => dispatch({view: ActionType.UTKAST});
+    const tilbakeTilSkjema  = () => {
+        dispatch({view: ActionType.UTKAST});
+        logEvent(`${APP_NAME}.metrikker.tilbake-fra-forhandsvisning`);
+    };
 
     useEffect(() => {
         switch (pdfStatus) {
@@ -65,8 +70,9 @@ export function Forhandsvisning(props: { fnr: string }) {
 
         VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
             tilbakeTilHovedsiden();
-        }).catch(() => {
+        }).catch((err) => {
             modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
+            logEvent(`${APP_NAME}.metrikker.feil-ved-sending`, err);
         });
     };
 

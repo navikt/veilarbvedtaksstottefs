@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { ViewDispatch } from '../../components/providers/view-provider';
@@ -15,6 +15,8 @@ import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import KildeType from '../../utils/types/kilde-type';
 import './oyblikksbilde-visning.less';
+import { logEvent } from '../../utils/frontend-logger';
+import { APP_NAME } from '../../utils/constants';
 
 interface VedleggVisningProps {
     vedtakId: number;
@@ -29,6 +31,10 @@ function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oybli
 export function OyblikksbildeVisning (props: VedleggVisningProps) {
     const {dispatch} = useContext(ViewDispatch);
     const oyblikksbilder = useFetch<Oyblikksbilde[]>(VedtaksstotteApi.hentOyblikksbilde(props.fnr, props.vedtakId));
+
+    useEffect(() => {
+        logEvent(`${APP_NAME}.metrikker.vis-oyblikksbilde`);
+    }, []);
 
     if (oyblikksbilder.status === Status.LOADING || oyblikksbilder.status === Status.NOT_STARTED) {
         return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;
