@@ -1,10 +1,15 @@
 import { VarselModal } from '../../components/modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
+import { ModalViewDispatch } from  '../../components/providers/modal-provider';
+import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
 
-export function KvalitetsSikringModalInnsending (props: {onRequestClose: () => void, isModalOpen: boolean, sendVedtak: () => void}) {
+export function KvalitetsSikringModalInnsending (props: {sendVedtak: () => void}) {
+    const {modalViewState, modalViewDispatch} = useContext(ModalViewDispatch);
+
+    const skalViseModal = modalViewState.modalView === ModalActionType.MODAL_KVALITETSSIKRING;
     const [erKvalitetssikret, setErKvalitetssikret] = useState(false);
     const [error, setError] = useState<{feilmelding: string} | undefined>(undefined);
     const [harForsoktSende, setHarForsoktSende] = useState<boolean>(false);
@@ -26,10 +31,11 @@ export function KvalitetsSikringModalInnsending (props: {onRequestClose: () => v
 
     return (
         <VarselModal
-            isOpen={props.isModalOpen}
+            isOpen={skalViseModal}
             contentLabel="Arbeidsevnevurderingen må godkjennes av beslutter"
-            onRequestClose={props.onRequestClose}
+            onRequestClose={() => modalViewDispatch({modalView: null})}
             type="ADVARSEL"
+            shouldCloseOnOverlayClick={false}
         >
             <Systemtittel>Kvalitetssikring</Systemtittel>
             <BekreftCheckboksPanel
@@ -39,7 +45,7 @@ export function KvalitetsSikringModalInnsending (props: {onRequestClose: () => v
                 feil={error}
             />
             <Hovedknapp onClick={handleSend}>Send til bruker</Hovedknapp>
-            <Flatknapp onClick={props.onRequestClose}>Avbryt</Flatknapp>
+            <Flatknapp onClick={() => modalViewDispatch({modalView: null})}>Avbryt</Flatknapp>
         </VarselModal>
     );
 }

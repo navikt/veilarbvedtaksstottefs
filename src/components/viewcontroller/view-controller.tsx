@@ -30,7 +30,6 @@ function renderView(view: ActionType): ((props: any) => JSX.Element) {
 export function ViewController (props: {fnr: string}) {
     const {viewState} = useContext(ViewDispatch);
     const Component = renderView(viewState.view);
-
     return (
         <Component {...Object.assign(viewState.props || {}, {fnr: props.fnr})}/>
     );

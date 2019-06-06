@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
@@ -7,24 +7,22 @@ import { ViewDispatch } from '../../components/providers/view-provider';
 import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import { useFetchState } from '../../components/providers/fetch-provider';
 import { Status } from '../../utils/fetch-utils';
-import PdfViewer from '../../components/pdf-viewer/pdf-viewer';
+import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import './forhandsvisning.less';
-import { VarselModal } from '../../components/modal/varsel-modal';
-import { Systemtittel } from 'nav-frontend-typografi';
-import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../api/feature-toggle-api';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { utkastetSkalKvalitetssikrets } from '../../components/skjema/skjema-utils';
 import { KvalitetsSikringModalInnsending } from './kvalitetssikring';
 import { VedtakData } from '../../utils/types/vedtak';
+import { SpinnerModal } from '../../components/modal/spinner-modal';
+import { OrNothing } from '../../utils/types/ornothing';
+import { FeilModalInnsending } from './feilmodal';
 
 export function Forhandsvisning(props: { fnr: string }) {
-    const [isSending, setIsSending] = useState(false);
-    const [isFeilModalOpen, setIsFeilModalOpen] = useState(false);
-    const [isKvalitetsSikringsModalOpen, setIsKvalitetsSikringsModalOpen] = useState(false);
+    const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
 
     const {dispatch} = useContext(ViewDispatch);
     const {modalViewDispatch} = useContext(ModalViewDispatch);
@@ -34,13 +32,27 @@ export function Forhandsvisning(props: { fnr: string }) {
     const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(utkast && utkast.innsatsgruppe);
 
     const [features, setFeatures] = useFetchState('features');
-
     const stoppeInnsendingfeatureToggle = features.data[STOPPE_VEDTAKSINNSENDING_TOGGLE];
+
     const url = env.isDevelopment
         ? vedtaksBrevUrl
         : VedtaksstotteApi.hentForhandsvisningURL(props.fnr);
 
     const tilbakeTilSkjema  = () => dispatch({view: ActionType.UTKAST});
+
+    useEffect(() => {
+        switch (pdfStatus) {
+            case 'NOT_STARTED':
+            case 'LOADING':
+                return modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
+            case 'SUCCESS':
+                return modalViewDispatch({modalView: null});
+            case 'ERROR':
+                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
+            default:
+                return;
+        }
+    }, [pdfStatus]);
 
     const tilbakeTilHovedsiden = () => {
         setVedtak({status: Status.NOT_STARTED, data: null as any});
@@ -49,29 +61,24 @@ export function Forhandsvisning(props: { fnr: string }) {
     };
 
     const sendVedtak = () => {
-        if (isSending) {
-            return;
-        }
+        modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
 
-        setIsSending(true);
         VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
-            setIsSending(false);
             tilbakeTilHovedsiden();
         }).catch(() => {
-            setIsSending(false);
-            setIsFeilModalOpen(true);
+            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
         });
     };
 
     const handleOnSendClicked = () => {
 
         if (stoppeInnsendingfeatureToggle) {
-            setIsFeilModalOpen(true);
+            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
             return;
         }
 
         if (kvalitetssikresVarsel) {
-            setIsKvalitetsSikringsModalOpen(true);
+            modalViewDispatch({modalView: ModalActionType.MODAL_KVALITETSSIKRING});
             return;
         }
         sendVedtak();
@@ -79,50 +86,30 @@ export function Forhandsvisning(props: { fnr: string }) {
 
     return (
         <>
-            <FeilModalInnsending
-                isFeilModalOpen={isFeilModalOpen}
-                onRequestClose={() => setIsFeilModalOpen(false)}
-                tilbakeTilSkjema={tilbakeTilSkjema}
+            <FeilModalInnsending/>
+            <KvalitetsSikringModalInnsending sendVedtak={sendVedtak}/>
+            <SpinnerModal/>
+            <PdfViewer
+                url={url}
+                title="Forhåndsvisning av vedtaksbrevet"
+                onStatusUpdate={setPdfStatus}
             />
-            <KvalitetsSikringModalInnsending
-                onRequestClose={() => setIsKvalitetsSikringsModalOpen(false)}
-                isModalOpen={isKvalitetsSikringsModalOpen}
-                sendVedtak={sendVedtak}
-            />
-            <PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet">
-                <Footer>
-                    <div className="forhandsvisning__aksjoner">
-                        <Hovedknapp
-                            onClick={handleOnSendClicked}
-                            className="forhandsvisning__knapp-sender"
-                            spinner={isSending}
-                        >
-                            Send til bruker
-                        </Hovedknapp>
-                        <Knapp
-                            htmlType="button"
-                            onClick={tilbakeTilSkjema}
-                        >
-                            Tilbake til utkast
-                        </Knapp>
-                    </div>
-                </Footer>
-            </PdfViewer>
+            <Footer>
+                <div className="forhandsvisning__aksjoner">
+                    <Hovedknapp
+                        onClick={handleOnSendClicked}
+                        className="forhandsvisning__knapp-sender"
+                    >
+                        Send til bruker
+                    </Hovedknapp>
+                    <Knapp
+                        htmlType="button"
+                        onClick={tilbakeTilSkjema}
+                    >
+                        Tilbake til utkast
+                    </Knapp>
+                </div>
+            </Footer>
         </>
-    );
-}
-
-function FeilModalInnsending (props: {onRequestClose: () => void, isFeilModalOpen: boolean, tilbakeTilSkjema: () => void}) {
-    return (
-        <VarselModal
-            isOpen={props.isFeilModalOpen}
-            contentLabel="Problem med sende vedtak"
-            onRequestClose={props.onRequestClose}
-            type="FEIL"
-        >
-            <Systemtittel>Problemer med å sende</Systemtittel>
-            <Normaltekst>Det er problemer med å sende vedtak før øyeblikket. Vi jobber med å løse saken</Normaltekst>
-            <Knapp onClick={props.tilbakeTilSkjema}>Tilbake til vedtakskjema</Knapp>
-        </VarselModal>
     );
 }

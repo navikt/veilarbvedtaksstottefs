@@ -14,9 +14,10 @@ interface VarselModalProps {
     type: VarselModalType;
     closeTimeoutMS?: number;
     closeButton?: boolean;
+    shouldCloseOnOverlayClick?: boolean;
 }
 
-export function VarselModal({contentLabel, isOpen, onRequestClose, children, type, closeTimeoutMS, closeButton}: React.PropsWithChildren<VarselModalProps>) {
+export function VarselModal({contentLabel, isOpen, onRequestClose, children, type, closeTimeoutMS, closeButton, shouldCloseOnOverlayClick}: React.PropsWithChildren<VarselModalProps>) {
     return (
         <ModalWrapper
             isOpen={isOpen}
@@ -25,6 +26,7 @@ export function VarselModal({contentLabel, isOpen, onRequestClose, children, typ
             closeTimeoutMS={closeTimeoutMS}
             closeButton={closeButton}
             portalClassName="veilarbvedtaksstottefs-modal"
+            shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
         >
             <VarselIkone type={type}/>
             <div className="modal__innehold">

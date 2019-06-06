@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Undertittel } from 'nav-frontend-typografi';
 import './pdf-viewer.less';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { OrNothing } from '../../utils/types/ornothing';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 interface PdfViewerProps {
     url: string;
     title: string;
-    children?: React.ReactNode;
+    onStatusUpdate: Dispatch<SetStateAction<OrNothing<PDFStatus>>>;
 }
 
 interface PdfViewerState {
     numPages: number;
 }
 
+export type PDFStatus = 'NOT_STARTED' | 'LOADING' | 'SUCCESS' | 'ERROR';
+
 class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
     constructor(props: PdfViewerProps) {
         super(props);
         this.state = {numPages : 0};
+        this.props.onStatusUpdate('NOT_STARTED');
     }
 
     shouldComponentUpdate(nextProps: PdfViewerProps, nextState: PdfViewerState) {
        return !(this.props.url === nextProps.url && this.state.numPages === nextState.numPages);
+    }
+
+    componentDidMount() {
+        this.props.onStatusUpdate('LOADING');
     }
 
     render () {
@@ -36,35 +42,22 @@ class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
                 <Document
                     className="pdfvisning__document"
                     file={{url: this.props.url}}
-                    loading={<PdfLoader/>}
-                    error={<PdfError/>}
-                    onLoadSuccess={(object: { numPages: number }) => this.setState({numPages: object.numPages})}
+                    error=""
+                    loading=""
+                    onLoadError={() => this.props.onStatusUpdate('ERROR')}
+                    onLoadSuccess={(object: { numPages: number }) => {
+                        this.props.onStatusUpdate('SUCCESS');
+                        this.setState({numPages: object.numPages});
+                    }}
                 >
                     <Pages numPages={this.state.numPages}/>
                 </Document>
-                {this.props.children}
             </div>
         );
     }
 }
 
 export default PdfViewer;
-
-const PdfError = () => {
-    return (
-        <div className="pdfvisning__error">
-            <AlertStripeFeil className="vedtaksstotte-alert">Klarte ikke å laste inn PDF, prøv igjen</AlertStripeFeil>
-        </div>
-    );
-};
-
-const PdfLoader = () => {
-    return (
-        <div className="pdfvisning__loader">
-            <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>
-        </div>
-    );
-};
 
 const Pages = (props: { numPages: number }) => {
     return (
