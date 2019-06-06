@@ -10,6 +10,7 @@ import { Dato } from '../dato';
 import { Veileder } from '../veileder';
 import emptyBox from './empty-box.svg';
 import './tidligere-vedtak-panel.less';
+import { logMetrikk } from '../../../utils/frontend-logger';
 
 export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData[]}) {
     if (props.vedtakHistorikk.length === 0) {
@@ -41,6 +42,7 @@ function HarTidligereVedtak({vedtakHistorikk}: {vedtakHistorikk: VedtakData []})
                     <TidligereVedtak
                         key={idx}
                         tidligereVedtak={tidligereVedtak}
+                        index={idx}
                     />
                 )}
             </ul>
@@ -48,12 +50,15 @@ function HarTidligereVedtak({vedtakHistorikk}: {vedtakHistorikk: VedtakData []})
     );
 }
 
-function TidligereVedtak(props: {tidligereVedtak: VedtakData}) {
+function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
     const {dispatch} = useContext(ViewDispatch);
     const tidligereVedtak = props.tidligereVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(tidligereVedtak.innsatsgruppe);
     return (
-        <li className="vedtak-historikk-liste__item" onClick={() => handleTidligereVedtakClicked(dispatch, tidligereVedtak)}>
+        <li
+            className="vedtak-historikk-liste__item"
+            onClick={() => handleTidligereVedtakClicked(dispatch, tidligereVedtak, props.index)}
+        >
             <div className="tidligere-vedtak">
                 <div>
                     <Element>Oppfølgingvedtak: {innsatsgruppe}</Element>
@@ -66,6 +71,7 @@ function TidligereVedtak(props: {tidligereVedtak: VedtakData}) {
     );
 }
 
-function handleTidligereVedtakClicked(dispatch: any, tidligereVedtak: VedtakData) {
+function handleTidligereVedtakClicked(dispatch: any, tidligereVedtak: VedtakData, index: number) {
     dispatch({view: ActionType.VIS_VEDTAK, props: {id: tidligereVedtak.id}});
+    logMetrikk('vis-tidligere-vedtak', { index });
 }

@@ -14,6 +14,7 @@ import './gjeldende-vedtak-panel.less';
 import { useFetchState } from '../../providers/fetch-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
 import ingenVedtakBilde from './ingen-vedtak.svg';
+import { logMetrikk } from '../../../utils/frontend-logger';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
 
@@ -41,6 +42,11 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
     const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
     const {dispatch} = useContext(ViewDispatch);
 
+    const handleVisVedtakClicked = () => {
+        dispatch({view: ActionType.VIS_VEDTAK, props: {id}});
+        logMetrikk('vis-gjeldende-vedtak');
+    };
+
     return (
         <VedtaksstottePanel
             tittel="Gjeldende oppfølgingsvedtak"
@@ -58,7 +64,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
                 </>
             }
             knappKomponent={
-                <Knapp onClick={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id}})}>Vis vedtak</Knapp>
+                <Knapp onClick={handleVisVedtakClicked}>Vis vedtak</Knapp>
             }
         />
     );
