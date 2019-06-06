@@ -4,6 +4,7 @@ import './modal.less';
 import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
 import { ReactComponent as OkSirkelIkon } from './ok-sirkel.svg';
 import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
+import classNames from 'classnames';
 
 type VarselModalType = 'SUKSESS' | 'FEIL' | 'ADVARSEL';
 
@@ -15,9 +16,10 @@ interface VarselModalProps {
     closeTimeoutMS?: number;
     closeButton?: boolean;
     shouldCloseOnOverlayClick?: boolean;
+    className?: string;
 }
 
-export function VarselModal({contentLabel, isOpen, onRequestClose, children, type, closeTimeoutMS, closeButton, shouldCloseOnOverlayClick}: React.PropsWithChildren<VarselModalProps>) {
+export function VarselModal({contentLabel, isOpen, onRequestClose, children, type, closeTimeoutMS, closeButton, shouldCloseOnOverlayClick, className}: React.PropsWithChildren<VarselModalProps>) {
     return (
         <ModalWrapper
             isOpen={isOpen}
@@ -29,7 +31,7 @@ export function VarselModal({contentLabel, isOpen, onRequestClose, children, typ
             shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
         >
             <VarselIkone type={type}/>
-            <div className="modal__innehold">
+            <div className={classNames('modal__innehold', className)}>
                 {children}
             </div>
         </ModalWrapper>

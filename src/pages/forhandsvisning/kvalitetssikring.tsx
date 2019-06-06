@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
 import { ModalViewDispatch } from  '../../components/providers/modal-provider';
 import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
+import './kvalitetetssikring.less';
 
 export function KvalitetsSikringModalInnsending (props: {sendVedtak: () => void}) {
     const {modalViewState, modalViewDispatch} = useContext(ModalViewDispatch);
@@ -36,6 +37,7 @@ export function KvalitetsSikringModalInnsending (props: {sendVedtak: () => void}
             onRequestClose={() => modalViewDispatch({modalView: null})}
             type="ADVARSEL"
             shouldCloseOnOverlayClick={false}
+            className="kvalitetssikring"
         >
             <Systemtittel>Kvalitetssikring</Systemtittel>
             <BekreftCheckboksPanel
@@ -44,8 +46,10 @@ export function KvalitetsSikringModalInnsending (props: {sendVedtak: () => void}
                 checked={erKvalitetssikret}
                 feil={error}
             />
-            <Hovedknapp onClick={handleSend}>Send til bruker</Hovedknapp>
-            <Flatknapp onClick={() => modalViewDispatch({modalView: null})}>Avbryt</Flatknapp>
+            <div className="knapper kvalitetssikring__knapper">
+                <Hovedknapp onClick={handleSend}>Send til bruker</Hovedknapp>
+                <Flatknapp onClick={() => modalViewDispatch({modalView: null})}>Avbryt</Flatknapp>
+            </div>
         </VarselModal>
     );
 }
