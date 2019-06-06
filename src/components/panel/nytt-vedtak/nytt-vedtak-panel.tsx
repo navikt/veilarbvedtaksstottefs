@@ -71,5 +71,5 @@ function NyttVedtakHarGjeldende({fnr, dispatch}: NyttVedtakProps) {
 
 function lagNyttVedtakUtkastOgRedirectTilUtkast(fnr: string, dispatch: Function) {
     VedtaksstotteApi.lagNyttVedtakUtkast(fnr).then(() => dispatch({view: ActionType.UTKAST}));
-    logMetrikk('vis-tidligere-vedtak');
+    logMetrikk('lag-nytt-vedtak');
 }
