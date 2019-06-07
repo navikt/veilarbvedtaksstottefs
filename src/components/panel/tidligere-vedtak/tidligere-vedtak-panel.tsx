@@ -59,19 +59,23 @@ function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
     const {dispatch} = useContext(ViewDispatch);
     const tidligereVedtak = props.tidligereVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(tidligereVedtak.innsatsgruppe);
+    const id = "tidligere-vedtak-" + props.index;
     return (
-        <li
-            className="vedtak-historikk-liste__item"
-            onClick={() => handleTidligereVedtakClicked(dispatch, tidligereVedtak, props.index)}
-        >
-            <div className="tidligere-vedtak">
-                <div>
-                    <Element>Oppfølgingvedtak: {innsatsgruppe}</Element>
-                    <Dato sistOppdatert={tidligereVedtak.sistOppdatert} formatType="short" text="Dato"/>
-                    <Veileder enhetId={tidligereVedtak.veilederEnhetId} ident={tidligereVedtak.veilederIdent} text="Fattet av"/>
+        <li className="vedtak-historikk-liste__item">
+            <button
+                aria-describedby={id}
+                className="tidligere-vedtak knapp__no-style"
+                onClick={() => handleTidligereVedtakClicked(dispatch, tidligereVedtak, props.index)}
+            >
+                <div className="tidligere-vedtak__innhold">
+                    <div id={id}>
+                        <Element>Oppfølgingvedtak: {innsatsgruppe}</Element>
+                        <Dato sistOppdatert={tidligereVedtak.sistOppdatert} formatType="short" text="Dato"/>
+                        <Veileder enhetId={tidligereVedtak.veilederEnhetId} ident={tidligereVedtak.veilederIdent} text="Fattet av"/>
+                    </div>
+                    <HoyreChevron className="tidligere-vedtak__chevron"/>
                 </div>
-                <HoyreChevron className="tidligere-vedtak__chevron"/>
-            </div>
+            </button>
         </li>
     );
 }

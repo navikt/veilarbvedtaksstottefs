@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
-import './hjelpetekster.less';
 import { ReactComponent as InfoSirkelIkon } from './info-sirkel.svg';
+import './hjelpetekster.less';
 
 export function Hjelpetekster (props: PropsWithChildren<{}>) {
     return (

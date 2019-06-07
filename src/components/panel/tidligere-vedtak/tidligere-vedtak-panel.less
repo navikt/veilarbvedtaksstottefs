@@ -37,8 +37,7 @@
 		margin: 0;
 
 		&__item {
-			padding: 0.5rem 0 1rem 0.7rem;
-			cursor: pointer;
+			padding: 0.5rem;
 		}
 
 		&__item:not(:first-child) {
@@ -46,13 +45,18 @@
 		}
 
 		.tidligere-vedtak {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			padding: 0.3rem;
+			padding: 0.5rem;
+			cursor: pointer;
+			width: 100%;
+
+			&__innhold {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			}
 
 			&__chevron {
-				margin: auto 1rem auto 0;
+				margin: auto 0.25rem auto 0;
 			}
 
 		}
