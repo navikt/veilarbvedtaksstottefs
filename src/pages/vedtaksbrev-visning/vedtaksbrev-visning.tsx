@@ -12,7 +12,6 @@ import { ActionType } from '../../components/viewcontroller/view-reducer';
 import './vedtaksbrev-visning.less';
 import { OrNothing } from '../../utils/types/ornothing';
 import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
-import { FeilModalInnsending } from '../forhandsvisning/feilmodal';
 import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { logMetrikk } from '../../utils/frontend-logger';
@@ -38,7 +37,13 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
             case 'SUCCESS':
                 return modalViewDispatch({modalView: null});
             case 'ERROR':
-                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
+                const modalProps = {
+                    tittel: 'Kan ikke vise vedtaksbrev',
+                    beskrivelse: 'Det er problemer med å vise vedtaksbrev for øyeblikket. Vi jobber med å løse saken.',
+                    viewAction: {view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}},
+                    knappeTekst : 'Tilbake til vedtak'
+                };
+                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: modalProps});
             default:
                 return;
         }
@@ -52,7 +57,6 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
 
     return (
         <>
-            <FeilModalInnsending/> // TODO FIKS THIS
             <SpinnerModal/>
             <PdfViewer
                 url={url}

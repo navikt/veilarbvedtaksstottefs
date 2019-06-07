@@ -70,7 +70,13 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
                 modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_LAGRET_SUKSESS});
             })
             .catch(error => {
-                console.log(error); // tslint:disable-line:no-console
+                const modalProps = {
+                    tittel: 'Problemer med å lagre',
+                    beskrivelse: 'Lagring feilet. Vennligst prøv igjen senare.',
+                    viewAction: ActionType.HOVEDSIDE,
+                    knappeTekst : 'Tilbake til vedtakoversikten'
+                };
+                modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: modalProps});
             });
     }
 
