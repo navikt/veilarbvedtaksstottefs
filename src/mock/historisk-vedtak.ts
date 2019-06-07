@@ -26,18 +26,6 @@ const historisk: VedtakData[] = [
         gjeldende: false,
         veilederEnhetId: 'Gotham City',
         veilederIdent: 'Z007'
-    },
-    {
-        id: 4,
-        hovedmal: HovedmalType.SKAFFE_ARBEID,
-        innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
-        vedtakStatus: 'SENDT',
-        opplysninger: [],
-        sistOppdatert: '2020-08-05T09:55:43.716393+02:00',
-        begrunnelse: 'herp derp',
-        gjeldende: false,
-        veilederEnhetId: 'Gotham City',
-        veilederIdent: 'Z007'
     }
 ];
 

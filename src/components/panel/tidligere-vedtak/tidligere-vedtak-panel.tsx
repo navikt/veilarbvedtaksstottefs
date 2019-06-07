@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import cls from 'classnames';
 import { VedtakData } from '../../../utils/types/vedtak';
 import { Panel } from '../panel/panel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
@@ -35,8 +36,12 @@ function IngenTidligereVedtak() {
 }
 
 function HarTidligereVedtak({vedtakHistorikk}: {vedtakHistorikk: VedtakData []}) {
+    const harToVedtak = vedtakHistorikk.length === 2;
     return (
-        <Panel tittel="Tidligere oppfølgingsvedtak" className="tidligere-vedtak-panel">
+        <Panel
+            tittel="Tidligere oppfølgingsvedtak"
+            className={cls("tidligere-vedtak-panel", {"to-tidligere-vedtak": harToVedtak })}
+        >
             <ul className="vedtak-historikk-liste">
                 {vedtakHistorikk.map((tidligereVedtak, idx) =>
                     <TidligereVedtak
