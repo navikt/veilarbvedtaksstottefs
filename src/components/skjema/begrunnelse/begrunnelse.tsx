@@ -34,13 +34,18 @@ function Begrunnelse(props: BegrunnelseProps) {
             value={begrunnelse}
         >
             <div className="begrunnelse">
-                <AlertStripeInfo>Ved standard innsats(gode muligheter)er det ikke obligatorisk
-                    begrunnelse</AlertStripeInfo>
-                <SkjemaGruppe feil={begrunnelseFeil ? {feilmelding : begrunnelseFeil} : undefined} className="begrunnelse__container">
+                <AlertStripeInfo>
+                    Ved <i>standard innsats</i> er begrunnelse ikke obligatorisk.
+                    Unntaket er hvis du skal gjøre en ny vurdering, og gjeldende oppfølgingsvedtak viser <i>nedsatt arbeidsevne</i>
+              </AlertStripeInfo>
+                <SkjemaGruppe
+                    feil={begrunnelseFeil ? {feilmelding : begrunnelseFeil} : undefined}
+                    className="begrunnelse__container"
+                >
                 <Textarea
                     value={begrunnelse}
                     label=""
-                    placeholder="Skriv inn begrunnelsen for vedtaket"
+                    placeholder="Skriv inn begrunnelse eller arbeidsevnevurdering"
                     maxLength={BEGRUNNELSE_MAX_LENGTH}
                     onChange={(e: any) => setBegrunnelse(e.target.value)}
                 />
