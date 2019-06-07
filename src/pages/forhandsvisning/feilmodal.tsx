@@ -22,7 +22,7 @@ export function FeilModalInnsending () {
             shouldCloseOnOverlayClick={false}
         >
             <Systemtittel>Problemer med å sende</Systemtittel>
-            <Normaltekst>Det er problemer med å sende vedtak før øyeblikket. Vi jobber med å løse saken</Normaltekst>
+            <Normaltekst>Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken</Normaltekst>
             <Knapp
                 onClick={() => {
                     dispatch({view: ActionType.UTKAST});
