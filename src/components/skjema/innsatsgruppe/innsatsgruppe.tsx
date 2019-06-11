@@ -57,6 +57,7 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
     return (
         <SkjemaElement
             tittel="Innsatsgruppe"
+            tittelId="innsatsgruppe-tittel"
             value={getInnsatsgruppeNavn(innsatsgruppe)}
         >
             <SkjemaGruppe feil={props.innsatgruppefeil ? {feilmelding : props.innsatgruppefeil} : undefined}>
@@ -68,7 +69,7 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
             </SkjemaGruppe>
             {kvalitetssikresVarsel &&
             <AlertStripeAdvarsel className="innsatsgruppe-advarsel">
-                    Ved <b>delvis varig tilpasset innsats</b> og <b>varig tilpasset innsats</b> må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
+                    Ved <i>delvis varig tilpasset innsats</i> og <i>varig tilpasset innsats</i> må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
             </AlertStripeAdvarsel>
             }
         </SkjemaElement>
@@ -85,7 +86,7 @@ interface InnsatsgruppeRadioProps {
 
 function InnsatsgruppeRadioButtons (props: InnsatsgruppeRadioProps ) {
     return (
-        <div className="innsatsgruppe">
+        <div className="innsatsgruppe" aria-labelledby="innsatsgruppe-tittel">
             {innsatsgrupper.map((innsatsgruppeObject, index) =>
                 <RadioPanel
                     key={index}

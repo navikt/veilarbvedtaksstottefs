@@ -8,6 +8,7 @@ import './begrunnelse.less';
 import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';
 import { useEffect } from 'react';
 import { validerBegrunnelsebegrunnelseMaxLengthTekst } from '../skjema-utils';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 
@@ -31,6 +32,7 @@ function Begrunnelse(props: BegrunnelseProps) {
     return (
         <SkjemaElement
             tittel="Begrunnelse"
+            tittelId="begrunnelse-tittel"
             value={begrunnelse}
         >
             <div className="begrunnelse">
@@ -48,7 +50,12 @@ function Begrunnelse(props: BegrunnelseProps) {
                     placeholder="Skriv inn begrunnelse eller arbeidsevnevurdering"
                     maxLength={BEGRUNNELSE_MAX_LENGTH}
                     onChange={(e: any) => setBegrunnelse(e.target.value)}
+                    aria-labelledby="begrunnelse-tittel"
+                    aria-describedby="begrunnelse-tips"
                 />
+                <span id="begrunnelse-tips" style={{display: 'none'}}>
+                    Begrunnelse for vedtak/arbeidsevnevurdering, tips ved siden av
+                </span>
                 </SkjemaGruppe>
                 <BegrunnelseHjelpeTekster/>
             </div>
