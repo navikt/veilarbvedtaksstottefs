@@ -6,6 +6,7 @@ import { logMetrikk } from '../../../utils/frontend-logger';
 
 interface SkjemaElementProps<T> {
     tittel: string;
+    tittelId?: string;
     children: React.ReactNode;
     className?: string;
     value?: React.ReactNode;
@@ -29,7 +30,7 @@ export function SkjemaElement<T>(props: SkjemaElementProps<T>) {
 
     return (
         <div className="vedtaksskjemaelement">
-            <legend>{`${props.tittel}:`}</legend>
+            <legend id={props.tittelId}>{`${props.tittel}:`}</legend>
             { isOpen || props.skalKunViseRedigeringsModus
                 ? <RedigeringsModus skalKunViseRedigeringsModus={props.skalKunViseRedigeringsModus}lukkSkjemaElement={lukkSkjemaElement} children={props.children}/>
                 : <VisningsModus<T> value={props.value} apneSkjemaElement={apneSkjemaElement}/>

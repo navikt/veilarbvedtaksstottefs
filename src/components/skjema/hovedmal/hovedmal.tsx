@@ -40,6 +40,7 @@ function Hovedmal(props: HovedmalProps) {
     return (
         <SkjemaElement
             tittel="Hovedmål"
+            tittelId="hovedmal-id"
             value={getHovedmalNavn(hovedmal)}
             skalKunViseRedigeringsModus={erVarigTilpassetInnsats}
         >

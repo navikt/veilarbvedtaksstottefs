@@ -79,12 +79,16 @@ function Opplysninger(props: OpplysningerProps) {
     return (
         <SkjemaElement
             tittel="Kilder"
+            tittelId="kilder-tittel"
             value={harOpplysninger ? <LagOpplysningsListe samladeOpplysninger={samladeOpplysninger}/> : null}
         >
             <div className="opplysninger">
                 <Normaltekst>Kilder slik de vil vises i vedtaksbrevet</Normaltekst>
                 <div className="opplysninger__innhold">
-                    <SkjemaGruppe feil={props.opplysningerfeil ?  {feilmelding : props.opplysningerfeil} : undefined}>
+                    <SkjemaGruppe
+                        aria-labelledby="kilder-tittel"
+                        feil={props.opplysningerfeil ?  {feilmelding : props.opplysningerfeil} : undefined}
+                    >
                         {opplysninger.map((opplysning, index) =>
                             redigeringModusIndeks !== index
                                 ? <VisOpplysning
