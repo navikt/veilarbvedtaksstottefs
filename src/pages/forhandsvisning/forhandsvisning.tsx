@@ -20,6 +20,11 @@ import { VedtakData } from '../../utils/types/vedtak';
 import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { OrNothing } from '../../utils/types/ornothing';
 import { logMetrikk } from '../../utils/frontend-logger';
+import {
+    feilVidForhandsvisnigProps,
+    feilVidSendningProps,
+    stoppeInnsendingFeatureToggleProps
+} from '../../components/modal/feil-modal-tekster';
 
 export function Forhandsvisning(props: { fnr: string }) {
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
@@ -51,13 +56,7 @@ export function Forhandsvisning(props: { fnr: string }) {
             case 'SUCCESS':
                 return modalViewDispatch({modalView: null});
             case 'ERROR': {
-                const modalProps = {
-                    tittel: 'Problemer med forhåndsvisning',
-                    beskrivelse: 'Vi får dessverre ikke forhåndsvist vedtaksbrevet for øyeblikket. Vennligst gå tilbake til utkastet og prøv igjen senare.',
-                    viewAction: ActionType.UTKAST,
-                    knappeTekst : 'Tilbake til vedtakskjema'
-                };
-                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: modalProps});
+                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidForhandsvisnigProps});
             }
             default:
                 return;
@@ -76,13 +75,7 @@ export function Forhandsvisning(props: { fnr: string }) {
         VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
             tilbakeTilHovedsiden();
         }).catch((err) => {
-            const modalProps = {
-                tittel: 'Problemer med å sende',
-                beskrivelse: 'Vedtaksbrevet kan dessverrre ikke sendes for øyeblikket. Vennligst prøv igjen senare.',
-                viewAction: ActionType.UTKAST,
-                knappeTekst : 'Tilbake til vedtakskjema'
-            };
-            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: modalProps});
+            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidSendningProps});
             logMetrikk('feil-ved-sending', err);
         });
     };
@@ -90,13 +83,8 @@ export function Forhandsvisning(props: { fnr: string }) {
     const handleOnSendClicked = () => {
 
         if (stoppeInnsendingfeatureToggle) {
-            const modalProps = {
-                tittel: 'Problemer med å sende',
-                beskrivelse: 'Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken',
-                viewAction: ActionType.UTKAST,
-                knappeTekst : 'Tilbake til vedtakskjema'
-            };
-            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: modalProps});
+
+            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: stoppeInnsendingFeatureToggleProps});
             return;
         }
 

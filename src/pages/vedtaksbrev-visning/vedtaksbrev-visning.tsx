@@ -15,6 +15,7 @@ import { ModalActionType } from '../../components/modalcontroller/modal-reducer'
 import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { logMetrikk } from '../../utils/frontend-logger';
+import { feilVidVisningProps } from '../../components/modal/feil-modal-tekster';
 
 export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
     const {dispatch} = useContext(ViewDispatch);
@@ -37,13 +38,7 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
             case 'SUCCESS':
                 return modalViewDispatch({modalView: null});
             case 'ERROR':
-                const modalProps = {
-                    tittel: 'Kan ikke vise vedtaksbrev',
-                    beskrivelse: 'Det er problemer med å vise vedtaksbrev for øyeblikket. Vi jobber med å løse saken.',
-                    viewAction: {view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}},
-                    knappeTekst : 'Tilbake til vedtak'
-                };
-                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: modalProps});
+                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidVisningProps(props.vedtakId)});
             default:
                 return;
         }

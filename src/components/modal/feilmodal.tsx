@@ -26,6 +26,7 @@ export function FeilModal (props: {children: React.ReactNode}) {
             >
                 <Systemtittel>{tittel}</Systemtittel>
                 <Normaltekst>{beskrivelse}</Normaltekst>
+                {knappeTekst &&
                 <Knapp
                     onClick={() => {
                         dispatch(view);
@@ -33,7 +34,7 @@ export function FeilModal (props: {children: React.ReactNode}) {
                     }}
                 >
                     {knappeTekst}
-                </Knapp>
+                </Knapp>}
             </VarselModal>
             {props.children}
         </>

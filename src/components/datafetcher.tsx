@@ -22,7 +22,11 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     if (isAnyLoading(vedtak.status, underOppfolging.status, features.status)) {
         return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;
     } else if (isAnyFailed(vedtak.status, underOppfolging.status, features.status)) {
-        return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
+        return (
+            <AlertStripeFeil className="vedtaksstotte-alert">
+                Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen senere.
+            </AlertStripeFeil>
+        );
     }
 
     return props.children;
