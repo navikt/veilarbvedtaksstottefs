@@ -49,8 +49,8 @@ function SlettModal (props: {onRequestClose: () => void, isSlettModalOpen: boole
             onRequestClose={props.onRequestClose}
             type="ADVARSEL"
         >
-            <Systemtittel>Slett vedtak</Systemtittel>
-            <Normaltekst>Er du sikker på du vil slette vedtaket?</Normaltekst>
+            <Systemtittel>Slett utkast</Systemtittel>
+            <Normaltekst>Er du sikker på at du vil slette utkastet?</Normaltekst>
             <div className="knapper">
                 <Hovedknapp className="btn--mr1" onClick={props.slettVedtak}>Slett</Hovedknapp>
                 <Knapp onClick={props.onRequestClose}> Avbryt</Knapp>
