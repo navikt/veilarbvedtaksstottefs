@@ -24,6 +24,7 @@ import Footer from '../../components/footer/footer';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
+import { feilVidLagring } from '../../components/modal/feil-modal-tekster';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -70,7 +71,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
                 modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_LAGRET_SUKSESS});
             })
             .catch(error => {
-                console.log(error); // tslint:disable-line:no-console
+                modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidLagring});
             });
     }
 

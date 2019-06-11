@@ -12,10 +12,10 @@ import { ActionType } from '../../components/viewcontroller/view-reducer';
 import './vedtaksbrev-visning.less';
 import { OrNothing } from '../../utils/types/ornothing';
 import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
-import { FeilModalInnsending } from '../forhandsvisning/feilmodal';
 import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { logMetrikk } from '../../utils/frontend-logger';
+import { feilVidVisningProps } from '../../components/modal/feil-modal-tekster';
 
 export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
     const {dispatch} = useContext(ViewDispatch);
@@ -38,7 +38,7 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
             case 'SUCCESS':
                 return modalViewDispatch({modalView: null});
             case 'ERROR':
-                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
+                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidVisningProps(props.vedtakId)});
             default:
                 return;
         }
@@ -52,7 +52,6 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
 
     return (
         <>
-            <FeilModalInnsending/> // TODO FIKS THIS
             <SpinnerModal/>
             <PdfViewer
                 url={url}

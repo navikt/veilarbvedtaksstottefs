@@ -19,8 +19,12 @@ import { KvalitetsSikringModalInnsending } from './kvalitetssikring';
 import { VedtakData } from '../../utils/types/vedtak';
 import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { OrNothing } from '../../utils/types/ornothing';
-import { FeilModalInnsending } from './feilmodal';
 import { logMetrikk } from '../../utils/frontend-logger';
+import {
+    feilVidForhandsvisnigProps,
+    feilVidSendningProps,
+    stoppeInnsendingFeatureToggleProps
+} from '../../components/modal/feil-modal-tekster';
 
 export function Forhandsvisning(props: { fnr: string }) {
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
@@ -51,8 +55,9 @@ export function Forhandsvisning(props: { fnr: string }) {
                 return modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
             case 'SUCCESS':
                 return modalViewDispatch({modalView: null});
-            case 'ERROR':
-                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
+            case 'ERROR': {
+                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidForhandsvisnigProps});
+            }
             default:
                 return;
         }
@@ -70,7 +75,7 @@ export function Forhandsvisning(props: { fnr: string }) {
         VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
             tilbakeTilHovedsiden();
         }).catch((err) => {
-            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
+            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidSendningProps});
             logMetrikk('feil-ved-sending', err);
         });
     };
@@ -78,7 +83,8 @@ export function Forhandsvisning(props: { fnr: string }) {
     const handleOnSendClicked = () => {
 
         if (stoppeInnsendingfeatureToggle) {
-            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL_VID_LASTNING});
+
+            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: stoppeInnsendingFeatureToggleProps});
             return;
         }
 
@@ -91,7 +97,6 @@ export function Forhandsvisning(props: { fnr: string }) {
 
     return (
         <>
-            <FeilModalInnsending/>
             <KvalitetsSikringModalInnsending sendVedtak={sendVedtak}/>
             <SpinnerModal/>
             <PdfViewer
