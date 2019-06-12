@@ -11,6 +11,7 @@ import './tilbakemelding-ekspanderbartpanel.less';
 
 interface TilbakemeldingEkspanderbartpanelProps {
     tittel: string;
+    bilde: string;
     tilbakemeldingTag?: string;
     children?: React.ReactNode;
 }
@@ -32,7 +33,7 @@ function TilbakemeldingEkspanderbartpanel(props: TilbakemeldingEkspanderbartpane
 
     const Heading = () => (
         <div className="tilbakemelding-ekspanderbartpanel__heading">
-            <img src={hjerteBilde} alt="Illustrasjon" className="tilbakemelding-ekspanderbartpanel__bilde"/>
+            <img src={props.bilde} alt="Illustrasjon" className="tilbakemelding-ekspanderbartpanel__bilde"/>
             <h2 className="ekspanderbartPanel__heading">
                 {props.tittel}
             </h2>

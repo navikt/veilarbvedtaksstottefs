@@ -5,7 +5,7 @@ import Innspill from './innspill';
 import PrelanseringInfo from './prelansering-info';
 import TakkMelding from './takk-melding';
 import './prelansering.less';
-import { LosningInfo } from './losning-info';
+import { LosningInfo } from './losning-info/losning-info';
 
 const FRITEKST_MAX_LENGTH = 500;
 const HAR_SENDT_INNSPILL_KEY = 'har_sendt_innspill';
