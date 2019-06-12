@@ -1,0 +1,50 @@
+.veilarbvedtaksstottefs {
+
+	.info-ekspanderbartpanel__heading {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		margin-left: 2rem;
+
+		.ekspanderbartPanel__heading {
+			margin-left: 3rem;
+		}
+
+	}
+
+	.info-ekspanderbartpanel__bilde {
+		width: 48px;
+		height: 48px;
+	}
+
+	.info-ekspanderbartpanel__innhold {
+		margin: 0 8rem;
+		font-family: Source Sans Pro, Arial, sans-serif;
+	}
+
+	.info-ekspanderbartpanel__tilbakemelding {
+		display: flex;
+		flex-direction: row;
+		margin-top: 2rem;
+
+		&--valg-wrapper {
+			margin-left: 1.5rem;
+
+			:last-child {
+				margin-left: 0.5rem;
+			}
+		}
+
+		&--valg {
+			width: 30px;
+			height: 30px;
+			cursor: pointer;
+		}
+
+		&--valg:hover {
+			transform: scale(1.4);
+			opacity: 1;
+		}
+
+	}
+}

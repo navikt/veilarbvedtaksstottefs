@@ -6,7 +6,7 @@ import {
 } from '../api/feature-toggle-api';
 
 const features: Features = {
-    [PRELANSERING_TOGGLE]: false,
+    [PRELANSERING_TOGGLE]: true,
     [VEDTAK_I_GOSYS_TOGGLE]: true,
     [STOPPE_VEDTAKSINNSENDING_TOGGLE]: false,
 };
