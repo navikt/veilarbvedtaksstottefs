@@ -63,10 +63,10 @@ const Innspill = ({ faneNavn, fritekst, handleFaneNavnChanged, handleFritekstCha
             <Textarea
                 value={fritekst}
                 label={[
-                    (<Undertittel>
+                    (<Undertittel key="undertittel">
                         Hva lurer du på om den nye løsningen?
                     </Undertittel>),
-                    (<Normaltekst>
+                    (<Normaltekst key="brodtekst">
                         Vi bruker innspillet ditt til å forberede innføringen av løsningen. Svaret er anonymt.
                     </Normaltekst>)]}
                 onChange={handleFritekstChanged}
