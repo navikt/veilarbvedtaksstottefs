@@ -4,8 +4,10 @@ import Page from '../page/page';
 import Innspill from './innspill';
 import PrelanseringInfo from './prelansering-info';
 import TakkMelding from './takk-melding';
-import './prelansering.less';
 import { LosningInfo } from './losning-info/losning-info';
+import { useFetchState } from '../../components/providers/fetch-provider';
+import { PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../../api/feature-toggle-api';
+import './prelansering.less';
 
 const FRITEKST_MAX_LENGTH = 500;
 const HAR_SENDT_INNSPILL_KEY = 'har_sendt_innspill';
@@ -15,6 +17,7 @@ export function Prelansering() {
     const [harSendt, setHarSendt] = useState(false);
     const [faneNavn, setFaneNavn] = useState(null);
     const [fritekst, setFritekst] = useState('');
+    const [features] = useFetchState('features');
     const harSendtTidligere = localStorage.getItem(HAR_SENDT_INNSPILL_KEY) != null;
 
     const handleFaneNavnChanged = (e: any) => {
@@ -41,8 +44,8 @@ export function Prelansering() {
     return (
         <Page>
             <PrelanseringInfo/>
-            <LosningInfo/>
-            {harSendt ? <TakkMelding/> : null}
+            {features.data[PRELANSERING_INFO_OM_LOSNING_TOGGLE] && <LosningInfo/>}
+            {harSendt && <TakkMelding/>}
             {harSendtTidligere || harSendt ? null :
                 <Innspill
                     faneNavn={faneNavn}
