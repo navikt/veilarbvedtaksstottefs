@@ -1,0 +1,76 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.skjema-header {
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 2rem;
+		height: 65px;
+		overflow-y: visible;
+
+		&__ikon {
+			margin-top: 0.5rem;
+			margin-left: 1rem;
+			width: 70px;
+			height: 70px;
+		}
+
+		&__innhold {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			margin: auto 6rem auto 1.5rem;
+		}
+
+		&__info {
+			display: flex;
+			flex-direction: row;
+
+			.seperator {
+				margin-left: 1rem;
+				margin-right: 1rem;
+			}
+		}
+
+		&__veileder {
+			margin: auto 0;
+
+			.label {
+				color: black;
+				font-weight: bolder;
+			}
+		}
+
+		&__dato {
+			margin: auto 0;
+
+			.label {
+				color: black;
+				font-weight: bolder;
+			}
+		}
+
+		&--utkast {
+			background-color: #cce1f3;
+			border-bottom: 3px solid @navBla;
+		}
+
+		&--fullfort {
+			background-color: @navGronnLighten40;
+			border-bottom: 3px solid @navGronn;
+		}
+
+		.seperator {
+			height: 80%;
+			width: 1px;
+			margin-top: auto;
+			margin-bottom: auto;
+			background-color: @navGra60;
+		}
+
+	}
+
+}
+

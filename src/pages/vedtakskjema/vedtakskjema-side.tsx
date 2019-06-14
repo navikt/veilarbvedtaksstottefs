@@ -11,7 +11,6 @@ import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
 import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import Skjema from '../../components/skjema/skjema';
 import { SkjemaContext } from '../../components/providers/skjema-provider';
 import { ViewDispatch } from '../../components/providers/view-provider';
@@ -19,12 +18,14 @@ import { useFetchState } from '../../components/providers/fetch-provider';
 import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import Card from '../../components/card/card';
-import { formatDateTime } from '../../utils/date-utils';
 import Footer from '../../components/footer/footer';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import { feilVidLagring } from '../../components/modal/feil-modal-tekster';
+import SkjemaHeader from '../../components/skjema/header/skjema-header';
+import { VedtakData } from '../../utils/types/vedtak';
+import './vedtakskjema-side.less';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -45,13 +46,14 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
     const [skjemaFeil, setSkjemaFeil] = useState<SkjemaFeil>({});
 
+    const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST') as VedtakData;
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
     useEffect(() => {
         if (harForsoktAttSende) {
             const errors = validerSkjema(vedtakskjema);
             setSkjemaFeil(errors);
-            }
+        }
     }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
     function sendDataTilBackend(skjema: SkjemaData) {
@@ -63,8 +65,30 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
         dispatch({view: ActionType.HOVEDSIDE});
     }
 
-    function handleLagreOgTilbake(e: any, skjema: SkjemaData) {
-        e.preventDefault();
+    function oppdaterSistEndret(skjema: SkjemaData) {
+        if (skjemaIsNotEmpty(skjema)) {
+            sendDataTilBackend(skjema).then(() => {
+                setSistOppdatert(new Date().toISOString());
+            });
+        }
+    }
+
+    function handleForhandsvis(skjema: SkjemaData) {
+        setHarForsoktAttSende(true);
+        const errors = validerSkjema(skjema);
+        if (Object.entries(errors).filter(feilmelding => feilmelding).length > 0) {
+            setSkjemaFeil(errors);
+            return;
+        }
+        sendDataTilBackend(skjema).then(() => {
+            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+            dispatch({view: ActionType.INNSENDING});
+        }).catch(error => {
+            console.log(error); // tslint:disable-line:no-console
+        });
+    }
+
+    function handleLagreOgTilbake(skjema: SkjemaData) {
         sendDataTilBackend(skjema)
             .then(() => {
                 dispatchFetchVedtakOgRedirectTilHovedside();
@@ -83,53 +107,19 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
             });
     }
 
-    function oppdaterSistEndret(skjema: SkjemaData) {
-        if (skjemaIsNotEmpty(skjema)) {
-            sendDataTilBackend(skjema).then(() => {
-                setSistOppdatert(new Date().toISOString());
-            });
-        }
-    }
-
-    function handleSubmit(e: any, skjema: SkjemaData) {
-        e.preventDefault();
-        setHarForsoktAttSende(true);
-        const errors = validerSkjema(skjema);
-        if (Object.entries(errors).filter(feilmelding => feilmelding).length > 0) {
-            setSkjemaFeil(errors);
-            return;
-        }
-        sendDataTilBackend(skjema).then(() => {
-            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
-            dispatch({view: ActionType.INNSENDING});
-        }).catch(error => {
-            console.log(error); // tslint:disable-line:no-console
-        });
-    }
-
     return (
         <Page>
-            <div className="skjema">
-                <form onSubmit={(e) => handleSubmit(e, vedtakskjema)}>
-                    <Card>
-                        <div className="skjema__topp">
-                            {sistOppdatert &&
-                            <Normaltekst>{`Sist lagret : ${formatDateTime(sistOppdatert)}`}</Normaltekst>}
-                        </div>
-                        <Systemtittel className="skjema__tittel">
-                            Oppfølgingsvedtak (§ 14a)
-                        </Systemtittel>
-                        <Skjema errors={skjemaFeil} oppdaterSistEndret={oppdaterSistEndret}/>
-                    </Card>
-                    <Footer>
-                        <Aksjoner
-                            handleSubmit={(e) => handleSubmit(e, vedtakskjema)}
-                            handleLagreOgTilbake={(e) => handleLagreOgTilbake(e, vedtakskjema)}
-                            handleSlett={handleSlett}
-                        />
-                    </Footer>
-                </form>
-            </div>
+            <Card className="vedtakskjema">
+                <SkjemaHeader vedtak={utkast} sistOppdatert={sistOppdatert}/>
+                <Skjema errors={skjemaFeil} oppdaterSistEndret={oppdaterSistEndret}/>
+            </Card>
+            <Footer>
+                <Aksjoner
+                    handleForhandsvis={() => handleForhandsvis(vedtakskjema)}
+                    handleLagreOgTilbake={() => handleLagreOgTilbake(vedtakskjema)}
+                    handleSlett={handleSlett}
+                />
+            </Footer>
         </Page>
     );
 }

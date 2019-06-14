@@ -22,12 +22,12 @@ function Skjema ({errors, oppdaterSistEndret}: SkjemaProps) {
 
     useTimer(() => oppdaterSistEndret(vedtakskjema), 2000, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
     return (
-        <>
+        <form>
             <Opplysninger opplysningerfeil={errors.opplysninger}/>
             <Begrunnelse begrunnelsefeil={errors.begrunnelse}/>
             <Innsatsgruppe innsatgruppefeil={errors.innsatsgruppe}/>
             <Hovedmal hovedmalfeil={errors.hovedmal}/>
-        </>
+        </form>
     );
 }
 

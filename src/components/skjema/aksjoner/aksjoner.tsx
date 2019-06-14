@@ -8,7 +8,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 
 interface AksjonerProps {
-    handleSubmit: (e: any) => void;
+    handleForhandsvis: (e: any) => void;
     handleLagreOgTilbake: (e: any) => void;
     handleSlett: () => void;
 }
@@ -23,7 +23,7 @@ function Aksjoner (props: AksjonerProps) {
                 slettVedtak={props.handleSlett}
             />
             <div className="aksjoner__lagre">
-                <Hovedknapp htmlType="submit" onClick={props.handleSubmit}>
+                <Hovedknapp htmlType="submit" onClick={props.handleForhandsvis}>
                     Forhåndsvis og ferdigstill
                 </Hovedknapp>
                 <Knapp htmlType="button" onClick={props.handleLagreOgTilbake}>
