@@ -10,6 +10,7 @@ import { SkjemaContext } from '../../providers/skjema-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OpplysningerHjelpeTekster } from './hjelpetekst-opplysninger';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import SkjemaBolk from '../bolk/skjema-bolk';
 
 export type Opplysning = {
     [key: string]: boolean
@@ -77,10 +78,9 @@ function Opplysninger(props: OpplysningerProps) {
     }
 
     return (
-        <SkjemaElement
+        <SkjemaBolk
             tittel="Kilder"
             tittelId="kilder-tittel"
-            value={harOpplysninger ? <LagOpplysningsListe samladeOpplysninger={samladeOpplysninger}/> : null}
         >
             <div className="opplysninger">
                 <Normaltekst>Kilder slik de vil vises i vedtaksbrevet</Normaltekst>
@@ -134,7 +134,7 @@ function Opplysninger(props: OpplysningerProps) {
                 </div>
                 <OpplysningerHjelpeTekster/>
             </div>
-        </SkjemaElement>
+        </SkjemaBolk>
     );
 }
 

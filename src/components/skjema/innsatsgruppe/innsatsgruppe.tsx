@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { utkastetSkalKvalitetssikrets } from '../skjema-utils';
+import SkjemaBolk from '../bolk/skjema-bolk';
 
 export enum InnsatsgruppeType {
     STANDARD_INNSATS = 'STANDARD_INNSATS',
@@ -55,10 +56,9 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
     const {setHovedmal} = useContext(SkjemaContext);
     const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
     return (
-        <SkjemaElement
+        <SkjemaBolk
             tittel="Innsatsgruppe"
             tittelId="innsatsgruppe-tittel"
-            value={getInnsatsgruppeNavn(innsatsgruppe)}
         >
             <SkjemaGruppe feil={props.innsatgruppefeil ? {feilmelding : props.innsatgruppefeil} : undefined}>
                 <InnsatsgruppeRadioButtons
@@ -72,7 +72,7 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
                     Ved <i>delvis varig tilpasset innsats</i> og <i>varig tilpasset innsats</i> må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
             </AlertStripeAdvarsel>
             }
-        </SkjemaElement>
+        </SkjemaBolk>
     );
 }
 

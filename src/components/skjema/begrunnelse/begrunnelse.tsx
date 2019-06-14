@@ -9,6 +9,7 @@ import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';
 import { useEffect } from 'react';
 import { validerBegrunnelsebegrunnelseMaxLengthTekst } from '../skjema-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
+import SkjemaBolk from '../bolk/skjema-bolk';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 
@@ -30,15 +31,15 @@ function Begrunnelse(props: BegrunnelseProps) {
     }, [props.begrunnelsefeil]);
 
     return (
-        <SkjemaElement
+        <SkjemaBolk
             tittel="Begrunnelse"
             tittelId="begrunnelse-tittel"
-            value={begrunnelse}
         >
             <div className="begrunnelse">
                 <AlertStripeInfo>
                     Ved <i>standard innsats</i> er begrunnelse ikke obligatorisk.
-                    Unntaket er hvis du skal gjøre en ny vurdering, og gjeldende oppfølgingsvedtak viser <i>nedsatt arbeidsevne</i>
+                    Unntaket er hvis du skal gjøre en ny vurdering,
+                    og gjeldende oppfølgingsvedtak viser <i>nedsatt arbeidsevne</i>
               </AlertStripeInfo>
                 <SkjemaGruppe
                     feil={begrunnelseFeil ? {feilmelding : begrunnelseFeil} : undefined}
@@ -59,7 +60,7 @@ function Begrunnelse(props: BegrunnelseProps) {
                 </SkjemaGruppe>
                 <BegrunnelseHjelpeTekster/>
             </div>
-        </SkjemaElement>
+        </SkjemaBolk>
     );
 }
 

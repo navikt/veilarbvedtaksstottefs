@@ -7,6 +7,7 @@ import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import SkjemaBolk from '../bolk/skjema-bolk';
 
 export enum HovedmalType {
     SKAFFE_ARBEID = 'SKAFFE_ARBEID',
@@ -38,11 +39,9 @@ function Hovedmal(props: HovedmalProps) {
     const {innsatsgruppe} = useContext(SkjemaContext);
     const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
     return (
-        <SkjemaElement
+        <SkjemaBolk
             tittel="Hovedmål"
             tittelId="hovedmal-id"
-            value={getHovedmalNavn(hovedmal)}
-            skalKunViseRedigeringsModus={erVarigTilpassetInnsats}
         >
             <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding: props.hovedmalfeil} : undefined}>
                 {erVarigTilpassetInnsats
@@ -54,7 +53,7 @@ function Hovedmal(props: HovedmalProps) {
                     />
                 }
             </SkjemaGruppe>
-        </SkjemaElement>
+        </SkjemaBolk>
     );
 }
 
