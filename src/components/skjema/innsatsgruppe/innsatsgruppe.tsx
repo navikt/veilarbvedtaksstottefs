@@ -60,6 +60,13 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
             tittel="Innsatsgruppe"
             tittelId="innsatsgruppe-tittel"
         >
+            {kvalitetssikresVarsel &&
+            <AlertStripeAdvarsel className="innsatsgruppe-advarsel">
+                <span className="innsatsgruppe-advarsel__tekst">
+                Ved <i>delvis varig tilpasset innsats</i> og <i>varig tilpasset innsats</i> må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
+                </span>
+            </AlertStripeAdvarsel>
+            }
             <SkjemaGruppe feil={props.innsatgruppefeil ? {feilmelding : props.innsatgruppefeil} : undefined}>
                 <InnsatsgruppeRadioButtons
                     handleInnsatsgruppeChanged={setInnsatsgruppe}
@@ -67,11 +74,6 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
                     setHovedmal={setHovedmal}
                 />
             </SkjemaGruppe>
-            {kvalitetssikresVarsel &&
-            <AlertStripeAdvarsel className="innsatsgruppe-advarsel">
-                    Ved <i>delvis varig tilpasset innsats</i> og <i>varig tilpasset innsats</i> må arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
-            </AlertStripeAdvarsel>
-            }
         </SkjemaBolk>
     );
 }

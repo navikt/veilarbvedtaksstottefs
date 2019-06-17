@@ -45,8 +45,11 @@ function Hovedmal(props: HovedmalProps) {
         >
             <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding: props.hovedmalfeil} : undefined}>
                 {erVarigTilpassetInnsats
-                    ? <AlertStripeInfo>Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt
-                        arbeidsevne)</AlertStripeInfo>
+                    ? <AlertStripeInfo className="hovedmal-info">
+                        <span className="hovedmal-info__tekst">
+                            Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsattarbeidsevne)
+                        </span>
+                    </AlertStripeInfo>
                     : <HovedmalRadioButtons
                         handleHovedmalChanged={setHovedmal}
                         hovedmal={hovedmal}

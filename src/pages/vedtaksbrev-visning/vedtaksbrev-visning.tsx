@@ -62,6 +62,7 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
             <Footer>
                 <div className="vedtaksbrev-visning__aksjoner">
                     <Hovedknapp
+                        mini={true}
                         onClick={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}})}
                     >
                         Tilbake til vedtak

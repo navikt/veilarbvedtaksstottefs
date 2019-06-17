@@ -8,7 +8,7 @@ export function BegrunnelseVisning(props: {begrunnelse: string}) {
             tittel="Begrunnelse"
             tittelId="begrunnelse-tittel"
         >
-            <p>{props.begrunnelse ? props.begrunnelse : EMDASH}</p>
+            <p className="begrunnelse-visning">{props.begrunnelse ? props.begrunnelse : EMDASH}</p>
         </SkjemaBolk>
     );
 }

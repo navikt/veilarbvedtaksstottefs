@@ -7,7 +7,7 @@ import Page from '../page/page';
 import Card from '../../components/card/card';
 import SkjemaHeader from '../../components/skjema/header/skjema-header';
 import Footer from '../../components/footer/footer';
-import { Flatknapp, Knapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../components/skjema-visning/skjema-visning';
 import './vedtakskjema-visning-side.less';
@@ -33,18 +33,18 @@ export function VedtakskjemaVisningSide(props: { id: number }) {
             </Card>
             <Footer className="vedtakskjema-visning__footer">
                 <div className="vedtakskjema-visning__aksjoner">
-                    <Knapp
+                    <Hovedknapp
                         mini={true}
                         onClick={() => dispatch({view: ActionType.VIS_VEDTAK_PDF, props: {vedtakId: vistVedtak.id}})}
                     >
                         Vis vedtaksbrev
-                    </Knapp>
-                    <Flatknapp
+                    </Hovedknapp>
+                    <Knapp
                         mini={true}
-                        onClick={() => dispatch({view: ActionType.VIS_VEDLEGG, props: {vedtakId: vistVedtak.id}})}
+                        onClick={() => dispatch({view: ActionType.HOVEDSIDE})}
                     >
-                        Brukerinformasjon på vedtakstidspunktet
-                    </Flatknapp>
+                        Tilbake
+                    </Knapp>
                 </div>
             </Footer>
         </Page>

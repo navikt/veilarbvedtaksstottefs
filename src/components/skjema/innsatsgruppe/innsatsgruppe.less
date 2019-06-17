@@ -9,7 +9,37 @@
 	}
 
 	.innsatsgruppe-advarsel {
-		margin: 2rem;
+		margin: 1.5rem 0;
+		animation: linear 0.25s advarsel-fade-in;
+
+		.alertstripe__ikon {
+			animation: linear 0.25s advarsel-innhold-fade-in;
+		}
+
+		&__tekst {
+			animation: linear 0.25s advarsel-innhold-fade-in;
+		}
+	}
+
+	@keyframes advarsel-fade-in {
+		0% {
+			height: 0;
+		}
+		75% {
+			height: 44px;
+		}
+	}
+
+	@keyframes advarsel-innhold-fade-in {
+		0% {
+			opacity: 0;
+		}
+		25% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
 	}
 
 }
