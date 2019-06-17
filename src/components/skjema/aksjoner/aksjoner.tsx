@@ -22,20 +22,18 @@ function Aksjoner (props: AksjonerProps) {
                 onRequestClose={() => setIsSlettModalOpen(false)}
                 slettVedtak={props.handleSlett}
             />
-            <div className="aksjoner__lagre">
-                <Hovedknapp htmlType="submit" onClick={props.handleForhandsvis}>
+            <div className="aksjoner__knapper">
+                <Hovedknapp mini={true} htmlType="submit" onClick={props.handleForhandsvis}>
                     Forhåndsvis og ferdigstill
                 </Hovedknapp>
-                <Knapp htmlType="button" onClick={props.handleLagreOgTilbake}>
+                <Knapp mini={true} htmlType="button" onClick={props.handleLagreOgTilbake}>
                     Lagre og gå tilbake
                 </Knapp>
             </div>
-            <div className="aksjoner__slett">
-                <Flatknapp htmlType="button" onClick={() => setIsSlettModalOpen(true)}>
-                    <SlettIkon className="aksjoner__slett-ikon"/>
-                    Slett
-                </Flatknapp>
-            </div>
+            <Flatknapp className="aksjoner__slett" mini={true} htmlType="button" onClick={() => setIsSlettModalOpen(true)}>
+                <SlettIkon className="aksjoner__slett-ikon"/>
+                Slett
+            </Flatknapp>
         </div>
     );
 

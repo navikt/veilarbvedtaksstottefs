@@ -113,7 +113,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
                 <SkjemaHeader vedtak={utkast} sistOppdatert={sistOppdatert}/>
                 <Skjema errors={skjemaFeil} oppdaterSistEndret={oppdaterSistEndret}/>
             </Card>
-            <Footer>
+            <Footer className="vedtakskjema__footer">
                 <Aksjoner
                     handleForhandsvis={() => handleForhandsvis(vedtakskjema)}
                     handleLagreOgTilbake={() => handleLagreOgTilbake(vedtakskjema)}
