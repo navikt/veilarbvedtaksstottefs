@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ActionType } from './view-reducer';
 import { Hovedside } from '../../pages/hovedside/hovedside';
-import { VisVedtak } from '../../pages/visvedtak';
+import { VedtakskjemaVisningSide } from '../../pages/vedtakskjema-visning/vedtakskjema-visning-side';
 import { Forhandsvisning } from '../../pages/forhandsvisning/forhandsvisning';
 import { ViewDispatch } from '../providers/view-provider';
 import { OyblikksbildeVisning } from '../../pages/oyblikksbilde-visning/oyblikksbilde-visning';
@@ -15,7 +15,7 @@ function renderView(view: ActionType): ((props: any) => JSX.Element) {
         case ActionType.UTKAST:
             return VedtakskjemaSide;
         case ActionType.VIS_VEDTAK:
-            return VisVedtak;
+            return VedtakskjemaVisningSide;
         case ActionType.INNSENDING:
             return Forhandsvisning;
         case ActionType.VIS_VEDLEGG:
