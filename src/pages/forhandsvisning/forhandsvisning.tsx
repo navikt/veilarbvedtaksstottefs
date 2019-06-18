@@ -69,10 +69,10 @@ export function Forhandsvisning(props: { fnr: string }) {
         modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_SENT_SUKSESS});
     };
 
-    const sendVedtak = () => {
+    const sendVedtak = (beslutter?: string) => {
         modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
 
-        VedtaksstotteApi.sendVedtak(props.fnr).then(() => {
+        VedtaksstotteApi.sendVedtak(props.fnr, beslutter).then(() => {
             tilbakeTilHovedsiden();
         }).catch((err) => {
             modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidSendningProps});
@@ -92,6 +92,7 @@ export function Forhandsvisning(props: { fnr: string }) {
             modalViewDispatch({modalView: ModalActionType.MODAL_KVALITETSSIKRING});
             return;
         }
+
         sendVedtak();
     };
 

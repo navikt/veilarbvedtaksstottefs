@@ -1,5 +1,5 @@
 import React from 'react';
-import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 import { VedtakData } from '../../../utils/types/vedtak';
 import cls from 'classnames';
 import fullfortBilde from './fullfort.svg';
