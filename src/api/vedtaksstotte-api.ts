@@ -27,8 +27,8 @@ class VedtaksstotteApi {
         return `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/utkast/pdf`;
     }
 
-    static sendVedtak (fnr: string) {
-        return axios.post(`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/vedtak/send`);
+    static sendVedtak (fnr: string, beslutter?: string) {
+        return axios.post(`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/vedtak/send`, { beslutter });
     }
 
     static slettUtkast(fnr: string) {

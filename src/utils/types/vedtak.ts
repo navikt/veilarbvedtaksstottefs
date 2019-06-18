@@ -14,6 +14,7 @@ export interface VedtakData {
     veilederIdent: string;
     veilederEnhetId: string;
     veilederEnhetNavn: string;
+    beslutter?: string;
     opplysninger: string[];
     journalpostId?: string;
     dokumentInfoId?: string;

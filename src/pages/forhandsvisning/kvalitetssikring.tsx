@@ -1,34 +1,39 @@
 import { VarselModal } from '../../components/modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
+import { BekreftCheckboksPanel, Input } from 'nav-frontend-skjema';
 import React, { useContext, useEffect, useState } from 'react';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
 import { ModalViewDispatch } from  '../../components/providers/modal-provider';
 import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
 import './kvalitetetssikring.less';
 
-export function KvalitetsSikringModalInnsending (props: {sendVedtak: () => void}) {
+interface KvalitetsSikringModalInnsendingProps {
+    sendVedtak: (beslutter?: string) => void;
+}
+
+export function KvalitetsSikringModalInnsending (props: KvalitetsSikringModalInnsendingProps) {
     const {modalViewState, modalViewDispatch} = useContext(ModalViewDispatch);
 
     const skalViseModal = modalViewState.modalView === ModalActionType.MODAL_KVALITETSSIKRING;
-    const [erKvalitetssikret, setErKvalitetssikret] = useState(false);
+    const [beslutter, setBeslutter] = useState('');
     const [error, setError] = useState<{feilmelding: string} | undefined>(undefined);
     const [harForsoktSende, setHarForsoktSende] = useState<boolean>(false);
+    const harFyltUtBeslutter = beslutter.length > 0;
 
     const handleSend = () => {
         setHarForsoktSende(true);
-        if (erKvalitetssikret) {
-            props.sendVedtak();
+        if (harFyltUtBeslutter) {
+            props.sendVedtak(beslutter);
         } else {
-            setError({feilmelding: 'Du må bekrefte før du får sendt vedtaket'});
+            setError({feilmelding: 'Skriv inn navn på beslutter som har kvalitetssikret for å sende vedtaket'});
         }
     };
 
     useEffect(() => {
-        if (harForsoktSende && erKvalitetssikret) {
+        if (harForsoktSende && harFyltUtBeslutter) {
             setError(undefined);
         }
-    }, [erKvalitetssikret]);
+    }, [beslutter]);
 
     return (
         <VarselModal
@@ -40,11 +45,12 @@ export function KvalitetsSikringModalInnsending (props: {sendVedtak: () => void}
             className="kvalitetssikring"
         >
             <Systemtittel>Kvalitetssikring</Systemtittel>
-            <BekreftCheckboksPanel
-                label="Jeg bekrefter at arbeidsevnevurderingen er godkjent av beslutter."
-                onChange={(e: any) => setErKvalitetssikret(e.target.checked)}
-                checked={erKvalitetssikret}
+            <Input
+                label="Navn på beslutter:"
+                onChange={(e) => setBeslutter(e.target.value)}
+                value={beslutter}
                 feil={error}
+                className="kvalitetssikring__input"
             />
             <div className="knapper kvalitetssikring__knapper">
                 <Hovedknapp onClick={handleSend}>Send til bruker</Hovedknapp>
