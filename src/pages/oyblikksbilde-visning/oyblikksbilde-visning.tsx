@@ -14,8 +14,10 @@ import { Innholdstittel, Sidetittel } from 'nav-frontend-typografi';
 import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import KildeType from '../../utils/types/kilde-type';
-import './oyblikksbilde-visning.less';
 import { logMetrikk } from '../../utils/frontend-logger';
+import Footer from '../../components/footer/footer';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import './oyblikksbilde-visning.less';
 
 interface VedleggVisningProps {
     vedtakId: number;
@@ -40,14 +42,23 @@ export function OyblikksbildeVisning (props: VedleggVisningProps) {
     }
 
     return (
-        <Page>
-            <TilbakeKnapp tilbake={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}})}/>
+        <Page className="oyblikksbilde-visning">
             <section className="vedlegg">
                 <Sidetittel>Brukerinformasjon på vedtakstidspunktet</Sidetittel>
                 <VedleggCard tittel="CV og Jobbprofil" json={finnOyblikksbilde(KildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)}/>
                 <VedleggCard tittel="Registrering" json={finnOyblikksbilde(KildeType.REGISTRERINGSINFO, oyblikksbilder.data)}/>
                 <VedleggCard tittel="Egenvurdering" json={finnOyblikksbilde(KildeType.EGENVURDERING, oyblikksbilder.data)}/>
             </section>
+            <Footer className="oyblikksbilde-visning__footer">
+                <div className="oyblikksbilde-visning__aksjoner">
+                    <Hovedknapp
+                        mini={true}
+                        onClick={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}})}
+                    >
+                        Tilbake til vedtak
+                    </Hovedknapp>
+                </div>
+            </Footer>
         </Page>
     );
 }

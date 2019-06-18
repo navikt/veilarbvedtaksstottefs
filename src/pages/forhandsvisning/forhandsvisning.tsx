@@ -36,7 +36,7 @@ export function Forhandsvisning(props: { fnr: string }) {
     const utkast =  vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
     const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(utkast && utkast.innsatsgruppe);
 
-    const [features, setFeatures] = useFetchState('features');
+    const [features] = useFetchState('features');
     const stoppeInnsendingfeatureToggle = features.data[STOPPE_VEDTAKSINNSENDING_TOGGLE];
 
     const url = env.isDevelopment
@@ -104,15 +104,17 @@ export function Forhandsvisning(props: { fnr: string }) {
                 title="Forhåndsvisning av vedtaksbrevet"
                 onStatusUpdate={setPdfStatus}
             />
-            <Footer>
+            <Footer className="forhandsvisning__footer">
                 <div className="forhandsvisning__aksjoner">
                     <Hovedknapp
+                        mini={true}
                         onClick={handleOnSendClicked}
                         className="forhandsvisning__knapp-sender"
                     >
                         Send til bruker
                     </Hovedknapp>
                     <Knapp
+                        mini={true}
                         htmlType="button"
                         onClick={tilbakeTilSkjema}
                     >

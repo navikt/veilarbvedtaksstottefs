@@ -7,6 +7,7 @@ import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import SkjemaBolk from '../bolk/skjema-bolk';
 
 export enum HovedmalType {
     SKAFFE_ARBEID = 'SKAFFE_ARBEID',
@@ -38,23 +39,24 @@ function Hovedmal(props: HovedmalProps) {
     const {innsatsgruppe} = useContext(SkjemaContext);
     const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
     return (
-        <SkjemaElement
+        <SkjemaBolk
             tittel="Hovedmål"
             tittelId="hovedmal-id"
-            value={getHovedmalNavn(hovedmal)}
-            skalKunViseRedigeringsModus={erVarigTilpassetInnsats}
         >
             <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding: props.hovedmalfeil} : undefined}>
                 {erVarigTilpassetInnsats
-                    ? <AlertStripeInfo>Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt
-                        arbeidsevne)</AlertStripeInfo>
+                    ? <AlertStripeInfo className="hovedmal-info">
+                        <span className="hovedmal-info__tekst">
+                            Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsattarbeidsevne)
+                        </span>
+                    </AlertStripeInfo>
                     : <HovedmalRadioButtons
                         handleHovedmalChanged={setHovedmal}
                         hovedmal={hovedmal}
                     />
                 }
             </SkjemaGruppe>
-        </SkjemaElement>
+        </SkjemaBolk>
     );
 }
 

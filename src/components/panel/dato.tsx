@@ -4,9 +4,17 @@ import { formatDateTime, formatDate } from '../../utils/date-utils';
 
 type FormatType = 'short' | 'long';
 
-export function Dato({sistOppdatert, text, formatType}: {sistOppdatert: string, text: string, formatType: FormatType}) {
+interface DatoProps {
+    sistOppdatert: string;
+    text: string;
+    formatType: FormatType;
+    className?: string;
+}
+
+export function Dato(props: DatoProps) {
+    const { formatType, sistOppdatert, text, className } = props;
     return (
-        <div style={{display: 'flex'}}>
+        <div className={className} style={{display: 'flex'}}>
             <Undertekst className="label">{text}: </Undertekst>
             <Undertekst>{formatType === 'short' ? formatDate(sistOppdatert) : formatDateTime(sistOppdatert)}</Undertekst>
         </div>

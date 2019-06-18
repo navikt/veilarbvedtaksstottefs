@@ -1,10 +1,45 @@
 
 .veilarbvedtaksstottefs {
+
 	.hovedmal {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: 1fr;
 		grid-column-gap: 0.5rem;
-		padding: 0 2rem;
+	}
+
+
+	.hovedmal-info {
+		margin: 1.5rem 0;
+		animation: linear 0.25s hovedmal-info-fade-in;
+
+		&__tekst {
+			animation: linear 0.25s hovedmal-info-innhold-fade-in;
+		}
+
+		.alertstripe__ikon {
+			animation: linear 0.25s hovedmal-info-innhold-fade-in;
+		}
+	}
+
+	@keyframes hovedmal-info-fade-in {
+		0% {
+			height: 0;
+		}
+		75% {
+			height: 24px;
+		}
+	}
+
+	@keyframes hovedmal-info-innhold-fade-in {
+		0% {
+			opacity: 0;
+		}
+		25% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
 	}
 }

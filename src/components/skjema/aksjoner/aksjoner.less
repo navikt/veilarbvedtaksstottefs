@@ -6,12 +6,12 @@
 		display: flex;
 		justify-content: flex-end;
 
-		&__lagre {
-			margin: auto 5rem;
-		}
+		&__knapper {
+			margin: auto;
 
-		&__slett {
-			margin: auto 2rem;
+			:last-child {
+				margin-left: 1rem;
+			}
 		}
 
 		&__slett-ikon {
@@ -19,8 +19,10 @@
 			margin-right: 5px;
 		}
 
-		.knapp--hoved {
-			margin-right: 1rem;
+		&__slett {
+			// Ikke ta opp plass slik at resten av knappene blir sentrert riktig
+			position: absolute;
 		}
+
 	}
 }

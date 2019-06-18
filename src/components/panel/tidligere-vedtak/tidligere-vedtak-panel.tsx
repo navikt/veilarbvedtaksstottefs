@@ -69,7 +69,7 @@ function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
             >
                 <div className="tidligere-vedtak__innhold">
                     <div id={id}>
-                        <Element>Oppfølgingvedtak: {innsatsgruppe}</Element>
+                        <Element className="blokk-xxs">Oppfølgingvedtak: {innsatsgruppe}</Element>
                         <Dato sistOppdatert={tidligereVedtak.sistOppdatert} formatType="short" text="Dato"/>
                         <Veileder
                             enhetId={tidligereVedtak.veilederEnhetId}
