@@ -34,9 +34,9 @@ function TilbakemeldingEkspanderbartpanel(props: TilbakemeldingEkspanderbartpane
     const Heading = () => (
         <div className="tilbakemelding-ekspanderbartpanel__heading">
             <img src={props.bilde} alt="Illustrasjon" className="tilbakemelding-ekspanderbartpanel__bilde"/>
-            <h2 className="ekspanderbartPanel__heading">
+            <Undertittel className="ekspanderbartPanel__heading">
                 {props.tittel}
-            </h2>
+            </Undertittel>
         </div>
     );
 
