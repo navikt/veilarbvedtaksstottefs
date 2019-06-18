@@ -24,7 +24,8 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     } else if (isAnyFailed(vedtak.status, underOppfolging.status, features.status)) {
         return (
             <AlertStripeFeil className="vedtaksstotte-alert">
-                Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen senere.
+                Det oppnås for tiden ikke kontakt med alle baksystemer.
+                Vi jobber med å løse saken. Vennligst prøv igjen senere.
             </AlertStripeFeil>
         );
     }
