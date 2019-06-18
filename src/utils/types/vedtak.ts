@@ -11,8 +11,9 @@ export interface VedtakData {
     sistOppdatert: string;
     begrunnelse: string;
     gjeldende: boolean;
-    veilederEnhetId: string;
     veilederIdent: string;
+    veilederEnhetId: string;
+    veilederEnhetNavn: string;
     opplysninger: string[];
     journalpostId?: string;
     dokumentInfoId?: string;

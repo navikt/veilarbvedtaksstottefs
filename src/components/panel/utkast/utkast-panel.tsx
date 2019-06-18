@@ -17,7 +17,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
         return null;
     }
 
-    const {sistOppdatert, veilederIdent, veilederEnhetId} = props.utkast;
+    const {sistOppdatert, veilederIdent, veilederEnhetId, veilederEnhetNavn} = props.utkast;
 
     return (
         <VedtaksstottePanel
@@ -28,7 +28,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
             tekstKomponent={
                 <>
                     <Dato sistOppdatert={sistOppdatert} formatType="long" text="Sist endret"/>
-                    <Veileder enhetId={veilederEnhetId} ident={veilederIdent} text="Endret av"/>
+                    <Veileder enhetId={veilederEnhetId} ident={veilederIdent} enhetNavn={veilederEnhetNavn} text="Endret av"/>
                 </>
             }
             knappKomponent={

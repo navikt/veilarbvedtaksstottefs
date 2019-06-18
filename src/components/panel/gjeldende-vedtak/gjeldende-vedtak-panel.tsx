@@ -38,7 +38,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
         return null;
     }
 
-    const {id, innsatsgruppe, sistOppdatert, veilederEnhetId, veilederIdent} = props.gjeldendeVedtak;
+    const {id, innsatsgruppe, sistOppdatert, veilederEnhetId, veilederIdent, veilederEnhetNavn} = props.gjeldendeVedtak;
     const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
     const {dispatch} = useContext(ViewDispatch);
 
@@ -60,6 +60,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
                         text="Fattet av"
                         ident={veilederIdent}
                         enhetId={veilederEnhetId}
+                        enhetNavn={veilederEnhetNavn}
                     />
                 </>
             }
