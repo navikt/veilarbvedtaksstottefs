@@ -14,7 +14,7 @@ interface SkjemaHeaderProps {
 }
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
-    const {vedtakStatus, veilederIdent, veilederEnhetId, veilederEnhetNavn} = props.vedtak;
+    const {vedtakStatus, veilederIdent, veilederEnhetId, veilederEnhetNavn, gjeldende} = props.vedtak;
     const erUtkast = vedtakStatus === 'UTKAST';
     const oppdatert = props.sistOppdatert ? props.sistOppdatert : props.vedtak.sistOppdatert;
 
@@ -35,7 +35,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
     } else {
         return (
             <Header
-                tittelTekst="Gjeldende oppfølgingsvedtak"
+                tittelTekst={gjeldende ? "Gjeldende oppfølgingsvedtak" : "Tidligere oppfølgingsvedtak"}
                 datoTekst="Fattet"
                 veilederTekst="Fattet av"
                 headerClassName="skjema-header--fullfort"
@@ -71,7 +71,7 @@ function Header(props: HeaderProps) {
         <header className={cls("skjema-header", headerClassName)}>
             <img src={bilde} alt="Vedtak ikon" className="skjema-header__ikon"/>
             <div className="skjema-header__innhold">
-                <Systemtittel>
+                <Systemtittel className="skjema-header__tittel">
                     {tittelTekst}
                 </Systemtittel>
                 <div className="skjema-header__info">
