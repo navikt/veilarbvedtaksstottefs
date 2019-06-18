@@ -14,7 +14,7 @@ interface SkjemaHeaderProps {
 }
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
-    const {vedtakStatus, veilederIdent, veilederEnhetId} = props.vedtak;
+    const {vedtakStatus, veilederIdent, veilederEnhetId, veilederEnhetNavn} = props.vedtak;
     const erUtkast = vedtakStatus === 'UTKAST';
     const oppdatert = props.sistOppdatert ? props.sistOppdatert : props.vedtak.sistOppdatert;
 
@@ -28,6 +28,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
                 bilde={utkastBilde}
                 veilederIdent={veilederIdent}
                 veilederEnhetId={veilederEnhetId}
+                veilederEnhetNavn={veilederEnhetNavn}
                 oppdatert={oppdatert}
             />
         );
@@ -41,6 +42,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
                 bilde={fullfortBilde}
                 veilederIdent={veilederIdent}
                 veilederEnhetId={veilederEnhetId}
+                veilederEnhetNavn={veilederEnhetNavn}
                 oppdatert={oppdatert}
             />
         );
@@ -53,15 +55,17 @@ interface HeaderProps {
     veilederTekst: string;
     headerClassName: string;
     bilde: string;
-    veilederEnhetId: string;
     veilederIdent: string;
+    veilederEnhetId: string;
+    veilederEnhetNavn: string;
     oppdatert: string;
 }
 
 function Header(props: HeaderProps) {
     const {
         tittelTekst, datoTekst, veilederTekst,
-        headerClassName, bilde, veilederIdent, veilederEnhetId, oppdatert
+        headerClassName, bilde, veilederIdent,
+        veilederEnhetId, veilederEnhetNavn, oppdatert
     } = props;
     return (
         <header className={cls("skjema-header", headerClassName)}>
@@ -74,6 +78,7 @@ function Header(props: HeaderProps) {
                     <Veileder
                         className="skjema-header__veileder"
                         enhetId={veilederEnhetId}
+                        enhetNavn={veilederEnhetNavn}
                         ident={veilederIdent}
                         text={veilederTekst}
                     />
