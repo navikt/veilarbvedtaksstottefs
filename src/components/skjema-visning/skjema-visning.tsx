@@ -10,13 +10,13 @@ import './skjema-visning.less';
 
 export function SkjemaVisning(props: {vedtak: VedtakData}) {
     const {dispatch} = useContext(ViewDispatch);
-    const { id, hovedmal, opplysninger, innsatsgruppe, begrunnelse} = props.vedtak;
+    const { id, hovedmal, opplysninger, innsatsgruppe, begrunnelse, beslutter } = props.vedtak;
 
     return (
         <>
             <OpplysningerVisning opplysninger={opplysninger}/>
             <BegrunnelseVisning begrunnelse={begrunnelse}/>
-            <InnsatsgruppeVisning innsatsgruppe={innsatsgruppe}/>
+            <InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} beslutter={beslutter}/>
             <HovedmalVisning hovedmal={hovedmal}/>
             <button
                 className="lenke oyblikksbilde-lenke"

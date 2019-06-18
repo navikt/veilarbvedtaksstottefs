@@ -19,7 +19,7 @@ const historisk: VedtakData[] = [
     {
         id: 3,
         hovedmal: HovedmalType.SKAFFE_ARBEID,
-        innsatsgruppe: InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS,
+        innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
         vedtakStatus: 'SENDT',
         opplysninger: [],
         sistOppdatert: '2018-08-05T09:55:43.716393+02:00',
@@ -27,7 +27,8 @@ const historisk: VedtakData[] = [
         gjeldende: false,
         veilederEnhetId: '1337',
         veilederEnhetNavn: 'Gotham city',
-        veilederIdent: 'Z007'
+        veilederIdent: 'Z007',
+        beslutter: 'Beslutter Besluttersen'
     }
 ];
 
