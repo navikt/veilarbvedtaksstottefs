@@ -12,9 +12,12 @@ import leggTilVedtakBilde from './legg-til-vedtak.svg';
 import './nytt-vedtak-panel.less';
 import { useFetchState } from '../../providers/fetch-provider';
 import { logMetrikk } from '../../../utils/frontend-logger';
+import { Status } from '../../../utils/fetch-utils';
+import { fetchData } from '../../../utils/hooks/useFetch';
 
 export function NyttVedtakPanel(props: {utkast: OrNothing<VedtakData>, gjeldendeVedtak: OrNothing<VedtakData>, fnr: string}) {
     const [underOppfolgingData] = useFetchState('underOppfolging');
+    const [vedtak, setVedtak] = useFetchState('vedtak');
     const {dispatch} = useContext(ViewDispatch);
     const { utkast, gjeldendeVedtak, fnr } = props;
 
@@ -23,15 +26,15 @@ export function NyttVedtakPanel(props: {utkast: OrNothing<VedtakData>, gjeldende
     }
 
     if (gjeldendeVedtak) {
-        return <NyttVedtakHarGjeldende fnr={fnr} dispatch={dispatch}/>;
+        return <NyttVedtakHarGjeldende fnr={fnr} dispatch={dispatch} setVedtak={setVedtak}/>;
     } else {
-        return <NyttVedtakIngenGjeldende fnr={props.fnr} dispatch={dispatch}/>;
+        return <NyttVedtakIngenGjeldende fnr={props.fnr} dispatch={dispatch} setVedtak={setVedtak}/>;
     }
 }
 
-type NyttVedtakProps = {fnr: string, dispatch: Function};
+type NyttVedtakProps = {fnr: string, dispatch: Function, setVedtak: Function};
 
-function NyttVedtakIngenGjeldende({fnr, dispatch}: NyttVedtakProps) {
+function NyttVedtakIngenGjeldende({fnr, dispatch, setVedtak}: NyttVedtakProps) {
     return (
         <VedtaksstottePanel
             tittel="Gjeldende oppfølgingsvedtak"
@@ -42,7 +45,7 @@ function NyttVedtakIngenGjeldende({fnr, dispatch}: NyttVedtakProps) {
                 <Normaltekst>Denne brukeren har ingen gjeldende oppfølgingsvedtak</Normaltekst>
             }
             knappKomponent={
-                <Hovedknapp onClick={() => lagNyttVedtakUtkastOgRedirectTilUtkast(fnr, dispatch)}>
+                <Hovedknapp onClick={() => lagNyttVedtakUtkastOgRedirectTilUtkast(fnr, dispatch, setVedtak)}>
                     Lag nytt vedtak
                 </Hovedknapp>
             }
@@ -50,7 +53,7 @@ function NyttVedtakIngenGjeldende({fnr, dispatch}: NyttVedtakProps) {
     );
 }
 
-function NyttVedtakHarGjeldende({fnr, dispatch}: NyttVedtakProps) {
+function NyttVedtakHarGjeldende({fnr, dispatch, setVedtak}: NyttVedtakProps) {
     return (
         <VedtaksstottePanel
             tittel="Lag nytt oppfølgingsvedtak"
@@ -61,7 +64,7 @@ function NyttVedtakHarGjeldende({fnr, dispatch}: NyttVedtakProps) {
                 <Normaltekst>Her kan du lage nytt oppfølgingsvedtak for denne brukeren.</Normaltekst>
             }
             knappKomponent={
-                <Hovedknapp onClick={() => lagNyttVedtakUtkastOgRedirectTilUtkast(fnr, dispatch)}>
+                <Hovedknapp onClick={() => lagNyttVedtakUtkastOgRedirectTilUtkast(fnr, dispatch, setVedtak)}>
                     Lag nytt vedtak
                 </Hovedknapp>
             }
@@ -69,7 +72,11 @@ function NyttVedtakHarGjeldende({fnr, dispatch}: NyttVedtakProps) {
     );
 }
 
-function lagNyttVedtakUtkastOgRedirectTilUtkast(fnr: string, dispatch: Function) {
-    VedtaksstotteApi.lagNyttVedtakUtkast(fnr).then(() => dispatch({view: ActionType.UTKAST}));
+function lagNyttVedtakUtkastOgRedirectTilUtkast(fnr: string, dispatch: Function, setVedtak: Function) {
+    VedtaksstotteApi.lagNyttVedtakUtkast(fnr).then(() => {
+        fetchData(VedtaksstotteApi.lagHentVedtakConfig(fnr), setVedtak).then(() => {
+            dispatch({view: ActionType.UTKAST});
+        });
+    });
     logMetrikk('lag-nytt-vedtak');
 }
