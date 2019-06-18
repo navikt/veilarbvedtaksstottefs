@@ -12,7 +12,8 @@ const utkast: VedtakData = {
     gjeldende: false,
     opplysninger: ['Møtestøtte', 'Svarene dine fra da du registrerte deg', 'CV-en og jobbprofilen din'],
     veilederIdent: 'Z007',
-    veilederEnhetId: 'Gotham city',
+    veilederEnhetId: '1337',
+    veilederEnhetNavn: 'Gotham city'
 };
 
 export default utkast;

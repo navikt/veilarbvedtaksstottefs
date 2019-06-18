@@ -12,6 +12,7 @@ const vedtak: VedtakData = {
     gjeldende: true,
     opplysninger: [],
     veilederIdent: 'Z007',
-    veilederEnhetId: 'Gotham city',
+    veilederEnhetId: '1337',
+    veilederEnhetNavn: 'Gotham city'
 };
 export default vedtak;

@@ -71,7 +71,12 @@ function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
                     <div id={id}>
                         <Element>Oppfølgingvedtak: {innsatsgruppe}</Element>
                         <Dato sistOppdatert={tidligereVedtak.sistOppdatert} formatType="short" text="Dato"/>
-                        <Veileder enhetId={tidligereVedtak.veilederEnhetId} ident={tidligereVedtak.veilederIdent} text="Fattet av"/>
+                        <Veileder
+                            enhetId={tidligereVedtak.veilederEnhetId}
+                            ident={tidligereVedtak.veilederIdent}
+                            enhetNavn={tidligereVedtak.veilederEnhetNavn}
+                            text="Fattet av"
+                        />
                     </div>
                     <HoyreChevron className="tidligere-vedtak__chevron"/>
                 </div>

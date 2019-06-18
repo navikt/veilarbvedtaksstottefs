@@ -12,7 +12,8 @@ const historisk: VedtakData[] = [
         begrunnelse: 'herps derps herps',
         opplysninger: [],
         gjeldende: false,
-        veilederEnhetId: 'Gotham City',
+        veilederEnhetId: '1337',
+        veilederEnhetNavn: 'Gotham city',
         veilederIdent: 'Z007',
     },
     {
@@ -24,7 +25,8 @@ const historisk: VedtakData[] = [
         sistOppdatert: '2018-08-05T09:55:43.716393+02:00',
         begrunnelse: 'herp derp',
         gjeldende: false,
-        veilederEnhetId: 'Gotham City',
+        veilederEnhetId: '1337',
+        veilederEnhetNavn: 'Gotham city',
         veilederIdent: 'Z007'
     }
 ];
