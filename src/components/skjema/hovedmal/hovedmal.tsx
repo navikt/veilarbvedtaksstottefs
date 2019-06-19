@@ -47,7 +47,7 @@ function Hovedmal(props: HovedmalProps) {
                 {erVarigTilpassetInnsats
                     ? <AlertStripeInfo className="hovedmal-info">
                         <span className="hovedmal-info__tekst">
-                            Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsattarbeidsevne)
+                            Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt arbeidsevne)
                         </span>
                     </AlertStripeInfo>
                     : <HovedmalRadioButtons
