@@ -14,10 +14,10 @@ export function SkjemaVisning(props: {vedtak: VedtakData}) {
 
     return (
         <>
-            <OpplysningerVisning opplysninger={opplysninger}/>
-            <BegrunnelseVisning begrunnelse={begrunnelse}/>
             <InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} beslutter={beslutter}/>
             <HovedmalVisning hovedmal={hovedmal}/>
+            <BegrunnelseVisning begrunnelse={begrunnelse}/>
+            <OpplysningerVisning opplysninger={opplysninger}/>
             <button
                 className="lenke oyblikksbilde-lenke"
                 onClick={() => dispatch({view: ActionType.VIS_VEDLEGG, props: {vedtakId: id}})}
