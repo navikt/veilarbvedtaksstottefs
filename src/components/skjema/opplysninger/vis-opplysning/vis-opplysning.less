@@ -1,0 +1,52 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.vis-opplysning {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		padding: 1rem 0.5rem;
+		border-top: 1px solid @navGra60;
+
+		.skjemaelement__label {
+			padding-left: 2.75rem;
+		}
+
+		.skjemaelement--horisontal {
+			margin-bottom: 0;
+		}
+
+		&__rediger-ikon {
+			background: url("./rediger.svg") no-repeat;
+		}
+
+		&__rediger-knapp {
+			border: none;
+			background-color: transparent;
+			cursor: pointer;
+			.vis-opplysning__rediger-ikon--fylt {
+				display: none;
+			}
+		}
+
+		&__rediger-knapp:focus {
+			box-shadow: 0 0 0 3px #254b6d;
+			border: 1px transparent;
+			outline-color: #254b6d;
+			color: transparent;
+		}
+
+		&__rediger-knapp:hover {
+			.vis-opplysning__rediger-ikon {
+				display: none;
+			}
+			.vis-opplysning__rediger-ikon--fylt {
+				display: block;
+			}
+		}
+
+	}
+
+}

@@ -1,16 +1,15 @@
 import * as React from 'react';
-import './opplysninger.less';
-import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { VisOpplysning } from './visopplysning';
-import { RedigerOpplysning } from './rediger-opplysning';
+import { VisOpplysning } from './vis-opplysning/vis-opplysning';
+import { RedigerOpplysning } from './rediger-opplysning/rediger-opplysning';
 import { useRef, useState } from 'react';
-import { LeggTilOpplysning } from './leggtil-opplysning';
+import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
 import { useContext } from 'react';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OpplysningerHjelpeTekster } from './hjelpetekst-opplysninger';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
+import './opplysninger.less';
 
 export type Opplysning = {
     [key: string]: boolean
@@ -24,28 +23,12 @@ function Opplysninger(props: OpplysningerProps) {
     const [redigeringModusIndeks, setRedigeringModusIndeks ] = useState<number>( -1);
     const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning ] = useState<boolean>( true);
     const [sistEndretIndeks, setSistEndretIndeks] = useState<number>( -1);
-    const timer = useRef(0);
-
     const { opplysninger, setOpplysninger } = useContext(SkjemaContext);
-    const harOpplysninger = opplysninger.some(opplysning => Object.values(opplysning)[0]);
-    const samladeOpplysninger = opplysninger.reduce((acc, opplysning) => {
-        if (Object.values(opplysning)[0]) {
-            return [...acc, Object.keys(opplysning)[0]];
-        }
-        return acc;
-    }, [] as string[]);
+
 
     function nullstilState() {
         setRedigeringModusIndeks(-1);
         setSistEndretIndeks(-1);
-    }
-
-    function setTimer () {
-        if (timer.current !== 0) {
-            window.clearTimeout(timer.current);
-        }
-        timer.current = window.setTimeout(() => setSistEndretIndeks(-1), 1500);
-
     }
 
     function handleOpplysningerChanged (index: number, opplysning: Opplysning) {
@@ -62,8 +45,13 @@ function Opplysninger(props: OpplysningerProps) {
                     return prevOpplysning;
                 });
             });
-            setTimer();
         }
+    }
+
+    function handleOpplysningDeleted(index: number) {
+        setOpplysninger(prevState => {
+            return [...prevState].filter((o, idx) => idx !== index);
+        });
     }
 
     function handleOpplysningerChecked (opplysning: Opplysning) {
@@ -102,13 +90,17 @@ function Opplysninger(props: OpplysningerProps) {
                                     erSistEndretIndeks={index === sistEndretIndeks}
                                 />
                                 : <RedigerOpplysning
+                                    key={index}
                                     opplysning={opplysning}
+                                    negativeBtn="DELETE"
                                     onTekstSubmit={(endretOpplysning) => {
                                         setRedigeringModusIndeks(-1);
                                         handleOpplysningerChanged(index, endretOpplysning);
                                     }}
-                                    key={index}
-                                    onTekstCancel={nullstilState}
+                                    onTekstDeleteOrCancel={() => {
+                                        handleOpplysningDeleted(index);
+                                        nullstilState();
+                                    }}
                                 />
                         )}
                     </SkjemaGruppe>
@@ -116,17 +108,17 @@ function Opplysninger(props: OpplysningerProps) {
                         ? <LeggTilOpplysning
                             leggTilOpplysning={() => {
                                 setVisLeggTilNyOpplysning(false);
-                                window.clearTimeout(timer.current);
                                 nullstilState();
                             }}
                         />
                         : <RedigerOpplysning
                             opplysning={{'': true}}
+                            negativeBtn="CANCEL"
                             onTekstSubmit={(endretOpplysning) => {
                                 handleOpplysningerChanged(opplysninger.length, endretOpplysning);
                                 setVisLeggTilNyOpplysning(true);
                             }}
-                            onTekstCancel={() => {
+                            onTekstDeleteOrCancel={() => {
                                 setVisLeggTilNyOpplysning(true);
                             }}
                         />
@@ -139,11 +131,3 @@ function Opplysninger(props: OpplysningerProps) {
 }
 
 export default Opplysninger;
-
-function LagOpplysningsListe (props: {samladeOpplysninger: string[]}) {
-    return (
-        <ul>
-            {props.samladeOpplysninger.map((opplysning, idx) => <li key={idx}>{opplysning}</li>)}
-        </ul>
-    );
-}
