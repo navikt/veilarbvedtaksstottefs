@@ -71,7 +71,7 @@ function Opplysninger(props: OpplysningerProps) {
             tittelId="kilder-tittel"
         >
             <div className="opplysninger">
-                <Normaltekst>Kilder slik de vil vises i vedtaksbrevet</Normaltekst>
+                <Normaltekst>Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
                 <div className="opplysninger__innhold">
                     <SkjemaGruppe
                         aria-labelledby="kilder-tittel"

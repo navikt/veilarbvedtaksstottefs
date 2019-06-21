@@ -8,7 +8,7 @@ export function BegrunnelseHjelpeTekster() {
             <Normaltekst>
                 Spørsmål som kan være til nytte når du skal gjøre vurderingen din:
             </Normaltekst>
-            <ul>
+            <ul className="begrunnelse-hjelpetekster__liste">
                 <li>Hva tenker denne personen selv om mulighetene sine til å være eller komme i jobb?</li>
                 <li>Hvilke typer arbeid ønsker denne personen seg og hva er realistisk ut fra dagens
                     arbeidsmarked?

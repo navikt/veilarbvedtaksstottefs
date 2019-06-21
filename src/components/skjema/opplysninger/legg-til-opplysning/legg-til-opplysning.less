@@ -4,21 +4,32 @@
 
 	.legg-til-kilde {
 		display: flex;
-		width: 100%;
 		border: none;
 		background-color: transparent;
-		padding: 1rem 0.5rem;
+		margin: 1.25rem 1rem 1rem;
+		padding: 0.25rem;
 		cursor: pointer;
-		border-top: 1px solid @navGra60;
+
+		&__ikon {
+			width: 16px;
+			height: 16px;
+			margin-top: 0.25rem;
+		}
 
 		&__tekst {
-			margin-left: 1.25rem;
+			margin-left: 0.5rem;
+			padding-bottom: 0.25rem;
+			border-bottom: 1px solid @navGra40;
 		}
 
 	}
 
-	.legg-til-kilde:focus {
-		box-shadow: 0 0 0 3px #254b6d;
+	.legg-til-kilde:hover {
+
+		.legg-til-kilde__tekst {
+			border-bottom: 1px solid @navDypBla;
+		}
+
 	}
 
 }

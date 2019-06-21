@@ -6,9 +6,12 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		border-bottom: 1px solid @navGra20;
 
-		padding: 1rem 0.5rem;
-		border-top: 1px solid @navGra60;
+		.skjemaelement__label:before {
+			width: 20px;
+			height: 20px;
+		}
 
 		.skjemaelement__label {
 			padding-left: 2.75rem;
@@ -16,9 +19,12 @@
 
 		.skjemaelement--horisontal {
 			margin-bottom: 0;
+			padding: 1rem;
 		}
 
 		&__rediger-ikon {
+			width: 20px;
+			height: 20px;
 			background: url("./rediger.svg") no-repeat;
 		}
 
@@ -26,9 +32,7 @@
 			border: none;
 			background-color: transparent;
 			cursor: pointer;
-			.vis-opplysning__rediger-ikon--fylt {
-				display: none;
-			}
+			padding: 1rem;
 		}
 
 		&__rediger-knapp:focus {
@@ -40,10 +44,7 @@
 
 		&__rediger-knapp:hover {
 			.vis-opplysning__rediger-ikon {
-				display: none;
-			}
-			.vis-opplysning__rediger-ikon--fylt {
-				display: block;
+				background: url("./rediger-fylt.svg") no-repeat;
 			}
 		}
 

@@ -39,8 +39,10 @@ export function RedigerOpplysning(props: OpplysningProps) {
                 autoFocus={true}
             />
             <div className="rediger__aksjoner">
-                <Hovedknapp htmlType="button" onClick={onSubmit}>Lagre</Hovedknapp>
-                <Knapp htmlType="button" onClick={onTekstDeleteOrCancel}>{negativeBtn === 'CANCEL' ? 'Avbryt' : 'Slett'}</Knapp>
+                <Hovedknapp mini={true} htmlType="button" onClick={onSubmit}>Lagre</Hovedknapp>
+                <Knapp mini={true} htmlType="button" onClick={onTekstDeleteOrCancel}>
+                    {negativeBtn === 'CANCEL' ? 'Avbryt' : 'Slett'}
+                </Knapp>
             </div>
         </div>
     );

@@ -5,7 +5,7 @@ import './hjelpetekster.less';
 export function Hjelpetekster (props: PropsWithChildren<{}>) {
     return (
         <section className="hjelpetekster">
-            <div className="hjelpetekster__header blokk-xs">
+            <div className="hjelpetekster__header blokk-xxs">
                 <InfoSirkelIkon/>
                 <h4 className="hjelpetekster__tittel">Tips</h4>
             </div>

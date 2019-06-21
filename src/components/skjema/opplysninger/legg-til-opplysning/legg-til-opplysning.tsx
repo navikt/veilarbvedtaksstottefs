@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { ReactComponent as LeggTilIkon } from './add.svg';
+import * as React from 'react'
+import leggTilIkon from './pluss.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './legg-til-opplysning.less';
 
@@ -11,7 +11,7 @@ export function LeggTilOpplysning (props: {leggTilOpplysning: () => void}) {
             aria-labelledby="leggtilkilde"
             aria-describedby="leggtilkildedesc"
         >
-            <LeggTilIkon aria-labelledby="leggtilkilde"/>
+            <img src={leggTilIkon} alt="Legg til" aria-labelledby="leggtilkilde" className="legg-til-kilde__ikon"/>
             <Normaltekst tag="span" className="legg-til-kilde__tekst">Legg til andre kilder</Normaltekst>
         </button>
     );

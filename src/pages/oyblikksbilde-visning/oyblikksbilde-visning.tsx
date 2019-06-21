@@ -10,7 +10,7 @@ import JsonViewer from '../../components/json-viewer/json-viewer';
 import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
 import Card from '../../components/card/card';
 import { OrNothing } from '../../utils/types/ornothing';
-import { Innholdstittel, Sidetittel } from 'nav-frontend-typografi';
+import { Innholdstittel, Sidetittel, Systemtittel } from 'nav-frontend-typografi';
 import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import KildeType from '../../utils/types/kilde-type';
@@ -44,7 +44,7 @@ export function OyblikksbildeVisning (props: VedleggVisningProps) {
     return (
         <Page className="oyblikksbilde-visning">
             <section className="vedlegg">
-                <Sidetittel>Brukerinformasjon på vedtakstidspunktet</Sidetittel>
+                <Innholdstittel>Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
                 <VedleggCard tittel="CV og Jobbprofil" json={finnOyblikksbilde(KildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)}/>
                 <VedleggCard tittel="Registrering" json={finnOyblikksbilde(KildeType.REGISTRERINGSINFO, oyblikksbilder.data)}/>
                 <VedleggCard tittel="Egenvurdering" json={finnOyblikksbilde(KildeType.EGENVURDERING, oyblikksbilder.data)}/>
@@ -66,8 +66,8 @@ export function OyblikksbildeVisning (props: VedleggVisningProps) {
 function VedleggCard({tittel, json}: { tittel: string, json: string | null}) {
     return (
         <Card className="vedlegg-card">
-            <Innholdstittel tag="h2" className="vedlegg-card__header">{tittel}</Innholdstittel>
-            <JsonViewer json={json}/>
+            <Systemtittel tag="h2" className="vedlegg-card__header">{tittel}</Systemtittel>
+            <JsonViewer json={json} className="oyblikksbilde-visning__json-visning"/>
         </Card>
     );
 }
