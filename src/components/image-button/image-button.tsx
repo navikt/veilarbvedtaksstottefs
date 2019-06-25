@@ -11,7 +11,7 @@ interface ImageButtonProps {
 function ImageButton(props: ImageButtonProps) {
     return (
         <button type="button" className="image-button" onClick={props.onClick}>
-            <img  src={props.src} alt={props.alt} className={props.imgClassName}/>
+            <img src={props.src} alt={props.alt} className={props.imgClassName}/>
         </button>
     );
 }

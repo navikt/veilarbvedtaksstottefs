@@ -1,13 +1,19 @@
 import React from 'react';
 import './json-viewer.less';
 
+
 interface JsonViewerProps {
     json: string | null;
+    className?: string;
 }
 
 export default function JsonViewer(props: JsonViewerProps) {
     const obj = !props.json ? null : JSON.parse(props.json);
-    return objToReact(obj);
+    return (
+        <div className={props.className}>
+            {objToReact(obj)}
+        </div>
+    );
 }
 
 function objToReact(obj: {} | null) {

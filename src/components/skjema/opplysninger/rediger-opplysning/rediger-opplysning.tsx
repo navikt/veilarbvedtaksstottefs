@@ -1,29 +1,32 @@
 import React, { useState } from 'react';
 import { Textarea } from 'nav-frontend-skjema';
-import { Flatknapp } from 'nav-frontend-knapper';
-import { Opplysning } from './opplysninger';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Opplysning } from '../opplysninger';
+import './rediger-opplysning.less';
 
 interface OpplysningProps {
     opplysning: Opplysning;
+    negativeBtn: 'CANCEL' | 'DELETE';
     onTekstSubmit: (opplysning: Opplysning) => void;
-    onTekstCancel: () => void;
+    onTekstDeleteOrCancel: () => void;
 }
 
 const OPPLYSNING_MAX_LENGTH = 150;
 
 export function RedigerOpplysning(props: OpplysningProps) {
-    const[tekst, setTekst] = useState(Object.keys(props.opplysning)[0]);
+    const { opplysning, negativeBtn, onTekstSubmit, onTekstDeleteOrCancel } = props;
+    const[tekst, setTekst] = useState(Object.keys(opplysning)[0]);
 
     function onSubmit() {
         let obj = {} as Opplysning;
         obj[tekst] = true;
-        props.onTekstSubmit(obj);
+        onTekstSubmit(obj);
     }
 
     return (
         <div className="rediger">
             <Textarea
-                label="Skriv inn andre kilder, f.eks. samtalereferat, dialogmeldinger eller helseopplysninger."
+                label=""
                 value={tekst}
                 maxLength={OPPLYSNING_MAX_LENGTH}
                 onChange={(e: any) => {
@@ -36,8 +39,10 @@ export function RedigerOpplysning(props: OpplysningProps) {
                 autoFocus={true}
             />
             <div className="rediger__aksjoner">
-                <Flatknapp onClick={onSubmit}> Ferdig</Flatknapp>
-                <Flatknapp onClick={props.onTekstCancel}>Avbryt</Flatknapp>
+                <Hovedknapp mini={true} htmlType="button" onClick={onSubmit}>Lagre</Hovedknapp>
+                <Knapp mini={true} htmlType="button" onClick={onTekstDeleteOrCancel}>
+                    {negativeBtn === 'CANCEL' ? 'Avbryt' : 'Slett'}
+                </Knapp>
             </div>
         </div>
     );
