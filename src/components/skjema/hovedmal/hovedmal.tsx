@@ -3,11 +3,11 @@ import { useContext } from 'react';
 import './hovedmal.less';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { SkjemaContext } from '../../providers/skjema-provider';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
+import { EMDASH } from '../skjemaelement/skjemaelement';
 
 export enum HovedmalType {
     SKAFFE_ARBEID = 'SKAFFE_ARBEID',
@@ -18,9 +18,9 @@ interface HovedmalProps {
     hovedmalfeil?: string;
 }
 
-export const getHovedmalNavn = (h: OrNothing<HovedmalType>) => {
-    const hovedmalobjekt = hovedmalliste.find(hovedmal => hovedmal.value === h);
-    return (hovedmalobjekt && hovedmalobjekt.label) || '';
+export const getHovedmalNavn = (hovedmal: OrNothing<HovedmalType>) => {
+    const hovedmalobjekt = hovedmalliste.find(h => h.value === hovedmal);
+    return (hovedmalobjekt && hovedmalobjekt.label) || EMDASH;
 };
 
 const hovedmalliste = [
