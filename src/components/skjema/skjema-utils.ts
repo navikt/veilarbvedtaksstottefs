@@ -4,25 +4,40 @@ import { BEGRUNNELSE_MAX_LENGTH } from './begrunnelse/begrunnelse';
 import { OrNothing } from '../../utils/types/ornothing';
 import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
 import { Opplysning } from './opplysninger/opplysninger';
+import { MalformType } from '../../api/person-api';
 
-export const defaultOpplysningsliste =
+export const defaultOpplysningslisteBokmal =
     [
         'Svarene dine fra da du registrerte deg',
         'CV-en/jobbprofilen din på nav.no',
         'Svarene dine om behov for veiledning',
     ];
 
-export function mergeMedDefaultOpplysninger(opplysningerListe?: string []): Opplysning[] {
-    const defaultObjekt = byggDefaultOpplysningsObjektliste(opplysningerListe);
-    const opplysningslisteObjekt = byggOpplysningsObjektliste(true, opplysningerListe);
+export const defaultOpplysningslisteNynorsk =
+    [
+        'Svara dine frå då du registrerte deg',
+        'CV-en/jobbprofilen din på nav.no',
+        'Svara dine om behov for rettleiing',
+    ];
+
+function finnDefaultOpplysningsliste(malform: MalformType | null) {
+    return malform === MalformType.NN
+        ? defaultOpplysningslisteNynorsk
+        : defaultOpplysningslisteBokmal;
+}
+
+export function mergeMedDefaultOpplysninger(opplysningerListe: string [] | undefined, malform: MalformType | null): Opplysning[] {
+    const defaultOpplysningsliste = finnDefaultOpplysningsliste(malform);
+    const defaultObjekt = byggDefaultOpplysningsObjektliste(opplysningerListe, defaultOpplysningsliste);
+    const opplysningslisteObjekt = byggOpplysningsObjektliste(true, opplysningerListe, defaultOpplysningsliste);
     return defaultObjekt.concat(opplysningslisteObjekt);
 }
 
-export function erDefaultOpplysning (opplysning: string) {
-    return defaultOpplysningsliste.some(defaultOpplysning => defaultOpplysning === opplysning);
+export function erDefaultOpplysning (opplysning: string, malform: MalformType | null) {
+    return finnDefaultOpplysningsliste(malform).some(defaultOpplysning => defaultOpplysning === opplysning);
 }
 
-function byggDefaultOpplysningsObjektliste(opplysningerListe?: string[]) {
+function byggDefaultOpplysningsObjektliste(opplysningerListe: string[] | undefined, defaultOpplysningsliste: string[]) {
     return defaultOpplysningsliste.reduce((acc, defaultOpplysning) => {
         let opplysningsObjekt = {} as Opplysning;
         opplysningsObjekt[defaultOpplysning] = opplysningerListe &&
@@ -31,7 +46,7 @@ function byggDefaultOpplysningsObjektliste(opplysningerListe?: string[]) {
     }, [] as Opplysning[]);
 }
 
-function byggOpplysningsObjektliste (verdi: boolean, opplysningerListe?: string []) {
+function byggOpplysningsObjektliste (verdi: boolean, opplysningerListe: string [] | undefined, defaultOpplysningsliste: string[]) {
     if (!opplysningerListe) {
         return [];
     }

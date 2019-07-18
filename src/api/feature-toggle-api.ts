@@ -19,6 +19,7 @@ export interface Features {
     [VEDTAK_I_GOSYS_TOGGLE]: boolean;
     [STOPPE_VEDTAKSINNSENDING_TOGGLE]: boolean;
 }
+
 class FeatureToggleApi {
 
     static lagHentFeaturesConfig(): AxiosRequestConfig {

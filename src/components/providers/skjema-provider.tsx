@@ -32,9 +32,13 @@ export const SkjemaContext = React.createContext<SkjemaContextProps>({} as Skjem
 
 export function SkjemaProvider(props: {children: React.ReactNode}) {
     const [vedtak] = useFetchState('vedtak');
-    const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST') || initialSkjemaData;
+    const [malform] = useFetchState('malform');
 
-    const [opplysninger, setOpplysninger] = useState<Opplysning[]>(mergeMedDefaultOpplysninger(utkast.opplysninger) as Opplysning[]);
+    const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST') || initialSkjemaData;
+    const mergetOpplysninger = mergeMedDefaultOpplysninger(utkast.opplysninger,
+        malform.data ? malform.data.malform : null) as Opplysning[];
+
+    const [opplysninger, setOpplysninger] = useState<Opplysning[]>(mergetOpplysninger);
     const [hovedmal, setHovedmal] = useState(utkast.hovedmal);
     const [innsatsgruppe, setInnsatsgruppe] = useState(utkast.innsatsgruppe);
     const [begrunnelse, setBegrunnelse] = useState(utkast.begrunnelse || '');
@@ -42,7 +46,7 @@ export function SkjemaProvider(props: {children: React.ReactNode}) {
 
     useEffect(() => {
         setHovedmal(utkast.hovedmal);
-        setOpplysninger(mergeMedDefaultOpplysninger(utkast.opplysninger) as Opplysning[]);
+        setOpplysninger(mergetOpplysninger);
         setInnsatsgruppe(utkast.innsatsgruppe);
         setBegrunnelse(utkast.begrunnelse || '');
         setSistOppdatert(utkast.sistOppdatert || '');
