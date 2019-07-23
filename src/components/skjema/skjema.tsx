@@ -5,7 +5,7 @@ import Innsatsgruppe from '../../components/skjema/innsatsgruppe/innsatsgruppe';
 import Begrunnelse from '../../components/skjema/begrunnelse/begrunnelse';
 import './skjema.less';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
-import { useTimer } from '../../utils/hooks/useTimer';
+import { useTimer } from '../../utils/hooks/use-timer';
 import { SkjemaContext } from '../providers/skjema-provider';
 import { mapTilTekstliste } from './skjema-utils';
 import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';

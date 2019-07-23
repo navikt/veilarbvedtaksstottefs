@@ -1,7 +1,7 @@
+import React from 'react';
 import { useContext } from 'react';
 import { ActionType } from '../../viewcontroller/view-reducer';
-import React from 'react';
-import { VedtakData } from '../../../utils/types/vedtak';
+import { VedtakData } from '../../../rest/data/vedtak';
 import { Dato } from '../dato';
 import { Knapp } from 'nav-frontend-knapper';
 import { OrNothing } from '../../../utils/types/ornothing';
@@ -10,17 +10,16 @@ import { ViewDispatch } from '../../providers/view-provider';
 import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import fullfortVedtakIcon from './fullfort.svg';
-import './gjeldende-vedtak-panel.less';
-import { useFetchState } from '../../providers/fetch-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
 import ingenVedtakBilde from './ingen-vedtak.svg';
 import { logMetrikk } from '../../../utils/frontend-logger';
+import { useFetchStoreContext } from '../../../stores/fetch-store';
+import './gjeldende-vedtak-panel.less';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
+    const { underOppfolging } = useFetchStoreContext();
 
-    const [underOppfolgingData] = useFetchState('underOppfolging');
-
-    if (!underOppfolgingData.data.underOppfolging) {
+    if (!underOppfolging.data.underOppfolging) {
         return (
             <VedtaksstottePanel
                 tittel="Gjeldende oppfølgingsvedtak"

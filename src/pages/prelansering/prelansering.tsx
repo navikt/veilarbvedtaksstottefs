@@ -5,8 +5,8 @@ import Innspill from './innspill';
 import PrelanseringInfo from './prelansering-info';
 import TakkMelding from './takk-melding';
 import { LosningInfo } from './losning-info/losning-info';
-import { useFetchState } from '../../components/providers/fetch-provider';
-import { PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../../api/feature-toggle-api';
+import { PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../../rest/data/features';
+import { useFetchStoreContext } from '../../stores/fetch-store';
 import './prelansering.less';
 
 const FRITEKST_MAX_LENGTH = 500;
@@ -14,10 +14,10 @@ const HAR_SENDT_INNSPILL_KEY = 'har_sendt_innspill';
 const INNSPILL_TAG = 'veilarbvedtaksstottefs.innspill';
 
 export function Prelansering() {
+    const { features } = useFetchStoreContext();
     const [harSendt, setHarSendt] = useState(false);
     const [faneNavn, setFaneNavn] = useState(null);
     const [fritekst, setFritekst] = useState('');
-    const [features] = useFetchState('features');
     const harSendtTidligere = localStorage.getItem(HAR_SENDT_INNSPILL_KEY) != null;
 
     const handleFaneNavnChanged = (e: any) => {

@@ -1,8 +1,9 @@
-import  { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgruppe';
-import { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
-import { VedtakData } from '../utils/types/vedtak';
+import  { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
+import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
+import { VedtakData } from '../../rest/data/vedtak';
+import { JSONObject } from 'yet-another-fetch-mock';
 
-const vedtak: VedtakData = {
+const vedtak: VedtakData & JSONObject = {
     id: 4,
     hovedmal: HovedmalType.BEHOLDE_ARBEID,
     innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,

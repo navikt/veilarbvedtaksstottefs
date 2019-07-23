@@ -3,12 +3,12 @@ import { ViewProvider } from './components/providers/view-provider';
 import { ViewController } from './components/viewcontroller/view-controller';
 import { DataFetcher } from './components/datafetcher';
 import { PrelanseringSjekk } from './components/sjekk/prelansering-sjekk';
-import { FetchProvider } from './components/providers/fetch-provider';
 import { SkjemaProvider } from './components/providers/skjema-provider';
 import { NasjonalTilgangSjekk } from './components/sjekk/nasjonal-tilgang-sjekk';
-import './app.less';
 import { ModalViewProvider } from './components/providers/modal-provider';
 import { FeilModal } from './components/modal/feilmodal';
+import StoreProvider from './stores/store-provider';
+import './app.less';
 
 interface AppProps {
     fnr: string;
@@ -18,7 +18,7 @@ interface AppProps {
 function App(props: AppProps) {
     return (
         <main className="veilarbvedtaksstottefs">
-            <FetchProvider>
+            <StoreProvider fnr={props.fnr} enhetId={props.enhet}>
                 <ViewProvider>
                     <ModalViewProvider>
                         <FeilModal>
@@ -34,7 +34,7 @@ function App(props: AppProps) {
                         </FeilModal>
                     </ModalViewProvider>
                 </ViewProvider>
-            </FetchProvider>
+            </StoreProvider>
         </main>
     );
 }

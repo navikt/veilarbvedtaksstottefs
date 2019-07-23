@@ -1,7 +1,5 @@
-import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import React, { useContext, useEffect, useState } from 'react';
 import { ViewDispatch } from '../../components/providers/view-provider';
-import { useFetchState } from '../../components/providers/fetch-provider';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
@@ -16,10 +14,12 @@ import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { ModalViewDispatch } from '../../components/providers/modal-provider';
 import { logMetrikk } from '../../utils/frontend-logger';
 import { feilVidVisningProps } from '../../components/modal/feil-modal-tekster';
+import { useFetchStoreContext } from '../../stores/fetch-store';
+import { lagHentVedtakPdfUrl } from '../../rest/api';
 
 export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
+    const { vedtak } = useFetchStoreContext();
     const {dispatch} = useContext(ViewDispatch);
-    const [vedtak] = useFetchState('vedtak');
     const vedtaksObjekt = vedtak.data.find(v => v.id === props.vedtakId);
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
     const {modalViewDispatch} = useContext(ModalViewDispatch);
@@ -48,7 +48,7 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
     const dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
     const url = env.isDevelopment
         ? vedtaksBrevUrl
-        : VedtaksstotteApi.hentVedtakPdfURL(props.fnr, dokumentInfoId, journalpostId);
+        : lagHentVedtakPdfUrl(props.fnr, dokumentInfoId, journalpostId);
 
     return (
         <>
@@ -57,7 +57,6 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
                 url={url}
                 title="Visning av vedtaksbrev"
                 onStatusUpdate={setPdfStatus}
-
             />
             <Footer>
                 <div className="vedtaksbrev-visning__aksjoner">

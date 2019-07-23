@@ -3,7 +3,6 @@ import {
     skjemaIsNotEmpty,
     validerSkjema
 } from '../../components/skjema/skjema-utils';
-import VedtaksstotteApi from '../../api/vedtaksstotte-api';
 import { useContext, useEffect, useState } from 'react';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import React from 'react';
@@ -14,8 +13,6 @@ import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
 import Skjema from '../../components/skjema/skjema';
 import { SkjemaContext } from '../../components/providers/skjema-provider';
 import { ViewDispatch } from '../../components/providers/view-provider';
-import { useFetchState } from '../../components/providers/fetch-provider';
-import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
@@ -24,8 +21,11 @@ import { ModalActionType } from '../../components/modalcontroller/modal-reducer'
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import { feilVidLagring } from '../../components/modal/feil-modal-tekster';
 import SkjemaHeader from '../../components/skjema/header/skjema-header';
-import { VedtakData } from '../../utils/types/vedtak';
+import { VedtakData } from '../../rest/data/vedtak';
 import './vedtakskjema-side.less';
+import { useFetchStoreContext } from '../../stores/fetch-store';
+import { fetchWithInfo } from '../../rest/utils';
+import { lagOppdaterVedtakUtkastFetchInfo, lagSlettUtkastFetchInfo } from '../../rest/api';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -39,9 +39,9 @@ interface SkjemaAksjonerProps {
 }
 
 export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
+    const { vedtak } = useFetchStoreContext();
     const {dispatch} = useContext(ViewDispatch);
     const {modalViewDispatch} = useContext(ModalViewDispatch);
-    const [vedtak, setVedtak] = useFetchState('vedtak');
     const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
     const [skjemaFeil, setSkjemaFeil] = useState<SkjemaFeil>({});
@@ -57,11 +57,11 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
     function sendDataTilBackend(skjema: SkjemaData) {
-        return VedtaksstotteApi.putVedtakUtkast(fnr, skjema);
+        return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema }));
     }
 
     function dispatchFetchVedtakOgRedirectTilHovedside() {
-        setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+        vedtak.fetch({ fnr });
         dispatch({view: ActionType.HOVEDSIDE});
     }
 
@@ -80,8 +80,9 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
             setSkjemaFeil(errors);
             return;
         }
+
         sendDataTilBackend(skjema).then(() => {
-            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
+            vedtak.fetch({ fnr });
             dispatch({view: ActionType.INNSENDING});
         }).catch(error => {
             console.log(error); // tslint:disable-line:no-console
@@ -100,7 +101,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
     }
 
     function handleSlett() {
-        VedtaksstotteApi.slettUtkast(fnr)
+        fetchWithInfo(lagSlettUtkastFetchInfo({fnr}))
             .then(dispatchFetchVedtakOgRedirectTilHovedside)
             .catch(error => {
                 console.log(error); // tslint:disable-line:no-console

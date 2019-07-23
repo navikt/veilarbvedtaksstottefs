@@ -1,22 +1,30 @@
-import React, { ReactNode } from 'react';
-import { useFetch } from '../../utils/hooks/useFetch';
+import React, { ReactNode, useEffect } from 'react';
+
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import OppfolgingApi from '../../api/oppfolging-api';
 import TilgangTilBrukersKontor from '../../utils/types/tilgang-til-brukers-kontor';
 import { isAnyFailed, isAnyLoading } from '../../utils/fetch-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import useFetch from '../../rest/use-fetch';
+import { FnrFetchParams, lagHentTilgangTilKontorFetchInfo } from '../../rest/api';
+import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../../rest/utils';
 
 interface NasjonalTilgangSjekkProps {
     fnr: string;
-    children?: ReactNode
+    children?: any
 }
 
 export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
-    const tilgangTilKontor = useFetch<TilgangTilBrukersKontor>(OppfolgingApi.lagHentTilgangTilBrukersKontor(props.fnr));
+    const tilgangTilKontor = useFetch<TilgangTilBrukersKontor, FnrFetchParams>(lagHentTilgangTilKontorFetchInfo);
 
-    if (isAnyLoading(tilgangTilKontor.status)) {
+    useEffect(() => {
+        if (isNotStarted(tilgangTilKontor)) {
+            tilgangTilKontor.fetch({ fnr: props.fnr });
+        }
+    }, []);
+
+    if (isAnyNotStartedOrPending(tilgangTilKontor)) {
         return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;
-    } else if (isAnyFailed(tilgangTilKontor.status)) {
+    } else if (hasAnyFailed(tilgangTilKontor)) {
         return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 
@@ -28,5 +36,5 @@ export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
         );
     }
 
-    return props.children as any;
+    return props.children;
 }

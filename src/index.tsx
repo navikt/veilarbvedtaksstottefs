@@ -13,8 +13,8 @@ dayjs.locale('nb');
 ModalWrapper.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
 if (env.isDevelopment || env.isRunningOnHeroku) {
+    require('./mock');
     ReactDOM.render(<App fnr={fnr} enhet={enhet} />, document.getElementById('veilarbvedtaksstottefs'));
-    require('./mock/index');
 } else {
     NAVSPA.eksporter('veilarbvedtaksstottefs', App);
 }

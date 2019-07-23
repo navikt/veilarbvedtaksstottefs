@@ -4,7 +4,7 @@ import { BEGRUNNELSE_MAX_LENGTH } from './begrunnelse/begrunnelse';
 import { OrNothing } from '../../utils/types/ornothing';
 import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
 import { Opplysning } from './opplysninger/opplysninger';
-import { MalformType } from '../../api/person-api';
+import { MalformType } from '../../rest/data/malform';
 
 export const defaultOpplysningslisteBokmal =
     [

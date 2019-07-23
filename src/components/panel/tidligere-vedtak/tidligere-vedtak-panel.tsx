@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import cls from 'classnames';
-import { VedtakData } from '../../../utils/types/vedtak';
+import { VedtakData } from '../../../rest/data/vedtak';
 import { Panel } from '../panel/panel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { getInnsatsgruppeNavn } from '../../skjema/innsatsgruppe/innsatsgruppe';

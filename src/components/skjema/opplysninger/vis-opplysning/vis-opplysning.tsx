@@ -2,8 +2,8 @@ import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Opplysning } from '../opplysninger';
 import { erDefaultOpplysning } from '../../skjema-utils';
+import { useFetchStoreContext } from '../../../../stores/fetch-store';
 import './vis-opplysning.less';
-import { useFetchState } from '../../../providers/fetch-provider';
 
 interface VisOpplysningProps {
     opplysning: Opplysning;
@@ -13,11 +13,11 @@ interface VisOpplysningProps {
 }
 
 export function VisOpplysning(props: VisOpplysningProps) {
-    const [malformData] = useFetchState('malform');
+    const { malform } = useFetchStoreContext();
     const checked = Object.values(props.opplysning)[0];
     const tekst = Object.keys(props.opplysning)[0];
-    const malform = malformData.data ? malformData.data.malform : null;
-    const kanRedigeres = !erDefaultOpplysning(tekst, malform);
+    const malformData = malform.data ? malform.data.malform : null;
+    const kanRedigeres = !erDefaultOpplysning(tekst, malformData);
 
     return (
         <div className="vis-opplysning">

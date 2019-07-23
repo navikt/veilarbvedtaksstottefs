@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { VedtakData } from '../../../utils/types/vedtak';
+import { VedtakData } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';

@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { ViewDispatch } from '../../components/providers/view-provider';
-import { VedtakData } from '../../utils/types/vedtak';
+import { VedtakData } from '../../rest/data/vedtak';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { useFetchState } from '../../components/providers/fetch-provider';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import SkjemaHeader from '../../components/skjema/header/skjema-header';
@@ -10,10 +9,11 @@ import Footer from '../../components/footer/footer';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../components/skjema-visning/skjema-visning';
+import { useFetchStoreContext } from '../../stores/fetch-store';
 import './vedtakskjema-visning-side.less';
 
 export function VedtakskjemaVisningSide(props: { id: number }) {
-    const [vedtak] = useFetchState('vedtak');
+    const { vedtak } = useFetchStoreContext();
     const {dispatch} = useContext(ViewDispatch);
     const vistVedtak = vedtak.data.find((v: VedtakData) => v.id === props.id);
 

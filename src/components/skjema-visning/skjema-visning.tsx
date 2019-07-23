@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { VedtakData } from '../../utils/types/vedtak';
+import { VedtakData } from '../../rest/data/vedtak';
 import { HovedmalVisning } from './hovedmal-visning';
 import { BegrunnelseVisning } from './begrunnelse-visning';
 import { InnsatsgruppeVisning } from './innsatsgruppe-visning';

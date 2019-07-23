@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 import { Prelansering } from '../../pages/prelansering/prelansering';
-import { useFetchState } from '../providers/fetch-provider';
-import { PRELANSERING_TOGGLE } from '../../api/feature-toggle-api';
+import { PRELANSERING_TOGGLE } from '../../rest/data/features';
+import { useFetchStoreContext } from '../../stores/fetch-store';
 
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
-    const [features] = useFetchState('features');
+    const { features} = useFetchStoreContext();
     return features.data![PRELANSERING_TOGGLE] ? <Prelansering/> : props.children;
 }

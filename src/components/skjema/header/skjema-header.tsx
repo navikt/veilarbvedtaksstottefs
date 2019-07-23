@@ -1,6 +1,6 @@
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { VedtakData } from '../../../utils/types/vedtak';
+import { VedtakData } from '../../../rest/data/vedtak';
 import cls from 'classnames';
 import fullfortBilde from './fullfort.svg';
 import utkastBilde from './utkast.svg';

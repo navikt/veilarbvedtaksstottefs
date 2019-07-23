@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import React from 'react';
-import { VedtakData } from '../../utils/types/vedtak';
+import { VedtakData } from '../../rest/data/vedtak';
 import { mergeMedDefaultOpplysninger } from '../skjema/skjema-utils';
 import { HovedmalType } from '../skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../skjema/innsatsgruppe/innsatsgruppe';
 import { Opplysning } from '../skjema/opplysninger/opplysninger';
-import { useFetchState } from './fetch-provider';
+import { useFetchStoreContext } from '../../stores/fetch-store';
 
 const initialSkjemaData = {
     opplysninger: undefined,
@@ -31,8 +31,7 @@ interface SkjemaContextProps {
 export const SkjemaContext = React.createContext<SkjemaContextProps>({} as SkjemaContextProps);
 
 export function SkjemaProvider(props: {children: React.ReactNode}) {
-    const [vedtak] = useFetchState('vedtak');
-    const [malform] = useFetchState('malform');
+    const { vedtak, malform } = useFetchStoreContext();
 
     const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST') || initialSkjemaData;
     const mergetOpplysninger = mergeMedDefaultOpplysninger(utkast.opplysninger,

@@ -1,23 +1,22 @@
 import React, { useContext, useEffect } from 'react';
-import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
 import { ActionType } from '../../components/viewcontroller/view-reducer';
 import { ViewDispatch } from '../../components/providers/view-provider';
-import { useFetch } from '../../utils/hooks/useFetch';
-import VedtaksstotteApi  from '../../api/vedtaksstotte-api';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../components/json-viewer/json-viewer';
 import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
 import Card from '../../components/card/card';
 import { OrNothing } from '../../utils/types/ornothing';
-import { Innholdstittel, Sidetittel, Systemtittel } from 'nav-frontend-typografi';
-import { Status } from '../../utils/fetch-utils';
+import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import Page from '../page/page';
 import KildeType from '../../utils/types/kilde-type';
 import { logMetrikk } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import './oyblikksbilde-visning.less';
+import useFetch from '../../rest/use-fetch';
+import { HentOyblikksbildeFetchParams, lagHentOyblikksbildeFetchInfo } from '../../rest/api';
+import { hasFailed, isNotStarted, isNotStartedOrPending } from '../../rest/utils';
 
 interface VedleggVisningProps {
     vedtakId: number;
@@ -31,13 +30,19 @@ function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oybli
 
 export function OyblikksbildeVisning (props: VedleggVisningProps) {
     const {dispatch} = useContext(ViewDispatch);
-    const oyblikksbilder = useFetch<Oyblikksbilde[]>(VedtaksstotteApi.hentOyblikksbilde(props.fnr, props.vedtakId));
+    const oyblikksbilder = useFetch<Oyblikksbilde[], HentOyblikksbildeFetchParams>(lagHentOyblikksbildeFetchInfo);
 
-    useEffect(() => logMetrikk('vis-oyblikksbilde'), []);
+    useEffect(() => {
+        logMetrikk('vis-oyblikksbilde');
 
-    if (oyblikksbilder.status === Status.LOADING || oyblikksbilder.status === Status.NOT_STARTED) {
+        if (isNotStarted(oyblikksbilder)) {
+            oyblikksbilder.fetch(props);
+        }
+    }, []);
+
+    if (isNotStartedOrPending(oyblikksbilder)) {
         return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;
-    } else if (oyblikksbilder.status === Status.ERROR) {
+    } else if (hasFailed(oyblikksbilder)) {
         return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 

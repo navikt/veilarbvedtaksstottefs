@@ -25,10 +25,10 @@
   ],
   "dependencies": {
     "@craco/craco": "^3.6.0",
-    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.6",
+    "constate": "^1.2.0",
     "craco-less": "^1.7.0",
     "dayjs": "^1.8.13",
     "lodash": "^4.17.11",
@@ -65,7 +65,6 @@
     "react": "^16.8.6",
     "react-collapse": "^4.0.3",
     "react-dom": "^16.8.6",
-    "react-hooks-global-state": "^0.9.0",
     "react-modal": "^3.8.1",
     "react-motion": "^0.5.2",
     "react-pdf": "^4.0.5",
@@ -79,9 +78,9 @@
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
     "@types/react-modal": "^3.8.2",
-    "axios-mock-adapter": "^1.16.0",
     "express": "^4.17.1",
     "tslint": "^5.14.0",
-    "tslint-react": "^4.0.0"
+    "tslint-react": "^4.0.0",
+    "yet-another-fetch-mock": "^3.2.0"
   }
 }
