@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import cls from 'classnames';
 import { VedtakData } from '../../../rest/data/vedtak';
 import { Panel } from '../panel/panel';
@@ -8,9 +8,9 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
 import emptyBox from './empty-box.svg';
-import './tidligere-vedtak-panel.less';
-import { logMetrikk } from '../../../utils/frontend-logger';
 import { useViewStore, View } from '../../../stores/view-store';
+import { frontendlogger } from '../../../utils/frontend-logger';
+import './tidligere-vedtak-panel.less';
 
 export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData[]}) {
     if (props.vedtakHistorikk.length === 0) {
@@ -62,7 +62,7 @@ function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
 
     function handleTidligereVedtakClicked() {
         changeView(View.VEDTAK, { vedtakId: props.tidligereVedtak.id });
-        logMetrikk('vis-tidligere-vedtak', { index: props.index });
+        frontendlogger.logMetrikk('vis-tidligere-vedtak', { index: props.index });
     }
 
     return (

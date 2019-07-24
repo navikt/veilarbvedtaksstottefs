@@ -5,7 +5,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import leggTilVedtakBilde from './legg-til-vedtak.svg';
-import { logMetrikk } from '../../../utils/frontend-logger';
+import { frontendlogger } from '../../../utils/frontend-logger';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { fetchWithInfo } from '../../../rest/utils';
 import { lagNyttVedtakUtkastFetchInfo } from '../../../rest/api';
@@ -27,7 +27,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData>, gjeldend
                 });
             });
 
-        logMetrikk('lag-nytt-vedtak');
+        frontendlogger.logMetrikk('lag-nytt-vedtak');
     }
 
     if (utkast || !underOppfolging.data.underOppfolging) {

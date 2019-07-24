@@ -5,18 +5,18 @@ import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
-import './forhandsvisning.less';
 import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../rest/data/features';
 import { utkastetSkalKvalitetssikrets } from '../../components/skjema/skjema-utils';
 import { VedtakData } from '../../rest/data/vedtak';
 import { OrNothing } from '../../utils/types/ornothing';
-import { logMetrikk } from '../../utils/frontend-logger';
+import { frontendlogger } from '../../utils/frontend-logger';
 import { useFetchStore } from '../../stores/fetch-store';
 import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
 import { fetchWithInfo } from '../../rest/utils';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, View } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
+import './forhandsvisning.less';
 
 export function Forhandsvisning() {
     const {fnr} = useAppStore();
@@ -37,7 +37,7 @@ export function Forhandsvisning() {
 
     const tilbakeTilSkjema = () => {
         changeView(View.UTKAST);
-        logMetrikk('tilbake-fra-forhandsvisning');
+        frontendlogger.logMetrikk('tilbake-fra-forhandsvisning');
     };
 
     useEffect(() => {
@@ -71,7 +71,7 @@ export function Forhandsvisning() {
             })
             .catch((err) => {
                 showModal(ModalType.FEIL_VED_SENDING);
-                logMetrikk('feil-ved-sending', err);
+                frontendlogger.logMetrikk('feil-ved-sending', err);
             });
     };
 

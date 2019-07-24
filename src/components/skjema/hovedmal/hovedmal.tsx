@@ -4,9 +4,9 @@ import { OrNothing } from '../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
-import { EMDASH } from '../skjemaelement/skjemaelement';
-import './hovedmal.less';
 import { useSkjemaStore } from '../../../stores/skjema-store';
+import { EMDASH } from '../../../utils';
+import './hovedmal.less';
 
 export enum HovedmalType {
     SKAFFE_ARBEID = 'SKAFFE_ARBEID',

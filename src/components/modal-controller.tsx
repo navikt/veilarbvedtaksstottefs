@@ -13,6 +13,7 @@ import { SpinnerModal } from './modal/spinner-modal';
 import { KvalitetsSikringModalInnsending } from '../pages/forhandsvisning/kvalitetssikring';
 import { SuksessModalInnsending } from '../pages/hovedside/sukssessmodal-innsending';
 import { SuksessModalLagretUtkast } from '../pages/hovedside/suksessmodal-lagret';
+import SlettUtkastModal from './modal/slett-utkast-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilmodalConfig | null {
     switch (modalType) {
@@ -41,6 +42,7 @@ export function ModalController() {
             <KvalitetsSikringModalInnsending isOpen={modalType === ModalType.KVALITETSSIKRING} sendVedtak={modalProps.sendVedtak}/>
             <SuksessModalInnsending isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS}/>
             <SuksessModalLagretUtkast isOpen={modalType === ModalType.VEDTAK_LAGRET_SUKSESS}/>
+            <SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST}/>
             {feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig}/>}
         </>
     );

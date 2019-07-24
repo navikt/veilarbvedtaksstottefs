@@ -1,6 +1,6 @@
 import React from 'react';
-import { EMDASH } from '../skjema/skjemaelement/skjemaelement';
 import SkjemaBolk from '../skjema/bolk/skjema-bolk';
+import { EMDASH } from '../../utils';
 
 export function BegrunnelseVisning(props: {begrunnelse: string}) {
     return (

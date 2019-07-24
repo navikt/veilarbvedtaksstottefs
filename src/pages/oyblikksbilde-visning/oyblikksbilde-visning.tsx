@@ -8,7 +8,7 @@ import { OrNothing } from '../../utils/types/ornothing';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import Page from '../page/page';
 import KildeType from '../../utils/types/kilde-type';
-import { logMetrikk } from '../../utils/frontend-logger';
+import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import './oyblikksbilde-visning.less';
@@ -29,7 +29,7 @@ export function OyblikksbildeVisning (props: { vedtakId: number }) {
     const oyblikksbilder = useFetch<Oyblikksbilde[], HentOyblikksbildeFetchParams>(lagHentOyblikksbildeFetchInfo);
 
     useEffect(() => {
-        logMetrikk('vis-oyblikksbilde');
+        frontendlogger.logMetrikk('vis-oyblikksbilde');
         if (isNotStarted(oyblikksbilder)) {
             oyblikksbilder.fetch({ fnr, vedtakId: props.vedtakId });
         }

@@ -6,7 +6,7 @@ import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { OrNothing } from '../../utils/types/ornothing';
-import { logMetrikk } from '../../utils/frontend-logger';
+import { frontendlogger } from '../../utils/frontend-logger';
 import { useFetchStore } from '../../stores/fetch-store';
 import { lagHentVedtakPdfUrl } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
@@ -23,7 +23,7 @@ export function VedtaksbrevVisning (props: {vedtakId: number}) {
     const vedtaksObjekt = vedtak.data.find(v => v.id === props.vedtakId);
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
 
-    useEffect(() => logMetrikk('vis-vedtaksbrev'), []);
+    useEffect(() => frontendlogger.logMetrikk('vis-vedtaksbrev'), []);
 
     if (!vedtaksObjekt) {
         return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;

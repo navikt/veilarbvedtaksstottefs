@@ -9,7 +9,7 @@ import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import fullfortVedtakIcon from './fullfort.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import ingenVedtakBilde from './ingen-vedtak.svg';
-import { logMetrikk } from '../../../utils/frontend-logger';
+import { frontendlogger } from '../../../utils/frontend-logger';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { useViewStore, View } from '../../../stores/view-store';
 import './gjeldende-vedtak-panel.less';
@@ -42,7 +42,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 
     const handleVisVedtakClicked = () => {
         changeView(View.VEDTAK, { vedtakId: id });
-        logMetrikk('vis-gjeldende-vedtak');
+        frontendlogger.logMetrikk('vis-gjeldende-vedtak');
     };
 
     return (

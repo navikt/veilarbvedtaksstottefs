@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { logEvent } from '../../utils/frontend-logger';
 import Page from '../page/page';
 import Innspill from './innspill';
 import PrelanseringInfo from './prelansering-info';
@@ -7,6 +6,7 @@ import TakkMelding from './takk-melding';
 import { LosningInfo } from './losning-info/losning-info';
 import { PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../../rest/data/features';
 import { useFetchStore } from '../../stores/fetch-store';
+import { frontendlogger } from '../../utils/frontend-logger';
 import './prelansering.less';
 
 const FRITEKST_MAX_LENGTH = 500;
@@ -34,7 +34,7 @@ export function Prelansering() {
 
     const handleSendInnspillClicked = () => {
         if (faneNavn || fritekst !== '') {
-            logEvent(INNSPILL_TAG, { faneNavn, fritekst});
+            frontendlogger.logEvent(INNSPILL_TAG, { faneNavn, fritekst});
         }
 
         setHarSendt(true);

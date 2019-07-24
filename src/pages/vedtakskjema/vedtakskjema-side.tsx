@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { mapTilTekstliste, skjemaIsNotEmpty, validerSkjema } from '../../components/skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
@@ -14,11 +14,12 @@ import { VedtakData } from '../../rest/data/vedtak';
 import './vedtakskjema-side.less';
 import { useFetchStore } from '../../stores/fetch-store';
 import { fetchWithInfo } from '../../rest/utils';
-import { lagOppdaterVedtakUtkastFetchInfo, lagSlettUtkastFetchInfo } from '../../rest/api';
+import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, View } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
+import { logger } from '../../utils/logger';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -79,7 +80,7 @@ export function VedtakskjemaSide() {
             vedtak.fetch({ fnr });
             changeView(View.INNSENDING);
         }).catch(error => {
-            console.log(error); // tslint:disable-line:no-console
+            logger.log(error);
         });
     }
 
@@ -94,14 +95,6 @@ export function VedtakskjemaSide() {
             });
     }
 
-    function handleSlett() {
-        fetchWithInfo(lagSlettUtkastFetchInfo({fnr}))
-            .then(dispatchFetchVedtakOgRedirectTilHovedside)
-            .catch(error => {
-                console.log(error); // tslint:disable-line:no-console
-            });
-    }
-
     return (
         <Page>
             <Card className="vedtakskjema">
@@ -112,7 +105,6 @@ export function VedtakskjemaSide() {
                 <Aksjoner
                     handleForhandsvis={() => handleForhandsvis(vedtakskjema)}
                     handleLagreOgTilbake={() => handleLagreOgTilbake(vedtakskjema)}
-                    handleSlett={handleSlett}
                 />
             </Footer>
         </Page>
