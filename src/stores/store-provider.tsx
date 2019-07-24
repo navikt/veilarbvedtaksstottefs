@@ -3,7 +3,7 @@ import { useAppStore } from './app-store';
 import { useFetchStore } from './fetch-store';
 import { useViewStore } from './view-store';
 import { useModalStore } from './modal-store';
-import { SkjemaProvider } from './skjema-provider';
+import { useSkjemaStore } from './skjema-store';
 
 interface StoreProviderProps {
     fnr: string;
@@ -17,9 +17,9 @@ const StoreProvider = (props: StoreProviderProps) => {
             <useFetchStore.Provider>
                 <useViewStore.Provider>
                     <useModalStore.Provider>
-                        <SkjemaProvider>
+                        <useSkjemaStore.Provider>
                             {props.children}
-                        </SkjemaProvider>
+                        </useSkjemaStore.Provider>
                     </useModalStore.Provider>
                 </useViewStore.Provider>
             </useFetchStore.Provider>

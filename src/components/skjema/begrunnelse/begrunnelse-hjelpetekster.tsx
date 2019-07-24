@@ -1,6 +1,6 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Hjelpetekster } from '../hjelpetekster/hjelpetekster';
-import * as React from 'react';
+import React from 'react';
 
 export function BegrunnelseHjelpeTekster() {
     return (

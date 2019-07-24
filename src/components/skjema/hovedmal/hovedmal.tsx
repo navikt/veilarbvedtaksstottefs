@@ -1,13 +1,12 @@
-import * as React from 'react';
-import { useContext } from 'react';
-import './hovedmal.less';
+import React, { useContext } from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { SkjemaContext } from '../../../stores/skjema-provider';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { EMDASH } from '../skjemaelement/skjemaelement';
+import './hovedmal.less';
+import { useSkjemaStore } from '../../../stores/skjema-store';
 
 export enum HovedmalType {
     SKAFFE_ARBEID = 'SKAFFE_ARBEID',
@@ -35,8 +34,7 @@ const hovedmalliste = [
 ];
 
 function Hovedmal(props: HovedmalProps) {
-    const {hovedmal, setHovedmal} = useContext(SkjemaContext);
-    const {innsatsgruppe} = useContext(SkjemaContext);
+    const { innsatsgruppe, hovedmal, setHovedmal } = useSkjemaStore();
     const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
     return (
         <SkjemaBolk

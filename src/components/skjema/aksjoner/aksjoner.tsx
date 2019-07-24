@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import './aksjoner.less';
 import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ReactComponent as SlettIkon } from './slett.svg';

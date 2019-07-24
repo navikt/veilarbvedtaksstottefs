@@ -5,7 +5,6 @@ import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
 import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
 import Skjema from '../../components/skjema/skjema';
-import { SkjemaContext } from '../../stores/skjema-provider';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
@@ -19,6 +18,7 @@ import { lagOppdaterVedtakUtkastFetchInfo, lagSlettUtkastFetchInfo } from '../..
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, View } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
+import { useSkjemaStore } from '../../stores/skjema-store';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -32,8 +32,11 @@ export function VedtakskjemaSide() {
     const { vedtak } = useFetchStore();
     const { changeView } = useViewStore();
     const { showModal } = useModalStore();
+    const {
+        opplysninger, begrunnelse, innsatsgruppe,
+        hovedmal, sistOppdatert, setSistOppdatert
+    } = useSkjemaStore();
 
-    const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
     const [skjemaFeil, setSkjemaFeil] = useState<SkjemaFeil>({});
 

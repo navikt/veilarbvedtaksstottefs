@@ -1,15 +1,11 @@
-import * as React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
-import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { useContext, useState } from 'react';
-import { SkjemaContext } from '../../../stores/skjema-provider';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import './begrunnelse.less';
 import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';
-import { useEffect } from 'react';
 import { validerBegrunnelsebegrunnelseMaxLengthTekst } from '../skjema-utils';
-import { Normaltekst } from 'nav-frontend-typografi';
 import SkjemaBolk from '../bolk/skjema-bolk';
+import { useSkjemaStore } from '../../../stores/skjema-store';
+import './begrunnelse.less';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 
@@ -18,7 +14,7 @@ interface BegrunnelseProps {
 }
 
 function Begrunnelse(props: BegrunnelseProps) {
-    const {begrunnelse, setBegrunnelse} = useContext(SkjemaContext);
+    const { begrunnelse, setBegrunnelse } = useSkjemaStore();
     const [begrunnelseFeil, setBegrunnelseFeil] = useState(props.begrunnelsefeil);
 
     useEffect(() => {

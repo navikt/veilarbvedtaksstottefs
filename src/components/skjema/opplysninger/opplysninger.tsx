@@ -1,14 +1,12 @@
-import * as React from 'react';
+import React, { useContext, useState } from 'react';
 import { VisOpplysning } from './vis-opplysning/vis-opplysning';
 import { RedigerOpplysning } from './rediger-opplysning/rediger-opplysning';
-import { useRef, useState } from 'react';
 import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
-import { useContext } from 'react';
-import { SkjemaContext } from '../../../stores/skjema-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OpplysningerHjelpeTekster } from './hjelpetekst-opplysninger';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
+import { useSkjemaStore } from '../../../stores/skjema-store';
 import './opplysninger.less';
 
 export type Opplysning = {
@@ -20,11 +18,10 @@ interface OpplysningerProps {
 }
 
 function Opplysninger(props: OpplysningerProps) {
+    const { opplysninger, setOpplysninger } = useSkjemaStore();
     const [redigeringModusIndeks, setRedigeringModusIndeks ] = useState<number>( -1);
     const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning ] = useState<boolean>( true);
     const [sistEndretIndeks, setSistEndretIndeks] = useState<number>( -1);
-    const { opplysninger, setOpplysninger } = useContext(SkjemaContext);
-
 
     function nullstilState() {
         setRedigeringModusIndeks(-1);

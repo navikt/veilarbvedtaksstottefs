@@ -1,13 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
-import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { useContext } from 'react';
-import { SkjemaContext } from '../../../stores/skjema-provider';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { utkastetSkalKvalitetssikrets } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
+import { useSkjemaStore } from '../../../stores/skjema-store';
+import './innsatsgruppe.less';
 
 export enum InnsatsgruppeType {
     STANDARD_INNSATS = 'STANDARD_INNSATS',
@@ -52,8 +50,7 @@ interface InnsatsgruppeProps {
 }
 
 function Innsatsgruppe (props: InnsatsgruppeProps) {
-    const {innsatsgruppe, setInnsatsgruppe} = useContext(SkjemaContext);
-    const {setHovedmal} = useContext(SkjemaContext);
+    const { innsatsgruppe, setInnsatsgruppe, setHovedmal } = useSkjemaStore();
     const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
     return (
         <SkjemaBolk
