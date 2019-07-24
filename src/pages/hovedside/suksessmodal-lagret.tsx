@@ -1,33 +1,31 @@
+import React, { useEffect, useRef } from 'react';
 import { VarselModal } from '../../components/modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
-import React, { useContext, useEffect, useRef } from 'react';
-import { ModalViewDispatch } from '../../stores/modal-provider';
-import { ModalActionType } from '../../stores/modal-reducer';
+import { ModalProps } from '../../components/modal/modal-props';
+import { useModalStore } from '../../stores/modal-store';
 
-export function SuksessModalLagretUtkast () {
-    const {modalViewState, modalViewDispatch} = useContext(ModalViewDispatch);
-
-    const skalViseLagreModal = modalViewState.modalView === ModalActionType.MODAL_VEDTAK_LAGRET_SUKSESS;
+export function SuksessModalLagretUtkast (props: ModalProps) {
+    const { hideModal } = useModalStore();
     const timer = useRef<number | undefined>();
 
     useEffect(() => {
-        if (skalViseLagreModal) {
+        if (props.isOpen) {
             if (!timer.current) {
-                timer.current = window.setTimeout(() => modalViewDispatch({modalView: null}), 5000);
+                timer.current = window.setTimeout(hideModal, 5000);
             }
             return () => {
                 clearTimeout(timer.current);
                 timer.current = undefined;
             };
         }
-    }, [modalViewState.modalView]);
+    }, [props.isOpen]);
 
     return (
         <VarselModal
-            isOpen={skalViseLagreModal}
+            isOpen={props.isOpen}
             contentLabel="Vedtaket sendt til bruker"
-            onRequestClose={() => modalViewDispatch({modalView: null})}
+            onRequestClose={hideModal}
             type="SUKSESS"
         >
             <Systemtittel>Du har lagret utkastet</Systemtittel>

@@ -15,8 +15,8 @@ import './oyblikksbilde-visning.less';
 import useFetch from '../../rest/use-fetch';
 import { HentOyblikksbildeFetchParams, lagHentOyblikksbildeFetchInfo } from '../../rest/api';
 import { hasFailed, isNotStarted, isNotStartedOrPending } from '../../rest/utils';
-import { useAppStoreContext } from '../../stores/app-store';
-import { useViewStoreContext, View } from '../../stores/view-store';
+import { useAppStore } from '../../stores/app-store';
+import { useViewStore, View } from '../../stores/view-store';
 
 function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
     const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.kildeType === kildeType) : null;
@@ -24,8 +24,8 @@ function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oybli
 }
 
 export function OyblikksbildeVisning (props: { vedtakId: number }) {
-    const { fnr } = useAppStoreContext();
-    const { changeView } = useViewStoreContext();
+    const { fnr } = useAppStore();
+    const { changeView } = useViewStore();
     const oyblikksbilder = useFetch<Oyblikksbilde[], HentOyblikksbildeFetchParams>(lagHentOyblikksbildeFetchInfo);
 
     useEffect(() => {

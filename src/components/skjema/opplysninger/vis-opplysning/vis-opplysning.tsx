@@ -2,7 +2,7 @@ import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Opplysning } from '../opplysninger';
 import { erDefaultOpplysning } from '../../skjema-utils';
-import { useFetchStoreContext } from '../../../../stores/fetch-store';
+import { useFetchStore } from '../../../../stores/fetch-store';
 import './vis-opplysning.less';
 
 interface VisOpplysningProps {
@@ -13,7 +13,7 @@ interface VisOpplysningProps {
 }
 
 export function VisOpplysning(props: VisOpplysningProps) {
-    const { malform } = useFetchStoreContext();
+    const { malform } = useFetchStore();
     const checked = Object.values(props.opplysning)[0];
     const tekst = Object.keys(props.opplysning)[0];
     const malformData = malform.data ? malform.data.malform : null;

@@ -10,7 +10,7 @@ export enum View {
     VEDTAK_PDF = 'VEDTAK_PDF'
 }
 
-function useViewStore() {
+export const useViewStore = createUseContext(() => {
     const [view, setView] = useState<View>(View.HOVEDSIDE);
     const [viewProps, setViewProps] = useState<any>({});
 
@@ -20,6 +20,4 @@ function useViewStore() {
     };
 
     return { view, viewProps, changeView };
-}
-
-export const useViewStoreContext = createUseContext(useViewStore);
+});

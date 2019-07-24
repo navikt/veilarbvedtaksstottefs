@@ -7,13 +7,13 @@ import Footer from '../../components/footer/footer';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../components/skjema-visning/skjema-visning';
-import { useFetchStoreContext } from '../../stores/fetch-store';
+import { useFetchStore } from '../../stores/fetch-store';
 import './vedtakskjema-visning-side.less';
-import { useViewStoreContext, View } from '../../stores/view-store';
+import { useViewStore, View } from '../../stores/view-store';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
-    const { vedtak } = useFetchStoreContext();
-    const { changeView } = useViewStoreContext();
+    const { vedtak } = useFetchStore();
+    const { changeView } = useViewStore();
     const vistVedtak = vedtak.data.find((v: VedtakData) => v.id === props.vedtakId);
 
     if (!vistVedtak) {

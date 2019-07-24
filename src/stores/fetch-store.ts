@@ -11,13 +11,11 @@ import { MalformData } from '../rest/data/malform';
 import { Features } from '../rest/data/features';
 import { VedtakData } from '../rest/data/vedtak';
 
-function useFetchStore() {
+export const useFetchStore = createUseContext(() => {
     const underOppfolging = useFetch<UnderOppfolging, FnrFetchParams>(lagHentUnderOppfolgingFetchInfo);
     const malform = useFetch<MalformData, FnrFetchParams>(lagHentMalformFetchInfo);
     const features = useFetch<Features>(lagHentFeaturesFetchInfo);
     const vedtak = useFetch<VedtakData[], FnrFetchParams>(lagHentVedtakFetchInfo);
 
     return { underOppfolging, features, malform, vedtak };
-}
-
-export const useFetchStoreContext = createUseContext(useFetchStore);
+});

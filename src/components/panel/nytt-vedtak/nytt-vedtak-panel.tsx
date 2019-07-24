@@ -6,17 +6,17 @@ import { OrNothing } from '../../../utils/types/ornothing';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import leggTilVedtakBilde from './legg-til-vedtak.svg';
 import { logMetrikk } from '../../../utils/frontend-logger';
-import { useFetchStoreContext } from '../../../stores/fetch-store';
+import { useFetchStore } from '../../../stores/fetch-store';
 import { fetchWithInfo } from '../../../rest/utils';
 import { lagNyttVedtakUtkastFetchInfo } from '../../../rest/api';
-import { useViewStoreContext, View } from '../../../stores/view-store';
-import { useAppStoreContext } from '../../../stores/app-store';
+import { useViewStore, View } from '../../../stores/view-store';
+import { useAppStore } from '../../../stores/app-store';
 import './nytt-vedtak-panel.less';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData>, gjeldendeVedtak: OrNothing<VedtakData> }) {
-    const { fnr } = useAppStoreContext();
-    const {underOppfolging, vedtak} = useFetchStoreContext();
-    const {changeView} = useViewStoreContext();
+    const { fnr } = useAppStore();
+    const {underOppfolging, vedtak} = useFetchStore();
+    const {changeView} = useViewStore();
     const {utkast, gjeldendeVedtak} = props;
 
     function lagNyttVedtakUtkastOgRedirectTilUtkast() {

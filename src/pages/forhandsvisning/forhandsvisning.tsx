@@ -1,40 +1,32 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { ModalActionType } from '../../stores/modal-reducer';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import './forhandsvisning.less';
 import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../rest/data/features';
-import { ModalViewDispatch } from '../../stores/modal-provider';
 import { utkastetSkalKvalitetssikrets } from '../../components/skjema/skjema-utils';
-import { KvalitetsSikringModalInnsending } from './kvalitetssikring';
 import { VedtakData } from '../../rest/data/vedtak';
-import { SpinnerModal } from '../../components/modal/spinner-modal';
 import { OrNothing } from '../../utils/types/ornothing';
 import { logMetrikk } from '../../utils/frontend-logger';
-import {
-    feilVidForhandsvisnigProps,
-    feilVidSendningProps,
-    stoppeInnsendingFeatureToggleProps
-} from '../../components/modal/feil-modal-tekster';
-import { useFetchStoreContext } from '../../stores/fetch-store';
+import { useFetchStore } from '../../stores/fetch-store';
 import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
 import { fetchWithInfo } from '../../rest/utils';
-import { useAppStoreContext } from '../../stores/app-store';
-import { useViewStoreContext, View } from '../../stores/view-store';
+import { useAppStore } from '../../stores/app-store';
+import { useViewStore, View } from '../../stores/view-store';
+import { ModalType, useModalStore } from '../../stores/modal-store';
 
 export function Forhandsvisning() {
-    const { fnr } = useAppStoreContext();
-    const { changeView } = useViewStoreContext();
-    const { vedtak, features } = useFetchStoreContext();
+    const {fnr} = useAppStore();
+    const {changeView} = useViewStore();
+    const {vedtak, features} = useFetchStore();
+    const {showModal} = useModalStore();
 
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
-    const {modalViewDispatch} = useContext(ModalViewDispatch);
 
-    const utkast =  vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
+    const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
     const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(utkast && utkast.innsatsgruppe);
 
     const stoppeInnsendingfeatureToggle = features.data[STOPPE_VEDTAKSINNSENDING_TOGGLE];
@@ -43,41 +35,42 @@ export function Forhandsvisning() {
         ? vedtaksBrevUrl
         : lagHentForhandsvisningUrl(fnr);
 
-    const tilbakeTilSkjema  = () => {
+    const tilbakeTilSkjema = () => {
         changeView(View.UTKAST);
         logMetrikk('tilbake-fra-forhandsvisning');
     };
 
     useEffect(() => {
         switch (pdfStatus) {
-            case 'NOT_STARTED':
-            case 'LOADING':
-                return modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
-            case 'SUCCESS':
-                return modalViewDispatch({modalView: null});
-            case 'ERROR': {
-                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidForhandsvisnigProps});
-            }
+            // TODO: Use spinner on page
+            // case 'NOT_STARTED':
+            // case 'LOADING':
+            //     return modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
+            // case 'SUCCESS':
+            //     return modalViewDispatch({modalView: null});
+            case 'ERROR':
+                showModal(ModalType.FEIL_VED_FORHANDSVISNING);
+                break;
             default:
                 return;
         }
     }, [pdfStatus]);
 
     const tilbakeTilHovedsiden = () => {
-        vedtak.fetch({ fnr });
+        vedtak.fetch({fnr});
         changeView(View.HOVEDSIDE);
-        modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_SENT_SUKSESS});
+        showModal(ModalType.VEDTAK_SENT_SUKSESS);
     };
 
     const sendVedtak = (beslutter?: string) => {
-        modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
+        showModal(ModalType.LASTER_DATA);
 
-        fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutter }))
+        fetchWithInfo(lagSendVedtakFetchInfo({fnr, beslutter}))
             .then(() => {
                 tilbakeTilHovedsiden();
             })
             .catch((err) => {
-                modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidSendningProps});
+                showModal(ModalType.FEIL_VED_SENDING);
                 logMetrikk('feil-ved-sending', err);
             });
     };
@@ -85,12 +78,12 @@ export function Forhandsvisning() {
     const handleOnSendClicked = () => {
 
         if (stoppeInnsendingfeatureToggle) {
-            modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: stoppeInnsendingFeatureToggleProps});
+            showModal(ModalType.FEIL_INNSENDING_STOPPET);
             return;
         }
 
         if (kvalitetssikresVarsel) {
-            modalViewDispatch({modalView: ModalActionType.MODAL_KVALITETSSIKRING});
+            showModal(ModalType.KVALITETSSIKRING, { sendVedtak });
             return;
         }
 
@@ -99,8 +92,6 @@ export function Forhandsvisning() {
 
     return (
         <>
-            <KvalitetsSikringModalInnsending sendVedtak={sendVedtak}/>
-            <SpinnerModal/>
             <PdfViewer
                 url={url}
                 title="Forhåndsvisning av vedtaksbrevet"

@@ -4,11 +4,11 @@ import { HovedmalVisning } from './hovedmal-visning';
 import { BegrunnelseVisning } from './begrunnelse-visning';
 import { InnsatsgruppeVisning } from './innsatsgruppe-visning';
 import { OpplysningerVisning } from './opplysninger-visning';
-import { useViewStoreContext, View } from '../../stores/view-store';
+import { useViewStore, View } from '../../stores/view-store';
 import './skjema-visning.less';
 
 export function SkjemaVisning(props: {vedtak: VedtakData}) {
-    const { changeView } = useViewStoreContext();
+    const { changeView } = useViewStore();
     const { id, hovedmal, opplysninger, innsatsgruppe, begrunnelse, beslutter } = props.vedtak;
 
     return (

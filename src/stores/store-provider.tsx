@@ -1,7 +1,9 @@
 import React from 'react';
-import { useAppStoreContext } from './app-store';
-import { useFetchStoreContext } from './fetch-store';
-import { useViewStoreContext } from './view-store';
+import { useAppStore } from './app-store';
+import { useFetchStore } from './fetch-store';
+import { useViewStore } from './view-store';
+import { useModalStore } from './modal-store';
+import { SkjemaProvider } from './skjema-provider';
 
 interface StoreProviderProps {
     fnr: string;
@@ -11,13 +13,17 @@ interface StoreProviderProps {
 
 const StoreProvider = (props: StoreProviderProps) => {
     return (
-        <useAppStoreContext.Provider fnr={props.fnr} enhetId={props.enhetId}>
-            <useFetchStoreContext.Provider>
-                <useViewStoreContext.Provider>
-                    {props.children}
-                </useViewStoreContext.Provider>
-            </useFetchStoreContext.Provider>
-        </useAppStoreContext.Provider>
+        <useAppStore.Provider fnr={props.fnr} enhetId={props.enhetId}>
+            <useFetchStore.Provider>
+                <useViewStore.Provider>
+                    <useModalStore.Provider>
+                        <SkjemaProvider>
+                            {props.children}
+                        </SkjemaProvider>
+                    </useModalStore.Provider>
+                </useViewStore.Provider>
+            </useFetchStore.Provider>
+        </useAppStore.Provider>
     );
 };
 

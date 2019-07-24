@@ -10,7 +10,7 @@ import { Veileder } from '../veileder';
 import emptyBox from './empty-box.svg';
 import './tidligere-vedtak-panel.less';
 import { logMetrikk } from '../../../utils/frontend-logger';
-import { useViewStoreContext, View } from '../../../stores/view-store';
+import { useViewStore, View } from '../../../stores/view-store';
 
 export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData[]}) {
     if (props.vedtakHistorikk.length === 0) {
@@ -55,7 +55,7 @@ function HarTidligereVedtak({vedtakHistorikk}: {vedtakHistorikk: VedtakData []})
 }
 
 function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
-    const { changeView } = useViewStoreContext();
+    const { changeView } = useViewStore();
     const tidligereVedtak = props.tidligereVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(tidligereVedtak.innsatsgruppe);
     const id = "tidligere-vedtak-" + props.index;

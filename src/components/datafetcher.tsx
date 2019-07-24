@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { useFetchStoreContext } from '../stores/fetch-store';
+import { useFetchStore } from '../stores/fetch-store';
 import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../rest/utils';
 
 export function DataFetcher (props: {fnr: string, children: any}) {
-    const { underOppfolging, features, malform, vedtak } = useFetchStoreContext();
+    const { underOppfolging, features, malform, vedtak } = useFetchStore();
 
     useEffect(() => {
         if (isNotStarted(vedtak)) {

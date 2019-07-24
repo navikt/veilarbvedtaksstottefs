@@ -1,20 +1,18 @@
+import React, { useEffect, useState } from 'react';
 import { VarselModal } from '../../components/modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { BekreftCheckboksPanel, Input } from 'nav-frontend-skjema';
-import React, { useContext, useEffect, useState } from 'react';
+import { Input } from 'nav-frontend-skjema';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
-import { ModalViewDispatch } from '../../stores/modal-provider';
-import { ModalActionType } from '../../stores/modal-reducer';
+import { ModalProps } from '../../components/modal/modal-props';
+import { useModalStore } from '../../stores/modal-store';
 import './kvalitetetssikring.less';
 
-interface KvalitetsSikringModalInnsendingProps {
+interface KvalitetsSikringModalInnsendingProps extends ModalProps {
     sendVedtak: (beslutter?: string) => void;
 }
 
 export function KvalitetsSikringModalInnsending (props: KvalitetsSikringModalInnsendingProps) {
-    const {modalViewState, modalViewDispatch} = useContext(ModalViewDispatch);
-
-    const skalViseModal = modalViewState.modalView === ModalActionType.MODAL_KVALITETSSIKRING;
+    const { hideModal } = useModalStore();
     const [beslutter, setBeslutter] = useState('');
     const [error, setError] = useState<{feilmelding: string} | undefined>(undefined);
     const [harForsoktSende, setHarForsoktSende] = useState<boolean>(false);
@@ -37,9 +35,9 @@ export function KvalitetsSikringModalInnsending (props: KvalitetsSikringModalInn
 
     return (
         <VarselModal
-            isOpen={skalViseModal}
+            isOpen={props.isOpen}
             contentLabel="Arbeidsevnevurderingen må godkjennes av beslutter"
-            onRequestClose={() => modalViewDispatch({modalView: null})}
+            onRequestClose={hideModal}
             type="ADVARSEL"
             shouldCloseOnOverlayClick={false}
             className="kvalitetssikring"
@@ -54,7 +52,7 @@ export function KvalitetsSikringModalInnsending (props: KvalitetsSikringModalInn
             />
             <div className="knapper kvalitetssikring__knapper">
                 <Hovedknapp onClick={handleSend}>Send til bruker</Hovedknapp>
-                <Flatknapp onClick={() => modalViewDispatch({modalView: null})}>Avbryt</Flatknapp>
+                <Flatknapp onClick={hideModal}>Avbryt</Flatknapp>
             </div>
         </VarselModal>
     );

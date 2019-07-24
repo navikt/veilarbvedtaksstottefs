@@ -10,13 +10,13 @@ import fullfortVedtakIcon from './fullfort.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import ingenVedtakBilde from './ingen-vedtak.svg';
 import { logMetrikk } from '../../../utils/frontend-logger';
-import { useFetchStoreContext } from '../../../stores/fetch-store';
-import { useViewStoreContext, View } from '../../../stores/view-store';
+import { useFetchStore } from '../../../stores/fetch-store';
+import { useViewStore, View } from '../../../stores/view-store';
 import './gjeldende-vedtak-panel.less';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
-    const { underOppfolging } = useFetchStoreContext();
-    const { changeView } = useViewStoreContext();
+    const { underOppfolging } = useFetchStore();
+    const { changeView } = useViewStore();
 
     if (!underOppfolging.data.underOppfolging) {
         return (

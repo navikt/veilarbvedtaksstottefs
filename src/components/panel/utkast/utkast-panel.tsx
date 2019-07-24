@@ -7,10 +7,10 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import utkastIkon from './utkast.svg';
 import './utkast-panel.less';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
-import { useViewStoreContext, View } from '../../../stores/view-store';
+import { useViewStore, View } from '../../../stores/view-store';
 
 export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
-    const { changeView } = useViewStoreContext();
+    const { changeView } = useViewStore();
 
     if (!props.utkast) {
         return null;

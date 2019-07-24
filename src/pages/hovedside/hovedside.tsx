@@ -5,18 +5,15 @@ import { VedtakData } from '../../rest/data/vedtak';
 import { GjeldendeVedtakPanel } from '../../components/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
 import { NyttVedtakPanel } from '../../components/panel/nytt-vedtak/nytt-vedtak-panel';
 import Page from '../page/page';
-import './hovedside.less';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { OrNothing } from '../../utils/types/ornothing';
 import { VEDTAK_I_GOSYS_TOGGLE } from '../../rest/data/features';
-import { SuksessModalInnsending } from './sukssessmodal-innsending';
-import { SuksessModalLagretUtkast } from './suksessmodal-lagret';
-import { useFetchStoreContext } from '../../stores/fetch-store';
-import { useAppStoreContext } from '../../stores/app-store';
+import { useFetchStore } from '../../stores/fetch-store';
+import { useAppStore } from '../../stores/app-store';
+import './hovedside.less';
 
 export function Hovedside() {
-    const { fnr } = useAppStoreContext();
-    const {vedtak, features} = useFetchStoreContext();
+    const {vedtak, features} = useFetchStore();
 
     const gjeldendeVedtak = vedtak.data.find((v: VedtakData) => v.gjeldende);
     const tidligereVedtak = vedtak.data.filter((v: VedtakData) => !v.gjeldende && v.vedtakStatus === 'SENDT');
@@ -24,27 +21,23 @@ export function Hovedside() {
     const visAlertrstripefeatureToggle = features.data[VEDTAK_I_GOSYS_TOGGLE];
 
     return (
-        <>
-            <Page>
-                <AlertStripeVedtakIArena
-                    gjeldendeVedtak={gjeldendeVedtak}
-                    tidligereVedtak={tidligereVedtak}
-                    visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
-                />
-                <div className="hovedside">
-                    <div className="vedtak-paneler">
-                        <UtkastPanel utkast={utkast}/>
-                        <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
-                        <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast}/>
-                    </div>
-                    <div>
-                        <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
-                    </div>
+        <Page>
+            <AlertStripeVedtakIArena
+                gjeldendeVedtak={gjeldendeVedtak}
+                tidligereVedtak={tidligereVedtak}
+                visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
+            />
+            <div className="hovedside">
+                <div className="vedtak-paneler">
+                    <UtkastPanel utkast={utkast}/>
+                    <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
+                    <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast}/>
                 </div>
-            </Page>
-            <SuksessModalInnsending/>
-            <SuksessModalLagretUtkast/>
-        </>
+                <div>
+                    <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
+                </div>
+            </div>
+        </Page>
     );
 
 }

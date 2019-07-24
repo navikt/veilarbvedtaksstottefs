@@ -1,10 +1,5 @@
-import {
-    mapTilTekstliste,
-    skjemaIsNotEmpty,
-    validerSkjema
-} from '../../components/skjema/skjema-utils';
-import { useContext, useEffect, useState } from 'react';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { mapTilTekstliste, skjemaIsNotEmpty, validerSkjema } from '../../components/skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
@@ -14,18 +9,16 @@ import { SkjemaContext } from '../../stores/skjema-provider';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
-import { ModalViewDispatch } from '../../stores/modal-provider';
-import { ModalActionType } from '../../stores/modal-reducer';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
-import { feilVidLagring } from '../../components/modal/feil-modal-tekster';
 import SkjemaHeader from '../../components/skjema/header/skjema-header';
 import { VedtakData } from '../../rest/data/vedtak';
 import './vedtakskjema-side.less';
-import { useFetchStoreContext } from '../../stores/fetch-store';
+import { useFetchStore } from '../../stores/fetch-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo, lagSlettUtkastFetchInfo } from '../../rest/api';
-import { useAppStoreContext } from '../../stores/app-store';
-import { useViewStoreContext, View } from '../../stores/view-store';
+import { useAppStore } from '../../stores/app-store';
+import { useViewStore, View } from '../../stores/view-store';
+import { ModalType, useModalStore } from '../../stores/modal-store';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -35,10 +28,11 @@ export interface SkjemaData {
 }
 
 export function VedtakskjemaSide() {
-    const { fnr } = useAppStoreContext();
-    const { vedtak } = useFetchStoreContext();
-    const { changeView } = useViewStoreContext();
-    const {modalViewDispatch} = useContext(ModalViewDispatch);
+    const { fnr } = useAppStore();
+    const { vedtak } = useFetchStore();
+    const { changeView } = useViewStore();
+    const { showModal } = useModalStore();
+
     const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
     const [skjemaFeil, setSkjemaFeil] = useState<SkjemaFeil>({});
@@ -90,10 +84,10 @@ export function VedtakskjemaSide() {
         sendDataTilBackend(skjema)
             .then(() => {
                 dispatchFetchVedtakOgRedirectTilHovedside();
-                modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_LAGRET_SUKSESS});
+                showModal(ModalType.VEDTAK_LAGRET_SUKSESS);
             })
             .catch(() => {
-                modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidLagring});
+                showModal(ModalType.FEIL_VED_LAGRING);
             });
     }
 

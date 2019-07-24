@@ -1,17 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ModalWrapper from 'nav-frontend-modal';
-import './modal.less';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { ModalViewDispatch } from '../../stores/modal-provider';
-import { ModalActionType } from '../../stores/modal-reducer';
+import { ModalProps } from './modal-props';
+import './modal.less';
 
-export function SpinnerModal() {
-    const {modalViewState} = useContext(ModalViewDispatch);
-
-    const skalViseModal = modalViewState.modalView === ModalActionType.MODAL_LASTER_DATA;
+export function SpinnerModal(props: ModalProps) {
     return (
         <ModalWrapper
-            isOpen={skalViseModal}
+            isOpen={props.isOpen}
             contentLabel="Laster data"
             onRequestClose={() => {}} // tslint:disable-line:no-empty
             closeButton={false}
