@@ -4,7 +4,7 @@ import { RedigerOpplysning } from './rediger-opplysning/rediger-opplysning';
 import { useRef, useState } from 'react';
 import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
 import { useContext } from 'react';
-import { SkjemaContext } from '../../providers/skjema-provider';
+import { SkjemaContext } from '../../../stores/skjema-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OpplysningerHjelpeTekster } from './hjelpetekst-opplysninger';
 import { SkjemaGruppe } from 'nav-frontend-skjema';

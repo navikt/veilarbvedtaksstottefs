@@ -3,8 +3,8 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import { BekreftCheckboksPanel, Input } from 'nav-frontend-skjema';
 import React, { useContext, useEffect, useState } from 'react';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
-import { ModalViewDispatch } from  '../../components/providers/modal-provider';
-import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
+import { ModalViewDispatch } from '../../stores/modal-provider';
+import { ModalActionType } from '../../stores/modal-reducer';
 import './kvalitetetssikring.less';
 
 interface KvalitetsSikringModalInnsendingProps {

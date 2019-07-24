@@ -12,42 +12,44 @@ import { VEDTAK_I_GOSYS_TOGGLE } from '../../rest/data/features';
 import { SuksessModalInnsending } from './sukssessmodal-innsending';
 import { SuksessModalLagretUtkast } from './suksessmodal-lagret';
 import { useFetchStoreContext } from '../../stores/fetch-store';
+import { useAppStoreContext } from '../../stores/app-store';
 
-export function Hovedside (props: {fnr: string}) {
-    const { vedtak, features } = useFetchStoreContext();
+export function Hovedside() {
+    const { fnr } = useAppStoreContext();
+    const {vedtak, features} = useFetchStoreContext();
 
     const gjeldendeVedtak = vedtak.data.find((v: VedtakData) => v.gjeldende);
     const tidligereVedtak = vedtak.data.filter((v: VedtakData) => !v.gjeldende && v.vedtakStatus === 'SENDT');
-    const utkast =  vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
+    const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
     const visAlertrstripefeatureToggle = features.data[VEDTAK_I_GOSYS_TOGGLE];
 
     return (
-      <>
-        <Page>
-            <AlertStripeVedtakIArena
-                gjeldendeVedtak={gjeldendeVedtak}
-                tidligereVedtak={tidligereVedtak}
-                visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
-            />
-            <div className="hovedside">
-                <div className="vedtak-paneler">
-                    <UtkastPanel utkast={utkast}/>
-                    <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
-                    <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} fnr={props.fnr}/>
+        <>
+            <Page>
+                <AlertStripeVedtakIArena
+                    gjeldendeVedtak={gjeldendeVedtak}
+                    tidligereVedtak={tidligereVedtak}
+                    visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
+                />
+                <div className="hovedside">
+                    <div className="vedtak-paneler">
+                        <UtkastPanel utkast={utkast}/>
+                        <GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak}/>
+                        <NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast}/>
+                    </div>
+                    <div>
+                        <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
+                    </div>
                 </div>
-                <div>
-                    <TidligereVedtakPanel vedtakHistorikk={tidligereVedtak}/>
-                </div>
-            </div>
             </Page>
-          <SuksessModalInnsending/>
-          <SuksessModalLagretUtkast/>
+            <SuksessModalInnsending/>
+            <SuksessModalLagretUtkast/>
         </>
     );
 
 }
 
-function AlertStripeVedtakIArena (props: {visAlertrstripefeatureToggle: boolean, gjeldendeVedtak: OrNothing<VedtakData>, tidligereVedtak: VedtakData[]}) {
+function AlertStripeVedtakIArena(props: { visAlertrstripefeatureToggle: boolean, gjeldendeVedtak: OrNothing<VedtakData>, tidligereVedtak: VedtakData[] }) {
     if (props.visAlertrstripefeatureToggle && (!props.gjeldendeVedtak && props.tidligereVedtak.length === 0)) {
         return (
             <AlertStripeInfo className="blokk-xs">

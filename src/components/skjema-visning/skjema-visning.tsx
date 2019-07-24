@@ -4,12 +4,11 @@ import { HovedmalVisning } from './hovedmal-visning';
 import { BegrunnelseVisning } from './begrunnelse-visning';
 import { InnsatsgruppeVisning } from './innsatsgruppe-visning';
 import { OpplysningerVisning } from './opplysninger-visning';
-import { ActionType } from '../viewcontroller/view-reducer';
-import { ViewDispatch } from '../providers/view-provider';
+import { useViewStoreContext, View } from '../../stores/view-store';
 import './skjema-visning.less';
 
 export function SkjemaVisning(props: {vedtak: VedtakData}) {
-    const {dispatch} = useContext(ViewDispatch);
+    const { changeView } = useViewStoreContext();
     const { id, hovedmal, opplysninger, innsatsgruppe, begrunnelse, beslutter } = props.vedtak;
 
     return (
@@ -20,7 +19,7 @@ export function SkjemaVisning(props: {vedtak: VedtakData}) {
             <OpplysningerVisning opplysninger={opplysninger}/>
             <button
                 className="lenke oyblikksbilde-lenke"
-                onClick={() => dispatch({view: ActionType.VIS_VEDLEGG, props: {vedtakId: id}})}
+                onClick={() => changeView(View.VEDLEGG, { vedtakId: id})}
              >
                 Brukerinformasjon på vedtakstidspunktet
             </button>

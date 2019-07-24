@@ -4,7 +4,7 @@ import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { useContext } from 'react';
-import { SkjemaContext } from '../../providers/skjema-provider';
+import { SkjemaContext } from '../../../stores/skjema-provider';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { utkastetSkalKvalitetssikrets } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';

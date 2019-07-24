@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { SkjemaElement } from '../skjemaelement/skjemaelement';
 import { useContext, useState } from 'react';
-import { SkjemaContext } from '../../providers/skjema-provider';
+import { SkjemaContext } from '../../../stores/skjema-provider';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import './begrunnelse.less';
 import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';

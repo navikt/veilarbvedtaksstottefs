@@ -1,6 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { ViewDispatch } from '../../components/providers/view-provider';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../components/json-viewer/json-viewer';
@@ -17,26 +15,23 @@ import './oyblikksbilde-visning.less';
 import useFetch from '../../rest/use-fetch';
 import { HentOyblikksbildeFetchParams, lagHentOyblikksbildeFetchInfo } from '../../rest/api';
 import { hasFailed, isNotStarted, isNotStartedOrPending } from '../../rest/utils';
-
-interface VedleggVisningProps {
-    vedtakId: number;
-    fnr: string;
-}
+import { useAppStoreContext } from '../../stores/app-store';
+import { useViewStoreContext, View } from '../../stores/view-store';
 
 function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
     const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.kildeType === kildeType) : null;
     return oyblikksbilde ? oyblikksbilde.json : null;
 }
 
-export function OyblikksbildeVisning (props: VedleggVisningProps) {
-    const {dispatch} = useContext(ViewDispatch);
+export function OyblikksbildeVisning (props: { vedtakId: number }) {
+    const { fnr } = useAppStoreContext();
+    const { changeView } = useViewStoreContext();
     const oyblikksbilder = useFetch<Oyblikksbilde[], HentOyblikksbildeFetchParams>(lagHentOyblikksbildeFetchInfo);
 
     useEffect(() => {
         logMetrikk('vis-oyblikksbilde');
-
         if (isNotStarted(oyblikksbilder)) {
-            oyblikksbilder.fetch(props);
+            oyblikksbilder.fetch({ fnr, vedtakId: props.vedtakId });
         }
     }, []);
 
@@ -58,7 +53,7 @@ export function OyblikksbildeVisning (props: VedleggVisningProps) {
                 <div className="oyblikksbilde-visning__aksjoner">
                     <Hovedknapp
                         mini={true}
-                        onClick={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}})}
+                        onClick={() => changeView(View.VEDTAK, { vedtakId: props.vedtakId })}
                     >
                         Tilbake til vedtak
                     </Hovedknapp>

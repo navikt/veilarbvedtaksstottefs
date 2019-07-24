@@ -4,20 +4,18 @@ import {
     validerSkjema
 } from '../../components/skjema/skjema-utils';
 import { useContext, useEffect, useState } from 'react';
-import { ActionType } from '../../components/viewcontroller/view-reducer';
 import React from 'react';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
 import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
 import Skjema from '../../components/skjema/skjema';
-import { SkjemaContext } from '../../components/providers/skjema-provider';
-import { ViewDispatch } from '../../components/providers/view-provider';
+import { SkjemaContext } from '../../stores/skjema-provider';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
-import { ModalViewDispatch } from '../../components/providers/modal-provider';
-import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
+import { ModalViewDispatch } from '../../stores/modal-provider';
+import { ModalActionType } from '../../stores/modal-reducer';
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import { feilVidLagring } from '../../components/modal/feil-modal-tekster';
 import SkjemaHeader from '../../components/skjema/header/skjema-header';
@@ -26,6 +24,8 @@ import './vedtakskjema-side.less';
 import { useFetchStoreContext } from '../../stores/fetch-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo, lagSlettUtkastFetchInfo } from '../../rest/api';
+import { useAppStoreContext } from '../../stores/app-store';
+import { useViewStoreContext, View } from '../../stores/view-store';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -34,13 +34,10 @@ export interface SkjemaData {
     begrunnelse: string;
 }
 
-interface SkjemaAksjonerProps {
-    fnr: string;
-}
-
-export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
+export function VedtakskjemaSide() {
+    const { fnr } = useAppStoreContext();
     const { vedtak } = useFetchStoreContext();
-    const {dispatch} = useContext(ViewDispatch);
+    const { changeView } = useViewStoreContext();
     const {modalViewDispatch} = useContext(ModalViewDispatch);
     const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
@@ -62,7 +59,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
 
     function dispatchFetchVedtakOgRedirectTilHovedside() {
         vedtak.fetch({ fnr });
-        dispatch({view: ActionType.HOVEDSIDE});
+        changeView(View.HOVEDSIDE);
     }
 
     function oppdaterSistEndret(skjema: SkjemaData) {
@@ -83,7 +80,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
 
         sendDataTilBackend(skjema).then(() => {
             vedtak.fetch({ fnr });
-            dispatch({view: ActionType.INNSENDING});
+            changeView(View.INNSENDING);
         }).catch(error => {
             console.log(error); // tslint:disable-line:no-console
         });
@@ -95,7 +92,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
                 dispatchFetchVedtakOgRedirectTilHovedside();
                 modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_LAGRET_SUKSESS});
             })
-            .catch(error => {
+            .catch(() => {
                 modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidLagring});
             });
     }

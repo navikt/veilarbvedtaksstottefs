@@ -5,13 +5,12 @@ import { Panel } from '../panel/panel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { getInnsatsgruppeNavn } from '../../skjema/innsatsgruppe/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import { ViewDispatch } from '../../providers/view-provider';
-import { ActionType } from '../../viewcontroller/view-reducer';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
 import emptyBox from './empty-box.svg';
 import './tidligere-vedtak-panel.less';
 import { logMetrikk } from '../../../utils/frontend-logger';
+import { useViewStoreContext, View } from '../../../stores/view-store';
 
 export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData[]}) {
     if (props.vedtakHistorikk.length === 0) {
@@ -56,16 +55,22 @@ function HarTidligereVedtak({vedtakHistorikk}: {vedtakHistorikk: VedtakData []})
 }
 
 function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
-    const {dispatch} = useContext(ViewDispatch);
+    const { changeView } = useViewStoreContext();
     const tidligereVedtak = props.tidligereVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(tidligereVedtak.innsatsgruppe);
     const id = "tidligere-vedtak-" + props.index;
+
+    function handleTidligereVedtakClicked() {
+        changeView(View.VEDTAK, { vedtakId: props.tidligereVedtak.id });
+        logMetrikk('vis-tidligere-vedtak', { index: props.index });
+    }
+
     return (
         <li className="vedtak-historikk-liste__item">
             <button
                 aria-describedby={id}
                 className="tidligere-vedtak knapp__no-style"
-                onClick={() => handleTidligereVedtakClicked(dispatch, tidligereVedtak, props.index)}
+                onClick={handleTidligereVedtakClicked}
             >
                 <div className="tidligere-vedtak__innhold">
                     <div id={id}>
@@ -83,9 +88,4 @@ function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
             </button>
         </li>
     );
-}
-
-function handleTidligereVedtakClicked(dispatch: any, tidligereVedtak: VedtakData, index: number) {
-    dispatch({view: ActionType.VIS_VEDTAK, props: {id: tidligereVedtak.id}});
-    logMetrikk('vis-tidligere-vedtak', { index });
 }

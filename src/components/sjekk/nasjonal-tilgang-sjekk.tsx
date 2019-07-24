@@ -1,8 +1,6 @@
-import React, { ReactNode, useEffect } from 'react';
-
+import React, { useEffect } from 'react';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import TilgangTilBrukersKontor from '../../utils/types/tilgang-til-brukers-kontor';
-import { isAnyFailed, isAnyLoading } from '../../utils/fetch-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import useFetch from '../../rest/use-fetch';
 import { FnrFetchParams, lagHentTilgangTilKontorFetchInfo } from '../../rest/api';

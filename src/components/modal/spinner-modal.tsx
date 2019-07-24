@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import ModalWrapper from 'nav-frontend-modal';
 import './modal.less';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { ModalViewDispatch } from '../providers/modal-provider';
-import { ModalActionType } from '../modalcontroller/modal-reducer';
+import { ModalViewDispatch } from '../../stores/modal-provider';
+import { ModalActionType } from '../../stores/modal-reducer';
 
 export function SpinnerModal() {
     const {modalViewState} = useContext(ModalViewDispatch);

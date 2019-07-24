@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import './hovedmal.less';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { SkjemaContext } from '../../providers/skjema-provider';
+import { SkjemaContext } from '../../../stores/skjema-provider';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';

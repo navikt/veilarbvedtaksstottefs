@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { initialModalViewState, modalViewReducer } from '../modalcontroller/modal-reducer';
+import { initialModalViewState, modalViewReducer } from './modal-reducer';
 
 export const ModalViewDispatch = React.createContext<any>(null);
 

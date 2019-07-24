@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import React from 'react';
-import { VedtakData } from '../../rest/data/vedtak';
-import { mergeMedDefaultOpplysninger } from '../skjema/skjema-utils';
-import { HovedmalType } from '../skjema/hovedmal/hovedmal';
-import { InnsatsgruppeType } from '../skjema/innsatsgruppe/innsatsgruppe';
-import { Opplysning } from '../skjema/opplysninger/opplysninger';
-import { useFetchStoreContext } from '../../stores/fetch-store';
+import { VedtakData } from '../rest/data/vedtak';
+import { mergeMedDefaultOpplysninger } from '../components/skjema/skjema-utils';
+import { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
+import { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgruppe';
+import { Opplysning } from '../components/skjema/opplysninger/opplysninger';
+import { useFetchStoreContext } from './fetch-store';
 
 const initialSkjemaData = {
     opplysninger: undefined,

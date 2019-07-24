@@ -1,25 +1,26 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ViewDispatch } from '../../components/providers/view-provider';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { ActionType } from '../../components/viewcontroller/view-reducer';
 import './vedtaksbrev-visning.less';
 import { OrNothing } from '../../utils/types/ornothing';
-import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
+import { ModalActionType } from '../../stores/modal-reducer';
 import { SpinnerModal } from '../../components/modal/spinner-modal';
-import { ModalViewDispatch } from '../../components/providers/modal-provider';
+import { ModalViewDispatch } from '../../stores/modal-provider';
 import { logMetrikk } from '../../utils/frontend-logger';
-import { feilVidVisningProps } from '../../components/modal/feil-modal-tekster';
+import { feilVedVisningProps } from '../../components/modal/feil-modal-tekster';
 import { useFetchStoreContext } from '../../stores/fetch-store';
 import { lagHentVedtakPdfUrl } from '../../rest/api';
+import { useAppStoreContext } from '../../stores/app-store';
+import { useViewStoreContext, View } from '../../stores/view-store';
 
-export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
+export function VedtaksbrevVisning (props: {vedtakId: number}) {
+    const { fnr } = useAppStoreContext();
     const { vedtak } = useFetchStoreContext();
-    const {dispatch} = useContext(ViewDispatch);
+    const { changeView } = useViewStoreContext();
     const vedtaksObjekt = vedtak.data.find(v => v.id === props.vedtakId);
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
     const {modalViewDispatch} = useContext(ModalViewDispatch);
@@ -38,7 +39,7 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
             case 'SUCCESS':
                 return modalViewDispatch({modalView: null});
             case 'ERROR':
-                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidVisningProps(props.vedtakId)});
+                return modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVedVisningProps(props.vedtakId)});
             default:
                 return;
         }
@@ -48,7 +49,7 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
     const dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
     const url = env.isDevelopment
         ? vedtaksBrevUrl
-        : lagHentVedtakPdfUrl(props.fnr, dokumentInfoId, journalpostId);
+        : lagHentVedtakPdfUrl(fnr, dokumentInfoId, journalpostId);
 
     return (
         <>
@@ -62,7 +63,7 @@ export function VedtaksbrevVisning (props: {fnr: string, vedtakId: number}) {
                 <div className="vedtaksbrev-visning__aksjoner">
                     <Hovedknapp
                         mini={true}
-                        onClick={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}})}
+                        onClick={() => changeView(View.VEDTAK, { vedtakId: props.vedtakId})}
                     >
                         Tilbake til vedtak
                     </Hovedknapp>

@@ -1,16 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
-import { ViewDispatch } from '../../components/providers/view-provider';
+import { ModalActionType } from '../../stores/modal-reducer';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import './forhandsvisning.less';
 import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../rest/data/features';
-import { ModalViewDispatch } from '../../components/providers/modal-provider';
+import { ModalViewDispatch } from '../../stores/modal-provider';
 import { utkastetSkalKvalitetssikrets } from '../../components/skjema/skjema-utils';
 import { KvalitetsSikringModalInnsending } from './kvalitetssikring';
 import { VedtakData } from '../../rest/data/vedtak';
@@ -25,12 +23,15 @@ import {
 import { useFetchStoreContext } from '../../stores/fetch-store';
 import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
 import { fetchWithInfo } from '../../rest/utils';
+import { useAppStoreContext } from '../../stores/app-store';
+import { useViewStoreContext, View } from '../../stores/view-store';
 
-export function Forhandsvisning(props: { fnr: string }) {
+export function Forhandsvisning() {
+    const { fnr } = useAppStoreContext();
+    const { changeView } = useViewStoreContext();
     const { vedtak, features } = useFetchStoreContext();
 
     const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
-    const {dispatch} = useContext(ViewDispatch);
     const {modalViewDispatch} = useContext(ModalViewDispatch);
 
     const utkast =  vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
@@ -40,10 +41,10 @@ export function Forhandsvisning(props: { fnr: string }) {
 
     const url = env.isDevelopment
         ? vedtaksBrevUrl
-        : lagHentForhandsvisningUrl(props.fnr);
+        : lagHentForhandsvisningUrl(fnr);
 
     const tilbakeTilSkjema  = () => {
-        dispatch({view: ActionType.UTKAST});
+        changeView(View.UTKAST);
         logMetrikk('tilbake-fra-forhandsvisning');
     };
 
@@ -63,15 +64,15 @@ export function Forhandsvisning(props: { fnr: string }) {
     }, [pdfStatus]);
 
     const tilbakeTilHovedsiden = () => {
-        vedtak.fetch({ fnr: props.fnr });
-        dispatch({view: ActionType.HOVEDSIDE});
+        vedtak.fetch({ fnr });
+        changeView(View.HOVEDSIDE);
         modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_SENT_SUKSESS});
     };
 
     const sendVedtak = (beslutter?: string) => {
         modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
 
-        fetchWithInfo(lagSendVedtakFetchInfo({ fnr: props.fnr, beslutter }))
+        fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutter }))
             .then(() => {
                 tilbakeTilHovedsiden();
             })

@@ -2,8 +2,8 @@ import { VarselModal } from '../../components/modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import React, { useContext } from 'react';
-import { ModalViewDispatch } from '../../components/providers/modal-provider';
-import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
+import { ModalViewDispatch } from '../../stores/modal-provider';
+import { ModalActionType } from '../../stores/modal-reducer';
 import { Knapp } from 'nav-frontend-knapper';
 
 export function SuksessModalInnsending () {
