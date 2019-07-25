@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { mapTilTekstliste, skjemaIsNotEmpty } from '../../components/skjema/skjema-utils';
+import {
+    mapTilTekstliste,
+    mergeMedDefaultOpplysninger,
+    skjemaIsNotEmpty,
+    validerBegrunnelseMaxLength
+} from '../../components/skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
@@ -12,12 +17,14 @@ import SkjemaHeader from '../../components/skjema/header/skjema-header';
 import { VedtakData } from '../../rest/data/vedtak';
 import './vedtakskjema-side.less';
 import { useFetchStore } from '../../stores/fetch-store';
-import { fetchWithInfo } from '../../rest/utils';
+import { fetchWithInfo, hasData } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
+import { Opplysning } from '../../components/skjema/opplysninger/opplysninger';
+import { useTimer } from '../../utils/hooks/use-timer';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -28,13 +35,16 @@ export interface SkjemaData {
 
 export function VedtakskjemaSide() {
     const { fnr } = useAppStore();
-    const { vedtak } = useFetchStore();
+    const { vedtak, malform } = useFetchStore();
     const { changeView } = useViewStore();
     const { showModal } = useModalStore();
     const {
-        opplysninger, begrunnelse, innsatsgruppe,
-        hovedmal, sistOppdatert, setSistOppdatert,
-        validerSkjema
+        opplysninger, setOpplysninger,
+        hovedmal, setHovedmal,
+        innsatsgruppe, setInnsatsgruppe,
+        begrunnelse, setBegrunnelse,
+        sistOppdatert, setSistOppdatert,
+        validerSkjema, validerBegrunnelseLengde
     } = useSkjemaStore();
 
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
@@ -43,10 +53,38 @@ export function VedtakskjemaSide() {
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
     useEffect(() => {
+
+        if (hasData(vedtak) && hasData(malform)) {
+            const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
+
+            if (utkast) {
+                const mergetOpplysninger = mergeMedDefaultOpplysninger(utkast.opplysninger,
+                    malform.data ? malform.data.malform : null) as Opplysning[];
+
+                setHovedmal(utkast.hovedmal);
+                setOpplysninger(mergetOpplysninger);
+                setInnsatsgruppe(utkast.innsatsgruppe);
+                setBegrunnelse(utkast.begrunnelse);
+                setSistOppdatert(utkast.sistOppdatert);
+            }
+        }
+
+    }, [vedtak.status, malform.status]);
+
+    useEffect(() => {
         if (harForsoktAttSende) {
             validerSkjema();
+        } else {
+            validerBegrunnelseLengde();
         }
+
     }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
+
+
+    useTimer(() => {
+        oppdaterSistEndret(vedtakskjema);
+    }, 2000, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
+
 
     function sendDataTilBackend(skjema: SkjemaData) {
         return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema }))
@@ -92,7 +130,7 @@ export function VedtakskjemaSide() {
         <Page>
             <Card className="vedtakskjema">
                 <SkjemaHeader vedtak={utkast} sistOppdatert={sistOppdatert}/>
-                <Skjema oppdaterSistEndret={oppdaterSistEndret}/>
+                <Skjema />
             </Card>
             <Footer className="vedtakskjema__footer">
                 <Aksjoner

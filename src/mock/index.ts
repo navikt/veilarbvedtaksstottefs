@@ -8,18 +8,6 @@ import tilgangTilBrukersKontor from './data/tilgang-til-brukers-kontor';
 import malform from './data/malform';
 import FetchMock, { JSONArray, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
 
-// Use this when you need to mock different status codes
-// @ts-ignore
-// eslint-disable-next-line
-// const failureMock = FetchMock.configure({
-//     enableFallback: true,
-//     middleware: MiddlewareUtils.combine(
-//         MiddlewareUtils.failurerateMiddleware(1, { status: 403 }),
-//         MiddlewareUtils.delayMiddleware(404),
-//         MiddlewareUtils.loggingMiddleware()
-//     )
-// });
-
 const mock = FetchMock.configure({
     enableFallback: true,
     middleware: MiddlewareUtils.combine(

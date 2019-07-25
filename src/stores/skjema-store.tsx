@@ -3,7 +3,11 @@ import { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgruppe';
 import createUseContext from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
-import { mapTilTekstliste, validerSkjema as valider } from '../components/skjema/skjema-utils';
+import {
+    mapTilTekstliste,
+    validerBegrunnelseMaxLength,
+    validerSkjema as valider
+} from '../components/skjema/skjema-utils';
 import { Opplysning } from '../components/skjema/opplysninger/opplysninger';
 
 export const useSkjemaStore = createUseContext(() => {
@@ -21,12 +25,17 @@ export const useSkjemaStore = createUseContext(() => {
         return Object.keys(feil).length === 0;
     };
 
+    const validerBegrunnelseLengde = () => {
+        const begrunnelseFeil = validerBegrunnelseMaxLength(begrunnelse);
+        setErrors(Object.assign({}, errors, begrunnelseFeil));
+    };
+
     return {
         opplysninger, setOpplysninger,
         hovedmal, setHovedmal,
         innsatsgruppe, setInnsatsgruppe,
         begrunnelse, setBegrunnelse,
         sistOppdatert, setSistOppdatert,
-        errors, validerSkjema
+        errors, validerSkjema, validerBegrunnelseLengde
     };
 });
