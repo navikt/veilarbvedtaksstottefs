@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { FetchInfo, FetchState, FetchStatus } from './utils';
+import { logger } from '../utils/logger';
 
 export interface Fetch<D = any, FP = any> extends FetchState<D> {
     fetch: (fetchParams: FP, onFinished?: (fetchState: FetchState<D>) => void) => void;
@@ -58,9 +59,15 @@ const useFetch = <D = {}, FP = any>(createFetchInfo: (fetchParams: FP) => FetchI
             .catch(error => {
                 return createFinishedFetchState(null as any, error, -1);
             }).then(fetchState => {
+
+                if (fetchState.httpCode >= 400) {
+                    logger.error('API kall feilet', fetchState);
+                }
+
                 if (onFinished) {
                     onFinished(fetchState);
                 }
+
                 setFetchState(fetchState);
             });
     };

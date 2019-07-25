@@ -7,14 +7,11 @@ import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { EMDASH } from '../../../utils';
 import './hovedmal.less';
+import { lagSkjemaElementFeil } from '../skjema-utils';
 
 export enum HovedmalType {
     SKAFFE_ARBEID = 'SKAFFE_ARBEID',
     BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
-}
-
-interface HovedmalProps {
-    hovedmalfeil?: string;
 }
 
 export const getHovedmalNavn = (hovedmal: OrNothing<HovedmalType>) => {
@@ -33,15 +30,15 @@ const hovedmalliste = [
     },
 ];
 
-function Hovedmal(props: HovedmalProps) {
-    const { innsatsgruppe, hovedmal, setHovedmal } = useSkjemaStore();
+function Hovedmal() {
+    const { innsatsgruppe, hovedmal, setHovedmal, errors } = useSkjemaStore();
     const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
     return (
         <SkjemaBolk
             tittel="Hovedmål"
             tittelId="hovedmal-id"
         >
-            <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding: props.hovedmalfeil} : undefined}>
+            <SkjemaGruppe feil={lagSkjemaElementFeil(errors.hovedmal)}>
                 {erVarigTilpassetInnsats
                     ? <AlertStripeInfo className="hovedmal-info">
                         <span className="hovedmal-info__tekst">

@@ -7,7 +7,7 @@ import { ModalProps } from './modal-props';
 import { useModalStore } from '../../stores/modal-store';
 import { useViewStore } from '../../stores/view-store';
 import Show from '../show';
-import { FeilmodalConfig } from './feilmodal-tekster';
+import { FeilmodalConfig } from './feilmodal-config';
 
 interface FeilmodalProps extends ModalProps {
     config: FeilmodalConfig;
@@ -19,14 +19,10 @@ export function FeilModal(props: FeilmodalProps) {
     const { changeView } = useViewStore();
 
     function handleOnClick() {
-        // if (typeof viewAction === 'object') {
-        //     changeView(viewAction.view, viewAction.props);
-        // } else {
-        //     changeView(viewAction);
-        // }
-
-        changeView(viewAction);
-        hideModal();
+        if (viewAction) {
+            changeView(viewAction);
+            hideModal();
+        }
     }
 
     return (

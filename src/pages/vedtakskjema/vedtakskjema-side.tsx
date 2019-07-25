@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { mapTilTekstliste, skjemaIsNotEmpty, validerSkjema } from '../../components/skjema/skjema-utils';
+import { mapTilTekstliste, skjemaIsNotEmpty } from '../../components/skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
@@ -8,7 +8,6 @@ import Skjema from '../../components/skjema/skjema';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
-import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import SkjemaHeader from '../../components/skjema/header/skjema-header';
 import { VedtakData } from '../../rest/data/vedtak';
 import './vedtakskjema-side.less';
@@ -19,7 +18,6 @@ import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { logger } from '../../utils/logger';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -35,24 +33,26 @@ export function VedtakskjemaSide() {
     const { showModal } = useModalStore();
     const {
         opplysninger, begrunnelse, innsatsgruppe,
-        hovedmal, sistOppdatert, setSistOppdatert
+        hovedmal, sistOppdatert, setSistOppdatert,
+        validerSkjema
     } = useSkjemaStore();
 
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
-    const [skjemaFeil, setSkjemaFeil] = useState<SkjemaFeil>({});
 
     const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST') as VedtakData;
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
     useEffect(() => {
         if (harForsoktAttSende) {
-            const errors = validerSkjema(vedtakskjema);
-            setSkjemaFeil(errors);
+            validerSkjema();
         }
     }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
     function sendDataTilBackend(skjema: SkjemaData) {
-        return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema }));
+        return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema }))
+            .catch(() => {
+                showModal(ModalType.FEIL_VED_LAGRING);
+            });
     }
 
     function dispatchFetchVedtakOgRedirectTilHovedside() {
@@ -70,17 +70,13 @@ export function VedtakskjemaSide() {
 
     function handleForhandsvis(skjema: SkjemaData) {
         setHarForsoktAttSende(true);
-        const errors = validerSkjema(skjema);
-        if (Object.entries(errors).filter(feilmelding => feilmelding).length > 0) {
-            setSkjemaFeil(errors);
+
+        if (!validerSkjema()) {
             return;
         }
 
         sendDataTilBackend(skjema).then(() => {
-            vedtak.fetch({ fnr });
             changeView(ViewType.FORHANDSVISNING);
-        }).catch(error => {
-            logger.error(error);
         });
     }
 
@@ -89,10 +85,6 @@ export function VedtakskjemaSide() {
             .then(() => {
                 dispatchFetchVedtakOgRedirectTilHovedside();
                 showModal(ModalType.VEDTAK_LAGRET_SUKSESS);
-            })
-            .catch((err) => {
-                showModal(ModalType.FEIL_VED_LAGRING);
-                logger.error(err);
             });
     }
 
@@ -100,7 +92,7 @@ export function VedtakskjemaSide() {
         <Page>
             <Card className="vedtakskjema">
                 <SkjemaHeader vedtak={utkast} sistOppdatert={sistOppdatert}/>
-                <Skjema errors={skjemaFeil} oppdaterSistEndret={oppdaterSistEndret}/>
+                <Skjema oppdaterSistEndret={oppdaterSistEndret}/>
             </Card>
             <Footer className="vedtakskjema__footer">
                 <Aksjoner

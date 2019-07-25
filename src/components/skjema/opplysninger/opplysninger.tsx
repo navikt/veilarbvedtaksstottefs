@@ -8,17 +8,14 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import './opplysninger.less';
+import { lagSkjemaElementFeil } from '../skjema-utils';
 
 export type Opplysning = {
     [key: string]: boolean
 };
 
-interface OpplysningerProps {
-    opplysningerfeil?: string;
-}
-
-function Opplysninger(props: OpplysningerProps) {
-    const { opplysninger, setOpplysninger } = useSkjemaStore();
+function Opplysninger() {
+    const { opplysninger, setOpplysninger, errors } = useSkjemaStore();
     const [redigeringModusIndeks, setRedigeringModusIndeks ] = useState<number>( -1);
     const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning ] = useState<boolean>( true);
     const [sistEndretIndeks, setSistEndretIndeks] = useState<number>( -1);
@@ -72,7 +69,7 @@ function Opplysninger(props: OpplysningerProps) {
                 <div className="opplysninger__innhold">
                     <SkjemaGruppe
                         aria-labelledby="kilder-tittel"
-                        feil={props.opplysningerfeil ?  {feilmelding : props.opplysningerfeil} : undefined}
+                        feil={lagSkjemaElementFeil(errors.opplysninger)}
                     >
                         {opplysninger.map((opplysning, index) =>
                             redigeringModusIndeks !== index

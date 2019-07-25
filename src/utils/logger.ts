@@ -1,6 +1,5 @@
 import env from './environment';
 import { frontendlogger } from './frontend-logger';
-import { APP_NAME } from './constants';
 
 export const log = (...args: any[]): void => {
     if (env.isDevelopment) {
@@ -24,7 +23,7 @@ export const error = (...args: any[]): void => {
     if (env.isDevelopment) {
         console.error(...args);
     } else if (env.isProduction) {
-        frontendlogger.logEvent(`${APP_NAME}.error`, { error: JSON.stringify(args) });
+        frontendlogger.logError({ error: JSON.stringify(args) });
     }
 };
 

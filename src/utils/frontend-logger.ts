@@ -11,11 +11,16 @@ const logEvent = (logTag: string, fields?: {}, tags?: {}): void => {
     }
 };
 
+const logError = (fields?: {}, tags?: {}): void => {
+    logEvent(`${APP_NAME}.error`, fields, tags);
+};
+
 const logMetrikk = (metrikkNavn: string, fields?: {}, tags?: {}): void => {
     logEvent(`${APP_NAME}.metrikker.${metrikkNavn}`, fields, tags);
 };
 
 export const frontendlogger = {
     logEvent,
-    logMetrikk
+    logMetrikk,
+    logError
 };

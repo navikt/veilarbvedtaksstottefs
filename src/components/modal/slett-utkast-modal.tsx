@@ -4,30 +4,30 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ModalProps } from './modal-props';
-import { useModalStore } from '../../stores/modal-store';
+import { ModalType, useModalStore } from '../../stores/modal-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagSlettUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { useFetchStore } from '../../stores/fetch-store';
-import { logger } from '../../utils/logger';
 
 function SlettUtkastModal (props: ModalProps) {
     const { fnr } = useAppStore();
-    const { hideModal } = useModalStore();
+    const { hideModal, showModal } = useModalStore();
     const { vedtak } = useFetchStore();
     const { changeView } = useViewStore();
 
     function handleOnDeleteClicked() {
+        showModal(ModalType.LASTER);
         fetchWithInfo(lagSlettUtkastFetchInfo({fnr}))
             .then(() => {
-                vedtak.fetch({ fnr });
-                hideModal();
-                changeView(ViewType.HOVEDSIDE);
+                vedtak.fetch({ fnr }, () => {
+                    hideModal();
+                    changeView(ViewType.HOVEDSIDE);
+                });
             })
-            .catch(error => {
-                // TODO: Vis feil modal
-                logger.error(error);
+            .catch(() => {
+                showModal(ModalType.FEIL_VED_SLETTING);
             });
     }
 

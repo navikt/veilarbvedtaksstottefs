@@ -46,13 +46,14 @@ export function Forhandsvisning() {
     }, [pdfStatus]);
 
     const tilbakeTilHovedsiden = () => {
-        vedtak.fetch({fnr});
-        changeView(ViewType.HOVEDSIDE);
-        showModal(ModalType.VEDTAK_SENT_SUKSESS);
+        vedtak.fetch({fnr}, () => {
+            changeView(ViewType.HOVEDSIDE);
+            showModal(ModalType.VEDTAK_SENT_SUKSESS);
+        });
     };
 
     const sendVedtak = (beslutter?: string) => {
-        showModal(ModalType.LASTER_DATA);
+        showModal(ModalType.LASTER);
 
         fetchWithInfo(lagSendVedtakFetchInfo({fnr, beslutter}))
             .then(() => {

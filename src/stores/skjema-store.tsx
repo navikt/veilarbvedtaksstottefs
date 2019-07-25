@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgruppe';
-import { Opplysning } from '../components/skjema/opplysninger/opplysninger';
 import createUseContext from 'constate';
+import { SkjemaFeil } from '../utils/types/skjema-feil';
+import { mapTilTekstliste, validerSkjema as valider } from '../components/skjema/skjema-utils';
+import { Opplysning } from '../components/skjema/opplysninger/opplysninger';
 
 export const useSkjemaStore = createUseContext(() => {
     const [opplysninger, setOpplysninger] = useState<Opplysning[]>([]);
@@ -10,12 +12,21 @@ export const useSkjemaStore = createUseContext(() => {
     const [innsatsgruppe, setInnsatsgruppe] = useState<InnsatsgruppeType | undefined>();
     const [begrunnelse, setBegrunnelse] = useState('');
     const [sistOppdatert, setSistOppdatert] = useState('');
+    const [errors, setErrors] = useState<SkjemaFeil>({});
+
+    const validerSkjema = (): boolean => {
+        const opplysningerListe = mapTilTekstliste(opplysninger);
+        const errors = valider({ opplysninger: opplysningerListe, hovedmal, innsatsgruppe, begrunnelse });
+        setErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
 
     return {
         opplysninger, setOpplysninger,
         hovedmal, setHovedmal,
         innsatsgruppe, setInnsatsgruppe,
         begrunnelse, setBegrunnelse,
-        sistOppdatert, setSistOppdatert
+        sistOppdatert, setSistOppdatert,
+        errors, validerSkjema
     };
 });

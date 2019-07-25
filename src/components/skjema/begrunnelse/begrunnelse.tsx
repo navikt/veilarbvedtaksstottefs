@@ -2,29 +2,25 @@ import React, { useContext, useEffect, useState } from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';
-import { validerBegrunnelsebegrunnelseMaxLengthTekst } from '../skjema-utils';
+import { lagSkjemaElementFeil, validerBegrunnelseMaxLength } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import './begrunnelse.less';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 
-interface BegrunnelseProps {
-    begrunnelsefeil?: string;
-}
-
-function Begrunnelse(props: BegrunnelseProps) {
-    const { begrunnelse, setBegrunnelse } = useSkjemaStore();
-    const [begrunnelseFeil, setBegrunnelseFeil] = useState(props.begrunnelsefeil);
+function Begrunnelse() {
+    const { begrunnelse, setBegrunnelse, errors } = useSkjemaStore();
+    const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 
     useEffect(() => {
-        const errors = validerBegrunnelsebegrunnelseMaxLengthTekst(begrunnelse);
+        const errors = validerBegrunnelseMaxLength(begrunnelse);
         setBegrunnelseFeil(errors.begrunnelse);
     }, [begrunnelse]);
 
     useEffect(() => {
-        setBegrunnelseFeil(props.begrunnelsefeil);
-    }, [props.begrunnelsefeil]);
+        setBegrunnelseFeil(errors.begrunnelse);
+    }, [errors.begrunnelse]);
 
     return (
         <SkjemaBolk
@@ -38,7 +34,7 @@ function Begrunnelse(props: BegrunnelseProps) {
                     og gjeldende oppfølgingsvedtak viser <i>nedsatt arbeidsevne</i>
               </AlertStripeInfo>
                 <SkjemaGruppe
-                    feil={begrunnelseFeil ? {feilmelding : begrunnelseFeil} : undefined}
+                    feil={lagSkjemaElementFeil(begrunnelseFeil)}
                     className="begrunnelse__container"
                 >
                 <Textarea

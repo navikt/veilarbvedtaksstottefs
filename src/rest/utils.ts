@@ -1,3 +1,5 @@
+import { frontendlogger } from '../utils/frontend-logger';
+
 export type FetchInfo = RequestInit & { url: string };
 
 export enum FetchStatus {
@@ -51,5 +53,16 @@ export const hasData = (fetch: FetchState): boolean => {
 
 export const fetchWithInfo = (fetchInfo: FetchInfo) => {
     const { url, ...rest } = fetchInfo;
-    return fetch(url, rest);
+    return fetch(url, rest).then((res) => {
+
+        if (res.status >= 400) {
+            res.clone().text()
+                .then(txt => {
+                    frontendlogger.logError({ error: txt });
+                })
+                .catch();
+        }
+
+        return res;
+    });
 };

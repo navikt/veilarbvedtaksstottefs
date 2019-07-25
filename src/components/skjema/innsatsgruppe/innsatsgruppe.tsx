@@ -2,7 +2,7 @@ import React from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { utkastetSkalKvalitetssikrets } from '../skjema-utils';
+import { lagSkjemaElementFeil, utkastetSkalKvalitetssikrets } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import './innsatsgruppe.less';
@@ -45,12 +45,8 @@ export const innsatsgrupper = [
 
 ];
 
-interface InnsatsgruppeProps {
-    innsatgruppefeil?: string;
-}
-
-function Innsatsgruppe (props: InnsatsgruppeProps) {
-    const { innsatsgruppe, setInnsatsgruppe, setHovedmal } = useSkjemaStore();
+function Innsatsgruppe () {
+    const { innsatsgruppe, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();
     const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
     return (
         <SkjemaBolk
@@ -64,7 +60,7 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
                 </span>
             </AlertStripeAdvarsel>
             }
-            <SkjemaGruppe feil={props.innsatgruppefeil ? {feilmelding : props.innsatgruppefeil} : undefined}>
+            <SkjemaGruppe feil={lagSkjemaElementFeil(errors.innsatsgruppe)}>
                 <InnsatsgruppeRadioButtons
                     handleInnsatsgruppeChanged={setInnsatsgruppe}
                     innsatsgruppe={innsatsgruppe}

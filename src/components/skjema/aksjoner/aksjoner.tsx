@@ -11,6 +11,10 @@ interface AksjonerProps {
 
 function Aksjoner (props: AksjonerProps) {
     const { showModal } = useModalStore();
+
+
+
+
     return (
         <div className="aksjoner">
             <div className="aksjoner__knapper">

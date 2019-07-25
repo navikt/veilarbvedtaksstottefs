@@ -14,11 +14,10 @@ import { useFetchStore } from '../../stores/fetch-store';
 import { VedtakData } from '../../rest/data/vedtak';
 
 interface SkjemaProps {
-    errors: SkjemaFeil;
     oppdaterSistEndret: (skjema: SkjemaData) => void;
 }
 
-function Skjema({errors, oppdaterSistEndret}: SkjemaProps) {
+function Skjema({oppdaterSistEndret}: SkjemaProps) {
     const { vedtak, malform } = useFetchStore();
     const {
         opplysninger, setOpplysninger,
@@ -49,13 +48,16 @@ function Skjema({errors, oppdaterSistEndret}: SkjemaProps) {
 
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
-    useTimer(() => oppdaterSistEndret(vedtakskjema), 2000, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
+    useTimer(() => {
+        oppdaterSistEndret(vedtakskjema)
+    }, 2000, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
+
     return (
         <form>
-            <Opplysninger opplysningerfeil={errors.opplysninger}/>
-            <Begrunnelse begrunnelsefeil={errors.begrunnelse}/>
-            <Innsatsgruppe innsatgruppefeil={errors.innsatsgruppe}/>
-            <Hovedmal hovedmalfeil={errors.hovedmal}/>
+            <Opplysninger />
+            <Begrunnelse />
+            <Innsatsgruppe />
+            <Hovedmal />
         </form>
     );
 }

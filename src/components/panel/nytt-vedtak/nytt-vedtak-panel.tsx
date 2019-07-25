@@ -11,23 +11,28 @@ import { fetchWithInfo } from '../../../rest/utils';
 import { lagNyttVedtakUtkastFetchInfo } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
+import { ModalType, useModalStore } from '../../../stores/modal-store';
 import './nytt-vedtak-panel.less';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData>, gjeldendeVedtak: OrNothing<VedtakData> }) {
     const { fnr } = useAppStore();
-    const {underOppfolging, vedtak} = useFetchStore();
-    const {changeView} = useViewStore();
-    const {utkast, gjeldendeVedtak} = props;
+    const { showModal, hideModal } = useModalStore();
+    const { underOppfolging, vedtak } = useFetchStore();
+    const { changeView } = useViewStore();
+    const { utkast, gjeldendeVedtak } = props;
 
     function lagNyttVedtakUtkastOgRedirectTilUtkast() {
+        showModal(ModalType.LASTER);
         fetchWithInfo(lagNyttVedtakUtkastFetchInfo({ fnr }))
             .then(() => {
                 vedtak.fetch({ fnr }, () => {
+                    hideModal();
                     changeView(ViewType.UTKAST);
+                    frontendlogger.logMetrikk('lag-nytt-vedtak');
                 });
+            }).catch(() => {
+                showModal(ModalType.FEIL_VED_OPPRETTING_AV_UTKAST);
             });
-
-        frontendlogger.logMetrikk('lag-nytt-vedtak');
     }
 
     if (utkast || !underOppfolging.data.underOppfolging) {
