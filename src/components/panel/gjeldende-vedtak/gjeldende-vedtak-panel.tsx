@@ -11,7 +11,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import ingenVedtakBilde from './ingen-vedtak.svg';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import { useFetchStore } from '../../../stores/fetch-store';
-import { useViewStore, View } from '../../../stores/view-store';
+import { useViewStore, ViewType } from '../../../stores/view-store';
 import './gjeldende-vedtak-panel.less';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
@@ -41,7 +41,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
     const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
 
     const handleVisVedtakClicked = () => {
-        changeView(View.VEDTAK, { vedtakId: id });
+        changeView(ViewType.VEDTAK, { vedtakId: id });
         frontendlogger.logMetrikk('vis-gjeldende-vedtak');
     };
 

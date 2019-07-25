@@ -4,7 +4,7 @@ import { HovedmalVisning } from './hovedmal-visning';
 import { BegrunnelseVisning } from './begrunnelse-visning';
 import { InnsatsgruppeVisning } from './innsatsgruppe-visning';
 import { OpplysningerVisning } from './opplysninger-visning';
-import { useViewStore, View } from '../../stores/view-store';
+import { useViewStore, ViewType } from '../../stores/view-store';
 import './skjema-visning.less';
 
 export function SkjemaVisning(props: {vedtak: VedtakData}) {
@@ -19,7 +19,7 @@ export function SkjemaVisning(props: {vedtak: VedtakData}) {
             <OpplysningerVisning opplysninger={opplysninger}/>
             <button
                 className="lenke oyblikksbilde-lenke"
-                onClick={() => changeView(View.VEDLEGG, { vedtakId: id})}
+                onClick={() => changeView(ViewType.VEDLEGG, { vedtakId: id})}
              >
                 Brukerinformasjon på vedtakstidspunktet
             </button>

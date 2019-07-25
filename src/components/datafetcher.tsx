@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useFetchStore } from '../stores/fetch-store';
 import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../rest/utils';
+import Spinner from './spinner/spinner';
 
 export function DataFetcher (props: {fnr: string, children: any}) {
     const { underOppfolging, features, malform, vedtak } = useFetchStore();
@@ -26,7 +26,7 @@ export function DataFetcher (props: {fnr: string, children: any}) {
     }, [vedtak, underOppfolging, malform, features]);
 
     if (isAnyNotStartedOrPending([vedtak, malform, underOppfolging, features])) {
-        return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;
+        return <Spinner/>;
     } else if (hasAnyFailed([vedtak, malform, underOppfolging, features])) {
         return (
             <AlertStripeFeil className="vedtaksstotte-alert">

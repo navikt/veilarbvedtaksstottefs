@@ -8,13 +8,12 @@ import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../rest/data/features';
 import { utkastetSkalKvalitetssikrets } from '../../components/skjema/skjema-utils';
 import { VedtakData } from '../../rest/data/vedtak';
-import { OrNothing } from '../../utils/types/ornothing';
 import { frontendlogger } from '../../utils/frontend-logger';
 import { useFetchStore } from '../../stores/fetch-store';
 import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
 import { fetchWithInfo } from '../../rest/utils';
 import { useAppStore } from '../../stores/app-store';
-import { useViewStore, View } from '../../stores/view-store';
+import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import './forhandsvisning.less';
 
@@ -24,7 +23,7 @@ export function Forhandsvisning() {
     const {vedtak, features} = useFetchStore();
     const {showModal} = useModalStore();
 
-    const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
+    const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
     const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
     const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(utkast && utkast.innsatsgruppe);
@@ -36,29 +35,19 @@ export function Forhandsvisning() {
         : lagHentForhandsvisningUrl(fnr);
 
     const tilbakeTilSkjema = () => {
-        changeView(View.UTKAST);
+        changeView(ViewType.UTKAST);
         frontendlogger.logMetrikk('tilbake-fra-forhandsvisning');
     };
 
     useEffect(() => {
-        switch (pdfStatus) {
-            // TODO: Use spinner on page
-            // case 'NOT_STARTED':
-            // case 'LOADING':
-            //     return modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
-            // case 'SUCCESS':
-            //     return modalViewDispatch({modalView: null});
-            case 'ERROR':
-                showModal(ModalType.FEIL_VED_FORHANDSVISNING);
-                break;
-            default:
-                return;
+        if (pdfStatus === PDFStatus.ERROR) {
+            showModal(ModalType.FEIL_VED_FORHANDSVISNING);
         }
     }, [pdfStatus]);
 
     const tilbakeTilHovedsiden = () => {
         vedtak.fetch({fnr});
-        changeView(View.HOVEDSIDE);
+        changeView(ViewType.HOVEDSIDE);
         showModal(ModalType.VEDTAK_SENT_SUKSESS);
     };
 

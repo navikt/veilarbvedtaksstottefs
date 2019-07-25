@@ -9,7 +9,7 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../components/skjema-visning/skjema-visning';
 import { useFetchStore } from '../../stores/fetch-store';
 import './vedtakskjema-visning-side.less';
-import { useViewStore, View } from '../../stores/view-store';
+import { useViewStore, ViewType } from '../../stores/view-store';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
     const { vedtak } = useFetchStore();
@@ -34,13 +34,13 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
                 <div className="vedtakskjema-visning__aksjoner">
                     <Hovedknapp
                         mini={true}
-                        onClick={() => changeView(View.VEDTAK_PDF, { vedtakId: vistVedtak.id})}
+                        onClick={() => changeView(ViewType.VEDTAK_PDF, { vedtakId: vistVedtak.id})}
                     >
                         Vis vedtaksbrev
                     </Hovedknapp>
                     <Knapp
                         mini={true}
-                        onClick={() => changeView(View.HOVEDSIDE)}
+                        onClick={() => changeView(ViewType.HOVEDSIDE)}
                     >
                         Tilbake
                     </Knapp>

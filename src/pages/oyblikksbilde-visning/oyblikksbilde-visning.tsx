@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../components/json-viewer/json-viewer';
 import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
@@ -16,7 +15,8 @@ import useFetch from '../../rest/use-fetch';
 import { HentOyblikksbildeFetchParams, lagHentOyblikksbildeFetchInfo } from '../../rest/api';
 import { hasFailed, isNotStarted, isNotStartedOrPending } from '../../rest/utils';
 import { useAppStore } from '../../stores/app-store';
-import { useViewStore, View } from '../../stores/view-store';
+import { useViewStore, ViewType } from '../../stores/view-store';
+import Spinner from '../../components/spinner/spinner';
 
 function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
     const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.kildeType === kildeType) : null;
@@ -36,7 +36,7 @@ export function OyblikksbildeVisning (props: { vedtakId: number }) {
     }, []);
 
     if (isNotStartedOrPending(oyblikksbilder)) {
-        return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;
+        return <Spinner/>;
     } else if (hasFailed(oyblikksbilder)) {
         return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
@@ -53,7 +53,7 @@ export function OyblikksbildeVisning (props: { vedtakId: number }) {
                 <div className="oyblikksbilde-visning__aksjoner">
                     <Hovedknapp
                         mini={true}
-                        onClick={() => changeView(View.VEDTAK, { vedtakId: props.vedtakId })}
+                        onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}
                     >
                         Tilbake til vedtak
                     </Hovedknapp>

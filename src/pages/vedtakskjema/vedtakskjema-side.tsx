@@ -16,7 +16,7 @@ import { useFetchStore } from '../../stores/fetch-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
-import { useViewStore, View } from '../../stores/view-store';
+import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { logger } from '../../utils/logger';
@@ -57,7 +57,7 @@ export function VedtakskjemaSide() {
 
     function dispatchFetchVedtakOgRedirectTilHovedside() {
         vedtak.fetch({ fnr });
-        changeView(View.HOVEDSIDE);
+        changeView(ViewType.HOVEDSIDE);
     }
 
     function oppdaterSistEndret(skjema: SkjemaData) {
@@ -78,9 +78,9 @@ export function VedtakskjemaSide() {
 
         sendDataTilBackend(skjema).then(() => {
             vedtak.fetch({ fnr });
-            changeView(View.INNSENDING);
+            changeView(ViewType.FORHANDSVISNING);
         }).catch(error => {
-            logger.log(error);
+            logger.error(error);
         });
     }
 
@@ -90,8 +90,9 @@ export function VedtakskjemaSide() {
                 dispatchFetchVedtakOgRedirectTilHovedside();
                 showModal(ModalType.VEDTAK_LAGRET_SUKSESS);
             })
-            .catch(() => {
+            .catch((err) => {
                 showModal(ModalType.FEIL_VED_LAGRING);
+                logger.error(err);
             });
     }
 

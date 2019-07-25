@@ -5,12 +5,11 @@ import env from '../../utils/environment';
 import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { OrNothing } from '../../utils/types/ornothing';
 import { frontendlogger } from '../../utils/frontend-logger';
 import { useFetchStore } from '../../stores/fetch-store';
 import { lagHentVedtakPdfUrl } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
-import { useViewStore, View } from '../../stores/view-store';
+import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import './vedtaksbrev-visning.less';
 
@@ -21,7 +20,7 @@ export function VedtaksbrevVisning (props: {vedtakId: number}) {
     const { showModal } = useModalStore();
 
     const vedtaksObjekt = vedtak.data.find(v => v.id === props.vedtakId);
-    const [pdfStatus, setPdfStatus] = useState<OrNothing<PDFStatus>>('NOT_STARTED');
+    const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
     useEffect(() => frontendlogger.logMetrikk('vis-vedtaksbrev'), []);
 
@@ -30,17 +29,8 @@ export function VedtaksbrevVisning (props: {vedtakId: number}) {
     }
 
     useEffect(() => {
-        switch (pdfStatus) {
-            // case 'NOT_STARTED':
-            // case 'LOADING':
-            //     return modalViewDispatch({modalView: ModalActionType.MODAL_LASTER_DATA});
-            // case 'SUCCESS':
-            //     return modalViewDispatch({modalView: null});
-            case 'ERROR':
-                showModal(ModalType.FEIL_VED_VISNING);
-                break;
-            default:
-                return;
+        if (pdfStatus === PDFStatus.ERROR) {
+            showModal(ModalType.FEIL_VED_VISNING);
         }
     }, [pdfStatus]);
 
@@ -61,7 +51,7 @@ export function VedtaksbrevVisning (props: {vedtakId: number}) {
                 <div className="vedtaksbrev-visning__aksjoner">
                     <Hovedknapp
                         mini={true}
-                        onClick={() => changeView(View.VEDTAK, { vedtakId: props.vedtakId})}
+                        onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId})}
                     >
                         Tilbake til vedtak
                     </Hovedknapp>

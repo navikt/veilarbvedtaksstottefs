@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import createUseContext from 'constate';
 
-export enum View {
+export enum ViewType {
     HOVEDSIDE = 'HOVEDSIDE',
     UTKAST = 'UTKAST',
-    INNSENDING = 'INNSENDING',
+    FORHANDSVISNING = 'FORHANDSVISNING',
     VEDLEGG = 'VEDLEGG',
     VEDTAK = 'VEDTAK',
     VEDTAK_PDF = 'VEDTAK_PDF'
 }
 
 export const useViewStore = createUseContext(() => {
-    const [view, setView] = useState<View>(View.HOVEDSIDE);
+    const [view, setView] = useState<ViewType>(ViewType.HOVEDSIDE);
     const [viewProps, setViewProps] = useState<any>({});
 
-    const changeView = (view: View, viewProps?: {}) => {
+    const changeView = (view: ViewType, viewProps?: {}) => {
         setViewProps(viewProps ? viewProps : {});
         setView(view);
     };

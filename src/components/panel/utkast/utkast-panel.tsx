@@ -7,7 +7,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import utkastIkon from './utkast.svg';
 import './utkast-panel.less';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
-import { useViewStore, View } from '../../../stores/view-store';
+import { useViewStore, ViewType } from '../../../stores/view-store';
 
 export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
     const { changeView } = useViewStore();
@@ -31,7 +31,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
                 </>
             }
             knappKomponent={
-                <Hovedknapp onClick={() => changeView(View.UTKAST)}>Fortsett</Hovedknapp>
+                <Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>Fortsett</Hovedknapp>
             }
         />
     );

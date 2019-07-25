@@ -8,7 +8,7 @@ import { useModalStore } from '../../stores/modal-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagSlettUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
-import { useViewStore, View } from '../../stores/view-store';
+import { useViewStore, ViewType } from '../../stores/view-store';
 import { useFetchStore } from '../../stores/fetch-store';
 import { logger } from '../../utils/logger';
 
@@ -23,7 +23,7 @@ function SlettUtkastModal (props: ModalProps) {
             .then(() => {
                 vedtak.fetch({ fnr });
                 hideModal();
-                changeView(View.HOVEDSIDE);
+                changeView(ViewType.HOVEDSIDE);
             })
             .catch(error => {
                 // TODO: Vis feil modal

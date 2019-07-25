@@ -9,7 +9,7 @@ import { frontendlogger } from '../../../utils/frontend-logger';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { fetchWithInfo } from '../../../rest/utils';
 import { lagNyttVedtakUtkastFetchInfo } from '../../../rest/api';
-import { useViewStore, View } from '../../../stores/view-store';
+import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
 import './nytt-vedtak-panel.less';
 
@@ -23,7 +23,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData>, gjeldend
         fetchWithInfo(lagNyttVedtakUtkastFetchInfo({ fnr }))
             .then(() => {
                 vedtak.fetch({ fnr }, () => {
-                    changeView(View.UTKAST);
+                    changeView(ViewType.UTKAST);
                 });
             });
 

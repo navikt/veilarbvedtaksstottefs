@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import createUseContext from 'constate';
-import { View } from './view-store';
+import { ViewType } from './view-store';
 
 export enum ModalType {
     INGEN = 'INGEN',

@@ -8,7 +8,7 @@ import { HoyreChevron } from 'nav-frontend-chevron';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
 import emptyBox from './empty-box.svg';
-import { useViewStore, View } from '../../../stores/view-store';
+import { useViewStore, ViewType } from '../../../stores/view-store';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import './tidligere-vedtak-panel.less';
 
@@ -61,7 +61,7 @@ function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
     const id = "tidligere-vedtak-" + props.index;
 
     function handleTidligereVedtakClicked() {
-        changeView(View.VEDTAK, { vedtakId: props.tidligereVedtak.id });
+        changeView(ViewType.VEDTAK, { vedtakId: props.tidligereVedtak.id });
         frontendlogger.logMetrikk('vis-tidligere-vedtak', { index: props.index });
     }
 
