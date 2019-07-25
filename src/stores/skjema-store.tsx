@@ -16,9 +16,9 @@ export const useSkjemaStore = createUseContext(() => {
 
     const validerSkjema = (): boolean => {
         const opplysningerListe = mapTilTekstliste(opplysninger);
-        const errors = valider({ opplysninger: opplysningerListe, hovedmal, innsatsgruppe, begrunnelse });
-        setErrors(errors);
-        return Object.keys(errors).length === 0;
+        const feil = valider({ opplysninger: opplysningerListe, hovedmal, innsatsgruppe, begrunnelse });
+        setErrors(feil);
+        return Object.keys(feil).length === 0;
     };
 
     return {

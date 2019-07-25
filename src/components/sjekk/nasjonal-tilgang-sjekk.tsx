@@ -8,7 +8,7 @@ import Spinner from '../spinner/spinner';
 
 interface NasjonalTilgangSjekkProps {
     fnr: string;
-    children?: any
+    children?: any;
 }
 
 export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {

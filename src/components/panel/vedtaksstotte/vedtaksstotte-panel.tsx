@@ -16,7 +16,7 @@ interface VedtaksstottePanelProps {
 export function VedtaksstottePanel (props: VedtaksstottePanelProps) {
     const { tittel, undertittel, imgSrc, tekstKomponent, knappKomponent, panelKlasse } = props;
     return (
-        <Panel tittel={tittel} className={cls("vedtakstottepanel", panelKlasse)}>
+        <Panel tittel={tittel} className={cls('vedtakstottepanel', panelKlasse)}>
             <div className="vedtakstottepanel__content">
                 <img src={imgSrc} className="vedtakstottepanel__ikon"/>
                 <div>

@@ -6,7 +6,6 @@ export interface FnrFetchParams {
     fnr: string;
 }
 
-
 export interface HentOyblikksbildeFetchParams {
     fnr: string;
     vedtakId: number;
@@ -43,7 +42,6 @@ export const lagHentTilgangTilKontorFetchInfo = (params: FnrFetchParams): FetchI
 export const lagHentMalformFetchInfo = (params: FnrFetchParams): FetchInfo => ({
     url: `${VEILARBPERSON_API}/person/${params.fnr}/malform`,
 });
-
 
 export const lagNyttVedtakUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
     url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast`,

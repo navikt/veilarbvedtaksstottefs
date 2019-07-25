@@ -41,34 +41,34 @@ const useFetch = <D = {}, FP = any>(createFetchInfo: (fetchParams: FP) => FetchI
             .then(async (res) => {
 
                 const httpCode = res.status;
-                let fetchState: FetchState<D>;
+                let state: FetchState<D>;
 
                 if ([200, 201, 203, 206].includes(httpCode)) {
                     try {
                         const data = await res.json();
-                        fetchState = createFinishedFetchState(data, null, httpCode);
+                        state = createFinishedFetchState(data, null, httpCode);
                     } catch (error) {
-                        fetchState = createFinishedFetchState(null as any, error, httpCode)
+                        state = createFinishedFetchState(null as any, error, httpCode);
                     }
                 } else {
-                    fetchState = createFinishedFetchState(null as any, null, httpCode)
+                    state = createFinishedFetchState(null as any, null, httpCode);
                 }
 
-                return fetchState;
+                return state;
             })
             .catch(error => {
                 return createFinishedFetchState(null as any, error, -1);
-            }).then(fetchState => {
+            }).then(state => {
 
-                if (fetchState.httpCode >= 400) {
-                    logger.error('API kall feilet', fetchState);
+                if (state.httpCode >= 400) {
+                    logger.error('API kall feilet', state);
                 }
 
                 if (onFinished) {
-                    onFinished(fetchState);
+                    onFinished(state);
                 }
 
-                setFetchState(fetchState);
+                setFetchState(state);
             });
     };
 

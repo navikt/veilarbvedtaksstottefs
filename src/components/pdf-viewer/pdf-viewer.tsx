@@ -77,4 +77,3 @@ class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
 }
 
 export default PdfViewer;
-

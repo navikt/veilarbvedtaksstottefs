@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app';
-import NAVSPA from './NAVSPA';
 import env from './utils/environment';
 import { enhet, fnr } from './mock/kontekst';
+import ModalWrapper from 'nav-frontend-modal';
+import NAVSPA from '@navikt/navspa';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/nb';
-import ModalWrapper from 'nav-frontend-modal';
 
 dayjs.locale('nb');
 

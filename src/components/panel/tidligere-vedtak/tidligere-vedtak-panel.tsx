@@ -39,7 +39,7 @@ function HarTidligereVedtak({vedtakHistorikk}: {vedtakHistorikk: VedtakData []})
     return (
         <Panel
             tittel="Tidligere oppfølgingsvedtak"
-            className={cls("tidligere-vedtak-panel", {"to-tidligere-vedtak": harToVedtak })}
+            className={cls('tidligere-vedtak-panel', {'to-tidligere-vedtak': harToVedtak })}
         >
             <ul className="vedtak-historikk-liste">
                 {vedtakHistorikk.map((tidligereVedtak, idx) =>
@@ -58,7 +58,7 @@ function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
     const { changeView } = useViewStore();
     const tidligereVedtak = props.tidligereVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(tidligereVedtak.innsatsgruppe);
-    const id = "tidligere-vedtak-" + props.index;
+    const id = 'tidligere-vedtak-' + props.index;
 
     function handleTidligereVedtakClicked() {
         changeView(ViewType.VEDTAK, { vedtakId: props.tidligereVedtak.id });

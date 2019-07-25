@@ -10,7 +10,7 @@ interface FooterProps {
 
 function Footer(props: FooterProps) {
     return (
-        <footer className={cls("vedtaksstotte-footer", props.className)}>
+        <footer className={cls('vedtaksstotte-footer', props.className)}>
             {props.children}
         </footer>
     );

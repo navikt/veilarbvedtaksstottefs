@@ -14,9 +14,9 @@ export const useViewStore = createUseContext(() => {
     const [view, setView] = useState<ViewType>(ViewType.HOVEDSIDE);
     const [viewProps, setViewProps] = useState<any>({});
 
-    const changeView = (view: ViewType, viewProps?: {}) => {
-        setViewProps(viewProps ? viewProps : {});
-        setView(view);
+    const changeView = (type: ViewType, props?: {}) => {
+        setViewProps(props ? props : {});
+        setView(type);
     };
 
     return { view, viewProps, changeView };

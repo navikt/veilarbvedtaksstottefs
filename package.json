@@ -25,6 +25,7 @@
   ],
   "dependencies": {
     "@craco/craco": "^3.6.0",
+    "@navikt/navspa": "^1.0.2",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.6",

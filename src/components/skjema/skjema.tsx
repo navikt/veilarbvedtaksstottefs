@@ -49,7 +49,7 @@ function Skjema({oppdaterSistEndret}: SkjemaProps) {
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
     useTimer(() => {
-        oppdaterSistEndret(vedtakskjema)
+        oppdaterSistEndret(vedtakskjema);
     }, 2000, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
     return (

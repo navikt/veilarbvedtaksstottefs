@@ -2,10 +2,10 @@ import { APP_NAME } from './constants';
 import { logger } from './logger';
 
 const logEvent = (logTag: string, fields?: {}, tags?: {}): void => {
-    const frontendlogger = (window as any).frontendlogger;
+    const frontlogger = (window as any).frontendlogger;
 
-    if (frontendlogger && frontendlogger.event) {
-        frontendlogger.event(logTag, fields ? fields : {}, tags ? tags : {});
+    if (frontlogger && frontlogger.event) {
+        frontlogger.event(logTag, fields ? fields : {}, tags ? tags : {});
     } else {
         logger.log('Event', logTag, 'Fields:', fields, 'Tags:', tags);
     }

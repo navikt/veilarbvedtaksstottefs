@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';
@@ -14,8 +14,8 @@ function Begrunnelse() {
     const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 
     useEffect(() => {
-        const errors = validerBegrunnelseMaxLength(begrunnelse);
-        setBegrunnelseFeil(errors.begrunnelse);
+        const feil = validerBegrunnelseMaxLength(begrunnelse);
+        setBegrunnelseFeil(feil.begrunnelse);
     }, [begrunnelse]);
 
     useEffect(() => {

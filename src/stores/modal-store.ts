@@ -22,9 +22,9 @@ export const useModalStore = createUseContext(() => {
     const [modalType, setModalType] = useState<ModalType>(ModalType.INGEN);
     const [modalProps, setModalProps] = useState<any>({});
 
-    const showModal = (modal: ModalType, modalProps?: {}) => {
-        setModalProps(modalProps ? modalProps : {});
-        setModalType(modal);
+    const showModal = (type: ModalType, props?: {}) => {
+        setModalProps(props ? props : {});
+        setModalType(type);
     };
 
     const hideModal = () => {

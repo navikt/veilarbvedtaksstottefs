@@ -9,12 +9,8 @@ interface AksjonerProps {
     handleLagreOgTilbake: (e: any) => void;
 }
 
-function Aksjoner (props: AksjonerProps) {
-    const { showModal } = useModalStore();
-
-
-
-
+function Aksjoner(props: AksjonerProps) {
+    const {showModal} = useModalStore();
     return (
         <div className="aksjoner">
             <div className="aksjoner__knapper">
@@ -27,7 +23,8 @@ function Aksjoner (props: AksjonerProps) {
             </div>
             <Flatknapp
                 className="aksjoner__slett"
-                mini={true} htmlType="button"
+                mini={true}
+                htmlType="button"
                 onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
             >
                 <SlettIkon className="aksjoner__slett-ikon"/>
