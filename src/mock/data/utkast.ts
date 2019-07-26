@@ -5,16 +5,19 @@ import { JSONObject } from 'yet-another-fetch-mock';
 
 const utkast: VedtakData & JSONObject = {
     id: 5,
-    hovedmal: HovedmalType.BEHOLDE_ARBEID,
-    innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
+    hovedmal: null,
+    innsatsgruppe: null,
     vedtakStatus: 'UTKAST',
     sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
-    begrunnelse: 'Test!!!!',
     gjeldende: false,
-    opplysninger: ['Møtestøtte', 'Svarene dine fra da du registrerte deg', 'CV-en og jobbprofilen din'],
+    opplysninger: [],
     veilederIdent: 'Z007',
     veilederEnhetId: '1337',
-    veilederEnhetNavn: 'Gotham city'
+    veilederEnhetNavn: 'Gotham city',
+    begrunnelse: null,
+    beslutter: null,
+    dokumentInfoId: null,
+    journalpostId: null
 };
 
 export default utkast;

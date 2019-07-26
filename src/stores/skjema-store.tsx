@@ -9,12 +9,13 @@ import {
     validerSkjema as valider
 } from '../components/skjema/skjema-utils';
 import { Opplysning } from '../components/skjema/opplysninger/opplysninger';
+import { OrNothing } from '../utils/types/ornothing';
 
 export const useSkjemaStore = createUseContext(() => {
     const [opplysninger, setOpplysninger] = useState<Opplysning[]>([]);
-    const [hovedmal, setHovedmal] = useState<HovedmalType | undefined>();
-    const [innsatsgruppe, setInnsatsgruppe] = useState<InnsatsgruppeType | undefined>();
-    const [begrunnelse, setBegrunnelse] = useState('');
+    const [hovedmal, setHovedmal] = useState<OrNothing<HovedmalType>>();
+    const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>();
+    const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
     const [sistOppdatert, setSistOppdatert] = useState('');
     const [errors, setErrors] = useState<SkjemaFeil>({});
 
