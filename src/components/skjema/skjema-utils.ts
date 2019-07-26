@@ -71,11 +71,11 @@ export function mapTilTekstliste (opplysninger: Opplysning[]): string[] {
     }, [] as string[]);
 }
 
-export function skjemaIsNotEmpty (skjema: SkjemaData) {
-    return skjema.hovedmal
-        || skjema.innsatsgruppe
-        || (skjema.opplysninger && (skjema.opplysninger as string[]).length > 0 )
-        || skjema.begrunnelse && skjema.begrunnelse.trim();
+export function isSkjemaEmpty (skjema: SkjemaData) {
+    return skjema.hovedmal == null
+        && skjema.innsatsgruppe == null
+        && (skjema.opplysninger == null || skjema.opplysninger.length === 0)
+        && skjema.begrunnelse == null || skjema.begrunnelse === '';
 }
 
 export function maSkriveBegrunnelseGittInnsatsgruppe (innsatsgruppe: OrNothing<InnsatsgruppeType>): boolean {

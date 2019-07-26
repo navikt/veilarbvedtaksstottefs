@@ -18,7 +18,7 @@ const mock = FetchMock.configure({
 
 mock.get('/veilarbpersonflatefs/api/feature', features);
 mock.get('/veilarbvedtaksstotte/api/:fnr/oyblikksbilde/:vedtakId', vedlegg);
-mock.get(`/veilarboppfolging/api/oppfolging/veilederTilgang`, tilgangTilBrukersKontor);
+mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', tilgangTilBrukersKontor);
 mock.get('/veilarboppfolging/api/underoppfolging', underOppfolging);
 mock.get('/veilarbperson/api/person/:fnr/malform', malform);
 mock.get('/veilarbvedtaksstotte/api/:fnr/vedtak', [utkast, vedtak, ...historisk] as JSONArray);
