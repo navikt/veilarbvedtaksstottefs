@@ -1,13 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
-import './innsatsgruppe.less';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { useContext } from 'react';
-import { SkjemaContext } from '../../providers/skjema-provider';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { utkastetSkalKvalitetssikrets } from '../skjema-utils';
+import { lagSkjemaElementFeil, utkastetSkalKvalitetssikrets } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
+import { useSkjemaStore } from '../../../stores/skjema-store';
+import './innsatsgruppe.less';
 
 export enum InnsatsgruppeType {
     STANDARD_INNSATS = 'STANDARD_INNSATS',
@@ -47,13 +45,8 @@ export const innsatsgrupper = [
 
 ];
 
-interface InnsatsgruppeProps {
-    innsatgruppefeil?: string;
-}
-
-function Innsatsgruppe (props: InnsatsgruppeProps) {
-    const {innsatsgruppe, setInnsatsgruppe} = useContext(SkjemaContext);
-    const {setHovedmal} = useContext(SkjemaContext);
+function Innsatsgruppe () {
+    const { innsatsgruppe, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();
     const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
     return (
         <SkjemaBolk
@@ -67,7 +60,7 @@ function Innsatsgruppe (props: InnsatsgruppeProps) {
                 </span>
             </AlertStripeAdvarsel>
             }
-            <SkjemaGruppe feil={props.innsatgruppefeil ? {feilmelding : props.innsatgruppefeil} : undefined}>
+            <SkjemaGruppe feil={lagSkjemaElementFeil(errors.innsatsgruppe)}>
                 <InnsatsgruppeRadioButtons
                     handleInnsatsgruppeChanged={setInnsatsgruppe}
                     innsatsgruppe={innsatsgruppe}

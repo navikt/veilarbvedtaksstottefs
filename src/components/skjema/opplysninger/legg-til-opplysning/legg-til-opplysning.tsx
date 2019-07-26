@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 import leggTilIkon from './pluss.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './legg-til-opplysning.less';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { VedtakData } from '../../../utils/types/vedtak';
+import { VedtakData } from '../../../rest/data/vedtak';
 import cls from 'classnames';
 import fullfortBilde from './fullfort.svg';
 import utkastBilde from './utkast.svg';
@@ -35,7 +35,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
     } else {
         return (
             <Header
-                tittelTekst={gjeldende ? "Gjeldende oppfølgingsvedtak" : "Tidligere oppfølgingsvedtak"}
+                tittelTekst={gjeldende ? 'Gjeldende oppfølgingsvedtak' : 'Tidligere oppfølgingsvedtak'}
                 datoTekst="Fattet"
                 veilederTekst="Fattet av"
                 headerClassName="skjema-header--fullfort"
@@ -68,7 +68,7 @@ function Header(props: HeaderProps) {
         veilederEnhetId, veilederEnhetNavn, oppdatert
     } = props;
     return (
-        <header className={cls("skjema-header", headerClassName)}>
+        <header className={cls('skjema-header', headerClassName)}>
             <img src={bilde} alt="Vedtak ikon" className="skjema-header__ikon"/>
             <div className="skjema-header__innhold">
                 <Systemtittel className="skjema-header__tittel">

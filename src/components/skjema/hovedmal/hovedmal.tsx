@@ -1,21 +1,17 @@
-import * as React from 'react';
-import { useContext } from 'react';
-import './hovedmal.less';
+import React, { useContext } from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { SkjemaContext } from '../../providers/skjema-provider';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
-import { EMDASH } from '../skjemaelement/skjemaelement';
+import { useSkjemaStore } from '../../../stores/skjema-store';
+import { EMDASH } from '../../../utils';
+import './hovedmal.less';
+import { lagSkjemaElementFeil } from '../skjema-utils';
 
 export enum HovedmalType {
     SKAFFE_ARBEID = 'SKAFFE_ARBEID',
     BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
-}
-
-interface HovedmalProps {
-    hovedmalfeil?: string;
 }
 
 export const getHovedmalNavn = (hovedmal: OrNothing<HovedmalType>) => {
@@ -34,16 +30,15 @@ const hovedmalliste = [
     },
 ];
 
-function Hovedmal(props: HovedmalProps) {
-    const {hovedmal, setHovedmal} = useContext(SkjemaContext);
-    const {innsatsgruppe} = useContext(SkjemaContext);
+function Hovedmal() {
+    const { innsatsgruppe, hovedmal, setHovedmal, errors } = useSkjemaStore();
     const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
     return (
         <SkjemaBolk
             tittel="Hovedmål"
             tittelId="hovedmal-id"
         >
-            <SkjemaGruppe feil={props.hovedmalfeil ? {feilmelding: props.hovedmalfeil} : undefined}>
+            <SkjemaGruppe feil={lagSkjemaElementFeil(errors.hovedmal)}>
                 {erVarigTilpassetInnsats
                     ? <AlertStripeInfo className="hovedmal-info">
                         <span className="hovedmal-info__tekst">

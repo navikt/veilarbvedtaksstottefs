@@ -1,7 +1,6 @@
 import React from 'react';
 import './json-viewer.less';
 
-
 interface JsonViewerProps {
     json: string | null;
     className?: string;

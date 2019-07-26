@@ -1,17 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import cls from 'classnames';
-import { VedtakData } from '../../../utils/types/vedtak';
+import { VedtakData } from '../../../rest/data/vedtak';
 import { Panel } from '../panel/panel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { getInnsatsgruppeNavn } from '../../skjema/innsatsgruppe/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import { ViewDispatch } from '../../providers/view-provider';
-import { ActionType } from '../../viewcontroller/view-reducer';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
 import emptyBox from './empty-box.svg';
+import { useViewStore, ViewType } from '../../../stores/view-store';
+import { frontendlogger } from '../../../utils/frontend-logger';
 import './tidligere-vedtak-panel.less';
-import { logMetrikk } from '../../../utils/frontend-logger';
 
 export function TidligereVedtakPanel(props: {vedtakHistorikk: VedtakData[]}) {
     if (props.vedtakHistorikk.length === 0) {
@@ -40,7 +39,7 @@ function HarTidligereVedtak({vedtakHistorikk}: {vedtakHistorikk: VedtakData []})
     return (
         <Panel
             tittel="Tidligere oppfølgingsvedtak"
-            className={cls("tidligere-vedtak-panel", {"to-tidligere-vedtak": harToVedtak })}
+            className={cls('tidligere-vedtak-panel', {'to-tidligere-vedtak': harToVedtak })}
         >
             <ul className="vedtak-historikk-liste">
                 {vedtakHistorikk.map((tidligereVedtak, idx) =>
@@ -56,16 +55,22 @@ function HarTidligereVedtak({vedtakHistorikk}: {vedtakHistorikk: VedtakData []})
 }
 
 function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
-    const {dispatch} = useContext(ViewDispatch);
+    const { changeView } = useViewStore();
     const tidligereVedtak = props.tidligereVedtak;
     const innsatsgruppe = getInnsatsgruppeNavn(tidligereVedtak.innsatsgruppe);
-    const id = "tidligere-vedtak-" + props.index;
+    const id = 'tidligere-vedtak-' + props.index;
+
+    function handleTidligereVedtakClicked() {
+        changeView(ViewType.VEDTAK, { vedtakId: props.tidligereVedtak.id });
+        frontendlogger.logMetrikk('vis-tidligere-vedtak', { index: props.index });
+    }
+
     return (
         <li className="vedtak-historikk-liste__item">
             <button
                 aria-describedby={id}
                 className="tidligere-vedtak knapp__no-style"
-                onClick={() => handleTidligereVedtakClicked(dispatch, tidligereVedtak, props.index)}
+                onClick={handleTidligereVedtakClicked}
             >
                 <div className="tidligere-vedtak__innhold">
                     <div id={id}>
@@ -83,9 +88,4 @@ function TidligereVedtak(props: {tidligereVedtak: VedtakData, index: number}) {
             </button>
         </li>
     );
-}
-
-function handleTidligereVedtakClicked(dispatch: any, tidligereVedtak: VedtakData, index: number) {
-    dispatch({view: ActionType.VIS_VEDTAK, props: {id: tidligereVedtak.id}});
-    logMetrikk('vis-tidligere-vedtak', { index });
 }

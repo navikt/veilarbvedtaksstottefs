@@ -1,34 +1,26 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
-import { SkjemaElement } from '../skjemaelement/skjemaelement';
-import { useContext, useState } from 'react';
-import { SkjemaContext } from '../../providers/skjema-provider';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import './begrunnelse.less';
 import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';
-import { useEffect } from 'react';
-import { validerBegrunnelsebegrunnelseMaxLengthTekst } from '../skjema-utils';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { lagSkjemaElementFeil, validerBegrunnelseMaxLength } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
+import { useSkjemaStore } from '../../../stores/skjema-store';
+import './begrunnelse.less';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 
-interface BegrunnelseProps {
-    begrunnelsefeil?: string;
-}
-
-function Begrunnelse(props: BegrunnelseProps) {
-    const {begrunnelse, setBegrunnelse} = useContext(SkjemaContext);
-    const [begrunnelseFeil, setBegrunnelseFeil] = useState(props.begrunnelsefeil);
+function Begrunnelse() {
+    const { begrunnelse, setBegrunnelse, errors } = useSkjemaStore();
+    const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 
     useEffect(() => {
-        const errors = validerBegrunnelsebegrunnelseMaxLengthTekst(begrunnelse);
-        setBegrunnelseFeil(errors.begrunnelse);
+        const feil = validerBegrunnelseMaxLength(begrunnelse);
+        setBegrunnelseFeil(feil.begrunnelse);
     }, [begrunnelse]);
 
     useEffect(() => {
-        setBegrunnelseFeil(props.begrunnelsefeil);
-    }, [props.begrunnelsefeil]);
+        setBegrunnelseFeil(errors.begrunnelse);
+    }, [errors.begrunnelse]);
 
     return (
         <SkjemaBolk
@@ -42,7 +34,7 @@ function Begrunnelse(props: BegrunnelseProps) {
                     og gjeldende oppfølgingsvedtak viser <i>nedsatt arbeidsevne</i>
               </AlertStripeInfo>
                 <SkjemaGruppe
-                    feil={begrunnelseFeil ? {feilmelding : begrunnelseFeil} : undefined}
+                    feil={lagSkjemaElementFeil(begrunnelseFeil)}
                     className="begrunnelse__container"
                 >
                 <Textarea

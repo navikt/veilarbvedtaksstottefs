@@ -4,7 +4,8 @@ import { BEGRUNNELSE_MAX_LENGTH } from './begrunnelse/begrunnelse';
 import { OrNothing } from '../../utils/types/ornothing';
 import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
 import { Opplysning } from './opplysninger/opplysninger';
-import { MalformType } from '../../api/person-api';
+import { MalformType } from '../../rest/data/malform';
+import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 export const defaultOpplysningslisteBokmal =
     [
@@ -61,7 +62,7 @@ function byggOpplysningsObjektliste (verdi: boolean, opplysningerListe: string [
     }, [] as Opplysning[]);
 }
 
-export function mapTilTekstliste (opplysninger: Opplysning[]) {
+export function mapTilTekstliste (opplysninger: Opplysning[]): string[] {
     return opplysninger.reduce((acc, opplysning) => {
         if (Object.values(opplysning)[0]) {
             return [...acc, Object.keys(opplysning)[0]];
@@ -77,13 +78,18 @@ export function skjemaIsNotEmpty (skjema: SkjemaData) {
         || skjema.begrunnelse.trim();
 }
 
-export function maSkriveBegrunnelseGittInnsatsgruppe (innsatsgruppe: OrNothing<InnsatsgruppeType>) {
+export function maSkriveBegrunnelseGittInnsatsgruppe (innsatsgruppe: OrNothing<InnsatsgruppeType>): boolean {
     return innsatsgruppe !== InnsatsgruppeType.STANDARD_INNSATS;
 }
 
-export function validerSkjema(skjema: SkjemaData) {
-    let errors: SkjemaFeil = {};
+export function lagSkjemaElementFeil(error: string | undefined): SkjemaelementFeil | undefined {
+    return error ? {feilmelding: error} : undefined;
+}
+
+export function validerSkjema(skjema: SkjemaData): SkjemaFeil {
+    const errors: SkjemaFeil = {};
     const innsatsgruppe = skjema.innsatsgruppe;
+
     if (!innsatsgruppe) {
         errors.innsatsgruppe = 'Mangler innsatsgruppe';
     }
@@ -98,7 +104,7 @@ export function validerSkjema(skjema: SkjemaData) {
         errors.begrunnelse = 'Mangler begrunnelse';
     }
 
-    const begrunnelsefeil = validerBegrunnelsebegrunnelseMaxLengthTekst(begrunnelse);
+    const begrunnelsefeil = validerBegrunnelseMaxLength(begrunnelse);
     Object.assign(errors, begrunnelsefeil);
 
     if (!skjema.opplysninger || skjema.opplysninger.length < 1) {
@@ -108,7 +114,7 @@ export function validerSkjema(skjema: SkjemaData) {
     return errors;
 }
 
-export function validerBegrunnelsebegrunnelseMaxLengthTekst (begrunnelse: string) {
+export function validerBegrunnelseMaxLength (begrunnelse: string) {
     let errors: SkjemaFeil = {};
     if (begrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
         errors.begrunnelse =  `Du kan maksimalt skrive ${BEGRUNNELSE_MAX_LENGTH} tegn`;

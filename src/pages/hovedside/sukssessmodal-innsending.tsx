@@ -1,23 +1,23 @@
+import React from 'react';
 import { VarselModal } from '../../components/modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
-import React, { useContext } from 'react';
-import { ModalViewDispatch } from '../../components/providers/modal-provider';
-import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
 import { Knapp } from 'nav-frontend-knapper';
+import { ModalProps } from '../../components/modal/modal-props';
+import { useModalStore } from '../../stores/modal-store';
 
-export function SuksessModalInnsending () {
-    const {modalViewState, modalViewDispatch} = useContext(ModalViewDispatch);
+export function SuksessModalInnsending (props: ModalProps) {
+    const { hideModal } = useModalStore();
     return (
         <VarselModal
-            isOpen={modalViewState.modalView === ModalActionType.MODAL_VEDTAK_SENT_SUKSESS}
+            isOpen={props.isOpen}
             contentLabel="Vedtaket sendt til bruker"
-            onRequestClose={() => modalViewDispatch({modalView: null})}
+            onRequestClose={hideModal}
             type="SUKSESS"
         >
             <Systemtittel>Vedtak sendt til bruker</Systemtittel>
             <Normaltekst>Du finner innholdet i vedtaket på fanen for oppfølgingsvedtak. Brukeren får vedtaksbrevet digitalt eller i posten</Normaltekst>
-            <Knapp onClick={() => modalViewDispatch({modalView: null})}>Lukk</Knapp>
+            <Knapp onClick={hideModal}>Lukk</Knapp>
         </VarselModal>
     );
 }

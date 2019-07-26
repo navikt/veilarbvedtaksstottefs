@@ -1,31 +1,30 @@
+import React, { useEffect, useState } from 'react';
 import {
     mapTilTekstliste,
+    mergeMedDefaultOpplysninger,
     skjemaIsNotEmpty,
-    validerSkjema
+    validerBegrunnelseMaxLength
 } from '../../components/skjema/skjema-utils';
-import VedtaksstotteApi from '../../api/vedtaksstotte-api';
-import { useContext, useEffect, useState } from 'react';
-import { ActionType } from '../../components/viewcontroller/view-reducer';
-import React from 'react';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
 import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
 import Skjema from '../../components/skjema/skjema';
-import { SkjemaContext } from '../../components/providers/skjema-provider';
-import { ViewDispatch } from '../../components/providers/view-provider';
-import { useFetchState } from '../../components/providers/fetch-provider';
-import { Status } from '../../utils/fetch-utils';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
-import { ModalViewDispatch } from '../../components/providers/modal-provider';
-import { ModalActionType } from '../../components/modalcontroller/modal-reducer';
-import { SkjemaFeil } from '../../utils/types/skjema-feil';
-import { feilVidLagring } from '../../components/modal/feil-modal-tekster';
 import SkjemaHeader from '../../components/skjema/header/skjema-header';
-import { VedtakData } from '../../utils/types/vedtak';
+import { VedtakData } from '../../rest/data/vedtak';
 import './vedtakskjema-side.less';
+import { useFetchStore } from '../../stores/fetch-store';
+import { fetchWithInfo, hasData } from '../../rest/utils';
+import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
+import { useAppStore } from '../../stores/app-store';
+import { useViewStore, ViewType } from '../../stores/view-store';
+import { ModalType, useModalStore } from '../../stores/modal-store';
+import { useSkjemaStore } from '../../stores/skjema-store';
+import { Opplysning } from '../../components/skjema/opplysninger/opplysninger';
+import { useTimer } from '../../utils/hooks/use-timer';
 
 export interface SkjemaData {
     opplysninger: string[] | undefined;
@@ -34,35 +33,69 @@ export interface SkjemaData {
     begrunnelse: string;
 }
 
-interface SkjemaAksjonerProps {
-    fnr: string;
-}
+export function VedtakskjemaSide() {
+    const { fnr } = useAppStore();
+    const { vedtak, malform } = useFetchStore();
+    const { changeView } = useViewStore();
+    const { showModal } = useModalStore();
+    const {
+        opplysninger, setOpplysninger,
+        hovedmal, setHovedmal,
+        innsatsgruppe, setInnsatsgruppe,
+        begrunnelse, setBegrunnelse,
+        sistOppdatert, setSistOppdatert,
+        validerSkjema, validerBegrunnelseLengde
+    } = useSkjemaStore();
 
-export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
-    const {dispatch} = useContext(ViewDispatch);
-    const {modalViewDispatch} = useContext(ModalViewDispatch);
-    const [vedtak, setVedtak] = useFetchState('vedtak');
-    const {opplysninger, begrunnelse, innsatsgruppe, hovedmal, sistOppdatert, setSistOppdatert} = useContext(SkjemaContext);
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
-    const [skjemaFeil, setSkjemaFeil] = useState<SkjemaFeil>({});
 
     const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST') as VedtakData;
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
     useEffect(() => {
-        if (harForsoktAttSende) {
-            const errors = validerSkjema(vedtakskjema);
-            setSkjemaFeil(errors);
+
+        if (hasData(vedtak) && hasData(malform)) {
+            const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
+
+            if (utkast) {
+                const mergetOpplysninger = mergeMedDefaultOpplysninger(utkast.opplysninger,
+                    malform.data ? malform.data.malform : null) as Opplysning[];
+
+                setHovedmal(utkast.hovedmal);
+                setOpplysninger(mergetOpplysninger);
+                setInnsatsgruppe(utkast.innsatsgruppe);
+                setBegrunnelse(utkast.begrunnelse);
+                setSistOppdatert(utkast.sistOppdatert);
+            }
         }
+
+    }, [vedtak.status, malform.status]);
+
+    useEffect(() => {
+        if (harForsoktAttSende) {
+            validerSkjema();
+        } else {
+            validerBegrunnelseLengde();
+        }
+
     }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
+
+    useTimer(() => {
+        oppdaterSistEndret(vedtakskjema);
+    }, 2000, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
+
+
     function sendDataTilBackend(skjema: SkjemaData) {
-        return VedtaksstotteApi.putVedtakUtkast(fnr, skjema);
+        return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema }))
+            .catch(() => {
+                showModal(ModalType.FEIL_VED_LAGRING);
+            });
     }
 
     function dispatchFetchVedtakOgRedirectTilHovedside() {
-        setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
-        dispatch({view: ActionType.HOVEDSIDE});
+        vedtak.fetch({ fnr });
+        changeView(ViewType.HOVEDSIDE);
     }
 
     function oppdaterSistEndret(skjema: SkjemaData) {
@@ -75,16 +108,13 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
 
     function handleForhandsvis(skjema: SkjemaData) {
         setHarForsoktAttSende(true);
-        const errors = validerSkjema(skjema);
-        if (Object.entries(errors).filter(feilmelding => feilmelding).length > 0) {
-            setSkjemaFeil(errors);
+
+        if (!validerSkjema()) {
             return;
         }
+
         sendDataTilBackend(skjema).then(() => {
-            setVedtak(prevState => ({...prevState, status: Status.NOT_STARTED}));
-            dispatch({view: ActionType.INNSENDING});
-        }).catch(error => {
-            console.log(error); // tslint:disable-line:no-console
+            changeView(ViewType.FORHANDSVISNING);
         });
     }
 
@@ -92,18 +122,7 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
         sendDataTilBackend(skjema)
             .then(() => {
                 dispatchFetchVedtakOgRedirectTilHovedside();
-                modalViewDispatch({modalView: ModalActionType.MODAL_VEDTAK_LAGRET_SUKSESS});
-            })
-            .catch(error => {
-                modalViewDispatch({modalView: ModalActionType.MODAL_FEIL, props: feilVidLagring});
-            });
-    }
-
-    function handleSlett() {
-        VedtaksstotteApi.slettUtkast(fnr)
-            .then(dispatchFetchVedtakOgRedirectTilHovedside)
-            .catch(error => {
-                console.log(error); // tslint:disable-line:no-console
+                showModal(ModalType.VEDTAK_LAGRET_SUKSESS);
             });
     }
 
@@ -111,13 +130,12 @@ export function VedtakskjemaSide({fnr}: SkjemaAksjonerProps) {
         <Page>
             <Card className="vedtakskjema">
                 <SkjemaHeader vedtak={utkast} sistOppdatert={sistOppdatert}/>
-                <Skjema errors={skjemaFeil} oppdaterSistEndret={oppdaterSistEndret}/>
+                <Skjema />
             </Card>
             <Footer className="vedtakskjema__footer">
                 <Aksjoner
                     handleForhandsvis={() => handleForhandsvis(vedtakskjema)}
                     handleLagreOgTilbake={() => handleLagreOgTilbake(vedtakskjema)}
-                    handleSlett={handleSlett}
                 />
             </Footer>
         </Page>

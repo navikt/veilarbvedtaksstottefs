@@ -1,30 +1,24 @@
-import * as React from 'react';
+import React, { useContext, useState } from 'react';
 import { VisOpplysning } from './vis-opplysning/vis-opplysning';
 import { RedigerOpplysning } from './rediger-opplysning/rediger-opplysning';
-import { useRef, useState } from 'react';
 import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
-import { useContext } from 'react';
-import { SkjemaContext } from '../../providers/skjema-provider';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { OpplysningerHjelpeTekster } from './hjelpetekst-opplysninger';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
+import { useSkjemaStore } from '../../../stores/skjema-store';
 import './opplysninger.less';
+import { lagSkjemaElementFeil } from '../skjema-utils';
 
 export type Opplysning = {
     [key: string]: boolean
 };
 
-interface OpplysningerProps {
-    opplysningerfeil?: string;
-}
-
-function Opplysninger(props: OpplysningerProps) {
+function Opplysninger() {
+    const { opplysninger, setOpplysninger, errors } = useSkjemaStore();
     const [redigeringModusIndeks, setRedigeringModusIndeks ] = useState<number>( -1);
     const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning ] = useState<boolean>( true);
     const [sistEndretIndeks, setSistEndretIndeks] = useState<number>( -1);
-    const { opplysninger, setOpplysninger } = useContext(SkjemaContext);
-
 
     function nullstilState() {
         setRedigeringModusIndeks(-1);
@@ -75,7 +69,7 @@ function Opplysninger(props: OpplysningerProps) {
                 <div className="opplysninger__innhold">
                     <SkjemaGruppe
                         aria-labelledby="kilder-tittel"
-                        feil={props.opplysningerfeil ?  {feilmelding : props.opplysningerfeil} : undefined}
+                        feil={lagSkjemaElementFeil(errors.opplysninger)}
                     >
                         {opplysninger.map((opplysning, index) =>
                             redigeringModusIndeks !== index

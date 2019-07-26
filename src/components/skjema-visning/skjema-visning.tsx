@@ -1,16 +1,15 @@
-import React, { useContext } from 'react';
-import { VedtakData } from '../../utils/types/vedtak';
+import React from 'react';
+import { VedtakData } from '../../rest/data/vedtak';
 import { HovedmalVisning } from './hovedmal-visning';
 import { BegrunnelseVisning } from './begrunnelse-visning';
 import { InnsatsgruppeVisning } from './innsatsgruppe-visning';
 import { OpplysningerVisning } from './opplysninger-visning';
-import { ActionType } from '../viewcontroller/view-reducer';
-import { ViewDispatch } from '../providers/view-provider';
+import { useViewStore, ViewType } from '../../stores/view-store';
 import './skjema-visning.less';
 
-export function SkjemaVisning(props: {vedtak: VedtakData}) {
-    const {dispatch} = useContext(ViewDispatch);
-    const { id, hovedmal, opplysninger, innsatsgruppe, begrunnelse, beslutter } = props.vedtak;
+export function SkjemaVisning(props: { vedtak: VedtakData }) {
+    const {changeView} = useViewStore();
+    const {id, hovedmal, opplysninger, innsatsgruppe, begrunnelse, beslutter} = props.vedtak;
 
     return (
         <>
@@ -20,8 +19,8 @@ export function SkjemaVisning(props: {vedtak: VedtakData}) {
             <OpplysningerVisning opplysninger={opplysninger}/>
             <button
                 className="lenke oyblikksbilde-lenke"
-                onClick={() => dispatch({view: ActionType.VIS_VEDLEGG, props: {vedtakId: id}})}
-             >
+                onClick={() => changeView(ViewType.VEDLEGG, {vedtakId: id})}
+            >
                 Brukerinformasjon på vedtakstidspunktet
             </button>
         </>

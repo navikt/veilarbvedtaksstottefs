@@ -1,42 +1,45 @@
-import { useContext } from 'react';
-import { ModalViewDispatch } from '../providers/modal-provider';
-import { ModalActionType } from '../modalcontroller/modal-reducer';
-import { ViewDispatch } from '../providers/view-provider';
+import React from 'react';
 import { VarselModal } from './varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { Knapp } from 'nav-frontend-knapper';
-import React from 'react';
+import { ModalProps } from './modal-props';
+import { useModalStore } from '../../stores/modal-store';
+import { useViewStore } from '../../stores/view-store';
+import Show from '../show';
+import { FeilmodalConfig } from './feilmodal-config';
 
-export function FeilModal (props: {children: React.ReactNode}) {
-    const {modalViewState, modalViewDispatch} = useContext(ModalViewDispatch);
-    const skalViseModal = modalViewState.modalView === ModalActionType.MODAL_FEIL;
-    const {tittel, beskrivelse, viewAction, knappeTekst} = modalViewState.props || {tittel: '', beskrivelse: '', viewAction: null, knappeTekst: ''};
-    const {dispatch} = useContext(ViewDispatch);
+interface FeilmodalProps extends ModalProps {
+    config: FeilmodalConfig;
+}
 
-    const view = typeof viewAction === 'object' ?  viewAction : {view: viewAction};
+export function FeilModal(props: FeilmodalProps) {
+    const { isOpen, config: {tittel, beskrivelse, viewAction, knappeTekst} } = props;
+    const { hideModal } = useModalStore();
+    const { changeView } = useViewStore();
+
+    function handleOnClick() {
+        if (viewAction) {
+            changeView(viewAction);
+            hideModal();
+        }
+    }
+
     return (
-        <>
-            <VarselModal
-                isOpen={skalViseModal}
-                contentLabel="Feil vid hentning av data"
-                onRequestClose={() => modalViewDispatch({modalView: null})}
-                type="FEIL"
-                shouldCloseOnOverlayClick={false}
-            >
-                <Systemtittel>{tittel}</Systemtittel>
-                <Normaltekst>{beskrivelse}</Normaltekst>
-                {knappeTekst &&
-                <Knapp
-                    onClick={() => {
-                        dispatch(view);
-                        modalViewDispatch({modalView: null});
-                    }}
-                >
+        <VarselModal
+            isOpen={isOpen}
+            contentLabel="En feil har oppstått"
+            onRequestClose={hideModal}
+            type="FEIL"
+            shouldCloseOnOverlayClick={false}
+        >
+            <Systemtittel>{tittel}</Systemtittel>
+            <Normaltekst>{beskrivelse}</Normaltekst>
+            <Show if={knappeTekst}>
+                <Knapp onClick={handleOnClick}>
                     {knappeTekst}
-                </Knapp>}
-            </VarselModal>
-            {props.children}
-        </>
+                </Knapp>
+            </Show>
+        </VarselModal>
     );
 }

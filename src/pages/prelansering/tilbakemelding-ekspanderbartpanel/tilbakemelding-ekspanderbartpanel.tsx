@@ -3,10 +3,9 @@ import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { Undertittel } from 'nav-frontend-typografi';
 import svaertBraBilde from './svaert_bra.svg';
 import svaertDarligBilde from './svaert_darlig.svg';
-import hjerteBilde from '../hjerte.svg';
 import ImageButton from '../../../components/image-button/image-button';
-import { logEvent } from '../../../utils/frontend-logger';
 import { APP_NAME } from '../../../utils/constants';
+import { frontendlogger } from '../../../utils/frontend-logger';
 import './tilbakemelding-ekspanderbartpanel.less';
 
 interface TilbakemeldingEkspanderbartpanelProps {
@@ -28,7 +27,7 @@ function TilbakemeldingEkspanderbartpanel(props: TilbakemeldingEkspanderbartpane
     const handleTilbakemeldingValgClicked = (valg: TilbakemeldingValg) => {
         localStorage.setItem(localStorageName, 'true');
         setVisTilbakemelding(false);
-        logEvent(`${APP_NAME}.tilbakemeldinger.info-om-ny-losning`, { tag: props.tilbakemeldingTag, valg });
+        frontendlogger.logEvent(`${APP_NAME}.tilbakemeldinger.info-om-ny-losning`, { tag: props.tilbakemeldingTag, valg });
     };
 
     const Heading = () => (

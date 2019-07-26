@@ -1,17 +1,16 @@
-import React, { useContext } from 'react';
-import { VedtakData } from '../../../utils/types/vedtak';
+import React from 'react';
+import { VedtakData } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { ActionType } from '../../viewcontroller/view-reducer';
 import utkastIkon from './utkast.svg';
-import { ViewDispatch } from '../../providers/view-provider';
 import './utkast-panel.less';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
+import { useViewStore, ViewType } from '../../../stores/view-store';
 
 export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
-    const {dispatch} = useContext(ViewDispatch);
+    const { changeView } = useViewStore();
 
     if (!props.utkast) {
         return null;
@@ -32,7 +31,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
                 </>
             }
             knappKomponent={
-                <Hovedknapp onClick={() => dispatch({view: ActionType.UTKAST})}>Fortsett</Hovedknapp>
+                <Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>Fortsett</Hovedknapp>
             }
         />
     );

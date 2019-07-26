@@ -1,43 +1,43 @@
-import React, { useContext, useEffect } from 'react';
-import { TilbakeKnapp } from '../../components/skjema/tilbakeknapp';
-import { ActionType } from '../../components/viewcontroller/view-reducer';
-import { ViewDispatch } from '../../components/providers/view-provider';
-import { useFetch } from '../../utils/hooks/useFetch';
-import VedtaksstotteApi  from '../../api/vedtaksstotte-api';
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../components/json-viewer/json-viewer';
 import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
 import Card from '../../components/card/card';
 import { OrNothing } from '../../utils/types/ornothing';
-import { Innholdstittel, Sidetittel, Systemtittel } from 'nav-frontend-typografi';
-import { Status } from '../../utils/fetch-utils';
+import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import Page from '../page/page';
 import KildeType from '../../utils/types/kilde-type';
-import { logMetrikk } from '../../utils/frontend-logger';
+import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import './oyblikksbilde-visning.less';
-
-interface VedleggVisningProps {
-    vedtakId: number;
-    fnr: string;
-}
+import useFetch from '../../rest/use-fetch';
+import { HentOyblikksbildeFetchParams, lagHentOyblikksbildeFetchInfo } from '../../rest/api';
+import { hasFailed, isNotStarted, isNotStartedOrPending } from '../../rest/utils';
+import { useAppStore } from '../../stores/app-store';
+import { useViewStore, ViewType } from '../../stores/view-store';
+import Spinner from '../../components/spinner/spinner';
 
 function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
     const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.kildeType === kildeType) : null;
     return oyblikksbilde ? oyblikksbilde.json : null;
 }
 
-export function OyblikksbildeVisning (props: VedleggVisningProps) {
-    const {dispatch} = useContext(ViewDispatch);
-    const oyblikksbilder = useFetch<Oyblikksbilde[]>(VedtaksstotteApi.hentOyblikksbilde(props.fnr, props.vedtakId));
+export function OyblikksbildeVisning (props: { vedtakId: number }) {
+    const { fnr } = useAppStore();
+    const { changeView } = useViewStore();
+    const oyblikksbilder = useFetch<Oyblikksbilde[], HentOyblikksbildeFetchParams>(lagHentOyblikksbildeFetchInfo);
 
-    useEffect(() => logMetrikk('vis-oyblikksbilde'), []);
+    useEffect(() => {
+        frontendlogger.logMetrikk('vis-oyblikksbilde');
+        if (isNotStarted(oyblikksbilder)) {
+            oyblikksbilder.fetch({ fnr, vedtakId: props.vedtakId });
+        }
+    }, []);
 
-    if (oyblikksbilder.status === Status.LOADING || oyblikksbilder.status === Status.NOT_STARTED) {
-        return <NavFrontendSpinner className="vedtaksstotte-spinner" type="XL"/>;
-    } else if (oyblikksbilder.status === Status.ERROR) {
+    if (isNotStartedOrPending(oyblikksbilder)) {
+        return <Spinner/>;
+    } else if (hasFailed(oyblikksbilder)) {
         return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 
@@ -53,7 +53,7 @@ export function OyblikksbildeVisning (props: VedleggVisningProps) {
                 <div className="oyblikksbilde-visning__aksjoner">
                     <Hovedknapp
                         mini={true}
-                        onClick={() => dispatch({view: ActionType.VIS_VEDTAK, props: {id: props.vedtakId}})}
+                        onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}
                     >
                         Tilbake til vedtak
                     </Hovedknapp>

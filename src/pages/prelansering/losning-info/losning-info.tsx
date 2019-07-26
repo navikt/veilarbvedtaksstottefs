@@ -7,6 +7,8 @@ import klagebehandlingBilde from './klagebehandling.svg';
 import mellomlagreBilde from './mellomlagre.svg';
 import synlighetTilBrukerBilde from './synlighet-til-bruker.svg';
 
+// tslint:disable max-line-length
+
 export function LosningInfo() {
     return (
         <section className="losning-info">

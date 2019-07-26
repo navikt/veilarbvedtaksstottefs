@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { logEvent } from '../../utils/frontend-logger';
 import Page from '../page/page';
 import Innspill from './innspill';
 import PrelanseringInfo from './prelansering-info';
 import TakkMelding from './takk-melding';
 import { LosningInfo } from './losning-info/losning-info';
-import { useFetchState } from '../../components/providers/fetch-provider';
-import { PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../../api/feature-toggle-api';
+import { PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../../rest/data/features';
+import { useFetchStore } from '../../stores/fetch-store';
+import { frontendlogger } from '../../utils/frontend-logger';
 import './prelansering.less';
 
 const FRITEKST_MAX_LENGTH = 500;
@@ -14,10 +14,10 @@ const HAR_SENDT_INNSPILL_KEY = 'har_sendt_innspill';
 const INNSPILL_TAG = 'veilarbvedtaksstottefs.innspill';
 
 export function Prelansering() {
+    const { features } = useFetchStore();
     const [harSendt, setHarSendt] = useState(false);
     const [faneNavn, setFaneNavn] = useState(null);
     const [fritekst, setFritekst] = useState('');
-    const [features] = useFetchState('features');
     const harSendtTidligere = localStorage.getItem(HAR_SENDT_INNSPILL_KEY) != null;
 
     const handleFaneNavnChanged = (e: any) => {
@@ -34,7 +34,7 @@ export function Prelansering() {
 
     const handleSendInnspillClicked = () => {
         if (faneNavn || fritekst !== '') {
-            logEvent(INNSPILL_TAG, { faneNavn, fritekst});
+            frontendlogger.logEvent(INNSPILL_TAG, { faneNavn, fritekst});
         }
 
         setHarSendt(true);
