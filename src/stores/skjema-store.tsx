@@ -32,9 +32,9 @@ export const useSkjemaStore = createUseContext(() => {
         setErrors(Object.assign({}, errors, begrunnelseFeil));
     };
 
-    const initSkjema = (utkast: VedtakData, opplysninger: Opplysning[]) => {
+    const initSkjema = (utkast: VedtakData, opplysningerListe: Opplysning[]) => {
         setHovedmal(utkast.hovedmal);
-        setOpplysninger(opplysninger);
+        setOpplysninger(opplysningerListe);
         setInnsatsgruppe(utkast.innsatsgruppe);
         setBegrunnelse(utkast.begrunnelse);
         setSistOppdatert(utkast.sistOppdatert);

@@ -64,11 +64,9 @@ export function VedtakskjemaSide() {
         }
     }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
-
     useTimer(() => {
         oppdaterSistEndret(vedtakskjema);
     }, 2000, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
-
 
     function sendDataTilBackend(skjema: SkjemaData) {
         return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema }))
