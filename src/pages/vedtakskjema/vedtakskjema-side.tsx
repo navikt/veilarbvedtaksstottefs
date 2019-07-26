@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
     mapTilTekstliste,
     mergeMedDefaultOpplysninger,
-    skjemaIsNotEmpty,
-    validerBegrunnelseMaxLength
+    isSkjemaEmpty,
 } from '../../components/skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
@@ -23,7 +22,6 @@ import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { Opplysning } from '../../components/skjema/opplysninger/opplysninger';
 import { useTimer } from '../../utils/hooks/use-timer';
 
 export interface SkjemaData {
@@ -39,12 +37,11 @@ export function VedtakskjemaSide() {
     const { changeView } = useViewStore();
     const { showModal } = useModalStore();
     const {
-        opplysninger, setOpplysninger,
-        hovedmal, setHovedmal,
-        innsatsgruppe, setInnsatsgruppe,
-        begrunnelse, setBegrunnelse,
+        opplysninger, hovedmal,
+        innsatsgruppe, begrunnelse,
         sistOppdatert, setSistOppdatert,
-        validerSkjema, validerBegrunnelseLengde
+        validerSkjema, validerBegrunnelseLengde,
+        initSkjema
     } = useSkjemaStore();
 
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
@@ -54,19 +51,15 @@ export function VedtakskjemaSide() {
 
     useEffect(() => {
 
-        if (hasData(vedtak) && hasData(malform)) {
+        if (hasData(vedtak) && hasData(malform) && isSkjemaEmpty(vedtakskjema)) {
             const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
 
             if (utkast) {
                 const mergetOpplysninger = mergeMedDefaultOpplysninger(utkast.opplysninger,
-                    malform.data ? malform.data.malform : null) as Opplysning[];
-
-                setHovedmal(utkast.hovedmal);
-                setOpplysninger(mergetOpplysninger);
-                setInnsatsgruppe(utkast.innsatsgruppe);
-                setBegrunnelse(utkast.begrunnelse);
-                setSistOppdatert(utkast.sistOppdatert);
+                    malform.data ? malform.data.malform : null);
+                initSkjema(utkast, mergetOpplysninger);
             }
+
         }
 
     }, [vedtak.status, malform.status]);
@@ -99,7 +92,7 @@ export function VedtakskjemaSide() {
     }
 
     function oppdaterSistEndret(skjema: SkjemaData) {
-        if (skjemaIsNotEmpty(skjema)) {
+        if (!isSkjemaEmpty(skjema)) {
             sendDataTilBackend(skjema).then(() => {
                 setSistOppdatert(new Date().toISOString());
             });

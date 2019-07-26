@@ -10,6 +10,7 @@ import {
 } from '../components/skjema/skjema-utils';
 import { Opplysning } from '../components/skjema/opplysninger/opplysninger';
 import { OrNothing } from '../utils/types/ornothing';
+import { VedtakData } from '../rest/data/vedtak';
 
 export const useSkjemaStore = createUseContext(() => {
     const [opplysninger, setOpplysninger] = useState<Opplysning[]>([]);
@@ -31,12 +32,22 @@ export const useSkjemaStore = createUseContext(() => {
         setErrors(Object.assign({}, errors, begrunnelseFeil));
     };
 
+    const initSkjema = (utkast: VedtakData, opplysninger: Opplysning[]) => {
+        setHovedmal(utkast.hovedmal);
+        setOpplysninger(opplysninger);
+        setInnsatsgruppe(utkast.innsatsgruppe);
+        setBegrunnelse(utkast.begrunnelse);
+        setSistOppdatert(utkast.sistOppdatert);
+    };
+
     return {
         opplysninger, setOpplysninger,
         hovedmal, setHovedmal,
         innsatsgruppe, setInnsatsgruppe,
         begrunnelse, setBegrunnelse,
         sistOppdatert, setSistOppdatert,
-        errors, validerSkjema, validerBegrunnelseLengde
+        errors, validerSkjema,
+        validerBegrunnelseLengde,
+        initSkjema
     };
 });
