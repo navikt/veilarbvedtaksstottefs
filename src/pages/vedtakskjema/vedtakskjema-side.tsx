@@ -19,7 +19,6 @@ import { useFetchStore } from '../../stores/fetch-store';
 import { fetchWithInfo, hasData } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
-import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { useTimer } from '../../utils/hooks/use-timer';
@@ -34,7 +33,6 @@ export interface SkjemaData {
 export function VedtakskjemaSide() {
     const { fnr } = useAppStore();
     const { vedtak, malform } = useFetchStore();
-    const { changeView } = useViewStore();
     const { showModal } = useModalStore();
     const {
         opplysninger, hovedmal,
@@ -46,22 +44,16 @@ export function VedtakskjemaSide() {
 
     const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 
+    // Hvis vi er på vedtakskjema-side så skal det alltid finnes et utkast
     const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST') as VedtakData;
     const vedtakskjema = {opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal};
 
     useEffect(() => {
-
-        if (hasData(vedtak) && hasData(malform) && isSkjemaEmpty(vedtakskjema)) {
-            const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
-
-            if (utkast) {
-                const mergetOpplysninger = mergeMedDefaultOpplysninger(utkast.opplysninger,
-                    malform.data ? malform.data.malform : null);
-                initSkjema(utkast, mergetOpplysninger);
-            }
-
+        if (isSkjemaEmpty(vedtakskjema)) {
+            const malformData = malform.data ? malform.data.malform : null;
+            const mergetOpplysninger = mergeMedDefaultOpplysninger(utkast.opplysninger, malformData);
+            initSkjema(utkast, mergetOpplysninger);
         }
-
     }, [vedtak.status, malform.status]);
 
     useEffect(() => {
@@ -70,7 +62,6 @@ export function VedtakskjemaSide() {
         } else {
             validerBegrunnelseLengde();
         }
-
     }, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
 
@@ -86,37 +77,12 @@ export function VedtakskjemaSide() {
             });
     }
 
-    function dispatchFetchVedtakOgRedirectTilHovedside() {
-        vedtak.fetch({ fnr });
-        changeView(ViewType.HOVEDSIDE);
-    }
-
     function oppdaterSistEndret(skjema: SkjemaData) {
         if (!isSkjemaEmpty(skjema)) {
             sendDataTilBackend(skjema).then(() => {
                 setSistOppdatert(new Date().toISOString());
             });
         }
-    }
-
-    function handleForhandsvis(skjema: SkjemaData) {
-        setHarForsoktAttSende(true);
-
-        if (!validerSkjema()) {
-            return;
-        }
-
-        sendDataTilBackend(skjema).then(() => {
-            changeView(ViewType.FORHANDSVISNING);
-        });
-    }
-
-    function handleLagreOgTilbake(skjema: SkjemaData) {
-        sendDataTilBackend(skjema)
-            .then(() => {
-                dispatchFetchVedtakOgRedirectTilHovedside();
-                showModal(ModalType.VEDTAK_LAGRET_SUKSESS);
-            });
     }
 
     return (
@@ -127,8 +93,8 @@ export function VedtakskjemaSide() {
             </Card>
             <Footer className="vedtakskjema__footer">
                 <Aksjoner
-                    handleForhandsvis={() => handleForhandsvis(vedtakskjema)}
-                    handleLagreOgTilbake={() => handleLagreOgTilbake(vedtakskjema)}
+                    vedtakskjema={vedtakskjema}
+                    harForsoktForhandsvisning={() => setHarForsoktAttSende(true)}
                 />
             </Footer>
         </Page>
