@@ -67,9 +67,6 @@ class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
                     error=""
                     loading={<PdfSpinner/>}
                     onLoadError={() => this.props.onStatusUpdate(PDFStatus.ERROR)}
-                    onLoadProgress={() => {
-                        console.log('test'); // tslint:disable-line
-                    }}
                     onLoadSuccess={(object: { numPages: number }) => {
                         this.props.onStatusUpdate(PDFStatus.SUCCESS);
                         this.setState({numPages: object.numPages});
