@@ -40,6 +40,15 @@ export const useSkjemaStore = createUseContext(() => {
         setSistOppdatert(utkast.sistOppdatert);
     };
 
+    const resetSkjema = () => {
+        setHovedmal(undefined);
+        setOpplysninger([]);
+        setInnsatsgruppe(undefined);
+        setBegrunnelse(undefined);
+        setSistOppdatert('');
+        setErrors({});
+    };
+
     return {
         opplysninger, setOpplysninger,
         hovedmal, setHovedmal,
@@ -48,6 +57,6 @@ export const useSkjemaStore = createUseContext(() => {
         sistOppdatert, setSistOppdatert,
         errors, validerSkjema,
         validerBegrunnelseLengde,
-        initSkjema
+        initSkjema, resetSkjema
     };
 });
