@@ -75,7 +75,7 @@ export function skjemaIsNotEmpty (skjema: SkjemaData) {
     return skjema.hovedmal
         || skjema.innsatsgruppe
         || (skjema.opplysninger && (skjema.opplysninger as string[]).length > 0 )
-        || skjema.begrunnelse.trim();
+        || skjema.begrunnelse && skjema.begrunnelse.trim();
 }
 
 export function maSkriveBegrunnelseGittInnsatsgruppe (innsatsgruppe: OrNothing<InnsatsgruppeType>): boolean {
@@ -98,7 +98,7 @@ export function validerSkjema(skjema: SkjemaData): SkjemaFeil {
         errors.hovedmal = 'Mangler hovedmål';
     }
 
-    const begrunnelse = skjema.begrunnelse.trim();
+    const begrunnelse = skjema.begrunnelse ? skjema.begrunnelse.trim() : '';
 
     if (!begrunnelse && maSkriveBegrunnelseGittInnsatsgruppe(innsatsgruppe)) {
         errors.begrunnelse = 'Mangler begrunnelse';
@@ -114,14 +114,14 @@ export function validerSkjema(skjema: SkjemaData): SkjemaFeil {
     return errors;
 }
 
-export function validerBegrunnelseMaxLength (begrunnelse: string) {
+export function validerBegrunnelseMaxLength (begrunnelse: OrNothing<string>) {
     let errors: SkjemaFeil = {};
-    if (begrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
+    if (begrunnelse && begrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
         errors.begrunnelse =  `Du kan maksimalt skrive ${BEGRUNNELSE_MAX_LENGTH} tegn`;
     }
     return errors;
 }
 
-export function utkastetSkalKvalitetssikrets (innsatsgruppe?: InnsatsgruppeType) {
+export function utkastetSkalKvalitetssikrets (innsatsgruppe: OrNothing<InnsatsgruppeType>) {
     return innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS || innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
 }

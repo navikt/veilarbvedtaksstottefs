@@ -38,7 +38,7 @@ function Begrunnelse() {
                     className="begrunnelse__container"
                 >
                 <Textarea
-                    value={begrunnelse}
+                    value={begrunnelse ? begrunnelse : ''}
                     label=""
                     placeholder="Skriv inn begrunnelse eller arbeidsevnevurdering"
                     maxLength={BEGRUNNELSE_MAX_LENGTH}

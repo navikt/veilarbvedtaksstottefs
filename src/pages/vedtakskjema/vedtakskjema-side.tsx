@@ -30,7 +30,7 @@ export interface SkjemaData {
     opplysninger: string[] | undefined;
     hovedmal: OrNothing<HovedmalType>;
     innsatsgruppe: OrNothing<InnsatsgruppeType>;
-    begrunnelse: string;
+    begrunnelse: OrNothing<string>;
 }
 
 export function VedtakskjemaSide() {

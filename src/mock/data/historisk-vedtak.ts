@@ -16,6 +16,9 @@ const historisk: VedtakData[] & JSONArray = [
         veilederEnhetId: '1337',
         veilederEnhetNavn: 'Gotham city',
         veilederIdent: 'Z007',
+        dokumentInfoId: null,
+        journalpostId: '123456',
+        beslutter: '654321',
     },
     {
         id: 3,
@@ -29,7 +32,9 @@ const historisk: VedtakData[] & JSONArray = [
         veilederEnhetId: '1337',
         veilederEnhetNavn: 'Gotham city',
         veilederIdent: 'Z007',
-        beslutter: 'Beslutter Besluttersen'
+        beslutter: 'Beslutter Besluttersen',
+        dokumentInfoId: '98765',
+        journalpostId: '5678',
     }
 ];
 
