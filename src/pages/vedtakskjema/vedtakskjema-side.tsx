@@ -16,7 +16,7 @@ import SkjemaHeader from '../../components/skjema/header/skjema-header';
 import { VedtakData } from '../../rest/data/vedtak';
 import './vedtakskjema-side.less';
 import { useFetchStore } from '../../stores/fetch-store';
-import { fetchWithInfo, hasData } from '../../rest/utils';
+import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';

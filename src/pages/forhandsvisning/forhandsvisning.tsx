@@ -16,18 +16,17 @@ import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import './forhandsvisning.less';
+import { useSkjemaStore } from '../../stores/skjema-store';
 
 export function Forhandsvisning() {
     const {fnr} = useAppStore();
     const {changeView} = useViewStore();
     const {vedtak, features} = useFetchStore();
     const {showModal} = useModalStore();
-
+    const {innsatsgruppe} = useSkjemaStore();
     const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
-    const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
-    const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(utkast && utkast.innsatsgruppe);
-
+    const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
     const stoppeInnsendingfeatureToggle = features.data[STOPPE_VEDTAKSINNSENDING_TOGGLE];
 
     const url = env.isDevelopment
