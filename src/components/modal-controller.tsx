@@ -11,7 +11,7 @@ import {
     stoppeInnsendingFeatureToggleConfig
 } from './modal/feilmodal-config';
 import { SpinnerModal } from './modal/spinner-modal';
-import { KvalitetsSikringModalInnsending } from '../pages/forhandsvisning/kvalitetssikring';
+import { KvalitetsSikringModalInnsending } from '../pages/forhandsvisning/kvalitetssikring-modal';
 import { SuksessModalInnsending } from '../pages/hovedside/sukssessmodal-innsending';
 import { SuksessModalLagretUtkast } from '../pages/hovedside/suksessmodal-lagret';
 import SlettUtkastModal from './modal/slett-utkast-modal';

@@ -61,6 +61,8 @@ export const fetchWithInfo = (fetchInfo: FetchInfo) => {
                     frontendlogger.logError({ error: txt });
                 })
                 .catch();
+
+            throw new Error('Kall feilet med status ' + res.status);
         }
 
         return res;

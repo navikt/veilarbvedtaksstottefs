@@ -5,7 +5,7 @@ import { Input } from 'nav-frontend-skjema';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
 import { ModalProps } from '../../components/modal/modal-props';
 import { useModalStore } from '../../stores/modal-store';
-import './kvalitetetssikring.less';
+import './kvalitetetssikring-modal.less';
 
 interface KvalitetsSikringModalInnsendingProps extends ModalProps {
     sendVedtak: (beslutter?: string) => void;
