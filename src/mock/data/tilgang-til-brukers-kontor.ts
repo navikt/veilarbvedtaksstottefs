@@ -2,7 +2,7 @@ import TilgangTilBrukersKontor from '../../utils/types/tilgang-til-brukers-konto
 import { JSONObject } from 'yet-another-fetch-mock';
 
 const tilgangTilBrukersKontor: TilgangTilBrukersKontor & JSONObject = {
-    tilgangTilBrukersKontor: true
+	tilgangTilBrukersKontor: true
 };
 
 export default tilgangTilBrukersKontor;

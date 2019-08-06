@@ -14,46 +14,47 @@ const HAR_SENDT_INNSPILL_KEY = 'har_sendt_innspill';
 const INNSPILL_TAG = 'veilarbvedtaksstottefs.innspill';
 
 export function Prelansering() {
-    const { features } = useFetchStore();
-    const [harSendt, setHarSendt] = useState(false);
-    const [faneNavn, setFaneNavn] = useState(null);
-    const [fritekst, setFritekst] = useState('');
-    const harSendtTidligere = localStorage.getItem(HAR_SENDT_INNSPILL_KEY) != null;
+	const { features } = useFetchStore();
+	const [harSendt, setHarSendt] = useState(false);
+	const [faneNavn, setFaneNavn] = useState(null);
+	const [fritekst, setFritekst] = useState('');
+	const harSendtTidligere = localStorage.getItem(HAR_SENDT_INNSPILL_KEY) != null;
 
-    const handleFaneNavnChanged = (e: any) => {
-        setFaneNavn(e.target.value);
-    };
+	const handleFaneNavnChanged = (e: any) => {
+		setFaneNavn(e.target.value);
+	};
 
-    const handleFritekstChanged = (e: any) => {
-        let tekst = e.target.value;
-        if (tekst.length > FRITEKST_MAX_LENGTH) {
-            tekst = tekst.substr(0, FRITEKST_MAX_LENGTH);
-        }
-        setFritekst(tekst);
-    };
+	const handleFritekstChanged = (e: any) => {
+		let tekst = e.target.value;
+		if (tekst.length > FRITEKST_MAX_LENGTH) {
+			tekst = tekst.substr(0, FRITEKST_MAX_LENGTH);
+		}
+		setFritekst(tekst);
+	};
 
-    const handleSendInnspillClicked = () => {
-        if (faneNavn || fritekst !== '') {
-            frontendlogger.logEvent(INNSPILL_TAG, { faneNavn, fritekst});
-        }
+	const handleSendInnspillClicked = () => {
+		if (faneNavn || fritekst !== '') {
+			frontendlogger.logEvent(INNSPILL_TAG, { faneNavn, fritekst });
+		}
 
-        setHarSendt(true);
-        localStorage.setItem(HAR_SENDT_INNSPILL_KEY, 'true');
-    };
+		setHarSendt(true);
+		localStorage.setItem(HAR_SENDT_INNSPILL_KEY, 'true');
+	};
 
-    return (
-        <Page>
-            <PrelanseringInfo/>
-            {features.data[PRELANSERING_INFO_OM_LOSNING_TOGGLE] && <LosningInfo/>}
-            {harSendt && <TakkMelding/>}
-            {harSendtTidligere || harSendt ? null :
-                <Innspill
-                    faneNavn={faneNavn}
-                    fritekst={fritekst}
-                    handleFaneNavnChanged={handleFaneNavnChanged}
-                    handleFritekstChanged={handleFritekstChanged}
-                    handleSendInnspillClicked={handleSendInnspillClicked}
-                />}
-        </Page>
-    );
+	return (
+		<Page>
+			<PrelanseringInfo />
+			{features.data[PRELANSERING_INFO_OM_LOSNING_TOGGLE] && <LosningInfo />}
+			{harSendt && <TakkMelding />}
+			{harSendtTidligere || harSendt ? null : (
+				<Innspill
+					faneNavn={faneNavn}
+					fritekst={fritekst}
+					handleFaneNavnChanged={handleFaneNavnChanged}
+					handleFritekstChanged={handleFritekstChanged}
+					handleSendInnspillClicked={handleSendInnspillClicked}
+				/>
+			)}
+		</Page>
+	);
 }

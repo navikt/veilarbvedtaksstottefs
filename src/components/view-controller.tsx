@@ -7,24 +7,24 @@ import { OyblikksbildeVisning } from '../pages/oyblikksbilde-visning/oyblikksbil
 import { VedtaksbrevVisning } from '../pages/vedtaksbrev-visning/vedtaksbrev-visning';
 import { VedtakskjemaSide } from '../pages/vedtakskjema/vedtakskjema-side';
 
-export function ViewController () {
-    const { view, viewProps } = useViewStore();
-    const vedtakId = viewProps.vedtakId;
+export function ViewController() {
+	const { view, viewProps } = useViewStore();
+	const vedtakId = viewProps.vedtakId;
 
-    switch (view) {
-        case ViewType.HOVEDSIDE:
-            return <Hovedside/>;
-        case ViewType.UTKAST:
-            return <VedtakskjemaSide/>;
-        case ViewType.FORHANDSVISNING:
-            return <Forhandsvisning/>;
-        case ViewType.VEDTAK:
-            return <VedtakskjemaVisningSide vedtakId={vedtakId}/>;
-        case ViewType.VEDLEGG:
-            return <OyblikksbildeVisning vedtakId={vedtakId}/>;
-        case ViewType.VEDTAK_PDF:
-            return <VedtaksbrevVisning vedtakId={vedtakId}/>;
-        default:
-            return <Hovedside/>;
-    }
+	switch (view) {
+		case ViewType.HOVEDSIDE:
+			return <Hovedside />;
+		case ViewType.UTKAST:
+			return <VedtakskjemaSide />;
+		case ViewType.FORHANDSVISNING:
+			return <Forhandsvisning />;
+		case ViewType.VEDTAK:
+			return <VedtakskjemaVisningSide vedtakId={vedtakId} />;
+		case ViewType.VEDLEGG:
+			return <OyblikksbildeVisning vedtakId={vedtakId} />;
+		case ViewType.VEDTAK_PDF:
+			return <VedtaksbrevVisning vedtakId={vedtakId} />;
+		default:
+			return <Hovedside />;
+	}
 }

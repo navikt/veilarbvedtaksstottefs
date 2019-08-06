@@ -12,40 +12,33 @@ import './vedtakskjema-visning-side.less';
 import { useViewStore, ViewType } from '../../stores/view-store';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
-    const { vedtak } = useFetchStore();
-    const { changeView } = useViewStore();
-    const vistVedtak = vedtak.data.find((v: VedtakData) => v.id === props.vedtakId);
+	const { vedtak } = useFetchStore();
+	const { changeView } = useViewStore();
+	const vistVedtak = vedtak.data.find((v: VedtakData) => v.id === props.vedtakId);
 
-    if (!vistVedtak) {
-        return (
-            <AlertStripeFeil>
-                Fant ikke vedtak å fremvise
-            </AlertStripeFeil>
-        );
-    }
+	if (!vistVedtak) {
+		return <AlertStripeFeil>Fant ikke vedtak å fremvise</AlertStripeFeil>;
+	}
 
-    return (
-        <Page>
-            <Card className="vedtakskjema-visning">
-                <SkjemaHeader vedtak={vistVedtak}/>
-                <SkjemaVisning vedtak={vistVedtak}/>
-            </Card>
-            <Footer className="vedtakskjema-visning__footer">
-                <div className="vedtakskjema-visning__aksjoner">
-                    <Hovedknapp
-                        mini={true}
-                        onClick={() => changeView(ViewType.VEDTAK_PDF, { vedtakId: vistVedtak.id})}
-                    >
-                        Vis vedtaksbrev
-                    </Hovedknapp>
-                    <Knapp
-                        mini={true}
-                        onClick={() => changeView(ViewType.HOVEDSIDE)}
-                    >
-                        Tilbake
-                    </Knapp>
-                </div>
-            </Footer>
-        </Page>
-    );
+	return (
+		<Page>
+			<Card className="vedtakskjema-visning">
+				<SkjemaHeader vedtak={vistVedtak} />
+				<SkjemaVisning vedtak={vistVedtak} />
+			</Card>
+			<Footer className="vedtakskjema-visning__footer">
+				<div className="vedtakskjema-visning__aksjoner">
+					<Hovedknapp
+						mini={true}
+						onClick={() => changeView(ViewType.VEDTAK_PDF, { vedtakId: vistVedtak.id })}
+					>
+						Vis vedtaksbrev
+					</Hovedknapp>
+					<Knapp mini={true} onClick={() => changeView(ViewType.HOVEDSIDE)}>
+						Tilbake
+					</Knapp>
+				</div>
+			</Footer>
+		</Page>
+	);
 }

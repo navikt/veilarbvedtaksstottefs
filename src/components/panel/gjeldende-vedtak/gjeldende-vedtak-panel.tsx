@@ -15,56 +15,56 @@ import { useViewStore, ViewType } from '../../../stores/view-store';
 import './gjeldende-vedtak-panel.less';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
-    const { underOppfolging } = useFetchStore();
-    const { changeView } = useViewStore();
+	const { underOppfolging } = useFetchStore();
+	const { changeView } = useViewStore();
 
-    if (!underOppfolging.data.underOppfolging) {
-        return (
-            <VedtaksstottePanel
-                tittel="Gjeldende oppfølgingsvedtak"
-                undertittel="Ingen gjeldende oppfølgingsvedtak"
-                imgSrc={ingenVedtakBilde}
-                panelKlasse="ikke-under-oppfolging-panel"
-                tekstKomponent={
-                    <Normaltekst>
-                        Denne brukeren er ikke under oppfølging.
-                    </Normaltekst>
-                }
-            />
-        );
+	if (!underOppfolging.data.underOppfolging) {
+		return (
+			<VedtaksstottePanel
+				tittel="Gjeldende oppfølgingsvedtak"
+				undertittel="Ingen gjeldende oppfølgingsvedtak"
+				imgSrc={ingenVedtakBilde}
+				panelKlasse="ikke-under-oppfolging-panel"
+				tekstKomponent={<Normaltekst>Denne brukeren er ikke under oppfølging.</Normaltekst>}
+			/>
+		);
+	} else if (!props.gjeldendeVedtak) {
+		return null;
+	}
 
-    } else if (!props.gjeldendeVedtak) {
-        return null;
-    }
+	const {
+		id,
+		innsatsgruppe,
+		sistOppdatert,
+		veilederEnhetId,
+		veilederIdent,
+		veilederEnhetNavn
+	} = props.gjeldendeVedtak;
+	const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
 
-    const {id, innsatsgruppe, sistOppdatert, veilederEnhetId, veilederIdent, veilederEnhetNavn} = props.gjeldendeVedtak;
-    const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
+	const handleVisVedtakClicked = () => {
+		changeView(ViewType.VEDTAK, { vedtakId: id });
+		frontendlogger.logMetrikk('vis-gjeldende-vedtak');
+	};
 
-    const handleVisVedtakClicked = () => {
-        changeView(ViewType.VEDTAK, { vedtakId: id });
-        frontendlogger.logMetrikk('vis-gjeldende-vedtak');
-    };
-
-    return (
-        <VedtaksstottePanel
-            tittel="Gjeldende oppfølgingsvedtak"
-            undertittel={innsatsgruppeNavn ? innsatsgruppeNavn : ''}
-            imgSrc={fullfortVedtakIcon}
-            panelKlasse="gjeldende-vedtak-panel"
-            tekstKomponent={
-                <>
-                    <Dato sistOppdatert={sistOppdatert} formatType="short" text="Dato"/>
-                    <Veileder
-                        text="Fattet av"
-                        ident={veilederIdent}
-                        enhetId={veilederEnhetId}
-                        enhetNavn={veilederEnhetNavn}
-                    />
-                </>
-            }
-            knappKomponent={
-                <Knapp onClick={handleVisVedtakClicked}>Vis vedtak</Knapp>
-            }
-        />
-    );
+	return (
+		<VedtaksstottePanel
+			tittel="Gjeldende oppfølgingsvedtak"
+			undertittel={innsatsgruppeNavn ? innsatsgruppeNavn : ''}
+			imgSrc={fullfortVedtakIcon}
+			panelKlasse="gjeldende-vedtak-panel"
+			tekstKomponent={
+				<>
+					<Dato sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
+					<Veileder
+						text="Fattet av"
+						ident={veilederIdent}
+						enhetId={veilederEnhetId}
+						enhetNavn={veilederEnhetNavn}
+					/>
+				</>
+			}
+			knappKomponent={<Knapp onClick={handleVisVedtakClicked}>Vis vedtak</Knapp>}
+		/>
+	);
 }

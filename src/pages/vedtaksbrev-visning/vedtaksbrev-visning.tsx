@@ -13,50 +13,41 @@ import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import './vedtaksbrev-visning.less';
 
-export function VedtaksbrevVisning (props: {vedtakId: number}) {
-    const { fnr } = useAppStore();
-    const { vedtak } = useFetchStore();
-    const { changeView } = useViewStore();
-    const { showModal } = useModalStore();
+export function VedtaksbrevVisning(props: { vedtakId: number }) {
+	const { fnr } = useAppStore();
+	const { vedtak } = useFetchStore();
+	const { changeView } = useViewStore();
+	const { showModal } = useModalStore();
 
-    const vedtaksObjekt = vedtak.data.find(v => v.id === props.vedtakId);
-    const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
+	const vedtaksObjekt = vedtak.data.find(v => v.id === props.vedtakId);
+	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
-    useEffect(() => frontendlogger.logMetrikk('vis-vedtaksbrev'), []);
+	useEffect(() => frontendlogger.logMetrikk('vis-vedtaksbrev'), []);
 
-    if (!vedtaksObjekt) {
-        return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
-    }
+	if (!vedtaksObjekt) {
+		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
+	}
 
-    useEffect(() => {
-        if (pdfStatus === PDFStatus.ERROR) {
-            showModal(ModalType.FEIL_VED_VISNING);
-        }
-    }, [pdfStatus]);
+	useEffect(() => {
+		if (pdfStatus === PDFStatus.ERROR) {
+			showModal(ModalType.FEIL_VED_VISNING);
+		}
+	}, [pdfStatus]);
 
-    const journalpostId = vedtaksObjekt.journalpostId as string;
-    const dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
-    const url = env.isDevelopment
-        ? vedtaksBrevUrl
-        : lagHentVedtakPdfUrl(fnr, dokumentInfoId, journalpostId);
+	const journalpostId = vedtaksObjekt.journalpostId as string;
+	const dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
+	const url = env.isDevelopment ? vedtaksBrevUrl : lagHentVedtakPdfUrl(fnr, dokumentInfoId, journalpostId);
 
-    return (
-        <>
-            <PdfViewer
-                url={url}
-                title="Visning av vedtaksbrev"
-                onStatusUpdate={setPdfStatus}
-            />
-            <Footer>
-                <div className="vedtaksbrev-visning__aksjoner">
-                    <Hovedknapp
-                        mini={true}
-                        onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId})}
-                    >
-                        Tilbake til vedtak
-                    </Hovedknapp>
-                </div>
-            </Footer>
-        </>
-    );
+	return (
+		<>
+			<PdfViewer url={url} title="Visning av vedtaksbrev" onStatusUpdate={setPdfStatus} />
+			<Footer>
+				<div className="vedtaksbrev-visning__aksjoner">
+					<Hovedknapp mini={true} onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}>
+						Tilbake til vedtak
+					</Hovedknapp>
+				</div>
+			</Footer>
+		</>
+	);
 }
