@@ -1,5 +1,5 @@
 import React from 'react';
-import { VarselModal } from './varsel-modal';
+import { VarselModal } from './varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -41,10 +41,10 @@ function SlettUtkastModal (props: ModalProps) {
             onRequestClose={hideModal}
             type="ADVARSEL"
         >
-            <Systemtittel>Slett utkast</Systemtittel>
+            <Systemtittel className="blokk-xxxs">Slett utkast</Systemtittel>
             <Normaltekst>Er du sikker på at du vil slette utkastet?</Normaltekst>
-            <div className="knapper">
-                <Hovedknapp className="btn--mr1" onClick={handleOnDeleteClicked}>Slett</Hovedknapp>
+            <div className="varsel-modal__knapper">
+                <Hovedknapp onClick={handleOnDeleteClicked}>Slett</Hovedknapp>
                 <Knapp onClick={hideModal}> Avbryt</Knapp>
             </div>
         </VarselModal>

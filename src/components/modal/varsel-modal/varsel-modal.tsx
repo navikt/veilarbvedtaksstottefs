@@ -1,10 +1,10 @@
 import React from 'react';
+import classNames from 'classnames';
 import ModalWrapper from 'nav-frontend-modal';
-import './modal.less';
 import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
 import { ReactComponent as OkSirkelIkon } from './ok-sirkel.svg';
 import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
-import classNames from 'classnames';
+import './varsel-modal.less';
 
 type VarselModalType = 'SUKSESS' | 'FEIL' | 'ADVARSEL';
 
@@ -27,11 +27,11 @@ export function VarselModal({contentLabel, isOpen, onRequestClose, children, typ
             onRequestClose={onRequestClose}
             closeTimeoutMS={closeTimeoutMS}
             closeButton={closeButton}
-            portalClassName="veilarbvedtaksstottefs-modal"
+            portalClassName="veilarbvedtaksstottefs-varsel-modal"
             shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
         >
             <VarselIkone type={type}/>
-            <div className={classNames('modal__innehold', className)}>
+            <div className={classNames('varsel-modal__innehold', className)}>
                 {children}
             </div>
         </ModalWrapper>
@@ -41,13 +41,12 @@ export function VarselModal({contentLabel, isOpen, onRequestClose, children, typ
 function VarselIkone(props: {type: VarselModalType}) {
     switch (props.type) {
         case 'SUKSESS':
-            return <OkSirkelIkon/>;
+            return <OkSirkelIkon className="varsel-modal__ikon"/>;
         case 'FEIL':
-            return <FeilSirkelIkon/>;
+            return <FeilSirkelIkon className="varsel-modal__ikon"/>;
         case 'ADVARSEL':
-            return <AdvarselSirkelIkon/>;
+            return <AdvarselSirkelIkon className="varsel-modal__ikon"/>;
         default:
             return null;
     }
-
 }
