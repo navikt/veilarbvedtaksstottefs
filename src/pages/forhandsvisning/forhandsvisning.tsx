@@ -23,7 +23,7 @@ export function Forhandsvisning() {
 	const { changeView } = useViewStore();
 	const { vedtak, features } = useFetchStore();
 	const { showModal } = useModalStore();
-	const { innsatsgruppe } = useSkjemaStore();
+	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
 	const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
@@ -54,6 +54,7 @@ export function Forhandsvisning() {
 
 		fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutter }))
 			.then(() => {
+                resetSkjema();
 				tilbakeTilHovedsiden();
 			})
 			.catch(err => {
