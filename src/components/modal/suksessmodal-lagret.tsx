@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { VarselModal } from '../../components/modal/varsel-modal';
+import { VarselModal } from './varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
-import { ModalProps } from '../../components/modal/modal-props';
+import { ModalProps } from './modal-props';
 import { useModalStore } from '../../stores/modal-store';
 
 export function SuksessModalLagretUtkast (props: ModalProps) {
@@ -28,8 +28,10 @@ export function SuksessModalLagretUtkast (props: ModalProps) {
             onRequestClose={hideModal}
             type="SUKSESS"
         >
-            <Systemtittel>Du har lagret utkastet</Systemtittel>
-            <Normaltekst>Du kan når som helst fortsette med vedtaket og det blir automatiskt lagret underveis.</Normaltekst>
+            <Systemtittel className="blokk-xxxs">Du har lagret utkastet</Systemtittel>
+            <Normaltekst className="blokk-xs">
+                Du kan når som helst fortsette med vedtaket og det blir automatiskt lagret underveis.
+            </Normaltekst>
         </VarselModal>
     );
 }

@@ -1,22 +1,22 @@
 import React from 'react';
 import { ModalType, useModalStore } from '../stores/modal-store';
-import { FeilModal } from './modal/feilmodal';
+import { FeilModal } from './modal/feil-modal/feil-modal';
 import {
-    FeilmodalConfig,
+    FeilModalConfig,
     feilVedForhandsvisnigConfig,
     feilVedLagringConfig,
     feilVedOpprettingAvUtkast,
     feilVedSendningConfig, feilVedSlettingAvUtkastConfig,
     feilVedVisningConfig,
     stoppeInnsendingFeatureToggleConfig
-} from './modal/feilmodal-config';
-import { SpinnerModal } from './modal/spinner-modal';
-import { KvalitetsSikringModalInnsending } from '../pages/forhandsvisning/kvalitetssikring-modal';
-import { SuksessModalInnsending } from '../pages/hovedside/sukssessmodal-innsending';
-import { SuksessModalLagretUtkast } from '../pages/hovedside/suksessmodal-lagret';
+} from './modal/feil-modal/feil-modal-config';
+import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
+import { KvalitetsSikringModalInnsending } from './modal/kvalitetssikring-modal/kvalitetssikring-modal';
+import { SuksessModalInnsending } from './modal/sukssessmodal-innsending';
+import { SuksessModalLagretUtkast } from './modal/suksessmodal-lagret';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 
-function finnFeilModalConfig(modalType: ModalType): FeilmodalConfig | null {
+function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
     switch (modalType) {
         case ModalType.FEIL_VED_OPPRETTING_AV_UTKAST:
             return feilVedOpprettingAvUtkast;

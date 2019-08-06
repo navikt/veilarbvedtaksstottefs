@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { VarselModal } from '../../components/modal/varsel-modal';
+import { VarselModal } from '../varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
-import { ModalProps } from '../../components/modal/modal-props';
-import { useModalStore } from '../../stores/modal-store';
+import { ModalProps } from '../modal-props';
+import { useModalStore } from '../../../stores/modal-store';
+import '../varsel-modal/varsel-modal.less';
 import './kvalitetetssikring-modal.less';
 
 interface KvalitetsSikringModalInnsendingProps extends ModalProps {
@@ -40,7 +41,6 @@ export function KvalitetsSikringModalInnsending (props: KvalitetsSikringModalInn
             onRequestClose={hideModal}
             type="ADVARSEL"
             shouldCloseOnOverlayClick={false}
-            className="kvalitetssikring"
         >
             <Systemtittel>Kvalitetssikring</Systemtittel>
             <Input
@@ -50,7 +50,7 @@ export function KvalitetsSikringModalInnsending (props: KvalitetsSikringModalInn
                 feil={error}
                 className="kvalitetssikring__input"
             />
-            <div className="knapper kvalitetssikring__knapper">
+            <div className="varsel-modal__knapper kvalitetssikring__knapper">
                 <Hovedknapp onClick={handleSend}>Send til bruker</Hovedknapp>
                 <Flatknapp onClick={hideModal}>Avbryt</Flatknapp>
             </div>

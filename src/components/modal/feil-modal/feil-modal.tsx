@@ -1,16 +1,16 @@
 import React from 'react';
-import { VarselModal } from './varsel-modal';
+import { VarselModal } from '../varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { Knapp } from 'nav-frontend-knapper';
-import { ModalProps } from './modal-props';
-import { useModalStore } from '../../stores/modal-store';
-import { useViewStore } from '../../stores/view-store';
-import Show from '../show';
-import { FeilmodalConfig } from './feilmodal-config';
+import { ModalProps } from '../modal-props';
+import { useModalStore } from '../../../stores/modal-store';
+import { useViewStore } from '../../../stores/view-store';
+import Show from '../../show';
+import { FeilModalConfig } from './feil-modal-config';
 
 interface FeilmodalProps extends ModalProps {
-    config: FeilmodalConfig;
+    config: FeilModalConfig;
 }
 
 export function FeilModal(props: FeilmodalProps) {

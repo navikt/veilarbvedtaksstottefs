@@ -9,7 +9,6 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { OrNothing } from '../../utils/types/ornothing';
 import { VEDTAK_I_GOSYS_TOGGLE } from '../../rest/data/features';
 import { useFetchStore } from '../../stores/fetch-store';
-import { useAppStore } from '../../stores/app-store';
 import './hovedside.less';
 
 export function Hovedside() {
