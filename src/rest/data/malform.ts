@@ -1,8 +1,8 @@
 export enum MalformType {
-    NB = 'NB',
-    NN = 'NN'
+	NB = 'NB',
+	NN = 'NN'
 }
 
 export interface MalformData {
-    malform: MalformType | null;
+	malform: MalformType | null;
 }

@@ -10,36 +10,37 @@ import Show from '../../show';
 import { FeilModalConfig } from './feil-modal-config';
 
 interface FeilmodalProps extends ModalProps {
-    config: FeilModalConfig;
+	config: FeilModalConfig;
 }
 
 export function FeilModal(props: FeilmodalProps) {
-    const { isOpen, config: {tittel, beskrivelse, viewAction, knappeTekst} } = props;
-    const { hideModal } = useModalStore();
-    const { changeView } = useViewStore();
+	const {
+		isOpen,
+		config: { tittel, beskrivelse, viewAction, knappeTekst }
+	} = props;
+	const { hideModal } = useModalStore();
+	const { changeView } = useViewStore();
 
-    function handleOnClick() {
-        if (viewAction) {
-            changeView(viewAction);
-            hideModal();
-        }
-    }
+	function handleOnClick() {
+		if (viewAction) {
+			changeView(viewAction);
+			hideModal();
+		}
+	}
 
-    return (
-        <VarselModal
-            isOpen={isOpen}
-            contentLabel="En feil har oppstått"
-            onRequestClose={hideModal}
-            type="FEIL"
-            shouldCloseOnOverlayClick={false}
-        >
-            <Systemtittel>{tittel}</Systemtittel>
-            <Normaltekst>{beskrivelse}</Normaltekst>
-            <Show if={knappeTekst}>
-                <Knapp onClick={handleOnClick}>
-                    {knappeTekst}
-                </Knapp>
-            </Show>
-        </VarselModal>
-    );
+	return (
+		<VarselModal
+			isOpen={isOpen}
+			contentLabel="En feil har oppstått"
+			onRequestClose={hideModal}
+			type="FEIL"
+			shouldCloseOnOverlayClick={false}
+		>
+			<Systemtittel>{tittel}</Systemtittel>
+			<Normaltekst>{beskrivelse}</Normaltekst>
+			<Show if={knappeTekst}>
+				<Knapp onClick={handleOnClick}>{knappeTekst}</Knapp>
+			</Show>
+		</VarselModal>
+	);
 }

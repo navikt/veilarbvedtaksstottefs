@@ -5,18 +5,18 @@ import { OrNothing } from '../../utils/types/ornothing';
 type VedtakStatus = 'UTKAST' | 'SENDT';
 
 export interface VedtakData {
-    id: number;
-    hovedmal: OrNothing<HovedmalType>;
-    innsatsgruppe: OrNothing<InnsatsgruppeType>;
-    vedtakStatus: VedtakStatus;
-    sistOppdatert: string;
-    begrunnelse: OrNothing<string>;
-    gjeldende: boolean;
-    veilederIdent: string;
-    veilederEnhetId: string;
-    veilederEnhetNavn: string;
-    beslutter: OrNothing<string>;
-    opplysninger: string[];
-    journalpostId: OrNothing<string>;
-    dokumentInfoId: OrNothing<string>;
+	id: number;
+	hovedmal: OrNothing<HovedmalType>;
+	innsatsgruppe: OrNothing<InnsatsgruppeType>;
+	vedtakStatus: VedtakStatus;
+	sistOppdatert: string;
+	begrunnelse: OrNothing<string>;
+	gjeldende: boolean;
+	veilederIdent: string;
+	veilederEnhetId: string;
+	veilederEnhetNavn: string;
+	beslutter: OrNothing<string>;
+	opplysninger: string[];
+	journalpostId: OrNothing<string>;
+	dokumentInfoId: OrNothing<string>;
 }

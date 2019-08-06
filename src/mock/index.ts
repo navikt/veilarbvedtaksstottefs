@@ -9,11 +9,8 @@ import malform from './data/malform';
 import FetchMock, { JSONArray, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
 
 const mock = FetchMock.configure({
-    enableFallback: true,
-    middleware: MiddlewareUtils.combine(
-        MiddlewareUtils.delayMiddleware(500),
-        MiddlewareUtils.loggingMiddleware()
-    )
+	enableFallback: true,
+	middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(500), MiddlewareUtils.loggingMiddleware())
 });
 
 mock.get('/veilarbpersonflatefs/api/feature', features);

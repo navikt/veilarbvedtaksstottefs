@@ -5,15 +5,15 @@ import { ModalProps } from '../modal-props';
 import './spinner-modal.less';
 
 export function SpinnerModal(props: ModalProps) {
-    return (
-        <ModalWrapper
-            isOpen={props.isOpen}
-            contentLabel="Spinner"
-            onRequestClose={() => {}} // tslint:disable-line:no-empty
-            closeButton={false}
-            portalClassName="veilarbvedtaksstottefs-spinner-modal"
-        >
-            <NavFrontendSpinner type="XXL"/>
-        </ModalWrapper>
-    );
+	return (
+		<ModalWrapper
+			isOpen={props.isOpen}
+			contentLabel="Spinner"
+			onRequestClose={() => {}} // tslint:disable-line:no-empty
+			closeButton={false}
+			portalClassName="veilarbvedtaksstottefs-spinner-modal"
+		>
+			<NavFrontendSpinner type="XXL" />
+		</ModalWrapper>
+	);
 }

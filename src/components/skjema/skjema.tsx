@@ -5,14 +5,14 @@ import Innsatsgruppe from '../../components/skjema/innsatsgruppe/innsatsgruppe';
 import Begrunnelse from '../../components/skjema/begrunnelse/begrunnelse';
 
 function Skjema() {
-    return (
-        <form>
-            <Opplysninger />
-            <Begrunnelse />
-            <Innsatsgruppe />
-            <Hovedmal />
-        </form>
-    );
+	return (
+		<form>
+			<Opplysninger />
+			<Begrunnelse />
+			<Innsatsgruppe />
+			<Hovedmal />
+		</form>
+	);
 }
 
 export default Skjema;
