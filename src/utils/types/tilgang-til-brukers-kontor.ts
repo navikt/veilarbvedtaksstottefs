@@ -1,5 +1,5 @@
 interface TilgangTilBrukersKontor {
-    tilgangTilBrukersKontor: boolean;
+	tilgangTilBrukersKontor: boolean;
 }
 
 export default TilgangTilBrukersKontor;

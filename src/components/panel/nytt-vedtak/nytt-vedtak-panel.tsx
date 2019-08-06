@@ -14,60 +14,54 @@ import { useAppStore } from '../../../stores/app-store';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import './nytt-vedtak-panel.less';
 
-export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData>, gjeldendeVedtak: OrNothing<VedtakData> }) {
-    const { fnr } = useAppStore();
-    const { showModal, hideModal } = useModalStore();
-    const { underOppfolging, vedtak } = useFetchStore();
-    const { changeView } = useViewStore();
-    const { utkast, gjeldendeVedtak } = props;
+export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData>; gjeldendeVedtak: OrNothing<VedtakData> }) {
+	const { fnr } = useAppStore();
+	const { showModal, hideModal } = useModalStore();
+	const { underOppfolging, vedtak } = useFetchStore();
+	const { changeView } = useViewStore();
+	const { utkast, gjeldendeVedtak } = props;
 
-    function lagNyttVedtakUtkastOgRedirectTilUtkast() {
-        showModal(ModalType.LASTER);
-        fetchWithInfo(lagNyttVedtakUtkastFetchInfo({ fnr }))
-            .then(() => {
-                vedtak.fetch({ fnr }, () => {
-                    hideModal();
-                    changeView(ViewType.UTKAST);
-                    frontendlogger.logMetrikk('lag-nytt-vedtak');
-                });
-            }).catch(() => {
-                showModal(ModalType.FEIL_VED_OPPRETTING_AV_UTKAST);
-            });
-    }
+	function lagNyttVedtakUtkastOgRedirectTilUtkast() {
+		showModal(ModalType.LASTER);
+		fetchWithInfo(lagNyttVedtakUtkastFetchInfo({ fnr }))
+			.then(() => {
+				vedtak.fetch({ fnr }, () => {
+					hideModal();
+					changeView(ViewType.UTKAST);
+					frontendlogger.logMetrikk('lag-nytt-vedtak');
+				});
+			})
+			.catch(() => {
+				showModal(ModalType.FEIL_VED_OPPRETTING_AV_UTKAST);
+			});
+	}
 
-    if (utkast || !underOppfolging.data.underOppfolging) {
-        return null;
-    }
+	if (utkast || !underOppfolging.data.underOppfolging) {
+		return null;
+	}
 
-    let tittel;
-    let undertittel;
-    let tekst;
+	let tittel;
+	let undertittel;
+	let tekst;
 
-    if (gjeldendeVedtak) {
-        tittel = 'Lag nytt oppfølgingsvedtak';
-        undertittel = 'Lag nytt vedtak';
-        tekst = 'Her kan du lage nytt oppfølgingsvedtak for denne brukeren';
-    } else {
-        tittel = 'Gjeldende oppfølgingsvedtak';
-        undertittel = 'Ingen gjeldende oppfølgingsvedtak';
-        tekst = 'Denne brukeren har ingen gjeldende oppfølgingsvedtak';
-    }
+	if (gjeldendeVedtak) {
+		tittel = 'Lag nytt oppfølgingsvedtak';
+		undertittel = 'Lag nytt vedtak';
+		tekst = 'Her kan du lage nytt oppfølgingsvedtak for denne brukeren';
+	} else {
+		tittel = 'Gjeldende oppfølgingsvedtak';
+		undertittel = 'Ingen gjeldende oppfølgingsvedtak';
+		tekst = 'Denne brukeren har ingen gjeldende oppfølgingsvedtak';
+	}
 
-    return (
-        <VedtaksstottePanel
-            tittel={tittel}
-            undertittel={undertittel}
-            imgSrc={leggTilVedtakBilde}
-            panelKlasse="nytt-vedtak-panel"
-            tekstKomponent={
-                <Normaltekst>{tekst}</Normaltekst>
-            }
-            knappKomponent={
-                <Hovedknapp onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>
-                    Lag nytt vedtak
-                </Hovedknapp>
-            }
-        />
-    );
-
+	return (
+		<VedtaksstottePanel
+			tittel={tittel}
+			undertittel={undertittel}
+			imgSrc={leggTilVedtakBilde}
+			panelKlasse="nytt-vedtak-panel"
+			tekstKomponent={<Normaltekst>{tekst}</Normaltekst>}
+			knappKomponent={<Hovedknapp onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>Lag nytt vedtak</Hovedknapp>}
+		/>
+	);
 }

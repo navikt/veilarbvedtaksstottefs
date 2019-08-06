@@ -8,21 +8,21 @@ import { useViewStore, ViewType } from '../../stores/view-store';
 import './skjema-visning.less';
 
 export function SkjemaVisning(props: { vedtak: VedtakData }) {
-    const {changeView} = useViewStore();
-    const {id, hovedmal, opplysninger, innsatsgruppe, begrunnelse, beslutter} = props.vedtak;
+	const { changeView } = useViewStore();
+	const { id, hovedmal, opplysninger, innsatsgruppe, begrunnelse, beslutter } = props.vedtak;
 
-    return (
-        <>
-            <InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} beslutter={beslutter}/>
-            <HovedmalVisning hovedmal={hovedmal}/>
-            <BegrunnelseVisning begrunnelse={begrunnelse}/>
-            <OpplysningerVisning opplysninger={opplysninger}/>
-            <button
-                className="lenke oyblikksbilde-lenke"
-                onClick={() => changeView(ViewType.VEDLEGG, {vedtakId: id})}
-            >
-                Brukerinformasjon på vedtakstidspunktet
-            </button>
-        </>
-    );
+	return (
+		<>
+			<InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} beslutter={beslutter} />
+			<HovedmalVisning hovedmal={hovedmal} />
+			<BegrunnelseVisning begrunnelse={begrunnelse} />
+			<OpplysningerVisning opplysninger={opplysninger} />
+			<button
+				className="lenke oyblikksbilde-lenke"
+				onClick={() => changeView(ViewType.VEDLEGG, { vedtakId: id })}
+			>
+				Brukerinformasjon på vedtakstidspunktet
+			</button>
+		</>
+	);
 }

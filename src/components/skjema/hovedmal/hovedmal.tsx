@@ -10,71 +10,66 @@ import './hovedmal.less';
 import { lagSkjemaElementFeil } from '../skjema-utils';
 
 export enum HovedmalType {
-    SKAFFE_ARBEID = 'SKAFFE_ARBEID',
-    BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
+	SKAFFE_ARBEID = 'SKAFFE_ARBEID',
+	BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
 }
 
 export const getHovedmalNavn = (hovedmal: OrNothing<HovedmalType>) => {
-    const hovedmalobjekt = hovedmalliste.find(h => h.value === hovedmal);
-    return (hovedmalobjekt && hovedmalobjekt.label) || EMDASH;
+	const hovedmalobjekt = hovedmalliste.find(h => h.value === hovedmal);
+	return (hovedmalobjekt && hovedmalobjekt.label) || EMDASH;
 };
 
 const hovedmalliste = [
-    {
-        label: 'Skaffe arbeid',
-        value: HovedmalType.SKAFFE_ARBEID
-    },
-    {
-        label: 'Beholde arbeid',
-        value: HovedmalType.BEHOLDE_ARBEID
-    },
+	{
+		label: 'Skaffe arbeid',
+		value: HovedmalType.SKAFFE_ARBEID
+	},
+	{
+		label: 'Beholde arbeid',
+		value: HovedmalType.BEHOLDE_ARBEID
+	}
 ];
 
 function Hovedmal() {
-    const { innsatsgruppe, hovedmal, setHovedmal, errors } = useSkjemaStore();
-    const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
-    return (
-        <SkjemaBolk
-            tittel="Hovedmål"
-            tittelId="hovedmal-id"
-        >
-            <SkjemaGruppe feil={lagSkjemaElementFeil(errors.hovedmal)}>
-                {erVarigTilpassetInnsats
-                    ? <AlertStripeInfo className="hovedmal-info">
-                        <span className="hovedmal-info__tekst">
-                            Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt arbeidsevne)
-                        </span>
-                    </AlertStripeInfo>
-                    : <HovedmalRadioButtons
-                        handleHovedmalChanged={setHovedmal}
-                        hovedmal={hovedmal}
-                    />
-                }
-            </SkjemaGruppe>
-        </SkjemaBolk>
-    );
+	const { innsatsgruppe, hovedmal, setHovedmal, errors } = useSkjemaStore();
+	const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
+	return (
+		<SkjemaBolk tittel="Hovedmål" tittelId="hovedmal-id">
+			<SkjemaGruppe feil={lagSkjemaElementFeil(errors.hovedmal)}>
+				{erVarigTilpassetInnsats ? (
+					<AlertStripeInfo className="hovedmal-info">
+						<span className="hovedmal-info__tekst">
+							Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt arbeidsevne)
+						</span>
+					</AlertStripeInfo>
+				) : (
+					<HovedmalRadioButtons handleHovedmalChanged={setHovedmal} hovedmal={hovedmal} />
+				)}
+			</SkjemaGruppe>
+		</SkjemaBolk>
+	);
 }
 
 export default Hovedmal;
 
 interface HovedmalRadioButtonsProps {
-    handleHovedmalChanged: (e: any) => void;
-    hovedmal: OrNothing<HovedmalType>;
+	handleHovedmalChanged: (e: any) => void;
+	hovedmal: OrNothing<HovedmalType>;
 }
 
 function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
-    return (
-        <div className="hovedmal">
-            {hovedmalliste.map((mal, idx) =>
-                <RadioPanel
-                    key={idx}
-                    label={mal.label}
-                    name="hovedmal"
-                    value={mal.value}
-                    onChange={(e: any) => props.handleHovedmalChanged(e.target.value)}
-                    checked={props.hovedmal === mal.value}
-                />
-            )}
-        </div>
-    );
+	return (
+		<div className="hovedmal">
+			{hovedmalliste.map((mal, idx) => (
+				<RadioPanel
+					key={idx}
+					label={mal.label}
+					name="hovedmal"
+					value={mal.value}
+					onChange={(e: any) => props.handleHovedmalChanged(e.target.value)}
+					checked={props.hovedmal === mal.value}
+				/>
+			))}
+		</div>
+	);
 }

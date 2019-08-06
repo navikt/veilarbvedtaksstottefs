@@ -7,32 +7,32 @@ import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../../rest
 import Spinner from '../spinner/spinner';
 
 interface NasjonalTilgangSjekkProps {
-    fnr: string;
-    children?: any;
+	fnr: string;
+	children?: any;
 }
 
 export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
-    const tilgangTilKontor = useFetch<TilgangTilBrukersKontor, FnrFetchParams>(lagHentTilgangTilKontorFetchInfo);
+	const tilgangTilKontor = useFetch<TilgangTilBrukersKontor, FnrFetchParams>(lagHentTilgangTilKontorFetchInfo);
 
-    useEffect(() => {
-        if (isNotStarted(tilgangTilKontor)) {
-            tilgangTilKontor.fetch({ fnr: props.fnr });
-        }
-    }, []);
+	useEffect(() => {
+		if (isNotStarted(tilgangTilKontor)) {
+			tilgangTilKontor.fetch({ fnr: props.fnr });
+		}
+	}, []);
 
-    if (isAnyNotStartedOrPending(tilgangTilKontor)) {
-        return <Spinner/>;
-    } else if (hasAnyFailed(tilgangTilKontor)) {
-        return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
-    }
+	if (isAnyNotStartedOrPending(tilgangTilKontor)) {
+		return <Spinner />;
+	} else if (hasAnyFailed(tilgangTilKontor)) {
+		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
+	}
 
-    if (!tilgangTilKontor.data.tilgangTilBrukersKontor) {
-        return (
-            <AlertStripeAdvarsel className="vedtaksstotte-alert">
-                Du har ikke tilgang til å se brukers oppfølgingsvedtak.
-            </AlertStripeAdvarsel>
-        );
-    }
+	if (!tilgangTilKontor.data.tilgangTilBrukersKontor) {
+		return (
+			<AlertStripeAdvarsel className="vedtaksstotte-alert">
+				Du har ikke tilgang til å se brukers oppfølgingsvedtak.
+			</AlertStripeAdvarsel>
+		);
+	}
 
-    return props.children;
+	return props.children;
 }
