@@ -27,7 +27,7 @@ function IngenTidligereVedtak() {
 				<img src={emptyBox} alt="Illustrasjon av tom eske" className="ingen-vedtak__bilde" />
 				<Undertittel>Ingen tidligere oppfølgingsvedtak</Undertittel>
 				<Normaltekst className="ingen-vedtak__forklaring">
-					Tidligere oppfølgingsvedtak (§ 14a) i ny løsning vil være tilgjengelig her
+                    Oppfølgingsvedtak som er fattet i Modia vil bli tilgjengelige her.
 				</Normaltekst>
 			</section>
 		</Panel>
