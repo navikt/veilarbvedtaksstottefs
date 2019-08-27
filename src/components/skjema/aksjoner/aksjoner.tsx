@@ -57,7 +57,6 @@ function Aksjoner(props: AksjonerProps) {
 		sendDataTilBackend().then(() => {
 			vedtak.fetch({ fnr });
 			changeView(ViewType.HOVEDSIDE);
-			showModal(ModalType.VEDTAK_LAGRET_SUKSESS);
 		});
 	}
 

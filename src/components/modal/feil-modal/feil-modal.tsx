@@ -21,25 +21,26 @@ export function FeilModal(props: FeilmodalProps) {
 	const { hideModal } = useModalStore();
 	const { changeView } = useViewStore();
 
-	function handleOnClick() {
+	function handleRequestClose() {
 		if (viewAction) {
 			changeView(viewAction);
-			hideModal();
 		}
+		hideModal();
 	}
 
 	return (
 		<VarselModal
 			isOpen={isOpen}
 			contentLabel="En feil har oppstått"
-			onRequestClose={hideModal}
+			onRequestClose={handleRequestClose}
 			type="FEIL"
 			shouldCloseOnOverlayClick={false}
+			closeButton={knappeTekst == undefined}
 		>
-			<Systemtittel>{tittel}</Systemtittel>
-			<Normaltekst>{beskrivelse}</Normaltekst>
+			<Systemtittel className="blokk-xxs">{tittel}</Systemtittel>
+			<Normaltekst className="blokk-s">{beskrivelse}</Normaltekst>
 			<Show if={knappeTekst}>
-				<Knapp onClick={handleOnClick}>{knappeTekst}</Knapp>
+				<Knapp onClick={handleRequestClose}>{knappeTekst}</Knapp>
 			</Show>
 		</VarselModal>
 	);
