@@ -16,14 +16,14 @@ function App(props: AppProps) {
 	return (
 		<main className="veilarbvedtaksstottefs">
 			<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
-				<NasjonalTilgangSjekk fnr={props.fnr}>
-					<DataFetcher fnr={props.fnr}>
-						<PrelanseringSjekk>
+				<PrelanseringSjekk>
+					<NasjonalTilgangSjekk fnr={props.fnr}>
+						<DataFetcher fnr={props.fnr}>
 							<ViewController />
 							<ModalController />
-						</PrelanseringSjekk>
-					</DataFetcher>
-				</NasjonalTilgangSjekk>
+						</DataFetcher>
+					</NasjonalTilgangSjekk>
+				</PrelanseringSjekk>
 			</StoreProvider>
 		</main>
 	);
