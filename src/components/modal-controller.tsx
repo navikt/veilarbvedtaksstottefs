@@ -14,7 +14,6 @@ import {
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
 import { KvalitetsSikringModalInnsending } from './modal/kvalitetssikring-modal/kvalitetssikring-modal';
 import { SuksessModalInnsending } from './modal/sukssessmodal-innsending';
-import { SuksessModalLagretUtkast } from './modal/suksessmodal-lagret';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
@@ -50,7 +49,6 @@ export function ModalController() {
 				sendVedtak={modalProps.sendVedtak}
 			/>
 			<SuksessModalInnsending isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />
-			<SuksessModalLagretUtkast isOpen={modalType === ModalType.VEDTAK_LAGRET_SUKSESS} />
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>

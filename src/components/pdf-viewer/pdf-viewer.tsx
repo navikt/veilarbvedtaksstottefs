@@ -23,13 +23,13 @@ export enum PDFStatus {
 	ERROR = 'ERROR'
 }
 
-function PdfSpinner() {
-	return (
-		<div className="pdfvisning__spinner">
-			<NavFrontendSpinner type="XL" />
-		</div>
-	);
-}
+const PdfError = () => <div className="pdfvisning__feedback-container"/>;
+
+const PdfSpinner = () => (
+	<div className="pdfvisning__feedback-container pdfvisning__spinner">
+		<NavFrontendSpinner type="XL" />
+	</div>
+);
 
 function Pages(props: { numPages: number }) {
 	return (
@@ -70,8 +70,8 @@ class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
 				<Document
 					className="pdfvisning__document"
 					file={this.file}
-					error=""
-					loading={<PdfSpinner />}
+					error={<PdfError/>}
+					loading={<PdfSpinner/>}
 					onLoadError={() => this.props.onStatusUpdate(PDFStatus.ERROR)}
 					onLoadSuccess={(object: { numPages: number }) => {
 						this.props.onStatusUpdate(PDFStatus.SUCCESS);

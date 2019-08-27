@@ -17,10 +17,10 @@ export function SuksessModalInnsending(props: ModalProps) {
 		>
 			<Systemtittel className="blokk-xxxs">Vedtak sendt til bruker</Systemtittel>
 			<Normaltekst className="blokk-s">
-				Du finner innholdet i vedtaket på fanen for oppfølgingsvedtak. Brukeren får vedtaksbrevet digitalt eller
-				i posten
+				Du finner innholdet i vedtaket på fanen for oppfølgingsvedtak.
+				Brukeren får vedtaksbrevet digitalt eller i posten.
 			</Normaltekst>
-			<Knapp onClick={hideModal}>Lukk</Knapp>
+			<Knapp onClick={hideModal}>OK</Knapp>
 		</VarselModal>
 	);
 }

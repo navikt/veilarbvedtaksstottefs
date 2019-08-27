@@ -41,6 +41,7 @@ export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInns
 			onRequestClose={hideModal}
 			type="ADVARSEL"
 			shouldCloseOnOverlayClick={false}
+			closeButton={false}
 		>
 			<Systemtittel>Kvalitetssikring</Systemtittel>
 			<Input
