@@ -102,6 +102,31 @@ export function lagSkjemaElementFeil(error: string | undefined): SkjemaelementFe
 	return error ? { feilmelding: error } : undefined;
 }
 
+export function harFeil(skjemaFeil: SkjemaFeil): boolean {
+	return Object.keys(skjemaFeil).length > 0;
+}
+
+export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
+	let forsteFeilNavn;
+
+	if (skjemaFeil.opplysninger) {
+		forsteFeilNavn = 'opplysninger';
+	} else if (skjemaFeil.begrunnelse) {
+		forsteFeilNavn = 'begrunnelse';
+	} else if (skjemaFeil.innsatsgruppe) {
+		forsteFeilNavn = 'innsatsgruppe';
+	} else if (skjemaFeil.hovedmal) {
+		forsteFeilNavn = 'hovedmal';
+	}
+
+	if (forsteFeilNavn) {
+		const tittelElem = document.getElementById(forsteFeilNavn + '-scroll-to');
+		if (tittelElem) {
+			tittelElem.scrollIntoView({ block: 'center' });
+		}
+	}
+}
+
 export function validerSkjema(skjema: SkjemaData): SkjemaFeil {
 	const errors: SkjemaFeil = {};
 	const innsatsgruppe = skjema.innsatsgruppe;

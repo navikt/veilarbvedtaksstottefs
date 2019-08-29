@@ -10,7 +10,7 @@ import './begrunnelse.less';
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 
 function Begrunnelse() {
-	const { begrunnelse, setBegrunnelse, errors } = useSkjemaStore();
+	const {begrunnelse, setBegrunnelse, errors} = useSkjemaStore();
 	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 
 	useEffect(() => {
@@ -31,6 +31,7 @@ function Begrunnelse() {
 				</AlertStripeInfo>
 				<SkjemaGruppe feil={lagSkjemaElementFeil(begrunnelseFeil)} className="begrunnelse__container">
 					<Textarea
+						id="begrunnelse-scroll-to"
 						value={begrunnelse ? begrunnelse : ''}
 						label=""
 						placeholder="Skriv inn begrunnelse eller arbeidsevnevurdering"
@@ -39,11 +40,11 @@ function Begrunnelse() {
 						aria-labelledby="begrunnelse-tittel"
 						aria-describedby="begrunnelse-tips"
 					/>
-					<span id="begrunnelse-tips" style={{ display: 'none' }}>
+					<span id="begrunnelse-tips" style={{display: 'none'}}>
 						Begrunnelse for vedtak/arbeidsevnevurdering, tips ved siden av
 					</span>
 				</SkjemaGruppe>
-				<BegrunnelseHjelpeTekster />
+				<BegrunnelseHjelpeTekster/>
 			</div>
 		</SkjemaBolk>
 	);

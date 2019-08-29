@@ -60,7 +60,7 @@ function Opplysninger() {
 	}
 
 	return (
-		<SkjemaBolk tittel="Kilder" tittelId="kilder-tittel">
+		<SkjemaBolk id="opplysninger-scroll-to" tittel="Kilder" tittelId="kilder-tittel">
 			<div className="opplysninger">
 				<Normaltekst>Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
 				<div className="opplysninger__innhold">

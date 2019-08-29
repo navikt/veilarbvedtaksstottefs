@@ -45,10 +45,10 @@ export const innsatsgrupper = [
 ];
 
 function Innsatsgruppe() {
-	const { innsatsgruppe, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();
+	const {innsatsgruppe, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
 	const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
 	return (
-		<SkjemaBolk tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
+		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
 			{kvalitetssikresVarsel && (
 				<AlertStripeAdvarsel className="innsatsgruppe-advarsel">
 					<span className="innsatsgruppe-advarsel__tekst">
