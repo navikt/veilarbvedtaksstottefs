@@ -20,11 +20,11 @@ export const useSkjemaStore = createUseContext(() => {
 	const [sistOppdatert, setSistOppdatert] = useState('');
 	const [errors, setErrors] = useState<SkjemaFeil>({});
 
-	const validerSkjema = (): boolean => {
+	const validerSkjema = (): SkjemaFeil => {
 		const opplysningerListe = mapTilTekstliste(opplysninger);
 		const feil = valider({ opplysninger: opplysningerListe, hovedmal, innsatsgruppe, begrunnelse });
 		setErrors(feil);
-		return Object.keys(feil).length === 0;
+		return feil;
 	};
 
 	const validerBegrunnelseLengde = () => {

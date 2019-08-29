@@ -10,6 +10,7 @@ import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
+import { harFeil, scrollTilForsteFeil } from '../skjema-utils';
 
 interface AksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -35,7 +36,10 @@ function Aksjoner(props: AksjonerProps) {
 	}
 
 	function handleForhandsvis() {
-		if (!validerSkjema()) {
+		const skjemaFeil = validerSkjema();
+
+		if (harFeil(skjemaFeil)) {
+			scrollTilForsteFeil(skjemaFeil);
 			props.harForsoktForhandsvisning();
 			return;
 		}

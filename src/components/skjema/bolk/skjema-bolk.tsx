@@ -3,6 +3,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import './skjem-bolk.less';
 
 interface SkjemaBolkProps {
+	id?: string;
 	tittel: string;
 	tittelId: string;
 	children?: React.ReactNode;
@@ -10,7 +11,7 @@ interface SkjemaBolkProps {
 
 function SkjemaBolk(props: SkjemaBolkProps) {
 	return (
-		<section className="skjemabolk">
+		<section id={props.id} className="skjemabolk">
 			<div className="skjemabolk__header">
 				<Undertittel id={props.tittelId}>{props.tittel}</Undertittel>
 			</div>
