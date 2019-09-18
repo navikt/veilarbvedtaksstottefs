@@ -7,14 +7,16 @@ import { ModalProps } from '../modal-props';
 import { useModalStore } from '../../../stores/modal-store';
 import '../varsel-modal/varsel-modal.less';
 import './kvalitetetssikring-modal.less';
+import { OrNothing } from '../../../utils/types/ornothing';
 
 interface KvalitetsSikringModalInnsendingProps extends ModalProps {
 	sendVedtak: (beslutter?: string) => void;
+	beslutter: OrNothing<string>;
 }
 
 export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInnsendingProps) {
 	const { hideModal } = useModalStore();
-	const [beslutter, setBeslutter] = useState('');
+	const [beslutter, setBeslutter] = useState(props.beslutter || '');
 	const [error, setError] = useState<{ feilmelding: string } | undefined>(undefined);
 	const [harForsoktSende, setHarForsoktSende] = useState<boolean>(false);
 	const harFyltUtBeslutter = beslutter.length > 0;

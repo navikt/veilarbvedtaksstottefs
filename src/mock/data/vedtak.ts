@@ -18,6 +18,7 @@ const vedtak: VedtakData & JSONObject = {
 	veilederEnhetNavn: 'Gotham city',
 	beslutter: null,
 	dokumentInfoId: null,
-	journalpostId: null
+	journalpostId: null,
+	sendtTilBeslutter: false
 };
 export default vedtak;

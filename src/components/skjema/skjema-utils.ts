@@ -163,9 +163,7 @@ export function validerBegrunnelseMaxLength(begrunnelse: OrNothing<string>) {
 	return errors;
 }
 
-export function utkastetSkalKvalitetssikrets(innsatsgruppe: OrNothing<InnsatsgruppeType>) {
-	return (
-		innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS ||
-		innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS
-	);
+export function trengerBeslutter(innsatsgruppe: OrNothing<InnsatsgruppeType>) {
+	return innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS
+		|| innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
 }

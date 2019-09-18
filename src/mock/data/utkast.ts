@@ -17,7 +17,8 @@ const utkast: VedtakData & JSONObject = {
 	begrunnelse: 'Trenger ikke hjelp',
 	beslutter: null,
 	dokumentInfoId: null,
-	journalpostId: null
+	journalpostId: null,
+	sendtTilBeslutter: false
 };
 
 export default utkast;

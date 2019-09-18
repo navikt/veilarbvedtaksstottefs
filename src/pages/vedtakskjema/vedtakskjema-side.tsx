@@ -18,6 +18,7 @@ import { useAppStore } from '../../stores/app-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { useTimer } from '../../utils/hooks/use-timer';
+import { finnUtkast } from '../../utils';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -45,7 +46,7 @@ export function VedtakskjemaSide() {
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 
 	// Hvis vi er på vedtakskjema-side så skal det alltid finnes et utkast
-	const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST') as VedtakData;
+	const utkast = finnUtkast(vedtak.data);
 	const vedtakskjema = { opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal };
 
 	useEffect(() => {

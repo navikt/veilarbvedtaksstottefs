@@ -16,6 +16,7 @@ import { KvalitetsSikringModalInnsending } from './modal/kvalitetssikring-modal/
 import { SuksessModalInnsending } from './modal/sukssessmodal-innsending';
 import { SuksessModalLagretUtkast } from './modal/suksessmodal-lagret';
 import SlettUtkastModal from './modal/slett-utkast-modal';
+import { BeslutterOppgaveModal } from './modal/beslutter-oppgave-modal/beslutter-oppgave-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
@@ -48,7 +49,9 @@ export function ModalController() {
 			<KvalitetsSikringModalInnsending
 				isOpen={modalType === ModalType.KVALITETSSIKRING}
 				sendVedtak={modalProps.sendVedtak}
+				beslutter={modalProps.beslutter}
 			/>
+			<BeslutterOppgaveModal isOpen={modalType === ModalType.BESLUTTER_OPPGAVE} />
 			<SuksessModalInnsending isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />
 			<SuksessModalLagretUtkast isOpen={modalType === ModalType.VEDTAK_LAGRET_SUKSESS} />
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
