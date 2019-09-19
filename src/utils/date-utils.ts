@@ -7,3 +7,7 @@ export function formatDateTime(dateStr: string) {
 export function formatDate(dateStr: string) {
 	return dayjs(dateStr).format('DD. MMM. YYYY');
 }
+
+export function formatInputDate(date: Date) {
+	return dayjs(date).format('YYYY-MM-DD');
+}

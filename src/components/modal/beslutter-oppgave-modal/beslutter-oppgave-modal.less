@@ -1,9 +1,32 @@
-.veilarbvedtaksstottefs-beslutter-oppgave-modal {
-  //.ReactModal__Content {
-  //  overflow: visible;
-  //  width: 448px;
-  //  padding: 0 1rem;
-  //  font-family: Source Sans Pro, Arial, sans-serif;
-  //}
 
+.veilarbvedtaksstottefs-beslutter-oppgave-modal {
+
+  .ReactModal__Content {
+    width: 640px;
+    padding: 1.5rem;
+  }
+
+  .to-kol {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    > * {
+      width: 30%;
+      min-width: 150px;
+    }
+  }
+
+  .knapperad {
+    display: flex;
+    justify-content: flex-start;
+
+    > * {
+      width: 150px;
+    }
+
+    > *:last-child {
+      margin-left: 1rem;
+    }
+  }
 }

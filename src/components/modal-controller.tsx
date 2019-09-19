@@ -4,7 +4,7 @@ import { FeilModal } from './modal/feil-modal/feil-modal';
 import {
 	FeilModalConfig,
 	feilVedForhandsvisnigConfig,
-	feilVedLagringConfig,
+	feilVedLagringConfig, feilVedOpprettingAvBeslutterOppgave,
 	feilVedOpprettingAvUtkast,
 	feilVedSendningConfig,
 	feilVedSlettingAvUtkastConfig,
@@ -20,6 +20,8 @@ import { BeslutterOppgaveModal } from './modal/beslutter-oppgave-modal/beslutter
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
+		case ModalType.FEIL_VED_OPPRETTING_AV_BESLUTTER_OPPGAVE:
+			return feilVedOpprettingAvBeslutterOppgave;
 		case ModalType.FEIL_VED_OPPRETTING_AV_UTKAST:
 			return feilVedOpprettingAvUtkast;
 		case ModalType.FEIL_VED_SENDING:
