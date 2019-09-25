@@ -1,9 +1,14 @@
 import { FetchInfo } from './utils';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { ALL_TOGGLES } from './data/features';
+import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-modal/beslutter-oppgave-modal-innhold';
 
 export interface FnrFetchParams {
 	fnr: string;
+}
+
+export interface EnhetIdFetchParams {
+	enhetId: string;
 }
 
 export interface HentOyblikksbildeFetchParams {
@@ -21,18 +26,13 @@ export interface SendVedtakFetchParams {
 	beslutter?: string;
 }
 
-export interface OpprettBeslutterOppgaveFetchParams {
-	aktivFra: string;
-	frist: string;
-	enhet: string;
-	beskrivelse: string;
-	beslutter?: string;
-}
+export type OpprettBeslutterOppgaveFetchParams = BeslutterOppgaveData;
 
 const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
 const OPPFOLGING_URL = '/veilarboppfolging/api';
 const VEILARBPERSON_API = '/veilarbperson/api';
 const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
+const VEILARBVEILEDER_API = '/veilarbveileder/api';
 
 export const lagHentFeaturesFetchInfo = (): FetchInfo => {
 	const toggles = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
@@ -49,6 +49,10 @@ export const lagHentTilgangTilKontorFetchInfo = (params: FnrFetchParams): FetchI
 
 export const lagHentMalformFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBPERSON_API}/person/${params.fnr}/malform`
+});
+
+export const lagHentVeiledereFetchInfo = (params: EnhetIdFetchParams): FetchInfo => ({
+	url: `${VEILARBVEILEDER_API}/enhet/${params.enhetId}/veiledere`
 });
 
 export const lagNyttVedtakUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({

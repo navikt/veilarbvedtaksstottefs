@@ -7,6 +7,7 @@ import underOppfolging from './data/under-oppfolging';
 import tilgangTilBrukersKontor from './data/tilgang-til-brukers-kontor';
 import malform from './data/malform';
 import FetchMock, { JSONArray, MiddlewareUtils, ResponseUtils } from 'yet-another-fetch-mock';
+import veiledere from './data/veiledere';
 
 const mock = FetchMock.configure({
 	enableFallback: true,
@@ -19,7 +20,9 @@ mock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', tilgangTilBrukersK
 mock.get('/veilarboppfolging/api/underoppfolging', underOppfolging);
 mock.get('/veilarbperson/api/person/:fnr/malform', malform);
 mock.get('/veilarbvedtaksstotte/api/:fnr/vedtak', [utkast, vedtak, ...historisk] as JSONArray);
+mock.get('/veilarbveileder/api/enhet/:enhetId/veiledere', veiledere);
 mock.put('/veilarbvedtaksstotte/api/:fnr/utkast', ResponseUtils.statusCode(204));
 mock.delete('/veilarbvedtaksstotte/api/:fnr/utkast', ResponseUtils.statusCode(204));
+mock.post('/veilarbvedtaksstotte/api/beslutter/send', ResponseUtils.statusCode(204));
 mock.post('/veilarbvedtaksstotte/api/:fnr/vedtak/send', ResponseUtils.statusCode(204));
 mock.post('/veilarbvedtaksstotte/api/:fnr/utkast', ResponseUtils.statusCode(204));
