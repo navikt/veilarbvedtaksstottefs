@@ -9,6 +9,8 @@ import './utkast-panel.less';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 
+
+
 export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 	const { changeView } = useViewStore();
 
@@ -16,14 +18,28 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 		return null;
 	}
 
-	const { sistOppdatert, veilederIdent, veilederEnhetId, veilederEnhetNavn } = props.utkast;
+	const { sistOppdatert, veilederIdent, veilederEnhetId, veilederEnhetNavn, sendtTilBeslutter } = props.utkast;
+
+	let tittel;
+	let klasse;
+	let img;
+
+	if (sendtTilBeslutter) {
+		tittel = 'Utkast til oppfølgingsvedtak';
+		img = utkastIkon;
+		klasse = 'vanlig';
+	} else {
+		tittel = 'Oppfølgingsvedtak til beslutter';
+		img = utkastIkon;
+		klasse = 'beslutter';
+	}
 
 	return (
 		<VedtaksstottePanel
-			tittel="Utkast til oppfølgingsvedtak"
+			tittel={tittel}
 			undertittel="Utkast"
-			imgSrc={utkastIkon}
-			panelKlasse="utkast-panel"
+			imgSrc={img}
+			panelKlasse={`utkast-panel utkast-panel--${klasse}`}
 			tekstKomponent={
 				<>
 					<Dato sistOppdatert={sistOppdatert} formatType="long" text="Sist endret" />

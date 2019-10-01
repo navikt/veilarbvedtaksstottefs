@@ -37,7 +37,7 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 
 		setSenderOppgave(true);
 
-		fetchWithInfo(lagOpprettBeslutterOppgaveFetchInfo(data))
+		fetchWithInfo(lagOpprettBeslutterOppgaveFetchInfo({fnr, ...data}))
 			.then(() => {
 				vedtak.fetch({ fnr }, () => {
 					hideModal();

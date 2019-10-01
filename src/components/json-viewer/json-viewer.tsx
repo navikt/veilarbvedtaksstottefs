@@ -45,7 +45,7 @@ function objToReact(obj: {} | null) {
 					return (
 						<div key={key}>
 							<JsonKey keyText={key} />
-							<div className="json-obj">{objToReact(value)}</div>
+							<div className="json-obj">{objToReact(value as object)}</div>
 						</div>
 					);
 				}

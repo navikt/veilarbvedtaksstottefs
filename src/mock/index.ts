@@ -23,6 +23,6 @@ mock.get('/veilarbvedtaksstotte/api/:fnr/vedtak', [utkast, vedtak, ...historisk]
 mock.get('/veilarbveileder/api/enhet/:enhetId/veiledere', veiledere);
 mock.put('/veilarbvedtaksstotte/api/:fnr/utkast', ResponseUtils.statusCode(204));
 mock.delete('/veilarbvedtaksstotte/api/:fnr/utkast', ResponseUtils.statusCode(204));
-mock.post('/veilarbvedtaksstotte/api/beslutter/send', ResponseUtils.statusCode(204));
+mock.post('/veilarbvedtaksstotte/api/:fnr/beslutter/send', ResponseUtils.statusCode(204));
 mock.post('/veilarbvedtaksstotte/api/:fnr/vedtak/send', ResponseUtils.statusCode(204));
 mock.post('/veilarbvedtaksstotte/api/:fnr/utkast', ResponseUtils.statusCode(204));

@@ -26,7 +26,9 @@ export interface SendVedtakFetchParams {
 	beslutter?: string;
 }
 
-export type OpprettBeslutterOppgaveFetchParams = BeslutterOppgaveData;
+export type OpprettBeslutterOppgaveFetchParams = BeslutterOppgaveData & {
+	fnr: string;
+};
 
 const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
 const OPPFOLGING_URL = '/veilarboppfolging/api';
@@ -76,11 +78,14 @@ export const lagSendVedtakFetchInfo = (params: SendVedtakFetchParams): FetchInfo
 	body: JSON.stringify({ beslutter: params.beslutter })
 });
 
-export const lagOpprettBeslutterOppgaveFetchInfo = (params: OpprettBeslutterOppgaveFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/send`,
-	method: 'POST',
-	body: JSON.stringify({  ...params })
-});
+export const lagOpprettBeslutterOppgaveFetchInfo = (params: OpprettBeslutterOppgaveFetchParams): FetchInfo => {
+	const {fnr, ...rest} = params;
+	return {
+		url: `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/beslutter/send`,
+		method: 'POST',
+		body: JSON.stringify(rest)
+	};
+};
 
 export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast`,

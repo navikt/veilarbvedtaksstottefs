@@ -21,7 +21,7 @@ export const feilVedSendningConfig: FeilModalConfig = {
 
 export const stoppeInnsendingFeatureToggleConfig: FeilModalConfig = {
 	tittel: 'Problemer med å sende',
-	beskrivelse: 'Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken',
+	beskrivelse: 'Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken.',
 	viewAction: ViewType.UTKAST,
 	knappeTekst: 'Tilbake til vedtakskjema'
 };

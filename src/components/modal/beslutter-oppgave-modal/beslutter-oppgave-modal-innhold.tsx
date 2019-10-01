@@ -1,8 +1,12 @@
-import React, { FormEvent, useEffect, useState } from 'react';
-import { formatInputDate } from '../../../utils/date-utils';
+import React, { FormEvent, useState } from 'react';
 import { Input, Select, Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Enhet, Veileder, VeiledereData } from '../../../rest/data/veiledere';
+import { Veileder, VeiledereData } from '../../../rest/data/veiledere';
+import { InnsatsgruppeType } from '../../skjema/innsatsgruppe/innsatsgruppe';
+import { useSkjemaStore } from '../../../stores/skjema-store';
+import { OrNothing } from '../../../utils/types/ornothing';
+import { Datepicker } from '../../datepicker/datepicker';
+import { formaterBeslutterOppgaveDato } from '../../../utils/date-utils';
 
 interface BeslutterOppgaveModalInnholdProps {
 	veiledereData: VeiledereData;
@@ -13,18 +17,19 @@ interface BeslutterOppgaveModalInnholdProps {
 
 export interface BeslutterOppgaveData {
 	aktivFra: string;
-	frist: string;
+	frist: string | null;
 	enhet: string;
-	beslutter: string | undefined;
+	beslutter: string | null;
 	beskrivelse: string;
 }
 
 const MAX_BESKRIVELSE_LENGDE = 250;
-
 const BESLUTTER_IKKE_VALGT = 'IKKE_VALGT';
 
-const DEFAULT_BESKRIVELSE = 'Jeg har innstilt på delvis varig tilpasset innsats eller varig tilpasset innsats. ' +
-	'Sendes til beslutter for kvalitetsikring.';
+function lagDefaultBeskrivelse(innsatsgruppe: OrNothing<InnsatsgruppeType>): string {
+	const innsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS ? 'varig' : 'delvis varig';
+	return `Jeg har innstilt på ${innsats} tilpasset innsats. Sendes til beslutter for kvalitetsikring.`;
+}
 
 function mapVeiledereToOptions(veilederListe: Veileder[]) {
 	return veilederListe.map(veileder =>
@@ -32,26 +37,25 @@ function mapVeiledereToOptions(veilederListe: Veileder[]) {
 }
 
 export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnholdProps) {
+	const {innsatsgruppe} = useSkjemaStore();
 	const { veiledereData: { enhet, veilederListe }, onCancel, onSubmit, senderOppgave } = props;
 
-	const [aktivFra, setAktivFra] = useState(formatInputDate(new Date()));
-	const [frist, setFrist] = useState('');
+	const [aktivFra, setAktivFra] = useState<Date>(new Date());
+	const [frist, setFrist] = useState<Date | undefined>();
 	const [beslutter, setBeslutter] = useState<string | undefined>(undefined);
-	const [beskrivelse, setBeskrivelse] = useState(DEFAULT_BESKRIVELSE);
+	const [beskrivelse, setBeskrivelse] = useState(lagDefaultBeskrivelse(innsatsgruppe));
 
 	function handleBeskrivelseChanged(e: any) {
 		const value = e.target.value;
-		if (value.length <= MAX_BESKRIVELSE_LENGDE) {
-			setBeskrivelse(value);
-		}
+		setBeskrivelse(value.substr(0, MAX_BESKRIVELSE_LENGDE));
 	}
 
 	function handleOnSubmit(e: FormEvent) {
 		e.preventDefault();
-		const valgtBeslutter = beslutter !== BESLUTTER_IKKE_VALGT ? beslutter : undefined;
+		const valgtBeslutter = (beslutter && beslutter !== BESLUTTER_IKKE_VALGT) ? beslutter : null;
 		onSubmit({
-			aktivFra,
-			frist,
+			aktivFra: formaterBeslutterOppgaveDato(aktivFra),
+			frist: frist ? formaterBeslutterOppgaveDato(frist) : null,
 			beskrivelse,
 			enhet: enhet.enhetId,
 			beslutter: valgtBeslutter
@@ -74,16 +78,8 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 						<option value="normal">Normal</option>
 					</Select>
 					<div className="blokk-s to-kol">
-						<div>
-							<label htmlFor="fraDato">Aktiv fra</label>
-							<br/>
-							<input id="fraDato" type="date" onChange={(e) => setAktivFra(e.target.value)} value={aktivFra} />
-						</div>
-						<div>
-							<label htmlFor="frist">Frist</label>
-							<br/>
-							<input id="frist" type="date" onChange={(e) => setFrist(e.target.value)} value={frist}/>
-						</div>
+						<Datepicker id="fraDato" label="Aktiv fra" value={aktivFra} onDateChange={setAktivFra}/>
+						<Datepicker id="frist" label="Frist" value={frist} onDateChange={setFrist} alignRight={true}/>
 					</div>
 					<div className="to-kol">
 						<Input id="enhet" label="Enhet" value={enhetTekst} disabled/>
@@ -93,7 +89,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 							selected={beslutter}
 							onChange={(e) => setBeslutter(e.target.value)}
 						>
-							<option value={BESLUTTER_IKKE_VALGT}/>
+							<option value={BESLUTTER_IKKE_VALGT}>Enhet</option>
 							{mapVeiledereToOptions(veilederListe)}
 						</Select>
 					</div>
