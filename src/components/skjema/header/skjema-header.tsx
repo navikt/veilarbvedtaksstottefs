@@ -2,8 +2,9 @@ import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { VedtakData } from '../../../rest/data/vedtak';
 import cls from 'classnames';
-import fullfortBilde from './fullfort.svg';
+import gjeldendeVedtakBilde from './gjeldende-vedtak.svg';
 import utkastBilde from './utkast.svg';
+import tidligereVedtakBilde from './tidligere-vedtak.svg';
 import './skjema-header.less';
 import { Dato } from '../../panel/dato';
 import { Veileder } from '../../panel/veileder';
@@ -14,39 +15,50 @@ interface SkjemaHeaderProps {
 }
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
-	const { vedtakStatus, veilederIdent, veilederEnhetId, veilederEnhetNavn, gjeldende } = props.vedtak;
+	const {vedtakStatus, veilederIdent, veilederEnhetId, veilederEnhetNavn, gjeldende} = props.vedtak;
 	const erUtkast = vedtakStatus === 'UTKAST';
 	const oppdatert = props.sistOppdatert ? props.sistOppdatert : props.vedtak.sistOppdatert;
 
+	let tittel;
+	let bilde;
+	let className;
+	let datoTekst;
+	let veilederTekst;
+
 	if (erUtkast) {
-		return (
-			<Header
-				tittelTekst="Utkast til oppfølgingsvedtak"
-				datoTekst="Sist endret"
-				veilederTekst="Endret av"
-				headerClassName="skjema-header--utkast"
-				bilde={utkastBilde}
-				veilederIdent={veilederIdent}
-				veilederEnhetId={veilederEnhetId}
-				veilederEnhetNavn={veilederEnhetNavn}
-				oppdatert={oppdatert}
-			/>
-		);
+		tittel = 'Utkast til oppfølgingsvedtak';
+		bilde = utkastBilde;
+		className = 'skjema-header--utkast';
+		datoTekst = 'Sist endret';
+		veilederTekst = 'Endret av';
 	} else {
-		return (
-			<Header
-				tittelTekst={gjeldende ? 'Gjeldende oppfølgingsvedtak' : 'Tidligere oppfølgingsvedtak'}
-				datoTekst="Fattet"
-				veilederTekst="Fattet av"
-				headerClassName="skjema-header--fullfort"
-				bilde={fullfortBilde}
-				veilederIdent={veilederIdent}
-				veilederEnhetId={veilederEnhetId}
-				veilederEnhetNavn={veilederEnhetNavn}
-				oppdatert={oppdatert}
-			/>
-		);
+		datoTekst = 'Fattet';
+		veilederTekst = 'Fattet av';
+
+		if (gjeldende) {
+			tittel = 'Gjeldende oppfølgingsvedtak';
+			bilde = gjeldendeVedtakBilde;
+			className = 'skjema-header--fullfort';
+		} else {
+			tittel = 'Tidligere oppfølgingsvedtak';
+			bilde = tidligereVedtakBilde;
+			className = 'skjema-header--tidligere';
+		}
 	}
+
+	return (
+		<Header
+			tittelTekst={tittel}
+			datoTekst={datoTekst}
+			veilederTekst={veilederTekst}
+			headerClassName={className}
+			bilde={bilde}
+			veilederIdent={veilederIdent}
+			veilederEnhetId={veilederEnhetId}
+			veilederEnhetNavn={veilederEnhetNavn}
+			oppdatert={oppdatert}
+		/>
+	);
 }
 
 interface HeaderProps {
@@ -75,7 +87,7 @@ function Header(props: HeaderProps) {
 	} = props;
 	return (
 		<header className={cls('skjema-header', headerClassName)}>
-			<img src={bilde} alt="Vedtak ikon" className="skjema-header__ikon" />
+			<img src={bilde} alt="Vedtak ikon" className="skjema-header__ikon"/>
 			<div className="skjema-header__innhold">
 				<Systemtittel className="skjema-header__tittel">{tittelTekst}</Systemtittel>
 				<div className="skjema-header__info">
@@ -86,7 +98,7 @@ function Header(props: HeaderProps) {
 						ident={veilederIdent}
 						text={veilederTekst}
 					/>
-					<div className="seperator" />
+					<div className="seperator"/>
 					<Dato
 						className="skjema-header__dato"
 						sistOppdatert={oppdatert}
