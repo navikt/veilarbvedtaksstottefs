@@ -18,7 +18,7 @@ const historisk: VedtakData[] & JSONArray = [
 		veilederIdent: 'Z007',
 		dokumentInfoId: null,
 		journalpostId: '123456',
-		beslutter: '654321',
+		beslutter: 'Beslutter Besluttersen',
 		sendtTilBeslutter: false
 	},
 	{

@@ -23,7 +23,7 @@ export const stoppeInnsendingFeatureToggleConfig: FeilModalConfig = {
 	tittel: 'Problemer med å sende',
 	beskrivelse: 'Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken.',
 	viewAction: ViewType.UTKAST,
-	knappeTekst: 'Tilbake til vedtakskjema'
+	knappeTekst: 'Tilbake til utkast'
 };
 
 export const feilVedForhandsvisnigConfig: FeilModalConfig = {
@@ -31,7 +31,7 @@ export const feilVedForhandsvisnigConfig: FeilModalConfig = {
 	beskrivelse:
 		'Vi får dessverre ikke forhåndsvist vedtaksbrevet for øyeblikket. Vennligst gå tilbake til utkastet og prøv igjen senere.',
 	viewAction: ViewType.UTKAST,
-	knappeTekst: 'Tilbake til vedtakskjema'
+	knappeTekst: 'Tilbake til utkast'
 };
 
 export const feilVedVisningConfig: FeilModalConfig = {
