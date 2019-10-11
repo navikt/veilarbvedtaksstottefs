@@ -28,5 +28,5 @@ spec:
       cpu: "1"
       memory: 1Gi
   ingresses:
-    - https://veilarbvedtaksstottefs.nais.preprod.local
+    - https://veilarbvedtaksstottefs.nais.adeo.no
     - https://app.adeo.no/veilarbvedtaksstottefs
