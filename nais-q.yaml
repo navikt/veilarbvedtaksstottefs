@@ -11,10 +11,10 @@ spec:
   image: docker.pkg.github.com/navikt/veilarbvedtaksstottefs/veilarbvedtaksstottefs:{{version}}
   port: 80
   liveness:
-    path: /isAlive
+    path: isAlive
     initialDelay: 15
   readiness:
-    path: /isReady
+    path: isReady
     initialDelay: 15
   replicas:
     min: 1
