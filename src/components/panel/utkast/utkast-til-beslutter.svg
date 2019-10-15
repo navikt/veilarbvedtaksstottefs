@@ -11,12 +11,8 @@
 	.st5{mask:url(#mask-2_1_);}
 	.st6{fill:#C9C9C9;}
 	.st7{fill:#8E9294;}
-	.st8{filter:url(#Adobe_OpacityMaskFilter_1_);}
-	.st9{mask:url(#mask-4_2_);}
-	.st10{filter:url(#Adobe_OpacityMaskFilter_2_);}
-	.st11{mask:url(#mask-6_2_);}
 </style>
-<g id="Interne-flater-_x2F_-card-_x2F_-ikon-vedtak-_x2F_-utkast-">
+<g id="Interne-flater-_x2F_-card-_x2F_-ikon-vedtak-_x2F_-utkast-beslutter">
 	<g id="Oval-Copy-8">
 		<circle class="st0" cx="44" cy="44" r="40"/>
 	</g>
@@ -78,45 +74,14 @@
 			</g>
 		</g>
 	</g>
-	<g id="Group-9" transform="translate(58.000000, 49.000000)">
-		<g id="Fill-1">
-			<path class="st0" d="M7.8,3.4L2.6,8.2c0,0,0,0-0.1,0c0,0-0.1,0-0.1,0L0.7,6.6c0,0,0-0.1,0-0.2l5.1-4.9c0,0,0,0,0.1,0
-				c0,0,0.1,0,0.1,0l1.7,1.7C7.8,3.2,7.8,3.3,7.8,3.4L7.8,3.4z"/>
-		</g>
-		<g id="Group-5" transform="translate(5.727273, 0.211304)">
-			<g id="Clip-4">
-			</g>
-			<defs>
-				<filter id="Adobe_OpacityMaskFilter_1_" filterUnits="userSpaceOnUse" x="0.4" y="0.2" width="2.8" height="2.7">
-					<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
-				</filter>
-			</defs>
-			<mask maskUnits="userSpaceOnUse" x="0.4" y="0.2" width="2.8" height="2.7" id="mask-4_2_">
-				<g class="st8">
-					<polygon id="path-3_2_" class="st0" points="0.4,0.2 3.2,0.2 3.2,2.9 0.4,2.9 					"/>
-				</g>
-			</mask>
-			<g id="Fill-3" class="st9">
-				<path class="st0" d="M3.2,1.7C3.2,1.8,3.2,2,3,2.1L2.2,2.9L0.4,1.1l0.8-0.8c0.2-0.2,0.6-0.2,0.8,0l1,0.9
-					C3.2,1.4,3.2,1.5,3.2,1.7L3.2,1.7z"/>
-			</g>
-		</g>
-		<g id="Group-8" transform="translate(0.000000, 6.472174)">
-			<g id="Clip-7">
-			</g>
-			<defs>
-				<filter id="Adobe_OpacityMaskFilter_2_" filterUnits="userSpaceOnUse" x="0" y="0.2" width="2.3" height="2.1">
-					<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
-				</filter>
-			</defs>
-			<mask maskUnits="userSpaceOnUse" x="0" y="0.2" width="2.3" height="2.1" id="mask-6_2_">
-				<g class="st10">
-					<polygon id="path-5_2_" class="st0" points="0,0.2 2.3,0.2 2.3,2.3 0,2.3 					"/>
-				</g>
-			</mask>
-			<g id="Fill-6" class="st11">
-				<polygon class="st0" points="2.3,1.9 0,2.3 0.6,0.2 				"/>
-			</g>
+	<g id="Fill_x2F_16-transfers_x2F_syncing" transform="translate(57.000000, 49.000000)">
+		<g id="Combined-Shape">
+			<path class="st0" d="M8.5,4.8c0.1,0,0.2,0,0.2,0.1c0,0,0.6,0.8,0.6,1.7c0,1.1-0.6,2.2-1.8,2.2l0,0H3.8v1c0,0.1-0.1,0.2-0.1,0.2
+				c0,0,0,0-0.1,0c-0.1,0-0.1,0-0.1-0.1l0,0l-2-2.2c-0.1-0.1-0.1-0.2,0-0.3l0,0l2-2.2c0.1-0.1,0.1-0.1,0.2-0.1
+				c0.1,0,0.1,0.1,0.1,0.2l0,0v1h3.8c0.7,0,0.8-0.2,0.8-0.3l0-0.1V5C8.4,4.9,8.5,4.8,8.5,4.8z M6.3,0.4c0.1,0,0.2,0,0.2,0.1l0,0
+				l2,2.2c0.1,0.1,0.1,0.2,0,0.3l0,0l-2,2.2C6.5,5.2,6.4,5.2,6.3,5.2C6.3,5.2,6.2,5.1,6.2,5l0,0V4H2.4C1.6,4,1.6,4.2,1.6,4.4v1
+				c0,0.1-0.1,0.2-0.1,0.2c0,0,0,0-0.1,0c-0.1,0-0.1,0-0.2-0.1c0,0-0.6-0.8-0.6-1.7c0-1.1,0.6-2.2,1.8-2.2l0,0h3.8v-1
+				C6.2,0.5,6.3,0.4,6.3,0.4z"/>
 		</g>
 	</g>
 </g>

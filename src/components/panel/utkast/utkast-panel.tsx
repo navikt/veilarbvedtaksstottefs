@@ -5,11 +5,12 @@ import { Dato } from '../dato';
 import { Veileder } from '../veileder';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import utkastIkon from './utkast.svg';
+import utkastTilBeslutterIkon from './utkast-til-beslutter.svg';
 import './utkast-panel.less';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../stores/view-store';
-
-
+import { Beslutter } from '../beslutter';
+import Show from '../../show';
 
 export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 	const { changeView } = useViewStore();
@@ -18,30 +19,35 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 		return null;
 	}
 
-	const { sistOppdatert, veilederIdent, veilederEnhetId, veilederEnhetNavn, sendtTilBeslutter } = props.utkast;
+	const {
+		sistOppdatert, veilederIdent, veilederEnhetId,
+		veilederEnhetNavn, sendtTilBeslutter, beslutter
+	} = props.utkast;
+	const beslutterTekst = beslutter || veilederEnhetId + ' ' + veilederEnhetNavn;
 
-	let tittel;
-	let klasse;
+	let undertittel;
 	let img;
 
 	if (sendtTilBeslutter) {
-		tittel = 'Utkast til oppfølgingsvedtak';
-		img = utkastIkon;
-		klasse = 'vanlig';
+		undertittel = 'Utkast sendt til beslutter';
+		img = utkastTilBeslutterIkon;
 	} else {
-		tittel = 'Oppfølgingsvedtak til beslutter';
+		undertittel = 'Utkast';
 		img = utkastIkon;
-		klasse = 'beslutter';
 	}
 
 	return (
 		<VedtaksstottePanel
-			tittel={tittel}
-			undertittel="Utkast"
+			tittel="Utkast til oppfølgingsvedtak"
+			undertittel={undertittel}
 			imgSrc={img}
-			panelKlasse={`utkast-panel utkast-panel--${klasse}`}
+			panelKlasse="utkast-panel"
+			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>Fortsett</Hovedknapp>}
 			tekstKomponent={
 				<>
+					<Show if={sendtTilBeslutter}>
+						<Beslutter beslutter={beslutterTekst}/>
+					</Show>
 					<Dato sistOppdatert={sistOppdatert} formatType="long" text="Sist endret" />
 					<Veileder
 						enhetId={veilederEnhetId}
@@ -51,7 +57,6 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 					/>
 				</>
 			}
-			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>Fortsett</Hovedknapp>}
 		/>
 	);
 }

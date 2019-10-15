@@ -18,7 +18,7 @@ const utkast: VedtakData & JSONObject = {
 	beslutter: null,
 	dokumentInfoId: null,
 	journalpostId: null,
-	sendtTilBeslutter: false
+	sendtTilBeslutter: true
 };
 
 export default utkast;
