@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { VarselModal } from '../varsel-modal/varsel-modal';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
 import { ModalProps } from '../modal-props';
@@ -8,6 +8,7 @@ import { useModalStore } from '../../../stores/modal-store';
 import '../varsel-modal/varsel-modal.less';
 import './kvalitetetssikring-modal.less';
 import { OrNothing } from '../../../utils/types/ornothing';
+import Show from '../../show';
 
 interface KvalitetsSikringModalInnsendingProps extends ModalProps {
 	sendVedtak: (beslutter?: string) => void;
@@ -16,10 +17,10 @@ interface KvalitetsSikringModalInnsendingProps extends ModalProps {
 
 export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInnsendingProps) {
 	const { hideModal } = useModalStore();
-	const [beslutter, setBeslutter] = useState(props.beslutter || '');
+	const [beslutter, setBeslutter] = useState<string>('');
 	const [error, setError] = useState<{ feilmelding: string } | undefined>(undefined);
 	const [harForsoktSende, setHarForsoktSende] = useState<boolean>(false);
-	const harFyltUtBeslutter = beslutter.length > 0;
+	const harFyltUtBeslutter = beslutter.trim().length > 0;
 
 	const handleSend = () => {
 		setHarForsoktSende(true);
@@ -29,6 +30,12 @@ export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInns
 			setError({ feilmelding: 'Skriv inn navn på beslutter som har kvalitetssikret for å sende vedtaket' });
 		}
 	};
+
+	useEffect(() => {
+		if (props.beslutter) {
+			setBeslutter(props.beslutter);
+		}
+	}, [props.beslutter]);
 
 	useEffect(() => {
 		if (harForsoktSende && harFyltUtBeslutter) {
@@ -45,13 +52,17 @@ export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInns
 			shouldCloseOnOverlayClick={false}
 			closeButton={false}
 		>
-			<Systemtittel>Kvalitetssikring</Systemtittel>
+			<Systemtittel>{props.beslutter ? 'Beslutter' : 'Hvem var beslutter?'}</Systemtittel>
+			<Show if={props.beslutter != null}>
+				<Normaltekst className="kvalitetssikring__ingress">Sjekk at navnet på beslutter stemmer eller endre navnet i feltet nedenfor.</Normaltekst>
+			</Show>
 			<Input
 				label="Navn på beslutter:"
 				onChange={e => setBeslutter(e.target.value)}
 				value={beslutter}
 				feil={error}
 				className="kvalitetssikring__input"
+				placeholder="Legg til fullt navn på beslutter"
 			/>
 			<div className="varsel-modal__knapper kvalitetssikring__knapper">
 				<Hovedknapp onClick={handleSend}>Send til bruker</Hovedknapp>

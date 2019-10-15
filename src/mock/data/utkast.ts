@@ -15,7 +15,7 @@ const utkast: VedtakData & JSONObject = {
 	veilederEnhetId: '1337',
 	veilederEnhetNavn: 'Gotham city',
 	begrunnelse: 'Trenger ikke hjelp',
-	beslutter: null,
+	beslutter: 'Anita Skorgan',
 	dokumentInfoId: null,
 	journalpostId: null,
 	sendtTilBeslutter: true
