@@ -55,11 +55,11 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 			isOpen={props.isOpen}
 			contentLabel="Send Gosys-oppgave til beslutter"
 			onRequestClose={hideModal}
-			closeButton={false}
-			portalClassName="veilarbvedtaksstottefs-beslutter-oppgave-modal"
+			closeButton={true}
+			portalClassName="beslutter-oppgave-modal"
 			shouldCloseOnOverlayClick={true}
 		>
-			<Systemtittel className="blokk-s">Send Gosys-oppgave til beslutter</Systemtittel>
+			<Systemtittel className="beslutter-oppgave-modal__tittel blokk-s">Send Gosys-oppgave til beslutter</Systemtittel>
 			<Show if={hasFailed(veiledere)}>
 				<AlertStripeFeil>
 					Et problem oppstod under innlastingen av data. Prøv igjen senere.

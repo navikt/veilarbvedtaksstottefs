@@ -6,6 +6,7 @@ import { MONTHS, WEEKDAYS_LONG, WEEKDAYS_SHORT } from './localization-nb';
 import { formatDate } from '../../utils/date-utils';
 import 'react-day-picker/lib/style.css';
 import './datepicker.less';
+import calendarIcon from './calendar.svg';
 
 interface DatepickerProps {
 	id: string;
@@ -30,12 +31,13 @@ export const Datepicker = (props: DatepickerProps) => {
 	return (
 		<div className="vedtaksstotte-datepicker skjemaelement">
 			<label htmlFor={id} className="skjemaelement__label">{label}</label>
+			<img src={calendarIcon} className="vedtaksstotte-datepicker__icon" alt="Kalender" />
 			<DayPickerInput
 				inputProps={{
 					id,
 					name: id,
 					placeholder: 'dd.mm.åååå',
-					className: 'skjemaelement__input'
+					className: 'vedtaksstotte-datepicker__input skjemaelement__input'
 				}}
 				dayPickerProps={{
 					months: MONTHS,

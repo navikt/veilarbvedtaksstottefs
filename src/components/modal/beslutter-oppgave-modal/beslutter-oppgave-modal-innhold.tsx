@@ -7,6 +7,8 @@ import { useSkjemaStore } from '../../../stores/skjema-store';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Datepicker } from '../../datepicker/datepicker';
 import { formaterBeslutterOppgaveDato } from '../../../utils/date-utils';
+import { Label } from '../../label';
+import { Seperator } from '../../seperator/seperator';
 
 interface BeslutterOppgaveModalInnholdProps {
 	veiledereData: VeiledereData;
@@ -38,7 +40,7 @@ function mapVeiledereToOptions(veilederListe: Veileder[]) {
 
 export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnholdProps) {
 	const {innsatsgruppe} = useSkjemaStore();
-	const { veiledereData: { enhet, veilederListe }, onCancel, onSubmit, senderOppgave } = props;
+	const {veiledereData: {enhet, veilederListe}, onCancel, onSubmit, senderOppgave} = props;
 
 	const [aktivFra, setAktivFra] = useState<Date>(new Date());
 	const [frist, setFrist] = useState<Date | undefined>();
@@ -65,61 +67,62 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 	const enhetTekst = `${enhet.enhetId}, ${enhet.navn}`;
 
 	return (
-		<>
-			<form onSubmit={handleOnSubmit}>
-				<div className="blokk-l">
-					<Select id="tema" label="Tema" disabled={true}>
-						<option value="oppfolging">Oppfølging</option>
-					</Select>
-					<Select id="oppgavetype" label="Oppgavetype" disabled={true}>
-						<option value="vurder_hendvendelse">Vurder henvendelse</option>
-					</Select>
-					<Select id="prioritet" className="blokk-s" label="Prioritet" disabled={true}>
+		<form className="beslutter-oppgave-modal__innhold" onSubmit={handleOnSubmit}>
+			<div className="blokk-m">
+				<div className="beslutter-oppgave-modal__labels blokk-m">
+					<Label labelText="Tema" valueText="Oppfølging"/>
+					<Seperator/>
+					<Label labelText="Oppgavetype" valueText="Vurder hendvendelse"/>
+					<Seperator/>
+					<Label labelText="Gjelder" valueText="Til beslutter"/>
+				</div>
+				<div className="beslutter-oppgave-modal__dato-prioritet blokk-s">
+					<div className="beslutter-oppgave-modal__dato">
+						<Datepicker id="fraDato" label="Aktiv fra" value={aktivFra} onDateChange={setAktivFra}/>
+						<Datepicker id="frist" label="Frist" value={frist} onDateChange={setFrist}/>
+					</div>
+					<Select className="beslutter-oppgave-modal__prioritet" id="prioritet" label="Prioritet">
 						<option value="normal">Normal</option>
 					</Select>
-					<div className="blokk-s to-kol">
-						<Datepicker id="fraDato" label="Aktiv fra" value={aktivFra} onDateChange={setAktivFra}/>
-						<Datepicker id="frist" label="Frist" value={frist} onDateChange={setFrist} alignRight={true}/>
-					</div>
-					<div className="to-kol">
-						<Input id="enhet" label="Enhet" value={enhetTekst} disabled/>
-						<Select
-							id="beslutter"
-							label="Beslutter"
-							selected={beslutter}
-							onChange={(e) => setBeslutter(e.target.value)}
-						>
-							<option value={BESLUTTER_IKKE_VALGT}>Enhet</option>
-							{mapVeiledereToOptions(veilederListe)}
-						</Select>
-					</div>
-					<Textarea
-						id="beskrivelse"
-						maxLength={MAX_BESKRIVELSE_LENGDE}
-						label="Beskrivelse"
-						value={beskrivelse}
-						onChange={handleBeskrivelseChanged}
-					/>
 				</div>
-				<div className="knapperad">
-					<Hovedknapp
-						spinner={senderOppgave}
-						disabled={senderOppgave}
-						htmlType="submit"
-						mini={true}
+				<div className="beslutter-oppgave-modal__beslutter blokk-s">
+					<Input id="enhet" label="Enhet" value={enhetTekst} disabled/>
+					<Select
+						id="beslutter"
+						label="Beslutter"
+						selected={beslutter}
+						onChange={(e) => setBeslutter(e.target.value)}
 					>
-						Bekreft
-					</Hovedknapp>
-					<Knapp
-						disabled={senderOppgave}
-						htmlType="button"
-						mini={true}
-						onClick={onCancel}
-					>
-						Avbryt
-					</Knapp>
+						<option value={BESLUTTER_IKKE_VALGT}>Enhet</option>
+						{mapVeiledereToOptions(veilederListe)}
+					</Select>
 				</div>
-			</form>
-		</>
+				<Textarea
+					id="beskrivelse"
+					maxLength={MAX_BESKRIVELSE_LENGDE}
+					label="Beskrivelse"
+					value={beskrivelse}
+					onChange={handleBeskrivelseChanged}
+				/>
+			</div>
+			<div className="knapperad">
+				<Hovedknapp
+					spinner={senderOppgave}
+					disabled={senderOppgave}
+					htmlType="submit"
+					mini={true}
+				>
+					Bekreft
+				</Hovedknapp>
+				<Knapp
+					disabled={senderOppgave}
+					htmlType="button"
+					mini={true}
+					onClick={onCancel}
+				>
+					Avbryt
+				</Knapp>
+			</div>
+		</form>
 	);
 }

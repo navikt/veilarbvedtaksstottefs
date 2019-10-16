@@ -1,20 +1,47 @@
+@import "~nav-frontend-core/less/_variabler";
 
-.veilarbvedtaksstottefs-beslutter-oppgave-modal {
+.beslutter-oppgave-modal {
 
   .ReactModal__Content {
-    width: 640px;
-    padding: 1.5rem;
+    width: 560px;
+    padding: 0;
   }
 
-  .to-kol {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  &__tittel {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid @navGra20
+  }
 
-    > * {
-      width: 30%;
-      min-width: 150px;
+  &__innhold {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+  }
+
+  &__labels {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__dato-prioritet {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__dato {
+    display: flex;
+
+    > :last-child {
+      margin-left: 1rem;
     }
+  }
+
+  &__prioritet {
+    min-width: 20%;
+  }
+
+  &__beslutter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1rem;
   }
 
   .knapperad {
