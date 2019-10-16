@@ -37,7 +37,8 @@ export const Datepicker = (props: DatepickerProps) => {
 					id,
 					name: id,
 					placeholder: 'dd.mm.åååå',
-					className: 'vedtaksstotte-datepicker__input skjemaelement__input'
+					className: 'vedtaksstotte-datepicker__input skjemaelement__input',
+					autoComplete: 'off'
 				}}
 				dayPickerProps={{
 					months: MONTHS,

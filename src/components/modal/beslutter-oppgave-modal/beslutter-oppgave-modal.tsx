@@ -34,7 +34,6 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 	}, [props.isOpen]);
 
 	function handleSubmit(data: BeslutterOppgaveData) {
-
 		setSenderOppgave(true);
 
 		fetchWithInfo(lagOpprettBeslutterOppgaveFetchInfo({fnr, ...data}))

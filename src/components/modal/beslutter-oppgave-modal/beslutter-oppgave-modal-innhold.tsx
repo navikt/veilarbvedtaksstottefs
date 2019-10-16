@@ -9,6 +9,7 @@ import { Datepicker } from '../../datepicker/datepicker';
 import { formaterBeslutterOppgaveDato } from '../../../utils/date-utils';
 import { Label } from '../../label';
 import { Seperator } from '../../seperator/seperator';
+import { DropdownOption, SearchDropdown } from '../../search-dropdown/search-dropdown';
 
 interface BeslutterOppgaveModalInnholdProps {
 	veiledereData: VeiledereData;
@@ -23,19 +24,24 @@ export interface BeslutterOppgaveData {
 	enhet: string;
 	beslutter: string | null;
 	beskrivelse: string;
+	prioritet: Prioritet;
 }
 
 const MAX_BESKRIVELSE_LENGDE = 250;
-const BESLUTTER_IKKE_VALGT = 'IKKE_VALGT';
 
 function lagDefaultBeskrivelse(innsatsgruppe: OrNothing<InnsatsgruppeType>): string {
 	const innsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS ? 'varig' : 'delvis varig';
 	return `Jeg har innstilt på ${innsats} tilpasset innsats. Sendes til beslutter for kvalitetsikring.`;
 }
 
-function mapVeiledereToOptions(veilederListe: Veileder[]) {
-	return veilederListe.map(veileder =>
-		<option key={veileder.ident} value={veileder.ident}>{veileder.navn}</option>);
+function mapVeiledereToOptions(veilederListe: Veileder[]): DropdownOption[] {
+	return veilederListe.map(veileder => ({ value: veileder.ident, label: veileder.navn}));
+}
+
+export enum Prioritet {
+	LAV = 'LAV',
+	NORMAL = 'NORM',
+	HOY = 'HOY'
 }
 
 export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnholdProps) {
@@ -44,7 +50,8 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 
 	const [aktivFra, setAktivFra] = useState<Date>(new Date());
 	const [frist, setFrist] = useState<Date | undefined>();
-	const [beslutter, setBeslutter] = useState<string | undefined>(undefined);
+	const [prioritet, setPrioritet] = useState<Prioritet>(Prioritet.NORMAL);
+	const [beslutter, setBeslutter] = useState<string | null>(null);
 	const [beskrivelse, setBeskrivelse] = useState(lagDefaultBeskrivelse(innsatsgruppe));
 
 	function handleBeskrivelseChanged(e: any) {
@@ -52,15 +59,19 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 		setBeskrivelse(value.substr(0, MAX_BESKRIVELSE_LENGDE));
 	}
 
+	function handleBeslutterChanged(selectedOption: DropdownOption | null) {
+		setBeslutter(selectedOption ? selectedOption.label : null);
+	}
+
 	function handleOnSubmit(e: FormEvent) {
 		e.preventDefault();
-		const valgtBeslutter = (beslutter && beslutter !== BESLUTTER_IKKE_VALGT) ? beslutter : null;
 		onSubmit({
 			aktivFra: formaterBeslutterOppgaveDato(aktivFra),
 			frist: frist ? formaterBeslutterOppgaveDato(frist) : null,
 			beskrivelse,
 			enhet: enhet.enhetId,
-			beslutter: valgtBeslutter
+			beslutter,
+			prioritet
 		});
 	}
 
@@ -81,21 +92,27 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 						<Datepicker id="fraDato" label="Aktiv fra" value={aktivFra} onDateChange={setAktivFra}/>
 						<Datepicker id="frist" label="Frist" value={frist} onDateChange={setFrist}/>
 					</div>
-					<Select className="beslutter-oppgave-modal__prioritet" id="prioritet" label="Prioritet">
-						<option value="normal">Normal</option>
+					<Select
+						id="prioritet"
+						label="Prioritet"
+						value={prioritet}
+						onChange={(e) => setPrioritet(e.target.value as Prioritet)}
+						className="beslutter-oppgave-modal__prioritet"
+					>
+						<option value={Prioritet.LAV}>Lav</option>
+						<option value={Prioritet.NORMAL}>Normal</option>
+						<option value={Prioritet.HOY}>Høy</option>
 					</Select>
 				</div>
 				<div className="beslutter-oppgave-modal__beslutter blokk-s">
 					<Input id="enhet" label="Enhet" value={enhetTekst} disabled/>
-					<Select
+					<SearchDropdown
 						id="beslutter"
 						label="Beslutter"
-						selected={beslutter}
-						onChange={(e) => setBeslutter(e.target.value)}
-					>
-						<option value={BESLUTTER_IKKE_VALGT}>Enhet</option>
-						{mapVeiledereToOptions(veilederListe)}
-					</Select>
+						placeholder="Søk etter veileder"
+						options={mapVeiledereToOptions(veilederListe)}
+						onChange={handleBeslutterChanged}
+					/>
 				</div>
 				<Textarea
 					id="beskrivelse"
