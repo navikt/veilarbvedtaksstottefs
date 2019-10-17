@@ -77,7 +77,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 
 	return (
 		<form className="beslutter-oppgave-modal__innhold" onSubmit={handleOnSubmit}>
-			<div className="blokk-m">
+			<div className="blokk-s">
 				<div className="beslutter-oppgave-modal__labels blokk-m">
 					<Label labelText="Tema" valueText="Oppfølging"/>
 					<Seperator/>
@@ -85,7 +85,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 					<Seperator/>
 					<Label labelText="Gjelder" valueText="Til beslutter"/>
 				</div>
-				<div className="beslutter-oppgave-modal__dato-prioritet blokk-s">
+				<div className="beslutter-oppgave-modal__dato-prioritet blokk-m">
 					<div className="beslutter-oppgave-modal__dato">
 						<Datepicker id="fraDato" label="Aktiv fra" value={aktivFra} onDateChange={setAktivFra}/>
 						<Datepicker id="frist" label="Frist" value={frist} onDateChange={setFrist}/>
@@ -102,8 +102,8 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 						<option value={Prioritet.HOY}>Høy</option>
 					</Select>
 				</div>
-				<div className="beslutter-oppgave-modal__beslutter blokk-s">
-					<Input id="enhet" label="Enhet" value={enhetTekst} disabled/>
+				<div className="beslutter-oppgave-modal__beslutter blokk-m">
+					<Input id="enhet" label="Enhet" value={enhetTekst} className="beslutter-oppgave-modal__enhet-input" disabled/>
 					<SearchDropdown
 						id="beslutter"
 						label="Beslutter"
@@ -117,6 +117,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 					maxLength={MAX_BESKRIVELSE_LENGDE}
 					label="Beskrivelse"
 					value={beskrivelse}
+					className="skjemaelement__input textarea--medMeta beslutter-oppgave-modal__beskrivelse"
 					onChange={handleBeskrivelseChanged}
 				/>
 			</div>

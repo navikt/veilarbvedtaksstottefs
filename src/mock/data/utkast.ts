@@ -15,10 +15,10 @@ const utkast: VedtakData & JSONObject = {
 	veilederEnhetId: '1337',
 	veilederEnhetNavn: 'Gotham city',
 	begrunnelse: 'Trenger ikke hjelp',
-	beslutterNavn: 'Anita Skorgan',
+	beslutterNavn: null,
 	dokumentInfoId: null,
 	journalpostId: null,
-	sendtTilBeslutter: true
+	sendtTilBeslutter: false
 };
 
 export default utkast;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ModalProps } from '../modal-props';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import ModalWrapper from 'nav-frontend-modal';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import { fetchWithInfo, hasData, hasFailed, isNotStartedOrPending } from '../../../rest/utils';
 import {
 	lagHentVeiledereFetchInfo, lagOpprettBeslutterOppgaveFetchInfo
@@ -29,7 +29,7 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 
 	useEffect(() => {
 		if (isNotStartedOrPending(veiledere) && props.isOpen) {
-			veiledere.fetch({ enhetId });
+			veiledere.fetch({enhetId});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.isOpen]);
@@ -39,7 +39,7 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 
 		fetchWithInfo(lagOpprettBeslutterOppgaveFetchInfo({fnr, ...data}))
 			.then(() => {
-				vedtak.fetch({ fnr }, () => {
+				vedtak.fetch({fnr}, () => {
 					hideModal();
 					changeView(ViewType.HOVEDSIDE);
 				});
@@ -59,7 +59,9 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 			portalClassName="beslutter-oppgave-modal"
 			shouldCloseOnOverlayClick={true}
 		>
-			<Systemtittel className="beslutter-oppgave-modal__tittel blokk-s">Send Gosys-oppgave til beslutter</Systemtittel>
+			<div className="beslutter-oppgave-modal__tittel-wrapper blokk-s">
+				<Undertittel className="beslutter-oppgave-modal__tittel">Send Gosys-oppgave til beslutter</Undertittel>
+			</div>
 			<Show if={hasFailed(veiledere)}>
 				<AlertStripeFeil>
 					Et problem oppstod under innlastingen av data. Prøv igjen senere.
