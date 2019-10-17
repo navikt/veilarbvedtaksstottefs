@@ -18,6 +18,7 @@ export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
 		if (isNotStarted(tilgangTilKontor)) {
 			tilgangTilKontor.fetch({ fnr: props.fnr });
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (isAnyNotStartedOrPending(tilgangTilKontor)) {

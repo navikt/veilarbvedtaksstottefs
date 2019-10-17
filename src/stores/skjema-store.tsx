@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgruppe';
 import createUseContext from 'constate';

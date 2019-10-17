@@ -1,12 +1,11 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ModalProps } from '../modal-props';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import ModalWrapper from 'nav-frontend-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
-import './beslutter-oppgave-modal.less';
 import { fetchWithInfo, hasData, hasFailed, isNotStartedOrPending } from '../../../rest/utils';
 import {
-	lagHentVeiledereFetchInfo, lagOpprettBeslutterOppgaveFetchInfo, OpprettBeslutterOppgaveFetchParams
+	lagHentVeiledereFetchInfo, lagOpprettBeslutterOppgaveFetchInfo
 } from '../../../rest/api';
 import { useAppStore } from '../../../stores/app-store';
 import useFetch from '../../../rest/use-fetch';
@@ -17,6 +16,7 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Show from '../../show';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { useViewStore, ViewType } from '../../../stores/view-store';
+import './beslutter-oppgave-modal.less';
 
 export function BeslutterOppgaveModal(props: ModalProps) {
 	const {vedtak} = useFetchStore();
@@ -31,6 +31,7 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 		if (isNotStartedOrPending(veiledere) && props.isOpen) {
 			veiledere.fetch({ enhetId });
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.isOpen]);
 
 	function handleSubmit(data: BeslutterOppgaveData) {
@@ -64,6 +65,9 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 					Et problem oppstod under innlastingen av data. Prøv igjen senere.
 				</AlertStripeFeil>
 			</Show>
+			<Show if={isNotStartedOrPending(veiledere)}>
+				<Spinner/>
+			</Show>
 			<Show if={hasData(veiledere)}>
 				<BeslutterOppgaveModalInnhold
 					veiledereData={veiledere.data}
@@ -71,9 +75,6 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 					onCancel={hideModal}
 					senderOppgave={senderOppgave}
 				/>
-			</Show>
-			<Show if={isNotStartedOrPending(veiledere)}>
-				<Spinner/>
 			</Show>
 		</ModalWrapper>
 	);

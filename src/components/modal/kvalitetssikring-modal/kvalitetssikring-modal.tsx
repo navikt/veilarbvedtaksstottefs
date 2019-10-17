@@ -35,12 +35,14 @@ export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInns
 		if (props.beslutter) {
 			setBeslutter(props.beslutter);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.beslutter]);
 
 	useEffect(() => {
 		if (harForsoktSende && harFyltUtBeslutter) {
 			setError(undefined);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [beslutter]);
 
 	return (

@@ -21,9 +21,9 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 
 	const {
 		sistOppdatert, veilederIdent, veilederEnhetId,
-		veilederEnhetNavn, sendtTilBeslutter, beslutter
+		veilederEnhetNavn, sendtTilBeslutter, beslutterNavn
 	} = props.utkast;
-	const beslutterTekst = beslutter || veilederEnhetId + ' ' + veilederEnhetNavn;
+	const beslutterTekst = beslutterNavn || veilederEnhetId + ' ' + veilederEnhetNavn;
 
 	let undertittel;
 	let img;

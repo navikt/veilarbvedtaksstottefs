@@ -16,9 +16,8 @@ export function Hovedside() {
 	const { vedtak, features } = useFetchStore();
 	const { showModal } = useModalStore();
 
-	useEffect(() => {
-		showModal(ModalType.BESLUTTER_OPPGAVE);
-	}, []);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(() => showModal(ModalType.BESLUTTER_OPPGAVE), []);
 
 	const gjeldendeVedtak = vedtak.data.find((v: VedtakData) => v.gjeldende);
 	const tidligereVedtak = vedtak.data.filter((v: VedtakData) => !v.gjeldende && v.vedtakStatus === 'SENDT');

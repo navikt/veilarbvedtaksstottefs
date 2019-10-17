@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { VisOpplysning } from './vis-opplysning/vis-opplysning';
 import { RedigerOpplysning } from './rediger-opplysning/rediger-opplysning';
 import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
@@ -10,9 +10,9 @@ import { useSkjemaStore } from '../../../stores/skjema-store';
 import './opplysninger.less';
 import { lagSkjemaElementFeil } from '../skjema-utils';
 
-export type Opplysning = {
+export interface Opplysning {
 	[key: string]: boolean;
-};
+}
 
 function Opplysninger() {
 	const { opplysninger, setOpplysninger, errors } = useSkjemaStore();

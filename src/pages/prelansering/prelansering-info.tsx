@@ -18,7 +18,7 @@ const PrelanseringInfo = () => (
 				Arena, og vi skal heller ikke fatte oppfølgingsvedtaket i Arena.
 			</Normaltekst>
 		</div>
-		<img src={prelanseringBilde} className="prelansering__bilde" />
+		<img src={prelanseringBilde} className="prelansering__bilde" alt="Visning av ny løsning for vedtaksstøtte" />
 	</Card>
 );
 

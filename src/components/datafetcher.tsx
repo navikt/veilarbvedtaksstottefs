@@ -23,6 +23,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		if (isNotStarted(features)) {
 			features.fetch(null);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [vedtak, underOppfolging, malform, features]);
 
 	if (isAnyNotStartedOrPending([vedtak, malform, underOppfolging, features])) {

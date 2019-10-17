@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';

@@ -28,6 +28,7 @@ export function VedtaksbrevVisning(props: { vedtakId: number }) {
 		if (pdfStatus === PDFStatus.ERROR) {
 			showModal(ModalType.FEIL_VED_VISNING);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
 	if (!vedtaksObjekt) {

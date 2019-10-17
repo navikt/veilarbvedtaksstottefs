@@ -42,6 +42,7 @@ export function Forhandsvisning() {
 		if (pdfStatus === PDFStatus.ERROR) {
 			showModal(ModalType.FEIL_VED_FORHANDSVISNING);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
 	const tilbakeTilHovedsiden = () => {
@@ -54,7 +55,7 @@ export function Forhandsvisning() {
 	const sendVedtak = (beslutter?: string) => {
 		showModal(ModalType.LASTER);
 
-		fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutter }))
+		fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutterNavn: beslutter }))
 			.then(() => {
                 resetSkjema();
 				tilbakeTilHovedsiden();
@@ -77,7 +78,7 @@ export function Forhandsvisning() {
 		}
 
 		if (trengerVedtakBeslutter && harSendtTilBeslutter) {
-			showModal(ModalType.KVALITETSSIKRING, { sendVedtak, beslutter: utkast.beslutter });
+			showModal(ModalType.KVALITETSSIKRING, { sendVedtak, beslutterNavn: utkast.beslutterNavn });
 			return;
 		}
 

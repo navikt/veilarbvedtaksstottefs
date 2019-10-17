@@ -15,7 +15,7 @@ export interface VedtakData {
 	veilederIdent: string;
 	veilederEnhetId: string;
 	veilederEnhetNavn: string;
-	beslutter: OrNothing<string>;
+	beslutterNavn: OrNothing<string>;
 	sendtTilBeslutter: boolean;
 	opplysninger: string[];
 	journalpostId: OrNothing<string>;

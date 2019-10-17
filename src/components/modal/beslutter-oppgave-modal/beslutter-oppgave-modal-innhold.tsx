@@ -21,9 +21,8 @@ interface BeslutterOppgaveModalInnholdProps {
 export interface BeslutterOppgaveData {
 	aktivFra: string;
 	frist: string | null;
-	enhet: string;
-	beslutter: string | null;
-	beskrivelse: string;
+	beslutterIdent: string | null;
+	beskrivelse: string | null;
 	prioritet: Prioritet;
 }
 
@@ -51,7 +50,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 	const [aktivFra, setAktivFra] = useState<Date>(new Date());
 	const [frist, setFrist] = useState<Date | undefined>();
 	const [prioritet, setPrioritet] = useState<Prioritet>(Prioritet.NORMAL);
-	const [beslutter, setBeslutter] = useState<string | null>(null);
+	const [beslutterIdent, setBeslutterIdent] = useState<string | null>(null);
 	const [beskrivelse, setBeskrivelse] = useState(lagDefaultBeskrivelse(innsatsgruppe));
 
 	function handleBeskrivelseChanged(e: any) {
@@ -60,7 +59,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 	}
 
 	function handleBeslutterChanged(selectedOption: DropdownOption | null) {
-		setBeslutter(selectedOption ? selectedOption.label : null);
+		setBeslutterIdent(selectedOption ? selectedOption.value : null);
 	}
 
 	function handleOnSubmit(e: FormEvent) {
@@ -69,8 +68,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 			aktivFra: formaterBeslutterOppgaveDato(aktivFra),
 			frist: frist ? formaterBeslutterOppgaveDato(frist) : null,
 			beskrivelse,
-			enhet: enhet.enhetId,
-			beslutter,
+			beslutterIdent,
 			prioritet
 		});
 	}
