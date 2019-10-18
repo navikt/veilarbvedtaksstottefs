@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import createUseContext from 'constate';
-import { ViewType } from './view-store';
 
 export enum ModalType {
 	INGEN = 'INGEN',
@@ -8,6 +7,8 @@ export enum ModalType {
 	LASTER = 'LASTER_DATA',
 	KVALITETSSIKRING = 'KVALITETSSIKRING',
 	BEKREFT_SLETT_UTKAST = 'BEKREFT_SLETT_UTKAST',
+	BESLUTTER_OPPGAVE = 'BESLUTTER_OPPGAVE',
+	FEIL_VED_OPPRETTING_AV_BESLUTTER_OPPGAVE = 'FEIL_VED_OPPRETTING_AV_BESLUTTER_OPPGAVE',
 	FEIL_VED_OPPRETTING_AV_UTKAST = 'FEIL_VED_OPPRETTING_AV_UTKAST',
 	FEIL_INNSENDING_STOPPET = 'FEIL_INNSENDING_STOPPET',
 	FEIL_VED_FORHANDSVISNING = 'FEIL_VED_FORHANDSVISNING',
@@ -21,8 +22,8 @@ export const useModalStore = createUseContext(() => {
 	const [modalType, setModalType] = useState<ModalType>(ModalType.INGEN);
 	const [modalProps, setModalProps] = useState<any>({});
 
-	const showModal = (type: ModalType, props?: {}) => {
-		setModalProps(props ? props : {});
+	const showModal = (type: ModalType, props: object = {}) => {
+		setModalProps(props);
 		setModalType(type);
 	};
 

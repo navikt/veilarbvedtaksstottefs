@@ -18,7 +18,7 @@ export function VedtaksstottePanel(props: VedtaksstottePanelProps) {
 	return (
 		<Panel tittel={tittel} className={cls('vedtakstottepanel', panelKlasse)}>
 			<div className="vedtakstottepanel__content">
-				<img src={imgSrc} className="vedtakstottepanel__ikon" />
+				<img src={imgSrc} className="vedtakstottepanel__ikon" alt="" />
 				<div>
 					<Undertittel className="vedtakstottepanel__undertittel">{undertittel}</Undertittel>
 					<div className="vedtakstottepanel__tekst">{tekstKomponent}</div>

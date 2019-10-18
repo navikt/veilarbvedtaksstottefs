@@ -1,6 +1,5 @@
 import React from 'react';
 import cls from 'classnames';
-import { Document, Page, pdfjs } from 'react-pdf';
 import './footer.less';
 
 interface FooterProps {

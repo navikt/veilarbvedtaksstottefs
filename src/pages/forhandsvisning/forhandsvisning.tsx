@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../rest/data/features';
-import { utkastetSkalKvalitetssikrets } from '../../components/skjema/skjema-utils';
-import { VedtakData } from '../../rest/data/vedtak';
+import { trengerBeslutter } from '../../components/skjema/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
 import { useFetchStore } from '../../stores/fetch-store';
 import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
@@ -15,8 +13,9 @@ import { fetchWithInfo } from '../../rest/utils';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
-import './forhandsvisning.less';
 import { useSkjemaStore } from '../../stores/skjema-store';
+import './forhandsvisning.less';
+import { finnUtkast } from '../../utils';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
@@ -24,12 +23,15 @@ export function Forhandsvisning() {
 	const { vedtak, features } = useFetchStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
+
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
-
-	const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
+	const trengerVedtakBeslutter = trengerBeslutter(innsatsgruppe);
 	const stoppeInnsendingfeatureToggle = features.data[STOPPE_VEDTAKSINNSENDING_TOGGLE];
-
 	const url = env.isDevelopment ? vedtaksBrevUrl : lagHentForhandsvisningUrl(fnr);
+
+	const utkast = finnUtkast(vedtak.data);
+	const harSendtTilBeslutter = utkast.sendtTilBeslutter;
+	const visSendTilBeslutter = trengerVedtakBeslutter && !harSendtTilBeslutter;
 
 	const tilbakeTilSkjema = () => {
 		changeView(ViewType.UTKAST);
@@ -40,6 +42,7 @@ export function Forhandsvisning() {
 		if (pdfStatus === PDFStatus.ERROR) {
 			showModal(ModalType.FEIL_VED_FORHANDSVISNING);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
 	const tilbakeTilHovedsiden = () => {
@@ -52,7 +55,7 @@ export function Forhandsvisning() {
 	const sendVedtak = (beslutter?: string) => {
 		showModal(ModalType.LASTER);
 
-		fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutter }))
+		fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutterNavn: beslutter }))
 			.then(() => {
                 resetSkjema();
 				tilbakeTilHovedsiden();
@@ -69,8 +72,13 @@ export function Forhandsvisning() {
 			return;
 		}
 
-		if (kvalitetssikresVarsel) {
-			showModal(ModalType.KVALITETSSIKRING, { sendVedtak });
+		if (visSendTilBeslutter) {
+			showModal(ModalType.BESLUTTER_OPPGAVE);
+			return;
+		}
+
+		if (trengerVedtakBeslutter && harSendtTilBeslutter) {
+			showModal(ModalType.KVALITETSSIKRING, { sendVedtak, beslutterNavn: utkast.beslutterNavn });
 			return;
 		}
 
@@ -83,7 +91,7 @@ export function Forhandsvisning() {
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
 					<Hovedknapp mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
-						Send til bruker
+						Send til {visSendTilBeslutter ? 'beslutter' : 'bruker'}
 					</Hovedknapp>
 					<Knapp mini={true} htmlType="button" onClick={tilbakeTilSkjema}>
 						Tilbake til utkast

@@ -10,13 +10,13 @@ import KildeType from '../../utils/types/kilde-type';
 import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import './oyblikksbilde-visning.less';
 import useFetch from '../../rest/use-fetch';
 import { HentOyblikksbildeFetchParams, lagHentOyblikksbildeFetchInfo } from '../../rest/api';
 import { hasFailed, isNotStarted, isNotStartedOrPending } from '../../rest/utils';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
+import './oyblikksbilde-visning.less';
 
 function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
 	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.kildeType === kildeType) : null;
@@ -33,6 +33,7 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 		if (isNotStarted(oyblikksbilder)) {
 			oyblikksbilder.fetch({ fnr, vedtakId: props.vedtakId });
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (isNotStartedOrPending(oyblikksbilder)) {

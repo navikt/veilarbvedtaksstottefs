@@ -21,7 +21,7 @@ export const feilVedSendningConfig: FeilModalConfig = {
 
 export const stoppeInnsendingFeatureToggleConfig: FeilModalConfig = {
 	tittel: 'Problemer med å sende',
-	beskrivelse: 'Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken',
+	beskrivelse: 'Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken.',
 	viewAction: ViewType.UTKAST,
 	knappeTekst: 'Tilbake til utkast'
 };
@@ -49,4 +49,9 @@ export const feilVedLagringConfig: FeilModalConfig = {
 export const feilVedSlettingAvUtkastConfig: FeilModalConfig = {
 	tittel: 'Klarte ikke å slette utkast',
 	beskrivelse: 'En feil oppstod under slettingen av utkastet. Vennligst prøv igjen senere.'
+};
+
+export const feilVedOpprettingAvBeslutterOppgave: FeilModalConfig = {
+	tittel: 'Problemer med å sende oppgave til beslutter',
+	beskrivelse: 'Det kan dessverre ikke sendes oppgave til beslutter for øyeblikket. Vennligst prøv igjen senere.',
 };

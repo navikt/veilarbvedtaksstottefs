@@ -9,11 +9,11 @@ import './skjema-visning.less';
 
 export function SkjemaVisning(props: { vedtak: VedtakData }) {
 	const { changeView } = useViewStore();
-	const { id, hovedmal, opplysninger, innsatsgruppe, begrunnelse, beslutter } = props.vedtak;
+	const { id, hovedmal, opplysninger, innsatsgruppe, begrunnelse, beslutterNavn } = props.vedtak;
 
 	return (
 		<>
-			<InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} beslutter={beslutter} />
+			<InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} beslutter={beslutterNavn} />
 			<HovedmalVisning hovedmal={hovedmal} />
 			<BegrunnelseVisning begrunnelse={begrunnelse} />
 			<OpplysningerVisning opplysninger={opplysninger} />

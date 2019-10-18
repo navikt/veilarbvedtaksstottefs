@@ -5,9 +5,12 @@ import { Dato } from '../dato';
 import { Veileder } from '../veileder';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import utkastIkon from './utkast.svg';
+import utkastTilBeslutterIkon from './utkast-til-beslutter.svg';
 import './utkast-panel.less';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../stores/view-store';
+import { Beslutter } from '../beslutter';
+import Show from '../../show';
 
 export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 	const { changeView } = useViewStore();
@@ -16,16 +19,35 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 		return null;
 	}
 
-	const { sistOppdatert, veilederIdent, veilederEnhetId, veilederEnhetNavn } = props.utkast;
+	const {
+		sistOppdatert, veilederIdent, veilederEnhetId,
+		veilederEnhetNavn, sendtTilBeslutter, beslutterNavn
+	} = props.utkast;
+	const beslutterTekst = beslutterNavn || veilederEnhetId + ' ' + veilederEnhetNavn;
+
+	let undertittel;
+	let img;
+
+	if (sendtTilBeslutter) {
+		undertittel = 'Utkast sendt til beslutter';
+		img = utkastTilBeslutterIkon;
+	} else {
+		undertittel = 'Utkast';
+		img = utkastIkon;
+	}
 
 	return (
 		<VedtaksstottePanel
 			tittel="Utkast til oppfølgingsvedtak"
-			undertittel="Utkast"
-			imgSrc={utkastIkon}
+			undertittel={undertittel}
+			imgSrc={img}
 			panelKlasse="utkast-panel"
+			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>Fortsett</Hovedknapp>}
 			tekstKomponent={
 				<>
+					<Show if={sendtTilBeslutter}>
+						<Beslutter beslutter={beslutterTekst}/>
+					</Show>
 					<Dato sistOppdatert={sistOppdatert} formatType="long" text="Sist endret" />
 					<Veileder
 						enhetId={veilederEnhetId}
@@ -35,7 +57,6 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 					/>
 				</>
 			}
-			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>Fortsett</Hovedknapp>}
 		/>
 	);
 }

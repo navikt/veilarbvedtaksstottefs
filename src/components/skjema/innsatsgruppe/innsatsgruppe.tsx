@@ -2,7 +2,7 @@ import React from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import { lagSkjemaElementFeil, utkastetSkalKvalitetssikrets } from '../skjema-utils';
+import { lagSkjemaElementFeil, trengerBeslutter } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import './innsatsgruppe.less';
@@ -46,10 +46,10 @@ export const innsatsgrupper = [
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
-	const kvalitetssikresVarsel = utkastetSkalKvalitetssikrets(innsatsgruppe);
+	const trengerVedtakBeslutter = trengerBeslutter(innsatsgruppe);
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
-			{kvalitetssikresVarsel && (
+			{trengerVedtakBeslutter && (
 				<AlertStripeAdvarsel className="innsatsgruppe-advarsel">
 					<span className="innsatsgruppe-advarsel__tekst">
 						Ved <i>delvis varig tilpasset innsats</i> og <i>varig tilpasset innsats</i> må

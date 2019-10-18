@@ -35,7 +35,7 @@ export function FeilModal(props: FeilmodalProps) {
 			onRequestClose={handleRequestClose}
 			type="FEIL"
 			shouldCloseOnOverlayClick={false}
-			closeButton={knappeTekst == undefined}
+			closeButton={knappeTekst == null}
 		>
 			<Systemtittel className="blokk-xxs">{tittel}</Systemtittel>
 			<Normaltekst className="blokk-s">{beskrivelse}</Normaltekst>

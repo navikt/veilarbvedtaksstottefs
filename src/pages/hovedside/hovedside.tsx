@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TidligereVedtakPanel } from '../../components/panel/tidligere-vedtak/tidligere-vedtak-panel';
 import { UtkastPanel } from '../../components/panel/utkast/utkast-panel';
 import { VedtakData } from '../../rest/data/vedtak';
@@ -13,7 +13,6 @@ import './hovedside.less';
 
 export function Hovedside() {
 	const { vedtak, features } = useFetchStore();
-
 	const gjeldendeVedtak = vedtak.data.find((v: VedtakData) => v.gjeldende);
 	const tidligereVedtak = vedtak.data.filter((v: VedtakData) => !v.gjeldende && v.vedtakStatus === 'SENDT');
 	const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');

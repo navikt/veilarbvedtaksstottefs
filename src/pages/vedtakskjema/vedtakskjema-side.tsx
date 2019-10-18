@@ -9,8 +9,6 @@ import Page from '../page/page';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
 import SkjemaHeader from '../../components/skjema/header/skjema-header';
-import { VedtakData } from '../../rest/data/vedtak';
-import './vedtakskjema-side.less';
 import { useFetchStore } from '../../stores/fetch-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
@@ -18,6 +16,8 @@ import { useAppStore } from '../../stores/app-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { useTimer } from '../../utils/hooks/use-timer';
+import { finnUtkast } from '../../utils';
+import './vedtakskjema-side.less';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -45,7 +45,7 @@ export function VedtakskjemaSide() {
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 
 	// Hvis vi er på vedtakskjema-side så skal det alltid finnes et utkast
-	const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST') as VedtakData;
+	const utkast = finnUtkast(vedtak.data);
 	const vedtakskjema = { opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal };
 
 	useEffect(() => {
@@ -54,6 +54,7 @@ export function VedtakskjemaSide() {
 			const mergetOpplysninger = mergeMedDefaultOpplysninger(utkast.opplysninger, malformData);
 			initSkjema(utkast, mergetOpplysninger);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [vedtak.status, malform.status]);
 
 	useEffect(() => {
@@ -62,6 +63,7 @@ export function VedtakskjemaSide() {
 		} else {
 			validerBegrunnelseLengde();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
 	useTimer(

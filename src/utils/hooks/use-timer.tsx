@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, DependencyList } from 'react';
+import { useEffect, useRef, DependencyList } from 'react';
 
 export function useTimer(handler: () => void, timeout: number, deps: DependencyList) {
 	const timer = useRef<number | undefined>();
@@ -16,5 +16,6 @@ export function useTimer(handler: () => void, timeout: number, deps: DependencyL
 				timer.current = undefined;
 			};
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, deps);
 }

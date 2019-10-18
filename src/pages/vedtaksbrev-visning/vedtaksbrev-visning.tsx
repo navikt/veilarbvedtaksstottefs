@@ -24,15 +24,16 @@ export function VedtaksbrevVisning(props: { vedtakId: number }) {
 
 	useEffect(() => frontendlogger.logMetrikk('vis-vedtaksbrev'), []);
 
-	if (!vedtaksObjekt) {
-		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
-	}
-
 	useEffect(() => {
 		if (pdfStatus === PDFStatus.ERROR) {
 			showModal(ModalType.FEIL_VED_VISNING);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
+
+	if (!vedtaksObjekt) {
+		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
+	}
 
 	const journalpostId = vedtaksObjekt.journalpostId as string;
 	const dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
