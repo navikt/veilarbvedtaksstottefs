@@ -50,7 +50,7 @@ export function ModalController() {
 			<KvalitetsSikringModalInnsending
 				isOpen={modalType === ModalType.KVALITETSSIKRING}
 				sendVedtak={modalProps.sendVedtak}
-				beslutter={modalProps.beslutterNavn}
+				beslutterNavn={modalProps.beslutterNavn}
 			/>
 			<BeslutterOppgaveModal isOpen={modalType === ModalType.BESLUTTER_OPPGAVE} />
 			<SuksessModalInnsending isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />

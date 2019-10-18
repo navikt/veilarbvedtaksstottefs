@@ -75,7 +75,7 @@ export const lagHentVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 export const lagSendVedtakFetchInfo = (params: SendVedtakFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtak/send`,
 	method: 'POST',
-	body: JSON.stringify({ beslutter: params.beslutterNavn })
+	body: JSON.stringify({ beslutterNavn: params.beslutterNavn })
 });
 
 export const lagOpprettBeslutterOppgaveFetchInfo = (params: OpprettBeslutterOppgaveFetchParams): FetchInfo => {

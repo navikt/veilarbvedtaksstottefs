@@ -13,7 +13,7 @@ export function SkjemaVisning(props: { vedtak: VedtakData }) {
 
 	return (
 		<>
-			<InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} beslutter={beslutterNavn} />
+			<InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} beslutterNavn={beslutterNavn} />
 			<HovedmalVisning hovedmal={hovedmal} />
 			<BegrunnelseVisning begrunnelse={begrunnelse} />
 			<OpplysningerVisning opplysninger={opplysninger} />

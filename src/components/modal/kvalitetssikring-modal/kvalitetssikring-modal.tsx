@@ -12,7 +12,7 @@ import Show from '../../show';
 
 interface KvalitetsSikringModalInnsendingProps extends ModalProps {
 	sendVedtak: (beslutter?: string) => void;
-	beslutter: OrNothing<string>;
+	beslutterNavn: OrNothing<string>;
 }
 
 export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInnsendingProps) {
@@ -32,11 +32,11 @@ export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInns
 	};
 
 	useEffect(() => {
-		if (props.beslutter) {
-			setBeslutter(props.beslutter);
+		if (props.beslutterNavn) {
+			setBeslutter(props.beslutterNavn);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [props.beslutter]);
+	}, [props.beslutterNavn]);
 
 	useEffect(() => {
 		if (harForsoktSende && harFyltUtBeslutter) {
@@ -54,8 +54,8 @@ export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInns
 			shouldCloseOnOverlayClick={false}
 			closeButton={false}
 		>
-			<Systemtittel>{props.beslutter ? 'Beslutter' : 'Hvem var beslutter?'}</Systemtittel>
-			<Show if={props.beslutter != null}>
+			<Systemtittel>{props.beslutterNavn ? 'Beslutter' : 'Hvem var beslutter?'}</Systemtittel>
+			<Show if={props.beslutterNavn != null}>
 				<Normaltekst className="kvalitetssikring__ingress">Sjekk at navnet på beslutter stemmer eller endre navnet i feltet nedenfor.</Normaltekst>
 			</Show>
 			<Input

@@ -46,7 +46,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 			tekstKomponent={
 				<>
 					<Show if={sendtTilBeslutter}>
-						<Beslutter beslutter={beslutterTekst}/>
+						<Beslutter beslutterNavn={beslutterTekst}/>
 					</Show>
 					<Dato sistOppdatert={sistOppdatert} formatType="long" text="Sist endret" />
 					<Veileder

@@ -2,15 +2,15 @@ import React from 'react';
 import { Undertekst } from 'nav-frontend-typografi';
 
 interface BeslutterProps {
-	beslutter: string;
+	beslutterNavn: string;
 }
 
-export function Beslutter({ beslutter }: BeslutterProps) {
+export function Beslutter({ beslutterNavn }: BeslutterProps) {
 	return (
 		<div style={{ display: 'flex' }}>
 			<Undertekst className="label">Beslutter: </Undertekst>
 			<Undertekst>
-				{beslutter}
+				{beslutterNavn}
 			</Undertekst>
 		</div>
 	);

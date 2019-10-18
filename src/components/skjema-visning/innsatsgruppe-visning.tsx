@@ -5,15 +5,15 @@ import { OrNothing } from '../../utils/types/ornothing';
 
 export function InnsatsgruppeVisning(props: {
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
-	beslutter: OrNothing<string>;
+	beslutterNavn: OrNothing<string>;
 }) {
 	return (
 		<SkjemaBolk tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
 			<div className="innsatsgruppe-visning">
 				<span>{getInnsatsgruppeNavn(props.innsatsgruppe)}</span>
-				{props.beslutter && (
+				{props.beslutterNavn && (
 					<span>
-						<b>Beslutter: </b> {props.beslutter}
+						<b>Beslutter: </b> {props.beslutterNavn}
 					</span>
 				)}
 			</div>
