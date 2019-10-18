@@ -8,8 +8,8 @@
     "build": "craco build",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
-    "test": "craco test",
-    "test:coverage": "echo \"Not yet implemented\"",
+    "test": "echo \"Tests not yet implemented\"",
+    "test:coverage": "echo \"Coverage not yet implemented\"",
     "heroku-serve": "node heroku-server.js",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\""
   },
