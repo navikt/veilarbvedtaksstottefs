@@ -33,6 +33,10 @@ function lagDefaultBeskrivelse(innsatsgruppe: OrNothing<InnsatsgruppeType>): str
 	return `Jeg har innstilt på ${innsats} tilpasset innsats. Sendes til beslutter for kvalitetsikring.`;
 }
 
+function sorterVeilederListe(veilederListe: Veileder[]): Veileder[] {
+	return veilederListe.sort((v1, v2) => v1.etternavn.localeCompare(v2.etternavn));
+}
+
 function mapVeiledereToOptions(veilederListe: Veileder[]): DropdownOption[] {
 	return veilederListe.map(veileder => ({ value: veileder.ident, label: veileder.navn}));
 }
@@ -81,7 +85,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 				<div className="beslutter-oppgave-modal__labels blokk-m">
 					<Label labelText="Tema" valueText="Oppfølging"/>
 					<Seperator/>
-					<Label labelText="Oppgavetype" valueText="Vurder hendvendelse"/>
+					<Label labelText="Oppgavetype" valueText="Vurder henvendelse"/>
 					<Seperator/>
 					<Label labelText="Gjelder" valueText="Til beslutter"/>
 				</div>
@@ -108,7 +112,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 						id="beslutter"
 						label="Beslutter"
 						placeholder="Søk etter veileder"
-						options={mapVeiledereToOptions(veilederListe)}
+						options={mapVeiledereToOptions(sorterVeilederListe(veilederListe))}
 						onChange={handleBeslutterChanged}
 					/>
 				</div>

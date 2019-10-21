@@ -27,7 +27,7 @@ export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInns
 		if (harFyltUtBeslutter) {
 			props.sendVedtak(beslutter);
 		} else {
-			setError({ feilmelding: 'Skriv inn navn på beslutter som har kvalitetssikret for å sende vedtaket' });
+			setError({ feilmelding: 'Legg inn navn på beslutter som har kvalitetssikret vedtaket' });
 		}
 	};
 
@@ -52,7 +52,7 @@ export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInns
 			onRequestClose={hideModal}
 			type="ADVARSEL"
 			shouldCloseOnOverlayClick={false}
-			closeButton={false}
+			closeButton={true}
 		>
 			<Systemtittel>{props.beslutterNavn ? 'Beslutter' : 'Hvem var beslutter?'}</Systemtittel>
 			<Show if={props.beslutterNavn != null}>
