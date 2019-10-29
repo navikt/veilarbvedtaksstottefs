@@ -15,7 +15,10 @@ interface SkjemaHeaderProps {
 }
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
-	const {vedtakStatus, veilederIdent, veilederEnhetId, veilederEnhetNavn, gjeldende} = props.vedtak;
+	const {
+		vedtakStatus, veilederIdent, veilederEnhetId,
+		veilederEnhetNavn, gjeldende, veilederNavn
+	} = props.vedtak;
 	const erUtkast = vedtakStatus === 'UTKAST';
 	const oppdatert = props.sistOppdatert ? props.sistOppdatert : props.vedtak.sistOppdatert;
 
@@ -53,6 +56,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 			veilederTekst={veilederTekst}
 			headerClassName={className}
 			bilde={bilde}
+			veilederNavn={veilederNavn}
 			veilederIdent={veilederIdent}
 			veilederEnhetId={veilederEnhetId}
 			veilederEnhetNavn={veilederEnhetNavn}
@@ -67,6 +71,7 @@ interface HeaderProps {
 	veilederTekst: string;
 	headerClassName: string;
 	bilde: string;
+	veilederNavn: string | null
 	veilederIdent: string;
 	veilederEnhetId: string;
 	veilederEnhetNavn: string;
@@ -80,6 +85,7 @@ function Header(props: HeaderProps) {
 		veilederTekst,
 		headerClassName,
 		bilde,
+		veilederNavn,
 		veilederIdent,
 		veilederEnhetId,
 		veilederEnhetNavn,
@@ -95,7 +101,7 @@ function Header(props: HeaderProps) {
 						className="skjema-header__veileder"
 						enhetId={veilederEnhetId}
 						enhetNavn={veilederEnhetNavn}
-						ident={veilederIdent}
+						veilederNavn={veilederNavn || veilederIdent}
 						text={veilederTekst}
 					/>
 					<div className="seperator"/>
