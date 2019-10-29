@@ -15,7 +15,7 @@ export function SuksessModalInnsending(props: ModalProps) {
 			onRequestClose={hideModal}
 			type="SUKSESS"
 		>
-			<Systemtittel className="blokk-xxxs">Vedtak sendt til bruker</Systemtittel>
+			<Systemtittel className="blokk-xxs">Vedtak sendt til bruker</Systemtittel>
 			<Normaltekst className="blokk-s">
 				Du finner innholdet i vedtaket på fanen for oppfølgingsvedtak.
 				Brukeren får vedtaksbrevet digitalt eller i posten.
