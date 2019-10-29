@@ -51,31 +51,35 @@ function HarTidligereVedtak({ vedtakHistorikk }: { vedtakHistorikk: VedtakData[]
 }
 
 function TidligereVedtak(props: { tidligereVedtak: VedtakData; index: number }) {
+	const {
+		innsatsgruppe, id, sistOppdatert, veilederNavn,
+		veilederIdent, veilederEnhetId, veilederEnhetNavn
+	} = props.tidligereVedtak;
 	const { changeView } = useViewStore();
-	const tidligereVedtak = props.tidligereVedtak;
-	const innsatsgruppe = getInnsatsgruppeNavn(tidligereVedtak.innsatsgruppe);
-	const id = 'tidligere-vedtak-' + props.index;
+
+	const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
+	const elemId = 'tidligere-vedtak-' + props.index;
 
 	function handleTidligereVedtakClicked() {
-		changeView(ViewType.VEDTAK, { vedtakId: props.tidligereVedtak.id });
+		changeView(ViewType.VEDTAK, { vedtakId: id });
 		frontendlogger.logMetrikk('vis-tidligere-vedtak', { index: props.index });
 	}
 
 	return (
 		<li className="vedtak-historikk-liste__item">
 			<button
-				aria-describedby={id}
+				aria-describedby={elemId}
 				className="tidligere-vedtak knapp__no-style"
 				onClick={handleTidligereVedtakClicked}
 			>
 				<div className="tidligere-vedtak__innhold">
-					<div id={id}>
-						<Element className="blokk-xxs">{innsatsgruppe}</Element>
-						<Dato sistOppdatert={tidligereVedtak.sistOppdatert} formatType="short" text="Dato" />
+					<div id={elemId}>
+						<Element className="blokk-xxs">{innsatsgruppeNavn}</Element>
+						<Dato sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
 						<Veileder
-							enhetId={tidligereVedtak.veilederEnhetId}
-							ident={tidligereVedtak.veilederIdent}
-							enhetNavn={tidligereVedtak.veilederEnhetNavn}
+							enhetId={veilederEnhetId}
+							veilederNavn={veilederNavn || veilederIdent}
+							enhetNavn={veilederEnhetNavn}
 							text="Fattet av"
 						/>
 					</div>
