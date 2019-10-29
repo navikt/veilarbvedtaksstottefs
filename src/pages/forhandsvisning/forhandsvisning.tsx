@@ -90,7 +90,7 @@ export function Forhandsvisning() {
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
-					<Hovedknapp mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
+					<Hovedknapp disabled={pdfStatus !== PDFStatus.SUCCESS} mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
 						Send til {visSendTilBeslutter ? 'beslutter' : 'bruker'}
 					</Hovedknapp>
 					<Knapp mini={true} htmlType="button" onClick={tilbakeTilSkjema}>
