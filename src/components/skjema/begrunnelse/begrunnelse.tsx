@@ -21,7 +21,8 @@ function Begrunnelse() {
 		const charDiff = newText.length - oldText.length;
 
 		if (charDiff >= CHAR_DIFF_LIMIT_COPY_PASTE) {
-			frontendlogger.logMetrikk('begrunnelse-copy-paste', { tegn: charDiff, innsatsgruppe });
+			frontendlogger.logMetrikk('begrunnelse-copy-paste',
+				{ tegn: charDiff, innsatsgruppe: innsatsgruppe || '' });
 		}
 
 		setBegrunnelse(newText);
