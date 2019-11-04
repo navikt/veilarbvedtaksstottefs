@@ -3,8 +3,7 @@ kind: "Application"
 metadata:
   name: veilarbvedtaksstottefs
   namespace: {{namespace}}
-  cluster:
-    - dev-fss
+  cluster: dev-fss
   labels:
     team: pto
 spec:
