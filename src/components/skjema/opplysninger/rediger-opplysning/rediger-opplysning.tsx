@@ -15,10 +15,10 @@ const OPPLYSNING_MAX_LENGTH = 150;
 
 export function RedigerOpplysning(props: OpplysningProps) {
 	const { opplysning, negativeBtn, onTekstSubmit, onTekstDeleteOrCancel } = props;
-	const [tekst, setTekst] = useState(Object.keys(opplysning)[0]);
+	const [tekst, setTekst] = useState(opplysning.navn);
 
 	function onSubmit() {
-		onTekstSubmit({ [tekst]: true });
+		onTekstSubmit({ navn: tekst, erValgt: true });
 	}
 
 	return (

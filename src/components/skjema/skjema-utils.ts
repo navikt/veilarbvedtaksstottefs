@@ -4,84 +4,62 @@ import { BEGRUNNELSE_MAX_LENGTH } from './begrunnelse/begrunnelse';
 import { OrNothing } from '../../utils/types/ornothing';
 import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
 import { Opplysning } from './opplysninger/opplysninger';
-import { MalformType } from '../../rest/data/malform';
+import { MalformData, MalformType } from '../../rest/data/malform';
 import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
-export const defaultOpplysningslisteBokmal = [
+export const opplysningslisteBokmal = [
 	'Svarene dine fra da du registrerte deg',
 	'CV-en/jobbprofilen din på nav.no',
 	'Svarene dine om behov for veiledning'
 ];
 
-export const defaultOpplysningslisteNynorsk = [
+export const opplysningslisteNynorsk = [
 	'Svara dine frå då du registrerte deg',
 	'CV-en/jobbprofilen din på nav.no',
 	'Svara dine om behov for rettleiing'
 ];
 
-function finnDefaultOpplysningsliste(malform: MalformType | null) {
-	return malform === MalformType.NN ? defaultOpplysningslisteNynorsk : defaultOpplysningslisteBokmal;
+export function hentMalformFraData(malformData: MalformData | null): MalformType | null {
+	return malformData ? malformData.malform : null;
 }
 
-export function mergeMedDefaultOpplysninger(
-	opplysningerListe: string[] | undefined,
-	malform: MalformType | null
-): Opplysning[] {
-	const defaultOpplysningsliste = finnDefaultOpplysningsliste(malform);
-	const defaultObjekt = byggDefaultOpplysningsObjektliste(opplysningerListe, defaultOpplysningsliste);
-	const opplysningslisteObjekt = byggOpplysningsObjektliste(true, opplysningerListe, defaultOpplysningsliste);
-	return defaultObjekt.concat(opplysningslisteObjekt);
+export function mapOpplysningerFraForskjelligMalformTilBokmal(opplysningerListe: string[]): string[] {
+	return opplysningerListe.map(opplysning => {
+		const translationPos = opplysningslisteNynorsk.indexOf(opplysning);
+		return translationPos === -1
+			? opplysning
+			: opplysningslisteBokmal[translationPos];
+	});
 }
 
-export function erDefaultOpplysning(opplysning: string, malform: MalformType | null) {
-	return finnDefaultOpplysningsliste(malform).some(defaultOpplysning => defaultOpplysning === opplysning);
+export function mapOpplysningerFraBokmalTilBrukersMalform(opplysningerListe: string[] | undefined, malformType: MalformType | null): string[] {
+	if (!opplysningerListe) return [];
+
+	// Trenger ikke å mappe hvis vi ikke vet malform eller det allerede er på bokmål
+	if (!malformType || malformType === MalformType.NB) return opplysningerListe;
+
+	return opplysningerListe.map(opplysning => {
+		const translationPos = opplysningslisteBokmal.indexOf(opplysning);
+		return translationPos === -1
+			? opplysning
+			: opplysningslisteNynorsk[translationPos];
+	});
 }
 
-function byggDefaultOpplysningsObjektliste(opplysningerListe: string[] | undefined, defaultOpplysningsliste: string[]) {
-	return defaultOpplysningsliste.reduce(
-		(acc, defaultOpplysning) => {
-			let opplysningsObjekt = {} as Opplysning;
-			opplysningsObjekt[defaultOpplysning] =
-				(opplysningerListe && opplysningerListe.some(opplysning => opplysning === defaultOpplysning)) || false;
-			return [...acc, opplysningsObjekt];
-		},
-		[] as Opplysning[]
-	);
+export function mergeMedDefaultOpplysninger(opplysningListe: string[]): Opplysning[] {
+	const opplysninger = opplysningslisteBokmal.map(opplysningTekst => ({
+		navn: opplysningTekst,
+		erValgt: opplysningListe.includes(opplysningTekst)
+	}));
+
+	opplysningListe.filter(opplysningTekst => !opplysningslisteBokmal.includes(opplysningTekst))
+		.forEach(opplysningTekst => opplysninger.push({ navn: opplysningTekst, erValgt: true }));
+
+	return opplysninger;
 }
 
-function byggOpplysningsObjektliste(
-	verdi: boolean,
-	opplysningerListe: string[] | undefined,
-	defaultOpplysningsliste: string[]
-) {
-	if (!opplysningerListe) {
-		return [];
-	}
-
-	const filtretOpplysningsListe = opplysningerListe.filter(
-		opplysning => !defaultOpplysningsliste.some(defaultOpplysning => opplysning === defaultOpplysning)
-	);
-
-	return filtretOpplysningsListe.reduce(
-		(acc, opplysning) => {
-			let opplysningsObjekt = {} as Opplysning;
-			opplysningsObjekt[opplysning] = verdi;
-			return [...acc, opplysningsObjekt];
-		},
-		[] as Opplysning[]
-	);
-}
-
-export function mapTilTekstliste(opplysninger: Opplysning[]): string[] {
-	return opplysninger.reduce(
-		(acc, opplysning) => {
-			if (Object.values(opplysning)[0]) {
-				return [...acc, Object.keys(opplysning)[0]];
-			}
-			return acc;
-		},
-		[] as string[]
-	);
+export function erDefaultOpplysning(opplysning: string) {
+	return opplysningslisteBokmal.some(defaultOpplysning => defaultOpplysning === opplysning);
 }
 
 export function isSkjemaEmpty(skjema: SkjemaData) {
@@ -156,7 +134,7 @@ export function validerSkjema(skjema: SkjemaData): SkjemaFeil {
 }
 
 export function validerBegrunnelseMaxLength(begrunnelse: OrNothing<string>) {
-	let errors: SkjemaFeil = {};
+	const errors: SkjemaFeil = {};
 	if (begrunnelse && begrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
 		errors.begrunnelse = `Du kan maksimalt skrive ${BEGRUNNELSE_MAX_LENGTH} tegn`;
 	}

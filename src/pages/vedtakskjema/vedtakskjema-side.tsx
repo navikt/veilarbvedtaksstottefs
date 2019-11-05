@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { mapTilTekstliste, mergeMedDefaultOpplysninger, isSkjemaEmpty } from '../../components/skjema/skjema-utils';
+import {
+	isSkjemaEmpty,
+	hentMalformFraData,
+	mapOpplysningerFraForskjelligMalformTilBokmal
+} from '../../components/skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
@@ -46,16 +50,31 @@ export function VedtakskjemaSide() {
 
 	// Hvis vi er på vedtakskjema-side så skal det alltid finnes et utkast
 	const utkast = finnUtkast(vedtak.data);
-	const vedtakskjema = { opplysninger: mapTilTekstliste(opplysninger), begrunnelse, innsatsgruppe, hovedmal };
+	const vedtakskjema = { opplysninger, begrunnelse, innsatsgruppe, hovedmal };
+
+	function sendDataTilBackend(skjema: SkjemaData) {
+		const malformType = hentMalformFraData(malform.data);
+		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema, malform: malformType })).catch(() => {
+			showModal(ModalType.FEIL_VED_LAGRING);
+		});
+	}
+
+	function oppdaterSistEndret(skjema: SkjemaData) {
+		if (!isSkjemaEmpty(skjema)) {
+			sendDataTilBackend(skjema).then(() => {
+				setSistOppdatert(new Date().toISOString());
+			});
+		}
+	}
 
 	useEffect(() => {
 		if (isSkjemaEmpty(vedtakskjema)) {
-			const malformData = malform.data ? malform.data.malform : null;
-			const mergetOpplysninger = mergeMedDefaultOpplysninger(utkast.opplysninger, malformData);
-			initSkjema(utkast, mergetOpplysninger);
+			const mappetOpplysninger = mapOpplysningerFraForskjelligMalformTilBokmal(utkast.opplysninger);
+			const utkastKopi = { ...utkast, opplysninger: mappetOpplysninger };
+			initSkjema(utkastKopi);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [vedtak.status, malform.status]);
+	}, [vedtak.status]);
 
 	useEffect(() => {
 		if (harForsoktAttSende) {
@@ -73,20 +92,6 @@ export function VedtakskjemaSide() {
 		2000,
 		[opplysninger, begrunnelse, innsatsgruppe, hovedmal]
 	);
-
-	function sendDataTilBackend(skjema: SkjemaData) {
-		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema })).catch(() => {
-			showModal(ModalType.FEIL_VED_LAGRING);
-		});
-	}
-
-	function oppdaterSistEndret(skjema: SkjemaData) {
-		if (!isSkjemaEmpty(skjema)) {
-			sendDataTilBackend(skjema).then(() => {
-				setSistOppdatert(new Date().toISOString());
-			});
-		}
-	}
 
 	return (
 		<Page>
