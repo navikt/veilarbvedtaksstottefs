@@ -11,6 +11,7 @@ import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../skjema-uti
 import './opplysninger.less';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { finnUtkast } from '../../../utils';
+import { MalformPanel } from './malform-panel/malform-panel';
 
 export interface Opplysning {
 	navn: string;
@@ -18,7 +19,7 @@ export interface Opplysning {
 }
 
 function Opplysninger() {
-	const { vedtak } = useFetchStore();
+	const { vedtak, malform } = useFetchStore();
 	const { opplysninger: skjemaOpplysninger, setOpplysninger: setSkjemaOpplysninger, errors } = useSkjemaStore();
 	const [ opplysninger, setOpplysninger ] = useState<Opplysning[]>([]);
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
@@ -86,60 +87,65 @@ function Opplysninger() {
 	return (
 		<SkjemaBolk id="opplysninger-scroll-to" tittel="Kilder" tittelId="kilder-tittel">
 			<div className="opplysninger">
-				<Normaltekst>Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
-				<div className="opplysninger__innhold">
-					<SkjemaGruppe aria-labelledby="kilder-tittel" feil={lagSkjemaElementFeil(errors.opplysninger)}>
-						{opplysninger.map((opplysning, index) =>
-							redigeringModusIndeks !== index ? (
-								<VisOpplysning
-									opplysning={opplysning}
-									handleOpplysning={() => {
-										setRedigeringModusIndeks(index);
-										setVisLeggTilNyOpplysning(true);
-									}}
-									key={index}
-									onChange={(o) => handleOpplysningerChecked(index, o)}
-									erSistEndretIndeks={index === sistEndretIndeks}
-								/>
-							) : (
-								<RedigerOpplysning
-									key={index}
-									opplysning={opplysning}
-									negativeBtn="DELETE"
-									onTekstSubmit={endretOpplysning => {
-										setRedigeringModusIndeks(-1);
-										handleOpplysningerChanged(index, endretOpplysning);
-									}}
-									onTekstDeleteOrCancel={() => {
-										handleOpplysningDeleted(index);
-										nullstilState();
-									}}
-								/>
-							)
+				<div>
+					<Normaltekst>Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
+					<div className="opplysninger__innhold">
+						<SkjemaGruppe aria-labelledby="kilder-tittel" feil={lagSkjemaElementFeil(errors.opplysninger)}>
+							{opplysninger.map((opplysning, index) =>
+								redigeringModusIndeks !== index ? (
+									<VisOpplysning
+										opplysning={opplysning}
+										handleOpplysning={() => {
+											setRedigeringModusIndeks(index);
+											setVisLeggTilNyOpplysning(true);
+										}}
+										key={index}
+										onChange={(o) => handleOpplysningerChecked(index, o)}
+										erSistEndretIndeks={index === sistEndretIndeks}
+									/>
+								) : (
+									<RedigerOpplysning
+										key={index}
+										opplysning={opplysning}
+										negativeBtn="DELETE"
+										onTekstSubmit={endretOpplysning => {
+											setRedigeringModusIndeks(-1);
+											handleOpplysningerChanged(index, endretOpplysning);
+										}}
+										onTekstDeleteOrCancel={() => {
+											handleOpplysningDeleted(index);
+											nullstilState();
+										}}
+									/>
+								)
+							)}
+						</SkjemaGruppe>
+						{visLeggTilNyOpplysning ? (
+							<LeggTilOpplysning
+								leggTilOpplysning={() => {
+									setVisLeggTilNyOpplysning(false);
+									nullstilState();
+								}}
+							/>
+						) : (
+							<RedigerOpplysning
+								opplysning={{ navn: '', erValgt: true }}
+								negativeBtn="CANCEL"
+								onTekstSubmit={endretOpplysning => {
+									handleOpplysningerChanged(opplysninger.length, endretOpplysning);
+									setVisLeggTilNyOpplysning(true);
+								}}
+								onTekstDeleteOrCancel={() => {
+									setVisLeggTilNyOpplysning(true);
+								}}
+							/>
 						)}
-					</SkjemaGruppe>
-					{visLeggTilNyOpplysning ? (
-						<LeggTilOpplysning
-							leggTilOpplysning={() => {
-								setVisLeggTilNyOpplysning(false);
-								nullstilState();
-							}}
-						/>
-					) : (
-						<RedigerOpplysning
-							opplysning={{ navn: '', erValgt: true }}
-							negativeBtn="CANCEL"
-							onTekstSubmit={endretOpplysning => {
-								handleOpplysningerChanged(opplysninger.length, endretOpplysning);
-								setVisLeggTilNyOpplysning(true);
-							}}
-							onTekstDeleteOrCancel={() => {
-								setVisLeggTilNyOpplysning(true);
-							}}
-						/>
-					)}
+					</div>
 				</div>
-				<OpplysningerHjelpeTekster />
+				<div>
+					<MalformPanel malform={malform.data && malform.data.malform}/>
+					<OpplysningerHjelpeTekster />
+				</div>
 			</div>
 		</SkjemaBolk>
 	);
