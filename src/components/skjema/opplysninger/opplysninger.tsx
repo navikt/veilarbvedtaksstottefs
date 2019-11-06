@@ -3,7 +3,7 @@ import { VisOpplysning } from './vis-opplysning/vis-opplysning';
 import { RedigerOpplysning } from './rediger-opplysning/rediger-opplysning';
 import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { OpplysningerHjelpeTekster } from './hjelpetekst-opplysninger';
+import { OpplysningerHjelpetekster } from './opplysninger-hjelpetekster';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
@@ -144,7 +144,7 @@ function Opplysninger() {
 				</div>
 				<div>
 					<MalformPanel malform={malform.data && malform.data.malform}/>
-					<OpplysningerHjelpeTekster />
+					<OpplysningerHjelpetekster />
 				</div>
 			</div>
 		</SkjemaBolk>
