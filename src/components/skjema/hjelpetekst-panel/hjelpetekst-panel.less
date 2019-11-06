@@ -2,21 +2,23 @@
 
 .veilarbvedtaksstottefs {
 
-  .hjelpetekster {
-    margin-top: 0.25rem;
+  .hjelpetekst-panel {
     font-size: 14px;
+
+    .ReactCollapse--collapse, .ekspanderbartPanel__hode {
+      background-color: rgba(204, 222, 230, 0.3);
+    }
 
     &__tittel {
       font-family: Source Sans Pro, Arial, sans-serif;
       font-size: 1rem;
       line-height: 1.625rem;
-      font-weight: 400;
+      font-weight: 600;
       margin: 0 0.5rem;
     }
 
     &__header {
       display: flex;
-
     }
 
     svg {
@@ -24,6 +26,7 @@
     }
 
     ul {
+      padding-left: 1.25rem;
       font-family: Source Sans Pro, Arial, sans-serif;
 
       li {
@@ -31,5 +34,4 @@
       }
     }
   }
-
 }

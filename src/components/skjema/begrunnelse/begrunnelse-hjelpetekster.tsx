@@ -1,10 +1,10 @@
 import { Normaltekst } from 'nav-frontend-typografi';
-import { Hjelpetekster } from '../hjelpetekster/hjelpetekster';
+import { HjelpetekstPanel } from '../hjelpetekst-panel/hjelpetekst-panel';
 import React from 'react';
 
-export function BegrunnelseHjelpeTekster() {
+export function BegrunnelseHjelpetekster() {
 	return (
-		<Hjelpetekster>
+		<HjelpetekstPanel navn="begrunnelse" headerTekst="Tips">
 			<Normaltekst>Spørsmål som kan være til nytte når du skal gjøre vurderingen din:</Normaltekst>
 			<ul className="begrunnelse-hjelpetekster__liste">
 				<li>Hva tenker denne personen selv om mulighetene sine til å være eller komme i jobb?</li>
@@ -21,6 +21,6 @@ export function BegrunnelseHjelpeTekster() {
 				</li>
 				<li>Hva har dere blitt enige om?</li>
 			</ul>
-		</Hjelpetekster>
+		</HjelpetekstPanel>
 	);
 }

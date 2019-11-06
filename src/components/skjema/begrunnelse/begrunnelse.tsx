@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { BegrunnelseHjelpeTekster } from './begrunnelse-hjelpetekster';
+import { BegrunnelseHjelpetekster } from './begrunnelse-hjelpetekster';
 import { lagSkjemaElementFeil, validerBegrunnelseMaxLength } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import './begrunnelse.less';
+import { HjelpetekstPanel } from '../hjelpetekst-panel/hjelpetekst-panel';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
@@ -40,10 +40,6 @@ function Begrunnelse() {
 	return (
 		<SkjemaBolk tittel="Begrunnelse" tittelId="begrunnelse-tittel">
 			<div className="begrunnelse">
-				<AlertStripeInfo>
-					Ved <i>standard innsats</i> er begrunnelse ikke obligatorisk. Unntaket er hvis du skal gjøre en ny
-					vurdering, og gjeldende oppfølgingsvedtak viser <i>nedsatt arbeidsevne</i>
-				</AlertStripeInfo>
 				<SkjemaGruppe feil={lagSkjemaElementFeil(begrunnelseFeil)} className="begrunnelse__container">
 					<Textarea
 						id="begrunnelse-scroll-to"
@@ -59,7 +55,13 @@ function Begrunnelse() {
 						Begrunnelse for vedtak/arbeidsevnevurdering, tips ved siden av
 					</span>
 				</SkjemaGruppe>
-				<BegrunnelseHjelpeTekster/>
+				<div>
+					<HjelpetekstPanel className="innsats-hjelpetekst" navn="innsats" headerTekst="Ved standard innsats">
+						Ved <i>standard innsats</i> er begrunnelse ikke obligatorisk. Unntaket er hvis du skal gjøre en ny
+						vurdering, og gjeldende oppfølgingsvedtak viser <i>nedsatt arbeidsevne</i>
+					</HjelpetekstPanel>
+					<BegrunnelseHjelpetekster/>
+				</div>
 			</div>
 		</SkjemaBolk>
 	);

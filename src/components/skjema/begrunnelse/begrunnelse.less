@@ -8,30 +8,22 @@
 		grid-template-rows: auto auto;
 		grid-row-gap: 1rem;
 
-		.alertstripe {
-			grid-column-start: 1;
-			grid-row-start: 1;
-		}
-
-		.hjelpetekster {
-			grid-column-start: 2;
-			grid-row-start: 2;
-		}
-
 		&__container {
-			grid-column-start: 1;
-			grid-row-start: 2;
+			.skjemaelement__label {
+				margin-bottom: 0;
+			}
 
 			.skjemaelement__input {
-				min-height: 33rem;
+				min-height: 670px;
+				max-height: 670px;
 				font-family: Source Sans Pro, Arial, sans-serif;
 				font-size: 1rem;
 			}
 		}
 	}
 
-	.begrunnelse-hjelpetekster__liste {
-		padding-left: 1.25rem;
+	.innsats-hjelpetekst {
+		margin-bottom: 1rem;
 	}
 
 }
