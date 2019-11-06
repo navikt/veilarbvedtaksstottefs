@@ -20,7 +20,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 	}
 
 	const {
-		sistOppdatert, veilederIdent, veilederEnhetId,
+		sistOppdatert, veilederIdent, veilederNavn, veilederEnhetId,
 		veilederEnhetNavn, sendtTilBeslutter, beslutterNavn
 	} = props.utkast;
 	const beslutterTekst = beslutterNavn || veilederEnhetId + ' ' + veilederEnhetNavn;
@@ -51,7 +51,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 					<Dato sistOppdatert={sistOppdatert} formatType="long" text="Sist endret" />
 					<Veileder
 						enhetId={veilederEnhetId}
-						ident={veilederIdent}
+						veilederNavn={veilederNavn || veilederIdent}
 						enhetNavn={veilederEnhetNavn}
 						text="Endret av"
 					/>

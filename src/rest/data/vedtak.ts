@@ -13,6 +13,7 @@ export interface VedtakData {
 	begrunnelse: OrNothing<string>;
 	gjeldende: boolean;
 	veilederIdent: string;
+	veilederNavn: string | null; // Skal egentlig alltid være string, men backend kan sende null siden det ikke er et kritisk felt
 	veilederEnhetId: string;
 	veilederEnhetNavn: string;
 	beslutterNavn: OrNothing<string>;

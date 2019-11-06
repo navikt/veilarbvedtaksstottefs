@@ -36,6 +36,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 		id,
 		innsatsgruppe,
 		sistOppdatert,
+		veilederNavn,
 		veilederEnhetId,
 		veilederIdent,
 		veilederEnhetNavn
@@ -58,7 +59,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 					<Dato sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
 					<Veileder
 						text="Fattet av"
-						ident={veilederIdent}
+						veilederNavn={veilederNavn || veilederIdent}
 						enhetId={veilederEnhetId}
 						enhetNavn={veilederEnhetNavn}
 					/>

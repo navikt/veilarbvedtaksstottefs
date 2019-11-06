@@ -13,6 +13,7 @@ const vedtak: VedtakData & JSONObject = {
 		'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
 	gjeldende: true,
 	opplysninger: [],
+	veilederNavn: 'Ola Nordmann',
 	veilederIdent: 'Z007',
 	veilederEnhetId: '1337',
 	veilederEnhetNavn: 'Gotham city',
