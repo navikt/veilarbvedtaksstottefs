@@ -10,7 +10,7 @@ import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { harFeil, scrollTilForsteFeil } from '../skjema-utils';
+import { harFeil, hentMalformFraData, scrollTilForsteFeil } from '../skjema-utils';
 
 interface AksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -19,7 +19,7 @@ interface AksjonerProps {
 
 function Aksjoner(props: AksjonerProps) {
 	const { fnr } = useAppStore();
-	const { vedtak } = useFetchStore();
+	const { vedtak, malform } = useFetchStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
 	const { validerSkjema } = useSkjemaStore();
@@ -28,11 +28,13 @@ function Aksjoner(props: AksjonerProps) {
 	const [visLagreVedtakLaster, setVisLagreVedtakLaster] = useState(false);
 
 	function sendDataTilBackend() {
-		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema: props.vedtakskjema })).catch(() => {
-			setVisForhandsvisngLaster(false);
-			setVisLagreVedtakLaster(false);
-			showModal(ModalType.FEIL_VED_LAGRING);
-		});
+		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform.data)};
+		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo(params))
+			.catch(() => {
+				setVisForhandsvisngLaster(false);
+				setVisLagreVedtakLaster(false);
+				showModal(ModalType.FEIL_VED_LAGRING);
+			});
 	}
 
 	function handleForhandsvis() {

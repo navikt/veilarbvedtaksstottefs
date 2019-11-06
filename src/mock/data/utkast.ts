@@ -10,7 +10,7 @@ const utkast: VedtakData & JSONObject = {
 	vedtakStatus: 'UTKAST',
 	sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 	gjeldende: false,
-	opplysninger: ['En annen viktig opplysning'],
+	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
 	veilederNavn: 'Ola Nordmann',
 	veilederIdent: 'Z007',
 	veilederEnhetId: '1337',

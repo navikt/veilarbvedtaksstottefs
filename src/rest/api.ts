@@ -2,6 +2,8 @@ import { FetchInfo } from './utils';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { ALL_TOGGLES } from './data/features';
 import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-modal/beslutter-oppgave-modal-innhold';
+import { mapOpplysningerFraBokmalTilBrukersMalform } from '../components/skjema/skjema-utils';
+import { MalformType } from './data/malform';
 
 export interface FnrFetchParams {
 	fnr: string;
@@ -18,6 +20,7 @@ export interface HentOyblikksbildeFetchParams {
 
 export interface OppdaterUtkastFetchParams {
 	fnr: string;
+	malform: MalformType | null;
 	skjema: SkjemaData;
 }
 
@@ -62,11 +65,14 @@ export const lagNyttVedtakUtkastFetchInfo = (params: FnrFetchParams): FetchInfo 
 	method: 'POST'
 });
 
-export const lagOppdaterVedtakUtkastFetchInfo = (params: OppdaterUtkastFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast`,
-	method: 'PUT',
-	body: JSON.stringify(params.skjema)
-});
+export const lagOppdaterVedtakUtkastFetchInfo = (params: OppdaterUtkastFetchParams): FetchInfo => {
+	params.skjema.opplysninger = mapOpplysningerFraBokmalTilBrukersMalform(params.skjema.opplysninger, params.malform);
+	return {
+		url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast`,
+		method: 'PUT',
+		body: JSON.stringify(params.skjema)
+	};
+};
 
 export const lagHentVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtak`

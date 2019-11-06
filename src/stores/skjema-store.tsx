@@ -4,16 +4,14 @@ import { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgru
 import createUseContext from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
 import {
-	mapTilTekstliste,
 	validerBegrunnelseMaxLength,
 	validerSkjema as valider
 } from '../components/skjema/skjema-utils';
-import { Opplysning } from '../components/skjema/opplysninger/opplysninger';
 import { OrNothing } from '../utils/types/ornothing';
 import { VedtakData } from '../rest/data/vedtak';
 
 export const useSkjemaStore = createUseContext(() => {
-	const [opplysninger, setOpplysninger] = useState<Opplysning[]>([]);
+	const [opplysninger, setOpplysninger] = useState<string[]>([]);
 	const [hovedmal, setHovedmal] = useState<OrNothing<HovedmalType>>();
 	const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>();
 	const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
@@ -21,8 +19,7 @@ export const useSkjemaStore = createUseContext(() => {
 	const [errors, setErrors] = useState<SkjemaFeil>({});
 
 	const validerSkjema = (): SkjemaFeil => {
-		const opplysningerListe = mapTilTekstliste(opplysninger);
-		const feil = valider({ opplysninger: opplysningerListe, hovedmal, innsatsgruppe, begrunnelse });
+		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse });
 		setErrors(feil);
 		return feil;
 	};
@@ -32,9 +29,9 @@ export const useSkjemaStore = createUseContext(() => {
 		setErrors(Object.assign({}, errors, begrunnelseFeil));
 	};
 
-	const initSkjema = (utkast: VedtakData, opplysningerListe: Opplysning[]) => {
+	const initSkjema = (utkast: VedtakData) => {
 		setHovedmal(utkast.hovedmal);
-		setOpplysninger(opplysningerListe);
+		setOpplysninger(utkast.opplysninger);
 		setInnsatsgruppe(utkast.innsatsgruppe);
 		setBegrunnelse(utkast.begrunnelse);
 		setSistOppdatert(utkast.sistOppdatert);
