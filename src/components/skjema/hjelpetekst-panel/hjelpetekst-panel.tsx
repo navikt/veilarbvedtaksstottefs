@@ -27,7 +27,7 @@ const getStorageName = (name: string) => `hjelpetekst_${name}_apen`;
 export function HjelpetekstPanel(props: PropsWithChildren<HjelpetekstPanelProps>) {
 	const storageName = getStorageName(props.navn);
 	const previousOpenState = localStorage.getItem(storageName);
-	const [isOpen, setIsOpen] = useState(previousOpenState === 'true');
+	const [isOpen, setIsOpen] = useState(previousOpenState !== 'false');
 
 	function onPanelClicked() {
 		setIsOpen(prevState => {
