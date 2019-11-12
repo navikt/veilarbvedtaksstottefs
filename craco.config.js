@@ -5,12 +5,33 @@ const { isEqual } = require("lodash");
 
 // pdfjs does some derpy stuff, which makes the build throw a lot of warnings which will stop the build in the CI pipeline
 const removeRulesPlugin = {
-    overrideWebpackConfig: ({ webpackConfig, cracoConfig, pluginOptions, context: { env, paths } }) => {
+    overrideWebpackConfig: ({ webpackConfig }) => {
 
-        const updatedRules = webpackConfig.module.rules.filter(
-            rule => !isEqual(rule, { parser: { requireEnsure: false } })
+        webpackConfig.module.rules = webpackConfig.module.rules.filter(
+            rule => !isEqual(rule, {parser: {requireEnsure: false}})
         );
-        webpackConfig.module.rules = updatedRules;
+
+        return webpackConfig;
+    }
+};
+
+const removeCssHashPlugin = {
+    overrideWebpackConfig: ({ webpackConfig }) => {
+
+        const plugins = webpackConfig.plugins;
+        plugins.forEach(plugin => {
+
+            const options = plugin.options;
+
+            if (!options) {
+                return;
+            }
+
+            if (options.filename && options.filename.endsWith('.css')) {
+                options.filename = "static/css/[name].css";
+            }
+
+        });
 
         return webpackConfig;
     }
@@ -20,6 +41,7 @@ module.exports = {
     plugins: [
         { plugin: CracoLessPlugin },
         { plugin: removeRulesPlugin },
+        { plugin: removeCssHashPlugin },
     ],
     webpack: {
         configure: {
