@@ -1,10 +1,11 @@
 import { JSONObject } from 'yet-another-fetch-mock';
 import { VeiledereData } from '../../rest/data/veiledere';
+import { innloggetVeileder } from './innlogget-veileder';
 
 const veiledere: VeiledereData & JSONObject = {
 	enhet: {
-		enhetId: '1234',
-		navn: 'NAV Testheim'
+		enhetId: innloggetVeileder.enhetId,
+		navn: innloggetVeileder.enhetNavn
 	},
 	veilederListe: [
 		{

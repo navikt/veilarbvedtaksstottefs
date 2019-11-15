@@ -3,7 +3,6 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
-import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../rest/data/features';
 import { trengerBeslutter } from '../../components/skjema/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
@@ -14,8 +13,9 @@ import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import './forhandsvisning.less';
 import { finnUtkast } from '../../utils';
+import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
+import './forhandsvisning.less';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
@@ -27,7 +27,9 @@ export function Forhandsvisning() {
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 	const trengerVedtakBeslutter = trengerBeslutter(innsatsgruppe);
 	const stoppeInnsendingfeatureToggle = features.data[STOPPE_VEDTAKSINNSENDING_TOGGLE];
-	const url = env.isDevelopment ? vedtaksBrevUrl : lagHentForhandsvisningUrl(fnr);
+	const url = env.isProduction
+		? lagHentForhandsvisningUrl(fnr)
+		: getMockVedtaksbrevUrl();
 
 	const utkast = finnUtkast(vedtak.data);
 	const harSendtTilBeslutter = utkast.sendtTilBeslutter;
