@@ -1,14 +1,14 @@
 class Environment {
-	get nodeEnv() {
-		return process.env.NODE_ENV;
+	get isAppMocked() {
+		return process.env.REACT_APP_MOCK;
 	}
 
 	get isProduction() {
-		return this.nodeEnv === 'production';
+		return this.isAppMocked !== 'true';
 	}
 
 	get isDevelopment() {
-		return this.nodeEnv === 'development';
+		return this.isAppMocked === 'true';
 	}
 
 	get isRunningOnHeroku() {

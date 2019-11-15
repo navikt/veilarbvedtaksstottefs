@@ -10,8 +10,9 @@
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "test": "echo \"Tests not yet implemented\"",
     "test:coverage": "echo \"Coverage not yet implemented\"",
+    "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
     "heroku-serve": "node heroku-server.js",
-    "prettier": "prettier --write \"src/**/*.{ts,tsx}\""
+    "heroku-postbuild": "REACT_APP_MOCK=true craco build"
   },
   "eslintConfig": {
     "extends": "react-app"
