@@ -13,7 +13,7 @@ import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { finnUtkast } from '../../utils';
+import { finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import './forhandsvisning.less';
 
@@ -31,7 +31,7 @@ export function Forhandsvisning() {
 		? lagHentForhandsvisningUrl(fnr)
 		: getMockVedtaksbrevUrl();
 
-	const utkast = finnUtkast(vedtak.data);
+	const utkast = finnUtkastAlltid(vedtak.data);
 	const harSendtTilBeslutter = utkast.sendtTilBeslutter;
 	const visSendTilBeslutter = trengerVedtakBeslutter && !harSendtTilBeslutter;
 

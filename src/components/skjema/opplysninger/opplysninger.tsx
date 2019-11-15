@@ -8,10 +8,10 @@ import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../skjema-utils';
-import './opplysninger.less';
 import { useFetchStore } from '../../../stores/fetch-store';
-import { finnUtkast } from '../../../utils';
 import { MalformPanel } from './malform-panel/malform-panel';
+import { useIsAfterFirstRender } from '../../../utils/hooks';
+import './opplysninger.less';
 
 export interface Opplysning {
 	navn: string;
@@ -19,14 +19,13 @@ export interface Opplysning {
 }
 
 function Opplysninger() {
-	const { vedtak, malform } = useFetchStore();
+	const { malform } = useFetchStore();
 	const { opplysninger: skjemaOpplysninger, setOpplysninger: setSkjemaOpplysninger, errors } = useSkjemaStore();
-	const [ opplysninger, setOpplysninger ] = useState<Opplysning[]>([]);
+	const [ opplysninger, setOpplysninger ] = useState<Opplysning[]>(mergeMedDefaultOpplysninger(skjemaOpplysninger));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
 	const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning] = useState<boolean>(true);
 	const [sistEndretIndeks, setSistEndretIndeks] = useState<number>(-1);
-
-	const utkast = finnUtkast(vedtak.data);
+	const isAfterFirstRender = useIsAfterFirstRender();
 
 	function nullstilState() {
 		setRedigeringModusIndeks(-1);
@@ -64,23 +63,13 @@ function Opplysninger() {
 	}
 
 	useEffect(() => {
-		const harIkkeInitialisertOpplysninger = Object.keys(opplysninger).length === 0;
-		const harInitialisertSkjemaOpplysninger = utkast.opplysninger.length === skjemaOpplysninger.length;
+		if (isAfterFirstRender) {
+			const valgteOpplysninger = opplysninger
+				.filter(opplysning => opplysning.erValgt)
+				.map(opplysning => opplysning.navn);
 
-		// Siden useEffecten i vedtaksskjema-side kjører etter at denne blir mountet, så må vi gjøre en ekstra sjekk på
-		// om skjemaOpplysninger har blitt initialisert ved å sammenligne de med opplysningene fra utkastet
-		if (harIkkeInitialisertOpplysninger && harInitialisertSkjemaOpplysninger) {
-			setOpplysninger(mergeMedDefaultOpplysninger(skjemaOpplysninger));
+			setSkjemaOpplysninger(valgteOpplysninger);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [skjemaOpplysninger]);
-
-	useEffect(() => {
-		const valgteOpplysninger = opplysninger
-			.filter(opplysning => opplysning.erValgt)
-			.map(opplysning => opplysning.navn);
-
-		setSkjemaOpplysninger(valgteOpplysninger);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [opplysninger]);
 

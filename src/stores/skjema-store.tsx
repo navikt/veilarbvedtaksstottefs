@@ -47,20 +47,12 @@ export const useSkjemaStore = createUseContext(() => {
 	};
 
 	return {
-		opplysninger,
-		setOpplysninger,
-		hovedmal,
-		setHovedmal,
-		innsatsgruppe,
-		setInnsatsgruppe,
-		begrunnelse,
-		setBegrunnelse,
-		sistOppdatert,
-		setSistOppdatert,
-		errors,
-		validerSkjema,
-		validerBegrunnelseLengde,
-		initSkjema,
-		resetSkjema
+		opplysninger, setOpplysninger,
+		hovedmal, setHovedmal,
+		innsatsgruppe, setInnsatsgruppe,
+		begrunnelse, setBegrunnelse,
+		sistOppdatert, setSistOppdatert, errors,
+		validerSkjema, validerBegrunnelseLengde,
+		initSkjema, resetSkjema
 	};
 });

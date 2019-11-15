@@ -7,6 +7,7 @@ import historisk from './api-data/vedtak/tidligere-vedtak';
 import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-modal/beslutter-oppgave-modal-innhold';
 import veiledere from './api-data/veiledere';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
+import { finnUtkast } from '../utils';
 
 let vedtak: VedtakData[] = [
 	utkast, ...historisk
@@ -52,7 +53,7 @@ export const mockOppdaterUtkast: Mock = {
 	url: '/veilarbvedtaksstotte/api/:fnr/utkast',
 	handler: async (args: HandlerArgument): Promise<ResponseData> => {
 		const skjemaData: SkjemaData = args.body;
-		const gammeltUtkast = vedtak.find(v => v.vedtakStatus === 'UTKAST');
+		const gammeltUtkast = finnUtkast(vedtak);
 		const oppdatertUtkast = Object.assign(gammeltUtkast, skjemaData);
 
 		if (!gammeltUtkast) throw new Error('Fant ikke et utkast å oppdatere');
@@ -77,7 +78,7 @@ export const mockSendTilBeslutter: Mock = {
 	method: 'POST',
 	url: '/veilarbvedtaksstotte/api/:fnr/beslutter/send',
 	handler: async (args: HandlerArgument): Promise<ResponseData> => {
-		const utkastTilBeslutter = vedtak.find(v => v.vedtakStatus === 'UTKAST');
+		const utkastTilBeslutter = finnUtkast(vedtak);
 
 		if (!utkastTilBeslutter) throw new Error('Fant ikke utkast til beslutter');
 
@@ -102,7 +103,7 @@ export const mockSendVedtak: Mock = {
 			gjeldendeVedtak.gjeldende = false;
 		}
 
-		const utkastTilUtsending = vedtak.find(v => v.vedtakStatus === 'UTKAST');
+		const utkastTilUtsending = finnUtkast(vedtak);
 
 		if (!utkastTilUtsending) throw new Error('Fant ikke utkast til beslutter');
 
