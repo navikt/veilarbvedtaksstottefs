@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "/veilarbvedtaksstottefs",
   "scripts": {
-    "start": "craco start",
+    "start": "REACT_APP_DEV=true craco start",
     "build": "craco build",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
@@ -12,7 +12,7 @@
     "test:coverage": "echo \"Coverage not yet implemented\"",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
     "heroku-serve": "node heroku-server.js",
-    "heroku-postbuild": "REACT_APP_MOCK=true craco build"
+    "heroku-postbuild": "REACT_APP_DEV=true craco build"
   },
   "eslintConfig": {
     "extends": "react-app"

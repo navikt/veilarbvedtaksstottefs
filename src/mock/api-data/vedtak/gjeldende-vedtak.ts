@@ -5,7 +5,7 @@ import { JSONObject } from 'yet-another-fetch-mock';
 import { innloggetVeileder } from '../innlogget-veileder';
 
 const gjeldendeVedtak: VedtakData & JSONObject = {
-	id: 4,
+	id: 1000,
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
 	innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
 	vedtakStatus: 'SENDT',

@@ -6,7 +6,7 @@ import { innloggetVeileder } from '../innlogget-veileder';
 
 const historisk: VedtakData[] & JSONArray = [
 	{
-		id: 2,
+		id: 1234,
 		hovedmal: HovedmalType.BEHOLDE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
 		vedtakStatus: 'SENDT',
@@ -24,7 +24,7 @@ const historisk: VedtakData[] & JSONArray = [
 		sendtTilBeslutter: false
 	},
 	{
-		id: 3,
+		id: 1235,
 		hovedmal: HovedmalType.SKAFFE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
 		vedtakStatus: 'SENDT',
