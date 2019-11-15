@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
-import vedtaksBrevUrl from '../../mock/vedtaksbrev-url';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { frontendlogger } from '../../utils/frontend-logger';
@@ -11,6 +10,7 @@ import { lagHentVedtakPdfUrl } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
+import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import './vedtaksbrev-visning.less';
 
 export function VedtaksbrevVisning(props: { vedtakId: number }) {
@@ -37,7 +37,9 @@ export function VedtaksbrevVisning(props: { vedtakId: number }) {
 
 	const journalpostId = vedtaksObjekt.journalpostId as string;
 	const dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
-	const url = env.isDevelopment ? vedtaksBrevUrl : lagHentVedtakPdfUrl(fnr, dokumentInfoId, journalpostId);
+	const url = env.isProduction
+		? lagHentVedtakPdfUrl(fnr, dokumentInfoId, journalpostId)
+		: getMockVedtaksbrevUrl();
 
 	return (
 		<>

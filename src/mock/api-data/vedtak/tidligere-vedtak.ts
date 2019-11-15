@@ -1,7 +1,8 @@
-import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
-import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
-import { VedtakData } from '../../rest/data/vedtak';
+import { InnsatsgruppeType } from '../../../components/skjema/innsatsgruppe/innsatsgruppe';
+import { HovedmalType } from '../../../components/skjema/hovedmal/hovedmal';
+import { VedtakData } from '../../../rest/data/vedtak';
 import { JSONArray } from 'yet-another-fetch-mock';
+import { innloggetVeileder } from '../innlogget-veileder';
 
 const historisk: VedtakData[] & JSONArray = [
 	{
@@ -13,10 +14,10 @@ const historisk: VedtakData[] & JSONArray = [
 		begrunnelse: 'herps derps herps',
 		opplysninger: [],
 		gjeldende: false,
-		veilederNavn: 'Ola Nordmann',
-		veilederEnhetId: '1337',
-		veilederEnhetNavn: 'Gotham city',
-		veilederIdent: 'Z007',
+		veilederNavn: innloggetVeileder.navn,
+		veilederIdent: innloggetVeileder.ident,
+		veilederEnhetId: innloggetVeileder.enhetId,
+		veilederEnhetNavn: innloggetVeileder.enhetNavn,
 		dokumentInfoId: null,
 		journalpostId: '123456',
 		beslutterNavn: 'Beslutter Besluttersen',
@@ -31,10 +32,10 @@ const historisk: VedtakData[] & JSONArray = [
 		sistOppdatert: '2018-08-05T09:55:43.716393+02:00',
 		begrunnelse: 'herp derp',
 		gjeldende: false,
-		veilederNavn: 'Ola Nordmann',
-		veilederEnhetId: '1337',
-		veilederEnhetNavn: 'Gotham city',
-		veilederIdent: 'Z007',
+		veilederNavn: innloggetVeileder.navn,
+		veilederIdent: innloggetVeileder.ident,
+		veilederEnhetId: innloggetVeileder.enhetId,
+		veilederEnhetNavn: innloggetVeileder.enhetNavn,
 		beslutterNavn: 'Beslutter Besluttersen',
 		dokumentInfoId: '98765',
 		journalpostId: '5678',
