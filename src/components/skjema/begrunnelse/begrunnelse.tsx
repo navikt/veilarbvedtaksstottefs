@@ -50,6 +50,7 @@ function Begrunnelse() {
 						onChange={onBegrunnelseChanged}
 						aria-labelledby="begrunnelse-tittel"
 						aria-describedby="begrunnelse-tips"
+						autoCorrect="on"
 					/>
 					<span id="begrunnelse-tips" style={{display: 'none'}}>
 						Begrunnelse for vedtak/arbeidsevnevurdering, tips ved siden av
