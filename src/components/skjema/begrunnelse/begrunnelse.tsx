@@ -59,7 +59,7 @@ function Begrunnelse() {
 				<div>
 					<HjelpetekstPanel className="innsats-hjelpetekst" navn="innsats" headerTekst="Ved standard innsats">
 						Ved <i>standard innsats</i> er begrunnelse ikke obligatorisk. Unntaket er hvis du skal gjøre en ny
-						vurdering, og gjeldende oppfølgingsvedtak viser <i>nedsatt arbeidsevne</i>
+						vurdering, og gjeldende oppfølgingsvedtak viser <i>nedsatt arbeidsevne</i>.
 					</HjelpetekstPanel>
 					<BegrunnelseHjelpetekster/>
 				</div>

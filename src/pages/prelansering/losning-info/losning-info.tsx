@@ -19,42 +19,43 @@ export function LosningInfo() {
 					tilbakemeldingTag="beslutterfunksjon"
 					bilde={beslutterFunksjonBilde}
 				>
-					Beslutterfunksjonen vil fortsatt eksistere. Forskjellen blir at veiledere og besluttere skal slutte
-					å sende Arena-oppgave seg mellom for å kommunisere. I stedet for skal veilederen opprette en oppgave
-					i Gosys og sende den til beslutteren. Det vil være veileder som sender ut 14a-vedtaket når saken er
-					godkjent. Beslutterordningen på 11-5 i Arena vil fortsatt bestå. Oppdatert rutine kommer.
+					Beslutterfunksjonen vil fortsatt eksistere. Det er ikke endringer i selve rutinen knyttet til beslutterfunksjonen.
+					Beslutterordningen på 11-5 i Arena vil fortsatt bestå. Oppdatert rutine kommer på Navet så snart den er klar.
+					Med den nye vedtakstøtten blir forskjellen sammenliknet med gammel løsning at veiledere og besluttere ikke skal sende Arena-oppgave seg imellom for å kommunisere.
+					Veilederen skal i stedet opprette en Gosys-oppgave og sende den til beslutteren for de innsatsgruppene som krever at beslutter kvalitetssikrer (AEV).
+					Det vil være veilederen som sender ut 14a-vedtaket når saken er godkjent.
 				</TilbakemeldingEkspanderbartpanel>
 				<TilbakemeldingEkspanderbartpanel
 					tittel="Kan vi mellomlagre?"
 					tilbakemeldingTag="mellomlagring"
 					bilde={mellomlagreBilde}
 				>
-					Teksten lagres automatisk mens du skriver vedtaket, slik at du ikke mister noe om systemet skulle
-					feile. Du vil også kunne mellomlagre, for å gå inn og ut av vedtaket du jobber med.
+					Teksten lagres automatisk mens du skriver vedtaket, slik at du ikke mister noe dersom det oppstår en teknisk feil.
+					Det blir også mulig å mellomlagre, slik at du kan gå inn og ut av vedtaket du jobber med.
 				</TilbakemeldingEkspanderbartpanel>
 				<TilbakemeldingEkspanderbartpanel
 					tittel="Vil løsningen være synlig og lik for bruker?"
 					tilbakemeldingTag="synlig_for_bruker"
 					bilde={synlighetTilBrukerBilde}
 				>
-					Behovs- og arbeidsevnevurderingen kommer til å se ulik ut for veilederen og brukeren. I Modia fatter
-					veilederen 14a-vedtak og skriver AEV, som deretter blir sendt elektronisk til brukeren når vedtaket
-					er fattet.
+					Løsningen vil bare være synlig for veilederen, ikke for brukeren.
+					I Modia fatter veilederen 14a-vedtaket og skriver AEV.
+					Det sendes automatisk et brev til brukeren når vedtaket er fattet.
 				</TilbakemeldingEkspanderbartpanel>
 				<TilbakemeldingEkspanderbartpanel
 					tittel="Hva skjer med 11-5 vedtak og klagesaksbehandling i Arena?"
 					tilbakemeldingTag="11-5_og_klagesaksbehandling"
 					bilde={klagebehandlingBilde}
 				>
-					Vi skal ikke lenger bruke Arena til å fatte 14a og skrive AEV, men øvrige saksbehandlingsprosesser i
-					Arena vil bestå inntil videre.
+					Vi skal ikke lenger bruke Arena til å fatte 14a-vedtaket og skrive AEV.
+					Øvrige saksbehandlingsprosesser i Arena består inntil videre.
 				</TilbakemeldingEkspanderbartpanel>
 				<TilbakemeldingEkspanderbartpanel
-					tittel="Vil det være hjelpespørsmål til arbeidsevnevurderingen?"
+					tittel="Vil det være hjelpespørsmål til arbeidsevnevurderingen, slik at veilederen vet hva vurderingen skal inneholde? "
 					tilbakemeldingTag="hjelpesporsmal"
 					bilde={hjelpesporsmalBilde}
 				>
-					Løsningen vil ha hjelpespørsmål som ligger ved siden av boksen for begrunnelsesfelt.
+					Løsningen vil ha veiledende hjelpespørsmål som ligger ved siden av boksen for begrunnelsesfeltet.
 				</TilbakemeldingEkspanderbartpanel>
 			</div>
 		</section>
