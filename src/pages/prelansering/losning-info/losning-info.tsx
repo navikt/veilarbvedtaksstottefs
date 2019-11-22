@@ -21,8 +21,14 @@ export function LosningInfo() {
 				>
 					Beslutterfunksjonen vil fortsatt eksistere. Det er ikke endringer i selve rutinen knyttet til beslutterfunksjonen.
 					Beslutterordningen på 11-5 i Arena vil fortsatt bestå. Oppdatert rutine kommer på Navet så snart den er klar.
+					<br/>
+					<br/>
 					Med den nye vedtakstøtten blir forskjellen sammenliknet med gammel løsning at veiledere og besluttere ikke skal sende Arena-oppgave seg imellom for å kommunisere.
+					<br/>
+					<br/>
 					Veilederen skal i stedet opprette en Gosys-oppgave og sende den til beslutteren for de innsatsgruppene som krever at beslutter kvalitetssikrer (AEV).
+					<br/>
+					<br/>
 					Det vil være veilederen som sender ut 14a-vedtaket når saken er godkjent.
 				</TilbakemeldingEkspanderbartpanel>
 				<TilbakemeldingEkspanderbartpanel
