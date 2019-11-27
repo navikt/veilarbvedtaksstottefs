@@ -10,3 +10,10 @@ export const finnUtkastAlltid = (vedtakListe: VedtakData[]): VedtakData => {
 export const finnUtkast = (vedtakListe: VedtakData[]): VedtakData | undefined => {
 	return vedtakListe.find(v => v.vedtakStatus === 'UTKAST');
 };
+
+// If the checkboxes/radios does not swallow enter, then it will for some reason propagate to the first button and trigger onClick
+export function swallowEnterKeyPress(e: any) {
+	if (e.charCode === 13) {
+		e.preventDefault();
+	}
+}

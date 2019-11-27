@@ -5,7 +5,7 @@ import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { EMDASH } from '../../../utils';
+import { EMDASH, swallowEnterKeyPress } from '../../../utils';
 import './hovedmal.less';
 import { lagSkjemaElementFeil } from '../skjema-utils';
 
@@ -62,12 +62,13 @@ function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
 		<div className="hovedmal">
 			{hovedmalliste.map((mal, idx) => (
 				<RadioPanel
+					name="hovedmal"
 					key={idx}
 					label={mal.label}
-					name="hovedmal"
 					value={mal.value}
 					onChange={(e: any) => props.handleHovedmalChanged(e.target.value)}
 					checked={props.hovedmal === mal.value}
+					inputProps={{onKeyPress: swallowEnterKeyPress}}
 				/>
 			))}
 		</div>

@@ -3,6 +3,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Opplysning } from '../opplysninger';
 import { erDefaultOpplysning } from '../../skjema-utils';
 import './vis-opplysning.less';
+import { swallowEnterKeyPress } from '../../../../utils';
 
 interface VisOpplysningProps {
 	opplysning: Opplysning;
@@ -21,10 +22,15 @@ export function VisOpplysning(props: VisOpplysningProps) {
 				checked={erValgt}
 				label={navn}
 				value={navn}
+				onKeyPress={swallowEnterKeyPress}
 				onChange={(e: any) => props.onChange(({ navn, erValgt: e.target.checked}))}
 			/>
 			{kanRedigeres && (
-				<button className="vis-opplysning__rediger-knapp" onClick={props.handleOpplysning}>
+				<button aria-label={'Rediger ' + navn} className="vis-opplysning__rediger-knapp" onClick={(e) => {
+					if (document.activeElement === e.currentTarget) {
+						props.handleOpplysning();
+					}
+				}}>
 					<div className="vis-opplysning__rediger-ikon" />
 				</button>
 			)}

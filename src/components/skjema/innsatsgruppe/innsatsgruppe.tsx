@@ -6,6 +6,7 @@ import { lagSkjemaElementFeil, trengerBeslutter } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import './innsatsgruppe.less';
+import { swallowEnterKeyPress } from '../../../utils';
 
 export enum InnsatsgruppeType {
 	STANDARD_INNSATS = 'STANDARD_INNSATS',
@@ -81,10 +82,12 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 		<div className="innsatsgruppe" aria-labelledby="innsatsgruppe-tittel">
 			{innsatsgrupper.map((innsatsgruppeObject, index) => (
 				<RadioPanel
+					name="innsatsgruppe"
 					key={index}
 					label={innsatsgruppeObject.label}
 					value={innsatsgruppeObject.value}
-					name="innsatsgruppe"
+					checked={props.innsatsgruppe === innsatsgruppeObject.value}
+					inputProps={{onKeyPress: swallowEnterKeyPress}}
 					onChange={(e: any) => {
 						const innsatsgruppe = e.target.value;
 						props.handleInnsatsgruppeChanged(innsatsgruppe);
@@ -92,7 +95,6 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 							props.setHovedmal(null);
 						}
 					}}
-					checked={props.innsatsgruppe === innsatsgruppeObject.value}
 				/>
 			))}
 		</div>
