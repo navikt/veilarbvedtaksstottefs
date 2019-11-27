@@ -16,5 +16,5 @@ if (env.isProduction) {
 	NAVSPA.eksporter('veilarbvedtaksstottefs', App);
 } else {
 	require('./mock');
-	ReactDOM.render(<App fnr={fnr} enhet={enhet} />, document.getElementById('veilarbvedtaksstottefs'));
+	ReactDOM.render(<App fnr={fnr} enhet={enhet} />, document.getElementById('root'));
 }

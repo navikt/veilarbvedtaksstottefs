@@ -95,7 +95,7 @@ function Header(props: HeaderProps) {
 		<header className={cls('skjema-header', headerClassName)}>
 			<img src={bilde} alt="Vedtak ikon" className="skjema-header__ikon"/>
 			<div className="skjema-header__innhold">
-				<Systemtittel className="skjema-header__tittel">{tittelTekst}</Systemtittel>
+				<Systemtittel tag="h1" className="skjema-header__tittel">{tittelTekst}</Systemtittel>
 				<div className="skjema-header__info">
 					<Veileder
 						className="skjema-header__veileder"

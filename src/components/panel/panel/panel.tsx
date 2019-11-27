@@ -8,7 +8,7 @@ export function Panel(props: { tittel: string; children: React.ReactNode; classN
 	return (
 		<div className={className}>
 			<div className="panel__tittel">
-				<Undertittel>{props.tittel}</Undertittel>
+				<Undertittel tag="h1">{props.tittel}</Undertittel>
 			</div>
 			{props.children}
 		</div>

@@ -34,7 +34,7 @@ function Hovedmal() {
 	const {innsatsgruppe, hovedmal, setHovedmal, errors} = useSkjemaStore();
 	const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
 	return (
-		<SkjemaBolk id="hovedmal-scroll-to" tittel="Hovedmål" tittelId="hovedmal-id">
+		<SkjemaBolk id="hovedmal-scroll-to" tittel="Hovedmål" tittelId="hovedmal-tittel">
 			<SkjemaGruppe feil={lagSkjemaElementFeil(errors.hovedmal)}>
 				{erVarigTilpassetInnsats ? (
 					<AlertStripeInfo className="hovedmal-info">

@@ -5,7 +5,7 @@ import { OrNothing } from '../../utils/types/ornothing';
 
 export function HovedmalVisning(props: { hovedmal: OrNothing<HovedmalType> }) {
 	return (
-		<SkjemaBolk tittel="Hovedmål" tittelId="hovedmal-id">
+		<SkjemaBolk tittel="Hovedmål" tittelId="hovedmal-tittel">
 			<span>{getHovedmalNavn(props.hovedmal)}</span>
 		</SkjemaBolk>
 	);

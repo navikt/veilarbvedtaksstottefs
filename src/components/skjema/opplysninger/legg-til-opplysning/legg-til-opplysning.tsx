@@ -8,11 +8,10 @@ export function LeggTilOpplysning(props: { leggTilOpplysning: () => void }) {
 		<button
 			className="legg-til-kilde"
 			onClick={props.leggTilOpplysning}
-			aria-labelledby="leggtilkilde"
-			aria-describedby="leggtilkildedesc"
+			aria-describedby="legg-til-kilde-tekst"
 		>
-			<img src={leggTilIkon} alt="Legg til" aria-labelledby="leggtilkilde" className="legg-til-kilde__ikon" />
-			<Normaltekst tag="span" className="legg-til-kilde__tekst">
+			<img src={leggTilIkon} alt="" className="legg-til-kilde__ikon" />
+			<Normaltekst id="legg-til-kilde-tekst" tag="span" className="legg-til-kilde__tekst">
 				Legg til andre kilder
 			</Normaltekst>
 		</button>

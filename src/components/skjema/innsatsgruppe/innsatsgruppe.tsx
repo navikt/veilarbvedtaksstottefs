@@ -79,7 +79,7 @@ interface InnsatsgruppeRadioProps {
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	return (
-		<div className="innsatsgruppe" aria-labelledby="innsatsgruppe-tittel">
+		<div className="innsatsgruppe">
 			{innsatsgrupper.map((innsatsgruppeObject, index) => (
 				<RadioPanel
 					name="innsatsgruppe"
@@ -87,7 +87,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 					label={innsatsgruppeObject.label}
 					value={innsatsgruppeObject.value}
 					checked={props.innsatsgruppe === innsatsgruppeObject.value}
-					inputProps={{onKeyPress: swallowEnterKeyPress}}
+					inputProps={{onKeyPress: swallowEnterKeyPress, 'aria-labelledby': 'innsatsgruppe-tittel'}}
 					onChange={(e: any) => {
 						const innsatsgruppe = e.target.value;
 						props.handleInnsatsgruppeChanged(innsatsgruppe);

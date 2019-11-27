@@ -11,7 +11,7 @@ function PanelHeader(props: {tekst: string}) {
 	return (
 		<div className="hjelpetekst-panel__header blokk-xxs">
 			<InfoSirkelIkon />
-			<h4 className="hjelpetekst-panel__tittel">{props.tekst}</h4>
+			<h3 className="hjelpetekst-panel__tittel">{props.tekst}</h3>
 		</div>
 	);
 }

@@ -22,7 +22,7 @@ export const SearchDropdown = (props: SearchDropdownProps) => {
 		<div className="veilarbvedtaksstottefs-search-dropdown">
 			<label htmlFor={id} className="skjemaelement__label">{label}</label>
 			<Select
-				name={id}
+				inputId={id}
 				placeholder={placeholder}
 				isClearable
 				isSearchable

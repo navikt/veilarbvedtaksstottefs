@@ -65,7 +65,7 @@ class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
 		return (
 			<div className="pdfvisning">
 				<div className="pdfvisning__header">
-					<Undertittel>{this.props.title}</Undertittel>
+					<Undertittel tag="h1">{this.props.title}</Undertittel>
 				</div>
 				<Document
 					className="pdfvisning__document"
