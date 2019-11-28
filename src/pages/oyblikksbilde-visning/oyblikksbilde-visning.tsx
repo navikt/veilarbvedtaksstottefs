@@ -45,7 +45,7 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 	return (
 		<Page className="oyblikksbilde-visning">
 			<section className="vedlegg">
-				<Innholdstittel>Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
+				<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
 				<VedleggCard
 					tittel="CV og Jobbprofil"
 					json={finnOyblikksbilde(KildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)}

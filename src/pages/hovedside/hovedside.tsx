@@ -26,12 +26,12 @@ export function Hovedside() {
 				visAlertrstripefeatureToggle={visAlertrstripefeatureToggle}
 			/>
 			<div className="hovedside">
-				<div className="vedtak-paneler">
+				<div className="hovedside__vedtak-paneler">
 					<UtkastPanel utkast={utkast} />
 					<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak} />
 					<NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} />
 				</div>
-				<div>
+				<div className="hovedside__tidligere-vedtak-panel">
 					<TidligereVedtakPanel vedtakHistorikk={tidligereVedtak} />
 				</div>
 			</div>

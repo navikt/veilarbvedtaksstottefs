@@ -6,12 +6,17 @@
 		background-color: white;
 		border-radius: 0.6rem;
 		border: 4px solid @navGra20;
+		width: 100%;
 
 		padding: 0 !important; // Overskriv styling som er dratt inn fra andre frontend apper
 
 		&__tittel {
 			padding: 1rem 1.25rem;
 			border-bottom: 1px solid @navGra20;
+		}
+
+		@media (min-width: 615px) {
+			width: 576px;
 		}
 
 	}
