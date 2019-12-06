@@ -11,6 +11,7 @@ import emptyBox from './empty-box.svg';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import './tidligere-vedtak-panel.less';
+import dayjs from 'dayjs';
 
 export function TidligereVedtakPanel(props: { vedtakHistorikk: VedtakData[] }) {
 	if (props.vedtakHistorikk.length === 0) {
@@ -36,6 +37,13 @@ function IngenTidligereVedtak() {
 
 function HarTidligereVedtak({ vedtakHistorikk }: { vedtakHistorikk: VedtakData[] }) {
 	const harToVedtak = vedtakHistorikk.length === 2;
+
+	vedtakHistorikk.sort((v1, v2) => {
+		const d1 = dayjs(v1.sistOppdatert);
+		const d2 = dayjs(v2.sistOppdatert);
+		return d1.isBefore(d2) ? 1 : -1;
+	});
+
 	return (
 		<Panel
 			tittel="Tidligere oppfølgingsvedtak"
