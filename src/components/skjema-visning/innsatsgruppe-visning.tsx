@@ -1,7 +1,8 @@
 import React from 'react';
-import { getInnsatsgruppeNavn, InnsatsgruppeType } from '../skjema/innsatsgruppe/innsatsgruppe';
 import SkjemaBolk from '../skjema/bolk/skjema-bolk';
 import { OrNothing } from '../../utils/types/ornothing';
+import { InnsatsgruppeType } from '../../rest/data/vedtak';
+import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
 
 export function InnsatsgruppeVisning(props: {
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
@@ -10,7 +11,7 @@ export function InnsatsgruppeVisning(props: {
 	return (
 		<SkjemaBolk tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
 			<div className="innsatsgruppe-visning">
-				<span>{getInnsatsgruppeNavn(props.innsatsgruppe)}</span>
+				<span>{getInnsatsgruppeTekst(props.innsatsgruppe as InnsatsgruppeType).tittel}</span>
 				{props.beslutterNavn && (
 					<span>
 						<b>Beslutter: </b> {props.beslutterNavn}

@@ -1,8 +1,15 @@
 import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
-import { InnsatsgruppeType } from '../../components/skjema/innsatsgruppe/innsatsgruppe';
 import { OrNothing } from '../../utils/types/ornothing';
 
 type VedtakStatus = 'UTKAST' | 'SENDT';
+
+export enum InnsatsgruppeType {
+	STANDARD_INNSATS = 'STANDARD_INNSATS',
+	SITUASJONSBESTEMT_INNSATS = 'SITUASJONSBESTEMT_INNSATS',
+	SPESIELT_TILPASSET_INNSATS = 'SPESIELT_TILPASSET_INNSATS',
+	GRADERT_VARIG_TILPASSET_INNSATS = 'GRADERT_VARIG_TILPASSET_INNSATS',
+	VARIG_TILPASSET_INNSATS = 'VARIG_TILPASSET_INNSATS'
+}
 
 export interface VedtakData {
 	id: number;

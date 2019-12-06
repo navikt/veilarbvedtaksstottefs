@@ -11,16 +11,17 @@ interface VedtaksstottePanelProps {
 	tekstKomponent: React.ReactNode;
 	knappKomponent?: React.ReactNode;
 	panelKlasse?: string;
+	undertittelClassName?: string;
 }
 
 export function VedtaksstottePanel(props: VedtaksstottePanelProps) {
-	const { tittel, undertittel, imgSrc, tekstKomponent, knappKomponent, panelKlasse } = props;
+	const { tittel, undertittel, imgSrc, tekstKomponent, knappKomponent, panelKlasse, undertittelClassName } = props;
 	return (
 		<Panel tittel={tittel} className={cls('vedtakstottepanel', panelKlasse)}>
 			<div className="vedtakstottepanel__content">
 				<img src={imgSrc} className="vedtakstottepanel__ikon" alt="" />
 				<div>
-					<Undertittel className="vedtakstottepanel__undertittel">{undertittel}</Undertittel>
+					<Undertittel className={cls('vedtakstottepanel__undertittel', undertittelClassName)}>{undertittel}</Undertittel>
 					<div className="vedtakstottepanel__tekst">{tekstKomponent}</div>
 					{knappKomponent}
 				</div>

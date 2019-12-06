@@ -1,9 +1,8 @@
 import React from 'react';
-import { VedtakData } from '../../../rest/data/vedtak';
+import { InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
 import { Dato } from '../dato';
 import { Knapp } from 'nav-frontend-knapper';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { getInnsatsgruppeNavn } from '../../skjema/innsatsgruppe/innsatsgruppe';
 import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import fullfortVedtakIcon from './fullfort.svg';
@@ -13,6 +12,7 @@ import { frontendlogger } from '../../../utils/frontend-logger';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import './gjeldende-vedtak-panel.less';
+import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
 	const { underOppfolging } = useFetchStore();
@@ -41,7 +41,8 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 		veilederIdent,
 		veilederEnhetNavn
 	} = props.gjeldendeVedtak;
-	const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
+
+	const innsatsgruppeData = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
 
 	const handleVisVedtakClicked = () => {
 		changeView(ViewType.VEDTAK, { vedtakId: id });
@@ -51,12 +52,14 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 	return (
 		<VedtaksstottePanel
 			tittel="Gjeldende oppfølgingsvedtak"
-			undertittel={innsatsgruppeNavn ? innsatsgruppeNavn : ''}
+			undertittel={innsatsgruppeData.tittel}
 			imgSrc={fullfortVedtakIcon}
 			panelKlasse="gjeldende-vedtak-panel"
+			undertittelClassName="gjeldende-vedtak-panel__undertittel"
 			tekstKomponent={
 				<>
-					<Dato sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
+					<p className="typo-undertekst gjeldende-vedtak-panel__innsatsgruppe">{innsatsgruppeData.undertekst}</p>
+					<Dato className="gjeldende-vedtak-panel__dato" sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
 					<Veileder
 						text="Fattet av"
 						veilederNavn={veilederNavn || veilederIdent}

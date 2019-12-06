@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { HovedmalType } from '../components/skjema/hovedmal/hovedmal';
-import { InnsatsgruppeType } from '../components/skjema/innsatsgruppe/innsatsgruppe';
 import createUseContext from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
 import {
@@ -8,7 +7,7 @@ import {
 	validerSkjema as valider
 } from '../components/skjema/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
-import { VedtakData } from '../rest/data/vedtak';
+import { InnsatsgruppeType, VedtakData } from '../rest/data/vedtak';
 
 export const useSkjemaStore = createUseContext(() => {
 	const [opplysninger, setOpplysninger] = useState<string[]>([]);

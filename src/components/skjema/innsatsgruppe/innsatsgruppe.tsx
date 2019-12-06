@@ -1,49 +1,15 @@
 import React from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
-import { OrNothing } from '../../../utils/types/ornothing';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { lagSkjemaElementFeil, trengerBeslutter } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import './innsatsgruppe.less';
 import { swallowEnterKeyPress } from '../../../utils';
-
-export enum InnsatsgruppeType {
-	STANDARD_INNSATS = 'STANDARD_INNSATS',
-	SITUASJONSBESTEMT_INNSATS = 'SITUASJONSBESTEMT_INNSATS',
-	SPESIELT_TILPASSET_INNSATS = 'SPESIELT_TILPASSET_INNSATS',
-	GRADERT_VARIG_TILPASSET_INNSATS = 'GRADERT_VARIG_TILPASSET_INNSATS',
-	VARIG_TILPASSET_INNSATS = 'VARIG_TILPASSET_INNSATS'
-}
-
-export const getInnsatsgruppeNavn = (innsatsgruppeType: OrNothing<InnsatsgruppeType>) => {
-	const innsatsgruppe = innsatsgrupper.find(elem => elem.value === innsatsgruppeType);
-	return innsatsgruppe && innsatsgruppe.label;
-};
-
-export const innsatsgrupper = [
-	{
-		label: 'Standard innsats (Gode muligheter)',
-		value: InnsatsgruppeType.STANDARD_INNSATS
-	},
-	{
-		label: 'Situasjonsbestemt innsats (Trenger veiledning)',
-		value: InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS
-	},
-	{
-		label: 'Spesielt tilpasset innsats (Nedsatt arbeidsevne)',
-		value: InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS
-	},
-	{
-		label: 'Delvis varig tilpasset innsats (Delvis varig nedsatt arbeidsevne)',
-		value: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS
-	},
-
-	{
-		label: 'Varig tilpasset innsats (Varig nedsatt arbeidsevne)',
-		value: InnsatsgruppeType.VARIG_TILPASSET_INNSATS
-	}
-];
+import './innsatsgruppe.less';
+import { InnsatsgruppeTekst, innsatsgruppeTekster } from '../../../utils/innsatsgruppe';
+import { InnsatsgruppeType } from '../../../rest/data/vedtak';
+import { OrNothing } from '../../../utils/types/ornothing';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
@@ -80,23 +46,32 @@ interface InnsatsgruppeRadioProps {
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	return (
 		<div className="innsatsgruppe">
-			{innsatsgrupper.map((innsatsgruppeObject, index) => (
-				<RadioPanel
-					name="innsatsgruppe"
-					key={index}
-					label={innsatsgruppeObject.label}
-					value={innsatsgruppeObject.value}
-					checked={props.innsatsgruppe === innsatsgruppeObject.value}
-					inputProps={{onKeyPress: swallowEnterKeyPress, 'aria-labelledby': 'innsatsgruppe-tittel'}}
-					onChange={(e: any) => {
-						const innsatsgruppe = e.target.value;
-						props.handleInnsatsgruppeChanged(innsatsgruppe);
-						if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
-							props.setHovedmal(null);
-						}
-					}}
-				/>
-			))}
+			{innsatsgruppeTekster.map(innsatsgruppeTekst => (
+					<RadioPanel
+						name="innsatsgruppe"
+						label={<InnatsgruppeVisning innsatsgruppeTekst={innsatsgruppeTekst}/>}
+						key={innsatsgruppeTekst.value}
+						value={innsatsgruppeTekst.value}
+						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
+						inputProps={{onKeyPress: swallowEnterKeyPress, 'aria-labelledby': 'innsatsgruppe-tittel'}}
+						onChange={(e: any) => {
+							const innsatsgruppe = e.target.value;
+							props.handleInnsatsgruppeChanged(innsatsgruppe);
+							if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
+								props.setHovedmal(null);
+							}
+						}}
+					/>
+				))}
+		</div>
+	);
+}
+
+function InnatsgruppeVisning({innsatsgruppeTekst}: {innsatsgruppeTekst: InnsatsgruppeTekst}) {
+	return (
+		<div className="innsatsgruppe__label">
+			<Element>{innsatsgruppeTekst.tittel}</Element>
+			<Normaltekst className="innsatsgruppe__label--undertekst">{innsatsgruppeTekst.undertekst}</Normaltekst>
 		</div>
 	);
 }
