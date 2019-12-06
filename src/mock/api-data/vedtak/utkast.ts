@@ -1,6 +1,5 @@
-import { VedtakData } from '../../../rest/data/vedtak';
+import { InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
 import { HovedmalType } from '../../../components/skjema/hovedmal/hovedmal';
-import { InnsatsgruppeType } from '../../../components/skjema/innsatsgruppe/innsatsgruppe';
 import { JSONObject } from 'yet-another-fetch-mock';
 import { innloggetVeileder } from '../innlogget-veileder';
 

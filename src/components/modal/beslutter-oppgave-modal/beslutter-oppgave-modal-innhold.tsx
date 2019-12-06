@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from 'react';
 import { Input, Select, Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Veileder, VeiledereData } from '../../../rest/data/veiledere';
-import { InnsatsgruppeType } from '../../skjema/innsatsgruppe/innsatsgruppe';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Datepicker } from '../../datepicker/datepicker';
@@ -10,6 +9,7 @@ import { formaterBeslutterOppgaveDato } from '../../../utils/date-utils';
 import { Label } from '../../label';
 import { Seperator } from '../../seperator/seperator';
 import { DropdownOption, SearchDropdown } from '../../search-dropdown/search-dropdown';
+import { InnsatsgruppeType } from '../../../rest/data/vedtak';
 
 interface BeslutterOppgaveModalInnholdProps {
 	veiledereData: VeiledereData;

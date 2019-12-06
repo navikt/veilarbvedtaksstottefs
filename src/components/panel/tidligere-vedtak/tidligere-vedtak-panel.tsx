@@ -1,9 +1,8 @@
 import React from 'react';
 import cls from 'classnames';
-import { VedtakData } from '../../../rest/data/vedtak';
+import { InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
 import { Panel } from '../panel/panel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { getInnsatsgruppeNavn } from '../../skjema/innsatsgruppe/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
@@ -11,6 +10,7 @@ import emptyBox from './empty-box.svg';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import './tidligere-vedtak-panel.less';
+import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 import dayjs from 'dayjs';
 
 export function TidligereVedtakPanel(props: { vedtakHistorikk: VedtakData[] }) {
@@ -65,7 +65,7 @@ function TidligereVedtak(props: { tidligereVedtak: VedtakData; index: number }) 
 	} = props.tidligereVedtak;
 	const { changeView } = useViewStore();
 
-	const innsatsgruppeNavn = getInnsatsgruppeNavn(innsatsgruppe);
+	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
 	const elemId = 'tidligere-vedtak-' + props.index;
 
 	function handleTidligereVedtakClicked() {
@@ -82,7 +82,7 @@ function TidligereVedtak(props: { tidligereVedtak: VedtakData; index: number }) 
 			>
 				<div className="tidligere-vedtak__innhold">
 					<div id={elemId}>
-						<Element className="blokk-xxs">{innsatsgruppeNavn}</Element>
+						<Element className="blokk-xxs">{innsatsgruppeTekst.tittel}</Element>
 						<Dato sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
 						<Veileder
 							enhetId={veilederEnhetId}

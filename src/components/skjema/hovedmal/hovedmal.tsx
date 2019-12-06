@@ -1,13 +1,13 @@
 import React from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { InnsatsgruppeType } from '../innsatsgruppe/innsatsgruppe';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { EMDASH, swallowEnterKeyPress } from '../../../utils';
 import './hovedmal.less';
 import { lagSkjemaElementFeil } from '../skjema-utils';
+import { InnsatsgruppeType } from '../../../rest/data/vedtak';
 
 export enum HovedmalType {
 	SKAFFE_ARBEID = 'SKAFFE_ARBEID',
