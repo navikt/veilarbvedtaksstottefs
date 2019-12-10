@@ -1,10 +1,11 @@
 import React from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import dayjs from 'dayjs';
+import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 import { InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
 import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import vedtakBilde from './vedtak.svg';
-import { formatDateStr } from '../../../utils/date-utils';
+import { daysFromToday, formatDate } from '../../../utils/date-utils';
 import './tidligere-vedtak-panel.less';
 
 interface TidligereVedtakLenkePanel {
@@ -13,8 +14,15 @@ interface TidligereVedtakLenkePanel {
 	onClick: (vedtakId: number, posisjon: number) => void;
 }
 
-function lagVedtakDatoTekst(dato: string): string {
-	return formatDateStr(dato);
+function lagVedtakDatoTekst(dateStr: string): string {
+	const date = dayjs(dateStr).toDate();
+	const days = daysFromToday(date);
+
+	if (days < 30) {
+		return `${days} dager siden`;
+	}
+
+	return formatDate(date);
 }
 
 export function TidligereVedtakLenkePanel(props: TidligereVedtakLenkePanel) {
@@ -32,8 +40,8 @@ export function TidligereVedtakLenkePanel(props: TidligereVedtakLenkePanel) {
 				<div className="tidligere-vedtak-panel__innhold">
 					<img src={vedtakBilde} alt="" className="tidligere-vedtak-panel__bilde" />
 					<div id={elemId}>
-						<Element>{innsatsgruppeTekst.tittel}</Element>
-						<Normaltekst className="tidligere-vedtak-panel__innsats--undertekst">{innsatsgruppeTekst.undertekst}</Normaltekst>
+						<Element className="tidligere-vedtak-panel__innsats--tittel">{innsatsgruppeTekst.tittel}</Element>
+						<EtikettLiten className="tidligere-vedtak-panel__innsats--undertekst">{innsatsgruppeTekst.undertekst}</EtikettLiten>
 					</div>
 				</div>
 				<Normaltekst className="tidligere-vedtak-panel__dato">
