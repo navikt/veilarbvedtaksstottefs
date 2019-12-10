@@ -1,5 +1,5 @@
 import React from 'react';
-import { TidligereVedtakPanel } from '../../components/panel/tidligere-vedtak/tidligere-vedtak-panel';
+import { TidligereVedtak } from '../../components/tidligere-vedtak/tidligere-vedtak';
 import { UtkastPanel } from '../../components/panel/utkast/utkast-panel';
 import { VedtakData } from '../../rest/data/vedtak';
 import { GjeldendeVedtakPanel } from '../../components/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
@@ -9,6 +9,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { OrNothing } from '../../utils/types/ornothing';
 import { VEDTAK_I_GOSYS_TOGGLE } from '../../rest/data/features';
 import { useFetchStore } from '../../stores/fetch-store';
+import { IngenTidligereVedtakPanel } from '../../components/panel/ingen-tidligere-vedtak/ingen-tidligere-vedtak-panel';
 import './hovedside.less';
 
 export function Hovedside() {
@@ -17,6 +18,7 @@ export function Hovedside() {
 	const tidligereVedtak = vedtak.data.filter((v: VedtakData) => !v.gjeldende && v.vedtakStatus === 'SENDT');
 	const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
 	const visAlertrstripefeatureToggle = features.data[VEDTAK_I_GOSYS_TOGGLE];
+	const harTidligereVedtak= tidligereVedtak.length > 0;
 
 	return (
 		<Page>
@@ -32,7 +34,10 @@ export function Hovedside() {
 					<NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} />
 				</div>
 				<div className="hovedside__tidligere-vedtak-panel">
-					<TidligereVedtakPanel vedtakHistorikk={tidligereVedtak} />
+					{harTidligereVedtak
+						? <TidligereVedtak vedtakHistorikk={tidligereVedtak} />
+						: <IngenTidligereVedtakPanel />
+					}
 				</div>
 			</div>
 		</Page>

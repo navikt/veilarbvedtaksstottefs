@@ -1,0 +1,68 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.tidligere-vedtak-panel {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		background-color: white;
+		padding: 1rem 1.25rem;
+
+		border: solid 1px @navGra20;
+		border-radius: 4px;
+
+		width: 500px;
+		height: 72px;
+
+		&:focus {
+			box-shadow: 0 0 0 3px @navBlaDarken60;
+			outline: none;
+		}
+		
+		&:hover {
+			cursor: pointer;
+			border: 1px solid @navBla;
+			box-shadow: @navGra40 0 2px 1px 0;
+		}
+
+		&__innhold--wrapper {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			margin-right: 1rem;
+		}
+
+		&__innhold {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+		}
+
+		&__innsats--undertekst {
+			text-align: start;
+			font-size: 12px;
+			color: @navGra80;
+			line-height: 1rem;
+		}
+
+		&__bilde {
+			width: 36px;
+			height: 36px;
+			margin-right: 0.5rem;
+		}
+
+		&__dato {
+			color: @navGra80;
+			font-size: 14px;
+		}
+
+		&__chevron {
+			margin: auto 0;
+		}
+	}
+
+}
