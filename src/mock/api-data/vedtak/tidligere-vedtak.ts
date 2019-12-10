@@ -28,7 +28,7 @@ const historisk: VedtakData[] & JSONArray = [
 		innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
 		vedtakStatus: 'SENDT',
 		opplysninger: [],
-		sistOppdatert: '2019-04-03T12:58:43.716393+02:00',
+		sistOppdatert: '2019-11-27T12:58:43.716393+02:00',
 		begrunnelse: 'herp derp',
 		gjeldende: false,
 		veilederNavn: innloggetVeileder.navn,
