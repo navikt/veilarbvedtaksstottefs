@@ -3,28 +3,25 @@
 .veilarbvedtaksstottefs {
 
 	.ingen-tidligere-vedtak-panel {
-		height: 270px;
-	}
-
-	.ingen-vedtak {
+		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		align-items: center;
 
-		margin-top: 2rem;
-		margin-bottom: 3rem;
+		border: @navGra20 solid 2px;
+		border-radius: 8px;
+		height: 278px;
+		width: 582px;
 
 		&__bilde {
-			width: 80px;
-			margin-bottom: 1.25rem;
+			width: 130px;
+			height: 90px;
+			margin-bottom: 1rem;
 		}
 
-		&__forklaring {
-			width: 60%;
-			text-align: center;
-			margin-top: 0.25rem;
+		&__tittel {
+			margin-bottom: 0.5rem;
 		}
-
 	}
-
 }

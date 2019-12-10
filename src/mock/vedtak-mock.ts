@@ -3,14 +3,13 @@ import { VedtakData } from '../rest/data/vedtak';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
-import historisk from './api-data/vedtak/tidligere-vedtak';
 import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-modal/beslutter-oppgave-modal-innhold';
 import veiledere from './api-data/veiledere';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { finnUtkast } from '../utils';
 
 let vedtak: VedtakData[] = [
-	utkast, ...historisk
+	utkast
 ];
 
 export const mockHentVedtak: Mock = {
