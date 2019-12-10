@@ -9,6 +9,10 @@
 
 		&__vedtak-paneler {
 			width: 100%;
+
+			> *:not(:first-child) {
+				margin-top: 1rem;
+			}
 		}
 
 		&__tidligere-vedtak-panel {
@@ -33,6 +37,8 @@
 		.hovedside {
 			flex-direction: row;
 			flex-wrap: nowrap;
+			justify-content: center;
+			align-items: start;
 
 			&__tidligere-vedtak-panel {
 				margin-top: 0;
