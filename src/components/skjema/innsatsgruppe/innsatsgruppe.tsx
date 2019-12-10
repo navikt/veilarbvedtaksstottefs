@@ -1,4 +1,5 @@
 import React from 'react';
+import cls from 'classnames';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { lagSkjemaElementFeil, trengerBeslutter } from '../skjema-utils';
@@ -49,7 +50,12 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 			{innsatsgruppeTekster.map(innsatsgruppeTekst => (
 					<RadioPanel
 						name="innsatsgruppe"
-						label={<InnatsgruppeVisning innsatsgruppeTekst={innsatsgruppeTekst}/>}
+						label={(
+							<InnatsgruppeVisning
+								erValgt={props.innsatsgruppe === innsatsgruppeTekst.value}
+								innsatsgruppeTekst={innsatsgruppeTekst}
+							/>
+						)}
 						key={innsatsgruppeTekst.value}
 						value={innsatsgruppeTekst.value}
 						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
@@ -67,11 +73,17 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	);
 }
 
-function InnatsgruppeVisning({innsatsgruppeTekst}: {innsatsgruppeTekst: InnsatsgruppeTekst}) {
+function InnatsgruppeVisning({innsatsgruppeTekst, erValgt}: {erValgt: boolean, innsatsgruppeTekst: InnsatsgruppeTekst}) {
 	return (
-		<div className="innsatsgruppe__label">
+		<div className="innsatsgruppe-label">
 			<Element>{innsatsgruppeTekst.tittel}</Element>
-			<Normaltekst className="innsatsgruppe__label--undertekst">{innsatsgruppeTekst.undertekst}</Normaltekst>
+			<Normaltekst
+				className={
+					cls('innsatsgruppe-label__undertekst', { 'innsatsgruppe-label__undertekst--valgt': erValgt})
+				}
+			>
+				{innsatsgruppeTekst.undertekst}
+			</Normaltekst>
 		</div>
 	);
 }

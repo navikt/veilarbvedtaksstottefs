@@ -8,10 +8,9 @@ import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-moda
 import veiledere from './api-data/veiledere';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { finnUtkast } from '../utils';
-import gjeldendeVedtak from './api-data/vedtak/gjeldende-vedtak';
 
 let vedtak: VedtakData[] = [
-	gjeldendeVedtak, utkast, ...historisk
+	utkast, ...historisk
 ];
 
 export const mockHentVedtak: Mock = {
