@@ -106,8 +106,6 @@ export const mockSendVedtak: Mock = {
 
 		if (!utkastTilUtsending) throw new Error('Fant ikke utkast til beslutter');
 
-		console.log('utkastTilUtsending', utkastTilUtsending); // tslint:disable-line
-
 		utkastTilUtsending.vedtakStatus = 'SENDT';
 		utkastTilUtsending.gjeldende = true;
 		utkastTilUtsending.dokumentInfoId = '123';

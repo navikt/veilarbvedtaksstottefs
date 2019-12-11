@@ -13,7 +13,7 @@ import {
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
 import { KvalitetsSikringModalInnsending } from './modal/kvalitetssikring-modal/kvalitetssikring-modal';
-import { SuksessModalInnsending } from './modal/sukssessmodal-innsending';
+import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import { BeslutterOppgaveModal } from './modal/beslutter-oppgave-modal/beslutter-oppgave-modal';
 
@@ -53,7 +53,10 @@ export function ModalController() {
 				beslutterNavn={modalProps.beslutterNavn}
 			/>
 			<BeslutterOppgaveModal isOpen={modalType === ModalType.BESLUTTER_OPPGAVE} />
-			<SuksessModalInnsending isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />
+			<VedtakSendtModal
+				isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS}
+				sendesVedtakDigitalt={modalProps.sendesVedtakDigitalt}
+			/>
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>

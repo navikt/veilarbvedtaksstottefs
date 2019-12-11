@@ -47,20 +47,16 @@ export function Forhandsvisning() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
-	const tilbakeTilHovedsiden = () => {
-		vedtak.fetch({ fnr }, () => {
-			changeView(ViewType.HOVEDSIDE);
-			showModal(ModalType.VEDTAK_SENT_SUKSESS);
-		});
-	};
-
 	const sendVedtak = (beslutter?: string) => {
 		showModal(ModalType.LASTER);
 
 		fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutterNavn: beslutter }))
 			.then(() => {
                 resetSkjema();
-				tilbakeTilHovedsiden();
+				vedtak.fetch({ fnr }, () => {
+					changeView(ViewType.HOVEDSIDE);
+					showModal(ModalType.VEDTAK_SENT_SUKSESS, { sendesVedtakDigitalt: false });
+				});
 			})
 			.catch(err => {
 				showModal(ModalType.FEIL_VED_SENDING);

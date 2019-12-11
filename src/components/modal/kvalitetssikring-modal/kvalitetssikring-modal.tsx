@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { VarselModal } from '../varsel-modal/varsel-modal';
+import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
-import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
+import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { ModalProps } from '../modal-props';
 import { useModalStore } from '../../../stores/modal-store';
 import '../varsel-modal/varsel-modal.less';
@@ -50,7 +50,7 @@ export function KvalitetsSikringModalInnsending(props: KvalitetsSikringModalInns
 			isOpen={props.isOpen}
 			contentLabel="Arbeidsevnevurderingen må godkjennes av beslutter"
 			onRequestClose={hideModal}
-			type="ADVARSEL"
+			varselIkonType={VarselIkonType.ADVARSEL}
 			shouldCloseOnOverlayClick={false}
 			closeButton={true}
 		>
