@@ -1,5 +1,5 @@
 import React from 'react';
-import { VarselModal } from '../varsel-modal/varsel-modal';
+import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { Knapp } from 'nav-frontend-knapper';
@@ -33,7 +33,7 @@ export function FeilModal(props: FeilmodalProps) {
 			isOpen={isOpen}
 			contentLabel="En feil har oppstått"
 			onRequestClose={handleRequestClose}
-			type="FEIL"
+			varselIkonType={VarselIkonType.FEIL}
 			shouldCloseOnOverlayClick={false}
 			closeButton={knappeTekst == null}
 		>

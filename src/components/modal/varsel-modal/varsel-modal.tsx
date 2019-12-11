@@ -1,22 +1,29 @@
 import React from 'react';
-import classNames from 'classnames';
+import cls from 'classnames';
 import ModalWrapper from 'nav-frontend-modal';
+import { ReactComponent as DigitalPostkasseIkon } from './vedtak-sendt-digital.svg';
+import { ReactComponent as BrevIkon } from './vedtak-sendt-brev.svg';
 import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
-import { ReactComponent as OkSirkelIkon } from './ok-sirkel.svg';
 import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
 import './varsel-modal.less';
 
-type VarselModalType = 'SUKSESS' | 'FEIL' | 'ADVARSEL';
+export enum VarselIkonType {
+	FEIL = 'FEIL',
+    ADVARSEL = 'ADVARSEL',
+	VEDTAK_SENDT_BREV = 'VEDTAK_SENDT_BREV',
+	VEDTAK_SENDT_DIGITALT = 'VEDTAK_SENDT_DIGITALT'
+}
 
 interface VarselModalProps {
 	contentLabel: string;
 	isOpen: boolean;
 	onRequestClose: () => void;
-	type: VarselModalType;
+	varselIkonType: VarselIkonType;
 	closeTimeoutMS?: number;
 	closeButton?: boolean;
 	shouldCloseOnOverlayClick?: boolean;
 	className?: string;
+	portalClassName?: string;
 }
 
 export function VarselModal({
@@ -24,11 +31,12 @@ export function VarselModal({
 	isOpen,
 	onRequestClose,
 	children,
-	type,
+	varselIkonType,
 	closeTimeoutMS,
 	closeButton,
 	shouldCloseOnOverlayClick,
-	className
+	className,
+	portalClassName
 }: React.PropsWithChildren<VarselModalProps>) {
 	return (
 		<ModalWrapper
@@ -37,22 +45,24 @@ export function VarselModal({
 			onRequestClose={onRequestClose}
 			closeTimeoutMS={closeTimeoutMS}
 			closeButton={closeButton}
-			portalClassName="veilarbvedtaksstottefs-varsel-modal"
+			portalClassName={cls('veilarbvedtaksstottefs-varsel-modal', portalClassName)}
 			shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
 		>
-			<VarselIkone type={type} />
-			<div className={classNames('varsel-modal__innehold', className)}>{children}</div>
+			<VarselIkon type={varselIkonType} />
+			<div className={cls('varsel-modal__innehold', className)}>{children}</div>
 		</ModalWrapper>
 	);
 }
 
-function VarselIkone(props: { type: VarselModalType }) {
+function VarselIkon(props: { type: VarselIkonType }) {
 	switch (props.type) {
-		case 'SUKSESS':
-			return <OkSirkelIkon className="varsel-modal__ikon" />;
-		case 'FEIL':
+		case VarselIkonType.VEDTAK_SENDT_BREV:
+			return <BrevIkon className="varsel-modal__ikon--vedtak-sendt" />;
+		case VarselIkonType.VEDTAK_SENDT_DIGITALT:
+			return <DigitalPostkasseIkon className="varsel-modal__ikon--vedtak-sendt" />;
+		case VarselIkonType.FEIL:
 			return <FeilSirkelIkon className="varsel-modal__ikon" />;
-		case 'ADVARSEL':
+		case VarselIkonType.ADVARSEL:
 			return <AdvarselSirkelIkon className="varsel-modal__ikon" />;
 		default:
 			return null;
