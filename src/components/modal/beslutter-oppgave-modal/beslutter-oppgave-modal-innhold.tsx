@@ -81,7 +81,7 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 
 	return (
 		<form className="beslutter-oppgave-modal__innhold" onSubmit={handleOnSubmit}>
-			<div className="blokk-s">
+			<div className="blokk-m">
 				<div className="beslutter-oppgave-modal__labels blokk-m">
 					<Label labelText="Tema" valueText="Oppfølging"/>
 					<Seperator/>
