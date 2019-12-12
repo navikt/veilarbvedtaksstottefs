@@ -74,10 +74,10 @@ function Opplysninger() {
 	}, [opplysninger]);
 
 	return (
-		<SkjemaBolk id="opplysninger-scroll-to" tittel="Kilder" tittelId="kilder-tittel">
+		<SkjemaBolk className="opplysninger-skjema-bolk" id="opplysninger-scroll-to" tittel="Kilder" tittelId="kilder-tittel">
 			<div className="opplysninger">
 				<div>
-					<Normaltekst>Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
+					<Normaltekst className="blokk-xxs">Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
 					<div className="opplysninger__innhold">
 						<SkjemaGruppe aria-labelledby="kilder-tittel" feil={lagSkjemaElementFeil(errors.opplysninger)}>
 							{opplysninger.map((opplysning, index) =>
@@ -131,7 +131,7 @@ function Opplysninger() {
 						)}
 					</div>
 				</div>
-				<div>
+				<div className="opplysninger__malform-tips">
 					<MalformPanel malform={malform.data && malform.data.malform}/>
 					<OpplysningerHjelpetekster />
 				</div>

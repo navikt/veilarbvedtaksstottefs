@@ -1,4 +1,5 @@
 import React from 'react';
+import cls from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
 import './skjem-bolk.less';
 
@@ -7,11 +8,12 @@ interface SkjemaBolkProps {
 	tittel: string;
 	tittelId: string;
 	children?: React.ReactNode;
+	className?: string;
 }
 
 function SkjemaBolk(props: SkjemaBolkProps) {
 	return (
-		<section id={props.id} className="skjemabolk">
+		<section id={props.id} className={cls('skjemabolk', props.className)}>
 			<div className="skjemabolk__header">
 				<Undertittel id={props.tittelId}>{props.tittel}</Undertittel>
 			</div>
