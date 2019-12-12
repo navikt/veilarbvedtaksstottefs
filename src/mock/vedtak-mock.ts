@@ -7,9 +7,10 @@ import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-moda
 import veiledere from './api-data/veiledere';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { finnUtkast } from '../utils';
+import historisk from './api-data/vedtak/tidligere-vedtak';
 
 let vedtak: VedtakData[] = [
-	utkast
+	utkast, ...historisk
 ];
 
 export const mockHentVedtak: Mock = {

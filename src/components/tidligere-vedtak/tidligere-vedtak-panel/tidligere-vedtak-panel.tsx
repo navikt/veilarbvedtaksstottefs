@@ -18,7 +18,9 @@ function lagVedtakDatoTekst(dateStr: string): string {
 	const date = dayjs(dateStr).toDate();
 	const days = daysFromToday(date);
 
-	if (days < 30) {
+	if (days <= 0) {
+		return 'i dag';
+	} else if (days < 30) {
 		return `${days} dager siden`;
 	}
 

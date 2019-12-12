@@ -1,8 +1,8 @@
 import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
 import ingenVedtakBilde from './ingen-vedtak.svg';
 import './ingen-tidligere-vedtak-panel.less';
-import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
 
 export function IngenTidligereVedtakPanel() {
 	return (

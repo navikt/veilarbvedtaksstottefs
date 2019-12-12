@@ -18,6 +18,5 @@ export function formaterBeslutterOppgaveDato(date: Date) {
 
 export function daysFromToday(date: Date): number {
 	const today = dayjs();
-	const days = today.diff(dayjs(date), 'day');
-	return Math.abs(days);
+	return today.diff(dayjs(date), 'day');
 }
