@@ -34,7 +34,7 @@ export type OpprettBeslutterOppgaveFetchParams = BeslutterOppgaveData & {
 };
 
 const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
-const OPPFOLGING_URL = '/veilarboppfolging/api';
+const VEILARBOPPFOLGING_API = '/veilarboppfolging/api';
 const VEILARBPERSON_API = '/veilarbperson/api';
 const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
 const VEILARBVEILEDER_API = '/veilarbveileder/api';
@@ -44,12 +44,12 @@ export const lagHentFeaturesFetchInfo = (): FetchInfo => {
 	return { url: `${FEATURE_TOGGLE_URL}/?${toggles}` };
 };
 
-export const lagHentUnderOppfolgingFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${OPPFOLGING_URL}/underoppfolging?fnr=${params.fnr}`
+export const lagHentOppfolgingDataFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBOPPFOLGING_API}/oppfolging?fnr=${params.fnr}`
 });
 
 export const lagHentTilgangTilKontorFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${OPPFOLGING_URL}/oppfolging/veilederTilgang?fnr=${params.fnr}`
+	url: `${VEILARBOPPFOLGING_API}/oppfolging/veilederTilgang?fnr=${params.fnr}`
 });
 
 export const lagHentMalformFetchInfo = (params: FnrFetchParams): FetchInfo => ({

@@ -5,6 +5,7 @@
   .ReactModal__Content {
     width: 600px;
     padding: 0;
+    overflow-y: hidden;
   }
 
   .skjemaelement__label {
@@ -59,6 +60,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 1rem;
+
+    .search-dropdown__menu-list {
+      max-height: 200px;
+    }
   }
 
   &__beskrivelse {

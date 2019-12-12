@@ -1,5 +1,5 @@
 import React from 'react';
-import { VarselModal } from './varsel-modal/varsel-modal';
+import { VarselIkonType, VarselModal } from './varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -39,7 +39,7 @@ function SlettUtkastModal(props: ModalProps) {
 			isOpen={props.isOpen}
 			contentLabel="Bekreft slett utkast"
 			onRequestClose={hideModal}
-			type="ADVARSEL"
+			varselIkonType={VarselIkonType.ADVARSEL}
 		>
 			<Systemtittel className="blokk-xxxs">Slett utkast</Systemtittel>
 			<Normaltekst>Er du sikker på at du vil slette utkastet?</Normaltekst>

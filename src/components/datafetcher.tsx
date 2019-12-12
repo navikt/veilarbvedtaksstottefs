@@ -5,15 +5,15 @@ import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../rest/ut
 import Spinner from './spinner/spinner';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
-	const { underOppfolging, features, malform, vedtak } = useFetchStore();
+	const { oppfolgingData, features, malform, vedtak } = useFetchStore();
 
 	useEffect(() => {
 		if (isNotStarted(vedtak)) {
 			vedtak.fetch({ fnr: props.fnr });
 		}
 
-		if (isNotStarted(underOppfolging)) {
-			underOppfolging.fetch({ fnr: props.fnr });
+		if (isNotStarted(oppfolgingData)) {
+			oppfolgingData.fetch({ fnr: props.fnr });
 		}
 
 		if (isNotStarted(malform)) {
@@ -24,15 +24,15 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			features.fetch(null);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [vedtak, underOppfolging, malform, features]);
+	}, [vedtak, oppfolgingData, malform, features]);
 
-	if (isAnyNotStartedOrPending([vedtak, malform, underOppfolging, features])) {
+	if (isAnyNotStartedOrPending([vedtak, malform, oppfolgingData, features])) {
 		return <Spinner />;
-	} else if (hasAnyFailed([vedtak, malform, underOppfolging, features])) {
+	} else if (hasAnyFailed([vedtak, malform, oppfolgingData, features])) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
-				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
-				senere.
+				Det oppnås for tiden ikke kontakt med alle baksystemer.
+				Vi jobber med å løse saken. Vennligst prøv igjen senere.
 			</AlertStripeFeil>
 		);
 	}

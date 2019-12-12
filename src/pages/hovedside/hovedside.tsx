@@ -31,7 +31,7 @@ export function Hovedside() {
 				<div className="hovedside__vedtak-paneler">
 					<UtkastPanel utkast={utkast} />
 					<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak} />
-					<NyttVedtakPanel gjeldendeVedtak={gjeldendeVedtak} utkast={utkast} />
+					<NyttVedtakPanel utkast={utkast} />
 				</div>
 				<div className="hovedside__tidligere-vedtak-panel">
 					{harTidligereVedtak

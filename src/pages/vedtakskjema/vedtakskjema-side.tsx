@@ -66,6 +66,13 @@ export function VedtakskjemaSide() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
+	useEffect(() => {
+		// Det kan bli problemer hvis gamle oppdateringer henger igjen etter at brukeren har forlatt redigeringssiden.
+		// Oppdateringen kan f.eks bli sendt etter at vedtaket har blitt fattet, eller at utkastet blir oppdatert med gammel data.
+		return oppdaterSistEndret.cancel;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<Page>
 			<Card className="vedtakskjema">

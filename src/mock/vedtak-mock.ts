@@ -3,11 +3,11 @@ import { VedtakData } from '../rest/data/vedtak';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
-import historisk from './api-data/vedtak/tidligere-vedtak';
 import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-modal/beslutter-oppgave-modal-innhold';
 import veiledere from './api-data/veiledere';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { finnUtkast } from '../utils';
+import historisk from './api-data/vedtak/tidligere-vedtak';
 
 let vedtak: VedtakData[] = [
 	utkast, ...historisk
@@ -106,8 +106,6 @@ export const mockSendVedtak: Mock = {
 		const utkastTilUtsending = finnUtkast(vedtak);
 
 		if (!utkastTilUtsending) throw new Error('Fant ikke utkast til beslutter');
-
-		console.log('utkastTilUtsending', utkastTilUtsending); // tslint:disable-line
 
 		utkastTilUtsending.vedtakStatus = 'SENDT';
 		utkastTilUtsending.gjeldende = true;
