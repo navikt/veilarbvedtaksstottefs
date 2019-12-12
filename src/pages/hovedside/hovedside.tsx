@@ -52,7 +52,7 @@ function AlertStripeVedtakIArena(props: {
 	if (props.visAlertrstripefeatureToggle && (!props.gjeldendeVedtak && props.tidligereVedtak.length === 0)) {
 		return (
 			<AlertStripeInfo className="blokk-xs">
-				Oppfølgingsvedtak utført i Arena før lansering av ny vedtaksstøtte kan hentes og vises i Gosys.
+				Oppfølgingsvedtak utført i Arena kan ses i Gosys.
 			</AlertStripeInfo>
 		);
 	}
