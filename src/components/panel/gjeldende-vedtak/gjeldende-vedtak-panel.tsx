@@ -15,10 +15,10 @@ import './gjeldende-vedtak-panel.less';
 import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
-	const { underOppfolging } = useFetchStore();
+	const { oppfolgingData } = useFetchStore();
 	const { changeView } = useViewStore();
 
-	if (!underOppfolging.data.underOppfolging) {
+	if (!oppfolgingData.data.underOppfolging) {
 		return (
 			<VedtaksstottePanel
 				tittel="Gjeldende oppfølgingsvedtak"

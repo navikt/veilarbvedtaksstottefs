@@ -16,7 +16,7 @@ import './nytt-vedtak-panel.less';
 export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
-	const { underOppfolging, vedtak } = useFetchStore();
+	const { oppfolgingData, vedtak } = useFetchStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
 
@@ -35,7 +35,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData> }) {
 			});
 	}
 
-	if (utkast || !underOppfolging.data.underOppfolging) {
+	if (utkast || !oppfolgingData.data.underOppfolging) {
 		return null;
 	}
 

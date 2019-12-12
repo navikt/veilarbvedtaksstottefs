@@ -44,16 +44,12 @@ export const lagHentFeaturesFetchInfo = (): FetchInfo => {
 	return { url: `${FEATURE_TOGGLE_URL}/?${toggles}` };
 };
 
-export const lagHentUnderOppfolgingFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBOPPFOLGING_API}/underoppfolging?fnr=${params.fnr}`
+export const lagHentOppfolgingDataFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBOPPFOLGING_API}/oppfolging?fnr=${params.fnr}`
 });
 
 export const lagHentTilgangTilKontorFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBOPPFOLGING_API}/oppfolging/veilederTilgang?fnr=${params.fnr}`
-});
-
-export const lagHentOppfolgingStatusFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBOPPFOLGING_API}/oppfolging?fnr=${params.fnr}`
 });
 
 export const lagHentMalformFetchInfo = (params: FnrFetchParams): FetchInfo => ({
