@@ -1,6 +1,6 @@
 import vedlegg from './api-data/oyblikksbilder';
 import features from './api-data/features';
-import underOppfolging from './api-data/under-oppfolging';
+import oppfolgingData from './api-data/oppfolging-data';
 import tilgangTilBrukersKontor from './api-data/tilgang-til-brukers-kontor';
 import malform from './api-data/malform';
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
@@ -9,7 +9,8 @@ import {
 	mockHentVedtak,
 	mockLagUtkast,
 	mockOppdaterUtkast,
-	mockSendTilBeslutter, mockSendVedtak,
+	mockSendTilBeslutter,
+	mockSendVedtak,
 	mockSlettUtkast
 } from './vedtak-mock';
 import { addToFetchMock } from './mock-utils';
@@ -29,6 +30,6 @@ addToFetchMock(mockSendVedtak, fetchMock);
 fetchMock.get('/veilarbvedtaksstotte/api/:fnr/oyblikksbilde/:vedtakId', vedlegg);
 fetchMock.get('/veilarbpersonflatefs/api/feature', features);
 fetchMock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', tilgangTilBrukersKontor);
-fetchMock.get('/veilarboppfolging/api/underoppfolging', underOppfolging);
+fetchMock.get('/veilarboppfolging/api/oppfolging', oppfolgingData);
 fetchMock.get('/veilarbperson/api/person/:fnr/malform', malform);
 fetchMock.get('/veilarbveileder/api/enhet/:enhetId/veiledere', veiledere);

@@ -30,7 +30,7 @@ export function VedtakSendtModal(props: VedtakSendtModalProps) {
 			portalClassName="vedtak-sendt-modal"
 		>
 			<Systemtittel className="vedtak-sendt-modal__tekst">{tekst}</Systemtittel>
-			<Hovedknapp onClick={hideModal}>OK, JEG FORSTÅR</Hovedknapp>
+			<Hovedknapp onClick={hideModal}>OK</Hovedknapp>
 		</VarselModal>
 	);
 }

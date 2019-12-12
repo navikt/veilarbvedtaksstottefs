@@ -20,7 +20,7 @@ import './forhandsvisning.less';
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { vedtak, features } = useFetchStore();
+	const { vedtak, features, oppfolgingData } = useFetchStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 
@@ -54,8 +54,9 @@ export function Forhandsvisning() {
 			.then(() => {
                 resetSkjema();
 				vedtak.fetch({ fnr }, () => {
+					const sendesVedtakDigitalt = !oppfolgingData.data.reservasjonKRR;
 					changeView(ViewType.HOVEDSIDE);
-					showModal(ModalType.VEDTAK_SENT_SUKSESS, { sendesVedtakDigitalt: false });
+					showModal(ModalType.VEDTAK_SENT_SUKSESS, { sendesVedtakDigitalt });
 				});
 			})
 			.catch(err => {
