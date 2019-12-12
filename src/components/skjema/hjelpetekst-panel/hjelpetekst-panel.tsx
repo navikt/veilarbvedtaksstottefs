@@ -9,7 +9,7 @@ import { frontendlogger } from '../../../utils/frontend-logger';
 
 function PanelHeader(props: {tekst: string}) {
 	return (
-		<div className="hjelpetekst-panel__header blokk-xxs">
+		<div className="hjelpetekst-panel__header">
 			<InfoSirkelIkon />
 			<h3 className="hjelpetekst-panel__tittel">{props.tekst}</h3>
 		</div>
