@@ -1,15 +1,13 @@
 import React from 'react';
 import { VedtakData } from '../../rest/data/vedtak';
 import Page from '../page/page';
-import Card from '../../components/card/card';
-import SkjemaHeader from '../../components/skjema/header/skjema-header';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../components/skjema-visning/skjema-visning';
 import { useFetchStore } from '../../stores/fetch-store';
-import './vedtakskjema-visning-side.less';
 import { useViewStore, ViewType } from '../../stores/view-store';
+import './vedtakskjema-visning-side.less';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	const { vedtak } = useFetchStore();
@@ -22,10 +20,7 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 
 	return (
 		<Page>
-			<Card className="vedtakskjema-visning">
-				<SkjemaHeader vedtak={vistVedtak} />
-				<SkjemaVisning vedtak={vistVedtak} />
-			</Card>
+			<SkjemaVisning vedtak={vistVedtak} />
 			<Footer className="vedtakskjema-visning__footer">
 				<div className="vedtakskjema-visning__aksjoner">
 					<Hovedknapp

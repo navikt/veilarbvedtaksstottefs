@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { hentMalformFraData } from '../../components/skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
-import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
 import Skjema from '../../components/skjema/skjema';
 import Page from '../page/page';
@@ -18,7 +17,7 @@ import { useSkjemaStore } from '../../stores/skjema-store';
 import { finnUtkastAlltid } from '../../utils';
 import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
 import './vedtakskjema-side.less';
-import { InnsatsgruppeType } from '../../rest/data/vedtak';
+import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;

@@ -1,4 +1,3 @@
-import { HovedmalType } from '../../components/skjema/hovedmal/hovedmal';
 import { OrNothing } from '../../utils/types/ornothing';
 
 type VedtakStatus = 'UTKAST' | 'SENDT';
@@ -11,6 +10,11 @@ export enum InnsatsgruppeType {
 	VARIG_TILPASSET_INNSATS = 'VARIG_TILPASSET_INNSATS'
 }
 
+export enum HovedmalType {
+	SKAFFE_ARBEID = 'SKAFFE_ARBEID',
+	BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
+}
+
 export interface VedtakData {
 	id: number;
 	hovedmal: OrNothing<HovedmalType>;
@@ -20,7 +24,7 @@ export interface VedtakData {
 	begrunnelse: OrNothing<string>;
 	gjeldende: boolean;
 	veilederIdent: string;
-	veilederNavn: string | null; // Skal egentlig alltid være string, men backend kan sende null siden det ikke er et kritisk felt
+	veilederNavn: string;
 	veilederEnhetId: string;
 	veilederEnhetNavn: string;
 	beslutterNavn: OrNothing<string>;

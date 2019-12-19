@@ -5,8 +5,8 @@ import { PrelanseringSjekk } from './components/sjekk/prelansering-sjekk';
 import { NasjonalTilgangSjekk } from './components/sjekk/nasjonal-tilgang-sjekk';
 import StoreProvider from './stores/store-provider';
 import { ModalController } from './components/modal-controller';
-import './app.less';
 import { UtkastSkjemaSync } from './components/utkast-skjema-sync';
+import './app.less';
 
 interface AppProps {
 	fnr: string;
