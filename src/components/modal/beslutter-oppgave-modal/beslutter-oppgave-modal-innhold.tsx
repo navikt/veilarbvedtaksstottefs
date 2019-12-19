@@ -6,7 +6,7 @@ import { useSkjemaStore } from '../../../stores/skjema-store';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Datepicker } from '../../datepicker/datepicker';
 import { formaterBeslutterOppgaveDato } from '../../../utils/date-utils';
-import { Label } from '../../label';
+import { Label } from '../../label/label';
 import { Seperator } from '../../seperator/seperator';
 import { DropdownOption, SearchDropdown } from '../../search-dropdown/search-dropdown';
 import { InnsatsgruppeType } from '../../../rest/data/vedtak';

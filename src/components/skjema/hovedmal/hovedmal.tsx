@@ -4,31 +4,11 @@ import { OrNothing } from '../../../utils/types/ornothing';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { EMDASH, swallowEnterKeyPress } from '../../../utils';
-import './hovedmal.less';
+import { swallowEnterKeyPress } from '../../../utils';
 import { lagSkjemaElementFeil } from '../skjema-utils';
-import { InnsatsgruppeType } from '../../../rest/data/vedtak';
-
-export enum HovedmalType {
-	SKAFFE_ARBEID = 'SKAFFE_ARBEID',
-	BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
-}
-
-export const getHovedmalNavn = (hovedmal: OrNothing<HovedmalType>) => {
-	const hovedmalobjekt = hovedmalliste.find(h => h.value === hovedmal);
-	return (hovedmalobjekt && hovedmalobjekt.label) || EMDASH;
-};
-
-const hovedmalliste = [
-	{
-		label: 'Skaffe arbeid',
-		value: HovedmalType.SKAFFE_ARBEID
-	},
-	{
-		label: 'Beholde arbeid',
-		value: HovedmalType.BEHOLDE_ARBEID
-	}
-];
+import { HovedmalType, InnsatsgruppeType } from '../../../rest/data/vedtak';
+import { alleHovedmal } from '../../../utils/hovedmal';
+import './hovedmal.less';
 
 function Hovedmal() {
 	const {innsatsgruppe, hovedmal, setHovedmal, errors} = useSkjemaStore();
@@ -60,7 +40,7 @@ interface HovedmalRadioButtonsProps {
 function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
 	return (
 		<div className="hovedmal">
-			{hovedmalliste.map((mal, idx) => (
+			{alleHovedmal.map((mal, idx) => (
 				<RadioPanel
 					name="hovedmal"
 					key={idx}
