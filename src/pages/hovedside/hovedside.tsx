@@ -51,8 +51,8 @@ function AlertStripeVedtakIArena(props: {
 }) {
 	if (props.visAlertrstripefeatureToggle && (!props.gjeldendeVedtak && props.tidligereVedtak.length === 0)) {
 		return (
-			<AlertStripeInfo className="blokk-xs">
-				Oppfølgingsvedtak utført i Arena kan ses i Gosys.
+			<AlertStripeInfo className="hovedside__alertstripe">
+				Oppfølgingsvedtak som er utført i Arena kan du se i Gosys
 			</AlertStripeInfo>
 		);
 	}
