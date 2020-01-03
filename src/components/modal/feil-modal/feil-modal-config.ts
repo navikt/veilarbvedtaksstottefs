@@ -50,8 +50,3 @@ export const feilVedSlettingAvUtkastConfig: FeilModalConfig = {
 	tittel: 'Klarte ikke å slette utkast',
 	beskrivelse: 'En feil oppstod under slettingen av utkastet. Vennligst prøv igjen senere.'
 };
-
-export const feilVedOpprettingAvBeslutterOppgave: FeilModalConfig = {
-	tittel: 'Problemer med å sende oppgave til beslutter',
-	beskrivelse: 'Det kan dessverre ikke sendes oppgave til beslutter for øyeblikket. Vennligst prøv igjen senere.',
-};

@@ -10,12 +10,15 @@ import { Label } from '../../label';
 import { Seperator } from '../../seperator/seperator';
 import { DropdownOption, SearchDropdown } from '../../search-dropdown/search-dropdown';
 import { InnsatsgruppeType } from '../../../rest/data/vedtak';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import Show from '../../show';
 
 interface BeslutterOppgaveModalInnholdProps {
 	veiledereData: VeiledereData;
 	onCancel: () => void;
 	onSubmit: (data: BeslutterOppgaveData) => void;
 	senderOppgave: boolean;
+	innsendingFeilet: boolean;
 }
 
 export interface BeslutterOppgaveData {
@@ -49,7 +52,7 @@ export enum Prioritet {
 
 export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnholdProps) {
 	const {innsatsgruppe} = useSkjemaStore();
-	const {veiledereData: {enhet, veilederListe}, onCancel, onSubmit, senderOppgave} = props;
+	const {veiledereData: {enhet, veilederListe}, onCancel, onSubmit, senderOppgave, innsendingFeilet} = props;
 
 	const [aktivFra, setAktivFra] = useState<Date>(new Date());
 	const [frist, setFrist] = useState<Date | undefined>();
@@ -82,6 +85,13 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 	return (
 		<form className="beslutter-oppgave-modal__innhold" onSubmit={handleOnSubmit}>
 			<div className="blokk-m">
+				<div className="blokk-m">
+					<Show if={innsendingFeilet}>
+						<AlertStripeFeil>
+							Problemer med å sende oppgave til beslutter for øyeblikket. Vennligst prøv igjen.
+						</AlertStripeFeil>
+					</Show>
+				</div>
 				<div className="beslutter-oppgave-modal__labels blokk-m">
 					<Label labelText="Tema" valueText="Oppfølging"/>
 					<Seperator/>
