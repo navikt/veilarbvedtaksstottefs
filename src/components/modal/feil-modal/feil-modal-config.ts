@@ -43,7 +43,7 @@ export const feilVedVisningConfig: FeilModalConfig = {
 
 export const feilVedLagringConfig: FeilModalConfig = {
 	tittel: 'Problemer med å lagre',
-	beskrivelse: 'Lagring feilet. Vennligst prøv igjen senere.'
+	beskrivelse: 'Feil oppstod under lagring. Vennligst prøv igjen senere.'
 };
 
 export const feilVedSlettingAvUtkastConfig: FeilModalConfig = {

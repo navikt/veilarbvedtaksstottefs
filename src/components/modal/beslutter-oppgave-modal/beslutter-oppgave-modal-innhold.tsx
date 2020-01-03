@@ -85,13 +85,13 @@ export function BeslutterOppgaveModalInnhold(props: BeslutterOppgaveModalInnhold
 	return (
 		<form className="beslutter-oppgave-modal__innhold" onSubmit={handleOnSubmit}>
 			<div className="blokk-m">
-				<div className="blokk-m">
-					<Show if={innsendingFeilet}>
+				<Show if={innsendingFeilet}>
+					<div className="blokk-m">
 						<AlertStripeFeil>
 							Problemer med å sende oppgave til beslutter for øyeblikket. Vennligst prøv igjen.
 						</AlertStripeFeil>
-					</Show>
-				</div>
+					</div>
+				</Show>
 				<div className="beslutter-oppgave-modal__labels blokk-m">
 					<Label labelText="Tema" valueText="Oppfølging"/>
 					<Seperator/>
