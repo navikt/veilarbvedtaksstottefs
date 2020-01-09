@@ -8,7 +8,13 @@ interface PageProps {
 }
 
 const Page = (props: PageProps) => {
-	return <div className={cls('page', props.className)}>{props.children}</div>;
+	return (
+		<div className={cls('page', props.className)}>
+			<div className="page__content">
+				{props.children}
+			</div>
+		</div>
+	);
 };
 
 export default Page;

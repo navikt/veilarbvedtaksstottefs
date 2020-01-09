@@ -19,7 +19,7 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	}
 
 	return (
-		<Page>
+		<Page className="vedtakskjema-visning page--white">
 			<SkjemaVisning vedtak={vistVedtak} />
 			<Footer className="vedtakskjema-visning__footer">
 				<div className="vedtakskjema-visning__aksjoner">
