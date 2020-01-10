@@ -3,7 +3,11 @@
 
 	.page {
 		min-height: 100%;
-		padding: 2rem 0 6rem;
+		padding: 2rem 1rem 6rem 1rem;
+
+		@media (min-width: 632px) {
+			padding: 2rem 0 6rem;
+		}
 
 		&--grey {
 			background-color: #f4f4f4;
