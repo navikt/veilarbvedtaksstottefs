@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6c9ee1817d697db15c447cf34d629d4f",
+    "revision": "4e171023e2fb4482de4c9349efb1eead",
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
