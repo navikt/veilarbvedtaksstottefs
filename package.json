@@ -6,12 +6,11 @@
   "scripts": {
     "start": "REACT_APP_DEV=true craco start",
     "build": "craco build",
+    "build:mock": "REACT_APP_DEV=true craco build",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "test": "echo \"Tests not yet implemented\"",
-    "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "heroku-serve": "node heroku-server.js",
-    "heroku-postbuild": "REACT_APP_DEV=true craco build"
+    "prettier": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -97,7 +96,6 @@
     "@types/react-dom": "^16.9.4",
     "@types/react-modal": "^3.10.0",
     "@types/react-select": "^3.0.8",
-    "express": "^4.17.1",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
