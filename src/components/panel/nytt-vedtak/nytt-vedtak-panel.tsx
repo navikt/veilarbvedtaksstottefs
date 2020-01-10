@@ -44,7 +44,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData> }) {
 			<HovedsidePanel className="nytt-vedtak-panel">
 				<img src={nyttVedtakBilde} alt="" className="nytt-vedtak-panel__bilde"/>
 				<Undertittel tag="h1" className="nytt-vedtak-panel__tittel">Lag nytt vedtak</Undertittel>
-				<Normaltekst>Opprett nytt oppfølgingsvedtak for denne brukeren</Normaltekst>
+				<Normaltekst>Opprett nytt oppfølgingsvedtak for denne brukeren.</Normaltekst>
 			</HovedsidePanel>
 		</button>
 	);
