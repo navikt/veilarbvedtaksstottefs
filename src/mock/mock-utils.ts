@@ -1,6 +1,6 @@
 import FetchMock, { HandlerArgument, HttpMethod, ResponseData } from 'yet-another-fetch-mock';
 import env from '../utils/environment';
-import { vedtaksbrevUrlHeroku, vedtaksBrevUrlLokal } from './konstanter';
+import { vedtaksbrevUrlGhPages, vedtaksBrevUrlLokal } from './konstanter';
 
 export interface Mock {
 	method: HttpMethod,
@@ -26,5 +26,5 @@ export function addToFetchMock(mock: Mock, fetchMock: FetchMock) {
 }
 
 export function getMockVedtaksbrevUrl() {
-	return env.isRunningOnHeroku ? vedtaksbrevUrlHeroku : vedtaksBrevUrlLokal;
+	return env.isRunningOnGhPages ? vedtaksbrevUrlGhPages : vedtaksBrevUrlLokal;
 }
