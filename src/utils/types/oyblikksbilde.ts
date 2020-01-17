@@ -1,6 +1,6 @@
-import KildeType from './kilde-type';
+import OyblikksbildeType from './oyblikksbilde-type';
 
 export interface Oyblikksbilde {
-	kildeType: KildeType;
+	oyblikksbildeType: OyblikksbildeType;
 	json: string;
 }

@@ -20,7 +20,7 @@ export function ViewController() {
 			return <Forhandsvisning />;
 		case ViewType.VEDTAK:
 			return <VedtakskjemaVisningSide vedtakId={vedtakId} />;
-		case ViewType.VEDLEGG:
+		case ViewType.OYBLIKKSBILDE_VISNING:
 			return <OyblikksbildeVisning vedtakId={vedtakId} />;
 		case ViewType.VEDTAK_PDF:
 			return <VedtaksbrevVisning vedtakId={vedtakId} />;

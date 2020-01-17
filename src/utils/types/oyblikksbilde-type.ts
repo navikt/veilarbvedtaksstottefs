@@ -1,7 +1,7 @@
-enum KildeType {
+enum OyblikksbildeType {
 	CV_OG_JOBBPROFIL = 'CV_OG_JOBBPROFIL',
 	REGISTRERINGSINFO = 'REGISTRERINGSINFO',
 	EGENVURDERING = 'EGENVURDERING'
 }
 
-export default KildeType;
+export default OyblikksbildeType;

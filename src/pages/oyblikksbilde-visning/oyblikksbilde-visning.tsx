@@ -6,7 +6,7 @@ import Card from '../../components/card/card';
 import { OrNothing } from '../../utils/types/ornothing';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import Page from '../page/page';
-import KildeType from '../../utils/types/kilde-type';
+import OyblikksbildeType from '../../utils/types/oyblikksbilde-type';
 import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -18,8 +18,8 @@ import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
 import './oyblikksbilde-visning.less';
 
-function finnOyblikksbilde(kildeType: KildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
-	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.kildeType === kildeType) : null;
+function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
+	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.oyblikksbildeType === oyblikksbildeType) : null;
 	return oyblikksbilde ? oyblikksbilde.json : null;
 }
 
@@ -43,20 +43,20 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 	}
 
 	return (
-		<Page className="oyblikksbilde-visning">
+		<Page className="oyblikksbilde-visning page--grey">
 			<section className="vedlegg">
 				<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
 				<VedleggCard
 					tittel="CV og Jobbprofil"
-					json={finnOyblikksbilde(KildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)}
+					json={finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)}
 				/>
 				<VedleggCard
 					tittel="Registrering"
-					json={finnOyblikksbilde(KildeType.REGISTRERINGSINFO, oyblikksbilder.data)}
+					json={finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, oyblikksbilder.data)}
 				/>
 				<VedleggCard
 					tittel="Egenvurdering"
-					json={finnOyblikksbilde(KildeType.EGENVURDERING, oyblikksbilder.data)}
+					json={finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, oyblikksbilder.data)}
 				/>
 			</section>
 			<Footer className="oyblikksbilde-visning__footer">

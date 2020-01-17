@@ -66,7 +66,7 @@ export function SkjemaVisning(props: { vedtak: VedtakData }) {
 
 			<button
 				className="skjema-visning__oyblikksbilde-lenke"
-				onClick={() => changeView(ViewType.VEDLEGG, { vedtakId: id })}
+				onClick={() => changeView(ViewType.OYBLIKKSBILDE_VISNING, { vedtakId: id })}
 			>
 				Brukerinformasjon på vedtakstidspunktet
 			</button>
