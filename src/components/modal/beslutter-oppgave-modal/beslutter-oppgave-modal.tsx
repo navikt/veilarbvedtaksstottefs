@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ModalProps } from '../modal-props';
-import { ModalType, useModalStore } from '../../../stores/modal-store';
+import { useModalStore } from '../../../stores/modal-store';
 import ModalWrapper from 'nav-frontend-modal';
 import { Undertittel } from 'nav-frontend-typografi';
 import { fetchWithInfo, hasData, hasFailed, isNotStartedOrPending } from '../../../rest/utils';
@@ -20,11 +20,16 @@ import './beslutter-oppgave-modal.less';
 
 export function BeslutterOppgaveModal(props: ModalProps) {
 	const {vedtak} = useFetchStore();
-	const {hideModal, showModal} = useModalStore();
+	const {hideModal} = useModalStore();
 	const {changeView} = useViewStore();
 	const {fnr, enhetId} = useAppStore();
+	const onClose = () => {
+		hideModal();
+		setInnsendingFeilet(false);
+	};
 
 	const [senderOppgave, setSenderOppgave] = useState();
+	const [innsendingFeilet, setInnsendingFeilet] = useState();
 	const veiledere = useFetch<VeiledereData>(lagHentVeiledereFetchInfo);
 
 	useEffect(() => {
@@ -46,7 +51,7 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 			})
 			.catch(() => {
 				setSenderOppgave(false);
-				showModal(ModalType.FEIL_VED_OPPRETTING_AV_BESLUTTER_OPPGAVE);
+				setInnsendingFeilet(true);
 			});
 	}
 
@@ -54,7 +59,7 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 		<ModalWrapper
 			isOpen={props.isOpen}
 			contentLabel="Send Gosys-oppgave til beslutter"
-			onRequestClose={hideModal}
+			onRequestClose={onClose}
 			closeButton={true}
 			portalClassName="beslutter-oppgave-modal"
 			shouldCloseOnOverlayClick={true}
@@ -74,8 +79,9 @@ export function BeslutterOppgaveModal(props: ModalProps) {
 				<BeslutterOppgaveModalInnhold
 					veiledereData={veiledere.data}
 					onSubmit={handleSubmit}
-					onCancel={hideModal}
+					onCancel={onClose}
 					senderOppgave={senderOppgave}
+					innsendingFeilet={innsendingFeilet}
 				/>
 			</Show>
 		</ModalWrapper>

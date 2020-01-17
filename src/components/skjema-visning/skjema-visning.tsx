@@ -59,14 +59,14 @@ export function SkjemaVisning(props: { vedtak: VedtakData }) {
 			</div>
 
 			<Element tag="span" className="skjema-visning__label blokk-xxs">Begrunnelse</Element>
-			<Normaltekst className="text--grey blokk-m">{begrunnelse}</Normaltekst>
+			<Normaltekst className="text--grey skjema-visning__begrunnelse">{begrunnelse}</Normaltekst>
 
 			<Element tag="span" className="skjema-visning__label blokk-xxs">Kilder</Element>
 			<ul className="skjema-visning__opplysninger">{opplysninger.map((o, idx) => (<li key={idx}>{o}</li>))}</ul>
 
 			<button
 				className="skjema-visning__oyblikksbilde-lenke"
-				onClick={() => changeView(ViewType.VEDLEGG, { vedtakId: id })}
+				onClick={() => changeView(ViewType.OYBLIKKSBILDE_VISNING, { vedtakId: id })}
 			>
 				Brukerinformasjon på vedtakstidspunktet
 			</button>

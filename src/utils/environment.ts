@@ -7,8 +7,8 @@ class Environment {
 		return process.env.REACT_APP_DEV === 'true';
 	}
 
-	get isRunningOnHeroku() {
-		return window.location.hostname.endsWith('herokuapp.com');
+	get isRunningOnGhPages() {
+		return window.location.hostname === 'navikt.github.io';
 	}
 }
 
