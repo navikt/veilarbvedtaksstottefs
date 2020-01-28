@@ -17,6 +17,7 @@ import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
 import './oyblikksbilde-visning.less';
+import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } from './oyblikksbilde-fikser';
 
 function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
 	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.oyblikksbildeType === oyblikksbildeType) : null;
@@ -42,21 +43,33 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 
+	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
+		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)
+	);
+
+	const registreringsinfoJson = fiksRegistreringsinfoJson(
+		finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, oyblikksbilder.data)
+	);
+
+	const egenvurderingJson = fiksEgenvurderingJson(
+		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, oyblikksbilder.data)
+	);
+
 	return (
 		<Page className="oyblikksbilde-visning page--grey">
 			<section className="vedlegg">
 				<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
 				<VedleggCard
 					tittel="CV og Jobbprofil"
-					json={finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)}
+					json={cvOgJobbprofileJson}
 				/>
 				<VedleggCard
 					tittel="Registrering"
-					json={finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, oyblikksbilder.data)}
+					json={registreringsinfoJson}
 				/>
 				<VedleggCard
 					tittel="Egenvurdering"
-					json={finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, oyblikksbilder.data)}
+					json={egenvurderingJson}
 				/>
 			</section>
 			<Footer className="oyblikksbilde-visning__footer">
@@ -70,7 +83,7 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 	);
 }
 
-function VedleggCard({ tittel, json }: { tittel: string; json: string | null }) {
+function VedleggCard({ tittel, json }: { tittel: string; json: string | object | null }) {
 	return (
 		<Card className="vedlegg-card">
 			<Systemtittel tag="h2" className="vedlegg-card__header">
