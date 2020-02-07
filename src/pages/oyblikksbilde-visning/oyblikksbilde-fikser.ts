@@ -19,7 +19,7 @@ export function fiksRegistreringsinfoJson(json: string | null): object | null {
 
 	removeNullValues(regInfo);
 	formatDates(regInfo);
-	fjernSporsmalId(regInfo);
+	fjernRegistreringSporsmalId(regInfo);
 	translateKeysToNorwegian(regInfo);
 
 	return regInfo;
@@ -33,6 +33,7 @@ export function fiksEgenvurderingJson(json: string | null): object | null {
 	const egenvurdering = JSON.parse(json);
 
 	removeNullValues(egenvurdering);
+	cleanEgenvurderingSporsmal(egenvurdering);
 	formatDates(egenvurdering);
 	translateKeysToNorwegian(egenvurdering);
 
@@ -63,9 +64,20 @@ function formatDates(obj: any): void {
 	});
 }
 
-function fjernSporsmalId(obj: any) {
+function fjernRegistreringSporsmalId(obj: any) {
 	deepForEach(obj, (parent, key) => {
 		if (key === 'sporsmalId') {
+			delete parent[key];
+		}
+	})
+}
+
+function cleanEgenvurderingSporsmal(obj: any) {
+	deepForEach(obj, (parent, key) => {
+		if (key === 'spmId' || key === 'besvarelseId' || key === 'dato') {
+			delete parent[key];
+		} else if (key === 'spm') {
+			parent.sporsmal = parent[key];
 			delete parent[key];
 		}
 	})
