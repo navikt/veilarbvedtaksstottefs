@@ -6,8 +6,6 @@ import { OrNothing } from '../../../utils/types/ornothing';
 import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import fullfortVedtakIcon from './fullfort.svg';
-import { Normaltekst } from 'nav-frontend-typografi';
-import ingenVedtakBilde from './ingen-vedtak.svg';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { useViewStore, ViewType } from '../../../stores/view-store';
@@ -18,17 +16,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 	const { oppfolgingData } = useFetchStore();
 	const { changeView } = useViewStore();
 
-	if (!oppfolgingData.data.underOppfolging) {
-		return (
-			<VedtaksstottePanel
-				tittel="Gjeldende oppfølgingsvedtak"
-				undertittel="Ingen gjeldende oppfølgingsvedtak"
-				imgSrc={ingenVedtakBilde}
-				panelKlasse="ikke-under-oppfolging-panel"
-				tekstKomponent={<Normaltekst>Denne brukeren er ikke under oppfølging.</Normaltekst>}
-			/>
-		);
-	} else if (!props.gjeldendeVedtak) {
+	if (!props.gjeldendeVedtak) {
 		return null;
 	}
 
