@@ -7,13 +7,11 @@ import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import fullfortVedtakIcon from './fullfort.svg';
 import { frontendlogger } from '../../../utils/frontend-logger';
-import { useFetchStore } from '../../../stores/fetch-store';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import './gjeldende-vedtak-panel.less';
 import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
-	const { oppfolgingData } = useFetchStore();
 	const { changeView } = useViewStore();
 
 	if (!props.gjeldendeVedtak) {
