@@ -25,22 +25,22 @@ export function Hovedside() {
 		<Page>
 			<AlertStripeVedtakIArena />
 			<div className="hovedside">
-			<div className="hovedside__vedtak-paneler">
-				<Show if={!underOppfolging}>
+				<div className="hovedside__vedtak-paneler">
+					<Show if={!underOppfolging}>
 						<IngenGjeldendeVedtakPanel />
-				</Show>
-				<Show if={underOppfolging}>
-					<UtkastPanel utkast={utkast} />
-					<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak} />
-					<NyttVedtakPanel utkast={utkast} />
-				</Show>
-			</div>
-			<div className="hovedside__tidligere-vedtak-panel">
+					</Show>
+					<Show if={underOppfolging}>
+						<UtkastPanel utkast={utkast} />
+						<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak} />
+						<NyttVedtakPanel utkast={utkast} />
+					</Show>
+				</div>
+				<div className="hovedside__tidligere-vedtak-panel">
 						{harTidligereVedtak
 							? <TidligereVedtak vedtakHistorikk={tidligereVedtak} />
 							: <IngenTidligereVedtakPanel />
 						}
-					</div>
+				</div>
 			</div>
 		</Page>
 	);
