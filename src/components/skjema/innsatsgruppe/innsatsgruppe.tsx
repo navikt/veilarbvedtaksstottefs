@@ -1,7 +1,7 @@
 import React from 'react';
 import cls from 'classnames';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { lagSkjemaElementFeil, trengerBeslutter } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
@@ -18,12 +18,10 @@ function Innsatsgruppe() {
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
 			{trengerVedtakBeslutter && (
-				<AlertStripeAdvarsel className="innsatsgruppe-advarsel">
-					<span className="innsatsgruppe-advarsel__tekst">
-						Ved <i>delvis varig tilpasset innsats</i> og <i>varig tilpasset innsats</i> må
-						arbeidsevnevurderingen godkjennes av beslutter etter gjeldende rutine.
-					</span>
-				</AlertStripeAdvarsel>
+				<AlertStripeInfo className="innsatsgruppe-info">
+					Vurderingen skal sendes til beslutter når du vurderer at brukeren enten har liten mulighettil å jobbe eller har mulighet til å jobbe delvis.
+					Når du går videre får du sendt til beslutter.
+				</AlertStripeInfo>
 			)}
 			<SkjemaGruppe feil={lagSkjemaElementFeil(errors.innsatsgruppe)}>
 				<InnsatsgruppeRadioButtons
