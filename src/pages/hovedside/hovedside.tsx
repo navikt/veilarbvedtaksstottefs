@@ -11,10 +11,10 @@ import { IngenTidligereVedtakPanel } from '../../components/panel/ingen-tidliger
 import { Knapp } from 'nav-frontend-knapper';
 import './hovedside.less';
 import { IngenGjeldendeVedtakPanel } from '../../components/panel/ingen-gjeldende-vedtak/ingen-gjeldende-vedtak';
+import Show from '../../components/show';
 
 export function Hovedside() {
-	const { vedtak } = useFetchStore();
-	const { oppfolgingData } = useFetchStore();
+	const { vedtak, oppfolgingData } = useFetchStore();
 	const underOppfolging = oppfolgingData.data.underOppfolging;
 	const gjeldendeVedtak = vedtak.data.find((v: VedtakData) => v.gjeldende);
 	const tidligereVedtak = vedtak.data.filter((v: VedtakData) => !v.gjeldende && v.vedtakStatus === 'SENDT');
@@ -25,18 +25,17 @@ export function Hovedside() {
 		<Page>
 			<AlertStripeVedtakIArena />
 			<div className="hovedside">
-				{!underOppfolging ?
-					<div className="hovedside__vedtak-paneler">
+			<div className="hovedside__vedtak-paneler">
+				<Show if={!underOppfolging}>
 						<IngenGjeldendeVedtakPanel />
-					</div>
-				:
-					<div className="hovedside__vedtak-paneler">
-						<UtkastPanel utkast={utkast} />
-						<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak} />
-						<NyttVedtakPanel utkast={utkast} />
-					</div>
-				}
-					<div className="hovedside__tidligere-vedtak-panel">
+				</Show>
+				<Show if={underOppfolging}>
+					<UtkastPanel utkast={utkast} />
+					<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak} />
+					<NyttVedtakPanel utkast={utkast} />
+				</Show>
+			</div>
+			<div className="hovedside__tidligere-vedtak-panel">
 						{harTidligereVedtak
 							? <TidligereVedtak vedtakHistorikk={tidligereVedtak} />
 							: <IngenTidligereVedtakPanel />

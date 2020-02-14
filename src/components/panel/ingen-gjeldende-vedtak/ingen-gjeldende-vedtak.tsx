@@ -9,7 +9,7 @@ export function IngenGjeldendeVedtakPanel() {
         <HovedsidePanel className="ingen-gjeldende-vedtak-panel">
             <img src={ingenGjeldendeVedtakBilde} alt="" className="ingen-gjeldende-vedtak-panel__bilde"/>
             <Undertittel tag="h1" className="ingen-gjeldende-vedtak-panel__tittel">Ingen gjeldende oppfølgingsvedtak</Undertittel>
-            <Normaltekst>Denne bruker er ikke under oppfolging.</Normaltekst>
+            <Normaltekst>Denne brukeren er ikke under oppfølging.</Normaltekst>
         </HovedsidePanel>
     );
 }
