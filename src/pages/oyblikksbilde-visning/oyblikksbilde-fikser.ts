@@ -65,9 +65,16 @@ function sorterSporsmalOgSvar(obj: any): void {
 }
 
 function formatDates(obj: any): void {
+	const yearMonthDayRegex = new RegExp('^\\d{4}-\\d{2}-\\d{2}$');
+	const yearMonthRegex = new RegExp('^\\d{4}-\\d{2}$');
+
 	deepForEach(obj, (parent, key, value) => {
 		if (typeof value === 'string') {
-			if (dayjs(value).isValid()) {
+			if (value.match(yearMonthDayRegex)) {
+				parent[key] = dayjs(value).format('DD. MMMM YYYY');
+			} else if (value.match(yearMonthRegex)) {
+				parent[key] = dayjs(value).format('MMMM YYYY');
+			} else if (dayjs(value).isValid()) {
 				parent[key] = dayjs(value).format('DD. MMM YYYY kl. HH:mm');
 			}
 		}
