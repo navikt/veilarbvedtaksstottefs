@@ -19,25 +19,10 @@ export function fiksRegistreringsinfoJson(json: string | null): object | null {
 
 	removeNullValues(regInfo);
 	formatDates(regInfo);
-	fjernRegistreringSporsmalId(regInfo);
 	translateKeysToNorwegian(regInfo);
+	sorterSporsmalOgSvar(regInfo);
 
 	return regInfo;
-}
-
-export function fiksEgenvurderingJson(json: string | null): object | null {
-	if (json == null) {
-		return null;
-	}
-
-	const egenvurdering = JSON.parse(json);
-
-	removeNullValues(egenvurdering);
-	cleanEgenvurderingSporsmal(egenvurdering);
-	formatDates(egenvurdering);
-	translateKeysToNorwegian(egenvurdering);
-
-	return egenvurdering;
 }
 
 export function fiksCvOgJobbprofil(json: string | null): object | null {
@@ -54,6 +39,31 @@ export function fiksCvOgJobbprofil(json: string | null): object | null {
 	return cvOgJobbprofil;
 }
 
+export function fiksEgenvurderingJson(json: string | null): object | null {
+	if (json == null) {
+		return null;
+	}
+
+	const egenvurdering = JSON.parse(json);
+
+	removeNullValues(egenvurdering);
+	cleanEgenvurderingSporsmal(egenvurdering);
+	formatDates(egenvurdering);
+	translateKeysToNorwegian(egenvurdering);
+	sorterSporsmalOgSvar(egenvurdering);
+
+	return egenvurdering;
+}
+
+function sorterSporsmalOgSvar(obj: any): void {
+	deepForEach(obj, (parent, key, value) => {
+		if (typeof value === 'object' && value.svar != null && value.spørsmål != null) {
+			// Dette fjerner også alle verdier bortsett fra 'spørsmål' og 'svar'
+			parent[key] = { spørsmål: value.spørsmål, svar: value.svar };
+		}
+	});
+}
+
 function formatDates(obj: any): void {
 	deepForEach(obj, (parent, key, value) => {
 		if (typeof value === 'string') {
@@ -62,14 +72,6 @@ function formatDates(obj: any): void {
 			}
 		}
 	});
-}
-
-function fjernRegistreringSporsmalId(obj: any) {
-	deepForEach(obj, (parent, key) => {
-		if (key === 'sporsmalId') {
-			delete parent[key];
-		}
-	})
 }
 
 function cleanEgenvurderingSporsmal(obj: any) {
