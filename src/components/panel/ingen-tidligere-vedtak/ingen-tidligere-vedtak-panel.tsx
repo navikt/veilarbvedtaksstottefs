@@ -9,7 +9,7 @@ export function IngenTidligereVedtakPanel() {
 		<HovedsidePanel className="ingen-tidligere-vedtak-panel">
 			<img src={ingenVedtakBilde} alt="" className="ingen-tidligere-vedtak-panel__bilde"/>
 			<Undertittel tag="h1" className="ingen-tidligere-vedtak-panel__tittel">Ingen tidligere vedtak</Undertittel>
-			<Normaltekst>Vedtak utført i Arena vises ikke her, men kan sees i Gosys.</Normaltekst>
+			<Normaltekst>Vedtak laget i Arena blir ikke overført til Modia.</Normaltekst>
 		</HovedsidePanel>
 	);
 }

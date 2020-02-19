@@ -45,7 +45,7 @@ function Begrunnelse() {
 						id="begrunnelse-scroll-to"
 						value={begrunnelse || ''}
 						label=""
-						placeholder="Skriv inn begrunnelse eller arbeidsevnevurdering"
+						placeholder="Skriv inn din begrunnelse/arbeidsevnevurdering her"
 						maxLength={BEGRUNNELSE_MAX_LENGTH}
 						onChange={onBegrunnelseChanged}
 						aria-labelledby="begrunnelse-tittel"

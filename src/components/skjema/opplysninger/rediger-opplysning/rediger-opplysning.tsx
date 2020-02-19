@@ -26,6 +26,7 @@ export function RedigerOpplysning(props: OpplysningProps) {
 			<Textarea
 				label=""
 				value={tekst}
+				placeholder="Legg til kilde og dato"
 				maxLength={OPPLYSNING_MAX_LENGTH}
 				onChange={(e: any) => {
 					let nyOpplysning = e.target.value;
