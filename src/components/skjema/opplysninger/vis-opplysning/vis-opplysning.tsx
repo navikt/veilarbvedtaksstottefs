@@ -15,7 +15,7 @@ interface VisOpplysningProps {
 
 export function VisOpplysning(props: VisOpplysningProps) {
 	const { navn, erValgt } = props.opplysning;
-	const kanRedigeres = !erDefaultOpplysning(navn);
+	const kanRedigeres = !erDefaultOpplysning(navn) && !props.disabled;
 
 	return (
 		<div className="vis-opplysning">

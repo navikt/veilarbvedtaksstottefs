@@ -16,7 +16,7 @@ export function LeggTilOpplysning(props: LeggTilOpplysningProps) {
 			aria-describedby="legg-til-kilde-tekst"
 			disabled={props.disabled}
 		>
-			<img src={leggTilIkon} alt="" className="legg-til-kilde__ikon" />
+			<div className="legg-til-kilde__ikon" />
 			<Normaltekst id="legg-til-kilde-tekst" tag="span" className="legg-til-kilde__tekst">
 				Legg til andre kilder
 			</Normaltekst>
