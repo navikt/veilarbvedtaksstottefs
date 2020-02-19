@@ -12,7 +12,7 @@ export const BEGRUNNELSE_MAX_LENGTH = 4000;
 const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
 
 function Begrunnelse() {
-	const {begrunnelse, setBegrunnelse, errors, innsatsgruppe} = useSkjemaStore();
+	const {begrunnelse, setBegrunnelse, errors, innsatsgruppe, isReadOnly} = useSkjemaStore();
 	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 
 	function onBegrunnelseChanged(e: any) {
@@ -51,6 +51,7 @@ function Begrunnelse() {
 						aria-labelledby="begrunnelse-tittel"
 						aria-describedby="begrunnelse-tips"
 						autoCorrect="on"
+						disabled={isReadOnly}
 					/>
 					<span id="begrunnelse-tips" style={{display: 'none'}}>
 						Begrunnelse for vedtak/arbeidsevnevurdering, tips ved siden av

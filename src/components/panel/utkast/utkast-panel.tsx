@@ -53,7 +53,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 						enhetId={veilederEnhetId}
 						veilederNavn={veilederNavn || veilederIdent}
 						enhetNavn={veilederEnhetNavn}
-						text="Endret av"
+						text="Ansvarlig"
 					/>
 				</>
 			}

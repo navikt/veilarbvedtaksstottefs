@@ -1,10 +1,9 @@
 import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
 import { VedtakData } from '../rest/data/vedtak';
-import { innloggetVeileder } from './api-data/innlogget-veileder';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
 import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-modal/beslutter-oppgave-modal-innhold';
-import veiledere from './api-data/veiledere';
+import { innloggetVeileder, veiledere } from './api-data/veiledere';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { finnUtkast } from '../utils';
 import historisk from './api-data/vedtak/tidligere-vedtak';
@@ -113,6 +112,24 @@ export const mockSendVedtak: Mock = {
 		utkastTilUtsending.dokumentInfoId = '123';
 		utkastTilUtsending.journalpostId = '456';
 		utkastTilUtsending.beslutterNavn = sendVedtakData.beslutterNavn || utkastTilUtsending.beslutterNavn;
+
+		return { status: 204 };
+	}
+};
+
+export const mockOvertaUtkast: Mock = {
+	method: 'POST',
+	url: '/veilarbvedtaksstotte/api/:fnr/utkast/overta',
+	handler: async (args: HandlerArgument): Promise<ResponseData> => {
+
+		const gjeldendeUtkast = finnUtkast(vedtak);
+
+		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
+
+		gjeldendeUtkast.veilederNavn = innloggetVeileder.navn;
+		gjeldendeUtkast.veilederIdent = innloggetVeileder.ident;
+		gjeldendeUtkast.veilederEnhetNavn = innloggetVeileder.enhetNavn;
+		gjeldendeUtkast.veilederEnhetId = innloggetVeileder.enhetId;
 
 		return { status: 204 };
 	}

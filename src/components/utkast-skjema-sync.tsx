@@ -1,27 +1,38 @@
 import { useFetchStore } from '../stores/fetch-store';
 import { useEffect } from 'react';
-import { FetchStatus, hasData } from '../rest/utils';
+import { hasFinishedWithData } from '../rest/utils';
 import { useSkjemaStore } from '../stores/skjema-store';
 import { mapOpplysningerFraForskjelligMalformTilBokmal } from './skjema/skjema-utils';
 import { finnUtkast } from '../utils';
 
 export function UtkastSkjemaSync() {
-	const { initSkjema } = useSkjemaStore();
-	const { vedtak } = useFetchStore();
+    const {initSkjema, setReadOnly} = useSkjemaStore();
+    const {vedtak, innloggetVeileder} = useFetchStore();
 
-	useEffect(() => {
-		if (vedtak.status === FetchStatus.FINISHED && hasData(vedtak)) {
-			const utkast = finnUtkast(vedtak.data);
+    useEffect(() => {
+        if (hasFinishedWithData(vedtak)) {
+            const utkast = finnUtkast(vedtak.data);
 
-			if (!utkast) return;
+            if (!utkast) {
+                return;
+            }
 
-			const mappetOpplysninger = mapOpplysningerFraForskjelligMalformTilBokmal(utkast.opplysninger);
-			const utkastKopi = { ...utkast, opplysninger: mappetOpplysninger };
+            const mappetOpplysninger = mapOpplysningerFraForskjelligMalformTilBokmal(utkast.opplysninger);
+            const utkastKopi = {...utkast, opplysninger: mappetOpplysninger};
 
-			initSkjema(utkastKopi);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [vedtak.status]);
+            initSkjema(utkastKopi);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vedtak.status]);
 
-	return null;
+    useEffect(() => {
+        if (hasFinishedWithData(vedtak) && hasFinishedWithData(innloggetVeileder)) {
+            const utkast = finnUtkast(vedtak.data);
+            if (utkast) {
+                setReadOnly(utkast.veilederIdent !== innloggetVeileder.data.ident);
+            }
+        }
+    }, [vedtak.status, innloggetVeileder.status]);
+
+    return null;
 }

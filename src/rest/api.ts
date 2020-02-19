@@ -60,6 +60,10 @@ export const lagHentVeiledereFetchInfo = (params: EnhetIdFetchParams): FetchInfo
 	url: `${VEILARBVEILEDER_API}/enhet/${params.enhetId}/veiledere`
 });
 
+export const lagHentVeilederFetchInfo = (): FetchInfo => ({
+	url: `${VEILARBVEILEDER_API}/veileder/me`
+});
+
 export const lagNyttVedtakUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast`,
 	method: 'POST'
@@ -96,6 +100,11 @@ export const lagOpprettBeslutterOppgaveFetchInfo = (params: OpprettBeslutterOppg
 export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast`,
 	method: 'DELETE'
+});
+
+export const lagTaOverUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast/overta`,
+	method: 'POST'
 });
 
 export const lagHentOyblikksbildeFetchInfo = (params: HentOyblikksbildeFetchParams): FetchInfo => ({

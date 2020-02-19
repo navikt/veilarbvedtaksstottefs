@@ -1,6 +1,6 @@
 import { HovedmalType, InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
 import { JSONArray } from 'yet-another-fetch-mock';
-import { innloggetVeileder } from '../innlogget-veileder';
+import { ansvarligVeileder } from '../veiledere';
 
 const historisk: VedtakData[] & JSONArray = [
 	{
@@ -20,10 +20,10 @@ const historisk: VedtakData[] & JSONArray = [
 			'Svarene dine om behov for veiledning'
 		],
 		gjeldende: false,
-		veilederNavn: innloggetVeileder.navn,
-		veilederIdent: innloggetVeileder.ident,
-		veilederEnhetId: innloggetVeileder.enhetId,
-		veilederEnhetNavn: innloggetVeileder.enhetNavn,
+		veilederNavn: ansvarligVeileder.navn,
+		veilederIdent: ansvarligVeileder.ident,
+		veilederEnhetId: ansvarligVeileder.enhetId,
+		veilederEnhetNavn: ansvarligVeileder.enhetNavn,
 		dokumentInfoId: null,
 		journalpostId: '123456',
 		beslutterNavn: 'Beslutter Besluttersen',
@@ -45,10 +45,10 @@ const historisk: VedtakData[] & JSONArray = [
 			'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' +
 			' Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 		gjeldende: false,
-		veilederNavn: innloggetVeileder.navn,
-		veilederIdent: innloggetVeileder.ident,
-		veilederEnhetId: innloggetVeileder.enhetId,
-		veilederEnhetNavn: innloggetVeileder.enhetNavn,
+		veilederNavn: ansvarligVeileder.navn,
+		veilederIdent: ansvarligVeileder.ident,
+		veilederEnhetId: ansvarligVeileder.enhetId,
+		veilederEnhetNavn: ansvarligVeileder.enhetNavn,
 		beslutterNavn: null,
 		dokumentInfoId: '98765',
 		journalpostId: '5678',

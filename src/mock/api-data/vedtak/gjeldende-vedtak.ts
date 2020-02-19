@@ -1,7 +1,7 @@
 
 import { HovedmalType, InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
-import { innloggetVeileder } from '../innlogget-veileder';
+import { ansvarligVeileder } from '../veiledere';
 
 const gjeldendeVedtak: VedtakData & JSONObject = {
 	id: 1000,
@@ -13,10 +13,10 @@ const gjeldendeVedtak: VedtakData & JSONObject = {
 		'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
 	gjeldende: true,
 	opplysninger: [],
-	veilederNavn: innloggetVeileder.navn,
-	veilederIdent: innloggetVeileder.ident,
-	veilederEnhetId: innloggetVeileder.enhetId,
-	veilederEnhetNavn: innloggetVeileder.enhetNavn,
+	veilederNavn: ansvarligVeileder.navn,
+	veilederIdent: ansvarligVeileder.ident,
+	veilederEnhetId: ansvarligVeileder.enhetId,
+	veilederEnhetNavn: ansvarligVeileder.enhetNavn,
 	beslutterNavn: null,
 	dokumentInfoId: null,
 	journalpostId: null,

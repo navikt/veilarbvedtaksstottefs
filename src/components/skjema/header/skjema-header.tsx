@@ -33,7 +33,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 		bilde = utkastBilde;
 		className = 'skjema-header--utkast';
 		datoTekst = 'Sist endret';
-		veilederTekst = 'Endret av';
+		veilederTekst = 'Ansvarlig';
 	} else {
 		datoTekst = 'Fattet';
 		veilederTekst = 'Fattet av';

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { hentMalformFraData } from '../../components/skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
-import Aksjoner from '../../components/skjema/aksjoner/aksjoner';
+import UtkastAksjoner from '../../components/skjema/aksjoner/utkast-aksjoner';
 import Skjema from '../../components/skjema/skjema';
 import Page from '../page/page';
 import Card from '../../components/card/card';
@@ -79,7 +79,7 @@ export function VedtakskjemaSide() {
 				<Skjema />
 			</Card>
 			<Footer className="vedtakskjema__footer">
-				<Aksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
+				<UtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
 			</Footer>
 		</Page>
 	);
