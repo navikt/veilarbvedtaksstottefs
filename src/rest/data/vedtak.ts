@@ -25,8 +25,8 @@ export interface VedtakData {
 	gjeldende: boolean;
 	veilederIdent: string;
 	veilederNavn: string;
-	veilederEnhetId: string;
-	veilederEnhetNavn: string;
+	oppfolgingsenhetId: string;
+	oppfolgingsenhetNavn: string;
 	beslutterNavn: OrNothing<string>;
 	sendtTilBeslutter: boolean;
 	opplysninger: string[];
