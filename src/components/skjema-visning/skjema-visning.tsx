@@ -16,13 +16,13 @@ export function SkjemaVisning(props: { vedtak: VedtakData }) {
 		id, hovedmal, opplysninger,
 		innsatsgruppe, begrunnelse,
 		beslutterNavn, gjeldende,
-		veilederNavn, veilederEnhetNavn,
-		veilederEnhetId, sistOppdatert,
+		veilederNavn, oppfolgingsenhetNavn,
+		oppfolgingsenhetId, sistOppdatert,
 		sendtTilBeslutter
 	} = props.vedtak;
 
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
-	const fattetAv = `${veilederNavn}, ${veilederEnhetId} ${veilederEnhetNavn}`;
+	const fattetAv = `${veilederNavn}, ${oppfolgingsenhetId} ${oppfolgingsenhetNavn}`;
 
 	return (
 		<div className="skjema-visning">

@@ -23,9 +23,9 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 		innsatsgruppe,
 		sistOppdatert,
 		veilederNavn,
-		veilederEnhetId,
+		oppfolgingsenhetId,
 		veilederIdent,
-		veilederEnhetNavn
+		oppfolgingsenhetNavn
 	} = props.gjeldendeVedtak;
 
 	const innsatsgruppeData = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
@@ -49,8 +49,8 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 					<Veileder
 						text="Fattet av"
 						veilederNavn={veilederNavn || veilederIdent}
-						enhetId={veilederEnhetId}
-						enhetNavn={veilederEnhetNavn}
+						enhetId={oppfolgingsenhetId}
+						enhetNavn={oppfolgingsenhetNavn}
 					/>
 				</>
 			}
