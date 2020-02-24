@@ -4,7 +4,7 @@ import React from 'react';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { finnUtkastAlltid } from '../../utils';
+import { finnUtkast } from '../../utils';
 import { useFetchStore } from '../../stores/fetch-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagTaOverUtkastFetchInfo } from '../../rest/api';
@@ -17,8 +17,9 @@ function TaOverUtkastModal(props: ModalProps) {
     const { vedtak } = useFetchStore();
 
 
-    const utkast = finnUtkastAlltid(vedtak.data);
-    const veilederNavn = utkast.veilederNavn;
+    const utkast = finnUtkast(vedtak.data);
+
+    const veilederNavn = utkast ? utkast.veilederNavn : undefined;
 
     function handleTaOver() {
         showModal(ModalType.LASTER);
