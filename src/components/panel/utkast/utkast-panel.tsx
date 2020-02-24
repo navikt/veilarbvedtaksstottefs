@@ -22,10 +22,10 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 	}
 
 	const {
-		sistOppdatert, veilederIdent, veilederNavn, veilederEnhetId,
-		veilederEnhetNavn, sendtTilBeslutter, beslutterNavn
+		sistOppdatert, veilederIdent, veilederNavn, oppfolgingsenhetId,
+		oppfolgingsenhetNavn, sendtTilBeslutter, beslutterNavn
 	} = props.utkast;
-	const beslutterTekst = beslutterNavn || veilederEnhetId + ' ' + veilederEnhetNavn;
+	const beslutterTekst = beslutterNavn || oppfolgingsenhetId + ' ' + oppfolgingsenhetNavn;
 
 	let undertittel;
 	let img;
@@ -52,9 +52,9 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 					</Show>
 					<Dato className="utkast-panel__dato" sistOppdatert={sistOppdatert} formatType="long" text="Sist endret" />
 					<Veileder
-						enhetId={veilederEnhetId}
+						enhetId={oppfolgingsenhetId}
 						veilederNavn={veilederNavn || veilederIdent}
-						enhetNavn={veilederEnhetNavn}
+						enhetNavn={oppfolgingsenhetNavn}
 						text="Ansvarlig"
 					/>
 				</>

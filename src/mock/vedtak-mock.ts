@@ -32,8 +32,8 @@ export const mockLagUtkast: Mock = {
 			opplysninger: [],
 			veilederNavn: innloggetVeileder.navn,
 			veilederIdent: innloggetVeileder.ident,
-			veilederEnhetId: innloggetVeileder.enhetId,
-			veilederEnhetNavn: innloggetVeileder.enhetNavn,
+			oppfolgingsenhetId: innloggetVeileder.enhetId,
+			oppfolgingsenhetNavn: innloggetVeileder.enhetNavn,
 			beslutterNavn: null,
 			dokumentInfoId: null,
 			journalpostId: null,
@@ -128,8 +128,8 @@ export const mockOvertaUtkast: Mock = {
 
 		gjeldendeUtkast.veilederNavn = innloggetVeileder.navn;
 		gjeldendeUtkast.veilederIdent = innloggetVeileder.ident;
-		gjeldendeUtkast.veilederEnhetNavn = innloggetVeileder.enhetNavn;
-		gjeldendeUtkast.veilederEnhetId = innloggetVeileder.enhetId;
+		gjeldendeUtkast.oppfolgingsenhetNavn = innloggetVeileder.enhetNavn;
+		gjeldendeUtkast.oppfolgingsenhetId = innloggetVeileder.enhetId;
 
 		return { status: 204 };
 	}

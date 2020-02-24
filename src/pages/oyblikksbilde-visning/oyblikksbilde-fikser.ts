@@ -19,25 +19,10 @@ export function fiksRegistreringsinfoJson(json: string | null): object | null {
 
 	removeNullValues(regInfo);
 	formatDates(regInfo);
-	fjernRegistreringSporsmalId(regInfo);
 	translateKeysToNorwegian(regInfo);
+	sorterSporsmalOgSvar(regInfo);
 
 	return regInfo;
-}
-
-export function fiksEgenvurderingJson(json: string | null): object | null {
-	if (json == null) {
-		return null;
-	}
-
-	const egenvurdering = JSON.parse(json);
-
-	removeNullValues(egenvurdering);
-	cleanEgenvurderingSporsmal(egenvurdering);
-	formatDates(egenvurdering);
-	translateKeysToNorwegian(egenvurdering);
-
-	return egenvurdering;
 }
 
 export function fiksCvOgJobbprofil(json: string | null): object | null {
@@ -54,22 +39,46 @@ export function fiksCvOgJobbprofil(json: string | null): object | null {
 	return cvOgJobbprofil;
 }
 
-function formatDates(obj: any): void {
+export function fiksEgenvurderingJson(json: string | null): object | null {
+	if (json == null) {
+		return null;
+	}
+
+	const egenvurdering = JSON.parse(json);
+
+	removeNullValues(egenvurdering);
+	cleanEgenvurderingSporsmal(egenvurdering);
+	formatDates(egenvurdering);
+	translateKeysToNorwegian(egenvurdering);
+	sorterSporsmalOgSvar(egenvurdering);
+
+	return egenvurdering;
+}
+
+function sorterSporsmalOgSvar(obj: any): void {
 	deepForEach(obj, (parent, key, value) => {
-		if (typeof value === 'string') {
-			if (dayjs(value).isValid()) {
-				parent[key] = dayjs(value).format('DD. MMM YYYY kl. HH:mm');
-			}
+		if (typeof value === 'object' && value.svar != null && value.spørsmål != null) {
+			// Dette fjerner også alle verdier bortsett fra 'spørsmål' og 'svar'
+			parent[key] = { spørsmål: value.spørsmål, svar: value.svar };
 		}
 	});
 }
 
-function fjernRegistreringSporsmalId(obj: any) {
-	deepForEach(obj, (parent, key) => {
-		if (key === 'sporsmalId') {
-			delete parent[key];
+function formatDates(obj: any): void {
+	const yearMonthDayRegex = new RegExp('^\\d{4}-\\d{2}-\\d{2}$');
+	const yearMonthRegex = new RegExp('^\\d{4}-\\d{2}$');
+
+	deepForEach(obj, (parent, key, value) => {
+		if (typeof value === 'string') {
+			if (value.match(yearMonthDayRegex)) {
+				parent[key] = dayjs(value).format('DD. MMMM YYYY');
+			} else if (value.match(yearMonthRegex)) {
+				parent[key] = dayjs(value).format('MMMM YYYY');
+			} else if (dayjs(value).isValid()) {
+				parent[key] = dayjs(value).format('DD. MMM YYYY kl. HH:mm');
+			}
 		}
-	})
+	});
 }
 
 function cleanEgenvurderingSporsmal(obj: any) {

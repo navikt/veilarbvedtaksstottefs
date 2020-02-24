@@ -16,8 +16,8 @@ interface SkjemaHeaderProps {
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
 	const {
-		vedtakStatus, veilederIdent, veilederEnhetId,
-		veilederEnhetNavn, gjeldende, veilederNavn
+		vedtakStatus, veilederIdent, oppfolgingsenhetId,
+		oppfolgingsenhetNavn, gjeldende, veilederNavn
 	} = props.vedtak;
 	const erUtkast = vedtakStatus === 'UTKAST';
 	const oppdatert = props.sistOppdatert ? props.sistOppdatert : props.vedtak.sistOppdatert;
@@ -58,8 +58,8 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 			bilde={bilde}
 			veilederNavn={veilederNavn}
 			veilederIdent={veilederIdent}
-			veilederEnhetId={veilederEnhetId}
-			veilederEnhetNavn={veilederEnhetNavn}
+			oppfolgingsenhetId={oppfolgingsenhetId}
+			oppfolgingsenhetNavn={oppfolgingsenhetNavn}
 			oppdatert={oppdatert}
 		/>
 	);
@@ -73,8 +73,8 @@ interface HeaderProps {
 	bilde: string;
 	veilederNavn: string | null
 	veilederIdent: string;
-	veilederEnhetId: string;
-	veilederEnhetNavn: string;
+	oppfolgingsenhetId: string;
+	oppfolgingsenhetNavn: string;
 	oppdatert: string;
 }
 
@@ -87,8 +87,8 @@ function Header(props: HeaderProps) {
 		bilde,
 		veilederNavn,
 		veilederIdent,
-		veilederEnhetId,
-		veilederEnhetNavn,
+		oppfolgingsenhetId,
+		oppfolgingsenhetNavn,
 		oppdatert
 	} = props;
 	return (
@@ -99,8 +99,8 @@ function Header(props: HeaderProps) {
 				<div className="skjema-header__info">
 					<Veileder
 						className="skjema-header__veileder"
-						enhetId={veilederEnhetId}
-						enhetNavn={veilederEnhetNavn}
+						enhetId={oppfolgingsenhetId}
+						enhetNavn={oppfolgingsenhetNavn}
 						veilederNavn={veilederNavn || veilederIdent}
 						text={veilederTekst}
 					/>
