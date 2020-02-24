@@ -16,13 +16,14 @@ import { useSkjemaStore } from '../../stores/skjema-store';
 import { finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import './forhandsvisning.less';
+import Show from '../../components/show';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
 	const { vedtak, features, oppfolgingData } = useFetchStore();
 	const { showModal } = useModalStore();
-	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
+	const { innsatsgruppe, resetSkjema, isReadOnly } = useSkjemaStore();
 
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 	const trengerVedtakBeslutter = trengerBeslutter(innsatsgruppe);
@@ -89,9 +90,11 @@ export function Forhandsvisning() {
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
-					<Hovedknapp disabled={pdfStatus !== PDFStatus.SUCCESS} mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
-						Send til {visSendTilBeslutter ? 'beslutter' : 'bruker'}
-					</Hovedknapp>
+					<Show if={!isReadOnly}>
+						<Hovedknapp disabled={pdfStatus !== PDFStatus.SUCCESS} mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
+							Send til {visSendTilBeslutter ? 'beslutter' : 'bruker'}
+						</Hovedknapp>
+					</Show>
 					<Knapp mini={true} htmlType="button" onClick={tilbakeTilSkjema}>
 						Tilbake til utkast
 					</Knapp>

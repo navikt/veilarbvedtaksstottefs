@@ -32,6 +32,7 @@ export function UtkastSkjemaSync() {
                 setReadOnly(utkast.veilederIdent !== innloggetVeileder.data.ident);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vedtak.status, innloggetVeileder.status]);
 
     return null;

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { useState } from 'react';
 import './aksjoner.less';
 import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ReactComponent as SlettIkon } from './delete.svg';
