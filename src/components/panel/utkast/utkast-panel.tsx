@@ -11,9 +11,11 @@ import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { Beslutter } from '../beslutter';
 import Show from '../../show';
+import { useSkjemaStore } from '../../../stores/skjema-store';
 
 export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 	const { changeView } = useViewStore();
+	const { isReadOnly } = useSkjemaStore();
 
 	if (!props.utkast) {
 		return null;
@@ -42,7 +44,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 			undertittel={undertittel}
 			imgSrc={img}
 			panelKlasse="utkast-panel"
-			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>Fortsett</Hovedknapp>}
+			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>{ isReadOnly ? 'Vis': 'Fortsett' }</Hovedknapp>}
 			tekstKomponent={
 				<>
 					<Show if={sendtTilBeslutter}>
