@@ -1,6 +1,6 @@
 import { HovedmalType, InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
-import { innloggetVeileder } from '../innlogget-veileder';
+import { ansvarligVeileder } from '../veiledere';
 
 const utkast: VedtakData & JSONObject = {
 	id: 100,
@@ -10,10 +10,10 @@ const utkast: VedtakData & JSONObject = {
 	sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 	gjeldende: false,
 	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
-	veilederNavn: innloggetVeileder.navn,
-	veilederIdent: innloggetVeileder.ident,
-	oppfolgingsenhetId: innloggetVeileder.enhetId,
-	oppfolgingsenhetNavn: innloggetVeileder.enhetNavn,
+	veilederNavn: ansvarligVeileder.navn,
+	veilederIdent: ansvarligVeileder.ident,
+	oppfolgingsenhetId: ansvarligVeileder.enhetId,
+	oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
 	begrunnelse: 'Trenger ikke hjelp',
 	beslutterNavn: null,
 	dokumentInfoId: null,

@@ -50,3 +50,8 @@ export const feilVedSlettingAvUtkastConfig: FeilModalConfig = {
 	tittel: 'Klarte ikke å slette utkast',
 	beskrivelse: 'En feil oppstod under slettingen av utkastet. Vennligst prøv igjen senere.'
 };
+
+export const feilVedOvertakelseAvUtkastConfig: FeilModalConfig = {
+	tittel: 'Klarte ikke å ta over utkast',
+	beskrivelse: 'En feil oppstod under overtakelse av utkast. Vennligst prøv igjen senere.'
+};

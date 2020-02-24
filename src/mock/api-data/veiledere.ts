@@ -1,8 +1,22 @@
 import { JSONObject } from 'yet-another-fetch-mock';
 import { VeiledereData } from '../../rest/data/veiledere';
-import { innloggetVeileder } from './innlogget-veileder';
+import { enhet } from '../konstanter';
 
-const veiledere: VeiledereData & JSONObject = {
+export const ansvarligVeileder = {
+	navn: 'Kari Nordmann',
+	ident: 'Z006',
+	enhetId: enhet,
+	enhetNavn: 'Gotham city',
+};
+
+export const innloggetVeileder = {
+	navn: 'Ola Nordmann',
+	ident: 'Z007',
+	enhetId: ansvarligVeileder.enhetId,
+	enhetNavn: ansvarligVeileder.enhetNavn,
+};
+
+export const veiledere: VeiledereData & JSONObject = {
 	enhet: {
 		enhetId: innloggetVeileder.enhetId,
 		navn: innloggetVeileder.enhetNavn
@@ -40,5 +54,3 @@ const veiledere: VeiledereData & JSONObject = {
 		}
 	]
 };
-
-export default veiledere;

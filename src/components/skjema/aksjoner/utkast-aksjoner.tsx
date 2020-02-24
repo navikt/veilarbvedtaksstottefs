@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './aksjoner.less';
 import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { ReactComponent as SlettIkon } from './slett.svg';
+import { ReactComponent as SlettIkon } from './delete.svg';
+import { ReactComponent as TaOverIkon } from './locked.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { SkjemaData } from '../../../pages/vedtakskjema/vedtakskjema-side';
 import { fetchWithInfo } from '../../../rest/utils';
@@ -11,18 +12,19 @@ import { useAppStore } from '../../../stores/app-store';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil } from '../skjema-utils';
+import Show from '../../show';
 
-interface AksjonerProps {
+interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
 	harForsoktForhandsvisning: () => void;
 }
 
-function Aksjoner(props: AksjonerProps) {
+function UtkastAksjoner(props: UtkastAksjonerProps) {
 	const { fnr } = useAppStore();
 	const { vedtak, malform } = useFetchStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
-	const { validerSkjema } = useSkjemaStore();
+	const { validerSkjema , isReadOnly } = useSkjemaStore();
 
 	const [visForhandsvisngLaster, setVisForhandsvisngLaster] = useState(false);
 	const [visLagreVedtakLaster, setVisLagreVedtakLaster] = useState(false);
@@ -37,7 +39,7 @@ function Aksjoner(props: AksjonerProps) {
 			});
 	}
 
-	function handleForhandsvis() {
+	function handleForhandsvisOgLagre() {
 		const skjemaFeil = validerSkjema();
 
 		if (harFeil(skjemaFeil)) {
@@ -53,6 +55,15 @@ function Aksjoner(props: AksjonerProps) {
 		});
 	}
 
+	function handleForhandsvis() {
+		const skjemaFeil = validerSkjema();
+
+		if (harFeil(skjemaFeil)) return;
+
+		setVisForhandsvisngLaster(true);
+		changeView(ViewType.FORHANDSVISNING);
+	}
+
 	function handleLagreOgTilbake() {
 		setVisLagreVedtakLaster(true);
 
@@ -60,6 +71,11 @@ function Aksjoner(props: AksjonerProps) {
 			vedtak.fetch({ fnr });
 			changeView(ViewType.HOVEDSIDE);
 		});
+	}
+
+	function handleTilbake() {
+		setVisLagreVedtakLaster(true);
+		changeView(ViewType.HOVEDSIDE);
 	}
 
 	return (
@@ -70,31 +86,44 @@ function Aksjoner(props: AksjonerProps) {
 					disabled={visForhandsvisngLaster}
 					mini={true}
 					htmlType="submit"
-					onClick={handleForhandsvis}
+					onClick={isReadOnly? handleForhandsvis : handleForhandsvisOgLagre}
 				>
-					Forhåndsvis og ferdigstill
+					Forhåndsvis
 				</Hovedknapp>
 				<Knapp
 					spinner={visLagreVedtakLaster}
 					disabled={visLagreVedtakLaster}
 					mini={true}
 					htmlType="button"
-					onClick={handleLagreOgTilbake}
+					onClick={isReadOnly? handleTilbake : handleLagreOgTilbake}
 				>
-					Lagre og gå tilbake
+					{isReadOnly ? 'Tilbake' : 'Lagre og gå tilbake'}
 				</Knapp>
 			</div>
-			<Flatknapp
-				className="aksjoner__slett"
-				mini={true}
-				htmlType="button"
-				onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
-			>
-				<SlettIkon className="aksjoner__slett-ikon" />
-				Slett
-			</Flatknapp>
+			<Show if={!isReadOnly}>
+				<Flatknapp
+					className="aksjoner__ikon-knapp"
+					mini={true}
+					htmlType="button"
+					onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
+				>
+					<SlettIkon className="aksjoner__ikon"/>
+					Slett
+				</Flatknapp>
+			</Show>
+			<Show if={isReadOnly}>
+				<Flatknapp
+					className="aksjoner__ikon-knapp"
+					mini={true}
+					htmlType="button"
+					onClick={() => showModal(ModalType.BEKREFT_TA_OVER_UTKAST)}
+				>
+					<TaOverIkon className="aksjoner__ikon"/>
+					Ta over vedtak
+				</Flatknapp>
+			</Show>
 		</div>
 	);
 }
 
-export default Aksjoner;
+export default UtkastAksjoner;

@@ -6,6 +6,7 @@ import {
 	feilVedForhandsvisnigConfig,
 	feilVedLagringConfig,
 	feilVedOpprettingAvUtkast,
+	feilVedOvertakelseAvUtkastConfig,
 	feilVedSendningConfig,
 	feilVedSlettingAvUtkastConfig,
 	feilVedVisningConfig,
@@ -16,6 +17,7 @@ import { KvalitetsSikringModalInnsending } from './modal/kvalitetssikring-modal/
 import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import { BeslutterOppgaveModal } from './modal/beslutter-oppgave-modal/beslutter-oppgave-modal';
+import TaOverUtkastModal from './modal/ta-over-utkast-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
@@ -33,6 +35,8 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedVisningConfig;
 		case ModalType.FEIL_VED_LAGRING:
 			return feilVedLagringConfig;
+		case ModalType.FEIL_VED_OVERTAKELSE:
+			return feilVedOvertakelseAvUtkastConfig;
 		default:
 			return null;
 	}
@@ -56,6 +60,7 @@ export function ModalController() {
 				sendesVedtakDigitalt={modalProps.sendesVedtakDigitalt}
 			/>
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
+			<TaOverUtkastModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>
 	);

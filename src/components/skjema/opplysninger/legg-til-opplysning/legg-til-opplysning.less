@@ -14,6 +14,7 @@
 			width: 16px;
 			height: 16px;
 			margin-top: 0.25rem;
+			background: url("./pluss.svg") no-repeat;
 		}
 
 		&__tekst {
@@ -27,12 +28,17 @@
 			outline: none;
 		}
 
-		&:hover {
-			.legg-til-kilde__tekst {
-				border-bottom: 1px solid @navDypBla;
-			}
+		&:hover:not(:disabled) > .legg-til-kilde__tekst {
+			border-bottom: 1px solid @navDypBla;
 		}
 
+		&:disabled {
+			color: @navGra60;
+			cursor: not-allowed;
+			.legg-til-kilde__ikon {
+				background: url("./pluss-gray.svg") no-repeat;
+			}
+		}
 	}
 
 }

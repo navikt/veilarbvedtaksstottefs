@@ -13,7 +13,7 @@ import { OrNothing } from '../../../utils/types/ornothing';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 function Innsatsgruppe() {
-	const {innsatsgruppe, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
+	const {innsatsgruppe, setInnsatsgruppe, setHovedmal, errors, isReadOnly} = useSkjemaStore();
 	const trengerVedtakBeslutter = trengerBeslutter(innsatsgruppe);
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
@@ -28,6 +28,7 @@ function Innsatsgruppe() {
 					handleInnsatsgruppeChanged={setInnsatsgruppe}
 					innsatsgruppe={innsatsgruppe}
 					setHovedmal={setHovedmal}
+					disabled={isReadOnly}
 				/>
 			</SkjemaGruppe>
 		</SkjemaBolk>
@@ -40,6 +41,7 @@ interface InnsatsgruppeRadioProps {
 	handleInnsatsgruppeChanged: (e: any) => void;
 	setHovedmal: (e: any) => void;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
+	disabled: boolean
 }
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
@@ -58,6 +60,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 						value={innsatsgruppeTekst.value}
 						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
 						inputProps={{onKeyPress: swallowEnterKeyPress, 'aria-labelledby': 'innsatsgruppe-tittel'}}
+						disabled={props.disabled}
 						onChange={(e: any) => {
 							const innsatsgruppe = e.target.value;
 							props.handleInnsatsgruppeChanged(innsatsgruppe);

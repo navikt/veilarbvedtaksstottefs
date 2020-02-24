@@ -5,7 +5,7 @@ import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../rest/ut
 import Spinner from './spinner/spinner';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
-	const { oppfolgingData, features, malform, vedtak } = useFetchStore();
+	const { oppfolgingData, features, malform, vedtak, innloggetVeileder } = useFetchStore();
 
 	useEffect(() => {
 		if (isNotStarted(vedtak)) {
@@ -22,6 +22,10 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 
 		if (isNotStarted(features)) {
 			features.fetch(null);
+		}
+
+		if (isNotStarted(innloggetVeileder)) {
+			innloggetVeileder.fetch(null);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [vedtak, oppfolgingData, malform, features]);
