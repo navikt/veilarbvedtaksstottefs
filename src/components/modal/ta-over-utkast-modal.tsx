@@ -40,7 +40,7 @@ function TaOverUtkastModal(props: ModalProps) {
             onRequestClose={hideModal}
             varselIkonType={VarselIkonType.ADVARSEL}
         >
-            <Normaltekst>{`Ønsker du å ta over vedtaket fra ${veilederNavn}?`}</Normaltekst>
+            <Normaltekst>{`Vil du å ta over som ansvarlig for vedtaket fra ${veilederNavn}?`}</Normaltekst>
             <div className="varsel-modal__knapper">
                 <Hovedknapp onClick={handleTaOver}>Ta over</Hovedknapp>
                 <Knapp onClick={hideModal}> Avbryt</Knapp>
