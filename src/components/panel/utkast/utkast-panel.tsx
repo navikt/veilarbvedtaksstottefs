@@ -44,7 +44,7 @@ export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
 			undertittel={undertittel}
 			imgSrc={img}
 			panelKlasse="utkast-panel"
-			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>{ isReadOnly ? 'Vis': 'Fortsett' }</Hovedknapp>}
+			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>{ isReadOnly ? 'Åpne': 'Fortsett' }</Hovedknapp>}
 			tekstKomponent={
 				<>
 					<Show if={sendtTilBeslutter}>
