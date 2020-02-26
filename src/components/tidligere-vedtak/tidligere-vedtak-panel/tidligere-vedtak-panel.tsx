@@ -1,13 +1,13 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
-import { InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
+import { ArenaVedtakData, InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
 import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import vedtakBilde from './vedtak.svg';
 import { daysFromToday, formatDate } from '../../../utils/date-utils';
 import { OnTidligereVedtakClicked } from '../tidligere-vedtak';
-import { ArenaVedtakData } from '../../../rest/data/arena-vedtak';
+import vedtakBilde from './vedtak.svg';
+import arenaVedtakBilde from './arena-vedtak.svg';
 import './tidligere-vedtak-panel.less';
 
 interface TidligereArenaVedtakLenkePanel {
@@ -36,7 +36,7 @@ function lagVedtakDatoTekst(dateStr: string): string {
 }
 
 export function TidligereArenaVedtakLenkePanel(props: TidligereArenaVedtakLenkePanel) {
-	const { datoOpprettet, journalfortAvNavn } = props.tidligereVedtak;
+	const { datoOpprettet } = props.tidligereVedtak;
 	const elemId = 'tidligere-vedtak-panel' + props.posisjon;
 
 	return (
@@ -47,11 +47,8 @@ export function TidligereArenaVedtakLenkePanel(props: TidligereArenaVedtakLenkeP
 		>
 			<div className="tidligere-vedtak-panel__innhold--wrapper">
 				<div className="tidligere-vedtak-panel__innhold">
-					<img src={vedtakBilde} alt="" className="tidligere-vedtak-panel__bilde" />
-					<div id={elemId}>
-						<Element className="tidligere-vedtak-panel__innsats--tittel">Vedtak fra Arena</Element>
-						<EtikettLiten className="tidligere-vedtak-panel__innsats--undertekst">Fattet av: {journalfortAvNavn}</EtikettLiten>
-					</div>
+					<img src={arenaVedtakBilde} alt="" className="tidligere-vedtak-panel__bilde" />
+					<Element id={elemId} className="tidligere-vedtak-panel__innsats--tittel">Oppfølgingsvedtak fra Arena</Element>
 				</div>
 				<Normaltekst className="tidligere-vedtak-panel__dato">
 					{lagVedtakDatoTekst(datoOpprettet)}

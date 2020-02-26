@@ -1,5 +1,5 @@
 import React from 'react';
-import { VedtakData } from '../../rest/data/vedtak';
+import { ArenaVedtakData, erVedtakFraArena, TidligereVedtakData, VedtakData } from '../../rest/data/vedtak';
 import { Undertittel } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import {
@@ -9,20 +9,13 @@ import {
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { frontendlogger } from '../../utils/frontend-logger';
 import './tidligere-vedtak.less';
-import { ArenaVedtakData } from '../../rest/data/arena-vedtak';
-
-export type TidligereVedtakData = VedtakData | ArenaVedtakData;
 
 export type OnTidligereVedtakClicked = (vedtakData: TidligereVedtakData, idx: number) => void;
-
-function erFraArena(tidligereVedtak: TidligereVedtakData): tidligereVedtak is ArenaVedtakData  {
-	return (tidligereVedtak as ArenaVedtakData).journalfortAvNavn != null;
-}
 
 function mapTidligereVedtakTilListItem(vedtakData: TidligereVedtakData, idx: number, handleOnVedtakClicked: OnTidligereVedtakClicked) {
 	return (
 		<li className="tidligere-vedtak__liste-item" key={idx}>
-			{ erFraArena(vedtakData)
+			{ erVedtakFraArena(vedtakData)
 				? (
 					<TidligereArenaVedtakLenkePanel
 						onClick={handleOnVedtakClicked}
@@ -44,7 +37,7 @@ function mapTidligereVedtakTilListItem(vedtakData: TidligereVedtakData, idx: num
 }
 
 function getDate(vedtakData: TidligereVedtakData): string {
-	if (erFraArena(vedtakData)) {
+	if (erVedtakFraArena(vedtakData)) {
 		return vedtakData.datoOpprettet;
 	}
 
@@ -66,9 +59,11 @@ export function TidligereVedtak({ vedtakHistorikk, vedtakFraArenaHistorikk }: { 
 	sorterTidligereVedtak(tidligereVedtak);
 
 	function handleTidligereVedtakClicked(vedtakData: TidligereVedtakData, idx: number) {
-		if (erFraArena(vedtakData)) {
-			// TODO: Endre props til noe annet enn vedtakId
-			changeView(ViewType.VEDTAK_PDF, { vedtakId: 1234 });
+		if (erVedtakFraArena(vedtakData)) {
+			changeView(ViewType.VEDTAK_PDF, {
+				journalpostId: vedtakData.journalpostId,
+				dokumentInfoId: vedtakData.dokumentInfoId
+			});
 		} else {
 			changeView(ViewType.VEDTAK, { vedtakId: (vedtakData as VedtakData).id });
 		}

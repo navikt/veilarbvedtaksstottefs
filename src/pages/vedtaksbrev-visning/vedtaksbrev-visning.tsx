@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { frontendlogger } from '../../utils/frontend-logger';
 import { useFetchStore } from '../../stores/fetch-store';
@@ -11,16 +10,46 @@ import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
+import { finnVedtakAlltid } from '../../utils';
 import './vedtaksbrev-visning.less';
 
-export function VedtaksbrevVisning(props: { vedtakId: number }) {
+interface VedtaksbrevVisningProps {
+	vedtakId?: number;
+	dokumentInfoId?: string;
+	journalpostId?: string;
+}
+
+export function VedtaksbrevVisning(props: VedtaksbrevVisningProps) {
 	const { fnr } = useAppStore();
 	const { vedtak } = useFetchStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
 
-	const vedtaksObjekt = vedtak.data.find(v => v.id === props.vedtakId);
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
+
+	let dokumentInfoId: string;
+	let journalpostId: string;
+
+	if (props.vedtakId) {
+		const vedtaksObjekt = finnVedtakAlltid(vedtak.data, props.vedtakId);
+		dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
+		journalpostId = vedtaksObjekt.journalpostId as string;
+	} else {
+		dokumentInfoId = props.dokumentInfoId as string;
+		journalpostId = props.journalpostId as string;
+	}
+
+	const url = env.isProduction
+		? lagHentVedtakPdfUrl(fnr, dokumentInfoId, journalpostId)
+		: getMockVedtaksbrevUrl();
+
+	function handleOnTilbakeClicked() {
+		if (props.vedtakId) {
+			changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId });
+		} else {
+			changeView(ViewType.HOVEDSIDE);
+		}
+	}
 
 	useEffect(() => frontendlogger.logMetrikk('vis-vedtaksbrev'), []);
 
@@ -31,23 +60,13 @@ export function VedtaksbrevVisning(props: { vedtakId: number }) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
-	if (!vedtaksObjekt) {
-		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
-	}
-
-	const journalpostId = vedtaksObjekt.journalpostId as string;
-	const dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
-	const url = env.isProduction
-		? lagHentVedtakPdfUrl(fnr, dokumentInfoId, journalpostId)
-		: getMockVedtaksbrevUrl();
-
 	return (
 		<>
 			<PdfViewer url={url} title="Visning av vedtaksbrev" onStatusUpdate={setPdfStatus} />
 			<Footer>
 				<div className="vedtaksbrev-visning__aksjoner">
-					<Hovedknapp mini={true} onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}>
-						Tilbake til vedtak
+					<Hovedknapp mini={true} onClick={handleOnTilbakeClicked}>
+						{ props.vedtakId ? 'Tilbake  til vedtak' : 'Tilbake til hovedside' }
 					</Hovedknapp>
 				</div>
 			</Footer>

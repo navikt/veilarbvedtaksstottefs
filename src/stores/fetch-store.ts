@@ -11,9 +11,8 @@ import {
 import Oppfolging from '../rest/data/oppfolging-data';
 import { MalformData } from '../rest/data/malform';
 import { Features } from '../rest/data/features';
-import { VedtakData } from '../rest/data/vedtak';
+import { ArenaVedtakData, VedtakData } from '../rest/data/vedtak';
 import { Veileder } from '../rest/data/veiledere';
-import { ArenaVedtakData } from '../rest/data/arena-vedtak';
 
 export const useFetchStore = createUseContext(() => {
 	const oppfolgingData = useFetch<Oppfolging, FnrFetchParams>(lagHentOppfolgingDataFetchInfo);

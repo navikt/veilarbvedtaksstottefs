@@ -2,6 +2,12 @@ import { OrNothing } from '../../utils/types/ornothing';
 
 type VedtakStatus = 'UTKAST' | 'SENDT';
 
+export type TidligereVedtakData = VedtakData | ArenaVedtakData;
+
+export function erVedtakFraArena(tidligereVedtak: TidligereVedtakData): tidligereVedtak is ArenaVedtakData  {
+	return (tidligereVedtak as VedtakData).id == null;
+}
+
 export enum InnsatsgruppeType {
 	STANDARD_INNSATS = 'STANDARD_INNSATS',
 	SITUASJONSBESTEMT_INNSATS = 'SITUASJONSBESTEMT_INNSATS',
@@ -33,3 +39,15 @@ export interface VedtakData {
 	journalpostId: OrNothing<string>;
 	dokumentInfoId: OrNothing<string>;
 }
+
+export interface ArenaVedtakData {
+	journalpostId: string;
+	dokumentInfoId: string;
+	veilederNavn: string;
+	oppfolgingsenhetId: string;
+	oppfolgingsenhetNavn: string;
+	datoOpprettet: string;
+	erGjeldende: boolean;
+	innsatsgruppe: OrNothing<InnsatsgruppeType>;
+}
+

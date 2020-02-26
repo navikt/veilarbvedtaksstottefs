@@ -7,6 +7,10 @@ export const finnUtkastAlltid = (vedtakListe: VedtakData[]): VedtakData => {
 	return finnUtkast(vedtakListe) as VedtakData;
 };
 
+export const finnVedtakAlltid = (vedtakListe: VedtakData[], vedtakId: number): VedtakData => {
+	return vedtakListe.find(v => v.id === vedtakId) as VedtakData;
+};
+
 export const finnUtkast = (vedtakListe: VedtakData[]): VedtakData | undefined => {
 	return vedtakListe.find(v => v.vedtakStatus === 'UTKAST');
 };
