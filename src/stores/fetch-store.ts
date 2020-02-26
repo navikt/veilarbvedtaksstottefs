@@ -18,9 +18,9 @@ export const useFetchStore = createUseContext(() => {
 	const oppfolgingData = useFetch<Oppfolging, FnrFetchParams>(lagHentOppfolgingDataFetchInfo);
 	const malform = useFetch<MalformData, FnrFetchParams>(lagHentMalformFetchInfo);
 	const features = useFetch<Features>(lagHentFeaturesFetchInfo);
-	const vedtak = useFetch<VedtakData[], FnrFetchParams>(lagHentVedtakFetchInfo);
 	const innloggetVeileder = useFetch<Veileder>(lagHentVeilederFetchInfo);
-	const arenaVedtak = useFetch<ArenaVedtakData[]>(lagHentArenaVedtakFetchInfo);
+	const vedtak = useFetch<VedtakData[], FnrFetchParams>(lagHentVedtakFetchInfo);
+	const arenaVedtak = useFetch<ArenaVedtakData[], FnrFetchParams>(lagHentArenaVedtakFetchInfo);
 
 	return { oppfolgingData, features, malform, vedtak, innloggetVeileder, arenaVedtak };
 });

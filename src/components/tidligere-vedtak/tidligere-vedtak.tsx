@@ -15,8 +15,8 @@ export type OnTidligereVedtakClicked = (vedtakData: TidligereVedtakData, idx: nu
 function mapTidligereVedtakTilListItem(vedtakData: TidligereVedtakData, idx: number, handleOnVedtakClicked: OnTidligereVedtakClicked) {
 	return (
 		<li className="tidligere-vedtak__liste-item" key={idx}>
-			{ erVedtakFraArena(vedtakData)
-				? (
+			{ erVedtakFraArena(vedtakData) ?
+				(
 					<TidligereArenaVedtakLenkePanel
 						onClick={handleOnVedtakClicked}
 						tidligereVedtak={vedtakData}
