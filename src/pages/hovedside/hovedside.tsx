@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { TidligereVedtak } from '../../components/tidligere-vedtak/tidligere-vedtak';
 import { UtkastPanel } from '../../components/panel/utkast/utkast-panel';
-import { VedtakData } from '../../rest/data/vedtak';
 import { GjeldendeVedtakPanel } from '../../components/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
 import { NyttVedtakPanel } from '../../components/panel/nytt-vedtak/nytt-vedtak-panel';
 import Page from '../page/page';
@@ -9,17 +8,18 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { useFetchStore } from '../../stores/fetch-store';
 import { IngenTidligereVedtakPanel } from '../../components/panel/ingen-tidligere-vedtak/ingen-tidligere-vedtak-panel';
 import { Knapp } from 'nav-frontend-knapper';
-import './hovedside.less';
 import { IngenGjeldendeVedtakPanel } from '../../components/panel/ingen-gjeldende-vedtak/ingen-gjeldende-vedtak';
 import Show from '../../components/show';
+import './hovedside.less';
 
 export function Hovedside() {
-	const { vedtak, oppfolgingData } = useFetchStore();
+	const { vedtak, arenaVedtak, oppfolgingData } = useFetchStore();
 	const underOppfolging = oppfolgingData.data.underOppfolging;
-	const gjeldendeVedtak = vedtak.data.find((v: VedtakData) => v.gjeldende);
-	const tidligereVedtak = vedtak.data.filter((v: VedtakData) => !v.gjeldende && v.vedtakStatus === 'SENDT');
-	const utkast = vedtak.data.find((v: VedtakData) => v.vedtakStatus === 'UTKAST');
-	const harTidligereVedtak= tidligereVedtak.length > 0;
+	const gjeldendeVedtak = vedtak.data.find(v => v.gjeldende);
+	const tidligereVedtak = vedtak.data.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
+	const tidligereVedtakFraArena = arenaVedtak.data.filter(v => !v.erGjeldende);
+	const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST');
+	const harTidligereVedtak= tidligereVedtak.length > 0 || tidligereVedtak.length > 0;
 
 	return (
 		<Page>
@@ -37,7 +37,7 @@ export function Hovedside() {
 				</div>
 				<div className="hovedside__tidligere-vedtak-panel">
 						{harTidligereVedtak
-							? <TidligereVedtak vedtakHistorikk={tidligereVedtak} />
+							? <TidligereVedtak vedtakHistorikk={tidligereVedtak} vedtakFraArenaHistorikk={tidligereVedtakFraArena} />
 							: <IngenTidligereVedtakPanel />
 						}
 				</div>

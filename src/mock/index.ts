@@ -3,6 +3,7 @@ import features from './api-data/features';
 import oppfolgingData from './api-data/oppfolging-data';
 import tilgangTilBrukersKontor from './api-data/tilgang-til-brukers-kontor';
 import malform from './api-data/malform';
+import vedtakFraArena from './api-data/arena-vedtak';
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import { innloggetVeileder, veiledere } from './api-data/veiledere';
 import {
@@ -29,6 +30,7 @@ addToFetchMock(mockSendTilBeslutter, fetchMock);
 addToFetchMock(mockSendVedtak, fetchMock);
 addToFetchMock(mockOvertaUtkast, fetchMock);
 
+fetchMock.get('/veilarbvedtaksstotte/api/:fnr/vedtakFraArena', vedtakFraArena);
 fetchMock.get('/veilarbvedtaksstotte/api/:fnr/oyblikksbilde/:vedtakId', vedlegg);
 fetchMock.get('/veilarbpersonflatefs/api/feature', features);
 fetchMock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', tilgangTilBrukersKontor);
