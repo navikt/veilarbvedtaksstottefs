@@ -1,5 +1,6 @@
 import React from 'react';
 import { Undertekst } from 'nav-frontend-typografi';
+import { fiksVeilederNavn } from '../../utils';
 
 interface VeilederProps {
 	enhetId: string;
@@ -14,7 +15,7 @@ export function Veileder({ enhetId, enhetNavn, veilederNavn, text, className }: 
 		<div className={className} style={{ display: 'flex' }}>
 			<Undertekst className="label">{text}: </Undertekst>
 			<Undertekst>
-				{veilederNavn}, {enhetId} {enhetNavn}
+				{fiksVeilederNavn(veilederNavn)}, {enhetId} {enhetNavn}
 			</Undertekst>
 		</div>
 	);

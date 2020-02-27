@@ -9,7 +9,7 @@ import { VedtakskjemaSide } from '../pages/vedtakskjema/vedtakskjema-side';
 
 export function ViewController() {
 	const { view, viewProps } = useViewStore();
-	const vedtakId = viewProps.vedtakId;
+	const { vedtakId, dokumentInfoId, journalpostId } = viewProps;
 
 	switch (view) {
 		case ViewType.HOVEDSIDE:
@@ -23,7 +23,7 @@ export function ViewController() {
 		case ViewType.OYBLIKKSBILDE_VISNING:
 			return <OyblikksbildeVisning vedtakId={vedtakId} />;
 		case ViewType.VEDTAK_PDF:
-			return <VedtaksbrevVisning vedtakId={vedtakId} />;
+			return <VedtaksbrevVisning vedtakId={vedtakId} dokumentInfoId={dokumentInfoId} journalpostId={journalpostId} />;
 		default:
 			return <Hovedside />;
 	}

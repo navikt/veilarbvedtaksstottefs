@@ -6,7 +6,7 @@ import {
 	validerSkjema as valider
 } from '../components/skjema/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
-import { HovedmalType, InnsatsgruppeType, VedtakData } from '../rest/data/vedtak';
+import { HovedmalType, InnsatsgruppeType, ModiaVedtak } from '../rest/data/vedtak';
 
 export const useSkjemaStore = createUseContext(() => {
 	const [opplysninger, setOpplysninger] = useState<string[]>([]);
@@ -28,7 +28,7 @@ export const useSkjemaStore = createUseContext(() => {
 		setErrors(Object.assign({}, errors, begrunnelseFeil));
 	};
 
-	const initSkjema = (utkast: VedtakData) => {
+	const initSkjema = (utkast: ModiaVedtak) => {
 		setHovedmal(utkast.hovedmal);
 		setOpplysninger(utkast.opplysninger);
 		setInnsatsgruppe(utkast.innsatsgruppe);

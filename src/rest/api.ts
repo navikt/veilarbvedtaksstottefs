@@ -82,6 +82,10 @@ export const lagHentVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtak`
 });
 
+export const lagHentArenaVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtakFraArena`
+});
+
 export const lagSendVedtakFetchInfo = (params: SendVedtakFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtak/send`,
 	method: 'POST',

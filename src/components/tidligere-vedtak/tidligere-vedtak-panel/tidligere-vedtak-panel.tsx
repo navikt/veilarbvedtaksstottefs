@@ -1,17 +1,25 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
-import { InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
+import { ArenaVedtak, InnsatsgruppeType, ModiaVedtak } from '../../../rest/data/vedtak';
 import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
-import vedtakBilde from './vedtak.svg';
 import { daysFromToday, formatDate } from '../../../utils/date-utils';
+import { OnTidligereVedtakClicked } from '../tidligere-vedtak';
+import vedtakBilde from './vedtak.svg';
+import arenaVedtakBilde from './arena-vedtak.svg';
 import './tidligere-vedtak-panel.less';
 
-interface TidligereVedtakLenkePanel {
-	tidligereVedtak: VedtakData;
+interface TidligereArenaVedtakLenkePanel {
+	tidligereVedtak: ArenaVedtak;
 	posisjon: number;
-	onClick: (vedtakId: number, posisjon: number) => void;
+	onClick: OnTidligereVedtakClicked;
+}
+
+interface TidligereVedtakLenkePanel {
+	tidligereVedtak: ModiaVedtak;
+	posisjon: number;
+	onClick: OnTidligereVedtakClicked;
 }
 
 function lagVedtakDatoTekst(dateStr: string): string {
@@ -27,8 +35,32 @@ function lagVedtakDatoTekst(dateStr: string): string {
 	return formatDate(date);
 }
 
+export function TidligereArenaVedtakLenkePanel(props: TidligereArenaVedtakLenkePanel) {
+	const { datoOpprettet } = props.tidligereVedtak;
+	const elemId = 'tidligere-vedtak-panel' + props.posisjon;
+
+	return (
+		<button
+			aria-describedby={elemId}
+			className="tidligere-vedtak-panel"
+			onClick={() => props.onClick(props.tidligereVedtak, props.posisjon)}
+		>
+			<div className="tidligere-vedtak-panel__innhold--wrapper">
+				<div className="tidligere-vedtak-panel__innhold">
+					<img src={arenaVedtakBilde} alt="" className="tidligere-vedtak-panel__bilde" />
+					<Element id={elemId} className="tidligere-vedtak-panel__innsats--tittel">Oppfølgingsvedtak fra Arena</Element>
+				</div>
+				<Normaltekst className="tidligere-vedtak-panel__dato">
+					{lagVedtakDatoTekst(datoOpprettet)}
+				</Normaltekst>
+			</div>
+			<HoyreChevron className="tidligere-vedtak-panel__chevron" />
+		</button>
+	);
+}
+
 export function TidligereVedtakLenkePanel(props: TidligereVedtakLenkePanel) {
-	const { innsatsgruppe, id, sistOppdatert } = props.tidligereVedtak;
+	const { innsatsgruppe, sistOppdatert } = props.tidligereVedtak;
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
 	const elemId = 'tidligere-vedtak-panel' + props.posisjon;
 
@@ -36,7 +68,7 @@ export function TidligereVedtakLenkePanel(props: TidligereVedtakLenkePanel) {
 		<button
 			aria-describedby={elemId}
 			className="tidligere-vedtak-panel"
-			onClick={() => props.onClick(id, props.posisjon)}
+			onClick={() => props.onClick(props.tidligereVedtak, props.posisjon)}
 		>
 			<div className="tidligere-vedtak-panel__innhold--wrapper">
 				<div className="tidligere-vedtak-panel__innhold">
