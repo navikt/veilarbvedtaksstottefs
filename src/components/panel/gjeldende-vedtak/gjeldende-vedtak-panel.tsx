@@ -1,5 +1,5 @@
 import React from 'react';
-import { erVedtakFraArena, InnsatsgruppeType, TidligereVedtakData, VedtakData } from '../../../rest/data/vedtak';
+import { erVedtakFraArena, InnsatsgruppeType, Vedtak, ModiaVedtak } from '../../../rest/data/vedtak';
 import { Dato } from '../dato';
 import { Knapp } from 'nav-frontend-knapper';
 import { Veileder } from '../veileder';
@@ -10,7 +10,7 @@ import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 import fullfortVedtakIcon from './fullfort.svg';
 import './gjeldende-vedtak-panel.less';
 
-export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: TidligereVedtakData }) {
+export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
 	const gjeldendeVedtak = props.gjeldendeVedtak;
 
@@ -30,7 +30,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: TidligereVedtakDa
 			dokumentInfoId: gjeldendeVedtak.dokumentInfoId
 		};
 	} else {
-		const vedtak = gjeldendeVedtak as VedtakData;
+		const vedtak = gjeldendeVedtak as ModiaVedtak;
 		panelTittel = 'Gjeldende oppfølgingsvedtak';
 		knappTekst = 'Vis vedtak';
 		dato = vedtak.sistOppdatert;

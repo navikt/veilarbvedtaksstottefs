@@ -1,5 +1,5 @@
 import React from 'react';
-import { VedtakData } from '../../../rest/data/vedtak';
+import { ModiaVedtak } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
@@ -13,7 +13,7 @@ import { Beslutter } from '../beslutter';
 import Show from '../../show';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 
-export function UtkastPanel(props: { utkast: OrNothing<VedtakData> }) {
+export function UtkastPanel(props: { utkast: OrNothing<ModiaVedtak> }) {
 	const { changeView } = useViewStore();
 	const { isReadOnly } = useSkjemaStore();
 

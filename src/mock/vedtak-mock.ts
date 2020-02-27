@@ -1,5 +1,5 @@
 import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
-import { VedtakData } from '../rest/data/vedtak';
+import { ModiaVedtak } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
 import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-modal/beslutter-oppgave-modal-innhold';
@@ -8,7 +8,7 @@ import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { finnUtkast } from '../utils';
 import historisk from './api-data/vedtak/tidligere-vedtak';
 
-let vedtak: VedtakData[] = [
+let vedtak: ModiaVedtak[] = [
 	utkast, ...historisk
 ];
 
@@ -38,7 +38,7 @@ export const mockLagUtkast: Mock = {
 			dokumentInfoId: null,
 			journalpostId: null,
 			sendtTilBeslutter: false
-		} as unknown as VedtakData;
+		} as unknown as ModiaVedtak;
 
 		vedtak.push(nyttUtkast);
 

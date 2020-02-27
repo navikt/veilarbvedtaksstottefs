@@ -1,6 +1,6 @@
 import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { VedtakData } from '../../../rest/data/vedtak';
+import { ModiaVedtak } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import nyttVedtakBilde from './nytt-vedtak.svg';
 import { frontendlogger } from '../../../utils/frontend-logger';
@@ -13,7 +13,7 @@ import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
 import './nytt-vedtak-panel.less';
 
-export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData> }) {
+export function NyttVedtakPanel(props: { utkast: OrNothing<ModiaVedtak> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
 	const { oppfolgingData, vedtak } = useFetchStore();

@@ -1,7 +1,7 @@
 import { JSONArray } from 'yet-another-fetch-mock';
-import { ArenaVedtakData, InnsatsgruppeType } from '../../rest/data/vedtak';
+import { ArenaVedtak, InnsatsgruppeType } from '../../rest/data/vedtak';
 
-const vedtakFraArena: ArenaVedtakData[] & JSONArray = [
+const vedtakFraArena: ArenaVedtak[] & JSONArray = [
 	{
 		journalpostId: '11223344',
 		dokumentInfoId: '44556677',

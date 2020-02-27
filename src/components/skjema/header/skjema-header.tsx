@@ -1,6 +1,6 @@
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { VedtakData } from '../../../rest/data/vedtak';
+import { ModiaVedtak } from '../../../rest/data/vedtak';
 import cls from 'classnames';
 import gjeldendeVedtakBilde from './gjeldende-vedtak.svg';
 import utkastBilde from './utkast.svg';
@@ -10,7 +10,7 @@ import { Dato } from '../../panel/dato';
 import { Veileder } from '../../panel/veileder';
 
 interface SkjemaHeaderProps {
-	vedtak: VedtakData;
+	vedtak: ModiaVedtak;
 	sistOppdatert?: string;
 }
 

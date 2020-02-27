@@ -2,10 +2,10 @@ import { OrNothing } from '../../utils/types/ornothing';
 
 type VedtakStatus = 'UTKAST' | 'SENDT';
 
-export type TidligereVedtakData = VedtakData | ArenaVedtakData;
+export type Vedtak = ModiaVedtak | ArenaVedtak;
 
-export function erVedtakFraArena(tidligereVedtak: TidligereVedtakData): tidligereVedtak is ArenaVedtakData  {
-	return (tidligereVedtak as VedtakData).id == null;
+export function erVedtakFraArena(vedtak: Vedtak): vedtak is ArenaVedtak  {
+	return (vedtak as ModiaVedtak).id == null;
 }
 
 export enum InnsatsgruppeType {
@@ -21,7 +21,7 @@ export enum HovedmalType {
 	BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
 }
 
-export interface VedtakData {
+export interface ModiaVedtak {
 	id: number;
 	hovedmal: OrNothing<HovedmalType>;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
@@ -40,7 +40,7 @@ export interface VedtakData {
 	dokumentInfoId: OrNothing<string>;
 }
 
-export interface ArenaVedtakData {
+export interface ArenaVedtak {
 	journalpostId: string;
 	dokumentInfoId: string;
 	veilederNavn: string;

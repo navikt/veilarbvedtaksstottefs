@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
-import { ArenaVedtakData, InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
+import { ArenaVedtak, InnsatsgruppeType, ModiaVedtak } from '../../../rest/data/vedtak';
 import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import { daysFromToday, formatDate } from '../../../utils/date-utils';
@@ -11,13 +11,13 @@ import arenaVedtakBilde from './arena-vedtak.svg';
 import './tidligere-vedtak-panel.less';
 
 interface TidligereArenaVedtakLenkePanel {
-	tidligereVedtak: ArenaVedtakData;
+	tidligereVedtak: ArenaVedtak;
 	posisjon: number;
 	onClick: OnTidligereVedtakClicked;
 }
 
 interface TidligereVedtakLenkePanel {
-	tidligereVedtak: VedtakData;
+	tidligereVedtak: ModiaVedtak;
 	posisjon: number;
 	onClick: OnTidligereVedtakClicked;
 }

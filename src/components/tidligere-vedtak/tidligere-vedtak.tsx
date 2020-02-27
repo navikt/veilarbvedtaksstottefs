@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArenaVedtakData, erVedtakFraArena, TidligereVedtakData, VedtakData } from '../../rest/data/vedtak';
+import { ArenaVedtak, erVedtakFraArena, Vedtak, ModiaVedtak } from '../../rest/data/vedtak';
 import { Undertittel } from 'nav-frontend-typografi';
 import dayjs from 'dayjs';
 import {
@@ -10,9 +10,9 @@ import { useViewStore, ViewType } from '../../stores/view-store';
 import { frontendlogger } from '../../utils/frontend-logger';
 import './tidligere-vedtak.less';
 
-export type OnTidligereVedtakClicked = (vedtakData: TidligereVedtakData, idx: number) => void;
+export type OnTidligereVedtakClicked = (vedtakData: Vedtak, idx: number) => void;
 
-function mapTidligereVedtakTilListItem(vedtakData: TidligereVedtakData, idx: number, handleOnVedtakClicked: OnTidligereVedtakClicked) {
+function mapTidligereVedtakTilListItem(vedtakData: Vedtak, idx: number, handleOnVedtakClicked: OnTidligereVedtakClicked) {
 	return (
 		<li className="tidligere-vedtak__liste-item" key={idx}>
 			{ erVedtakFraArena(vedtakData) ?
@@ -36,15 +36,15 @@ function mapTidligereVedtakTilListItem(vedtakData: TidligereVedtakData, idx: num
 	);
 }
 
-function getDate(vedtakData: TidligereVedtakData): string {
+function getDate(vedtakData: Vedtak): string {
 	if (erVedtakFraArena(vedtakData)) {
 		return vedtakData.datoOpprettet;
 	}
 
-	return (vedtakData as VedtakData).sistOppdatert;
+	return (vedtakData as ModiaVedtak).sistOppdatert;
 }
 
-function sorterTidligereVedtak(tidligereVedtak: TidligereVedtakData[]) {
+function sorterTidligereVedtak(tidligereVedtak: Vedtak[]) {
 	tidligereVedtak.sort((vedtak1, vedtak2) => {
 		const d1 = dayjs(getDate(vedtak1));
 		const d2 = dayjs(getDate(vedtak2));
@@ -52,20 +52,20 @@ function sorterTidligereVedtak(tidligereVedtak: TidligereVedtakData[]) {
 	});
 }
 
-export function TidligereVedtak({ vedtakHistorikk, vedtakFraArenaHistorikk }: { vedtakHistorikk: VedtakData[], vedtakFraArenaHistorikk: ArenaVedtakData[] }) {
+export function TidligereVedtak({ modiaHistorikk, arenaHistorikk }: { modiaHistorikk: ModiaVedtak[], arenaHistorikk: ArenaVedtak[] }) {
 	const { changeView } = useViewStore();
 
-	const tidligereVedtak: TidligereVedtakData[] = [...vedtakHistorikk, ...vedtakFraArenaHistorikk];
+	const tidligereVedtak: Vedtak[] = [...modiaHistorikk, ...arenaHistorikk];
 	sorterTidligereVedtak(tidligereVedtak);
 
-	function handleTidligereVedtakClicked(vedtakData: TidligereVedtakData, idx: number) {
+	function handleTidligereVedtakClicked(vedtakData: Vedtak, idx: number) {
 		if (erVedtakFraArena(vedtakData)) {
 			changeView(ViewType.VEDTAK_PDF, {
 				journalpostId: vedtakData.journalpostId,
 				dokumentInfoId: vedtakData.dokumentInfoId
 			});
 		} else {
-			changeView(ViewType.VEDTAK, { vedtakId: (vedtakData as VedtakData).id });
+			changeView(ViewType.VEDTAK, { vedtakId: (vedtakData as ModiaVedtak).id });
 		}
 
 		frontendlogger.logMetrikk('vis-tidligere-vedtak', { index: idx });
