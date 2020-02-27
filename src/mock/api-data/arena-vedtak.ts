@@ -1,17 +1,7 @@
 import { JSONArray } from 'yet-another-fetch-mock';
-import { ArenaVedtak, InnsatsgruppeType } from '../../rest/data/vedtak';
+import { ArenaVedtak } from '../../rest/data/vedtak';
 
 const vedtakFraArena: ArenaVedtak[] & JSONArray = [
-	{
-		journalpostId: '11223344',
-		dokumentInfoId: '44556677',
-		oppfolgingsenhetId: '1234',
-		oppfolgingsenhetNavn: 'NAV Testheim',
-		veilederNavn: 'Nordmann, Ola',
-		datoOpprettet: '2019-01-12T09:56:28',
-		erGjeldende: true,
-		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS
-	},
 	{
 		journalpostId: '22334455',
 		dokumentInfoId: '66778899',
