@@ -4,20 +4,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "31e786b6095e443fd137",
+    "revision": "61c720084a874624f9bf",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "31e786b6095e443fd137",
+    "revision": "61c720084a874624f9bf",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
-    "revision": "a3ede3d3abb3c3c179b4",
-    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.474c2f8d.chunk.js"
+    "revision": "f270d4651ddf029d510c",
+    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.037fe523.chunk.js"
   },
   {
     "revision": "60c7de9e28dee1c6c239b50318b59bfe",
     "url": "/veilarbvedtaksstottefs/static/media/advarsel-sirkel.60c7de9e.svg"
+  },
+  {
+    "revision": "6ff6acdd01fa6b8f4abcacd2ec4a3c21",
+    "url": "/veilarbvedtaksstottefs/static/media/arena-vedtak.6ff6acdd.svg"
   },
   {
     "revision": "7b1b80d906793cdf3c4710d0a3aa503e",
@@ -132,8 +136,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/vedtak-sendt-digital.9abf4fbf.svg"
   },
   {
-    "revision": "9dd28f3b94d847647c39ab9dbc03e931",
-    "url": "/veilarbvedtaksstottefs/static/media/vedtak.9dd28f3b.svg"
+    "revision": "c2eba75d45221bdc872ba9162459e00a",
+    "url": "/veilarbvedtaksstottefs/static/media/vedtak.c2eba75d.svg"
   },
   {
     "revision": "cf671b5e9feade3e8aeddcba9dc609cf",
