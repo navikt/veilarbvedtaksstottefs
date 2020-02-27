@@ -36,7 +36,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 
 	if (isAnyNotStartedOrPending([vedtak, malform, oppfolgingData, features, arenaVedtak])) {
 		return <Spinner />;
-	} else if (hasAnyFailed([vedtak, malform, oppfolgingData, features, arenaVedtak])) {
+	} else if (hasAnyFailed([vedtak, malform, oppfolgingData, features])) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.

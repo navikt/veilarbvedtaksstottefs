@@ -3,8 +3,8 @@ import { ArenaVedtak, ModiaVedtak } from '../rest/data/vedtak';
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
 
-export const finnGjeldendeArenaVedtak = (vedtakListe: ArenaVedtak[]): ArenaVedtak | undefined => {
-	return vedtakListe.find(v => v.erGjeldende);
+export const finnGjeldendeArenaVedtak = (vedtakListe: ArenaVedtak[] | undefined): ArenaVedtak | undefined => {
+	return vedtakListe && vedtakListe.find(v => v.erGjeldende);
 };
 
 export const finnUtkastAlltid = (vedtakListe: ModiaVedtak[]): ModiaVedtak => {
