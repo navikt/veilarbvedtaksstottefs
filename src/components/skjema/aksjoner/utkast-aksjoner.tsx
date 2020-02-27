@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './aksjoner.less';
 import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ReactComponent as SlettIkon } from './delete.svg';
 import { ReactComponent as TaOverIkon } from './locked.svg';
@@ -13,6 +12,7 @@ import { useFetchStore } from '../../../stores/fetch-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil } from '../skjema-utils';
 import Show from '../../show';
+import './aksjoner.less';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -21,7 +21,7 @@ interface UtkastAksjonerProps {
 
 function UtkastAksjoner(props: UtkastAksjonerProps) {
 	const { fnr } = useAppStore();
-	const { vedtak, malform } = useFetchStore();
+	const { vedtak, arenaVedtak, malform } = useFetchStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
 	const { validerSkjema , isReadOnly } = useSkjemaStore();
@@ -29,7 +29,9 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	const [visForhandsvisngLaster, setVisForhandsvisngLaster] = useState(false);
 	const [visLagreVedtakLaster, setVisLagreVedtakLaster] = useState(false);
 
-	function sendDataTilBackend() {
+	const arenaVedtakData = arenaVedtak.data ? arenaVedtak.data : [];
+
+		function sendDataTilBackend() {
 		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform.data)};
 		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo(params))
 			.catch(() => {
@@ -40,7 +42,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	}
 
 	function handleForhandsvisOgLagre() {
-		const skjemaFeil = validerSkjema();
+		const skjemaFeil = validerSkjema(vedtak.data, arenaVedtakData);
 
 		if (harFeil(skjemaFeil)) {
 			scrollTilForsteFeil(skjemaFeil);
@@ -56,7 +58,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	}
 
 	function handleForhandsvis() {
-		const skjemaFeil = validerSkjema();
+		const skjemaFeil = validerSkjema(vedtak.data, arenaVedtakData);
 
 		if (harFeil(skjemaFeil)) return;
 
@@ -86,7 +88,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 					disabled={visForhandsvisngLaster}
 					mini={true}
 					htmlType="submit"
-					onClick={isReadOnly? handleForhandsvis : handleForhandsvisOgLagre}
+					onClick={isReadOnly ? handleForhandsvis : handleForhandsvisOgLagre}
 				>
 					Forhåndsvis
 				</Hovedknapp>
@@ -95,7 +97,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 					disabled={visLagreVedtakLaster}
 					mini={true}
 					htmlType="button"
-					onClick={isReadOnly? handleTilbake : handleLagreOgTilbake}
+					onClick={isReadOnly ? handleTilbake : handleLagreOgTilbake}
 				>
 					{isReadOnly ? 'Tilbake' : 'Lagre og gå tilbake'}
 				</Knapp>

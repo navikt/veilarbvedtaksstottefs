@@ -1,28 +1,49 @@
 import React from 'react';
 import cls from 'classnames';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { lagSkjemaElementFeil, trengerBeslutter } from '../skjema-utils';
+import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import {
+	lagSkjemaElementFeil,
+	trengerBeslutter, harSkrevetBegrunnelse
+} from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { swallowEnterKeyPress } from '../../../utils';
+import { finnGjeldendeArenaVedtak, finnGjeldendeModiaVedtak, swallowEnterKeyPress } from '../../../utils';
 import './innsatsgruppe.less';
-import { InnsatsgruppeTekst, innsatsgruppeTekster } from '../../../utils/innsatsgruppe';
+import {
+	erStandard, erVarigEllerGradertVarig,
+	InnsatsgruppeTekst,
+	innsatsgruppeTekster
+} from '../../../utils/innsatsgruppe';
 import { InnsatsgruppeType } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import Show from '../../show';
+import { useFetchStore } from '../../../stores/fetch-store';
 
 function Innsatsgruppe() {
-	const {innsatsgruppe, setInnsatsgruppe, setHovedmal, errors, isReadOnly} = useSkjemaStore();
-	const trengerVedtakBeslutter = trengerBeslutter(innsatsgruppe);
+	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors, isReadOnly} = useSkjemaStore();
+	const {vedtak, arenaVedtak} = useFetchStore();
+
+	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
+	const gjeldendeVedtak = finnGjeldendeModiaVedtak(vedtak.data) || finnGjeldendeArenaVedtak(arenaVedtak.data);
+	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
+
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
-			{trengerVedtakBeslutter && (
-				<AlertStripeInfo className="innsatsgruppe-info">
+			<Show if={trengerBeslutter(innsatsgruppe)}>
+				<AlertStripeInfo className="innsatsgruppe__alertstripe">
 					Vurderingen skal sendes til beslutter når du vurderer at brukeren enten har liten mulighettil å jobbe eller har mulighet til å jobbe delvis.
 					Når du går videre får du sendt til beslutter.
 				</AlertStripeInfo>
-			)}
+			</Show>
+			<Show if={!harSkrevetBegrunnelse(begrunnelse) && erStandardInnsatsValgt && erGjeldendeInnsatsVarig}>
+				<AlertStripe form="inline" type="advarsel" className="innsatsgruppe__alertstripe">
+					Begrunnelse må i dette tilfellet også fylles ut for standard innsats.
+					Dette er fordi gjeldende vedtak viser varig eller delvis varig tilpasset innsats.
+					Når det gjøres en ny vurdering er det viktig å fremheve hva som er årsaken til endring i brukers situasjon.
+				</AlertStripe>
+			</Show>
 			<SkjemaGruppe feil={lagSkjemaElementFeil(errors.innsatsgruppe)}>
 				<InnsatsgruppeRadioButtons
 					handleInnsatsgruppeChanged={setInnsatsgruppe}

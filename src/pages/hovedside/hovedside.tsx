@@ -9,15 +9,15 @@ import { IngenTidligereVedtakPanel } from '../../components/panel/ingen-tidliger
 import { IngenGjeldendeVedtakPanel } from '../../components/panel/ingen-gjeldende-vedtak/ingen-gjeldende-vedtak';
 import Show from '../../components/show';
 import { Vedtak } from '../../rest/data/vedtak';
-import './hovedside.less';
-import { hasData, hasFailed } from '../../rest/utils';
+import { hasFailed } from '../../rest/utils';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import './hovedside.less';
 
 export function Hovedside() {
 	const { vedtak, arenaVedtak, oppfolgingData } = useFetchStore();
 
 	const underOppfolging = oppfolgingData.data.underOppfolging;
-	const vedtakFraArena = hasData(arenaVedtak) ? arenaVedtak.data : [];
+	const vedtakFraArena = arenaVedtak.data ? arenaVedtak.data : [];
 
 	const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST');
 	const gjeldendeVedtak = vedtak.data.find(v => v.gjeldende) || vedtakFraArena.find(v => v.erGjeldende);

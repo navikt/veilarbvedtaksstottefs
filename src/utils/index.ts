@@ -1,10 +1,15 @@
 import { ArenaVedtak, ModiaVedtak } from '../rest/data/vedtak';
+import { OrNothing } from './types/ornothing';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
 
-export const finnGjeldendeArenaVedtak = (vedtakListe: ArenaVedtak[] | undefined): ArenaVedtak | undefined => {
-	return vedtakListe && vedtakListe.find(v => v.erGjeldende);
+export const finnGjeldendeArenaVedtak = (vedtakListe: OrNothing<ArenaVedtak[]>): ArenaVedtak | undefined => {
+	return vedtakListe ? vedtakListe.find(v => v.erGjeldende) : undefined;
+};
+
+export const finnGjeldendeModiaVedtak = (vedtakListe: OrNothing<ModiaVedtak[]>): ModiaVedtak | undefined => {
+	return vedtakListe ? vedtakListe.find(v => v.gjeldende) : undefined;
 };
 
 export const finnUtkastAlltid = (vedtakListe: ModiaVedtak[]): ModiaVedtak => {
