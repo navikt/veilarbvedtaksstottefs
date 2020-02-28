@@ -1,8 +1,18 @@
 import { InnsatsgruppeType } from '../rest/data/vedtak';
+import { OrNothing } from './types/ornothing';
 
 
 export const getInnsatsgruppeTekst = (innsatsgruppeType: InnsatsgruppeType) => {
 	return innsatsgruppeTekster.find(elem => elem.value === innsatsgruppeType) as InnsatsgruppeTekst;
+};
+
+export const erStandard = (innsatsgruppe: OrNothing<InnsatsgruppeType>): boolean => {
+	return innsatsgruppe === InnsatsgruppeType.STANDARD_INNSATS;
+};
+
+export const erVarigEllerGradertVarig = (innsatsgruppe: OrNothing<InnsatsgruppeType>): boolean => {
+	return innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS
+		|| innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
 };
 
 export interface InnsatsgruppeTekst {

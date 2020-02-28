@@ -34,9 +34,9 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [vedtak, oppfolgingData, malform, features]);
 
-	if (isAnyNotStartedOrPending([vedtak, malform, oppfolgingData, features, arenaVedtak])) {
+	if (isAnyNotStartedOrPending([vedtak, malform, oppfolgingData, features, innloggetVeileder, arenaVedtak])) {
 		return <Spinner />;
-	} else if (hasAnyFailed([vedtak, malform, oppfolgingData, features])) {
+	} else if (hasAnyFailed([vedtak, malform, oppfolgingData, features, innloggetVeileder])) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.

@@ -5,7 +5,9 @@ import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
 import { Opplysning } from './opplysninger/opplysninger';
 import { MalformData, MalformType } from '../../rest/data/malform';
 import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
-import { InnsatsgruppeType } from '../../rest/data/vedtak';
+import { ArenaVedtak, InnsatsgruppeType, ModiaVedtak } from '../../rest/data/vedtak';
+import { finnGjeldendeArenaVedtak, finnGjeldendeModiaVedtak } from '../../utils';
+import { erStandard, erVarigEllerGradertVarig } from '../../utils/innsatsgruppe';
 
 export const opplysningslisteBokmal = [
 	'Svarene dine fra da du registrerte deg',
@@ -62,20 +64,6 @@ export function erDefaultOpplysning(opplysning: string) {
 	return opplysningslisteBokmal.some(defaultOpplysning => defaultOpplysning === opplysning);
 }
 
-export function isSkjemaEmpty(skjema: SkjemaData) {
-	return (
-		(skjema.hovedmal == null &&
-			skjema.innsatsgruppe == null &&
-			(skjema.opplysninger == null || skjema.opplysninger.length === 0) &&
-			skjema.begrunnelse == null) ||
-		skjema.begrunnelse === ''
-	);
-}
-
-export function maSkriveBegrunnelseGittInnsatsgruppe(innsatsgruppe: OrNothing<InnsatsgruppeType>): boolean {
-	return innsatsgruppe !== InnsatsgruppeType.STANDARD_INNSATS;
-}
-
 export function lagSkjemaElementFeil(error: string | undefined): SkjemaelementFeil | undefined {
 	return error ? { feilmelding: error } : undefined;
 }
@@ -105,28 +93,26 @@ export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
 	}
 }
 
-export function validerSkjema(skjema: SkjemaData): SkjemaFeil {
+export function validerSkjema(skjema: SkjemaData, modiaVedtak: ModiaVedtak[], arenaVedtak: ArenaVedtak[]): SkjemaFeil {
 	const errors: SkjemaFeil = {};
-	const innsatsgruppe = skjema.innsatsgruppe;
+	const { innsatsgruppe, opplysninger, begrunnelse, hovedmal } = skjema;
 
 	if (!innsatsgruppe) {
 		errors.innsatsgruppe = 'Mangler innsatsgruppe';
 	}
 
-	if (!skjema.hovedmal && innsatsgruppe !== InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
+	if (!hovedmal && innsatsgruppe !== InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
 		errors.hovedmal = 'Mangler hovedmål';
 	}
 
-	const begrunnelse = skjema.begrunnelse ? skjema.begrunnelse.trim() : '';
-
-	if (!begrunnelse && maSkriveBegrunnelseGittInnsatsgruppe(innsatsgruppe)) {
+	if (!harSkrevetBegrunnelse(begrunnelse) && maSkriveBegrunnelse(innsatsgruppe, modiaVedtak, arenaVedtak)) {
 		errors.begrunnelse = 'Mangler begrunnelse';
 	}
 
 	const begrunnelsefeil = validerBegrunnelseMaxLength(begrunnelse);
 	Object.assign(errors, begrunnelsefeil);
 
-	if (!skjema.opplysninger || skjema.opplysninger.length < 1) {
+	if (!opplysninger || opplysninger.length < 1) {
 		errors.opplysninger = 'Mangler kilder';
 	}
 
@@ -144,4 +130,26 @@ export function validerBegrunnelseMaxLength(begrunnelse: OrNothing<string>) {
 export function trengerBeslutter(innsatsgruppe: OrNothing<InnsatsgruppeType>) {
 	return innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS
 		|| innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
+}
+
+export function harSkrevetBegrunnelse(begrunnelse: OrNothing<string>) {
+	return begrunnelse ? begrunnelse.trim().length > 0 : false;
+}
+
+/**
+ * Begrunnelse må fylles ut hvis innsatsgruppe ikke er standard.
+ * Unntaket for denne reglen er hvis det gjeldende vedtaket er varig/gradert varig.
+ */
+export function maSkriveBegrunnelse(innsatsgruppe: OrNothing<InnsatsgruppeType>,
+                                    modiaVedtak: ModiaVedtak[], arenaVedtak: ArenaVedtak[]) {
+	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
+
+	if (!erStandardInnsatsValgt) {
+		return true;
+	}
+
+	const gjeldendeVedtak = finnGjeldendeModiaVedtak(modiaVedtak) || finnGjeldendeArenaVedtak(arenaVedtak);
+	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
+
+	return erStandardInnsatsValgt && erGjeldendeInnsatsVarig;
 }

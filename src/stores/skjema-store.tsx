@@ -6,7 +6,7 @@ import {
 	validerSkjema as valider
 } from '../components/skjema/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
-import { HovedmalType, InnsatsgruppeType, ModiaVedtak } from '../rest/data/vedtak';
+import { ArenaVedtak, HovedmalType, InnsatsgruppeType, ModiaVedtak } from '../rest/data/vedtak';
 
 export const useSkjemaStore = createUseContext(() => {
 	const [opplysninger, setOpplysninger] = useState<string[]>([]);
@@ -17,8 +17,8 @@ export const useSkjemaStore = createUseContext(() => {
 	const [errors, setErrors] = useState<SkjemaFeil>({});
 	const [isReadOnly, setReadOnly] = useState<boolean>(true);
 
-	const validerSkjema = (): SkjemaFeil => {
-		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse });
+	const validerSkjema = (modiaVedtak: ModiaVedtak[], arenaVedtak: ArenaVedtak[]): SkjemaFeil => {
+		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, modiaVedtak, arenaVedtak);
 		setErrors(feil);
 		return feil;
 	};

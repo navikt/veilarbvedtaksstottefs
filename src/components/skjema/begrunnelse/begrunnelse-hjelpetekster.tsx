@@ -5,8 +5,11 @@ import React from 'react';
 export function BegrunnelseHjelpetekster() {
 	return (
 		<HjelpetekstPanel navn="begrunnelse" headerTekst="Tips">
-			<Normaltekst>Spørsmål som kan være til nytte når du skal gjøre vurderingen din:</Normaltekst>
-			<ul className="begrunnelse-hjelpetekster__liste">
+			<Normaltekst className="begrunnelse-hjelpetekster__ingress">
+				Begrunnelse må skrives for alle innsatsgrupper, bortsett fra standard innsats.
+				Når du skal skrive begrunnelse og gjøre vurderingen din, er følgende spørsmål nyttige å stille:
+			</Normaltekst>
+			<ul>
 				<li>Hva tenker denne personen selv om mulighetene sine til å være eller komme i jobb?</li>
 				<li>Hvilke typer arbeid ønsker denne personen seg og hva er realistisk ut fra dagens arbeidsmarked?</li>
 				<li>Hva slags veiledning trenger denne personen?</li>
