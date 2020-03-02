@@ -8,9 +8,10 @@ import { useFetchStore } from '../../stores/fetch-store';
 import { IngenTidligereVedtakPanel } from '../../components/panel/ingen-tidligere-vedtak/ingen-tidligere-vedtak-panel';
 import { IngenGjeldendeVedtakPanel } from '../../components/panel/ingen-gjeldende-vedtak/ingen-gjeldende-vedtak';
 import Show from '../../components/show';
-import { Vedtak } from '../../rest/data/vedtak';
+import { ModiaVedtak } from '../../rest/data/vedtak';
 import { hasFailed } from '../../rest/utils';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { TidligereVedtakArena } from '../../components/tidligere-vedtak-arena/tidligere-vedtak-arena';
 import './hovedside.less';
 
 export function Hovedside() {
@@ -18,13 +19,13 @@ export function Hovedside() {
 
 	const underOppfolging = oppfolgingData.data.underOppfolging;
 	const vedtakFraArena = arenaVedtak.data ? arenaVedtak.data : [];
+	const harVedtakFraArena = vedtakFraArena.length > 0;
 
 	const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST');
-	const gjeldendeVedtak = vedtak.data.find(v => v.gjeldende) || vedtakFraArena.find(v => v.erGjeldende);
+	const gjeldendeVedtak = vedtak.data.find(v => v.gjeldende);
 
-	const tidligereVedtakFraModia = vedtak.data.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
-	const tidligereVedtakFraArena = vedtakFraArena.filter(v => !v.erGjeldende);
-	const harTidligereVedtak = tidligereVedtakFraModia.length > 0 || tidligereVedtakFraArena.length > 0;
+	const tidligereVedtak = vedtak.data.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
+	const harTidligereVedtak = tidligereVedtak.length > 0;
 
 	return (
 		<Page>
@@ -41,16 +42,19 @@ export function Hovedside() {
 					<Show if={underOppfolging}>
 						<UtkastPanel utkast={utkast} />
 						<Show if={gjeldendeVedtak != null}>
-							<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak as Vedtak} />
+							<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak as ModiaVedtak} />
 						</Show>
 						<NyttVedtakPanel utkast={utkast} />
 					</Show>
 				</div>
 				<div className="hovedside__tidligere-vedtak-panel">
-						{harTidligereVedtak
-							? <TidligereVedtak modiaHistorikk={tidligereVedtakFraModia} arenaHistorikk={tidligereVedtakFraArena} />
-							: <IngenTidligereVedtakPanel />
-						}
+					{harTidligereVedtak
+						? <TidligereVedtak modiaHistorikk={tidligereVedtak} />
+						: <IngenTidligereVedtakPanel />
+					}
+					<Show if={harVedtakFraArena}>
+						<TidligereVedtakArena arenaHistorikk={vedtakFraArena}/>
+					</Show>
 				</div>
 			</div>
 		</Page>

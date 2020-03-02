@@ -1,7 +1,6 @@
 import { InnsatsgruppeType } from '../rest/data/vedtak';
 import { OrNothing } from './types/ornothing';
 
-
 export const getInnsatsgruppeTekst = (innsatsgruppeType: InnsatsgruppeType) => {
 	return innsatsgruppeTekster.find(elem => elem.value === innsatsgruppeType) as InnsatsgruppeTekst;
 };

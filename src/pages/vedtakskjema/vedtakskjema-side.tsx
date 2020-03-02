@@ -28,7 +28,7 @@ export interface SkjemaData {
 
 export function VedtakskjemaSide() {
 	const { fnr } = useAppStore();
-	const { vedtak, arenaVedtak, malform } = useFetchStore();
+	const { vedtak, malform } = useFetchStore();
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse,
@@ -38,8 +38,6 @@ export function VedtakskjemaSide() {
 
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 	const isAfterFirstRender = useIsAfterFirstRender();
-
-	const arenaVedtakData = arenaVedtak.data ? arenaVedtak.data : [];
 
 	const oppdaterSistEndret = useConst(debounce((skjema: SkjemaData) => {
 		const malformType = hentMalformFraData(malform.data);
@@ -57,7 +55,7 @@ export function VedtakskjemaSide() {
 
 	useEffect(() => {
 		if (harForsoktAttSende) {
-			validerSkjema(vedtak.data, arenaVedtakData);
+			validerSkjema(vedtak.data);
 		} else {
 			validerBegrunnelseLengde();
 		}

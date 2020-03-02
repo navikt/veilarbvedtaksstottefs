@@ -21,7 +21,7 @@ interface UtkastAksjonerProps {
 
 function UtkastAksjoner(props: UtkastAksjonerProps) {
 	const { fnr } = useAppStore();
-	const { vedtak, arenaVedtak, malform } = useFetchStore();
+	const { vedtak, malform } = useFetchStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
 	const { validerSkjema , isReadOnly } = useSkjemaStore();
@@ -29,9 +29,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	const [visForhandsvisngLaster, setVisForhandsvisngLaster] = useState(false);
 	const [visLagreVedtakLaster, setVisLagreVedtakLaster] = useState(false);
 
-	const arenaVedtakData = arenaVedtak.data ? arenaVedtak.data : [];
-
-		function sendDataTilBackend() {
+	function sendDataTilBackend() {
 		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform.data)};
 		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo(params))
 			.catch(() => {
@@ -42,7 +40,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	}
 
 	function handleForhandsvisOgLagre() {
-		const skjemaFeil = validerSkjema(vedtak.data, arenaVedtakData);
+		const skjemaFeil = validerSkjema(vedtak.data);
 
 		if (harFeil(skjemaFeil)) {
 			scrollTilForsteFeil(skjemaFeil);
@@ -58,7 +56,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	}
 
 	function handleForhandsvis() {
-		const skjemaFeil = validerSkjema(vedtak.data, arenaVedtakData);
+		const skjemaFeil = validerSkjema(vedtak.data);
 
 		if (harFeil(skjemaFeil)) return;
 

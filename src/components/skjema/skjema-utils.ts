@@ -5,8 +5,8 @@ import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
 import { Opplysning } from './opplysninger/opplysninger';
 import { MalformData, MalformType } from '../../rest/data/malform';
 import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
-import { ArenaVedtak, InnsatsgruppeType, ModiaVedtak } from '../../rest/data/vedtak';
-import { finnGjeldendeArenaVedtak, finnGjeldendeModiaVedtak } from '../../utils';
+import { InnsatsgruppeType, ModiaVedtak } from '../../rest/data/vedtak';
+import { finnGjeldendeVedtak } from '../../utils';
 import { erStandard, erVarigEllerGradertVarig } from '../../utils/innsatsgruppe';
 
 export const opplysningslisteBokmal = [
@@ -93,7 +93,7 @@ export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
 	}
 }
 
-export function validerSkjema(skjema: SkjemaData, modiaVedtak: ModiaVedtak[], arenaVedtak: ArenaVedtak[]): SkjemaFeil {
+export function validerSkjema(skjema: SkjemaData, modiaVedtak: ModiaVedtak[]): SkjemaFeil {
 	const errors: SkjemaFeil = {};
 	const { innsatsgruppe, opplysninger, begrunnelse, hovedmal } = skjema;
 
@@ -105,7 +105,7 @@ export function validerSkjema(skjema: SkjemaData, modiaVedtak: ModiaVedtak[], ar
 		errors.hovedmal = 'Mangler hovedmål';
 	}
 
-	if (!harSkrevetBegrunnelse(begrunnelse) && maSkriveBegrunnelse(innsatsgruppe, modiaVedtak, arenaVedtak)) {
+	if (!harSkrevetBegrunnelse(begrunnelse) && maSkriveBegrunnelse(innsatsgruppe, modiaVedtak)) {
 		errors.begrunnelse = 'Mangler begrunnelse';
 	}
 
@@ -140,15 +140,14 @@ export function harSkrevetBegrunnelse(begrunnelse: OrNothing<string>) {
  * Begrunnelse må fylles ut hvis innsatsgruppe ikke er standard.
  * Unntaket for denne reglen er hvis det gjeldende vedtaket er varig/gradert varig.
  */
-export function maSkriveBegrunnelse(innsatsgruppe: OrNothing<InnsatsgruppeType>,
-                                    modiaVedtak: ModiaVedtak[], arenaVedtak: ArenaVedtak[]) {
+export function maSkriveBegrunnelse(innsatsgruppe: OrNothing<InnsatsgruppeType>, modiaVedtak: ModiaVedtak[]) {
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
 
 	if (!erStandardInnsatsValgt) {
 		return true;
 	}
 
-	const gjeldendeVedtak = finnGjeldendeModiaVedtak(modiaVedtak) || finnGjeldendeArenaVedtak(arenaVedtak);
+	const gjeldendeVedtak = finnGjeldendeVedtak(modiaVedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
 
 	return erStandardInnsatsValgt && erGjeldendeInnsatsVarig;

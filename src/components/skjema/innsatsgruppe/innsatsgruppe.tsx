@@ -8,7 +8,7 @@ import {
 } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { finnGjeldendeArenaVedtak, finnGjeldendeModiaVedtak, swallowEnterKeyPress } from '../../../utils';
+import { finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../utils';
 import './innsatsgruppe.less';
 import {
 	erStandard, erVarigEllerGradertVarig,
@@ -23,10 +23,10 @@ import { useFetchStore } from '../../../stores/fetch-store';
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors, isReadOnly} = useSkjemaStore();
-	const {vedtak, arenaVedtak} = useFetchStore();
+	const {vedtak} = useFetchStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
-	const gjeldendeVedtak = finnGjeldendeModiaVedtak(vedtak.data) || finnGjeldendeArenaVedtak(arenaVedtak.data);
+	const gjeldendeVedtak = finnGjeldendeVedtak(vedtak.data);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
 
 	return (
