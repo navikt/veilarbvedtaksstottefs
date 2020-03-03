@@ -20,3 +20,22 @@ export function daysFromToday(date: Date): number {
 	const today = dayjs();
 	return today.diff(dayjs(date), 'day');
 }
+
+export function sortDates(dateStr1: string, dateStr2: string): number {
+	const d1 = dayjs(dateStr1);
+	const d2 = dayjs(dateStr2);
+	return d1.isBefore(d2) ? 1 : -1;
+}
+
+export function lagVedtakDatoTekst(dateStr: string): string {
+	const date = dayjs(dateStr).toDate();
+	const days = daysFromToday(date);
+
+	if (days <= 0) {
+		return 'i dag';
+	} else if (days < 30) {
+		return `${days} dager siden`;
+	}
+
+	return formatDate(date);
+}

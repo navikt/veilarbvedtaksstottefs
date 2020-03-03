@@ -1,8 +1,8 @@
-import { HovedmalType, InnsatsgruppeType, ModiaVedtak } from '../../../rest/data/vedtak';
+import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
 import { ansvarligVeileder } from '../veiledere';
 
-const utkast: ModiaVedtak & JSONObject = {
+const utkast: Vedtak & JSONObject = {
 	id: 100,
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
 	innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,

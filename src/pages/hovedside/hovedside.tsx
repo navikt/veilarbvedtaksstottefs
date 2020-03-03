@@ -1,5 +1,5 @@
 import React from 'react';
-import { TidligereVedtak } from '../../components/tidligere-vedtak/tidligere-vedtak';
+import { TidligereVedtakListe } from '../../components/tidligere-vedtak-liste/tidligere-vedtak-liste';
 import { UtkastPanel } from '../../components/panel/utkast/utkast-panel';
 import { GjeldendeVedtakPanel } from '../../components/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
 import { NyttVedtakPanel } from '../../components/panel/nytt-vedtak/nytt-vedtak-panel';
@@ -11,6 +11,7 @@ import Show from '../../components/show';
 import { Vedtak } from '../../rest/data/vedtak';
 import { hasFailed } from '../../rest/utils';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { VedtakFraArenaListe } from '../../components/vedtak-fra-arena-liste/vedtak-fra-arena-liste';
 import './hovedside.less';
 
 export function Hovedside() {
@@ -18,13 +19,13 @@ export function Hovedside() {
 
 	const underOppfolging = oppfolgingData.data.underOppfolging;
 	const vedtakFraArena = arenaVedtak.data ? arenaVedtak.data : [];
+	const harVedtakFraArena = vedtakFraArena.length > 0;
 
 	const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST');
-	const gjeldendeVedtak = vedtak.data.find(v => v.gjeldende) || vedtakFraArena.find(v => v.erGjeldende);
+	const gjeldendeVedtak = vedtak.data.find(v => v.gjeldende);
 
-	const tidligereVedtakFraModia = vedtak.data.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
-	const tidligereVedtakFraArena = vedtakFraArena.filter(v => !v.erGjeldende);
-	const harTidligereVedtak = tidligereVedtakFraModia.length > 0 || tidligereVedtakFraArena.length > 0;
+	const tidligereVedtak = vedtak.data.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
+	const harTidligereVedtak = tidligereVedtak.length > 0;
 
 	return (
 		<Page>
@@ -47,10 +48,13 @@ export function Hovedside() {
 					</Show>
 				</div>
 				<div className="hovedside__tidligere-vedtak-panel">
-						{harTidligereVedtak
-							? <TidligereVedtak modiaHistorikk={tidligereVedtakFraModia} arenaHistorikk={tidligereVedtakFraArena} />
-							: <IngenTidligereVedtakPanel />
-						}
+					{harTidligereVedtak
+						? <TidligereVedtakListe vedtakListe={tidligereVedtak} />
+						: <IngenTidligereVedtakPanel />
+					}
+					<Show if={harVedtakFraArena}>
+						<VedtakFraArenaListe vedtakListe={vedtakFraArena}/>
+					</Show>
 				</div>
 			</div>
 		</Page>

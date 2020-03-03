@@ -13,7 +13,7 @@ import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { finnGjeldendeArenaVedtak, finnUtkastAlltid } from '../../utils';
+import { finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import './forhandsvisning.less';
 import Show from '../../components/show';
@@ -21,7 +21,7 @@ import Show from '../../components/show';
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { vedtak, arenaVedtak, features, oppfolgingData } = useFetchStore();
+	const { vedtak, features, oppfolgingData } = useFetchStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema, isReadOnly } = useSkjemaStore();
 
@@ -55,11 +55,6 @@ export function Forhandsvisning() {
 			.then(() => {
                 resetSkjema();
 				vedtak.fetch({ fnr }, () => {
-					const gjeldendeArenaVedtak = finnGjeldendeArenaVedtak(arenaVedtak.data);
-					if (gjeldendeArenaVedtak) {
-						gjeldendeArenaVedtak.erGjeldende = false;
-					}
-
 					const sendesVedtakDigitalt = !oppfolgingData.data.reservasjonKRR;
 					changeView(ViewType.HOVEDSIDE);
 					showModal(ModalType.VEDTAK_SENT_SUKSESS, { sendesVedtakDigitalt });

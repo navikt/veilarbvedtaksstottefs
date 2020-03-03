@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModiaVedtak } from '../../rest/data/vedtak';
+import { Vedtak } from '../../rest/data/vedtak';
 import Page from '../page/page';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -12,7 +12,7 @@ import './vedtakskjema-visning-side.less';
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	const { vedtak } = useFetchStore();
 	const { changeView } = useViewStore();
-	const vistVedtak = vedtak.data.find((v: ModiaVedtak) => v.id === props.vedtakId);
+	const vistVedtak = vedtak.data.find((v: Vedtak) => v.id === props.vedtakId);
 
 	if (!vistVedtak) {
 		return <AlertStripeFeil>Fant ikke vedtak å fremvise</AlertStripeFeil>;

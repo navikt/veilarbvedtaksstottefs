@@ -11,7 +11,7 @@ import {
 import Oppfolging from '../rest/data/oppfolging-data';
 import { MalformData } from '../rest/data/malform';
 import { Features } from '../rest/data/features';
-import { ArenaVedtak, ModiaVedtak } from '../rest/data/vedtak';
+import { ArenaVedtak, Vedtak } from '../rest/data/vedtak';
 import { Veileder } from '../rest/data/veiledere';
 import { OrNothing } from '../utils/types/ornothing';
 
@@ -20,7 +20,7 @@ export const useFetchStore = createUseContext(() => {
 	const malform = useFetch<MalformData, FnrFetchParams>(lagHentMalformFetchInfo);
 	const features = useFetch<Features>(lagHentFeaturesFetchInfo);
 	const innloggetVeileder = useFetch<Veileder>(lagHentVeilederFetchInfo);
-	const vedtak = useFetch<ModiaVedtak[], FnrFetchParams>(lagHentVedtakFetchInfo);
+	const vedtak = useFetch<Vedtak[], FnrFetchParams>(lagHentVedtakFetchInfo);
 	const arenaVedtak = useFetch<OrNothing<ArenaVedtak[]>, FnrFetchParams>(lagHentArenaVedtakFetchInfo);
 
 	return { oppfolgingData, features, malform, vedtak, innloggetVeileder, arenaVedtak };
