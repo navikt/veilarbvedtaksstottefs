@@ -18,6 +18,7 @@ import { finnUtkastAlltid } from '../../utils';
 import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
 import './vedtakskjema-side.less';
 import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
+import { BeslutterDialog } from '../../components/beslutter-dialog/beslutter-dialog';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -74,11 +75,12 @@ export function VedtakskjemaSide() {
 	}, []);
 
 	return (
-		<Page className="page--grey">
+		<Page className="page--grey" contentClassName="vedtakskjema-side">
 			<Card className="vedtakskjema">
 				<SkjemaHeader vedtak={finnUtkastAlltid(vedtak.data)} sistOppdatert={sistOppdatert} />
 				<Skjema />
 			</Card>
+			<BeslutterDialog />
 			<Footer className="vedtakskjema__footer">
 				<UtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
 			</Footer>

@@ -13,7 +13,7 @@ export function ViewController() {
 
 	switch (view) {
 		case ViewType.HOVEDSIDE:
-			return <Hovedside />;
+			return <VedtakskjemaSide />;
 		case ViewType.UTKAST:
 			return <VedtakskjemaSide />;
 		case ViewType.FORHANDSVISNING:

@@ -7,6 +7,7 @@ import StoreProvider from './stores/store-provider';
 import { ModalController } from './components/modal-controller';
 import { UtkastSkjemaSync } from './components/utkast-skjema-sync';
 import './app.less';
+import { DialogMeldingerSync } from './components/dialog-meldinger-sync';
 
 interface AppProps {
 	fnr: string;
@@ -21,6 +22,7 @@ function App(props: AppProps) {
 					<NasjonalTilgangSjekk fnr={props.fnr}>
 						<DataFetcher fnr={props.fnr}>
 							<UtkastSkjemaSync />
+							<DialogMeldingerSync />
 							<ViewController />
 							<ModalController />
 						</DataFetcher>

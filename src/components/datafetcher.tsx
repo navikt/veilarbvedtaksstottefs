@@ -5,7 +5,11 @@ import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../rest/ut
 import Spinner from './spinner/spinner';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
-	const { oppfolgingData, features, malform, vedtak, innloggetVeileder, arenaVedtak } = useFetchStore();
+	const {
+		oppfolgingData, features, malform,
+		vedtak, innloggetVeileder, arenaVedtak,
+		dialogerMeldinger
+	} = useFetchStore();
 
 	useEffect(() => {
 		if (isNotStarted(vedtak)) {
@@ -31,12 +35,16 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		if (isNotStarted(innloggetVeileder)) {
 			innloggetVeileder.fetch(null);
 		}
+
+		if (isNotStarted(dialogerMeldinger)) {
+			dialogerMeldinger.fetch({ fnr: props.fnr });
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [vedtak, oppfolgingData, malform, features]);
 
-	if (isAnyNotStartedOrPending([vedtak, malform, oppfolgingData, features, innloggetVeileder, arenaVedtak])) {
+	if (isAnyNotStartedOrPending([vedtak, malform, oppfolgingData, features, innloggetVeileder, arenaVedtak, dialogerMeldinger])) {
 		return <Spinner />;
-	} else if (hasAnyFailed([vedtak, malform, oppfolgingData, features, innloggetVeileder])) {
+	} else if (hasAnyFailed([vedtak, malform, oppfolgingData, features, innloggetVeileder, dialogerMeldinger])) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.

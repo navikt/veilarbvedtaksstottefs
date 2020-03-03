@@ -1,7 +1,7 @@
 import createUseContext from 'constate';
 import useFetch from '../rest/use-fetch';
 import {
-	FnrFetchParams, lagHentArenaVedtakFetchInfo,
+	FnrFetchParams, lagHentArenaVedtakFetchInfo, lagHentDialogerFetchInfo,
 	lagHentFeaturesFetchInfo,
 	lagHentMalformFetchInfo,
 	lagHentOppfolgingDataFetchInfo,
@@ -14,6 +14,7 @@ import { Features } from '../rest/data/features';
 import { ArenaVedtak, Vedtak } from '../rest/data/vedtak';
 import { Veileder } from '../rest/data/veiledere';
 import { OrNothing } from '../utils/types/ornothing';
+import { DialogMelding } from '../rest/data/dialog-melding';
 
 export const useFetchStore = createUseContext(() => {
 	const oppfolgingData = useFetch<Oppfolging, FnrFetchParams>(lagHentOppfolgingDataFetchInfo);
@@ -22,6 +23,7 @@ export const useFetchStore = createUseContext(() => {
 	const innloggetVeileder = useFetch<Veileder>(lagHentVeilederFetchInfo);
 	const vedtak = useFetch<Vedtak[], FnrFetchParams>(lagHentVedtakFetchInfo);
 	const arenaVedtak = useFetch<OrNothing<ArenaVedtak[]>, FnrFetchParams>(lagHentArenaVedtakFetchInfo);
+	const dialogerMeldinger = useFetch<DialogMelding[], FnrFetchParams>(lagHentDialogerFetchInfo);
 
-	return { oppfolgingData, features, malform, vedtak, innloggetVeileder, arenaVedtak };
+	return { oppfolgingData, features, malform, vedtak, innloggetVeileder, arenaVedtak, dialogerMeldinger };
 });

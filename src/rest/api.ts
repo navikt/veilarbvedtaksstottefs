@@ -5,6 +5,11 @@ import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-moda
 import { mapOpplysningerFraBokmalTilBrukersMalform } from '../components/skjema/skjema-utils';
 import { MalformType } from './data/malform';
 
+export interface SendDialogFetchParams {
+	fnr: string;
+	tekst: string;
+}
+
 export interface FnrFetchParams {
 	fnr: string;
 }
@@ -33,11 +38,11 @@ export type OpprettBeslutterOppgaveFetchParams = BeslutterOppgaveData & {
 	fnr: string;
 };
 
-const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
-const VEILARBOPPFOLGING_API = '/veilarboppfolging/api';
-const VEILARBPERSON_API = '/veilarbperson/api';
-const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
-const VEILARBVEILEDER_API = '/veilarbveileder/api';
+export const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
+export const VEILARBOPPFOLGING_API = '/veilarboppfolging/api';
+export const VEILARBPERSON_API = '/veilarbperson/api';
+export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
+export const VEILARBVEILEDER_API = '/veilarbveileder/api';
 
 export const lagHentFeaturesFetchInfo = (): FetchInfo => {
 	const toggles = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
@@ -90,6 +95,16 @@ export const lagSendVedtakFetchInfo = (params: SendVedtakFetchParams): FetchInfo
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtak/send`,
 	method: 'POST',
 	body: JSON.stringify({ beslutterNavn: params.beslutterNavn })
+});
+
+export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/melding`,
+	method: 'POST',
+	body: JSON.stringify({ tekst: params.tekst })
+});
+
+export const lagHentDialogerFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/melding`
 });
 
 export const lagOpprettBeslutterOppgaveFetchInfo = (params: OpprettBeslutterOppgaveFetchParams): FetchInfo => {

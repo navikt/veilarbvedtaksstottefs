@@ -4,6 +4,8 @@ import { useFetchStore } from './fetch-store';
 import { useViewStore } from './view-store';
 import { useModalStore } from './modal-store';
 import { useSkjemaStore } from './skjema-store';
+import { useDialogStore } from './dialog-store';
+
 
 interface StoreProviderProps {
 	fnr: string;
@@ -17,7 +19,11 @@ const StoreProvider = (props: StoreProviderProps) => {
 			<useFetchStore.Provider>
 				<useViewStore.Provider>
 					<useModalStore.Provider>
-						<useSkjemaStore.Provider>{props.children}</useSkjemaStore.Provider>
+						<useDialogStore.Provider>
+							<useSkjemaStore.Provider>
+								{props.children}
+							</useSkjemaStore.Provider>
+						</useDialogStore.Provider>
 					</useModalStore.Provider>
 				</useViewStore.Provider>
 			</useFetchStore.Provider>

@@ -1,5 +1,7 @@
 import { Vedtak } from '../rest/data/vedtak';
 import { OrNothing } from './types/ornothing';
+import { DialogMelding } from '../rest/data/dialog-melding';
+import { SkrevetAv } from '../components/beslutter-dialog/melding-liste/melding/melding';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
@@ -24,5 +26,15 @@ export const finnUtkast = (vedtakListe: Vedtak[]): Vedtak | undefined => {
 export function swallowEnterKeyPress(e: any) {
 	if (e.charCode === 13) {
 		e.preventDefault();
+	}
+}
+
+export function finnSkrevetAv(melding: DialogMelding, innloggetVeilederIdent: string) {
+	if (!melding.skrevetAvIdent) {
+		return SkrevetAv.SYSTEM;
+	} else if (melding.skrevetAvIdent === innloggetVeilederIdent) {
+		return SkrevetAv.MEG;
+	} else {
+		return SkrevetAv.ANNEN;
 	}
 }

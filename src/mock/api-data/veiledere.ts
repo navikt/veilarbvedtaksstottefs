@@ -1,12 +1,26 @@
 import { JSONObject } from 'yet-another-fetch-mock';
 import { VeiledereData } from '../../rest/data/veiledere';
-import { enhet } from '../konstanter';
+import { enhet, enhetNavn } from '../konstanter';
 
 export const innloggetVeileder = {
 	navn: 'Ola Nordmann',
 	ident: 'Z007',
 	enhetId: enhet,
-	enhetNavn: 'Gotham city',
+	enhetNavn,
+};
+
+export const ikkeAnsvarligVeileder = {
+	navn: 'Kari Nordmann',
+	ident: 'Z123',
+	enhetId: enhet,
+	enhetNavn,
+};
+
+export const beslutter = {
+	navn: 'Beslutter Besluttersen',
+	ident: 'Z123456',
+	enhetId: enhet,
+	enhetNavn,
 };
 
 export const ansvarligVeileder = innloggetVeileder;
