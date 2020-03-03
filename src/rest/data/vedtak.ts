@@ -15,7 +15,7 @@ export enum HovedmalType {
 	BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
 }
 
-export interface ModiaVedtak {
+export interface Vedtak {
 	id: number;
 	hovedmal: OrNothing<HovedmalType>;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;

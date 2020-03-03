@@ -7,7 +7,7 @@ import { sortDates } from '../../utils/date-utils';
 import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
 import vedtakBilde from './pdf.svg';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
-import './vedtak-fra-arena.less';
+import './vedtak-fra-arena-liste.less';
 
 function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<ArenaVedtak>, posisjon: number) {
 	return (
@@ -23,12 +23,12 @@ function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<Ar
 	);
 }
 
-export function VedtakFraArena({ arenaHistorikk }: { arenaHistorikk: ArenaVedtak[] }) {
+export function VedtakFraArenaListe({ vedtakListe }: { vedtakListe: ArenaVedtak[] }) {
 	const { changeView } = useViewStore();
 
 	const arenaVedtak = useMemo(() => {
-		return [...arenaHistorikk].sort((v1, v2) => sortDates(v1.dato, v2.dato));
-	}, [arenaHistorikk]);
+		return [...vedtakListe].sort((v1, v2) => sortDates(v1.dato, v2.dato));
+	}, [vedtakListe]);
 
 	function handleTidligereVedtakClicked(vedtakData: ArenaVedtak, idx: number) {
 		changeView(ViewType.VEDTAK_PDF, {

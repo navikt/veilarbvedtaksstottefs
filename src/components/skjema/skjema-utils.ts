@@ -5,7 +5,7 @@ import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
 import { Opplysning } from './opplysninger/opplysninger';
 import { MalformData, MalformType } from '../../rest/data/malform';
 import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
-import { InnsatsgruppeType, ModiaVedtak } from '../../rest/data/vedtak';
+import { InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { finnGjeldendeVedtak } from '../../utils';
 import { erStandard, erVarigEllerGradertVarig } from '../../utils/innsatsgruppe';
 
@@ -93,7 +93,7 @@ export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
 	}
 }
 
-export function validerSkjema(skjema: SkjemaData, modiaVedtak: ModiaVedtak[]): SkjemaFeil {
+export function validerSkjema(skjema: SkjemaData, vedtak: Vedtak[]): SkjemaFeil {
 	const errors: SkjemaFeil = {};
 	const { innsatsgruppe, opplysninger, begrunnelse, hovedmal } = skjema;
 
@@ -105,7 +105,7 @@ export function validerSkjema(skjema: SkjemaData, modiaVedtak: ModiaVedtak[]): S
 		errors.hovedmal = 'Mangler hovedmål';
 	}
 
-	if (!harSkrevetBegrunnelse(begrunnelse) && maSkriveBegrunnelse(innsatsgruppe, modiaVedtak)) {
+	if (!harSkrevetBegrunnelse(begrunnelse) && maSkriveBegrunnelse(innsatsgruppe, vedtak)) {
 		errors.begrunnelse = 'Mangler begrunnelse';
 	}
 
@@ -140,14 +140,14 @@ export function harSkrevetBegrunnelse(begrunnelse: OrNothing<string>) {
  * Begrunnelse må fylles ut hvis innsatsgruppe ikke er standard.
  * Unntaket for denne reglen er hvis det gjeldende vedtaket er varig/gradert varig.
  */
-export function maSkriveBegrunnelse(innsatsgruppe: OrNothing<InnsatsgruppeType>, modiaVedtak: ModiaVedtak[]) {
+export function maSkriveBegrunnelse(innsatsgruppe: OrNothing<InnsatsgruppeType>, vedtak: Vedtak[]) {
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
 
 	if (!erStandardInnsatsValgt) {
 		return true;
 	}
 
-	const gjeldendeVedtak = finnGjeldendeVedtak(modiaVedtak);
+	const gjeldendeVedtak = finnGjeldendeVedtak(vedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
 
 	return erStandardInnsatsValgt && erGjeldendeInnsatsVarig;

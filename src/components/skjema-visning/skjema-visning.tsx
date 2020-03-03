@@ -1,5 +1,5 @@
 import React from 'react';
-import { InnsatsgruppeType, ModiaVedtak } from '../../rest/data/vedtak';
+import { InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { SkjemaVisningHeader } from './header/skjema-visning-header';
 import { Label } from '../label/label';
@@ -10,7 +10,7 @@ import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
 import './skjema-visning.less';
 import { getHovedmalNavn } from '../../utils/hovedmal';
 
-export function SkjemaVisning(props: { vedtak: ModiaVedtak }) {
+export function SkjemaVisning(props: { vedtak: Vedtak }) {
 	const { changeView } = useViewStore();
 	const {
 		id, hovedmal, opplysninger,

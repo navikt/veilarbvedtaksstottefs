@@ -1,5 +1,5 @@
 import React from 'react';
-import { InnsatsgruppeType, ModiaVedtak } from '../../../rest/data/vedtak';
+import { InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { Dato } from '../dato';
 import { Knapp } from 'nav-frontend-knapper';
 import { Veileder } from '../veileder';
@@ -10,7 +10,7 @@ import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 import fullfortVedtakIcon from './fullfort.svg';
 import './gjeldende-vedtak-panel.less';
 
-export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: ModiaVedtak }) {
+export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
 	const {
 		id, innsatsgruppe,
