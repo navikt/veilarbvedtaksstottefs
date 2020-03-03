@@ -18,7 +18,7 @@ function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<Ar
 			posisjon={posisjon}
 			ikon={vedtakBilde}
 		>
-			<Element className="arena-vedtak-panel__tittel">Oppfølgingsvedtak fra Arena</Element>
+			<Element className="arena-vedtak-panel__tittel">Vedtaksbrev - 14a</Element>
 		</VedtakPanel>
 	);
 }
@@ -40,7 +40,7 @@ export function VedtakFraArenaListe({ vedtakListe }: { vedtakListe: ArenaVedtak[
 
 	return (
 		<VedtakListe<ArenaVedtak>
-			tittel="Utsendte vedtak fra Arena"
+			tittel="Utsendte oppfølgingsvedtak fra Arena"
 			vedtak={arenaVedtak}
 			className="arena-vedtak-panel"
 			vedtakMapper={(vedtak, posisjon) => {
