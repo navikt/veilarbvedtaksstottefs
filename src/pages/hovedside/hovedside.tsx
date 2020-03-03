@@ -11,7 +11,7 @@ import Show from '../../components/show';
 import { ModiaVedtak } from '../../rest/data/vedtak';
 import { hasFailed } from '../../rest/utils';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { TidligereVedtakArena } from '../../components/tidligere-vedtak-arena/tidligere-vedtak-arena';
+import { VedtakFraArena } from '../../components/vedtak-fra-arena/vedtak-fra-arena';
 import './hovedside.less';
 
 export function Hovedside() {
@@ -53,7 +53,7 @@ export function Hovedside() {
 						: <IngenTidligereVedtakPanel />
 					}
 					<Show if={harVedtakFraArena}>
-						<TidligereVedtakArena arenaHistorikk={vedtakFraArena}/>
+						<VedtakFraArena arenaHistorikk={vedtakFraArena}/>
 					</Show>
 				</div>
 			</div>

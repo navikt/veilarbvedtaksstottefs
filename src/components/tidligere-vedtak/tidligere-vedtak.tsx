@@ -1,15 +1,30 @@
 import React, { useMemo } from 'react';
-import { ModiaVedtak } from '../../rest/data/vedtak';
-import { Undertittel } from 'nav-frontend-typografi';
-import {
-	TidligereVedtakLenkePanel
-} from './tidligere-vedtak-panel/tidligere-vedtak-panel';
+import { InnsatsgruppeType, ModiaVedtak } from '../../rest/data/vedtak';
+import { Element, EtikettLiten } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { frontendlogger } from '../../utils/frontend-logger';
-import './tidligere-vedtak.less';
 import { sortDates } from '../../utils/date-utils';
+import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
+import vedtakBilde from './vedtak.svg';
+import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
+import { VedtakListe } from '../vedtak-liste/vedtak-liste';
+import './tidligere-vedtak.less';
 
-export type OnTidligereVedtakClicked = (vedtakData: ModiaVedtak, idx: number) => void;
+function mapVedtakTilPanel(vedtak: ModiaVedtak, onClick: OnVedtakClicked<ModiaVedtak>, posisjon: number) {
+	const innsatsgruppeTekst = getInnsatsgruppeTekst(vedtak.innsatsgruppe as InnsatsgruppeType);
+	return (
+		<VedtakPanel<ModiaVedtak>
+			onClick={onClick}
+			vedtak={vedtak}
+			dato={vedtak.sistOppdatert}
+			posisjon={posisjon}
+			ikon={vedtakBilde}
+		>
+			<Element className="tidligere-vedtak-panel__innsats--tittel">{innsatsgruppeTekst.tittel}</Element>
+			<EtikettLiten className="tidligere-vedtak-panel__innsats--undertekst">{innsatsgruppeTekst.undertekst}</EtikettLiten>
+		</VedtakPanel>
+	);
+}
 
 export function TidligereVedtak({ modiaHistorikk }: { modiaHistorikk: ModiaVedtak[] }) {
 	const { changeView } = useViewStore();
@@ -24,20 +39,14 @@ export function TidligereVedtak({ modiaHistorikk }: { modiaHistorikk: ModiaVedta
 	}
 
 	return (
-        <div className="tidligere-vedtak">
-	        <Undertittel className="tidligere-vedtak__tittel" tag="h1">Tidligere oppfølgingsvedtak</Undertittel>
-	        <ul className="tidligere-vedtak__liste">
-		        {tidligereVedtak.map((vedtak, idx) => (
-                    <li className="tidligere-vedtak__liste-item" key={idx}>
-				        <TidligereVedtakLenkePanel
-					        onClick={handleTidligereVedtakClicked}
-					        tidligereVedtak={vedtak}
-					        posisjon={idx}
-				        />
-                    </li>
-		        ))}
-	        </ul>
-        </div>
+		<VedtakListe<ModiaVedtak>
+			tittel="Tidligere oppfølgingsvedtak"
+			vedtak={tidligereVedtak}
+			vedtakMapper={(vedtak, posisjon) => {
+				const onClick = (v: ModiaVedtak, idx: number) => handleTidligereVedtakClicked(vedtak, idx);
+				return mapVedtakTilPanel(vedtak, onClick, posisjon)
+			}}
+		/>
 	);
 }
 
