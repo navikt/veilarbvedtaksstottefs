@@ -11,7 +11,7 @@ export const Skrivefelt = () => {
 
     return (
     	<div className="skrivefelt">
-		    <Input label="" value={melding} onChange={(e) => setMelding(e.target.value)}/>
+		    <Input className="skrivefelt__input" label="" value={melding} onChange={(e) => setMelding(e.target.value)}/>
 		    <button onClick={handleOnDialogSendClicked}>Send</button>
 	    </div>
     );

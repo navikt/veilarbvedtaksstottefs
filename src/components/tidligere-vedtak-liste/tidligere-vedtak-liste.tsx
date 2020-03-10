@@ -3,7 +3,7 @@ import { InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { Element, EtikettLiten } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { frontendlogger } from '../../utils/frontend-logger';
-import { sortDates } from '../../utils/date-utils';
+import { sortDatesAsc } from '../../utils/date-utils';
 import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
 import vedtakBilde from './vedtak.svg';
 import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
@@ -30,7 +30,7 @@ export function TidligereVedtakListe({ vedtakListe }: { vedtakListe: Vedtak[] })
 	const { changeView } = useViewStore();
 
 	const tidligereVedtak = useMemo(() => {
-		return [...vedtakListe].sort((v1, v2) => sortDates(v1.sistOppdatert, v2.sistOppdatert));
+		return [...vedtakListe].sort((v1, v2) => sortDatesAsc(v1.sistOppdatert, v2.sistOppdatert));
 	}, [vedtakListe]);
 
 	function handleTidligereVedtakClicked(vedtakData: Vedtak, idx: number) {

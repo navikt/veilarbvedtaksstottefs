@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import cls from 'classnames';
 import { DialogMelding } from '../../../rest/data/dialog-melding';
 import { Melding, SkrevetAv } from './melding/melding';
@@ -11,7 +11,7 @@ interface MeldingListeProps {
 	className?: string;
 }
 
-function mapMeldingTilDialogView(melding: DialogMelding, skrevetAv: SkrevetAv) {
+function mapMeldingTilDialogView(melding: DialogMelding, key: number, skrevetAv: SkrevetAv) {
 	const wrapperClasses = {
 		'melding-wrapper--til-meg': skrevetAv === SkrevetAv.ANNEN,
 		'melding-wrapper--fra-meg': skrevetAv === SkrevetAv.MEG,
@@ -19,7 +19,7 @@ function mapMeldingTilDialogView(melding: DialogMelding, skrevetAv: SkrevetAv) {
 	};
 
 	return (
-		<div className={cls('melding-wrapper', wrapperClasses)}>
+		<div className={cls('melding-wrapper', wrapperClasses)} key={key}>
 			<Melding
 				dato={melding.dato}
 				tekst={melding.tekst}
@@ -32,9 +32,17 @@ function mapMeldingTilDialogView(melding: DialogMelding, skrevetAv: SkrevetAv) {
 
 export const MeldingListe = (props: MeldingListeProps) => {
 	const { innloggetVeilederIdent, meldinger, className } = props;
+	const listeRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (listeRef.current) {
+			listeRef.current.scrollTop = listeRef.current.scrollHeight;
+		}
+	}, [meldinger]);
+
     return (
-    	<div className={cls('melding-liste', className)}>
-		    {meldinger.map((melding) => mapMeldingTilDialogView(melding, finnSkrevetAv(melding, innloggetVeilederIdent)))}
+    	<div ref={listeRef} className={cls('melding-liste', className)}>
+		    {meldinger.map((melding, idx) => mapMeldingTilDialogView(melding, idx, finnSkrevetAv(melding, innloggetVeilederIdent)))}
 	    </div>
     );
 };
