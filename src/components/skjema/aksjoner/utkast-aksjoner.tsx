@@ -5,13 +5,14 @@ import { ReactComponent as TaOverIkon } from './locked.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { SkjemaData } from '../../../pages/vedtakskjema/vedtakskjema-side';
 import { fetchWithInfo } from '../../../rest/utils';
-import { lagOppdaterVedtakUtkastFetchInfo } from '../../../rest/api';
+import { lagOppdaterVedtakUtkastFetchInfo, lagStartBeslutterProsess } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { harFeil, hentMalformFraData, scrollTilForsteFeil } from '../skjema-utils';
+import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } from '../skjema-utils';
 import Show from '../../show';
+import { useBeslutterStore } from '../../../stores/beslutter-store';
 import './aksjoner.less';
 
 interface UtkastAksjonerProps {
@@ -24,10 +25,14 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	const { vedtak, malform } = useFetchStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
-	const { validerSkjema , isReadOnly } = useSkjemaStore();
+	const { validerSkjema, innsatsgruppe, isReadOnly } = useSkjemaStore();
+	const { beslutterProsessStartet, setBeslutterProsessStartet } = useBeslutterStore();
 
+	const [visKlarTilBeslutterLaster, setVisKlarTilBeslutterLaster] = useState(false);
 	const [visForhandsvisngLaster, setVisForhandsvisngLaster] = useState(false);
 	const [visLagreVedtakLaster, setVisLagreVedtakLaster] = useState(false);
+
+	const visKlarTilBeslutter = trengerBeslutter(innsatsgruppe) && !beslutterProsessStartet;
 
 	function sendDataTilBackend() {
 		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform.data)};
@@ -78,6 +83,19 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 		changeView(ViewType.HOVEDSIDE);
 	}
 
+	function handleKlarTilBeslutter() {
+		setVisKlarTilBeslutterLaster(true);
+		fetchWithInfo(lagStartBeslutterProsess({fnr}))
+			.then(() => {
+				setVisKlarTilBeslutterLaster(false);
+				setBeslutterProsessStartet(true);
+			})
+			.catch(() => {
+				setVisKlarTilBeslutterLaster(false);
+				showModal(ModalType.FEIL_VED_VISNING);
+			});
+	}
+
 	return (
 		<div className="aksjoner">
 			<div className="aksjoner__knapper">
@@ -90,6 +108,17 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 				>
 					Forhåndsvis
 				</Hovedknapp>
+				<Show if={visKlarTilBeslutter}>
+					<Knapp
+						spinner={visKlarTilBeslutterLaster}
+						disabled={visKlarTilBeslutterLaster}
+						mini={true}
+						htmlType="submit"
+						onClick={handleKlarTilBeslutter}
+					>
+						Klar til beslutter
+					</Knapp>
+				</Show>
 				<Knapp
 					spinner={visLagreVedtakLaster}
 					disabled={visLagreVedtakLaster}

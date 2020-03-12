@@ -2,8 +2,7 @@ import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
 import { Vedtak } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
-import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-modal/beslutter-oppgave-modal-innhold';
-import { innloggetVeileder, veiledere } from './api-data/veiledere';
+import { innloggetVeileder } from './personer';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { finnUtkast } from '../utils';
 import historisk from './api-data/vedtak/tidligere-vedtak';
@@ -73,25 +72,6 @@ export const mockSlettUtkast: Mock = {
 	}
 };
 
-export const mockSendTilBeslutter: Mock = {
-	method: 'POST',
-	url: '/veilarbvedtaksstotte/api/:fnr/beslutter/send',
-	handler: async (args: HandlerArgument): Promise<ResponseData> => {
-		const utkastTilBeslutter = finnUtkast(vedtak);
-
-		if (!utkastTilBeslutter) throw new Error('Fant ikke utkast til beslutter');
-
-		const beslutterData = args.body as BeslutterOppgaveData;
-		const valgtBeslutter = veiledere.veilederListe
-			.find(v => v.ident === beslutterData.beslutterIdent);
-
-		utkastTilBeslutter.sendtTilBeslutter = true;
-		utkastTilBeslutter.beslutterNavn = valgtBeslutter ? valgtBeslutter.navn : null;
-
-		return { status: 204 };
-	}
-};
-
 export const mockSendVedtak: Mock = {
 	method: 'POST',
 	url: '/veilarbvedtaksstotte/api/:fnr/vedtak/send',
@@ -120,7 +100,7 @@ export const mockSendVedtak: Mock = {
 export const mockOvertaUtkast: Mock = {
 	method: 'POST',
 	url: '/veilarbvedtaksstotte/api/:fnr/utkast/overta',
-	handler: async (args: HandlerArgument): Promise<ResponseData> => {
+	handler: async (): Promise<ResponseData> => {
 
 		const gjeldendeUtkast = finnUtkast(vedtak);
 
@@ -132,5 +112,20 @@ export const mockOvertaUtkast: Mock = {
 		gjeldendeUtkast.oppfolgingsenhetId = innloggetVeileder.enhetId;
 
 		return { status: 204 };
+	}
+};
+
+export const mockStartBeslutterProsess: Mock = {
+	method: 'POST',
+	url: '/veilarbvedtaksstotte/api/:fnr/beslutter/start',
+	handler: async (): Promise<ResponseData> => {
+
+		const gjeldendeUtkast = finnUtkast(vedtak);
+
+		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å starte beslutterprosess på');
+
+		gjeldendeUtkast.beslutterProsessStartet = true;
+
+		return { status: 200 };
 	}
 };

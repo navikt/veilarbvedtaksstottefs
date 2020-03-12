@@ -128,8 +128,7 @@ export function validerBegrunnelseMaxLength(begrunnelse: OrNothing<string>) {
 }
 
 export function trengerBeslutter(innsatsgruppe: OrNothing<InnsatsgruppeType>) {
-	return innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS
-		|| innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
+	return erVarigEllerGradertVarig(innsatsgruppe);
 }
 
 export function harSkrevetBegrunnelse(begrunnelse: OrNothing<string>) {
