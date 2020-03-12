@@ -32,7 +32,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	const [visForhandsvisngLaster, setVisForhandsvisngLaster] = useState(false);
 	const [visLagreVedtakLaster, setVisLagreVedtakLaster] = useState(false);
 
-	const visKlarTilBeslutter = trengerBeslutter(innsatsgruppe) && !beslutterProsessStartet;
+	const visKlarTilBeslutter = !isReadOnly && (trengerBeslutter(innsatsgruppe) && !beslutterProsessStartet);
 
 	function sendDataTilBackend() {
 		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform.data)};
@@ -40,6 +40,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 			.catch(() => {
 				setVisForhandsvisngLaster(false);
 				setVisLagreVedtakLaster(false);
+				setVisKlarTilBeslutterLaster(false);
 				showModal(ModalType.FEIL_VED_LAGRING);
 			});
 	}
@@ -85,15 +86,17 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 
 	function handleKlarTilBeslutter() {
 		setVisKlarTilBeslutterLaster(true);
-		fetchWithInfo(lagStartBeslutterProsess({fnr}))
-			.then(() => {
-				setVisKlarTilBeslutterLaster(false);
-				setBeslutterProsessStartet(true);
-			})
-			.catch(() => {
-				setVisKlarTilBeslutterLaster(false);
-				showModal(ModalType.FEIL_VED_VISNING);
-			});
+		sendDataTilBackend().then(() => {
+			fetchWithInfo(lagStartBeslutterProsess({fnr}))
+				.then(() => {
+					setVisKlarTilBeslutterLaster(false);
+					setBeslutterProsessStartet(true);
+				})
+				.catch(() => {
+					setVisKlarTilBeslutterLaster(false);
+					showModal(ModalType.FEIL_VED_VISNING);
+				});
+		});
 	}
 
 	return (

@@ -19,11 +19,6 @@ export interface OppdaterUtkastFetchParams {
 	skjema: SkjemaData;
 }
 
-export interface SendVedtakFetchParams {
-	fnr: string;
-	beslutterNavn?: string;
-}
-
 const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
 const VEILARBOPPFOLGING_API = '/veilarboppfolging/api';
 const VEILARBPERSON_API = '/veilarbperson/api';
@@ -73,10 +68,9 @@ export const lagHentArenaVedtakFetchInfo = (params: FnrFetchParams): FetchInfo =
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtakFraArena`
 });
 
-export const lagSendVedtakFetchInfo = (params: SendVedtakFetchParams): FetchInfo => ({
+export const lagSendVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtak/send`,
 	method: 'POST',
-	body: JSON.stringify({ beslutterNavn: params.beslutterNavn })
 });
 
 export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({

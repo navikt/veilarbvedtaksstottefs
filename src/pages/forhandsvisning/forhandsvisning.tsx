@@ -48,10 +48,10 @@ export function Forhandsvisning() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
-	const sendVedtak = (beslutter?: string) => {
+	const sendVedtak = () => {
 		showModal(ModalType.LASTER);
 
-		fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutterNavn: beslutter }))
+		fetchWithInfo(lagSendVedtakFetchInfo({ fnr }))
 			.then(() => {
                 resetSkjema();
 				vedtak.fetch({ fnr }, () => {
