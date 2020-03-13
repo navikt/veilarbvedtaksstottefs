@@ -4,16 +4,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "62b3b96de2b387edf005",
+    "revision": "1a3c04d6ea3216fb808e",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "62b3b96de2b387edf005",
+    "revision": "1a3c04d6ea3216fb808e",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
-    "revision": "bf40c226d86e0c6eed5d",
-    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.21d37eea.chunk.js"
+    "revision": "4cc818928e05731cf2fd",
+    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.81f21ab0.chunk.js"
   },
   {
     "revision": "60c7de9e28dee1c6c239b50318b59bfe",
@@ -22,10 +22,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "7b1b80d906793cdf3c4710d0a3aa503e",
     "url": "/veilarbvedtaksstottefs/static/media/beslutterfunksjon.7b1b80d9.svg"
-  },
-  {
-    "revision": "47b572a34e5390640888fd9a6fe2a3a4",
-    "url": "/veilarbvedtaksstottefs/static/media/calendar.47b572a3.svg"
   },
   {
     "revision": "7e641224c473f655aaac89e9159d3ff7",
