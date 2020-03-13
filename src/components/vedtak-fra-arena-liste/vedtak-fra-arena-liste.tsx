@@ -41,6 +41,7 @@ export function VedtakFraArenaListe({ vedtakListe }: { vedtakListe: ArenaVedtak[
 	return (
 		<VedtakListe<ArenaVedtak>
 			tittel="Utsendte oppfølgingsvedtak fra Arena"
+			ingenVedtakTekst="Ingen utsendte oppfølgingsvedtak"
 			vedtak={arenaVedtak}
 			className="arena-vedtak-panel"
 			vedtakMapper={(vedtak, posisjon) => {
