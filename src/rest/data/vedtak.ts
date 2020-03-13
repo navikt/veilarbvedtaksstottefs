@@ -27,8 +27,10 @@ export interface Vedtak {
 	veilederNavn: string;
 	oppfolgingsenhetId: string;
 	oppfolgingsenhetNavn: string;
+	beslutterIdent: OrNothing<string>;
 	beslutterNavn: OrNothing<string>;
-	sendtTilBeslutter: boolean;
+	beslutterProsessStartet: boolean;
+	godkjentAvBeslutter: boolean;
 	opplysninger: string[];
 	journalpostId: OrNothing<string>;
 	dokumentInfoId: OrNothing<string>;

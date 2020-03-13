@@ -1,16 +1,11 @@
 import { FetchInfo } from './utils';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { ALL_TOGGLES } from './data/features';
-import { BeslutterOppgaveData } from '../components/modal/beslutter-oppgave-modal/beslutter-oppgave-modal-innhold';
 import { mapOpplysningerFraBokmalTilBrukersMalform } from '../components/skjema/skjema-utils';
 import { MalformType } from './data/malform';
 
 export interface FnrFetchParams {
 	fnr: string;
-}
-
-export interface EnhetIdFetchParams {
-	enhetId: string;
 }
 
 export interface HentOyblikksbildeFetchParams {
@@ -23,15 +18,6 @@ export interface OppdaterUtkastFetchParams {
 	malform: MalformType | null;
 	skjema: SkjemaData;
 }
-
-export interface SendVedtakFetchParams {
-	fnr: string;
-	beslutterNavn?: string;
-}
-
-export type OpprettBeslutterOppgaveFetchParams = BeslutterOppgaveData & {
-	fnr: string;
-};
 
 const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
 const VEILARBOPPFOLGING_API = '/veilarboppfolging/api';
@@ -54,10 +40,6 @@ export const lagHentTilgangTilKontorFetchInfo = (params: FnrFetchParams): FetchI
 
 export const lagHentMalformFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBPERSON_API}/person/${params.fnr}/malform`
-});
-
-export const lagHentVeiledereFetchInfo = (params: EnhetIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEILEDER_API}/enhet/${params.enhetId}/veiledere`
 });
 
 export const lagHentVeilederFetchInfo = (): FetchInfo => ({
@@ -86,20 +68,10 @@ export const lagHentArenaVedtakFetchInfo = (params: FnrFetchParams): FetchInfo =
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtakFraArena`
 });
 
-export const lagSendVedtakFetchInfo = (params: SendVedtakFetchParams): FetchInfo => ({
+export const lagSendVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtak/send`,
 	method: 'POST',
-	body: JSON.stringify({ beslutterNavn: params.beslutterNavn })
 });
-
-export const lagOpprettBeslutterOppgaveFetchInfo = (params: OpprettBeslutterOppgaveFetchParams): FetchInfo => {
-	const {fnr, ...rest} = params;
-	return {
-		url: `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/beslutter/send`,
-		method: 'POST',
-		body: JSON.stringify(rest)
-	};
-};
 
 export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast`,
@@ -119,3 +91,8 @@ export const lagHentForhandsvisningUrl = (fnr: string): string => `${VEILARBVEDT
 
 export const lagHentVedtakPdfUrl = (fnr: string, dokumentInfoId: string, journalpostId: string): string =>
 	`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/vedtak/pdf?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
+
+export const lagStartBeslutterProsess = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/start`,
+	method: 'POST'
+});
