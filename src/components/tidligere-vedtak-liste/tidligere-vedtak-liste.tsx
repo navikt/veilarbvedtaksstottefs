@@ -40,7 +40,8 @@ export function TidligereVedtakListe({ vedtakListe }: { vedtakListe: Vedtak[] })
 
 	return (
 		<VedtakListe<Vedtak>
-			tittel="Tidligere oppfølgingsvedtak"
+			tittel="Tidligere oppfølgingsvedtak i Modia"
+			ingenVedtakTekst="Ingen tidligere oppfølgingsvedtak"
 			vedtak={tidligereVedtak}
 			vedtakMapper={(vedtak, posisjon) => {
 				const onClick = (v: Vedtak, idx: number) => handleTidligereVedtakClicked(vedtak, idx);

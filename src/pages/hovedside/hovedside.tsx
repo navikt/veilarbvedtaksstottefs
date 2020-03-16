@@ -19,13 +19,12 @@ export function Hovedside() {
 
 	const underOppfolging = oppfolgingData.data.underOppfolging;
 	const vedtakFraArena = arenaVedtak.data ? arenaVedtak.data : [];
-	const harVedtakFraArena = vedtakFraArena.length > 0;
 
 	const utkast = vedtak.data.find(v => v.vedtakStatus === 'UTKAST');
+	const tidligereVedtak = vedtak.data.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
 	const gjeldendeVedtak = vedtak.data.find(v => v.gjeldende);
 
-	const tidligereVedtak = vedtak.data.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
-	const harTidligereVedtak = tidligereVedtak.length > 0;
+	const harTidligereVedtak = vedtakFraArena.length > 0 || tidligereVedtak.length > 0;
 
 	return (
 		<Page>
@@ -48,11 +47,11 @@ export function Hovedside() {
 					</Show>
 				</div>
 				<div className="hovedside__tidligere-vedtak-panel">
-					{harTidligereVedtak
-						? <TidligereVedtakListe vedtakListe={tidligereVedtak} />
-						: <IngenTidligereVedtakPanel />
-					}
-					<Show if={harVedtakFraArena}>
+					<Show if={!harTidligereVedtak}>
+						<IngenTidligereVedtakPanel />
+					</Show>
+					<Show if={harTidligereVedtak}>
+						<TidligereVedtakListe vedtakListe={tidligereVedtak} />
 						<VedtakFraArenaListe vedtakListe={vedtakFraArena}/>
 					</Show>
 				</div>
