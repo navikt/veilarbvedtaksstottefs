@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import cls from 'classnames';
 import './sidebar.less';
-import tipsIkon from '../utkast-skjema/tips.svg';
-import dialogIkon from '../utkast-skjema/dialog.svg';
+import tipsIkon from './tips.svg';
+import dialogIkon from './dialog.svg';
 import { Tips } from './tips/tips';
+import { Dialog } from './dialog/dialog';
 
 interface SidebarTab {
 	name: string;
@@ -20,7 +21,7 @@ const sidebarTabs: SidebarTab[] = [
 	{
 		name: 'dialog',
 		icon: dialogIkon,
-		content: (<div>Dette er dialog innhold</div>)
+		content: <Dialog />
 	},
 ];
 

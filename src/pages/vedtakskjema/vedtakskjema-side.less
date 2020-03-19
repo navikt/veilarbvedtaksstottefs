@@ -4,7 +4,7 @@
 
 	.vedtakskjema {
 		padding: 0;
-		min-width: 1400px;
+		width: 100%;
 
 		&__footer {
 			padding: 0.75rem 0;
@@ -14,7 +14,13 @@
 
 	.vedtakskjema-side {
 		display: flex;
-		// max-width: 1400px;
+		max-width: 1600px;
+		margin: 0 1rem;
 	}
 
+	@media (min-width: 1632px) {
+		.vedtakskjema-side {
+			margin: 0 auto;
+		}
+	}
 }

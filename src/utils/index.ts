@@ -1,7 +1,7 @@
 import { Vedtak } from '../rest/data/vedtak';
 import { OrNothing } from './types/ornothing';
 import { DialogMelding } from '../rest/data/dialog-melding';
-import { SkrevetAv } from '../components/sidebar/beslutter-dialog/melding-liste/melding/melding';
+import { SkrevetAv } from '../components/sidebar/dialog/melding-liste/melding/melding';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);

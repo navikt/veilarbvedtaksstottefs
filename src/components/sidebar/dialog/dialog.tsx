@@ -4,9 +4,9 @@ import { MeldingListe } from './melding-liste/melding-liste';
 import { useDialogStore } from '../../../stores/dialog-store';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { sortDatesDesc } from '../../../utils/date-utils';
-import './beslutter-dialog.less';
+import './dialog.less';
 
-export const BeslutterDialog = () => {
+export const Dialog = () => {
 	const { innloggetVeileder } = useFetchStore();
 	const { dialoger } = useDialogStore();
 
@@ -15,9 +15,9 @@ export const BeslutterDialog = () => {
 	}, [dialoger]);
 
     return (
-    	<section className="beslutter-dialog">
+    	<div className="dialog">
 		    <MeldingListe meldinger={sorterteDialoger} innloggetVeilederIdent={innloggetVeileder.data.ident} />
 		    <Skrivefelt />
-	    </section>
+	    </div>
     );
 };

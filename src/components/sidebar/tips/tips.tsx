@@ -1,11 +1,10 @@
 import React from 'react';
-import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import './tips.less';
 
 export const Tips = () => {
     return (
     	<div className="tips">
-		    <Systemtittel className="tips_tittel">Tips</Systemtittel>
 		    <div className="tips__bolk">
 			    <Undertittel>Kilder</Undertittel>
 			    <Normaltekst>For andre kilder kan du for eksempel skrive:</Normaltekst>
