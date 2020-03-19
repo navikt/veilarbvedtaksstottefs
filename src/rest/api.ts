@@ -1,7 +1,7 @@
 import { FetchInfo } from './utils';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { ALL_TOGGLES } from './data/features';
-import { mapOpplysningerFraBokmalTilBrukersMalform } from '../components/skjema/skjema-utils';
+import { mapOpplysningerFraBokmalTilBrukersMalform } from '../components/utkast-skjema/skjema-utils';
 import { MalformType } from './data/malform';
 
 export interface SendDialogFetchParams {

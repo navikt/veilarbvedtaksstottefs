@@ -9,7 +9,7 @@ import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../skjema-utils';
 import { useFetchStore } from '../../../stores/fetch-store';
-import { MalformPanel } from './malform-panel/malform-panel';
+import { MalformPanel } from '../malform/malform-panel/malform-panel';
 import { useIsAfterFirstRender } from '../../../utils/hooks';
 import './opplysninger.less';
 
@@ -132,10 +132,6 @@ function Opplysninger() {
 							/>
 						)}
 					</div>
-				</div>
-				<div className="opplysninger__malform-tips">
-					<MalformPanel malform={malform.data && malform.data.malform}/>
-					<OpplysningerHjelpetekster />
 				</div>
 			</div>
 		</SkjemaBolk>

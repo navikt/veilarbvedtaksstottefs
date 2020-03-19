@@ -53,7 +53,6 @@ function Begrunnelse() {
 						disabled={isReadOnly}
 					/>
 				</SkjemaGruppe>
-				<BegrunnelseHjelpetekster/>
 			</div>
 		</SkjemaBolk>
 	);

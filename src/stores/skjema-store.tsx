@@ -4,7 +4,7 @@ import { SkjemaFeil } from '../utils/types/skjema-feil';
 import {
 	validerBegrunnelseMaxLength,
 	validerSkjema as valider
-} from '../components/skjema/skjema-utils';
+} from '../components/utkast-skjema/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 
