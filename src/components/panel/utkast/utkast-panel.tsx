@@ -22,33 +22,21 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	}
 
 	const {
-		sistOppdatert, veilederIdent, veilederNavn, oppfolgingsenhetId,
-		oppfolgingsenhetNavn, sendtTilBeslutter, beslutterNavn
+		sistOppdatert, veilederIdent, veilederNavn,
+		oppfolgingsenhetId, oppfolgingsenhetNavn, beslutterNavn
 	} = props.utkast;
-	const beslutterTekst = beslutterNavn || oppfolgingsenhetId + ' ' + oppfolgingsenhetNavn;
-
-	let undertittel;
-	let img;
-
-	if (sendtTilBeslutter) {
-		undertittel = 'Utkast sendt til beslutter';
-		img = utkastTilBeslutterIkon;
-	} else {
-		undertittel = 'Utkast';
-		img = utkastIkon;
-	}
 
 	return (
 		<VedtaksstottePanel
 			tittel="Utkast til oppfølgingsvedtak"
-			undertittel={undertittel}
-			imgSrc={img}
+			undertittel="Utkast"
+			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
 			panelKlasse="utkast-panel"
 			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>{ isReadOnly ? 'Åpne': 'Fortsett' }</Hovedknapp>}
 			tekstKomponent={
 				<>
-					<Show if={sendtTilBeslutter}>
-						<Beslutter beslutterNavn={beslutterTekst}/>
+					<Show if={beslutterNavn}>
+						<Beslutter beslutterNavn={beslutterNavn as string}/>
 					</Show>
 					<Dato className="utkast-panel__dato" sistOppdatert={sistOppdatert} formatType="long" text="Sist endret" />
 					<Veileder

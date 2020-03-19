@@ -1,9 +1,4 @@
 
-export interface VeiledereData {
-	enhet: Enhet;
-	veilederListe: Veileder[];
-}
-
 export interface Enhet {
 	enhetId: string;
 	navn: string;

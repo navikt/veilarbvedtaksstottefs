@@ -19,7 +19,7 @@ export const feilVedSendningConfig: FeilModalConfig = {
 	knappeTekst: 'Tilbake til vedtakskjema'
 };
 
-export const stoppeInnsendingFeatureToggleConfig: FeilModalConfig = {
+export const stoppeUtsendingFeatureToggleConfig: FeilModalConfig = {
 	tittel: 'Problemer med å sende',
 	beskrivelse: 'Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken.',
 	viewAction: ViewType.UTKAST,
@@ -54,4 +54,9 @@ export const feilVedSlettingAvUtkastConfig: FeilModalConfig = {
 export const feilVedOvertakelseAvUtkastConfig: FeilModalConfig = {
 	tittel: 'Klarte ikke å ta over utkast',
 	beskrivelse: 'En feil oppstod under overtakelse av utkast. Vennligst prøv igjen senere.'
+};
+
+export const feilVedStartBeslutterProsessConfig: FeilModalConfig = {
+	tittel: 'Klarte ikke å klargjøre utkastet for beslutter',
+	beskrivelse: 'En feil oppstod under klargjøring av utkastet for beslutter. Vennligst prøv igjen senere.'
 };

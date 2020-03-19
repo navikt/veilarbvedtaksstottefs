@@ -1,6 +1,6 @@
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { JSONArray } from 'yet-another-fetch-mock';
-import { ansvarligVeileder } from '../veiledere';
+import { ansvarligVeileder, beslutter } from '../../personer';
 
 const historisk: Vedtak[] & JSONArray = [
 	{
@@ -26,13 +26,15 @@ const historisk: Vedtak[] & JSONArray = [
 		oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
 		dokumentInfoId: null,
 		journalpostId: '123456',
-		beslutterNavn: 'Beslutter Besluttersen',
-		sendtTilBeslutter: true
+		beslutterIdent: null,
+		beslutterNavn: null,
+		beslutterProsessStartet: false,
+		godkjentAvBeslutter: false,
 	},
 	{
 		id: 1235,
 		hovedmal: HovedmalType.SKAFFE_ARBEID,
-		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
+		innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
 		vedtakStatus: 'SENDT',
 		opplysninger: [
 			'Svarene dine fra da du registrerte deg',
@@ -49,10 +51,12 @@ const historisk: Vedtak[] & JSONArray = [
 		veilederIdent: ansvarligVeileder.ident,
 		oppfolgingsenhetId: ansvarligVeileder.enhetId,
 		oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
-		beslutterNavn: null,
 		dokumentInfoId: '98765',
 		journalpostId: '5678',
-		sendtTilBeslutter: false
+		beslutterIdent: beslutter.ident,
+		beslutterNavn: beslutter.navn,
+		beslutterProsessStartet: true,
+		godkjentAvBeslutter: false,
 	}
 ];
 

@@ -1,7 +1,7 @@
 
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
-import { ansvarligVeileder } from '../veiledere';
+import { ansvarligVeileder } from '../../personer';
 
 const gjeldendeVedtak: Vedtak & JSONObject = {
 	id: 1000,
@@ -17,10 +17,12 @@ const gjeldendeVedtak: Vedtak & JSONObject = {
 	veilederIdent: ansvarligVeileder.ident,
 	oppfolgingsenhetId: ansvarligVeileder.enhetId,
 	oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
+	beslutterIdent: null,
 	beslutterNavn: null,
+	beslutterProsessStartet: false,
+	godkjentAvBeslutter: false,
 	dokumentInfoId: null,
 	journalpostId: null,
-	sendtTilBeslutter: false
 };
 
 export default gjeldendeVedtak;

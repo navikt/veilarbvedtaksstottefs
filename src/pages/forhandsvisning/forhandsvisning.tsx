@@ -3,7 +3,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
-import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../rest/data/features';
+import { STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
 import { trengerBeslutter } from '../../components/skjema/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
 import { useFetchStore } from '../../stores/fetch-store';
@@ -26,15 +26,15 @@ export function Forhandsvisning() {
 	const { innsatsgruppe, resetSkjema, isReadOnly } = useSkjemaStore();
 
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
-	const trengerVedtakBeslutter = trengerBeslutter(innsatsgruppe);
-	const stoppeInnsendingfeatureToggle = features.data[STOPPE_VEDTAKSINNSENDING_TOGGLE];
+	const stoppeUtsendingfeatureToggle = features.data[STOPPE_VEDTAKSUTSENDING_TOGGLE];
 	const url = env.isProduction
 		? lagHentForhandsvisningUrl(fnr)
 		: getMockVedtaksbrevUrl();
 
 	const utkast = finnUtkastAlltid(vedtak.data);
-	const harSendtTilBeslutter = utkast.sendtTilBeslutter;
-	const visSendTilBeslutter = trengerVedtakBeslutter && !harSendtTilBeslutter;
+	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
+		? utkast.godkjentAvBeslutter
+		: true;
 
 	const tilbakeTilSkjema = () => {
 		changeView(ViewType.UTKAST);
@@ -48,10 +48,10 @@ export function Forhandsvisning() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
-	const sendVedtak = (beslutter?: string) => {
+	const sendVedtak = () => {
 		showModal(ModalType.LASTER);
 
-		fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutterNavn: beslutter }))
+		fetchWithInfo(lagSendVedtakFetchInfo({ fnr }))
 			.then(() => {
                 resetSkjema();
 				vedtak.fetch({ fnr }, () => {
@@ -67,18 +67,8 @@ export function Forhandsvisning() {
 	};
 
 	const handleOnSendClicked = () => {
-		if (stoppeInnsendingfeatureToggle) {
-			showModal(ModalType.FEIL_INNSENDING_STOPPET);
-			return;
-		}
-
-		if (visSendTilBeslutter) {
-			showModal(ModalType.BESLUTTER_OPPGAVE);
-			return;
-		}
-
-		if (trengerVedtakBeslutter && harSendtTilBeslutter) {
-			showModal(ModalType.KVALITETSSIKRING, { sendVedtak, beslutterNavn: utkast.beslutterNavn });
+		if (stoppeUtsendingfeatureToggle) {
+			showModal(ModalType.FEIL_UTSENDING_STOPPET);
 			return;
 		}
 
@@ -90,9 +80,9 @@ export function Forhandsvisning() {
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
-					<Show if={!isReadOnly}>
+					<Show if={!isReadOnly && erUtkastKlartTilUtsending}>
 						<Hovedknapp disabled={pdfStatus !== PDFStatus.SUCCESS} mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
-							Send til {visSendTilBeslutter ? 'beslutter' : 'bruker'}
+							Send til bruker
 						</Hovedknapp>
 					</Show>
 					<Knapp mini={true} htmlType="button" onClick={tilbakeTilSkjema}>

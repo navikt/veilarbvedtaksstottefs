@@ -5,7 +5,7 @@ import { useViewStore } from './view-store';
 import { useModalStore } from './modal-store';
 import { useSkjemaStore } from './skjema-store';
 import { useDialogStore } from './dialog-store';
-
+import { useBeslutterStore } from './beslutter-store';
 
 interface StoreProviderProps {
 	fnr: string;
@@ -16,17 +16,20 @@ interface StoreProviderProps {
 const StoreProvider = (props: StoreProviderProps) => {
 	return (
 		<useAppStore.Provider fnr={props.fnr} enhetId={props.enhetId}>
-			<useFetchStore.Provider>
-				<useViewStore.Provider>
-					<useModalStore.Provider>
-						<useDialogStore.Provider>
+			<useBeslutterStore.Provider>
+				<useDialogStore.Provider>
+				<useFetchStore.Provider>
+					<useViewStore.Provider>
+						<useModalStore.Provider>
 							<useSkjemaStore.Provider>
 								{props.children}
 							</useSkjemaStore.Provider>
-						</useDialogStore.Provider>
-					</useModalStore.Provider>
-				</useViewStore.Provider>
-			</useFetchStore.Provider>
+						</useModalStore.Provider>
+					</useViewStore.Provider>
+				</useFetchStore.Provider>
+				</useDialogStore.Provider>
+			</useBeslutterStore.Provider>
+
 		</useAppStore.Provider>
 	);
 };

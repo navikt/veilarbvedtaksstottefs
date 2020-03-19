@@ -12,10 +12,6 @@ export function formatDate(date: Date, format: string = 'DD.MM.YYYY') {
 	return dayjs(date).format(format);
 }
 
-export function formaterBeslutterOppgaveDato(date: Date) {
-	return dayjs(date).format('YYYY-MM-DD');
-}
-
 export function daysFromToday(date: Date): number {
 	const today = dayjs();
 	return today.diff(dayjs(date), 'day');

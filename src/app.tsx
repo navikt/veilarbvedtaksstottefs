@@ -8,6 +8,7 @@ import { ModalController } from './components/modal-controller';
 import { UtkastSkjemaSync } from './components/utkast-skjema-sync';
 import './app.less';
 import { DialogMeldingerSync } from './components/dialog-meldinger-sync';
+import { BeslutterSync } from './components/beslutter-sync';
 
 interface AppProps {
 	fnr: string;
@@ -23,6 +24,7 @@ function App(props: AppProps) {
 						<DataFetcher fnr={props.fnr}>
 							<UtkastSkjemaSync />
 							<DialogMeldingerSync />
+							<BeslutterSync />
 							<ViewController />
 							<ModalController />
 						</DataFetcher>
