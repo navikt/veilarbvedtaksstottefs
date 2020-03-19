@@ -1,7 +1,6 @@
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Vedtak } from '../../../rest/data/vedtak';
-import cls from 'classnames';
 import utkastBilde from './utkast.svg';
 import { Dato } from '../../panel/dato';
 import { Veileder } from '../../panel/veileder';
@@ -20,7 +19,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 	const oppdatert = props.sistOppdatert ? props.sistOppdatert : props.utkast.sistOppdatert;
 
 	return (
-		<header className={cls('skjema-header', 'skjema-header--utkast')}>
+		<header className="skjema-header">
 			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon"/>
 			<div className="skjema-header__innhold">
 				<Systemtittel tag="h1" className="skjema-header__tittel">Utkast til oppfølgingsvedtak</Systemtittel>

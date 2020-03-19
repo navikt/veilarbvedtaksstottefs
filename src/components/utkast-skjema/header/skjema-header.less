@@ -5,9 +5,10 @@
 	.skjema-header {
 		display: flex;
 		flex-direction: row;
-		margin-bottom: 2rem;
 		height: 64px;
 		overflow-y: visible;
+		background-color: @navBlaLighten80;
+		border-bottom: 3px solid @navBla;
 
 		&__ikon {
 			margin-top: 0.75rem;
@@ -53,21 +54,6 @@
 				color: black;
 				font-weight: bolder;
 			}
-		}
-
-		&--utkast {
-			background-color: @navBlaLighten80;
-			border-bottom: 3px solid @navBla;
-		}
-
-		&--fullfort {
-			background-color: @navGronnLighten80;
-			border-bottom: 3px solid @navGronn;
-		}
-
-		&--tidligere {
-			background-color: @navLysGra;
-			border-bottom: 3px solid @navGra60;
 		}
 
 		.seperator {

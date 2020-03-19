@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import cls from 'classnames';
-import { DialogMelding } from '../../../rest/data/dialog-melding';
+import { DialogMelding } from '../../../../rest/data/dialog-melding';
 import { Melding, SkrevetAv } from './melding/melding';
 import './melding-liste.less';
-import { finnSkrevetAv } from '../../../utils';
+import { finnSkrevetAv } from '../../../../utils';
 
 interface MeldingListeProps {
 	meldinger: DialogMelding[];

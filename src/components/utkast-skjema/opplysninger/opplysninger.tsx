@@ -3,13 +3,10 @@ import { VisOpplysning } from './vis-opplysning/vis-opplysning';
 import { RedigerOpplysning } from './rediger-opplysning/rediger-opplysning';
 import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { OpplysningerHjelpetekster } from './opplysninger-hjelpetekster';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../skjema-utils';
-import { useFetchStore } from '../../../stores/fetch-store';
-import { MalformPanel } from '../malform/malform-panel/malform-panel';
 import { useIsAfterFirstRender } from '../../../utils/hooks';
 import './opplysninger.less';
 
@@ -19,7 +16,6 @@ export interface Opplysning {
 }
 
 function Opplysninger() {
-	const { malform } = useFetchStore();
 	const { opplysninger: skjemaOpplysninger, setOpplysninger: setSkjemaOpplysninger, errors, isReadOnly } = useSkjemaStore();
 	const [ opplysninger, setOpplysninger ] = useState<Opplysning[]>(mergeMedDefaultOpplysninger(skjemaOpplysninger));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);

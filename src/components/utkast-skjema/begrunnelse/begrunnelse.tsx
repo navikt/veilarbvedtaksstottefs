@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
-import { BegrunnelseHjelpetekster } from './begrunnelse-hjelpetekster';
 import { lagSkjemaElementFeil, validerBegrunnelseMaxLength } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';

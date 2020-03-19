@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { Skrivefelt } from './skrivefelt/skrivefelt';
 import { MeldingListe } from './melding-liste/melding-liste';
-import { useDialogStore } from '../../stores/dialog-store';
-import { useFetchStore } from '../../stores/fetch-store';
-import { sortDatesDesc } from '../../utils/date-utils';
+import { useDialogStore } from '../../../stores/dialog-store';
+import { useFetchStore } from '../../../stores/fetch-store';
+import { sortDatesDesc } from '../../../utils/date-utils';
 import './beslutter-dialog.less';
 
 export const BeslutterDialog = () => {

@@ -16,9 +16,8 @@ import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { finnUtkastAlltid } from '../../utils';
 import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
-import './vedtakskjema-side.less';
 import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
-import { BeslutterDialog } from '../../components/beslutter-dialog/beslutter-dialog';
+import './vedtakskjema-side.less';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;

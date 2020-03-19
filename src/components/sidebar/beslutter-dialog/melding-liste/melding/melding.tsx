@@ -1,9 +1,9 @@
 import React from 'react';
 import cls from 'classnames';
 import { EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
-import { formatDateTime } from '../../../../utils/date-utils';
+import { formatDateTime } from '../../../../../utils/date-utils';
 import './melding.less';
-import { OrNothing } from '../../../../utils/types/ornothing';
+import { OrNothing } from '../../../../../utils/types/ornothing';
 
 export enum SkrevetAv {
 	MEG = 'MEG',
