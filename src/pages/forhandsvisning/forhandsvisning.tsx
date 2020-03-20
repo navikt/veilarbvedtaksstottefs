@@ -4,7 +4,7 @@ import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import { STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
-import { trengerBeslutter } from '../../components/skjema/skjema-utils';
+import { trengerBeslutter } from '../../components/utkast-skjema/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
 import { useFetchStore } from '../../stores/fetch-store';
 import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';

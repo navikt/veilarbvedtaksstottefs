@@ -1,8 +1,13 @@
 import { FetchInfo } from './utils';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { ALL_TOGGLES } from './data/features';
-import { mapOpplysningerFraBokmalTilBrukersMalform } from '../components/skjema/skjema-utils';
+import { mapOpplysningerFraBokmalTilBrukersMalform } from '../components/utkast-skjema/skjema-utils';
 import { MalformType } from './data/malform';
+
+export interface SendDialogFetchParams {
+	fnr: string;
+	melding: string;
+}
 
 export interface FnrFetchParams {
 	fnr: string;
@@ -19,11 +24,12 @@ export interface OppdaterUtkastFetchParams {
 	skjema: SkjemaData;
 }
 
-const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
-const VEILARBOPPFOLGING_API = '/veilarboppfolging/api';
-const VEILARBPERSON_API = '/veilarbperson/api';
-const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
-const VEILARBVEILEDER_API = '/veilarbveileder/api';
+export const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
+export const VEILARBOPPFOLGING_API = '/veilarboppfolging/api';
+export const VEILARBPERSON_API = '/veilarbperson/api';
+export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
+export const VEILARBVEILEDER_API = '/veilarbveileder/api';
+
 
 export const lagHentFeaturesFetchInfo = (): FetchInfo => {
 	const toggles = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
@@ -71,6 +77,16 @@ export const lagHentArenaVedtakFetchInfo = (params: FnrFetchParams): FetchInfo =
 export const lagSendVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/vedtak/send`,
 	method: 'POST',
+});
+
+export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/dialog`,
+	method: 'POST',
+	body: JSON.stringify({ melding: params.melding })
+});
+
+export const lagHentDialogerFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/dialog`
 });
 
 export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({

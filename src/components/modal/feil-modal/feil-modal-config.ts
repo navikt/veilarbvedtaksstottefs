@@ -60,3 +60,8 @@ export const feilVedStartBeslutterProsessConfig: FeilModalConfig = {
 	tittel: 'Klarte ikke å klargjøre utkastet for beslutter',
 	beskrivelse: 'En feil oppstod under klargjøring av utkastet for beslutter. Vennligst prøv igjen senere.'
 };
+
+export const feilVedUtsendingAvDialogMelding: FeilModalConfig = {
+	tittel: 'Klarte ikke å sende meldingen',
+	beskrivelse: 'En feil oppstod under utsendingen av meldingen. Vennligst prøv igjen senere.'
+};

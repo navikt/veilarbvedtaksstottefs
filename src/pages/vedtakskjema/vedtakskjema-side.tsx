@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
-import { hentMalformFraData } from '../../components/skjema/skjema-utils';
+import { hentMalformFraData } from '../../components/utkast-skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
-import UtkastAksjoner from '../../components/skjema/aksjoner/utkast-aksjoner';
-import Skjema from '../../components/skjema/skjema';
+import UtkastAksjoner from '../../components/utkast-skjema/aksjoner/utkast-aksjoner';
+import UtkastSkjema from '../../components/utkast-skjema/utkast-skjema';
 import Page from '../page/page';
 import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
-import SkjemaHeader from '../../components/skjema/header/skjema-header';
+import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
 import { useFetchStore } from '../../stores/fetch-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
@@ -16,8 +16,8 @@ import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { finnUtkastAlltid } from '../../utils';
 import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
-import './vedtakskjema-side.less';
 import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
+import './vedtakskjema-side.less';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -74,10 +74,10 @@ export function VedtakskjemaSide() {
 	}, []);
 
 	return (
-		<Page className="page--grey">
+		<Page className="page--grey" contentClassName="vedtakskjema-side">
 			<Card className="vedtakskjema">
-				<SkjemaHeader vedtak={finnUtkastAlltid(vedtak.data)} sistOppdatert={sistOppdatert} />
-				<Skjema />
+				<SkjemaHeader utkast={finnUtkastAlltid(vedtak.data)} sistOppdatert={sistOppdatert} />
+				<UtkastSkjema />
 			</Card>
 			<Footer className="vedtakskjema__footer">
 				<UtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />

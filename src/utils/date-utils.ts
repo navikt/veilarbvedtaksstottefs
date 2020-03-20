@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 export function formatDateTime(dateStr: string) {
-	return dayjs(dateStr).format('DD. MMM. YYYY kl. HH:mm');
+	return dayjs(dateStr).format('DD. MMM YYYY kl. HH:mm');
 }
 
 export function formatDateStr(dateStr: string) {
@@ -17,10 +17,16 @@ export function daysFromToday(date: Date): number {
 	return today.diff(dayjs(date), 'day');
 }
 
-export function sortDates(dateStr1: string, dateStr2: string): number {
+export function sortDatesAsc(dateStr1: string, dateStr2: string): number {
 	const d1 = dayjs(dateStr1);
 	const d2 = dayjs(dateStr2);
 	return d1.isBefore(d2) ? 1 : -1;
+}
+
+export function sortDatesDesc(dateStr1: string, dateStr2: string): number {
+	const d1 = dayjs(dateStr1);
+	const d2 = dayjs(dateStr2);
+	return d1.isAfter(d2) ? 1 : -1;
 }
 
 export function lagVedtakDatoTekst(dateStr: string): string {

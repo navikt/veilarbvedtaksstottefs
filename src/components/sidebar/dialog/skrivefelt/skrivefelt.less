@@ -1,0 +1,41 @@
+.veilarbvedtaksstottefs {
+
+	.skrivefelt {
+		display: flex;
+		padding: 0.5rem;
+
+		&__input {
+			flex-grow: 1;
+			flex-basis: auto;
+
+			input {
+				font-family: Source Sans Pro, Arial, sans-serif;
+				font-size: 14px;
+			}
+		}
+
+		&__send-knapp {
+			border: none;
+			padding: 0;
+			margin: auto 1rem;
+
+			width: 40px;
+			height: 40px;
+		}
+
+		&__send-knapp:disabled {
+			opacity: 0.5;
+		}
+
+		&__send-knapp:hover:not(:disabled), &__send-knapp:focus:not(:disabled)  {
+			cursor: pointer;
+			transform: scale(1.15);
+		}
+
+		&__send-ikon {
+			width: 36px;
+			height: 36px;
+		}
+	}
+
+}

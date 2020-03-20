@@ -1,0 +1,46 @@
+
+.veilarbvedtaksstottefs {
+
+	.sidebar {
+		position: relative;
+		background-color: white;
+		box-shadow: 0px 10px 14px 0px rgb(182, 182, 182);
+
+		&__tab {
+			//padding: 0.5rem;
+			display: block;
+			background-color: white;
+			border-radius: 8px 0 0 8px;
+			box-shadow: 0 10px 14px 0 rgba(182, 182, 182, 0.5);
+			height: 64px;
+			width: 64px;
+
+			cursor: pointer;
+		}
+
+		&__tab-ikon {
+			width: 36px;
+			height: 36px;
+
+			margin: auto;
+		}
+
+		&__tab--selected {
+			background-color: lightgray;
+		}
+
+		&__tabs {
+			position: absolute;
+			margin-top: 2rem;
+			left: -64px;
+
+			> * {
+				margin-bottom: 0.5rem;
+			}
+		}
+
+
+
+	}
+
+}
