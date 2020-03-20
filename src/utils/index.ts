@@ -30,9 +30,9 @@ export function swallowEnterKeyPress(e: any) {
 }
 
 export function finnSkrevetAv(melding: DialogMelding, innloggetVeilederIdent: string) {
-	if (!melding.skrevetAvIdent) {
+	if (!melding.opprettetAvIdent) {
 		return SkrevetAv.SYSTEM;
-	} else if (melding.skrevetAvIdent === innloggetVeilederIdent) {
+	} else if (melding.opprettetAvIdent === innloggetVeilederIdent) {
 		return SkrevetAv.MEG;
 	} else {
 		return SkrevetAv.ANNEN;

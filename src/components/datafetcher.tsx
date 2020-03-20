@@ -7,8 +7,7 @@ import Spinner from './spinner/spinner';
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const {
 		oppfolgingData, features, malform,
-		vedtak, innloggetVeileder, arenaVedtak,
-		dialogerMeldinger
+		vedtak, innloggetVeileder, arenaVedtak
 	} = useFetchStore();
 
 	useEffect(() => {
@@ -35,16 +34,12 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		if (isNotStarted(innloggetVeileder)) {
 			innloggetVeileder.fetch(null);
 		}
-
-		if (isNotStarted(dialogerMeldinger)) {
-			dialogerMeldinger.fetch({ fnr: props.fnr });
-		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [vedtak, oppfolgingData, malform, features]);
 
-	if (isAnyNotStartedOrPending([vedtak, malform, oppfolgingData, features, innloggetVeileder, arenaVedtak, dialogerMeldinger])) {
+	if (isAnyNotStartedOrPending([vedtak, malform, oppfolgingData, features, innloggetVeileder, arenaVedtak])) {
 		return <Spinner />;
-	} else if (hasAnyFailed([vedtak, malform, oppfolgingData, features, innloggetVeileder, dialogerMeldinger])) {
+	} else if (hasAnyFailed([vedtak, malform, oppfolgingData, features, innloggetVeileder])) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.

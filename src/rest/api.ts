@@ -6,7 +6,7 @@ import { MalformType } from './data/malform';
 
 export interface SendDialogFetchParams {
 	fnr: string;
-	tekst: string;
+	melding: string;
 }
 
 export interface FnrFetchParams {
@@ -22,11 +22,6 @@ export interface OppdaterUtkastFetchParams {
 	fnr: string;
 	malform: MalformType | null;
 	skjema: SkjemaData;
-}
-
-export interface SendVedtakFetchParams {
-	fnr: string;
-	beslutterNavn?: string;
 }
 
 export const FEATURE_TOGGLE_URL = '/veilarbpersonflatefs/api/feature';
@@ -85,13 +80,13 @@ export const lagSendVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 });
 
 export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/melding`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/dialog`,
 	method: 'POST',
-	body: JSON.stringify({ tekst: params.tekst })
+	body: JSON.stringify({ melding: params.melding })
 });
 
 export const lagHentDialogerFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/melding`
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/dialog`
 });
 
 export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({

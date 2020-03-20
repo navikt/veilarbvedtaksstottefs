@@ -75,14 +75,13 @@ export const mockSlettUtkast: Mock = {
 export const mockSendVedtak: Mock = {
 	method: 'POST',
 	url: '/veilarbvedtaksstotte/api/:fnr/vedtak/send',
-	handler: async (args: HandlerArgument): Promise<ResponseData> => {
+	handler: async (): Promise<ResponseData> => {
 		const gjeldendeVedtak = vedtak.find(v => v.gjeldende);
 
 		if (gjeldendeVedtak) {
 			gjeldendeVedtak.gjeldende = false;
 		}
 
-		const sendVedtakData = args.body as { beslutterNavn: string };
 		const utkastTilUtsending = finnUtkast(vedtak);
 
 		if (!utkastTilUtsending) throw new Error('Fant ikke utkast til beslutter');
@@ -91,7 +90,6 @@ export const mockSendVedtak: Mock = {
 		utkastTilUtsending.gjeldende = true;
 		utkastTilUtsending.dokumentInfoId = '123';
 		utkastTilUtsending.journalpostId = '456';
-		utkastTilUtsending.beslutterNavn = sendVedtakData.beslutterNavn || utkastTilUtsending.beslutterNavn;
 
 		return { status: 204 };
 	}

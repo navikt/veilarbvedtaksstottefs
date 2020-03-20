@@ -23,7 +23,11 @@
 			height: 40px;
 		}
 
-		&__send-knapp:hover, &__send-knapp:focus  {
+		&__send-knapp:disabled {
+			opacity: 0.5;
+		}
+
+		&__send-knapp:hover:not(:disabled), &__send-knapp:focus:not(:disabled)  {
 			cursor: pointer;
 			transform: scale(1.15);
 		}

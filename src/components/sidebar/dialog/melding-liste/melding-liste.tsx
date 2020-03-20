@@ -21,9 +21,9 @@ function mapMeldingTilDialogView(melding: DialogMelding, key: number, skrevetAv:
 	return (
 		<div className={cls('melding-wrapper', wrapperClasses)} key={key}>
 			<Melding
-				dato={melding.dato}
-				tekst={melding.tekst}
-				skrevetAvNavn={melding.skrevetAvNavn}
+				dato={melding.opprettet}
+				tekst={melding.melding}
+				skrevetAvNavn={melding.opprettetAvNavn}
 				skrevetAv={skrevetAv}
 			/>
 		</div>
