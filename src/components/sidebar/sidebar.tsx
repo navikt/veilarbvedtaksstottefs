@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cls from 'classnames';
-import './sidebar.less';
 import tipsIkon from './tips.svg';
 import dialogIkon from './dialog.svg';
 import { Tips } from './tips/tips';
 import { Dialog } from './dialog/dialog';
+import './sidebar.less';
+import { func } from 'prop-types';
 
 interface SidebarTab {
 	name: string;
@@ -41,6 +42,7 @@ function mapTabTilView(tab: SidebarTab, isSelected: boolean, onTabClicked: (tab:
 }
 
 export const Sidebar = () => {
+	const sidebarRef = useRef<HTMLDivElement>(null);
 	const [selectedTabName, setSelectedTabName] = useState(defaultSelectedTabName);
 	const selectedTab = finnTab(selectedTabName, sidebarTabs);
 
@@ -48,14 +50,37 @@ export const Sidebar = () => {
 		setSelectedTabName(tab.name);
 	}
 
+	function setSidebarHeight() {
+		const sidebar = sidebarRef.current;
+		if (sidebar) {
+			const rect = sidebar.getBoundingClientRect();
+			sidebar.style.height = window.innerHeight - rect.top + 'px';
+		}
+	}
+
+	useEffect(() => {
+		setSidebarHeight();
+	}, [sidebarRef.current]);
+
+	useEffect(() => {
+		window.addEventListener('scroll', setSidebarHeight, true);
+		return () => {
+			window.removeEventListener('scroll', setSidebarHeight);
+		};
+	}, []);
+
+	// Element Height = Viewport height - element.offset.top - desired bottom margin
+
     return (
-    	<section className="sidebar">
+    	<div className="sidebar__wrapper">
+    	<div ref={sidebarRef} className="sidebar">
 		    <div className="sidebar__tabs">
 			    {sidebarTabs.map(tab => mapTabTilView(tab, tab.name === selectedTab.name, handleOnTabClicked))}
 		    </div>
 		    <div className="sidebar__content">
 		        {selectedTab.content}
 		    </div>
-	    </section>
+	    </div>
+	    </div>
     );
 };

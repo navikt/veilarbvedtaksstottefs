@@ -29,9 +29,7 @@ export const Dialog = () => {
 
     return (
     	<div className="dialog">
-		    <Show if={meldinger.length > 0}>
-			    <MeldingListe meldinger={sorterteDialoger} innloggetVeilederIdent={innloggetVeileder.data.ident} />
-		    </Show>
+		    <MeldingListe meldinger={sorterteDialoger} innloggetVeilederIdent={innloggetVeileder.data.ident} />
 		    <Show if={dialogerMeldinger.status === FetchStatus.PENDING}>
 				<Spinner />
 		    </Show>

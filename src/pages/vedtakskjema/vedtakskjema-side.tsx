@@ -74,7 +74,7 @@ export function VedtakskjemaSide() {
 	}, []);
 
 	return (
-		<Page className="page--grey" contentClassName="vedtakskjema-side">
+		<Page className="page-vedtaksskjema" contentClassName="vedtakskjema-side">
 			<Card className="vedtakskjema">
 				<SkjemaHeader utkast={finnUtkastAlltid(vedtak.data)} sistOppdatert={sistOppdatert} />
 				<UtkastSkjema />

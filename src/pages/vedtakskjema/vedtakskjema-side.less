@@ -2,25 +2,25 @@
 
 .veilarbvedtaksstottefs {
 
+	.page-vedtaksskjema {
+		padding-top: 0;
+	}
+
 	.vedtakskjema {
 		padding: 0;
 		width: 100%;
+		border: none;
 
 		&__footer {
 			padding: 0.75rem 0;
+			width: 82%; // TODO: THIS MUST BE REMOVED
 		}
 
 	}
 
 	.vedtakskjema-side {
 		display: flex;
-		max-width: 1600px;
-		margin: 0 1rem;
+		max-width: 100%;
 	}
 
-	@media (min-width: 1632px) {
-		.vedtakskjema-side {
-			margin: 0 auto;
-		}
-	}
 }

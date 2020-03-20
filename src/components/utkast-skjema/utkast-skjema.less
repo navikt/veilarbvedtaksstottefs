@@ -2,10 +2,22 @@
 
 	.utkast-skjema {
 		display: grid;
-		grid-template-columns: 60% 40%;
+		grid-template-columns: 1fr 375px;
 
 		&__form {
 			padding: 2rem 5rem 0 3rem;
+		}
+	}
+
+	@media (min-width: 1600px) {
+		.utkast-skjema__form {
+			padding: 2rem 10rem 0 8rem;
+		}
+	}
+
+	@media (min-width: 1920px) {
+		.utkast-skjema__form {
+			padding: 2rem 14rem 0 12rem;
 		}
 	}
 

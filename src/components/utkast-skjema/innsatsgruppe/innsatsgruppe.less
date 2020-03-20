@@ -4,10 +4,9 @@
 
 	.innsatsgruppe {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 1fr 1fr 1fr;
 		grid-column-gap: 1rem;
 		grid-row-gap: 1rem;
+		grid-template-columns: 1fr;
 
 		&__alertstripe {
 			margin: 1rem 0;
@@ -31,6 +30,12 @@
 				color: @navGra80;
 			}
 
+		}
+	}
+
+	@media (min-width: @screen-lg-min) {
+		.innsatsgruppe {
+			grid-template-columns: 1fr 1fr;
 		}
 	}
 
