@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e3981c329465aebf87549a09d96fdbec",
+    "revision": "d85fa1ee03d80a39b2bf57d8c085352f",
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "5be20de3da37b040a74e",
+    "revision": "1c2576906f66c5e0ff77",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "5be20de3da37b040a74e",
+    "revision": "1c2576906f66c5e0ff77",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
-    "revision": "4cc818928e05731cf2fd",
-    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.81f21ab0.chunk.js"
+    "revision": "4a5d27f049e05757997f",
+    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.f6a2a2e6.chunk.js"
   },
   {
     "revision": "60c7de9e28dee1c6c239b50318b59bfe",
@@ -26,6 +26,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "7e641224c473f655aaac89e9159d3ff7",
     "url": "/veilarbvedtaksstottefs/static/media/delete.7e641224.svg"
+  },
+  {
+    "revision": "91418ce5421fc0892378cff796646897",
+    "url": "/veilarbvedtaksstottefs/static/media/dialog.91418ce5.svg"
   },
   {
     "revision": "6f448b5f26deb9c2cc75f36a34ec2696",
@@ -42,10 +46,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "9923fcbf6ea57eef81ab2d19ec18f92a",
     "url": "/veilarbvedtaksstottefs/static/media/hjelpesporsmal.9923fcbf.svg"
-  },
-  {
-    "revision": "8a9a8f4b9ec6bbf6a2cd129cca10c5bb",
-    "url": "/veilarbvedtaksstottefs/static/media/info-sirkel.8a9a8f4b.svg"
   },
   {
     "revision": "a20982406f122ffb3cd502b7c8fb4f73",
@@ -96,6 +96,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/rediger.e1f53933.svg"
   },
   {
+    "revision": "5c35d935afbee01d20a382845e0f68d3",
+    "url": "/veilarbvedtaksstottefs/static/media/send.5c35d935.svg"
+  },
+  {
     "revision": "cc939bc278ddb7962de8663c1b9a49a0",
     "url": "/veilarbvedtaksstottefs/static/media/svaert_bra.cc939bc2.svg"
   },
@@ -110,6 +114,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "34bf54c5387e908eff484b28fd1a9048",
     "url": "/veilarbvedtaksstottefs/static/media/tidligere-vedtak.34bf54c5.svg"
+  },
+  {
+    "revision": "2d4d32259a446a9c7ca2edec6c4e6845",
+    "url": "/veilarbvedtaksstottefs/static/media/tips.2d4d3225.svg"
   },
   {
     "revision": "9add9957a434181039e565b03e1e7771",
