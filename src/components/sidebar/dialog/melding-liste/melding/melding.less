@@ -3,22 +3,53 @@
 .veilarbvedtaksstottefs {
 
 	.melding {
-		border-radius: 4px;
-		width: 60%;
+		width: 85%;
 		padding: 0.5rem;
+
+		&__metadata {
+			display: flex;
+			margin-bottom: 0.25rem;
+		}
+
+		&__tekst {
+			padding: 0.25rem 0;
+		}
+
+		&__tekst-wrapper {
+			display: flex;
+		}
 	}
 
 	.melding--fra-meg {
-		background-color: @navBla;
-		color: white;
+		text-align: end;
+
+		.melding__metadata {
+			flex-direction: row-reverse;
+		}
+
+		.melding__tekst-wrapper {
+			flex-direction: row-reverse;
+		}
 	}
 
 	.melding--til-meg {
-		background-color: @navLysGra;
+		text-align: start;
+
+		.melding__metadata {
+			flex-direction: row;
+
+			&-navn {
+				margin-right: 1rem;
+			}
+		}
+
+		.melding__tekst-wrapper {
+			flex-direction: row;
+		}
 	}
 
-	.melding--system {
-		background-color: @navGronnLighten40;
-	}
+	//.melding--system {
+	//	background-color: @navGronnLighten40;
+	//}
 
 }
