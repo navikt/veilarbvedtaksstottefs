@@ -10,8 +10,8 @@ import { useViewStore, ViewType } from '../../stores/view-store';
 import './vedtakskjema-visning-side.less';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
-	const { vedtak } = useFetchStore();
-	const { changeView } = useViewStore();
+	const {vedtak} = useFetchStore();
+	const {changeView} = useViewStore();
 	const vistVedtak = vedtak.data.find((v: Vedtak) => v.id === props.vedtakId);
 
 	if (!vistVedtak) {
@@ -19,13 +19,15 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	}
 
 	return (
-		<Page className="vedtakskjema-visning page--white">
-			<SkjemaVisning vedtak={vistVedtak} />
-			<Footer className="vedtakskjema-visning__footer">
+		<>
+			<Page className="vedtakskjema-visning page--white">
+				<SkjemaVisning vedtak={vistVedtak}/>
+			</Page>
+			<Footer>
 				<div className="vedtakskjema-visning__aksjoner">
 					<Hovedknapp
 						mini={true}
-						onClick={() => changeView(ViewType.VEDTAK_PDF, { vedtakId: vistVedtak.id })}
+						onClick={() => changeView(ViewType.VEDTAK_PDF, {vedtakId: vistVedtak.id})}
 					>
 						Vis vedtaksbrev
 					</Hovedknapp>
@@ -34,6 +36,6 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 					</Knapp>
 				</div>
 			</Footer>
-		</Page>
+		</>
 	);
 }

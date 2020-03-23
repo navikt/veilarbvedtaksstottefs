@@ -3,7 +3,7 @@ import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ReactComponent as SlettIkon } from './delete.svg';
 import { ReactComponent as TaOverIkon } from './locked.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { SkjemaData } from '../../../pages/vedtakskjema/vedtakskjema-side';
+import { SkjemaData } from '../../../pages/utkast/utkast-side';
 import { fetchWithInfo } from '../../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo, lagStartBeslutterProsess } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';

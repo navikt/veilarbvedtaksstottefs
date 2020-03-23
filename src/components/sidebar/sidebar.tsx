@@ -5,7 +5,6 @@ import dialogIkon from './dialog.svg';
 import { Tips } from './tips/tips';
 import { Dialog } from './dialog/dialog';
 import './sidebar.less';
-import { func } from 'prop-types';
 
 interface SidebarTab {
 	name: string;
@@ -60,6 +59,7 @@ export const Sidebar = () => {
 
 	useEffect(() => {
 		setSidebarHeight();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sidebarRef.current]);
 
 	useEffect(() => {
@@ -68,8 +68,6 @@ export const Sidebar = () => {
 			window.removeEventListener('scroll', setSidebarHeight);
 		};
 	}, []);
-
-	// Element Height = Viewport height - element.offset.top - desired bottom margin
 
     return (
     	<div className="sidebar__wrapper">
