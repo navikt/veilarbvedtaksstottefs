@@ -1,7 +1,7 @@
 import React from 'react';
 import cls from 'classnames';
 import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
-import { formatTime } from '../../../../../utils/date-utils';
+import { formatDayMonthTime } from '../../../../../utils/date-utils';
 import './melding.less';
 import { OrNothing } from '../../../../../utils/types/ornothing';
 import { MeldingBar } from './melding-bar';
@@ -39,7 +39,7 @@ export const Melding = (props: DialogMeldingProps) => {
     	<div className={cls('melding', meldingClasses)}>
 		    <div className="melding__metadata">
 			    <Element className="melding__metadata-navn">{navn}</Element>
-		        <EtikettLiten>{`${formatTime(dato)}`}</EtikettLiten>
+		        <EtikettLiten>{`${formatDayMonthTime(dato)}`}</EtikettLiten>
 		    </div>
 		    <div className="melding__tekst-wrapper">
 			    <MeldingBar className={cls(meldingBarClasses)} />

@@ -16,8 +16,8 @@ export interface Opplysning {
 }
 
 function Opplysninger() {
-	const { opplysninger: skjemaOpplysninger, setOpplysninger: setSkjemaOpplysninger, errors, isReadOnly } = useSkjemaStore();
-	const [ opplysninger, setOpplysninger ] = useState<Opplysning[]>(mergeMedDefaultOpplysninger(skjemaOpplysninger));
+	const {opplysninger: skjemaOpplysninger, setOpplysninger: setSkjemaOpplysninger, errors, isReadOnly} = useSkjemaStore();
+	const [opplysninger, setOpplysninger] = useState<Opplysning[]>(mergeMedDefaultOpplysninger(skjemaOpplysninger));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
 	const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning] = useState<boolean>(true);
 	const [sistEndretIndeks, setSistEndretIndeks] = useState<number>(-1);
@@ -70,64 +70,63 @@ function Opplysninger() {
 	}, [opplysninger]);
 
 	return (
-		<SkjemaBolk className="opplysninger-skjema-bolk" id="opplysninger-scroll-to" tittel="Kilder" tittelId="kilder-tittel">
+		<SkjemaBolk className="opplysninger-skjema-bolk" id="opplysninger-scroll-to" tittel="Kilder"
+		            tittelId="kilder-tittel">
 			<div className="opplysninger">
-				<div>
-					<Normaltekst className="blokk-xxs">Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
-					<div className="opplysninger__innhold">
-						<SkjemaGruppe aria-labelledby="kilder-tittel" feil={lagSkjemaElementFeil(errors.opplysninger)}>
-							{opplysninger.map((opplysning, index) =>
-								redigeringModusIndeks !== index ? (
-									<VisOpplysning
-										opplysning={opplysning}
-										handleOpplysning={() => {
-											setRedigeringModusIndeks(index);
-											setVisLeggTilNyOpplysning(true);
-										}}
-										key={index}
-										onChange={(o) => handleOpplysningerChecked(index, o)}
-										erSistEndretIndeks={index === sistEndretIndeks}
-										disabled={isReadOnly}
-									/>
-								) : (
-									<RedigerOpplysning
-										key={index}
-										opplysning={opplysning}
-										negativeBtn="DELETE"
-										onTekstSubmit={endretOpplysning => {
-											setRedigeringModusIndeks(-1);
-											handleOpplysningerChanged(index, endretOpplysning);
-										}}
-										onTekstDeleteOrCancel={() => {
-											handleOpplysningDeleted(index);
-											nullstilState();
-										}}
-									/>
-								)
-							)}
-						</SkjemaGruppe>
-						{visLeggTilNyOpplysning ? (
-							<LeggTilOpplysning
-								disabled={isReadOnly}
-								leggTilOpplysning={() => {
-									setVisLeggTilNyOpplysning(false);
-									nullstilState();
-								}}
-							/>
-						) : (
-							<RedigerOpplysning
-								opplysning={{ navn: '', erValgt: true }}
-								negativeBtn="CANCEL"
-								onTekstSubmit={endretOpplysning => {
-									handleOpplysningerChanged(opplysninger.length, endretOpplysning);
-									setVisLeggTilNyOpplysning(true);
-								}}
-								onTekstDeleteOrCancel={() => {
-									setVisLeggTilNyOpplysning(true);
-								}}
-							/>
+				<Normaltekst className="blokk-xxs">Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
+				<div className="opplysninger__innhold">
+					<SkjemaGruppe aria-labelledby="kilder-tittel" feil={lagSkjemaElementFeil(errors.opplysninger)}>
+						{opplysninger.map((opplysning, index) =>
+							redigeringModusIndeks !== index ? (
+								<VisOpplysning
+									opplysning={opplysning}
+									handleOpplysning={() => {
+										setRedigeringModusIndeks(index);
+										setVisLeggTilNyOpplysning(true);
+									}}
+									key={index}
+									onChange={(o) => handleOpplysningerChecked(index, o)}
+									erSistEndretIndeks={index === sistEndretIndeks}
+									disabled={isReadOnly}
+								/>
+							) : (
+								<RedigerOpplysning
+									key={index}
+									opplysning={opplysning}
+									negativeBtn="DELETE"
+									onTekstSubmit={endretOpplysning => {
+										setRedigeringModusIndeks(-1);
+										handleOpplysningerChanged(index, endretOpplysning);
+									}}
+									onTekstDeleteOrCancel={() => {
+										handleOpplysningDeleted(index);
+										nullstilState();
+									}}
+								/>
+							)
 						)}
-					</div>
+					</SkjemaGruppe>
+					{visLeggTilNyOpplysning ? (
+						<LeggTilOpplysning
+							disabled={isReadOnly}
+							leggTilOpplysning={() => {
+								setVisLeggTilNyOpplysning(false);
+								nullstilState();
+							}}
+						/>
+					) : (
+						<RedigerOpplysning
+							opplysning={{navn: '', erValgt: true}}
+							negativeBtn="CANCEL"
+							onTekstSubmit={endretOpplysning => {
+								handleOpplysningerChanged(opplysninger.length, endretOpplysning);
+								setVisLeggTilNyOpplysning(true);
+							}}
+							onTekstDeleteOrCancel={() => {
+								setVisLeggTilNyOpplysning(true);
+							}}
+						/>
+					)}
 				</div>
 			</div>
 		</SkjemaBolk>
