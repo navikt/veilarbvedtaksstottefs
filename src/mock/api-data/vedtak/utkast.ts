@@ -1,11 +1,11 @@
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
-import { ansvarligVeileder } from '../../personer';
+import {ansvarligVeileder, beslutter} from '../../personer';
 
 const utkast: Vedtak & JSONObject = {
 	id: 100,
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
-	innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
+	innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
 	vedtakStatus: 'UTKAST',
 	sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 	gjeldende: false,
@@ -17,10 +17,12 @@ const utkast: Vedtak & JSONObject = {
 	begrunnelse: 'Trenger ikke hjelp',
 	dokumentInfoId: null,
 	journalpostId: null,
-	beslutterIdent: null,
-	beslutterNavn: null,
-	beslutterProsessStartet: false,
-	godkjentAvBeslutter: false
+	beslutterIdent: beslutter.ident,
+	beslutterNavn: beslutter.navn,
+	godkjentAvBeslutter: false,
+	beslutterProsessStartet: true,
+	harBeslutter: true,
+	taOverFor: 'veileder'
 };
 
 export default utkast;

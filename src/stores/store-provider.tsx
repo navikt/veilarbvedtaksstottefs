@@ -5,6 +5,7 @@ import { useViewStore } from './view-store';
 import { useModalStore } from './modal-store';
 import { useSkjemaStore } from './skjema-store';
 import { useBeslutterStore } from './beslutter-store';
+import { useTaOverVedtakStore } from './taover-stor';
 
 interface StoreProviderProps {
 	fnr: string;
@@ -15,15 +16,17 @@ interface StoreProviderProps {
 const StoreProvider = (props: StoreProviderProps) => {
 	return (
 		<useAppStore.Provider fnr={props.fnr} enhetId={props.enhetId}>
-			<useBeslutterStore.Provider>
-				<useFetchStore.Provider>
-					<useViewStore.Provider>
-						<useModalStore.Provider>
-							<useSkjemaStore.Provider>{props.children}</useSkjemaStore.Provider>
-						</useModalStore.Provider>
-					</useViewStore.Provider>
-				</useFetchStore.Provider>
-			</useBeslutterStore.Provider>
+			<useTaOverVedtakStore.Provider>
+				<useBeslutterStore.Provider>
+					<useFetchStore.Provider>
+						<useViewStore.Provider>
+							<useModalStore.Provider>
+								<useSkjemaStore.Provider>{props.children}</useSkjemaStore.Provider>
+							</useModalStore.Provider>
+						</useViewStore.Provider>
+					</useFetchStore.Provider>
+				</useBeslutterStore.Provider>
+			</useTaOverVedtakStore.Provider>
 		</useAppStore.Provider>
 	);
 };

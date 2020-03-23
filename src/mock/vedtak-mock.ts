@@ -2,10 +2,12 @@ import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
 import { Vedtak } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
-import { innloggetVeileder } from './personer';
+import innloggetVeileder from './api-data/innlogget-veileder';
+import { ansvarligVeileder } from './personer';
 import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { finnUtkast } from '../utils';
 import historisk from './api-data/vedtak/tidligere-vedtak';
+import gjeldendeVedtak from "./api-data/vedtak/gjeldende-vedtak";
 
 let vedtak: Vedtak[] = [
 	utkast, ...historisk
@@ -29,14 +31,16 @@ export const mockLagUtkast: Mock = {
 			sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 			gjeldende: false,
 			opplysninger: [],
-			veilederNavn: innloggetVeileder.navn,
-			veilederIdent: innloggetVeileder.ident,
-			oppfolgingsenhetId: innloggetVeileder.enhetId,
-			oppfolgingsenhetNavn: innloggetVeileder.enhetNavn,
+			veilederNavn: ansvarligVeileder.navn,
+			veilederIdent: ansvarligVeileder.ident,
+			oppfolgingsenhetId: ansvarligVeileder.enhetId,
+			oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
 			beslutterNavn: null,
 			dokumentInfoId: null,
 			journalpostId: null,
-			sendtTilBeslutter: false
+			sendtTilBeslutter: false,
+			beslutterIdent: null,
+			harBeslutter: false
 		} as unknown as Vedtak;
 
 		vedtak.push(nyttUtkast);
@@ -99,23 +103,31 @@ export const mockSendVedtak: Mock = {
 
 export const mockOvertaUtkast: Mock = {
 	method: 'POST',
-	url: '/veilarbvedtaksstotte/api/:fnr/utkast/overta',
+	url: '/veilarbvedtaksstotte/api/:fnr/utkast/overta/:taOverFor',
 	handler: async (): Promise<ResponseData> => {
 
 		const gjeldendeUtkast = finnUtkast(vedtak);
 
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
 
-		gjeldendeUtkast.veilederNavn = innloggetVeileder.navn;
-		gjeldendeUtkast.veilederIdent = innloggetVeileder.ident;
-		gjeldendeUtkast.oppfolgingsenhetNavn = innloggetVeileder.enhetNavn;
-		gjeldendeUtkast.oppfolgingsenhetId = innloggetVeileder.enhetId;
+		if (gjeldendeUtkast.taOverFor === 'veileder') {
+			gjeldendeUtkast.veilederNavn = innloggetVeileder.navn;
+			gjeldendeUtkast.veilederIdent = innloggetVeileder.ident;
+		}
+
+		if (gjeldendeUtkast.taOverFor === 'beslutter') {
+			gjeldendeUtkast.beslutterIdent = innloggetVeileder.ident;
+			gjeldendeUtkast.beslutterNavn = innloggetVeileder.navn;
+		}
+
+		gjeldendeUtkast.oppfolgingsenhetNavn = ansvarligVeileder.enhetNavn;
+		gjeldendeUtkast.oppfolgingsenhetId = ansvarligVeileder.enhetId;
 
 		return { status: 204 };
 	}
 };
 
-export const mockStartBeslutterProsess: Mock = {
+export const mockKlarTilBeslutter: Mock = {
 	method: 'POST',
 	url: '/veilarbvedtaksstotte/api/:fnr/beslutter/start',
 	handler: async (): Promise<ResponseData> => {
@@ -125,7 +137,39 @@ export const mockStartBeslutterProsess: Mock = {
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å starte beslutterprosess på');
 
 		gjeldendeUtkast.beslutterProsessStartet = true;
-
+		gjeldendeUtkast.beslutterIdent = null;
+		innloggetVeileder.ident = 'Z150561';
 		return { status: 200 };
+	}
+};
+
+export const mockBliBeslutter: Mock = {
+	method: 'POST',
+	url: '/veilarbvedtaksstotte/api/:fnr/beslutter/bliBeslutter',
+	handler: async (): Promise<ResponseData> => {
+
+		const gjeldendeUtkast = finnUtkast(vedtak);
+
+		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
+
+		gjeldendeUtkast.beslutterIdent = innloggetVeileder.ident;
+		gjeldendeUtkast.beslutterIdent = innloggetVeileder.navn;
+		gjeldendeUtkast.beslutterProsessStartet = true;
+		gjeldendeUtkast.harBeslutter= true;
+		return { status: 204 };
+	}
+};
+
+export const mockGodkjennVedtak: Mock = {
+	method: 'POST',
+	url: '/veilarbvedtaksstotte/api/:fnr/beslutter/godkjenn',
+	handler: async (): Promise<ResponseData> => {
+
+		const gjeldendeUtkast = finnUtkast(vedtak);
+
+		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
+
+		gjeldendeUtkast.godkjentAvBeslutter= true;
+		return { status: 204 };
 	}
 };

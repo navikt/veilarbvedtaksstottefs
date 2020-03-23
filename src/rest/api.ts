@@ -3,6 +3,7 @@ import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
 import { ALL_TOGGLES } from './data/features';
 import { mapOpplysningerFraBokmalTilBrukersMalform } from '../components/skjema/skjema-utils';
 import { MalformType } from './data/malform';
+import {OrNothing} from "../utils/types/ornothing";
 
 export interface FnrFetchParams {
 	fnr: string;
@@ -11,6 +12,11 @@ export interface FnrFetchParams {
 export interface HentOyblikksbildeFetchParams {
 	fnr: string;
 	vedtakId: number;
+}
+
+export interface TaOverFetchParams {
+	fnr: string;
+	taOverFor: string;
 }
 
 export interface OppdaterUtkastFetchParams {
@@ -78,9 +84,8 @@ export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	method: 'DELETE'
 });
 
-export const lagTaOverUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast/overta`,
-	method: 'POST'
+export const lagTaOverUtkastFetchInfo = (params: { fnr: string; taOverFor: string | undefined | null }): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast/overta/${params.taOverFor}`
 });
 
 export const lagHentOyblikksbildeFetchInfo = (params: HentOyblikksbildeFetchParams): FetchInfo => ({
@@ -92,7 +97,17 @@ export const lagHentForhandsvisningUrl = (fnr: string): string => `${VEILARBVEDT
 export const lagHentVedtakPdfUrl = (fnr: string, dokumentInfoId: string, journalpostId: string): string =>
 	`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/vedtak/pdf?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
 
-export const lagStartBeslutterProsess = (params: FnrFetchParams): FetchInfo => ({
+export const lagKlarTilBeslutter = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/start`,
+	method: 'POST'
+});
+
+export const lagBliBeslutter = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/bliBeslutter`,
+	method: 'POST'
+});
+
+export const lagGodkjennVedtak = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/godkjenn`,
 	method: 'POST'
 });

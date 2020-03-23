@@ -12,7 +12,7 @@ export const useSkjemaStore = createUseContext(() => {
 	const [opplysninger, setOpplysninger] = useState<string[]>([]);
 	const [hovedmal, setHovedmal] = useState<OrNothing<HovedmalType>>();
 	const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>();
-	const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
+		const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
 	const [sistOppdatert, setSistOppdatert] = useState('');
 	const [errors, setErrors] = useState<SkjemaFeil>({});
 	const [isReadOnly, setReadOnly] = useState<boolean>(true);

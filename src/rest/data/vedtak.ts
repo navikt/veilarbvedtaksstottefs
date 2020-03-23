@@ -15,6 +15,10 @@ export enum HovedmalType {
 	BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
 }
 
+export enum TaOverType {
+	VEILEDER
+}
+
 export interface Vedtak {
 	id: number;
 	hovedmal: OrNothing<HovedmalType>;
@@ -34,6 +38,8 @@ export interface Vedtak {
 	opplysninger: string[];
 	journalpostId: OrNothing<string>;
 	dokumentInfoId: OrNothing<string>;
+	harBeslutter: boolean;
+	taOverFor: OrNothing<string>;
 }
 
 export interface ArenaVedtak {

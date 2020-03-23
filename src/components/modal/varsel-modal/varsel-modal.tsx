@@ -5,13 +5,15 @@ import { ReactComponent as DigitalPostkasseIkon } from './vedtak-sendt-digital.s
 import { ReactComponent as BrevIkon } from './vedtak-sendt-brev.svg';
 import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
 import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
+import { ReactComponent as OpplåstIkon } from './lock green.svg';
 import './varsel-modal.less';
 
 export enum VarselIkonType {
 	FEIL = 'FEIL',
     ADVARSEL = 'ADVARSEL',
 	VEDTAK_SENDT_BREV = 'VEDTAK_SENDT_BREV',
-	VEDTAK_SENDT_DIGITALT = 'VEDTAK_SENDT_DIGITALT'
+	VEDTAK_SENDT_DIGITALT = 'VEDTAK_SENDT_DIGITALT',
+	OPPLÅS = 'OPPLÅS'
 }
 
 interface VarselModalProps {
@@ -64,6 +66,8 @@ function VarselIkon(props: { type: VarselIkonType }) {
 			return <FeilSirkelIkon className="varsel-modal__ikon" />;
 		case VarselIkonType.ADVARSEL:
 			return <AdvarselSirkelIkon className="varsel-modal__ikon" />;
+		case VarselIkonType.OPPLÅS:
+			return <OpplåstIkon className="varsel-modal__ikon" />;
 		default:
 			return null;
 	}
