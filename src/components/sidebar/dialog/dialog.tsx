@@ -3,7 +3,7 @@ import { Skrivefelt } from './skrivefelt/skrivefelt';
 import { MeldingListe } from './melding-liste/melding-liste';
 import { useDialogStore } from '../../../stores/dialog-store';
 import { useFetchStore } from '../../../stores/fetch-store';
-import { sortDatesDesc } from '../../../utils/date-utils';
+import { sortDatesAsc } from '../../../utils/date-utils';
 import './dialog.less';
 import { FetchStatus, isNotStarted } from '../../../rest/utils';
 import { useAppStore } from '../../../stores/app-store';
@@ -16,7 +16,7 @@ export const Dialog = () => {
 	const { innloggetVeileder, dialogerMeldinger } = useFetchStore();
 
 	const sorterteDialoger = useMemo(() => {
-		return [...meldinger].sort((d1, d2) => sortDatesDesc(d1.opprettet, d2.opprettet));
+		return [...meldinger].sort((d1, d2) => sortDatesAsc(d1.opprettet, d2.opprettet));
 	}, [meldinger]);
 
 	useEffect(() => {
@@ -29,9 +29,7 @@ export const Dialog = () => {
 
     return (
     	<div className="dialog">
-		    <Show if={meldinger.length > 0}>
-			    <MeldingListe meldinger={sorterteDialoger} innloggetVeilederIdent={innloggetVeileder.data.ident} />
-		    </Show>
+		    <MeldingListe meldinger={sorterteDialoger} innloggetVeilederIdent={innloggetVeileder.data.ident} />
 		    <Show if={dialogerMeldinger.status === FetchStatus.PENDING}>
 				<Spinner />
 		    </Show>

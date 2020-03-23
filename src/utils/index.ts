@@ -1,7 +1,5 @@
 import { Vedtak } from '../rest/data/vedtak';
 import { OrNothing } from './types/ornothing';
-import { DialogMelding } from '../rest/data/dialog-melding';
-import { SkrevetAv } from '../components/sidebar/dialog/melding-liste/melding/melding';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
@@ -23,18 +21,13 @@ export const finnUtkast = (vedtakListe: Vedtak[]): Vedtak | undefined => {
 };
 
 // If the checkboxes/radios does not swallow enter, then it will for some reason propagate to the first button and trigger onClick
-export function swallowEnterKeyPress(e: any) {
+export const swallowEnterKeyPress = (e: any) => {
 	if (e.charCode === 13) {
 		e.preventDefault();
 	}
-}
+};
 
-export function finnSkrevetAv(melding: DialogMelding, innloggetVeilederIdent: string) {
-	if (!melding.opprettetAvIdent) {
-		return SkrevetAv.SYSTEM;
-	} else if (melding.opprettetAvIdent === innloggetVeilederIdent) {
-		return SkrevetAv.MEG;
-	} else {
-		return SkrevetAv.ANNEN;
-	}
-}
+export const isNothing = (str: OrNothing<string>): boolean => {
+	return str == null || str.trim().length === 0;
+};
+

@@ -4,7 +4,6 @@ import Hovedmal from './hovedmal/hovedmal';
 import Innsatsgruppe from './innsatsgruppe/innsatsgruppe';
 import Begrunnelse from './begrunnelse/begrunnelse';
 import { Malform } from './malform/malform';
-import { Sidebar } from '../sidebar/sidebar';
 import './utkast-skjema.less';
 
 function UtkastSkjema() {
@@ -17,7 +16,6 @@ function UtkastSkjema() {
 				<Innsatsgruppe />
 				<Hovedmal />
 			</form>
-			<Sidebar />
 		</div>
 	);
 }

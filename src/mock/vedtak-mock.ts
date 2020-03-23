@@ -3,7 +3,7 @@ import { Vedtak } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
 import { innloggetVeileder } from './personer';
-import { SkjemaData } from '../pages/vedtakskjema/vedtakskjema-side';
+import { SkjemaData } from '../pages/utkast/utkast-side';
 import { finnUtkast } from '../utils';
 import historisk from './api-data/vedtak/tidligere-vedtak';
 

@@ -1,7 +1,7 @@
 import { SkjemaFeil } from '../../utils/types/skjema-feil';
 import { BEGRUNNELSE_MAX_LENGTH } from './begrunnelse/begrunnelse';
 import { OrNothing } from '../../utils/types/ornothing';
-import { SkjemaData } from '../../pages/vedtakskjema/vedtakskjema-side';
+import { SkjemaData } from '../../pages/utkast/utkast-side';
 import { Opplysning } from './opplysninger/opplysninger';
 import { MalformData, MalformType } from '../../rest/data/malform';
 import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';

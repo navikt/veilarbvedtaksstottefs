@@ -4,6 +4,12 @@ import { beslutter, innloggetVeileder } from './veiledere';
 
 const dialogeMeldinger: DialogMelding[] & JSONArray = [
 	{
+		melding: 'Beslutter Besluttersen er beslutter',
+		opprettet: '2020-02-05T09:47:13.716393+02:00',
+		opprettetAvIdent: null,
+		opprettetAvNavn: null
+	},
+	{
 		melding: 'Kan du sjekke om alt ser greit ut?',
 		opprettet: '2020-02-05T09:55:43.716393+02:00',
 		opprettetAvIdent: innloggetVeileder.ident,

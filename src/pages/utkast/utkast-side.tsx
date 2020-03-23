@@ -4,8 +4,6 @@ import { hentMalformFraData } from '../../components/utkast-skjema/skjema-utils'
 import { OrNothing } from '../../utils/types/ornothing';
 import UtkastAksjoner from '../../components/utkast-skjema/aksjoner/utkast-aksjoner';
 import UtkastSkjema from '../../components/utkast-skjema/utkast-skjema';
-import Page from '../page/page';
-import Card from '../../components/card/card';
 import Footer from '../../components/footer/footer';
 import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
 import { useFetchStore } from '../../stores/fetch-store';
@@ -17,7 +15,8 @@ import { useSkjemaStore } from '../../stores/skjema-store';
 import { finnUtkastAlltid } from '../../utils';
 import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
 import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
-import './vedtakskjema-side.less';
+import { Sidebar } from '../../components/sidebar/sidebar';
+import './utkast-side.less';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -26,7 +25,7 @@ export interface SkjemaData {
 	begrunnelse: OrNothing<string>;
 }
 
-export function VedtakskjemaSide() {
+export function UtkastSide() {
 	const { fnr } = useAppStore();
 	const { vedtak, malform } = useFetchStore();
 	const { showModal } = useModalStore();
@@ -74,14 +73,17 @@ export function VedtakskjemaSide() {
 	}, []);
 
 	return (
-		<Page className="page--grey" contentClassName="vedtakskjema-side">
-			<Card className="vedtakskjema">
-				<SkjemaHeader utkast={finnUtkastAlltid(vedtak.data)} sistOppdatert={sistOppdatert} />
-				<UtkastSkjema />
-			</Card>
-			<Footer className="vedtakskjema__footer">
-				<UtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
-			</Footer>
-		</Page>
+		<div className="utkast-side">
+			<SkjemaHeader utkast={finnUtkastAlltid(vedtak.data)} sistOppdatert={sistOppdatert} />
+			<div className="utkast-side__innhold">
+				<div>
+					<UtkastSkjema />
+					<Footer>
+						<UtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
+					</Footer>
+				</div>
+				<Sidebar />
+			</div>
+		</div>
 	);
 }
