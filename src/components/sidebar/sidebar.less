@@ -8,19 +8,23 @@
 	.sidebar {
 		position: sticky;
 		top: 64px; // the height of SkjemaHeader
-		background-color: white;
-		box-shadow: 0px 10px 14px 0px rgb(182, 182, 182);
-		z-index: 1;
 
 		&__content {
 			height: 100%;
+			position: relative;
+			z-index: 1;
+			box-shadow: 0 10px 14px 0 rgb(182, 182, 182);
+			background-color: white;
 		}
 
 		&__tab {
+			position: relative;
 			display: block;
 			background-color: white;
+			border: none;
 			border-radius: 8px 0 0 8px;
-			box-shadow: 0 10px 14px 0 rgba(182, 182, 182, 0.5);
+			box-shadow: -4px 10px 14px 0 rgba(182, 182, 182, 0.5);
+			padding: 0;
 			height: 64px;
 			width: 64px;
 
@@ -35,7 +39,7 @@
 		}
 
 		&__tab--selected {
-			background-color: lightgray;
+			z-index: 2;
 		}
 
 		&__tabs {
