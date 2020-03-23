@@ -6,8 +6,8 @@ import { mapOpplysningerFraForskjelligMalformTilBokmal } from './skjema/skjema-u
 import { finnUtkast } from '../utils';
 
 export function UtkastSkjemaSync() {
-    const {initSkjema, setReadOnly} = useSkjemaStore();
-    const {vedtak, innloggetVeileder} = useFetchStore();
+    const {initSkjema} = useSkjemaStore();
+    const {vedtak} = useFetchStore();
 
     useEffect(() => {
         if (hasFinishedWithData(vedtak)) {
@@ -24,16 +24,6 @@ export function UtkastSkjemaSync() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vedtak.status]);
-
-    useEffect(() => {
-        if (hasFinishedWithData(vedtak) && hasFinishedWithData(innloggetVeileder)) {
-            const utkast = finnUtkast(vedtak.data);
-            if (utkast) {
-                setReadOnly(utkast.veilederIdent !== innloggetVeileder.data.ident);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vedtak.status, innloggetVeileder.status]);
 
     return null;
 }

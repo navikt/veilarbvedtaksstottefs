@@ -6,7 +6,7 @@ import { useBeslutterStore } from '../stores/beslutter-store';
 
 export function BeslutterSync() {
 	const {vedtak} = useFetchStore();
-	const {setBeslutterProsessStartet} = useBeslutterStore();
+	const {setBeslutterProsessStartet, setHarBeslutter} = useBeslutterStore();
 
 	useEffect(() => {
 		if (hasFinishedWithData(vedtak)) {
@@ -17,6 +17,7 @@ export function BeslutterSync() {
 			}
 
 			setBeslutterProsessStartet(utkast.beslutterProsessStartet);
+			setHarBeslutter(utkast.beslutterIdent !== null && utkast.beslutterIdent !== undefined);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [vedtak.status]);

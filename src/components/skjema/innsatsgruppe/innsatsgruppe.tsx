@@ -20,9 +20,11 @@ import { OrNothing } from '../../../utils/types/ornothing';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Show from '../../show';
 import { useFetchStore } from '../../../stores/fetch-store';
+import { useSkjemaTilgangStore } from '../../../stores/skjema-tilgang-store';
 
 function Innsatsgruppe() {
-	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors, isReadOnly} = useSkjemaStore();
+	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
+	const {isReadOnly} = useSkjemaTilgangStore();
 	const {vedtak} = useFetchStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);

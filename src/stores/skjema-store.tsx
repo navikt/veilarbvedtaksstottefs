@@ -12,10 +12,9 @@ export const useSkjemaStore = createUseContext(() => {
 	const [opplysninger, setOpplysninger] = useState<string[]>([]);
 	const [hovedmal, setHovedmal] = useState<OrNothing<HovedmalType>>();
 	const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>();
-	const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
+		const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
 	const [sistOppdatert, setSistOppdatert] = useState('');
 	const [errors, setErrors] = useState<SkjemaFeil>({});
-	const [isReadOnly, setReadOnly] = useState<boolean>(true);
 
 	const validerSkjema = (vedtak: Vedtak[]): SkjemaFeil => {
 		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, vedtak);
@@ -53,6 +52,5 @@ export const useSkjemaStore = createUseContext(() => {
 		sistOppdatert, setSistOppdatert, errors,
 		validerSkjema, validerBegrunnelseLengde,
 		initSkjema, resetSkjema,
-		isReadOnly, setReadOnly
 	};
 });

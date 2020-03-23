@@ -8,6 +8,7 @@ import { ModalController } from './components/modal-controller';
 import { UtkastSkjemaSync } from './components/utkast-skjema-sync';
 import './app.less';
 import { BeslutterSync } from './components/beslutter-sync';
+import { SkjemaTilgangSync } from './components/skjema-tilgang-sync';
 
 interface AppProps {
 	fnr: string;
@@ -25,6 +26,7 @@ function App(props: AppProps) {
 							<BeslutterSync />
 							<ViewController />
 							<ModalController />
+							<SkjemaTilgangSync />
 						</DataFetcher>
 					</NasjonalTilgangSjekk>
 				</PrelanseringSjekk>

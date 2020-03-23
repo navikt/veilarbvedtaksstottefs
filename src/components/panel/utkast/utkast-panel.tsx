@@ -11,11 +11,11 @@ import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { Beslutter } from '../beslutter';
 import Show from '../../show';
-import { useSkjemaStore } from '../../../stores/skjema-store';
+import { useSkjemaTilgangStore } from '../../../stores/skjema-tilgang-store';
 
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { changeView } = useViewStore();
-	const { isReadOnly } = useSkjemaStore();
+	const { isReadOnly } = useSkjemaTilgangStore();
 
 	if (!props.utkast) {
 		return null;

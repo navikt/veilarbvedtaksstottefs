@@ -6,12 +6,14 @@ import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import './begrunnelse.less';
+import { useSkjemaTilgangStore } from '../../../stores/skjema-tilgang-store';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
 
 function Begrunnelse() {
-	const {begrunnelse, setBegrunnelse, errors, innsatsgruppe, isReadOnly} = useSkjemaStore();
+	const {begrunnelse, setBegrunnelse, errors, innsatsgruppe} = useSkjemaStore();
+	const {isReadOnly} = useSkjemaTilgangStore();
 	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 
 	function onBegrunnelseChanged(e: any) {

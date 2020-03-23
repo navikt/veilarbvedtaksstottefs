@@ -1,6 +1,6 @@
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
-import { ansvarligVeileder } from '../../personer';
+import { ansvarligVeileder, beslutter } from '../../personer';
 
 const utkast: Vedtak & JSONObject = {
 	id: 100,
@@ -17,10 +17,11 @@ const utkast: Vedtak & JSONObject = {
 	begrunnelse: 'Trenger ikke hjelp',
 	dokumentInfoId: null,
 	journalpostId: null,
-	beslutterIdent: null,
-	beslutterNavn: null,
-	beslutterProsessStartet: false,
-	godkjentAvBeslutter: false
+	beslutterIdent: beslutter.ident,
+	beslutterNavn: beslutter.navn,
+	godkjentAvBeslutter: false,
+	beslutterProsessStartet: true,
+	taOverFor: 'veileder'
 };
 
 export default utkast;

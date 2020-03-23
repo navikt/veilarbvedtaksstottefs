@@ -5,14 +5,17 @@ import tilgangTilBrukersKontor from './api-data/tilgang-til-brukers-kontor';
 import malform from './api-data/malform';
 import vedtakFraArena from './api-data/arena-vedtak';
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
-import { innloggetVeileder } from './personer';
+import innloggetVeileder  from './api-data/innlogget-veileder';
 import {
 	mockHentVedtak,
 	mockLagUtkast,
 	mockOppdaterUtkast,
 	mockOvertaUtkast,
 	mockSendVedtak,
-	mockSlettUtkast, mockStartBeslutterProsess
+	mockSlettUtkast,
+	mockKlarTilBeslutter,
+	mockBliBeslutter,
+	mockGodkjennVedtak
 } from './vedtak-mock';
 import { addToFetchMock } from './mock-utils';
 
@@ -27,7 +30,9 @@ addToFetchMock(mockSlettUtkast, fetchMock);
 addToFetchMock(mockLagUtkast, fetchMock);
 addToFetchMock(mockSendVedtak, fetchMock);
 addToFetchMock(mockOvertaUtkast, fetchMock);
-addToFetchMock(mockStartBeslutterProsess, fetchMock);
+addToFetchMock(mockKlarTilBeslutter, fetchMock);
+addToFetchMock(mockBliBeslutter, fetchMock);
+addToFetchMock(mockGodkjennVedtak, fetchMock);
 
 fetchMock.get('/veilarbvedtaksstotte/api/:fnr/vedtakFraArena', vedtakFraArena);
 fetchMock.get('/veilarbvedtaksstotte/api/:fnr/oyblikksbilde/:vedtakId', vedlegg);

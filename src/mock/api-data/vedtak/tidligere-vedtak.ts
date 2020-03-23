@@ -1,4 +1,4 @@
-import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
+import { HovedmalType, InnsatsgruppeType, Vedtak} from '../../../rest/data/vedtak';
 import { JSONArray } from 'yet-another-fetch-mock';
 import { ansvarligVeileder, beslutter } from '../../personer';
 
@@ -30,6 +30,7 @@ const historisk: Vedtak[] & JSONArray = [
 		beslutterNavn: null,
 		beslutterProsessStartet: false,
 		godkjentAvBeslutter: false,
+		taOverFor: null
 	},
 	{
 		id: 1235,
@@ -57,6 +58,7 @@ const historisk: Vedtak[] & JSONArray = [
 		beslutterNavn: beslutter.navn,
 		beslutterProsessStartet: true,
 		godkjentAvBeslutter: false,
+		taOverFor: null
 	}
 ];
 

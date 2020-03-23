@@ -1,21 +1,24 @@
 import React from 'react';
-import { ModalType, useModalStore } from '../stores/modal-store';
-import { FeilModal } from './modal/feil-modal/feil-modal';
+import {ModalType, useModalStore} from '../stores/modal-store';
+import {FeilModal} from './modal/feil-modal/feil-modal';
 import {
 	FeilModalConfig,
+	feilVedBliBeslutterConfig,
 	feilVedForhandsvisnigConfig,
 	feilVedLagringConfig,
 	feilVedOpprettingAvUtkast,
 	feilVedOvertakelseAvUtkastConfig,
 	feilVedSendningConfig,
-	feilVedSlettingAvUtkastConfig, feilVedStartBeslutterProsessConfig,
+	feilVedSlettingAvUtkastConfig,
+	feilVedStartBeslutterProsessConfig,
 	feilVedVisningConfig,
 	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
-import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
+import { VedtakSendtModal  } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
-import TaOverUtkastModal from './modal/ta-over-utkast-modal';
+import TaOverUtkastModal from './modal/ta-over-modal/ta-over-utkast-modal';
+import TaOverTilbakemeldingModal from './modal/ta-over-modal/ta-over-tilbakemelding-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
@@ -37,6 +40,8 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedOvertakelseAvUtkastConfig;
 		case ModalType.FEIL_VED_START_BESLUTTER_PROSESS:
 			return feilVedStartBeslutterProsessConfig;
+		case ModalType.FEIL_VED_BLI_BESLUTTER:
+			return feilVedBliBeslutterConfig;
 		default:
 			return null;
 	}
@@ -55,6 +60,7 @@ export function ModalController() {
 			/>
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverUtkastModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
+			<TaOverTilbakemeldingModal isOpen={modalType === ModalType.TA_OVER_TILBAKEMELDING} />
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>
 	);

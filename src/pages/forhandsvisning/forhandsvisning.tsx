@@ -17,13 +17,15 @@ import { finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import './forhandsvisning.less';
 import Show from '../../components/show';
+import { useSkjemaTilgangStore } from '../../stores/skjema-tilgang-store';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
 	const { vedtak, features, oppfolgingData } = useFetchStore();
 	const { showModal } = useModalStore();
-	const { innsatsgruppe, resetSkjema, isReadOnly } = useSkjemaStore();
+	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
+	const { isReadOnly } = useSkjemaTilgangStore();
 
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 	const stoppeUtsendingfeatureToggle = features.data[STOPPE_VEDTAKSUTSENDING_TOGGLE];
