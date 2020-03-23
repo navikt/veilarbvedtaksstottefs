@@ -39,7 +39,7 @@ export const Melding = (props: DialogMeldingProps) => {
     	<div className={cls('melding', meldingClasses)}>
 		    <div className="melding__metadata">
 			    <Element className="melding__metadata-navn">{navn}</Element>
-		        <EtikettLiten>{`${formatDayMonthTime(dato)}`}</EtikettLiten>
+		        <EtikettLiten className="melding__metadata-dato">{`${formatDayMonthTime(dato)}`}</EtikettLiten>
 		    </div>
 		    <div className="melding__tekst-wrapper">
 			    <MeldingBar className={cls(meldingBarClasses)} />
