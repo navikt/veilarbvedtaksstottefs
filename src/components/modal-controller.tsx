@@ -14,7 +14,7 @@ import {
 	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
-import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
+import { VedtakSendtModal  } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverUtkastModal from './modal/ta-over-modal/ta-over-utkast-modal';
 import TaOverTilbakemeldingModal from './modal/ta-over-modal/ta-over-tilbakemelding-modal';

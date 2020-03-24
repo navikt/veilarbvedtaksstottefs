@@ -2,7 +2,7 @@ import { ModalProps } from '../modal-props';
 import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import React from 'react';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { finnUtkast} from '../../../utils';
+import { finnUtkast } from '../../../utils';
 import { useFetchStore } from '../../../stores/fetch-store';
 import { fetchWithInfo } from '../../../rest/utils';
 import { lagTaOverUtkastFetchInfo } from '../../../rest/api';
@@ -23,6 +23,7 @@ function TaOverUtkastModal(props: ModalProps) {
     const {harBeslutter} = useBeslutterStore();
     const {taOverFor, setTaOverFor} = useTaOverVedtakStore();
     const {setErInnloggetAnsvarligVeileder, setErInnloggetVeilederBeslutter} = useSkjemaTilgangStore();
+
     const utkast = finnUtkast(vedtak.data);
     const veilederNavn = utkast ? utkast.veilederNavn : undefined;
 
@@ -102,6 +103,5 @@ function TaOverUtkastModal(props: ModalProps) {
         </VarselModal>
     )
 }
-
 
 export default TaOverUtkastModal;

@@ -3,7 +3,6 @@ import { SkjemaData } from '../pages/utkast/utkast-side';
 import { ALL_TOGGLES } from './data/features';
 import { mapOpplysningerFraBokmalTilBrukersMalform } from '../components/utkast-skjema/skjema-utils';
 import { MalformType } from './data/malform';
-import {OrNothing} from "../utils/types/ornothing";
 
 export interface SendDialogFetchParams {
 	fnr: string;
@@ -17,11 +16,6 @@ export interface FnrFetchParams {
 export interface HentOyblikksbildeFetchParams {
 	fnr: string;
 	vedtakId: number;
-}
-
-export interface TaOverFetchParams {
-	fnr: string;
-	taOverFor: string;
 }
 
 export interface OppdaterUtkastFetchParams {
