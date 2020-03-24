@@ -9,7 +9,7 @@ export const ansvarligVeileder = {
 
 export const beslutter = {
 	navn: 'Beslutter Besluttersen',
-	ident: null,
+	ident: 'S150566',
 	enhetId: ansvarligVeileder.enhetId,
 	enhetNavn: ansvarligVeileder.enhetNavn,
 };

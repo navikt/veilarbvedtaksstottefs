@@ -141,7 +141,6 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 					setVisBliBeslutterLaster(false);
 					showModal(ModalType.FEIL_VED_BLI_BESLUTTER);
 				});
-
 	}
 
 	function handleSendEndringer() {
@@ -152,7 +151,6 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 			changeView(ViewType.UTKAST);
 			setVisSendEndringer(false);
 		});
-
 	}
 
 	function handleGodkjenne() {
