@@ -21,7 +21,6 @@ const utkast: Vedtak & JSONObject = {
 	beslutterNavn: beslutter.navn,
 	godkjentAvBeslutter: false,
 	beslutterProsessStartet: true,
-	taOverFor: 'veileder'
 };
 
 export default utkast;

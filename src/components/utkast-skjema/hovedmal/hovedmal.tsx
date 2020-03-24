@@ -9,11 +9,11 @@ import { lagSkjemaElementFeil } from '../skjema-utils';
 import { HovedmalType, InnsatsgruppeType } from '../../../rest/data/vedtak';
 import { alleHovedmal } from '../../../utils/hovedmal';
 import './hovedmal.less';
-import { useSkjemaTilgangStore } from '../../../stores/skjema-tilgang-store';
+import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-store';
 
 function Hovedmal() {
 	const {innsatsgruppe, hovedmal, setHovedmal, errors} = useSkjemaStore();
-	const {isReadOnly} = useSkjemaTilgangStore();
+	const {kanEndreUtkast} = useInnloggetVeilederStore();
 	const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
 	return (
 		<SkjemaBolk id="hovedmal-scroll-to" tittel="Hovedmål" tittelId="hovedmal-tittel">
@@ -25,7 +25,7 @@ function Hovedmal() {
 						</span>
 					</AlertStripeInfo>
 				) : (
-					<HovedmalRadioButtons handleHovedmalChanged={setHovedmal} hovedmal={hovedmal} disabled={isReadOnly}/>
+					<HovedmalRadioButtons handleHovedmalChanged={setHovedmal} hovedmal={hovedmal} disabled={!kanEndreUtkast}/>
 				)}
 			</SkjemaGruppe>
 		</SkjemaBolk>

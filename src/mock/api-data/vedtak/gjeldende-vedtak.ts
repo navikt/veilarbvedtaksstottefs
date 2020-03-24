@@ -23,7 +23,6 @@ const gjeldendeVedtak: Vedtak & JSONObject = {
 	godkjentAvBeslutter: false,
 	dokumentInfoId: null,
 	journalpostId: null,
-	taOverFor: null
 };
 
 export default gjeldendeVedtak;

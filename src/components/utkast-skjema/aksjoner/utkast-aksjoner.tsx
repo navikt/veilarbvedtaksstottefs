@@ -8,8 +8,8 @@ import { fetchWithInfo } from '../../../rest/utils';
 import { ReactComponent as SlettIkon } from './delete.svg';
 import {
 	lagOppdaterVedtakUtkastFetchInfo,
-	lagKlarTilBeslutter,
-	lagBliBeslutter, lagGodkjennVedtak
+	lagStartBeslutterProsessFetchInfo,
+	lagBliBeslutterFetchInfo, lagGodkjennVedtakFetchInfo
 } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
@@ -18,9 +18,9 @@ import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } from '../skjema-utils';
 import Show from '../../show';
 import { useBeslutterStore } from '../../../stores/beslutter-store';
-import './aksjoner.less';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { useSkjemaTilgangStore } from '../../../stores/skjema-tilgang-store';
+import './aksjoner.less';
+import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-store';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -29,6 +29,7 @@ interface UtkastAksjonerProps {
 
 function UtkastAksjoner(props: UtkastAksjonerProps) {
 	const { fnr } = useAppStore();
+	const { kanEndreUtkast } = useInnloggetVeilederStore();
 	const { vedtak, malform, innloggetVeileder } = useFetchStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
@@ -37,9 +38,6 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 		    harBeslutter, setHarBeslutter,
 		    godkjentAvBeslutter, setGodkjentAvBeslutter,
 		    visSendEndringer, setVisSendEndringer } = useBeslutterStore();
-	const { erInnloggetAnsvarligVeileder,
-			erInnloggetVeilederBeslutter, setErInnloggetVeilederBeslutter,
-			isReadOnly } = useSkjemaTilgangStore();
 
 	const [visKlarTilBeslutterLaster, setVisKlarTilBeslutterLaster] = useState(false);
 	const [visForhandsvisngLaster, setVisForhandsvisngLaster] = useState(false);
@@ -48,15 +46,10 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	const [visGodkjennesLaster, setVisGodkjennesLaster] = useState(false);
 	const [visSendEndringerLaster, setVisSendEndringerLaster] = useState(false);
 
-	const visKlarTilBeslutter = erInnloggetAnsvarligVeileder && (trengerBeslutter(innsatsgruppe) && !beslutterProsessStartet);
-	const visBliBeslutter = !erInnloggetAnsvarligVeileder && beslutterProsessStartet && !harBeslutter;
-	const visGodkjenne = !erInnloggetAnsvarligVeileder && erInnloggetVeilederBeslutter && !godkjentAvBeslutter;
-	const visTaOver = !erInnloggetAnsvarligVeileder && !erInnloggetVeilederBeslutter;
-
-	console.log('erInnloggetAnsvarligVeileder:',erInnloggetAnsvarligVeileder, '(trengerBeslutter(innsatsgruppe)): ', trengerBeslutter(innsatsgruppe),
-	'beslutterProsessStartet: ', beslutterProsessStartet, 'visKlarTilBeslutter: ',visKlarTilBeslutter, 'visBliBeslutter: ',visBliBeslutter,
-		'visGodkjenne: ',visGodkjenne, 'visTaOver: ', visTaOver, 'erInnloggetVeilederBeslutter: ', erInnloggetVeilederBeslutter, 'godkjentAvBeslutter: ', godkjentAvBeslutter,
-		'harBeslutter: ', harBeslutter, 'visSendEndringer', visSendEndringer);
+	const visKlarTilBeslutter = true; // erInnloggetAnsvarligVeileder && (trengerBeslutter(innsatsgruppe) && !beslutterProsessStartet);
+	const visBliBeslutter = true; // !erInnloggetAnsvarligVeileder && beslutterProsessStartet && !harBeslutter;
+	const visGodkjenne = true; // !erInnloggetAnsvarligVeileder && erInnloggetVeilederBeslutter && !godkjentAvBeslutter;
+	const visTaOver = true; // !erInnloggetAnsvarligVeileder && !erInnloggetVeilederBeslutter;
 
 	function sendDataTilBackend() {
 		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform.data)};
@@ -115,7 +108,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 		setVisKlarTilBeslutterLaster(true);
 
 		sendDataTilBackend().then(() => {
-			fetchWithInfo(lagKlarTilBeslutter({fnr}))
+			fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
 				.then(() => {
 					setVisKlarTilBeslutterLaster(false);
 					setBeslutterProsessStartet(true);
@@ -130,12 +123,12 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	function handleBliBeslutter() {
 		setVisBliBeslutterLaster(true);
 
-			fetchWithInfo(lagBliBeslutter({fnr}))
+			fetchWithInfo(lagBliBeslutterFetchInfo({fnr}))
 				.then(() => {
 					setVisBliBeslutterLaster(false);
 					setVisSendEndringer(true);
 					setHarBeslutter(true);
-					setErInnloggetVeilederBeslutter(true);
+					// setErInnloggetVeilederBeslutter(true);
 				})
 				.catch(() => {
 					setVisBliBeslutterLaster(false);
@@ -156,7 +149,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 	function handleGodkjenne() {
 		setVisGodkjennesLaster(true);
 
-			fetchWithInfo(lagGodkjennVedtak({fnr}))
+			fetchWithInfo(lagGodkjennVedtakFetchInfo({fnr}))
 				.then(() => {
 					setVisGodkjennesLaster(false);
 					setGodkjentAvBeslutter(true);
@@ -171,7 +164,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 		<div className="aksjoner">
 			<Tilbakeknapp
 				htmlType="button"
-				onClick={isReadOnly ? handleTilbake : handleLagreOgTilbake}
+				onClick={kanEndreUtkast ? handleLagreOgTilbake : handleTilbake}
 			/>
 			<div className="aksjoner__knapper">
 				<Show if={visKlarTilBeslutter}>
@@ -208,7 +201,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 					disabled={visForhandsvisngLaster}
 					mini={true}
 					htmlType="submit"
-					onClick={isReadOnly ? handleForhandsvis : handleForhandsvisOgLagre}
+					onClick={kanEndreUtkast ? handleForhandsvisOgLagre : handleForhandsvis}
 				>
 					FORHÅNDSVIS
 				</Hovedknapp>
@@ -227,7 +220,7 @@ function UtkastAksjoner(props: UtkastAksjonerProps) {
 					</div>
 				</Show>
 			</div>
-			<Show if={!isReadOnly}>
+			<Show if={kanEndreUtkast}>
 				<Flatknapp
 					className="aksjoner__ikon-knapp"
 					mini={true}

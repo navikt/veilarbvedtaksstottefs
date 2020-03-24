@@ -99,22 +99,11 @@ export const mockSendVedtak: Mock = {
 
 export const mockOvertaUtkast: Mock = {
 	method: 'POST',
-	url: '/veilarbvedtaksstotte/api/:fnr/utkast/overta/:taOverFor',
+	url: '/veilarbvedtaksstotte/api/:fnr/utkast/overta',
 	handler: async (): Promise<ResponseData> => {
-
 		const gjeldendeUtkast = finnUtkast(vedtak);
 
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
-
-		if (gjeldendeUtkast.taOverFor === 'veileder') {
-			gjeldendeUtkast.veilederNavn = innloggetVeileder.navn;
-			gjeldendeUtkast.veilederIdent = innloggetVeileder.ident;
-		}
-
-		if (gjeldendeUtkast.taOverFor === 'beslutter') {
-			gjeldendeUtkast.beslutterIdent = innloggetVeileder.ident;
-			gjeldendeUtkast.beslutterNavn = innloggetVeileder.navn;
-		}
 
 		gjeldendeUtkast.oppfolgingsenhetNavn = ansvarligVeileder.enhetNavn;
 		gjeldendeUtkast.oppfolgingsenhetId = ansvarligVeileder.enhetId;
@@ -146,7 +135,7 @@ export const mockBliBeslutter: Mock = {
 
 		const gjeldendeUtkast = finnUtkast(vedtak);
 
-		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
+		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å bli beslutter for');
 
 		gjeldendeUtkast.beslutterIdent = innloggetVeileder.ident;
 		gjeldendeUtkast.beslutterIdent = innloggetVeileder.navn;

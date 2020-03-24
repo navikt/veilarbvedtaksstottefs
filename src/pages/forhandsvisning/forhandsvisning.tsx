@@ -17,7 +17,7 @@ import { finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import './forhandsvisning.less';
 import Show from '../../components/show';
-import { useSkjemaTilgangStore } from '../../stores/skjema-tilgang-store';
+import { useInnloggetVeilederStore } from '../../stores/innlogget-veileder-store';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
@@ -25,7 +25,7 @@ export function Forhandsvisning() {
 	const { vedtak, features, oppfolgingData } = useFetchStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
-	const { isReadOnly } = useSkjemaTilgangStore();
+	const { kanEndreUtkast } = useInnloggetVeilederStore();
 
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 	const stoppeUtsendingfeatureToggle = features.data[STOPPE_VEDTAKSUTSENDING_TOGGLE];
@@ -82,7 +82,7 @@ export function Forhandsvisning() {
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
-					<Show if={!isReadOnly && erUtkastKlartTilUtsending}>
+					<Show if={kanEndreUtkast && erUtkastKlartTilUtsending}>
 						<Hovedknapp disabled={pdfStatus !== PDFStatus.SUCCESS} mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
 							Send til bruker
 						</Hovedknapp>

@@ -8,9 +8,9 @@ export const useBeslutterStore = createUseContext(() => {
 	const [visSendEndringer, setVisSendEndringer] = useState(false);
 
 	return {
-			 beslutterProsessStartet, setBeslutterProsessStartet,
-		     harBeslutter, setHarBeslutter,
-		     godkjentAvBeslutter, setGodkjentAvBeslutter,
-		     visSendEndringer, setVisSendEndringer
+		beslutterProsessStartet, setBeslutterProsessStartet,
+		harBeslutter, setHarBeslutter,
+		godkjentAvBeslutter, setGodkjentAvBeslutter,
+		visSendEndringer, setVisSendEndringer
 	};
 });

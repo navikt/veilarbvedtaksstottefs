@@ -6,8 +6,7 @@ import { useModalStore } from './modal-store';
 import { useSkjemaStore } from './skjema-store';
 import { useDialogStore } from './dialog-store';
 import { useBeslutterStore } from './beslutter-store';
-import { useTaOverVedtakStore } from './taover-stor';
-import { useSkjemaTilgangStore } from './skjema-tilgang-store';
+import { useInnloggetVeilederStore } from './innlogget-veileder-store';
 
 interface StoreProviderProps {
 	fnr: string;
@@ -19,19 +18,19 @@ const StoreProvider = (props: StoreProviderProps) => {
 	return (
 		<useAppStore.Provider fnr={props.fnr} enhetId={props.enhetId}>
 			<useBeslutterStore.Provider>
-				<useTaOverVedtakStore.Provider>
-					<useDialogStore.Provider>
-						<useFetchStore.Provider>
+				<useDialogStore.Provider>
+					<useFetchStore.Provider>
+						<useInnloggetVeilederStore.Provider>
 							<useViewStore.Provider>
 								<useModalStore.Provider>
-									<useSkjemaTilgangStore.Provider>
-										<useSkjemaStore.Provider>{props.children}</useSkjemaStore.Provider>
-									</useSkjemaTilgangStore.Provider>
+									<useSkjemaStore.Provider>
+										{props.children}
+									</useSkjemaStore.Provider>
 								</useModalStore.Provider>
 							</useViewStore.Provider>
-						</useFetchStore.Provider>
-					</useDialogStore.Provider>
-				</useTaOverVedtakStore.Provider>
+						</useInnloggetVeilederStore.Provider>
+					</useFetchStore.Provider>
+				</useDialogStore.Provider>
 			</useBeslutterStore.Provider>
 		</useAppStore.Provider>
 	);

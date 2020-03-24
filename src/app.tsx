@@ -9,7 +9,7 @@ import { UtkastSkjemaSync } from './components/utkast-skjema-sync';
 import './app.less';
 import { DialogMeldingerSync } from './components/dialog-meldinger-sync';
 import { BeslutterSync } from './components/beslutter-sync';
-import { SkjemaTilgangSync } from './components/skjema-tilgang-sync';
+import { InnloggetVeilederSync } from './components/innlogget-veileder-sync';
 
 interface AppProps {
 	fnr: string;
@@ -28,7 +28,7 @@ function App(props: AppProps) {
 							<BeslutterSync />
 							<ViewController />
 							<ModalController />
-							<SkjemaTilgangSync />
+							<InnloggetVeilederSync />
 						</DataFetcher>
 					</NasjonalTilgangSjekk>
 				</PrelanseringSjekk>
