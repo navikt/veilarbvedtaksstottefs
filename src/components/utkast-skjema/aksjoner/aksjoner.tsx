@@ -19,10 +19,11 @@ import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } fr
 import Show from '../../show';
 import { Element } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../stores/tilgang-store';
-import { erBeslutter, erIkkeAnsvarligVeileder, VeilederTilgang } from '../../../utils/tilgang';
+import { erAnsvarligVeileder, erBeslutter, erIkkeAnsvarligVeileder, VeilederTilgang } from '../../../utils/tilgang';
 import { finnUtkastAlltid } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import './aksjoner.less';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -45,7 +46,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 	const utkast = finnUtkastAlltid(vedtak);
 	const godkjentAvBeslutter = utkast.godkjentAvBeslutter;
-	const visKlarTilBeslutter = !utkast.beslutterProsessStartet && trengerBeslutter(innsatsgruppe);
+	const visKlarTilBeslutter = !utkast.beslutterProsessStartet && trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder(veilederTilgang);
 	const visBliBeslutter = utkast.beslutterProsessStartet && utkast.beslutterIdent == null && erIkkeAnsvarligVeileder(veilederTilgang);
 	const visGodkjennUtkast = utkast.beslutterProsessStartet && !godkjentAvBeslutter && erBeslutter(veilederTilgang);
 	const visTaOverUtkast = erIkkeAnsvarligVeileder(veilederTilgang);
@@ -137,10 +138,12 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				disabled={laster}
 			/>
 
-			<div className="aksjoner__knapper">
+			<div className="aksjoner__knapper-midten">
+				<Show if={laster}>
+					<NavFrontendSpinner type="XS" />
+				</Show>
 				<Show if={visKlarTilBeslutter}>
 					<Knapp
-						spinner={laster}
 						disabled={laster}
 						mini={true}
 						htmlType="button"
@@ -154,6 +157,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 						mini={true}
 						htmlType="button"
 						onClick={handleOnBliBeslutterClicked}
+						disabled={laster}
 					>
 						Bli beslutter
 					</Hovedknapp>
@@ -163,12 +167,12 @@ function Aksjoner(props: UtkastAksjonerProps) {
 						mini={true}
 						htmlType="button"
 						onClick={handleOnSendEndringerClicked}
+						disabled={laster}
 					>
 						Send endringer
 					</Hovedknapp>
 				</Show>
 				<Hovedknapp
-					spinner={laster}
 					disabled={laster}
 					mini={true}
 					htmlType="button"
@@ -178,7 +182,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				</Hovedknapp>
 			</div>
 
-			<div>
+			<div className="aksjoner__knapper-hoyre">
 				<Show if={kanEndreUtkast}>
 					<Flatknapp
 						mini={true}

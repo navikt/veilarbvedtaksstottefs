@@ -34,8 +34,6 @@ export function UtkastSide() {
 		setSistOppdatert, validerSkjema, validerBegrunnelseLengde
 	} = useSkjemaStore();
 
-	console.log('vedtak', vedtak); // tslint:disable-line
-
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 	const isAfterFirstRender = useIsAfterFirstRender();
 
