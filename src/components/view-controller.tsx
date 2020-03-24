@@ -5,7 +5,7 @@ import { Forhandsvisning } from '../pages/forhandsvisning/forhandsvisning';
 import { useViewStore, ViewType } from '../stores/view-store';
 import { OyblikksbildeVisning } from '../pages/oyblikksbilde-visning/oyblikksbilde-visning';
 import { VedtaksbrevVisning } from '../pages/vedtaksbrev-visning/vedtaksbrev-visning';
-import { VedtakskjemaSide } from '../pages/vedtakskjema/vedtakskjema-side';
+import { UtkastSide } from '../pages/utkast/utkast-side';
 
 export function ViewController() {
 	const { view, viewProps } = useViewStore();
@@ -15,7 +15,7 @@ export function ViewController() {
 		case ViewType.HOVEDSIDE:
 			return <Hovedside />;
 		case ViewType.UTKAST:
-			return <VedtakskjemaSide />;
+			return <UtkastSide />;
 		case ViewType.FORHANDSVISNING:
 			return <Forhandsvisning />;
 		case ViewType.VEDTAK:

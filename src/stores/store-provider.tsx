@@ -4,6 +4,7 @@ import { useFetchStore } from './fetch-store';
 import { useViewStore } from './view-store';
 import { useModalStore } from './modal-store';
 import { useSkjemaStore } from './skjema-store';
+import { useDialogStore } from './dialog-store';
 import { useBeslutterStore } from './beslutter-store';
 import { useTaOverVedtakStore } from './taover-stor';
 import { useSkjemaTilgangStore } from './skjema-tilgang-store';
@@ -19,15 +20,17 @@ const StoreProvider = (props: StoreProviderProps) => {
 		<useAppStore.Provider fnr={props.fnr} enhetId={props.enhetId}>
 			<useBeslutterStore.Provider>
 				<useTaOverVedtakStore.Provider>
-					<useFetchStore.Provider>
-						<useViewStore.Provider>
-							<useModalStore.Provider>
-								<useSkjemaTilgangStore.Provider>
-									<useSkjemaStore.Provider>{props.children}</useSkjemaStore.Provider>
-								</useSkjemaTilgangStore.Provider>
-							</useModalStore.Provider>
-						</useViewStore.Provider>
-					</useFetchStore.Provider>
+					<useDialogStore.Provider>
+						<useFetchStore.Provider>
+							<useViewStore.Provider>
+								<useModalStore.Provider>
+									<useSkjemaTilgangStore.Provider>
+										<useSkjemaStore.Provider>{props.children}</useSkjemaStore.Provider>
+									</useSkjemaTilgangStore.Provider>
+								</useModalStore.Provider>
+							</useViewStore.Provider>
+						</useFetchStore.Provider>
+					</useDialogStore.Provider>
 				</useTaOverVedtakStore.Provider>
 			</useBeslutterStore.Provider>
 		</useAppStore.Provider>

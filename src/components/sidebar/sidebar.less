@@ -1,0 +1,61 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.sidebar__wrapper {
+		position: relative;
+	}
+
+	.sidebar {
+		position: sticky;
+		top: 64px; // the height of SkjemaHeader
+
+		&__content {
+			height: 100%;
+			position: relative;
+			z-index: 1;
+			box-shadow: 0 10px 14px 0 rgb(182, 182, 182);
+			background-color: white;
+		}
+
+		&__tab {
+			position: relative;
+			display: block;
+			background-color: white;
+			border: 1px solid @navLysGra;
+			border-right: none;
+			border-radius: 8px 0 0 8px;
+			box-shadow: -4px 10px 14px 0 rgba(182, 182, 182, 0.5);
+			padding: 0;
+			height: 64px;
+			width: 64px;
+
+			cursor: pointer;
+		}
+
+		&__tab-ikon {
+			width: 36px;
+			height: 36px;
+
+			margin: auto;
+		}
+
+		&__tab--selected {
+			z-index: 2;
+		}
+
+		&__tabs {
+			position: absolute;
+			margin-top: 2rem;
+			left: -64px;
+
+			> * {
+				margin-bottom: 0.5rem;
+			}
+		}
+
+
+
+	}
+
+}

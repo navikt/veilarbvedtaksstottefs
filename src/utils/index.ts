@@ -21,8 +21,13 @@ export const finnUtkast = (vedtakListe: Vedtak[]): Vedtak | undefined => {
 };
 
 // If the checkboxes/radios does not swallow enter, then it will for some reason propagate to the first button and trigger onClick
-export function swallowEnterKeyPress(e: any) {
+export const swallowEnterKeyPress = (e: any) => {
 	if (e.charCode === 13) {
 		e.preventDefault();
 	}
-}
+};
+
+export const isNothing = (str: OrNothing<string>): boolean => {
+	return str == null || str.trim().length === 0;
+};
+

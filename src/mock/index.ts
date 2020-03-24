@@ -18,6 +18,7 @@ import {
 	mockGodkjennVedtak
 } from './vedtak-mock';
 import { addToFetchMock } from './mock-utils';
+import { mockHentDialoger, mockSendDialogMelding } from './dialoger-meldinger-mock';
 
 const fetchMock = FetchMock.configure({
 	enableFallback: true,
@@ -33,6 +34,8 @@ addToFetchMock(mockOvertaUtkast, fetchMock);
 addToFetchMock(mockKlarTilBeslutter, fetchMock);
 addToFetchMock(mockBliBeslutter, fetchMock);
 addToFetchMock(mockGodkjennVedtak, fetchMock);
+addToFetchMock(mockHentDialoger, fetchMock);
+addToFetchMock(mockSendDialogMelding, fetchMock);
 
 fetchMock.get('/veilarbvedtaksstotte/api/:fnr/vedtakFraArena', vedtakFraArena);
 fetchMock.get('/veilarbvedtaksstotte/api/:fnr/oyblikksbilde/:vedtakId', vedlegg);

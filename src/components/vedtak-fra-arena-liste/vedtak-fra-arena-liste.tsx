@@ -3,7 +3,7 @@ import { ArenaVedtak } from '../../rest/data/vedtak';
 import { Element } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { frontendlogger } from '../../utils/frontend-logger';
-import { sortDates } from '../../utils/date-utils';
+import { sortDatesDesc } from '../../utils/date-utils';
 import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
 import vedtakBilde from './pdf.svg';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
@@ -27,7 +27,7 @@ export function VedtakFraArenaListe({ vedtakListe }: { vedtakListe: ArenaVedtak[
 	const { changeView } = useViewStore();
 
 	const arenaVedtak = useMemo(() => {
-		return [...vedtakListe].sort((v1, v2) => sortDates(v1.dato, v2.dato));
+		return [...vedtakListe].sort((v1, v2) => sortDatesDesc(v1.dato, v2.dato));
 	}, [vedtakListe]);
 
 	function handleTidligereVedtakClicked(vedtakData: ArenaVedtak, idx: number) {

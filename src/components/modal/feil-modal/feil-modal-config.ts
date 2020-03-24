@@ -65,3 +65,8 @@ export const feilVedBliBeslutterConfig: FeilModalConfig = {
 	tittel: 'Klarte ikke å bli beslutter',
 	beskrivelse: 'En feil oppstod under overtakselse som beslutter. Vennligst prøv igjen senere.'
 };
+
+export const feilVedUtsendingAvDialogMelding: FeilModalConfig = {
+	tittel: 'Klarte ikke å sende meldingen',
+	beskrivelse: 'En feil oppstod under utsendingen av meldingen. Vennligst prøv igjen senere.'
+};

@@ -5,7 +5,10 @@ import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../rest/ut
 import Spinner from './spinner/spinner';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
-	const { oppfolgingData, features, malform, vedtak, innloggetVeileder, arenaVedtak } = useFetchStore();
+	const {
+		oppfolgingData, features, malform,
+		vedtak, innloggetVeileder, arenaVedtak
+	} = useFetchStore();
 
 	useEffect(() => {
 		if (isNotStarted(vedtak)) {

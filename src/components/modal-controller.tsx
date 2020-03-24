@@ -1,6 +1,6 @@
 import React from 'react';
-import {ModalType, useModalStore} from '../stores/modal-store';
-import {FeilModal} from './modal/feil-modal/feil-modal';
+import { ModalType, useModalStore } from '../stores/modal-store';
+import { FeilModal } from './modal/feil-modal/feil-modal';
 import {
 	FeilModalConfig,
 	feilVedBliBeslutterConfig,
@@ -9,13 +9,12 @@ import {
 	feilVedOpprettingAvUtkast,
 	feilVedOvertakelseAvUtkastConfig,
 	feilVedSendningConfig,
-	feilVedSlettingAvUtkastConfig,
-	feilVedStartBeslutterProsessConfig,
+	feilVedSlettingAvUtkastConfig, feilVedStartBeslutterProsessConfig, feilVedUtsendingAvDialogMelding,
 	feilVedVisningConfig,
 	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
-import { VedtakSendtModal  } from './modal/vedtak-sendt/vedtak-sendt-modal';
+import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverUtkastModal from './modal/ta-over-modal/ta-over-utkast-modal';
 import TaOverTilbakemeldingModal from './modal/ta-over-modal/ta-over-tilbakemelding-modal';
@@ -42,6 +41,8 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedStartBeslutterProsessConfig;
 		case ModalType.FEIL_VED_BLI_BESLUTTER:
 			return feilVedBliBeslutterConfig;
+		case ModalType.FEIL_VED_UTSENDING_AV_DIALOG_MELDING:
+			return feilVedUtsendingAvDialogMelding;
 		default:
 			return null;
 	}
