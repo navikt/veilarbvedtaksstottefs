@@ -1,6 +1,7 @@
 import { JSONArray } from 'yet-another-fetch-mock';
 import { DialogMelding } from '../../rest/data/dialog-melding';
-import { beslutter, innloggetVeileder } from './veiledere';
+import { innloggetVeileder } from './innlogget-veileder';
+import { beslutter } from '../personer';
 
 const dialogeMeldinger: DialogMelding[] & JSONArray = [
 	{

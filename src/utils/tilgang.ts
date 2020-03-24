@@ -12,6 +12,18 @@ export function kanEndreUtkast(tilgang: VeilederTilgang): boolean {
 	return tilgang === VeilederTilgang.ANSVARLIG_VEILEDER;
 }
 
+export function erAnsvarligVeileder(tilgang: VeilederTilgang): boolean {
+	return tilgang === VeilederTilgang.ANSVARLIG_VEILEDER;
+}
+
+export function erIkkeAnsvarligVeileder(tilgang: VeilederTilgang): boolean {
+	return tilgang === VeilederTilgang.IKKE_ANSVARLIG_VEILEDER;
+}
+
+export function erBeslutter(tilgang: VeilederTilgang): boolean {
+	return tilgang === VeilederTilgang.BESLUTTER;
+}
+
 export function finnVeilederTilgang(innloggetVeileder: Veileder, vedtak: OrNothing<Vedtak>): VeilederTilgang {
 	const innloggetIdent = innloggetVeileder.ident;
 

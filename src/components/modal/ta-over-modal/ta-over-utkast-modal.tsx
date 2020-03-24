@@ -14,7 +14,6 @@ function TaOverUtkastModal(props: ModalProps) {
     const {fnr} = useAppStore();
     const {hideModal, showModal} = useModalStore();
     const {vedtak} = useFetchStore();
-    const {harBeslutter} = useBeslutterStore();
 
     const utkast = finnUtkast(vedtak.data);
     const veilederNavn = utkast ? utkast.veilederNavn : undefined;
@@ -44,16 +43,16 @@ function TaOverUtkastModal(props: ModalProps) {
             onRequestClose={hideModal}
             varselIkonType={VarselIkonType.ADVARSEL}
         >
-            <Show if={!harBeslutter}>
-                <Normaltekst className="varsel-modal__tekstinnehold">
-                    {`Vil du ta over som ansvarlig for vedtaket fra ${veilederNavn}?`}
-                </Normaltekst>
-                <div className="varsel-modal__knapper">
-                    {/*<Hovedknapp onClick={() => handleTaOverVedtak()}>TA OVER FOR VEILEDER</Hovedknapp>*/}
-                    <Knapp onClick={hideModal}> Avbryt</Knapp>
-                </div>
-            </Show>
-            <Show if={harBeslutter}>
+            {/*<Show if={!harBeslutter}>*/}
+            {/*    <Normaltekst className="varsel-modal__tekstinnehold">*/}
+            {/*        {`Vil du ta over som ansvarlig for vedtaket fra ${veilederNavn}?`}*/}
+            {/*    </Normaltekst>*/}
+            {/*    <div className="varsel-modal__knapper">*/}
+            {/*        /!*<Hovedknapp onClick={() => handleTaOverVedtak()}>TA OVER FOR VEILEDER</Hovedknapp>*!/*/}
+            {/*        <Knapp onClick={hideModal}> Avbryt</Knapp>*/}
+            {/*    </div>*/}
+            {/*</Show>*/}
+            {/*<Show if={harBeslutter}>*/}
                 {/*<div className="varsel-modal__radiopanel">*/}
                 {/*    <RadioPanelGruppe*/}
                 {/*        name="taovervedtakfor"*/}
@@ -77,7 +76,7 @@ function TaOverUtkastModal(props: ModalProps) {
                 {/*        </Hovedknapp>*/}
                 {/*    </Show>*/}
                 {/*</div>*/}
-            </Show>
+            {/*</Show>*/}
         </VarselModal>
     )
 }

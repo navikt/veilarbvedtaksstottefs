@@ -2,10 +2,11 @@
 
 .veilarbvedtaksstottefs {
 	.aksjoner {
+		display: flex;
+		justify-content: space-between;
+
 		max-width: 1200px;
 		margin: 0 auto;
-		display: flex;
-		justify-content: flex-end;
 
 		&__knapper {
 			margin: auto;
@@ -19,21 +20,5 @@
 			margin-right: 5px;
 		}
 
-		&__ikon-knapp {
-			// Ikke ta opp plass slik at resten av knappene blir sentrert riktig
-			position: absolute;
-		}
-
-		&__godkjent-tekst {
-			// Ikke ta opp plass slik at resten av knappene blir sentrert riktig
-			margin-left: 1rem;
-			display:inline-block;
-			font-family: Source Sans Pro, Arial, sans-serif;
-			font-size: 1rem;
-			background-color: white;
-			line-height: 1.375rem;
-			color: @navGra60;
-			font-weight: 600;
-		}
 	}
 }

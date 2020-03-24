@@ -1,10 +1,3 @@
-import { enhet } from '../konstanter';
+import { ansvarligVeileder } from '../personer';
 
-export const innloggetVeileder = {
-    navn: 'Ola Nordmann',
-    ident: 'Z007',
-    enhetId: enhet,
-    enhetNavn: 'Gotham city',
-};
-
-export default innloggetVeileder;
+export const innloggetVeileder = ansvarligVeileder;

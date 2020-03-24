@@ -5,7 +5,6 @@ import tilgangTilBrukersKontor from './api-data/tilgang-til-brukers-kontor';
 import malform from './api-data/malform';
 import vedtakFraArena from './api-data/arena-vedtak';
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
-import innloggetVeileder  from './api-data/innlogget-veileder';
 import {
 	mockHentVedtak,
 	mockLagUtkast,
@@ -19,6 +18,7 @@ import {
 } from './vedtak-mock';
 import { addToFetchMock } from './mock-utils';
 import { mockHentDialoger, mockSendDialogMelding } from './dialoger-meldinger-mock';
+import { innloggetVeileder } from './api-data/innlogget-veileder';
 
 const fetchMock = FetchMock.configure({
 	enableFallback: true,

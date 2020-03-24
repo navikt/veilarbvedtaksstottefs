@@ -12,7 +12,6 @@ export const useSkjemaStore = createUseContext(() => {
 	const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
 	const [sistOppdatert, setSistOppdatert] = useState('');
 	const [errors, setErrors] = useState<SkjemaFeil>({});
-	const [isReadOnly, setReadOnly] = useState<boolean>(true);
 
 	const validerSkjema = (vedtak: Vedtak[]): SkjemaFeil => {
 		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, vedtak);
@@ -49,7 +48,6 @@ export const useSkjemaStore = createUseContext(() => {
 		begrunnelse, setBegrunnelse,
 		sistOppdatert, setSistOppdatert, errors,
 		validerSkjema, validerBegrunnelseLengde,
-		initSkjema, resetSkjema,
-		isReadOnly, setReadOnly
+		initSkjema, resetSkjema
 	};
 });

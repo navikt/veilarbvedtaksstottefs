@@ -51,6 +51,10 @@ export const hasFailed = (fetch: FetchState): boolean => {
 	return fetch.error != null || fetch.httpCode >= 400;
 };
 
+export const hasOkStatus = (fetch: FetchState): boolean => {
+	return fetch.httpCode >= 200 && fetch.httpCode < 300;
+};
+
 export const hasData = (fetch: FetchState): boolean => {
 	return fetch.data != null;
 };

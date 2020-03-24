@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { hentMalformFraData } from '../../components/utkast-skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
-import UtkastAksjoner from '../../components/utkast-skjema/aksjoner/utkast-aksjoner';
+import Aksjoner from '../../components/utkast-skjema/aksjoner/aksjoner';
 import UtkastSkjema from '../../components/utkast-skjema/utkast-skjema';
 import Footer from '../../components/footer/footer';
 import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
@@ -79,7 +79,7 @@ export function UtkastSide() {
 				<div>
 					<UtkastSkjema />
 					<Footer>
-						<UtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
+						<Aksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
 					</Footer>
 				</div>
 				<Sidebar />

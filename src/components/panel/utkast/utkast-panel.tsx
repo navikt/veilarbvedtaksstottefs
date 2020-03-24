@@ -6,16 +6,16 @@ import { Veileder } from '../veileder';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import utkastIkon from './utkast.svg';
 import utkastTilBeslutterIkon from './utkast-til-beslutter.svg';
-import './utkast-panel.less';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { Beslutter } from '../beslutter';
 import Show from '../../show';
-import { useSkjemaStore } from '../../../stores/skjema-store';
+import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-store';
+import './utkast-panel.less';
 
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { changeView } = useViewStore();
-	const { isReadOnly } = useSkjemaStore();
+	const { kanEndreUtkast } = useInnloggetVeilederStore();
 
 	if (!props.utkast) {
 		return null;
@@ -32,7 +32,7 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 			undertittel="Utkast"
 			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
 			panelKlasse="utkast-panel"
-			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>{ isReadOnly ? 'Åpne': 'Fortsett' }</Hovedknapp>}
+			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>{ kanEndreUtkast ? 'Fortsett' : 'Åpne' }</Hovedknapp>}
 			tekstKomponent={
 				<>
 					<Show if={beslutterNavn}>

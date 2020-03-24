@@ -2,11 +2,11 @@ import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
 import { Vedtak } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
-import innloggetVeileder from './api-data/innlogget-veileder';
-import { ansvarligVeileder } from './personer';
 import { SkjemaData } from '../pages/utkast/utkast-side';
 import { finnUtkast } from '../utils';
 import historisk from './api-data/vedtak/tidligere-vedtak';
+import { ansvarligVeileder } from './personer';
+import { innloggetVeileder } from './api-data/innlogget-veileder';
 
 let vedtak: Vedtak[] = [
 	utkast, ...historisk
@@ -122,8 +122,7 @@ export const mockKlarTilBeslutter: Mock = {
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å starte beslutterprosess på');
 
 		gjeldendeUtkast.beslutterProsessStartet = true;
-		gjeldendeUtkast.beslutterIdent = null;
-		innloggetVeileder.ident = 'Z150561';
+
 		return { status: 200 };
 	}
 };
@@ -139,7 +138,7 @@ export const mockBliBeslutter: Mock = {
 
 		gjeldendeUtkast.beslutterIdent = innloggetVeileder.ident;
 		gjeldendeUtkast.beslutterIdent = innloggetVeileder.navn;
-		gjeldendeUtkast.beslutterProsessStartet = true;
+
 		return { status: 204 };
 	}
 };
@@ -151,9 +150,10 @@ export const mockGodkjennVedtak: Mock = {
 
 		const gjeldendeUtkast = finnUtkast(vedtak);
 
-		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
+		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å godkjenne');
 
 		gjeldendeUtkast.godkjentAvBeslutter= true;
+
 		return { status: 204 };
 	}
 };
