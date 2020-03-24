@@ -4,7 +4,6 @@ import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { frontendlogger } from '../../utils/frontend-logger';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { lagHentVedtakPdfUrl } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';

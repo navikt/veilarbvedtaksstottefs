@@ -6,6 +6,7 @@ import { MalformData } from '../rest/data/malform';
 import { Features } from '../rest/data/features';
 import { Veileder } from '../rest/data/veiledere';
 import { DialogMelding } from '../rest/data/dialog-melding';
+import { finnUtkastAlltid } from '../utils';
 
 // Data med placeholder er garantert av datafetcher.ts at det er tilgjengelig i hele appen
 const placeholder = {} as any;
@@ -30,6 +31,22 @@ export const useDataStore = createUseContext(() => {
 		setDialogMeldinger((curMeldinger) => [...curMeldinger, dialogMelding])
 	}
 
+	function setUtkastBeslutterProsessStartet() {
+		const utkast = finnUtkastAlltid(vedtak);
+		utkast.beslutterProsessStartet = true;
+	}
+
+	function setUtkastGodkjent() {
+		const utkast = finnUtkastAlltid(vedtak);
+		utkast.godkjentAvBeslutter = true;
+	}
+
+	function setUtkastBeslutter(beslutterIdent: string, beslutterNavn: string) {
+		const utkast = finnUtkastAlltid(vedtak);
+		utkast.beslutterIdent = beslutterIdent;
+		utkast.beslutterNavn = beslutterNavn;
+	}
+
 	return {
 		oppfolgingData, setOppfolgingData,
 		malform, setMalform,
@@ -38,6 +55,9 @@ export const useDataStore = createUseContext(() => {
 		vedtak, setVedtak,
 		arenaVedtak, setArenaVedtak,
 		dialogMeldinger, setDialogMeldinger,
-		leggTilDialogMelding
+		leggTilDialogMelding,
+		setUtkastBeslutterProsessStartet,
+		setUtkastGodkjent,
+		setUtkastBeslutter
 	};
 });

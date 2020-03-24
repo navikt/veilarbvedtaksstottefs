@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDataFetcherStore } from '../stores/data-fetcher-store';
-import { hasAnyFailed, hasData, isAnyNotStartedOrPending, isNotStarted, isNotStartedOrPending } from '../rest/utils';
+import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../rest/utils';
 import Spinner from './spinner/spinner';
 
 export function DataFetcher(props: { fnr: string; children: any }) {

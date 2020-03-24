@@ -6,7 +6,6 @@ import Aksjoner from '../../components/utkast-skjema/aksjoner/aksjoner';
 import UtkastSkjema from '../../components/utkast-skjema/utkast-skjema';
 import Footer from '../../components/footer/footer';
 import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
@@ -16,8 +15,8 @@ import { finnUtkastAlltid } from '../../utils';
 import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
 import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
 import { Sidebar } from '../../components/sidebar/sidebar';
-import './utkast-side.less';
 import { useDataStore } from '../../stores/data-store';
+import './utkast-side.less';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -32,9 +31,10 @@ export function UtkastSide() {
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse,
-		sistOppdatert, setSistOppdatert, validerSkjema,
-		validerBegrunnelseLengde
+		setSistOppdatert, validerSkjema, validerBegrunnelseLengde
 	} = useSkjemaStore();
+
+	console.log('vedtak', vedtak); // tslint:disable-line
 
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 	const isAfterFirstRender = useIsAfterFirstRender();
@@ -75,7 +75,7 @@ export function UtkastSide() {
 
 	return (
 		<div className="utkast-side">
-			<SkjemaHeader utkast={finnUtkastAlltid(vedtak)} sistOppdatert={sistOppdatert} />
+			<SkjemaHeader utkast={finnUtkastAlltid(vedtak)} />
 			<div className="utkast-side__innhold">
 				<div>
 					<UtkastSkjema />

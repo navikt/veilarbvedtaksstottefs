@@ -9,11 +9,11 @@ import { lagSkjemaElementFeil } from '../skjema-utils';
 import { HovedmalType, InnsatsgruppeType } from '../../../rest/data/vedtak';
 import { alleHovedmal } from '../../../utils/hovedmal';
 import './hovedmal.less';
-import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-store';
+import { useTilgangStore } from '../../../stores/tilgang-store';
 
 function Hovedmal() {
 	const {innsatsgruppe, hovedmal, setHovedmal, errors} = useSkjemaStore();
-	const {kanEndreUtkast} = useInnloggetVeilederStore();
+	const {kanEndreUtkast} = useTilgangStore();
 	const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
 	return (
 		<SkjemaBolk id="hovedmal-scroll-to" tittel="Hovedmål" tittelId="hovedmal-tittel">

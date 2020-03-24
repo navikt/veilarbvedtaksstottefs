@@ -9,7 +9,7 @@ import { useSkjemaStore } from '../../../stores/skjema-store';
 import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../skjema-utils';
 import { useIsAfterFirstRender } from '../../../utils/hooks';
 import './opplysninger.less';
-import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-store';
+import { useTilgangStore } from '../../../stores/tilgang-store';
 
 export interface Opplysning {
 	navn: string;
@@ -18,7 +18,7 @@ export interface Opplysning {
 
 function Opplysninger() {
 	const { opplysninger: skjemaOpplysninger, setOpplysninger: setSkjemaOpplysninger, errors } = useSkjemaStore();
-	const { kanEndreUtkast } = useInnloggetVeilederStore();
+	const { kanEndreUtkast } = useTilgangStore();
 	const [opplysninger, setOpplysninger] = useState<Opplysning[]>(mergeMedDefaultOpplysninger(skjemaOpplysninger));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
 	const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning] = useState<boolean>(true);

@@ -19,13 +19,12 @@ import { InnsatsgruppeType } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Show from '../../show';
-import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
-import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-store';
+import { useTilgangStore } from '../../../stores/tilgang-store';
 import { useDataStore } from '../../../stores/data-store';
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
-	const {kanEndreUtkast} = useInnloggetVeilederStore();
+	const {kanEndreUtkast} = useTilgangStore();
 	const {vedtak} = useDataStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);

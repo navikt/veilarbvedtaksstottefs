@@ -4,7 +4,7 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { ReactComponent as TaOverIkon } from './locked.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { SkjemaData } from '../../../pages/utkast/utkast-side';
-import { fetchWithInfo, hasOkStatus } from '../../../rest/utils';
+import { fetchWithInfo } from '../../../rest/utils';
 import { ReactComponent as SlettIkon } from './delete.svg';
 import {
 	lagBliBeslutterFetchInfo,
@@ -14,16 +14,15 @@ import {
 } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
-import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } from '../skjema-utils';
 import Show from '../../show';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-store';
-import { erBeslutter, erIkkeAnsvarligVeileder } from '../../../utils/tilgang';
+import { Element } from 'nav-frontend-typografi';
+import { useTilgangStore } from '../../../stores/tilgang-store';
+import { erBeslutter, erIkkeAnsvarligVeileder, VeilederTilgang } from '../../../utils/tilgang';
 import { finnUtkastAlltid } from '../../../utils';
-import './aksjoner.less';
 import { useDataStore } from '../../../stores/data-store';
+import './aksjoner.less';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -32,9 +31,12 @@ interface UtkastAksjonerProps {
 
 function Aksjoner(props: UtkastAksjonerProps) {
 	const {fnr} = useAppStore();
-	const {kanEndreUtkast, veilederTilgang} = useInnloggetVeilederStore();
-	const {malform, vedtak} = useDataStore();
-	const {vedtakFetcher} = useDataFetcherStore();
+	const {kanEndreUtkast, veilederTilgang, setVeilederTilgang} = useTilgangStore();
+	const {
+		malform, vedtak, innloggetVeileder,
+		setUtkastBeslutterProsessStartet, setUtkastBeslutter,
+		setUtkastGodkjent
+	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
 	const {validerSkjema, innsatsgruppe} = useSkjemaStore();
@@ -58,19 +60,6 @@ function Aksjoner(props: UtkastAksjonerProps) {
 			});
 	}
 
-	function refreshDataFraBackend() {
-		return new Promise((resolve, reject) => {
-			vedtakFetcher.fetch({fnr}, (state) => {
-				console.log('refresh fra backend', state.data); // tslint:disable-line
-				if (hasOkStatus(state)) {
-					resolve();
-				} else {
-					reject();
-				}
-			});
-		});
-	}
-
 	function handleOnForhandsvisClicked() {
 		const skjemaFeil = validerSkjema(vedtak);
 
@@ -82,10 +71,8 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 		if (kanEndreUtkast) {
 			setLaster(true);
-			sendDataTilBackend().then(() => {
-				// TODO: Skal vi refreshe data fra backend?
-				changeView(ViewType.FORHANDSVISNING);
-			});
+			sendDataTilBackend()
+				.then(() => changeView(ViewType.FORHANDSVISNING));
 		} else {
 			changeView(ViewType.FORHANDSVISNING);
 		}
@@ -95,10 +82,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		if (kanEndreUtkast) {
 			setLaster(true);
 			sendDataTilBackend()
-				.then(refreshDataFraBackend)
-				.then(() => {
-					changeView(ViewType.HOVEDSIDE);
-				});
+				.then(() => changeView(ViewType.HOVEDSIDE));
 		} else {
 			changeView(ViewType.HOVEDSIDE);
 		}
@@ -106,25 +90,25 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 	function handleOnStartBeslutterProsessClicked() {
 		setLaster(true);
-
-		sendDataTilBackend().then(() => {
-			console.log('start beslutter'); // tslint:disable-line
-			fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
-				.then(refreshDataFraBackend)
-				.catch(() => {
-					showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS);
-				}).finally(() => setLaster(false));
-		});
+		sendDataTilBackend()
+			.then(() => {
+				fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
+					.then(() => setUtkastBeslutterProsessStartet())
+					.catch(() => showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS))
+					.finally(() => setLaster(false));
+			});
 	}
 
 	function handleOnBliBeslutterClicked() {
 		setLaster(true);
 
 		fetchWithInfo(lagBliBeslutterFetchInfo({fnr}))
-			.then(refreshDataFraBackend)
-			.catch(() => {
-				showModal(ModalType.FEIL_VED_BLI_BESLUTTER);
-			}).finally(() => setLaster(false));
+			.then(() => {
+				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
+				setVeilederTilgang(VeilederTilgang.BESLUTTER);
+			})
+			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
+			.finally(() => setLaster(false));
 	}
 
 	function handleOnSendEndringerClicked() {
@@ -139,16 +123,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 	function handleOnGodkjennClicked() {
 		setLaster(true);
-
 		fetchWithInfo(lagGodkjennVedtakFetchInfo({fnr}))
-			.then(refreshDataFraBackend)
-			.then(() => {
-				setLaster(false);
-			})
-			.catch(() => {
-				setLaster(false);
-				showModal(ModalType.FEIL_VED_BLI_BESLUTTER);
-			});
+			.then(() => setUtkastGodkjent())
+			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
+			.finally(() => setLaster(false));
 	}
 
 	return (

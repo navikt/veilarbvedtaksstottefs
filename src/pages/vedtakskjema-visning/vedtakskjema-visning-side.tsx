@@ -5,10 +5,9 @@ import Footer from '../../components/footer/footer';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../components/skjema-visning/skjema-visning';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
-import './vedtakskjema-visning-side.less';
 import { useDataStore } from '../../stores/data-store';
+import './vedtakskjema-visning-side.less';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	const {vedtak} = useDataStore();

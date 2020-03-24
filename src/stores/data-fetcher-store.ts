@@ -25,9 +25,10 @@ export const useDataFetcherStore = createUseContext(() => {
 	const arenaVedtakFetcher = useFetch<OrNothing<ArenaVedtak[]>, FnrFetchParams>(lagHentArenaVedtakFetchInfo);
 	const dialogerMeldingerFetcher = useFetch<DialogMelding[], FnrFetchParams>(lagHentDialogerFetchInfo);
 
-	// TODO: Kun eksponer fetch()?
-	return { oppfolgingDataFetcher, featuresFetcher,
+	return {
+		oppfolgingDataFetcher, featuresFetcher,
 		malformFetcher, vedtakFetcher,
 		innloggetVeilederFetcher, arenaVedtakFetcher,
-		dialogerMeldingerFetcher };
+		dialogerMeldingerFetcher
+	};
 });

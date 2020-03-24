@@ -16,7 +16,7 @@ import { useSkjemaStore } from '../../stores/skjema-store';
 import { finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import Show from '../../components/show';
-import { useInnloggetVeilederStore } from '../../stores/innlogget-veileder-store';
+import { useTilgangStore } from '../../stores/tilgang-store';
 import { useDataStore } from '../../stores/data-store';
 import './forhandsvisning.less';
 
@@ -27,7 +27,7 @@ export function Forhandsvisning() {
 	const { vedtak, features, oppfolgingData } = useDataStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
-	const { kanEndreUtkast } = useInnloggetVeilederStore();
+	const { kanEndreUtkast } = useTilgangStore();
 
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE];

@@ -10,12 +10,12 @@ import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { Beslutter } from '../beslutter';
 import Show from '../../show';
-import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-store';
+import { useTilgangStore } from '../../../stores/tilgang-store';
 import './utkast-panel.less';
 
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { changeView } = useViewStore();
-	const { kanEndreUtkast } = useInnloggetVeilederStore();
+	const { kanEndreUtkast } = useTilgangStore();
 
 	if (!props.utkast) {
 		return null;

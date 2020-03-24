@@ -27,9 +27,12 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 		fetchWithInfo(lagNyttVedtakUtkastFetchInfo({ fnr }))
 			.then(() => {
 				vedtakFetcher.fetch({ fnr }, () => {
-					hideModal();
-					changeView(ViewType.UTKAST);
-					frontendlogger.logMetrikk('lag-nytt-vedtak');
+					// Wrap in timeout so that data-store-sync.tsx can pick up the changes before the view is changed
+					setTimeout(() => {
+						hideModal();
+						changeView(ViewType.UTKAST);
+						frontendlogger.logMetrikk('lag-nytt-vedtak');
+					}, 0);
 				});
 			})
 			.catch(() => {
