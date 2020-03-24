@@ -1,21 +1,17 @@
 import React from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { Knapp } from 'nav-frontend-knapper';
 import { ModalProps } from '../modal-props';
 import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { useModalStore } from '../../../stores/modal-store';
 import { finnUtkast } from '../../../utils';
-import { useFetchStore } from '../../../stores/fetch-store';
 import { useAppStore } from '../../../stores/app-store';
-import { useBeslutterStore } from '../../../stores/beslutter-store';
-import Show from '../../show';
+import { useDataStore } from '../../../stores/data-store';
 
 function TaOverUtkastModal(props: ModalProps) {
     const {fnr} = useAppStore();
     const {hideModal, showModal} = useModalStore();
-    const {vedtak} = useFetchStore();
+    const {vedtak} = useDataStore();
 
-    const utkast = finnUtkast(vedtak.data);
+    const utkast = finnUtkast(vedtak);
     const veilederNavn = utkast ? utkast.veilederNavn : undefined;
 
     // function handleTaOverVedtak() {

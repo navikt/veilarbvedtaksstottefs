@@ -1,12 +1,12 @@
 import React from 'react';
 import { MalformType } from '../../../rest/data/malform';
 import veilederBilde from './veileder.svg';
-import { useFetchStore } from '../../../stores/fetch-store';
+import { useDataStore } from '../../../stores/data-store';
 import './malform.less';
 
 export const Malform = () => {
-	const { malform } = useFetchStore();
-	const malformData = malform.data && malform.data.malform;
+	const { malform } = useDataStore();
+	const malformData = malform && malform.malform;
 	const malformTekst = `Norsk (${malformData === MalformType.NN ? 'Nynorsk' : 'Bokmål'})`;
 
 	return (

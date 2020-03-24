@@ -14,7 +14,7 @@ import {
 } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
-import { useFetchStore } from '../../../stores/fetch-store';
+import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } from '../skjema-utils';
 import Show from '../../show';
@@ -23,6 +23,7 @@ import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-st
 import { erBeslutter, erIkkeAnsvarligVeileder } from '../../../utils/tilgang';
 import { finnUtkastAlltid } from '../../../utils';
 import './aksjoner.less';
+import { useDataStore } from '../../../stores/data-store';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -32,14 +33,15 @@ interface UtkastAksjonerProps {
 function Aksjoner(props: UtkastAksjonerProps) {
 	const {fnr} = useAppStore();
 	const {kanEndreUtkast, veilederTilgang} = useInnloggetVeilederStore();
-	const {vedtak, malform} = useFetchStore();
+	const {malform, vedtak} = useDataStore();
+	const {vedtakFetcher} = useDataFetcherStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
 	const {validerSkjema, innsatsgruppe} = useSkjemaStore();
 
 	const [laster, setLaster] = useState(false);
 
-	const utkast = finnUtkastAlltid(vedtak.data);
+	const utkast = finnUtkastAlltid(vedtak);
 	const godkjentAvBeslutter = utkast.godkjentAvBeslutter;
 	const visKlarTilBeslutter = !utkast.beslutterProsessStartet && trengerBeslutter(innsatsgruppe);
 	const visBliBeslutter = utkast.beslutterProsessStartet && utkast.beslutterIdent == null && erIkkeAnsvarligVeileder(veilederTilgang);
@@ -48,7 +50,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const visSendEndringer = false; // TODO: Implement later
 
 	function sendDataTilBackend() {
-		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform.data)};
+		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform)};
 		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo(params))
 			.catch(() => {
 				setLaster(false);
@@ -58,7 +60,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 	function refreshDataFraBackend() {
 		return new Promise((resolve, reject) => {
-			vedtak.fetch({fnr}, (state) => {
+			vedtakFetcher.fetch({fnr}, (state) => {
 				console.log('refresh fra backend', state.data); // tslint:disable-line
 				if (hasOkStatus(state)) {
 					resolve();
@@ -70,7 +72,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	}
 
 	function handleOnForhandsvisClicked() {
-		const skjemaFeil = validerSkjema(vedtak.data);
+		const skjemaFeil = validerSkjema(vedtak);
 
 		if (harFeil(skjemaFeil)) {
 			scrollTilForsteFeil(skjemaFeil);

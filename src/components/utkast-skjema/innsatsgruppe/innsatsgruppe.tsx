@@ -19,16 +19,17 @@ import { InnsatsgruppeType } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Show from '../../show';
-import { useFetchStore } from '../../../stores/fetch-store';
+import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import { useInnloggetVeilederStore } from '../../../stores/innlogget-veileder-store';
+import { useDataStore } from '../../../stores/data-store';
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
 	const {kanEndreUtkast} = useInnloggetVeilederStore();
-	const {vedtak} = useFetchStore();
+	const {vedtak} = useDataStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
-	const gjeldendeVedtak = finnGjeldendeVedtak(vedtak.data);
+	const gjeldendeVedtak = finnGjeldendeVedtak(vedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
 
 	return (

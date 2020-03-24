@@ -6,7 +6,7 @@ import Aksjoner from '../../components/utkast-skjema/aksjoner/aksjoner';
 import UtkastSkjema from '../../components/utkast-skjema/utkast-skjema';
 import Footer from '../../components/footer/footer';
 import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
-import { useFetchStore } from '../../stores/fetch-store';
+import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
@@ -17,6 +17,7 @@ import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
 import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
 import { Sidebar } from '../../components/sidebar/sidebar';
 import './utkast-side.less';
+import { useDataStore } from '../../stores/data-store';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -27,7 +28,7 @@ export interface SkjemaData {
 
 export function UtkastSide() {
 	const { fnr } = useAppStore();
-	const { vedtak, malform } = useFetchStore();
+	const { vedtak, malform } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse,
@@ -39,7 +40,7 @@ export function UtkastSide() {
 	const isAfterFirstRender = useIsAfterFirstRender();
 
 	const oppdaterSistEndret = useConst(debounce((skjema: SkjemaData) => {
-		const malformType = hentMalformFraData(malform.data);
+		const malformType = hentMalformFraData(malform);
 
 		fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema, malform: malformType }))
 			.then(() => {
@@ -54,7 +55,7 @@ export function UtkastSide() {
 
 	useEffect(() => {
 		if (harForsoktAttSende) {
-			validerSkjema(vedtak.data);
+			validerSkjema(vedtak);
 		} else {
 			validerBegrunnelseLengde();
 		}
@@ -74,7 +75,7 @@ export function UtkastSide() {
 
 	return (
 		<div className="utkast-side">
-			<SkjemaHeader utkast={finnUtkastAlltid(vedtak.data)} sistOppdatert={sistOppdatert} />
+			<SkjemaHeader utkast={finnUtkastAlltid(vedtak)} sistOppdatert={sistOppdatert} />
 			<div className="utkast-side__innhold">
 				<div>
 					<UtkastSkjema />

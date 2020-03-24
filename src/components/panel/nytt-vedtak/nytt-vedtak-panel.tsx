@@ -4,19 +4,21 @@ import { Vedtak } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import nyttVedtakBilde from './nytt-vedtak.svg';
 import { frontendlogger } from '../../../utils/frontend-logger';
-import { useFetchStore } from '../../../stores/fetch-store';
 import { fetchWithInfo } from '../../../rest/utils';
 import { lagNyttVedtakUtkastFetchInfo } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
+import { useDataStore } from '../../../stores/data-store';
+import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import './nytt-vedtak-panel.less';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
-	const { oppfolgingData, vedtak } = useFetchStore();
+	const { vedtakFetcher } = useDataFetcherStore();
+	const { oppfolgingData } = useDataStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
 
@@ -24,7 +26,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 		showModal(ModalType.LASTER);
 		fetchWithInfo(lagNyttVedtakUtkastFetchInfo({ fnr }))
 			.then(() => {
-				vedtak.fetch({ fnr }, () => {
+				vedtakFetcher.fetch({ fnr }, () => {
 					hideModal();
 					changeView(ViewType.UTKAST);
 					frontendlogger.logMetrikk('lag-nytt-vedtak');
@@ -35,7 +37,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 			});
 	}
 
-	if (utkast || !oppfolgingData.data.underOppfolging) {
+	if (utkast || !oppfolgingData.underOppfolging) {
 		return null;
 	}
 

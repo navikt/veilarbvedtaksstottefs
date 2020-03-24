@@ -1,8 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import sendIkon from './send.svg';
-import { useDialogStore } from '../../../../stores/dialog-store';
-import { useFetchStore } from '../../../../stores/fetch-store';
+import { useDataStore } from '../../../../stores/data-store';
 import { fetchWithInfo } from '../../../../rest/utils';
 import { lagSendDialogFetchInfo } from '../../../../rest/api';
 import { useAppStore } from '../../../../stores/app-store';
@@ -11,8 +10,7 @@ import './skrivefelt.less';
 
 export const Skrivefelt = () => {
 	const { fnr } = useAppStore();
-	const { innloggetVeileder } = useFetchStore();
-	const { leggTilMelding } = useDialogStore();
+	const { leggTilDialogMelding, innloggetVeileder } = useDataStore();
 	const { showModal } = useModalStore();
 	const [melding, setMelding] = useState('');
 	const [senderMelding, setSenderMelding] = useState(false);
@@ -21,10 +19,10 @@ export const Skrivefelt = () => {
 	function handleOnDialogSendClicked() {
 		setSenderMelding(true);
 
-		fetchWithInfo(lagSendDialogFetchInfo({ fnr, melding: melding }))
+		fetchWithInfo(lagSendDialogFetchInfo({ fnr, melding }))
 			.then(() => {
-				const { ident, navn } = innloggetVeileder.data;
-				leggTilMelding(melding, ident, navn);
+				const { ident, navn } = innloggetVeileder;
+				leggTilDialogMelding(melding, ident, navn);
 				setMelding('');
 				setSenderMelding(false);
 			}).catch(() => {

@@ -5,14 +5,15 @@ import Footer from '../../components/footer/footer';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../components/skjema-visning/skjema-visning';
-import { useFetchStore } from '../../stores/fetch-store';
+import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import './vedtakskjema-visning-side.less';
+import { useDataStore } from '../../stores/data-store';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
-	const {vedtak} = useFetchStore();
+	const {vedtak} = useDataStore();
 	const {changeView} = useViewStore();
-	const vistVedtak = vedtak.data.find((v: Vedtak) => v.id === props.vedtakId);
+	const vistVedtak = vedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
 	if (!vistVedtak) {
 		return <AlertStripeFeil>Fant ikke vedtak å fremvise</AlertStripeFeil>;
