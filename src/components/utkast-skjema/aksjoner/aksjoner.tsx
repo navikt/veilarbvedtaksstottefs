@@ -52,6 +52,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const visGodkjennUtkast = utkast.beslutterProsessStartet && !godkjentAvBeslutter && erBeslutter(veilederTilgang);
 	const visTaOverUtkast = erIkkeAnsvarligVeileder(veilederTilgang);
 	const visSendEndringer = false; // TODO: Implement later
+	const erForhandsvisHovedknapp = !visKlarTilBeslutter && !visBliBeslutter && !visSendEndringer;
 
 	function sendDataTilBackend() {
 		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform)};
@@ -144,14 +145,14 @@ function Aksjoner(props: UtkastAksjonerProps) {
 					<NavFrontendSpinner type="XS" />
 				</Show>
 				<Show if={visKlarTilBeslutter}>
-					<Knapp
+					<Hovedknapp
 						disabled={laster}
 						mini={true}
 						htmlType="button"
 						onClick={handleOnStartBeslutterProsessClicked}
 					>
 						Klar til beslutter
-					</Knapp>
+					</Hovedknapp>
 				</Show>
 				<Show if={visBliBeslutter}>
 					<Hovedknapp
@@ -173,14 +174,15 @@ function Aksjoner(props: UtkastAksjonerProps) {
 						Send endringer
 					</Hovedknapp>
 				</Show>
-				<Hovedknapp
+				<Knapp
+					type={erForhandsvisHovedknapp ? 'hoved' : 'standard'}
 					disabled={laster}
 					mini={true}
 					htmlType="button"
 					onClick={handleOnForhandsvisClicked}
 				>
 					Forhåndsvis
-				</Hovedknapp>
+				</Knapp>
 			</div>
 
 			<div className="aksjoner__knapper-hoyre">
