@@ -3,7 +3,7 @@ import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
 import { VEILARBVEDTAKSSTOTTE_API } from '../rest/api';
 import dialogeMeldinger from './api-data/dialoger-meldinger';
 import { DialogMelding } from '../rest/data/dialog-melding';
-import { innloggetVeileder } from './personer';
+import { innloggetVeileder } from './api-data/innlogget-veileder';
 
 const meldinger = dialogeMeldinger;
 

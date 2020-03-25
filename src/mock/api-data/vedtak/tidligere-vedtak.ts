@@ -1,4 +1,4 @@
-import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
+import { HovedmalType, InnsatsgruppeType, Vedtak} from '../../../rest/data/vedtak';
 import { JSONArray } from 'yet-another-fetch-mock';
 import { ansvarligVeileder, beslutter } from '../../personer';
 

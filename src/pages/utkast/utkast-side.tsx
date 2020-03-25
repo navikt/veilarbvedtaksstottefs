@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { hentMalformFraData } from '../../components/utkast-skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
-import UtkastAksjoner from '../../components/utkast-skjema/aksjoner/utkast-aksjoner';
+import Aksjoner from '../../components/utkast-skjema/aksjoner/aksjoner';
 import UtkastSkjema from '../../components/utkast-skjema/utkast-skjema';
 import Footer from '../../components/footer/footer';
 import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
-import { useFetchStore } from '../../stores/fetch-store';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
@@ -16,6 +15,7 @@ import { finnUtkastAlltid } from '../../utils';
 import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
 import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
 import { Sidebar } from '../../components/sidebar/sidebar';
+import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 
 export interface SkjemaData {
@@ -27,19 +27,18 @@ export interface SkjemaData {
 
 export function UtkastSide() {
 	const { fnr } = useAppStore();
-	const { vedtak, malform } = useFetchStore();
+	const { vedtak, malform } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse,
-		sistOppdatert, setSistOppdatert, validerSkjema,
-		validerBegrunnelseLengde
+		setSistOppdatert, validerSkjema, validerBegrunnelseLengde
 	} = useSkjemaStore();
 
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 	const isAfterFirstRender = useIsAfterFirstRender();
 
 	const oppdaterSistEndret = useConst(debounce((skjema: SkjemaData) => {
-		const malformType = hentMalformFraData(malform.data);
+		const malformType = hentMalformFraData(malform);
 
 		fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema, malform: malformType }))
 			.then(() => {
@@ -54,7 +53,7 @@ export function UtkastSide() {
 
 	useEffect(() => {
 		if (harForsoktAttSende) {
-			validerSkjema(vedtak.data);
+			validerSkjema(vedtak);
 		} else {
 			validerBegrunnelseLengde();
 		}
@@ -74,12 +73,12 @@ export function UtkastSide() {
 
 	return (
 		<div className="utkast-side">
-			<SkjemaHeader utkast={finnUtkastAlltid(vedtak.data)} sistOppdatert={sistOppdatert} />
+			<SkjemaHeader utkast={finnUtkastAlltid(vedtak)} />
 			<div className="utkast-side__innhold">
 				<div>
 					<UtkastSkjema />
 					<Footer>
-						<UtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
+						<Aksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
 					</Footer>
 				</div>
 				<Sidebar />

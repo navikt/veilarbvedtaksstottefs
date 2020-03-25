@@ -1,26 +1,28 @@
+@import "~nav-frontend-core/less/_variabler";
 
 .veilarbvedtaksstottefs {
 	.aksjoner {
+		display: flex;
+		justify-content: space-between;
+
 		max-width: 1200px;
 		margin: 0 auto;
-		display: flex;
-		justify-content: flex-end;
 
-		&__knapper {
+		&__knapper-midten {
 			margin: auto;
 			:not(:first-child) {
 				margin-left: 1rem;
 			}
 		}
 
+		&__knapper-hoyre {
+			display: flex;
+			align-items: center;
+		}
+
 		&__ikon {
 			margin-bottom: 1px;
 			margin-right: 5px;
-		}
-
-		&__ikon-knapp {
-			// Ikke ta opp plass slik at resten av knappene blir sentrert riktig
-			position: absolute;
 		}
 
 	}

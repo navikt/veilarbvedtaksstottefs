@@ -4,7 +4,6 @@ import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { frontendlogger } from '../../utils/frontend-logger';
-import { useFetchStore } from '../../stores/fetch-store';
 import { lagHentVedtakPdfUrl } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
@@ -12,6 +11,7 @@ import { ModalType, useModalStore } from '../../stores/modal-store';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import { finnVedtakAlltid } from '../../utils';
 import './vedtaksbrev-visning.less';
+import { useDataStore } from '../../stores/data-store';
 
 interface VedtaksbrevVisningProps {
 	vedtakId?: number;
@@ -21,7 +21,7 @@ interface VedtaksbrevVisningProps {
 
 export function VedtaksbrevVisning(props: VedtaksbrevVisningProps) {
 	const { fnr } = useAppStore();
-	const { vedtak } = useFetchStore();
+	const { vedtak } = useDataStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
 
@@ -31,7 +31,7 @@ export function VedtaksbrevVisning(props: VedtaksbrevVisningProps) {
 	let journalpostId: string;
 
 	if (props.vedtakId) {
-		const vedtaksObjekt = finnVedtakAlltid(vedtak.data, props.vedtakId);
+		const vedtaksObjekt = finnVedtakAlltid(vedtak, props.vedtakId);
 		dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
 		journalpostId = vedtaksObjekt.journalpostId as string;
 	} else {

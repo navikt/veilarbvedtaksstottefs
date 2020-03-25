@@ -9,6 +9,7 @@ import { useSkjemaStore } from '../../../stores/skjema-store';
 import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../skjema-utils';
 import { useIsAfterFirstRender } from '../../../utils/hooks';
 import './opplysninger.less';
+import { useTilgangStore } from '../../../stores/tilgang-store';
 
 export interface Opplysning {
 	navn: string;
@@ -16,7 +17,8 @@ export interface Opplysning {
 }
 
 function Opplysninger() {
-	const {opplysninger: skjemaOpplysninger, setOpplysninger: setSkjemaOpplysninger, errors, isReadOnly} = useSkjemaStore();
+	const { opplysninger: skjemaOpplysninger, setOpplysninger: setSkjemaOpplysninger, errors } = useSkjemaStore();
+	const { kanEndreUtkast } = useTilgangStore();
 	const [opplysninger, setOpplysninger] = useState<Opplysning[]>(mergeMedDefaultOpplysninger(skjemaOpplysninger));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
 	const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning] = useState<boolean>(true);
@@ -87,7 +89,7 @@ function Opplysninger() {
 									key={index}
 									onChange={(o) => handleOpplysningerChecked(index, o)}
 									erSistEndretIndeks={index === sistEndretIndeks}
-									disabled={isReadOnly}
+									disabled={!kanEndreUtkast}
 								/>
 							) : (
 								<RedigerOpplysning
@@ -108,7 +110,7 @@ function Opplysninger() {
 					</SkjemaGruppe>
 					{visLeggTilNyOpplysning ? (
 						<LeggTilOpplysning
-							disabled={isReadOnly}
+							disabled={!kanEndreUtkast}
 							leggTilOpplysning={() => {
 								setVisLeggTilNyOpplysning(false);
 								nullstilState();

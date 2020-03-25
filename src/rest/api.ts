@@ -95,8 +95,7 @@ export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 });
 
 export const lagTaOverUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast/overta`,
-	method: 'POST'
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast/overta`
 });
 
 export const lagHentOyblikksbildeFetchInfo = (params: HentOyblikksbildeFetchParams): FetchInfo => ({
@@ -108,7 +107,17 @@ export const lagHentForhandsvisningUrl = (fnr: string): string => `${VEILARBVEDT
 export const lagHentVedtakPdfUrl = (fnr: string, dokumentInfoId: string, journalpostId: string): string =>
 	`${VEILARBVEDTAKSSTOTTE_API}/${fnr}/vedtak/pdf?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
 
-export const lagStartBeslutterProsess = (params: FnrFetchParams): FetchInfo => ({
+export const lagStartBeslutterProsessFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/start`,
+	method: 'POST'
+});
+
+export const lagBliBeslutterFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/bliBeslutter`,
+	method: 'POST'
+});
+
+export const lagGodkjennVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/godkjenn`,
 	method: 'POST'
 });

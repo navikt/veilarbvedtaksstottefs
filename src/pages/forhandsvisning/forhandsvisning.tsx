@@ -6,7 +6,7 @@ import env from '../../utils/environment';
 import { STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
 import { trengerBeslutter } from '../../components/utkast-skjema/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
-import { useFetchStore } from '../../stores/fetch-store';
+import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
 import { fetchWithInfo } from '../../rest/utils';
 import { useAppStore } from '../../stores/app-store';
@@ -15,23 +15,27 @@ import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
-import './forhandsvisning.less';
 import Show from '../../components/show';
+import { useTilgangStore } from '../../stores/tilgang-store';
+import { useDataStore } from '../../stores/data-store';
+import './forhandsvisning.less';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { vedtak, features, oppfolgingData } = useFetchStore();
+	const { vedtakFetcher } = useDataFetcherStore();
+	const { vedtak, features, oppfolgingData } = useDataStore();
 	const { showModal } = useModalStore();
-	const { innsatsgruppe, resetSkjema, isReadOnly } = useSkjemaStore();
+	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
+	const { kanEndreUtkast } = useTilgangStore();
 
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
-	const stoppeUtsendingfeatureToggle = features.data[STOPPE_VEDTAKSUTSENDING_TOGGLE];
+	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE];
 	const url = env.isProduction
 		? lagHentForhandsvisningUrl(fnr)
 		: getMockVedtaksbrevUrl();
 
-	const utkast = finnUtkastAlltid(vedtak.data);
+	const utkast = finnUtkastAlltid(vedtak);
 	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
 		? utkast.godkjentAvBeslutter
 		: true;
@@ -54,8 +58,8 @@ export function Forhandsvisning() {
 		fetchWithInfo(lagSendVedtakFetchInfo({ fnr }))
 			.then(() => {
                 resetSkjema();
-				vedtak.fetch({ fnr }, () => {
-					const sendesVedtakDigitalt = !oppfolgingData.data.reservasjonKRR;
+				vedtakFetcher.fetch({ fnr }, () => {
+					const sendesVedtakDigitalt = !oppfolgingData.reservasjonKRR;
 					changeView(ViewType.HOVEDSIDE);
 					showModal(ModalType.VEDTAK_SENT_SUKSESS, { sendesVedtakDigitalt });
 				});
@@ -80,7 +84,7 @@ export function Forhandsvisning() {
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
-					<Show if={!isReadOnly && erUtkastKlartTilUtsending}>
+					<Show if={kanEndreUtkast && erUtkastKlartTilUtsending}>
 						<Hovedknapp disabled={pdfStatus !== PDFStatus.SUCCESS} mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
 							Send til bruker
 						</Hovedknapp>

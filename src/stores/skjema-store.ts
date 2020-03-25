@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import createUseContext from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
-import {
-	validerBegrunnelseMaxLength,
-	validerSkjema as valider
-} from '../components/utkast-skjema/skjema-utils';
+import { validerBegrunnelseMaxLength, validerSkjema as valider } from '../components/utkast-skjema/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 
@@ -15,7 +12,6 @@ export const useSkjemaStore = createUseContext(() => {
 	const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
 	const [sistOppdatert, setSistOppdatert] = useState('');
 	const [errors, setErrors] = useState<SkjemaFeil>({});
-	const [isReadOnly, setReadOnly] = useState<boolean>(true);
 
 	const validerSkjema = (vedtak: Vedtak[]): SkjemaFeil => {
 		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, vedtak);
@@ -52,7 +48,6 @@ export const useSkjemaStore = createUseContext(() => {
 		begrunnelse, setBegrunnelse,
 		sistOppdatert, setSistOppdatert, errors,
 		validerSkjema, validerBegrunnelseLengde,
-		initSkjema, resetSkjema,
-		isReadOnly, setReadOnly
+		initSkjema, resetSkjema
 	};
 });

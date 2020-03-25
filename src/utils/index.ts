@@ -31,3 +31,4 @@ export const isNothing = (str: OrNothing<string>): boolean => {
 	return str == null || str.trim().length === 0;
 };
 
+

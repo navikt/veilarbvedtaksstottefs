@@ -1,17 +1,23 @@
-import { enhet } from './konstanter';
+import { enhetId, enhetNavn } from './konstanter';
 
-export const innloggetVeileder = {
+export const ansvarligVeileder = {
 	navn: 'Ola Nordmann',
-	ident: 'Z007',
-	enhetId: enhet,
-	enhetNavn: 'Gotham city',
+	ident: 'O11111111',
+	enhetId,
+	enhetNavn,
+};
+
+export const ikkeAnsvarligVeileder = {
+	navn: 'Kari Nordmann',
+	ident: 'K22222222',
+	enhetId,
+	enhetNavn,
 };
 
 export const beslutter = {
 	navn: 'Beslutter Besluttersen',
-	ident: 'Z442389',
-	enhetId: innloggetVeileder.enhetId,
-	enhetNavn: innloggetVeileder.enhetNavn,
+	ident: 'B333333333',
+	enhetId,
+	enhetNavn,
 };
 
-export const ansvarligVeileder = innloggetVeileder;

@@ -2,10 +2,11 @@ import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
 import { Vedtak } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
-import { innloggetVeileder } from './personer';
 import { SkjemaData } from '../pages/utkast/utkast-side';
 import { finnUtkast } from '../utils';
 import historisk from './api-data/vedtak/tidligere-vedtak';
+import { ansvarligVeileder } from './personer';
+import { innloggetVeileder } from './api-data/innlogget-veileder';
 
 let vedtak: Vedtak[] = [
 	utkast, ...historisk
@@ -29,14 +30,15 @@ export const mockLagUtkast: Mock = {
 			sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 			gjeldende: false,
 			opplysninger: [],
-			veilederNavn: innloggetVeileder.navn,
-			veilederIdent: innloggetVeileder.ident,
-			oppfolgingsenhetId: innloggetVeileder.enhetId,
-			oppfolgingsenhetNavn: innloggetVeileder.enhetNavn,
+			veilederNavn: ansvarligVeileder.navn,
+			veilederIdent: ansvarligVeileder.ident,
+			oppfolgingsenhetId: ansvarligVeileder.enhetId,
+			oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
 			beslutterNavn: null,
 			dokumentInfoId: null,
 			journalpostId: null,
-			sendtTilBeslutter: false
+			sendtTilBeslutter: false,
+			beslutterIdent: null
 		} as unknown as Vedtak;
 
 		vedtak.push(nyttUtkast);
@@ -99,21 +101,18 @@ export const mockOvertaUtkast: Mock = {
 	method: 'POST',
 	url: '/veilarbvedtaksstotte/api/:fnr/utkast/overta',
 	handler: async (): Promise<ResponseData> => {
-
 		const gjeldendeUtkast = finnUtkast(vedtak);
 
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
 
-		gjeldendeUtkast.veilederNavn = innloggetVeileder.navn;
-		gjeldendeUtkast.veilederIdent = innloggetVeileder.ident;
-		gjeldendeUtkast.oppfolgingsenhetNavn = innloggetVeileder.enhetNavn;
-		gjeldendeUtkast.oppfolgingsenhetId = innloggetVeileder.enhetId;
+		gjeldendeUtkast.oppfolgingsenhetNavn = ansvarligVeileder.enhetNavn;
+		gjeldendeUtkast.oppfolgingsenhetId = ansvarligVeileder.enhetId;
 
 		return { status: 204 };
 	}
 };
 
-export const mockStartBeslutterProsess: Mock = {
+export const mockKlarTilBeslutter: Mock = {
 	method: 'POST',
 	url: '/veilarbvedtaksstotte/api/:fnr/beslutter/start',
 	handler: async (): Promise<ResponseData> => {
@@ -125,5 +124,36 @@ export const mockStartBeslutterProsess: Mock = {
 		gjeldendeUtkast.beslutterProsessStartet = true;
 
 		return { status: 200 };
+	}
+};
+
+export const mockBliBeslutter: Mock = {
+	method: 'POST',
+	url: '/veilarbvedtaksstotte/api/:fnr/beslutter/bliBeslutter',
+	handler: async (): Promise<ResponseData> => {
+
+		const gjeldendeUtkast = finnUtkast(vedtak);
+
+		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å bli beslutter for');
+
+		gjeldendeUtkast.beslutterIdent = innloggetVeileder.ident;
+		gjeldendeUtkast.beslutterIdent = innloggetVeileder.navn;
+
+		return { status: 204 };
+	}
+};
+
+export const mockGodkjennVedtak: Mock = {
+	method: 'POST',
+	url: '/veilarbvedtaksstotte/api/:fnr/beslutter/godkjenn',
+	handler: async (): Promise<ResponseData> => {
+
+		const gjeldendeUtkast = finnUtkast(vedtak);
+
+		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å godkjenne');
+
+		gjeldendeUtkast.godkjentAvBeslutter= true;
+
+		return { status: 204 };
 	}
 };
