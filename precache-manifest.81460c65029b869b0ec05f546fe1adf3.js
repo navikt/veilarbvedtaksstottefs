@@ -4,16 +4,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "9c121f8812bd39b8b948",
+    "revision": "e6ea5b91bb48bb947e7c",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "9c121f8812bd39b8b948",
+    "revision": "e6ea5b91bb48bb947e7c",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
-    "revision": "df60d4cf52e304470405",
-    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.b8dfdf45.chunk.js"
+    "revision": "09cb726e996b2fae5d60",
+    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.ce5b9710.chunk.js"
   },
   {
     "revision": "60c7de9e28dee1c6c239b50318b59bfe",
@@ -32,8 +32,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/dialog.91418ce5.svg"
   },
   {
-    "revision": "6f448b5f26deb9c2cc75f36a34ec2696",
-    "url": "/veilarbvedtaksstottefs/static/media/feil-sirkel.6f448b5f.svg"
+    "revision": "6663e652df5420af74420d64a58434a4",
+    "url": "/veilarbvedtaksstottefs/static/media/feil-sirkel.6663e652.svg"
   },
   {
     "revision": "75ecedd8fc271557e31191efc51a6cbd",
@@ -58,6 +58,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "78f0aa200e8c72d3b0209a539776e331",
     "url": "/veilarbvedtaksstottefs/static/media/klagebehandling.78f0aa20.svg"
+  },
+  {
+    "revision": "7202ab3e09b56444e88e9b4351f282a0",
+    "url": "/veilarbvedtaksstottefs/static/media/las-opp.7202ab3e.svg"
   },
   {
     "revision": "e1bed2a8a4b464190ce7e0950d335789",
@@ -136,8 +140,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/vedtak-sendt-brev.e9ec96ff.svg"
   },
   {
-    "revision": "9abf4fbf6eeec7c310b11862b0c30db2",
-    "url": "/veilarbvedtaksstottefs/static/media/vedtak-sendt-digital.9abf4fbf.svg"
+    "revision": "b42017996ad8b2d156136b0afdb67ca7",
+    "url": "/veilarbvedtaksstottefs/static/media/vedtak-sendt-digital.b4201799.svg"
   },
   {
     "revision": "c2eba75d45221bdc872ba9162459e00a",
