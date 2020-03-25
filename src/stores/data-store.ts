@@ -47,6 +47,12 @@ export const useDataStore = createUseContext(() => {
 		utkast.beslutterNavn = beslutterNavn;
 	}
 
+	function setUtkastVeileder(veilederIdent: string, veilederNavn: string) {
+		const utkast = finnUtkastAlltid(vedtak);
+		utkast.veilederIdent = veilederIdent;
+		utkast.veilederNavn = veilederNavn;
+	}
+
 	return {
 		oppfolgingData, setOppfolgingData,
 		malform, setMalform,
@@ -58,6 +64,7 @@ export const useDataStore = createUseContext(() => {
 		leggTilDialogMelding,
 		setUtkastBeslutterProsessStartet,
 		setUtkastGodkjent,
-		setUtkastBeslutter
+		setUtkastBeslutter,
+		setUtkastVeileder
 	};
 });
