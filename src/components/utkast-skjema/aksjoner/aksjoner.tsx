@@ -46,6 +46,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 	const utkast = finnUtkastAlltid(vedtak);
 	const godkjentAvBeslutter = utkast.godkjentAvBeslutter;
+	const visGodkjentAvBeslutter = utkast.godkjentAvBeslutter && erBeslutter(veilederTilgang);
 	const visKlarTilBeslutter = !utkast.beslutterProsessStartet && trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder(veilederTilgang);
 	const visBliBeslutter = utkast.beslutterProsessStartet && utkast.beslutterIdent == null && erIkkeAnsvarligVeileder(veilederTilgang);
 	const visGodkjennUtkast = utkast.beslutterProsessStartet && !godkjentAvBeslutter && erBeslutter(veilederTilgang);
@@ -216,7 +217,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 						Godkjenn
 					</Flatknapp>
 				</Show>
-				<Show if={godkjentAvBeslutter}>
+				<Show if={visGodkjentAvBeslutter}>
 					<Element>Godkjent</Element>
 				</Show>
 			</div>
