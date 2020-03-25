@@ -95,7 +95,8 @@ export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 });
 
 export const lagTaOverUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast/overta`
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast/overta`,
+	method: 'POST'
 });
 
 export const lagHentOyblikksbildeFetchInfo = (params: HentOyblikksbildeFetchParams): FetchInfo => ({
