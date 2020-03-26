@@ -5,6 +5,7 @@ import { PrelanseringSjekk } from './components/sjekk/prelansering-sjekk';
 import { NasjonalTilgangSjekk } from './components/sjekk/nasjonal-tilgang-sjekk';
 import StoreProvider from './stores/store-provider';
 import { ModalController } from './components/modal-controller';
+import { TabClickedListener } from './components/tab-clicked-listener';
 import './app.less';
 
 interface AppProps {
@@ -21,6 +22,7 @@ function App(props: AppProps) {
 						<DataFetcher fnr={props.fnr}>
 							<ViewController />
 							<ModalController />
+							<TabClickedListener />
 						</DataFetcher>
 					</NasjonalTilgangSjekk>
 				</PrelanseringSjekk>

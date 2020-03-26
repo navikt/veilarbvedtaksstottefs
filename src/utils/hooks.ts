@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 export function useConst<T>(value: T): T {
 	const ref = useRef(value);
@@ -15,4 +15,12 @@ export function useIsAfterFirstRender(): boolean {
 	});
 
 	return hasRenderedOnce.current;
+}
+
+export function useEventListener(name: string, listener: EventListener) {
+	const callback: any = useCallback(listener, []);
+	useEffect(() => {
+		window.addEventListener(name, callback);
+		return () => window.removeEventListener(name, callback);
+	}, [callback, name]);
 }
