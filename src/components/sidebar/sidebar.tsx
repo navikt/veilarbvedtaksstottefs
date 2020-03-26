@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cls from 'classnames';
-import tipsIkon from './tips.svg';
-import dialogIkon from './dialog.svg';
+import tipsIkon from './tips/tips.svg';
+import dialogIkon from './dialog/dialog.svg';
 import { Tips } from './tips/tips';
 import { Dialog } from './dialog/dialog';
 import './sidebar.less';
@@ -49,6 +49,8 @@ export const Sidebar = () => {
 		setSelectedTabName(tab.name);
 	}
 
+	// Dette burde egentlig debounces, men det ser grusomt ut selv med lavt delay
+	// Det beste hadde vært å bruke kun CSS til å sette høyden på sidebaren
 	function setSidebarHeight() {
 		const sidebar = sidebarRef.current;
 		if (sidebar) {
@@ -58,14 +60,18 @@ export const Sidebar = () => {
 	}
 
 	useEffect(() => {
+		// Set initial height
 		setSidebarHeight();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sidebarRef.current]);
 
 	useEffect(() => {
+		// TODO: Kan vurdere å sjekke at det er høyden som endrer seg på resize event
 		window.addEventListener('scroll', setSidebarHeight, true);
+		window.addEventListener('resize', setSidebarHeight, true);
 		return () => {
 			window.removeEventListener('scroll', setSidebarHeight);
+			window.removeEventListener('resize', setSidebarHeight);
 		};
 	}, []);
 

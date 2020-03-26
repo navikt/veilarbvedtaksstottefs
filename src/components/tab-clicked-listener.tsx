@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEventListener } from '../utils/hooks';
 import { useViewStore, ViewType } from '../stores/view-store';
 
