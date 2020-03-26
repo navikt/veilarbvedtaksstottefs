@@ -5,30 +5,42 @@ import dialogIkon from './dialog/dialog.svg';
 import { Tips } from './tips/tips';
 import { Dialog } from './dialog/dialog';
 import './sidebar.less';
+import { Vedtak } from '../../rest/data/vedtak';
+import { useDataStore } from '../../stores/data-store';
+import { finnUtkastAlltid } from '../../utils';
+
+enum TabName {
+	TIPS = 'TIPS',
+	DIALOG = 'DIALOG'
+}
 
 interface SidebarTab {
-	name: string;
+	name: TabName;
 	icon: string;
 	content: React.ReactChild;
 }
 
 const sidebarTabs: SidebarTab[] = [
 	{
-		name: 'tips',
+		name: TabName.TIPS,
 		icon: tipsIkon,
 		content: <Tips />
 	},
 	{
-		name: 'dialog',
+		name: TabName.DIALOG,
 		icon: dialogIkon,
 		content: <Dialog />
 	},
 ];
 
-const defaultSelectedTabName = 'tips';
-
 function finnTab(tabName: string, tabs: SidebarTab[]): SidebarTab {
 	return tabs.find(t => t.name === tabName) as SidebarTab;
+}
+
+function finnDefaultTab(utkast: Vedtak): TabName {
+	return utkast.beslutterProsessStartet
+		? TabName.DIALOG
+		: TabName.TIPS;
 }
 
 function mapTabTilView(tab: SidebarTab, isSelected: boolean, onTabClicked: (tab: SidebarTab) => void) {
@@ -41,8 +53,9 @@ function mapTabTilView(tab: SidebarTab, isSelected: boolean, onTabClicked: (tab:
 }
 
 export const Sidebar = () => {
+	const { vedtak } = useDataStore();
 	const sidebarRef = useRef<HTMLDivElement>(null);
-	const [selectedTabName, setSelectedTabName] = useState(defaultSelectedTabName);
+	const [selectedTabName, setSelectedTabName] = useState(finnDefaultTab(finnUtkastAlltid(vedtak)));
 	const selectedTab = finnTab(selectedTabName, sidebarTabs);
 
 	function handleOnTabClicked(tab: SidebarTab) {

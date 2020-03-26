@@ -21,10 +21,11 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Show from '../../show';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { useDataStore } from '../../../stores/data-store';
+import { erAnsvarligVeileder } from '../../../utils/tilgang';
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
-	const {kanEndreUtkast} = useTilgangStore();
+	const {kanEndreUtkast, veilederTilgang} = useTilgangStore();
 	const {vedtak} = useDataStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
@@ -33,7 +34,7 @@ function Innsatsgruppe() {
 
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
-			<Show if={trengerBeslutter(innsatsgruppe)}>
+			<Show if={trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder(veilederTilgang)}>
 				<AlertStripeInfo className="innsatsgruppe__alertstripe">
 					Vurderingen skal sendes til beslutter når du vurderer at brukeren enten har liten mulighettil å jobbe eller har mulighet til å jobbe delvis.
 					Når du går videre får du sendt til beslutter.
