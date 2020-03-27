@@ -1,4 +1,4 @@
-import { Vedtak } from '../rest/data/vedtak';
+import { BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
 import { OrNothing } from './types/ornothing';
 
 const emdashCharacterCode = 8212;
@@ -18,6 +18,14 @@ export const finnVedtakAlltid = (vedtakListe: Vedtak[], vedtakId: number): Vedta
 
 export const finnUtkast = (vedtakListe: Vedtak[]): Vedtak | undefined => {
 	return vedtakListe.find(v => v.vedtakStatus === 'UTKAST');
+};
+
+export const erKlarTilBeslutter = (vedtak: Vedtak): boolean => {
+	return vedtak.beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
+};
+
+export const erKlarTilVeileder = (vedtak: Vedtak): boolean => {
+	return vedtak.beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_VEILEDER;
 };
 
 // If the checkboxes/radios does not swallow enter, then it will for some reason propagate to the first button and trigger onClick

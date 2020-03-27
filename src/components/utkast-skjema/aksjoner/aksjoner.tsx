@@ -9,6 +9,7 @@ import { ReactComponent as SlettIkon } from './delete.svg';
 import {
 	lagBliBeslutterFetchInfo,
 	lagGodkjennVedtakFetchInfo,
+	lagOppdaterBeslutterProsessStatusFetchInfo,
 	lagOppdaterVedtakUtkastFetchInfo,
 	lagStartBeslutterProsessFetchInfo
 } from '../../../rest/api';
@@ -19,11 +20,12 @@ import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } fr
 import Show from '../../show';
 import { Element } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../stores/tilgang-store';
-import { erAnsvarligVeileder, erBeslutter, erIkkeAnsvarligVeileder, VeilederTilgang } from '../../../utils/tilgang';
-import { finnUtkastAlltid } from '../../../utils';
+import { VeilederTilgang } from '../../../utils/tilgang';
+import { erKlarTilBeslutter, erKlarTilVeileder, finnUtkastAlltid } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import './aksjoner.less';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -32,11 +34,15 @@ interface UtkastAksjonerProps {
 
 function Aksjoner(props: UtkastAksjonerProps) {
 	const {fnr} = useAppStore();
-	const {kanEndreUtkast, veilederTilgang, setVeilederTilgang} = useTilgangStore();
+	const {
+		kanEndreUtkast,
+		setVeilederTilgang, erBeslutter,
+		erAnsvarligVeileder, erIkkeAnsvarligVeileder
+	} = useTilgangStore();
 	const {
 		malform, vedtak, innloggetVeileder,
 		setUtkastBeslutterProsessStartet, setUtkastBeslutter,
-		setUtkastGodkjent
+		setUtkastGodkjent, setBeslutterProsessStatus
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
@@ -46,13 +52,15 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 	const utkast = finnUtkastAlltid(vedtak);
 	const godkjentAvBeslutter = utkast.godkjentAvBeslutter;
-	const visGodkjentAvBeslutter = utkast.godkjentAvBeslutter && erBeslutter(veilederTilgang);
-	const visKlarTilBeslutter = !utkast.beslutterProsessStartet && trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder(veilederTilgang);
-	const visBliBeslutter = utkast.beslutterProsessStartet && utkast.beslutterIdent == null && erIkkeAnsvarligVeileder(veilederTilgang);
-	const visGodkjennUtkast = utkast.beslutterProsessStartet && !godkjentAvBeslutter && erBeslutter(veilederTilgang);
-	const visTaOverUtkast = erIkkeAnsvarligVeileder(veilederTilgang);
-	const visSendEndringer = false; // TODO: Implement later
-	const erForhandsvisHovedknapp = !visKlarTilBeslutter && !visBliBeslutter && !visSendEndringer;
+	const visGodkjentAvBeslutter = utkast.godkjentAvBeslutter && erBeslutter;
+	const visStartBeslutterProsess = !utkast.beslutterProsessStartet && trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder;
+	const visBliBeslutter = utkast.beslutterProsessStartet && utkast.beslutterIdent == null && erIkkeAnsvarligVeileder;
+	const visGodkjennUtkast = utkast.beslutterProsessStartet && !godkjentAvBeslutter && erBeslutter;
+	const visTaOverUtkast = erIkkeAnsvarligVeileder;
+	const visKlarTil =
+		(erAnsvarligVeileder && erKlarTilVeileder(utkast)) ||
+		(erBeslutter && (erKlarTilBeslutter(utkast) || !utkast.beslutterProsessStatus));
+	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function sendDataTilBackend() {
 		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform)};
@@ -114,14 +122,19 @@ function Aksjoner(props: UtkastAksjonerProps) {
 			.finally(() => setLaster(false));
 	}
 
-	function handleOnSendEndringerClicked() {
-		alert('TODO: Not implemented yet');
-		// setVisLaster(true);
-		//
-		// sendDataTilBackend().then(() => {
-		// 	setVisLaster(false);
-		// 	changeView(ViewType.UTKAST);
-		// });
+	function handleOnKlarTilClicked() {
+		setLaster(true);
+
+		fetchWithInfo(lagOppdaterBeslutterProsessStatusFetchInfo({fnr}))
+			.then(() => {
+				const status = erBeslutter
+					? BeslutterProsessStatus.KLAR_TIL_VEILEDER
+					: BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
+
+				setBeslutterProsessStatus(status);
+			})
+			.catch(() => showModal(ModalType.FEIL_VED_OPPDATER_BESLUTTER_PROSESS_STATUS))
+			.finally(() => setLaster(false));
 	}
 
 	function handleOnGodkjennClicked() {
@@ -144,14 +157,14 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				<Show if={laster}>
 					<NavFrontendSpinner type="XS" />
 				</Show>
-				<Show if={visKlarTilBeslutter}>
+				<Show if={visStartBeslutterProsess}>
 					<Hovedknapp
 						disabled={laster}
 						mini={true}
 						htmlType="button"
 						onClick={handleOnStartBeslutterProsessClicked}
 					>
-						Klar til beslutter
+						Start beslutterprosess
 					</Hovedknapp>
 				</Show>
 				<Show if={visBliBeslutter}>
@@ -164,14 +177,14 @@ function Aksjoner(props: UtkastAksjonerProps) {
 						Bli beslutter
 					</Hovedknapp>
 				</Show>
-				<Show if={visSendEndringer}>
+				<Show if={visKlarTil}>
 					<Hovedknapp
 						mini={true}
 						htmlType="button"
-						onClick={handleOnSendEndringerClicked}
+						onClick={handleOnKlarTilClicked}
 						disabled={laster}
 					>
-						Send endringer
+						Klar til {erBeslutter ? 'veileder' : 'beslutter'}
 					</Hovedknapp>
 				</Show>
 				<Knapp

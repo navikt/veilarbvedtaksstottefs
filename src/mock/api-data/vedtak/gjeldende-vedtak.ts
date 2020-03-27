@@ -1,4 +1,3 @@
-
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
 import { ansvarligVeileder } from '../../personer';
@@ -23,6 +22,7 @@ const gjeldendeVedtak: Vedtak & JSONObject = {
 	godkjentAvBeslutter: false,
 	dokumentInfoId: null,
 	journalpostId: null,
+	beslutterProsessStatus: null
 };
 
 export default gjeldendeVedtak;

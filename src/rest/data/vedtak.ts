@@ -15,6 +15,11 @@ export enum HovedmalType {
 	BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
 }
 
+export enum BeslutterProsessStatus {
+	KLAR_TIL_BESLUTTER = 'KLAR_TIL_BESLUTTER',
+	KLAR_TIL_VEILEDER = 'KLAR_TIL_VEILEDER'
+}
+
 export interface Vedtak {
 	id: number;
 	hovedmal: OrNothing<HovedmalType>;
@@ -34,6 +39,7 @@ export interface Vedtak {
 	opplysninger: string[];
 	journalpostId: OrNothing<string>;
 	dokumentInfoId: OrNothing<string>;
+	beslutterProsessStatus: OrNothing<BeslutterProsessStatus>;
 }
 
 export interface ArenaVedtak {
