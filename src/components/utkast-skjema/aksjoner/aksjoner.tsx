@@ -36,7 +36,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const {
 		malform, vedtak, innloggetVeileder,
 		setUtkastBeslutterProsessStartet, setUtkastBeslutter,
-		setUtkastGodkjent
+		setUtkastGodkjent, leggTilSystemMelding
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
@@ -96,7 +96,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		sendDataTilBackend()
 			.then(() => {
 				fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
-					.then(() => setUtkastBeslutterProsessStartet())
+					.then(() => {
+						setUtkastBeslutterProsessStartet();
+						leggTilSystemMelding('Utkast klar for beslutter');
+					})
 					.catch(() => showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS))
 					.finally(() => setLaster(false));
 			});
@@ -109,6 +112,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 			.then(() => {
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
 				setVeilederTilgang(VeilederTilgang.BESLUTTER);
+				leggTilSystemMelding(`${innloggetVeileder.navn} er beslutter`);
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
 			.finally(() => setLaster(false));
@@ -127,7 +131,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	function handleOnGodkjennClicked() {
 		setLaster(true);
 		fetchWithInfo(lagGodkjennVedtakFetchInfo({fnr}))
-			.then(() => setUtkastGodkjent())
+			.then(() => {
+				setUtkastGodkjent();
+				leggTilSystemMelding(`Kvalifisert av ${innloggetVeileder.navn}`);
+			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
 			.finally(() => setLaster(false));
 	}

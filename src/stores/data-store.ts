@@ -31,6 +31,17 @@ export const useDataStore = createUseContext(() => {
 		setDialogMeldinger((curMeldinger) => [...curMeldinger, dialogMelding])
 	}
 
+	function leggTilSystemMelding (melding: string) {
+			const systemMelding: DialogMelding = {
+				melding,
+				opprettet: new Date().toISOString(),
+				opprettetAvIdent: null,
+				opprettetAvNavn: null
+			};
+
+			setDialogMeldinger((curMeldinger) => [...curMeldinger, systemMelding]);
+	}
+
 	function setUtkastBeslutterProsessStartet() {
 		const utkast = finnUtkastAlltid(vedtak);
 		utkast.beslutterProsessStartet = true;
@@ -65,6 +76,7 @@ export const useDataStore = createUseContext(() => {
 		setUtkastBeslutterProsessStartet,
 		setUtkastGodkjent,
 		setUtkastBeslutter,
-		setUtkastVeileder
+		setUtkastVeileder,
+		leggTilSystemMelding
 	};
 });
