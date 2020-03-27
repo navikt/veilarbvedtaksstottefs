@@ -1,4 +1,4 @@
-import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
+import { BeslutterProsessStatus, HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
 import { ansvarligVeileder, beslutter } from '../../personer';
 
@@ -21,6 +21,7 @@ const utkast: Vedtak & JSONObject = {
 	beslutterNavn: null,
 	godkjentAvBeslutter: false,
 	beslutterProsessStartet: false,
+	beslutterProsessStatus: null
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,6 +44,7 @@ const utkastMedBeslutter: Vedtak & JSONObject = {
 	beslutterNavn: beslutter.navn,
 	godkjentAvBeslutter: false,
 	beslutterProsessStartet: true,
+	beslutterProsessStatus: BeslutterProsessStatus.KLAR_TIL_BESLUTTER
 };
 
 export default utkast;

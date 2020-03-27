@@ -122,3 +122,8 @@ export const lagGodkjennVedtakFetchInfo = (params: FnrFetchParams): FetchInfo =>
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/godkjenn`,
 	method: 'POST'
 });
+
+export const lagOppdaterBeslutterProsessStatusFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/beslutter/status`,
+	method: 'PUT'
+});

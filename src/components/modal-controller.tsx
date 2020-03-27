@@ -5,7 +5,7 @@ import {
 	FeilModalConfig,
 	feilVedBliBeslutterConfig,
 	feilVedForhandsvisnigConfig,
-	feilVedLagringConfig,
+	feilVedLagringConfig, feilVedOppdaterBeslutterProsessStatus,
 	feilVedOpprettingAvUtkast,
 	feilVedOvertakelseAvUtkastConfig,
 	feilVedSendningConfig,
@@ -42,6 +42,8 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedBliBeslutterConfig;
 		case ModalType.FEIL_VED_UTSENDING_AV_DIALOG_MELDING:
 			return feilVedUtsendingAvDialogMelding;
+		case ModalType.FEIL_VED_OPPDATER_BESLUTTER_PROSESS_STATUS:
+			return feilVedOppdaterBeslutterProsessStatus;
 		default:
 			return null;
 	}

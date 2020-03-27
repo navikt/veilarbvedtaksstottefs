@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import createUseContext from 'constate';
-import { ArenaVedtak, Vedtak } from '../rest/data/vedtak';
+import { ArenaVedtak, BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
 import Oppfolging from '../rest/data/oppfolging-data';
 import { MalformData } from '../rest/data/malform';
 import { Features } from '../rest/data/features';
@@ -53,6 +53,11 @@ export const useDataStore = createUseContext(() => {
 		utkast.veilederNavn = veilederNavn;
 	}
 
+	function setBeslutterProsessStatus(beslutterProsessStatus: BeslutterProsessStatus) {
+		const utkast = finnUtkastAlltid(vedtak);
+		utkast.beslutterProsessStatus = beslutterProsessStatus;
+	}
+
 	return {
 		oppfolgingData, setOppfolgingData,
 		malform, setMalform,
@@ -65,6 +70,7 @@ export const useDataStore = createUseContext(() => {
 		setUtkastBeslutterProsessStartet,
 		setUtkastGodkjent,
 		setUtkastBeslutter,
-		setUtkastVeileder
+		setUtkastVeileder,
+		setBeslutterProsessStatus
 	};
 });

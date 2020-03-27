@@ -14,7 +14,7 @@ import {
 	mockSlettUtkast,
 	mockKlarTilBeslutter,
 	mockBliBeslutter,
-	mockGodkjennVedtak
+	mockGodkjennVedtak, mockOppdaterBeslutterProsessStatus
 } from './vedtak-mock';
 import { addToFetchMock } from './mock-utils';
 import { mockHentDialoger, mockSendDialogMelding } from './dialoger-meldinger-mock';
@@ -36,6 +36,7 @@ addToFetchMock(mockBliBeslutter, fetchMock);
 addToFetchMock(mockGodkjennVedtak, fetchMock);
 addToFetchMock(mockHentDialoger, fetchMock);
 addToFetchMock(mockSendDialogMelding, fetchMock);
+addToFetchMock(mockOppdaterBeslutterProsessStatus, fetchMock);
 
 fetchMock.get('/veilarbvedtaksstotte/api/:fnr/vedtakFraArena', vedtakFraArena);
 fetchMock.get('/veilarbvedtaksstotte/api/:fnr/oyblikksbilde/:vedtakId', vedlegg);
