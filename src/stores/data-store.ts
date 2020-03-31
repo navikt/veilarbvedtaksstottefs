@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import createUseContext from 'constate';
-import { ArenaVedtak, Vedtak } from '../rest/data/vedtak';
+import { ArenaVedtak, BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
 import Oppfolging from '../rest/data/oppfolging-data';
 import { MalformData } from '../rest/data/malform';
 import { Features } from '../rest/data/features';
@@ -31,17 +31,6 @@ export const useDataStore = createUseContext(() => {
 		setDialogMeldinger((curMeldinger) => [...curMeldinger, dialogMelding])
 	}
 
-	function leggTilSystemMelding (melding: string) {
-			const systemMelding: DialogMelding = {
-				melding,
-				opprettet: new Date().toISOString(),
-				opprettetAvIdent: null,
-				opprettetAvNavn: null
-			};
-
-			setDialogMeldinger((curMeldinger) => [...curMeldinger, systemMelding]);
-	}
-
 	function setUtkastBeslutterProsessStartet() {
 		const utkast = finnUtkastAlltid(vedtak);
 		utkast.beslutterProsessStartet = true;
@@ -64,6 +53,11 @@ export const useDataStore = createUseContext(() => {
 		utkast.veilederNavn = veilederNavn;
 	}
 
+	function setBeslutterProsessStatus(beslutterProsessStatus: BeslutterProsessStatus) {
+		const utkast = finnUtkastAlltid(vedtak);
+		utkast.beslutterProsessStatus = beslutterProsessStatus;
+	}
+
 	return {
 		oppfolgingData, setOppfolgingData,
 		malform, setMalform,
@@ -77,6 +71,6 @@ export const useDataStore = createUseContext(() => {
 		setUtkastGodkjent,
 		setUtkastBeslutter,
 		setUtkastVeileder,
-		leggTilSystemMelding
+		setBeslutterProsessStatus
 	};
 });

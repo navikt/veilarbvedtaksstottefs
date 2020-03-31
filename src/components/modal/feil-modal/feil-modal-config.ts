@@ -70,3 +70,8 @@ export const feilVedUtsendingAvDialogMelding: FeilModalConfig = {
 	tittel: 'Klarte ikke å sende meldingen',
 	beskrivelse: 'En feil oppstod under utsendingen av meldingen. Vennligst prøv igjen senere.'
 };
+
+export const feilVedOppdaterBeslutterProsessStatus: FeilModalConfig = {
+	tittel: 'Klarte ikke å oppdatere status',
+	beskrivelse: 'En feil oppstod under oppdatering av status. Vennligst prøv igjen senere.'
+};
