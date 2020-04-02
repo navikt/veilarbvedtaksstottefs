@@ -40,9 +40,7 @@ function TaOverModal(props: ModalProps) {
 	const {fnr} = useAppStore();
 	const {hideModal, showModal} = useModalStore();
 	const {setVeilederTilgang} = useTilgangStore();
-	const {vedtak, innloggetVeileder,
-		   setUtkastBeslutter, setUtkastVeileder,
-		   leggTilSystemMelding} = useDataStore();
+	const {vedtak, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder} = useDataStore();
 
 	const [taOverFor, setTaOverFor] = useState<TaOverFor>();
 	const [vedtakOvertatt, setVedtakOvertatt] = useState(false);
@@ -74,10 +72,8 @@ function TaOverModal(props: ModalProps) {
 
 				if (tilgang === VeilederTilgang.ANSVARLIG_VEILEDER) {
 					setUtkastVeileder(ident, navn);
-					leggTilSystemMelding(`${innloggetVeileder.navn} er ny ansvarlig veileder`);
 				} else {
 					setUtkastBeslutter(ident, navn);
-					leggTilSystemMelding(`${innloggetVeileder.navn} er ny beslutter`);
 				}
 
 				setVeilederTilgang(tilgang);

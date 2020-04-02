@@ -18,7 +18,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
 	const { vedtakFetcher } = useDataFetcherStore();
-	const { oppfolgingData, innloggetVeileder, leggTilSystemMelding } = useDataStore();
+	const { oppfolgingData } = useDataStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
 
@@ -34,7 +34,6 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 						frontendlogger.logMetrikk('lag-nytt-vedtak');
 					}, 0);
 				});
-				leggTilSystemMelding(`${innloggetVeileder.navn} opprettet utkast`);
 			})
 			.catch(() => {
 				showModal(ModalType.FEIL_VED_OPPRETTING_AV_UTKAST);
