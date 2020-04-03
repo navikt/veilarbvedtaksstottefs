@@ -1,6 +1,7 @@
 import React from 'react';
 import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import './tips.less';
+import { Malform } from './malform/malform';
 
 export const Tips = () => {
     return (
@@ -51,6 +52,8 @@ export const Tips = () => {
 				    <li>Hva har dere blitt enige om?</li>
 			    </ul>
 		    </div>
+
+		    <Malform />
 
 	    </div>
     );
