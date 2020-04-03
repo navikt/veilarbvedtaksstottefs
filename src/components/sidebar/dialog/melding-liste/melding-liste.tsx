@@ -25,7 +25,9 @@ function mapMeldingTilDialogView(melding: DialogMeldingData, key: number, innlog
 	return (
 		<div className={cls('melding-wrapper', wrapperClasses)} key={key}>
 			{erSystemMelding
-				? <SystemMelding tekst={melding.melding}/>
+				? <SystemMelding meldingtype={melding.melding}
+								 utfortAvNavn={melding.opprettetAvNavn as string}
+				/>
 				: (
 					<DialogMelding
 						dato={melding.opprettet}
