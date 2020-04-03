@@ -59,7 +59,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const visTaOverUtkast = erIkkeAnsvarligVeileder;
 	const visKlarTil =
 		(erAnsvarligVeileder && erKlarTilVeileder(utkast)) ||
-		(erBeslutter && (erKlarTilBeslutter(utkast) || !utkast.beslutterProsessStatus));
+		(erBeslutter && erKlarTilBeslutter(utkast));
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function sendDataTilBackend() {
@@ -116,6 +116,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		fetchWithInfo(lagBliBeslutterFetchInfo({fnr}))
 			.then(() => {
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
+				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 				setVeilederTilgang(VeilederTilgang.BESLUTTER);
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))

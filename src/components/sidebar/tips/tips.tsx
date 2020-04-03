@@ -1,12 +1,13 @@
 import React from 'react';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import './tips.less';
 
 export const Tips = () => {
     return (
     	<div className="tips">
-		    <div className="tips__bolk">
-			    <Undertittel>Kilder</Undertittel>
+		    <Systemtittel className="blokk-m">Tips til vurderingen din</Systemtittel>
+		    <div className="tips__bolk blokk-m">
+			    <Undertittel className="blokk-xs">Kilder</Undertittel>
 			    <Normaltekst>For andre kilder kan du for eksempel skrive:</Normaltekst>
 			    <ul className="tips__liste">
 				    <li>
@@ -28,8 +29,8 @@ export const Tips = () => {
 			    </ul>
 		    </div>
 
-		    <div className="tips__bolk">
-			    <Undertittel>Begrunnelse</Undertittel>
+		    <div className="tips__bolk blokk-m">
+			    <Undertittel className="blokk-xs">Begrunnelse</Undertittel>
 			    <Normaltekst>
 				    Begrunnelse må skrives for alle innsatsgrupper, bortsett fra standard innsats.
 				    Når du skal skrive begrunnelse og gjøre vurderingen din, er følgende spørsmål nyttige å stille:
@@ -41,7 +42,7 @@ export const Tips = () => {
 				    <li>Er arbeidsevnen nedsatt, og hvorfor?</li>
 				    <li>
 					    Trenger denne personen:
-					    <ul>
+					    <ul className="tips__sub-liste">
 						    <li>yrkes- og/eller karriereveiledning?</li>
 						    <li>arbeidsrettede aktiviteter og tiltak?</li>
 						    <li>behandling eller oppfølging fra helsevesenet?</li>
