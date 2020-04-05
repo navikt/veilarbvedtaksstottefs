@@ -26,6 +26,7 @@ import { useDataStore } from '../../../stores/data-store';
 import './aksjoner.less';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
+import { MeldingType, MeldingUnderType } from '../../../utils/types/dialog-melding-type';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -42,7 +43,8 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const {
 		malform, vedtak, innloggetVeileder,
 		setUtkastBeslutterProsessStartet, setUtkastBeslutter,
-		setUtkastGodkjent, setBeslutterProsessStatus
+		setUtkastGodkjent, setBeslutterProsessStatus,
+		leggTilDialogMelding
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
@@ -93,7 +95,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		if (kanEndreUtkast) {
 			setLaster(true);
 			sendDataTilBackend()
-				.then(() => changeView(ViewType.HOVEDSIDE));
+				.then(() => {
+					changeView(ViewType.HOVEDSIDE);
+					leggTilDialogMelding(null, innloggetVeileder.ident, innloggetVeileder.navn, MeldingType.SYSTEM, MeldingUnderType.UTKAST_OPPRETTET);
+				});
 		} else {
 			changeView(ViewType.HOVEDSIDE);
 		}
@@ -104,7 +109,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		sendDataTilBackend()
 			.then(() => {
 				fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
-					.then(() => setUtkastBeslutterProsessStartet())
+					.then(() => {
+						setUtkastBeslutterProsessStartet();
+					    leggTilDialogMelding(null, innloggetVeileder.ident, innloggetVeileder.navn, MeldingType.SYSTEM, MeldingUnderType.BESLUTTER_PROSESS_STARTET);
+					})
 					.catch(() => showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS))
 					.finally(() => setLaster(false));
 			});
@@ -116,6 +124,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		fetchWithInfo(lagBliBeslutterFetchInfo({fnr}))
 			.then(() => {
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
+				leggTilDialogMelding(null, innloggetVeileder.ident, innloggetVeileder.navn, MeldingType.SYSTEM, MeldingUnderType.BLI_BESLUTTER);
 				setVeilederTilgang(VeilederTilgang.BESLUTTER);
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
@@ -140,7 +149,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	function handleOnGodkjennClicked() {
 		setLaster(true);
 		fetchWithInfo(lagGodkjennVedtakFetchInfo({fnr}))
-			.then(() => setUtkastGodkjent())
+			.then(() => {
+				setUtkastGodkjent();
+				leggTilDialogMelding(null, innloggetVeileder.ident, innloggetVeileder.navn, MeldingType.SYSTEM, MeldingUnderType.GODSKJENT_AV_BESLUTTER);
+			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
 			.finally(() => setLaster(false));
 	}

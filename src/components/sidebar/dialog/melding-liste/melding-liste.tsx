@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import cls from 'classnames';
 import { DialogMelding as DialogMeldingData } from '../../../../rest/data/dialog-melding';
-import { isNothing } from '../../../../utils';
 import { SystemMelding } from './system-melding/system-melding';
 import { DialogMelding } from './dialog-melding/dialog-melding';
 import './melding-liste.less';
+import { MeldingType } from '../../../../utils/types/dialog-melding-type';
+import Show from "../../../show";
 
 interface MeldingListeProps {
 	meldinger: DialogMeldingData[];
@@ -13,7 +14,7 @@ interface MeldingListeProps {
 }
 
 function mapMeldingTilDialogView(melding: DialogMeldingData, key: number, innloggetVeilederIdent: string) {
-	const erSystemMelding = isNothing(melding.opprettetAvIdent);
+	const erSystemMelding = melding.meldingType === MeldingType.SYSTEM;
 	const skrevetAvMeg = melding.opprettetAvIdent === innloggetVeilederIdent;
 
 	const wrapperClasses = {
@@ -24,17 +25,19 @@ function mapMeldingTilDialogView(melding: DialogMeldingData, key: number, innlog
 
 	return (
 		<div className={cls('melding-wrapper', wrapperClasses)} key={key}>
-			{erSystemMelding
-				? <SystemMelding tekst={melding.melding}/>
-				: (
-					<DialogMelding
+			<Show if={erSystemMelding}>
+				<SystemMelding meldingtype={melding.meldingUnderType}
+							   utfortAvNavn={melding.opprettetAvNavn as string}
+				/>
+			</Show>
+			<Show if={!erSystemMelding}>
+				<DialogMelding
 						dato={melding.opprettet}
 						tekst={melding.melding}
 						skrevetAvNavn={melding.opprettetAvNavn as string}
 						skrevetAvMeg={skrevetAvMeg}
-					/>
-				)
-			}
+				/>
+			</Show>
 		</div>
 	);
 }

@@ -7,6 +7,7 @@ import { lagSendDialogFetchInfo } from '../../../../rest/api';
 import { useAppStore } from '../../../../stores/app-store';
 import { ModalType, useModalStore } from '../../../../stores/modal-store';
 import './skrivefelt.less';
+import { MeldingType } from '../../../../utils/types/dialog-melding-type';
 
 export const Skrivefelt = () => {
 	const { fnr } = useAppStore();
@@ -22,7 +23,7 @@ export const Skrivefelt = () => {
 		fetchWithInfo(lagSendDialogFetchInfo({ fnr, melding }))
 			.then(() => {
 				const { ident, navn } = innloggetVeileder;
-				leggTilDialogMelding(melding, ident, navn);
+				leggTilDialogMelding(melding, ident, navn, MeldingType.MANUELL, null);
 				setMelding('');
 				setSenderMelding(false);
 			}).catch(() => {

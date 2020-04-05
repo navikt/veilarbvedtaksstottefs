@@ -14,6 +14,7 @@ import { lagBliBeslutterFetchInfo, lagTaOverUtkastFetchInfo } from '../../../res
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
 import './ta-over-modal.less';
+import { MeldingType, MeldingUnderType } from '../../../utils/types/dialog-melding-type';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
@@ -40,7 +41,7 @@ function TaOverModal(props: ModalProps) {
 	const {fnr} = useAppStore();
 	const {hideModal, showModal} = useModalStore();
 	const {setVeilederTilgang} = useTilgangStore();
-	const {vedtak, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder} = useDataStore();
+	const {vedtak, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilDialogMelding} = useDataStore();
 
 	const [taOverFor, setTaOverFor] = useState<TaOverFor>();
 	const [vedtakOvertatt, setVedtakOvertatt] = useState(false);
@@ -72,8 +73,10 @@ function TaOverModal(props: ModalProps) {
 
 				if (tilgang === VeilederTilgang.ANSVARLIG_VEILEDER) {
 					setUtkastVeileder(ident, navn);
+					leggTilDialogMelding(null, innloggetVeileder.ident, innloggetVeileder.navn, MeldingType.SYSTEM, MeldingUnderType.TA_OVER_SOM_VEILEDER);
 				} else {
 					setUtkastBeslutter(ident, navn);
+					leggTilDialogMelding(null, innloggetVeileder.ident, innloggetVeileder.navn, MeldingType.SYSTEM, MeldingUnderType.TA_OVER_SOM_BESLUTTER);
 				}
 
 				setVeilederTilgang(tilgang);

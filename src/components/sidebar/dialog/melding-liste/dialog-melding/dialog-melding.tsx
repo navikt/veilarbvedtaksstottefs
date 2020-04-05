@@ -4,9 +4,10 @@ import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 import { formatDayMonthTime } from '../../../../../utils/date-utils';
 import './dialog-melding.less';
 import Show from '../../../../show';
+import { OrNothing } from '../../../../../utils/types/ornothing';
 
 interface DialogMeldingProps {
-	tekst: string;
+	tekst: OrNothing<string>;
 	dato: string;
 	skrevetAvNavn: string;
 	skrevetAvMeg: boolean;

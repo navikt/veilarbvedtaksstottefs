@@ -4,6 +4,7 @@ import { VEILARBVEDTAKSSTOTTE_API } from '../rest/api';
 import dialogeMeldinger from './api-data/dialoger-meldinger';
 import { DialogMelding } from '../rest/data/dialog-melding';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
+import { MeldingType } from '../utils/types/dialog-melding-type';
 
 const meldinger = dialogeMeldinger;
 
@@ -24,7 +25,9 @@ export const mockSendDialogMelding: Mock = {
 			opprettet: new Date().toISOString(),
 			opprettetAvIdent: innloggetVeileder.ident,
 			opprettetAvNavn: innloggetVeileder.navn,
-			melding: sendDialogData.melding
+			melding: sendDialogData.melding,
+			meldingUnderType: null,
+			meldingType: MeldingType.MANUELL
 		};
 
 		meldinger.push(nyMelding);

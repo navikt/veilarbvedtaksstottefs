@@ -7,6 +7,8 @@ import { Features } from '../rest/data/features';
 import { Veileder } from '../rest/data/veiledere';
 import { DialogMelding } from '../rest/data/dialog-melding';
 import { finnUtkastAlltid } from '../utils';
+import { MeldingType, MeldingUnderType } from '../utils/types/dialog-melding-type';
+import { OrNothing } from '../utils/types/ornothing';
 
 // Data med placeholder er garantert av datafetcher.ts at det er tilgjengelig i hele appen
 const placeholder = {} as any;
@@ -20,12 +22,17 @@ export const useDataStore = createUseContext(() => {
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
 	const [dialogMeldinger, setDialogMeldinger] = useState<DialogMelding[]>([]);
 
-	function leggTilDialogMelding(melding: string, ident: string, navn: string) {
+	function leggTilDialogMelding(melding: OrNothing<string>, ident: string, navn: string,
+								  meldingType: MeldingType,
+								  meldingUnderType: OrNothing<MeldingUnderType>)
+	{
 		const dialogMelding: DialogMelding = {
 			melding,
 			opprettet: new Date().toISOString(),
 			opprettetAvIdent: ident,
-			opprettetAvNavn: navn
+			opprettetAvNavn: navn,
+			meldingUnderType,
+			meldingType
 		};
 
 		setDialogMeldinger((curMeldinger) => [...curMeldinger, dialogMelding])
