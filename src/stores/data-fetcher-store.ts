@@ -1,7 +1,9 @@
 import createUseContext from 'constate';
 import useFetch from '../rest/use-fetch';
 import {
-	FnrFetchParams, lagHentArenaVedtakFetchInfo, lagHentDialogerFetchInfo,
+	FnrFetchParams,
+	lagHentArenaVedtakFetchInfo,
+	lagHentMeldingerFetchInfo,
 	lagHentFeaturesFetchInfo,
 	lagHentMalformFetchInfo,
 	lagHentOppfolgingDataFetchInfo,
@@ -14,7 +16,7 @@ import { Features } from '../rest/data/features';
 import { ArenaVedtak, Vedtak } from '../rest/data/vedtak';
 import { Veileder } from '../rest/data/veiledere';
 import { OrNothing } from '../utils/types/ornothing';
-import { DialogMelding } from '../rest/data/dialog-melding';
+import { DialogMelding, SystemMelding } from '../rest/data/melding';
 
 export const useDataFetcherStore = createUseContext(() => {
 	const oppfolgingDataFetcher = useFetch<Oppfolging, FnrFetchParams>(lagHentOppfolgingDataFetchInfo);
@@ -23,12 +25,12 @@ export const useDataFetcherStore = createUseContext(() => {
 	const innloggetVeilederFetcher = useFetch<Veileder>(lagHentVeilederFetchInfo);
 	const vedtakFetcher = useFetch<Vedtak[], FnrFetchParams>(lagHentVedtakFetchInfo);
 	const arenaVedtakFetcher = useFetch<OrNothing<ArenaVedtak[]>, FnrFetchParams>(lagHentArenaVedtakFetchInfo);
-	const dialogerMeldingerFetcher = useFetch<DialogMelding[], FnrFetchParams>(lagHentDialogerFetchInfo);
+	const meldingFetcher = useFetch<Array<DialogMelding | SystemMelding>, FnrFetchParams>(lagHentMeldingerFetchInfo);
 
 	return {
 		oppfolgingDataFetcher, featuresFetcher,
 		malformFetcher, vedtakFetcher,
 		innloggetVeilederFetcher, arenaVedtakFetcher,
-		dialogerMeldingerFetcher
+		meldingFetcher
 	};
 });

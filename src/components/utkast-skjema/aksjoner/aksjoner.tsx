@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
-import { ReactComponent as TaOverIkon } from './locked.svg';
-import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { SkjemaData } from '../../../pages/utkast/utkast-side';
-import { fetchWithInfo } from '../../../rest/utils';
-import { ReactComponent as SlettIkon } from './delete.svg';
+import React, {useState} from 'react';
+import {Flatknapp, Hovedknapp, Knapp} from 'nav-frontend-knapper';
+import {Tilbakeknapp} from 'nav-frontend-ikonknapper';
+import {ReactComponent as TaOverIkon} from './locked.svg';
+import {ModalType, useModalStore} from '../../../stores/modal-store';
+import {SkjemaData} from '../../../pages/utkast/utkast-side';
+import {fetchWithInfo} from '../../../rest/utils';
+import {ReactComponent as SlettIkon} from './delete.svg';
 import {
 	lagBliBeslutterFetchInfo,
 	lagGodkjennVedtakFetchInfo,
@@ -13,19 +13,20 @@ import {
 	lagOppdaterVedtakUtkastFetchInfo,
 	lagStartBeslutterProsessFetchInfo
 } from '../../../rest/api';
-import { useViewStore, ViewType } from '../../../stores/view-store';
-import { useAppStore } from '../../../stores/app-store';
-import { useSkjemaStore } from '../../../stores/skjema-store';
-import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } from '../skjema-utils';
+import {useViewStore, ViewType} from '../../../stores/view-store';
+import {useAppStore} from '../../../stores/app-store';
+import {useSkjemaStore} from '../../../stores/skjema-store';
+import {harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter} from '../skjema-utils';
 import Show from '../../show';
-import { Element } from 'nav-frontend-typografi';
-import { useTilgangStore } from '../../../stores/tilgang-store';
-import { VeilederTilgang } from '../../../utils/tilgang';
-import { erKlarTilBeslutter, erKlarTilVeileder, finnUtkastAlltid } from '../../../utils';
-import { useDataStore } from '../../../stores/data-store';
+import {Element} from 'nav-frontend-typografi';
+import {useTilgangStore} from '../../../stores/tilgang-store';
+import {VeilederTilgang} from '../../../utils/tilgang';
+import {erKlarTilBeslutter, erKlarTilVeileder, finnUtkastAlltid} from '../../../utils';
+import {useDataStore} from '../../../stores/data-store';
 import './aksjoner.less';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
+import {BeslutterProsessStatus} from '../../../rest/data/vedtak';
+import {MeldingType, SystemMeldingType} from "../../../utils/types/melding-type";
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -42,7 +43,8 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const {
 		malform, vedtak, innloggetVeileder,
 		setUtkastBeslutterProsessStartet, setUtkastBeslutter,
-		setUtkastGodkjent, setBeslutterProsessStatus
+		setUtkastGodkjent, setBeslutterProsessStatus,
+		leggTilSystemMelding
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
@@ -93,7 +95,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		if (kanEndreUtkast) {
 			setLaster(true);
 			sendDataTilBackend()
-				.then(() => changeView(ViewType.HOVEDSIDE));
+				.then(() => {
+					changeView(ViewType.HOVEDSIDE);
+					leggTilSystemMelding(SystemMeldingType.UTKAST_OPPRETTET, innloggetVeileder.ident, innloggetVeileder.navn);
+				});
 		} else {
 			changeView(ViewType.HOVEDSIDE);
 		}
@@ -104,7 +109,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		sendDataTilBackend()
 			.then(() => {
 				fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
-					.then(() => setUtkastBeslutterProsessStartet())
+					.then(() => {
+						setUtkastBeslutterProsessStartet();
+						leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET, innloggetVeileder.ident, innloggetVeileder.navn);
+					})
 					.catch(() => showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS))
 					.finally(() => setLaster(false));
 			});
@@ -118,6 +126,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
 				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 				setVeilederTilgang(VeilederTilgang.BESLUTTER);
+				leggTilSystemMelding(SystemMeldingType.BLITT_BESLUTTER, innloggetVeileder.ident, innloggetVeileder.navn);
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
 			.finally(() => setLaster(false));

@@ -14,6 +14,7 @@ import { lagBliBeslutterFetchInfo, lagTaOverUtkastFetchInfo } from '../../../res
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
 import './ta-over-modal.less';
+import { SystemMeldingType } from '../../../utils/types/melding-type';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
@@ -40,7 +41,7 @@ function TaOverModal(props: ModalProps) {
 	const {fnr} = useAppStore();
 	const {hideModal, showModal} = useModalStore();
 	const {setVeilederTilgang} = useTilgangStore();
-	const {vedtak, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder} = useDataStore();
+	const {vedtak, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilSystemMelding} = useDataStore();
 
 	const [taOverFor, setTaOverFor] = useState<TaOverFor>();
 	const [vedtakOvertatt, setVedtakOvertatt] = useState(false);
@@ -72,8 +73,10 @@ function TaOverModal(props: ModalProps) {
 
 				if (tilgang === VeilederTilgang.ANSVARLIG_VEILEDER) {
 					setUtkastVeileder(ident, navn);
+					leggTilSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER, ident, navn);
 				} else {
 					setUtkastBeslutter(ident, navn);
+					leggTilSystemMelding(SystemMeldingType.TATT_OVER_SOM_BESLUTTER, ident, navn);
 				}
 
 				setVeilederTilgang(tilgang);

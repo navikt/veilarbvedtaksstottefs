@@ -5,23 +5,23 @@ import { useDataStore } from '../data-store';
 
 export const DataStoreSync = () => {
 	const {
-		setVedtak, setDialogMeldinger,
+		setVedtak, setMeldinger,
 		setInnloggetVeileder,
 		setArenaVedtak, setFeatures,
 		setMalform, setOppfolgingData
 	} = useDataStore();
 	const {
-		vedtakFetcher, dialogerMeldingerFetcher,
+		vedtakFetcher, meldingFetcher,
 		innloggetVeilederFetcher, malformFetcher,
 		arenaVedtakFetcher, oppfolgingDataFetcher, featuresFetcher
 	} = useDataFetcherStore();
 
 	useEffect(() => {
-		if (hasFinishedWithData(dialogerMeldingerFetcher)) {
-			setDialogMeldinger(dialogerMeldingerFetcher.data);
+		if (hasFinishedWithData(meldingFetcher)) {
+			setMeldinger(meldingFetcher.data);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dialogerMeldingerFetcher.status]);
+	}, [meldingFetcher.status]);
 
 	useEffect(() => {
 		if (hasFinishedWithData(vedtakFetcher)) {

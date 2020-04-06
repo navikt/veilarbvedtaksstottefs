@@ -85,7 +85,7 @@ export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo
 	body: JSON.stringify({ melding: params.melding })
 });
 
-export const lagHentDialogerFetchInfo = (params: FnrFetchParams): FetchInfo => ({
+export const lagHentMeldingerFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/dialog`
 });
 

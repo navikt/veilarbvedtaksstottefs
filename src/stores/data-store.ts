@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import createUseContext from 'constate';
-import { ArenaVedtak, BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
+import { ArenaVedtak, BeslutterProsessStatus, Vedtak} from '../rest/data/vedtak';
 import Oppfolging from '../rest/data/oppfolging-data';
 import { MalformData } from '../rest/data/malform';
 import { Features } from '../rest/data/features';
 import { Veileder } from '../rest/data/veiledere';
-import { DialogMelding } from '../rest/data/dialog-melding';
 import { finnUtkastAlltid } from '../utils';
+import { DialogMelding as DialogMeldingData, SystemMelding as SystemMeldingData } from '../rest/data/melding';
+import { MeldingType, SystemMeldingType } from '../utils/types/melding-type';
+import index from "@navikt/navspa";
 
 // Data med placeholder er garantert av datafetcher.ts at det er tilgjengelig i hele appen
 const placeholder = {} as any;
@@ -18,17 +20,31 @@ export const useDataStore = createUseContext(() => {
 	const [innloggetVeileder, setInnloggetVeileder] = useState<Veileder>(placeholder);
 	const [vedtak, setVedtak] = useState<Vedtak[]>([]);
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
-	const [dialogMeldinger, setDialogMeldinger] = useState<DialogMelding[]>([]);
+	const [meldinger, setMeldinger] = useState<Array<DialogMeldingData | SystemMeldingData>>([]);
 
-	function leggTilDialogMelding(melding: string, ident: string, navn: string) {
-		const dialogMelding: DialogMelding = {
-			melding,
+	function leggTilDialogMelding(dialogmelding: string, ident: string, navn: string) {
+
+		const dialogMeldingData: DialogMeldingData = {
+			melding: dialogmelding,
 			opprettet: new Date().toISOString(),
 			opprettetAvIdent: ident,
-			opprettetAvNavn: navn
+			opprettetAvNavn: navn,
+			type: MeldingType.DIALOG_MELDING
 		};
 
-		setDialogMeldinger((curMeldinger) => [...curMeldinger, dialogMelding])
+		setMeldinger((curMeldinger) => [...curMeldinger, dialogMeldingData]);
+	}
+
+	function leggTilSystemMelding(systemMeldingType: SystemMeldingType, utfortAvIdent: string, utfortAvNavn: string) {
+		const systemMeldingData : SystemMeldingData = {
+			opprettet: new Date().toISOString(),
+			systemMeldingType,
+			utfortAvIdent,
+			utfortAvNavn,
+			type: MeldingType.SYSTEM_MELDING
+		};
+
+		setMeldinger((curMeldinger) => [...curMeldinger, systemMeldingData])
 	}
 
 	function setUtkastBeslutterProsessStartet() {
@@ -65,8 +81,9 @@ export const useDataStore = createUseContext(() => {
 		innloggetVeileder, setInnloggetVeileder,
 		vedtak, setVedtak,
 		arenaVedtak, setArenaVedtak,
-		dialogMeldinger, setDialogMeldinger,
+		meldinger, setMeldinger,
 		leggTilDialogMelding,
+		leggTilSystemMelding,
 		setUtkastBeslutterProsessStartet,
 		setUtkastGodkjent,
 		setUtkastBeslutter,
