@@ -61,7 +61,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const visTaOverUtkast = erIkkeAnsvarligVeileder;
 	const visKlarTil =
 		(erAnsvarligVeileder && erKlarTilVeileder(utkast)) ||
-		(erBeslutter && (erKlarTilBeslutter(utkast) || !utkast.beslutterProsessStatus));
+		(erBeslutter && erKlarTilBeslutter(utkast));
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function sendDataTilBackend() {
@@ -125,6 +125,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 			.then(() => {
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
 				leggTilDialogMelding(null, innloggetVeileder.ident, innloggetVeileder.navn, MeldingType.SYSTEM, MeldingUnderType.BLI_BESLUTTER);
+				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 				setVeilederTilgang(VeilederTilgang.BESLUTTER);
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
