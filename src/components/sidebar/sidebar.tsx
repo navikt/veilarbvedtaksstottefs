@@ -1,65 +1,69 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import cls from 'classnames';
 import tipsIkon from './tips/tips.svg';
 import dialogIkon from './dialog/dialog.svg';
 import { Tips } from './tips/tips';
 import { Dialog } from './dialog/dialog';
-import './sidebar.less';
 import { Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import { finnUtkastAlltid } from '../../utils';
-
-enum TabName {
-	TIPS = 'TIPS',
-	DIALOG = 'DIALOG'
-}
+import { SidebarTab as SidebarTabType, useSidebarViewStore } from '../../stores/sidebar-view-store';
+import Show from '../show';
+import './sidebar.less';
 
 interface SidebarTab {
-	name: TabName;
+	type: SidebarTabType;
 	icon: string;
 	content: React.ReactChild;
 }
 
 const sidebarTabs: SidebarTab[] = [
 	{
-		name: TabName.TIPS,
+		type: SidebarTabType.TIPS,
 		icon: tipsIkon,
 		content: <Tips />
 	},
 	{
-		name: TabName.DIALOG,
+		type: SidebarTabType.DIALOG,
 		icon: dialogIkon,
 		content: <Dialog />
 	},
 ];
 
-function finnTab(tabName: string, tabs: SidebarTab[]): SidebarTab {
-	return tabs.find(t => t.name === tabName) as SidebarTab;
+function finnTab(viewType: SidebarTabType, tabs: SidebarTab[]): SidebarTab | undefined {
+	return tabs.find(t => t.type === viewType);
 }
 
-function finnDefaultTab(utkast: Vedtak): TabName {
+function finnDefaultTab(utkast: Vedtak): SidebarTabType {
 	return utkast.beslutterProsessStartet
-		? TabName.DIALOG
-		: TabName.TIPS;
+		? SidebarTabType.DIALOG
+		: SidebarTabType.TIPS;
 }
 
 function mapTabTilView(tab: SidebarTab, isSelected: boolean, onTabClicked: (tab: SidebarTab) => void) {
 	const classes = cls('sidebar__tab', { 'sidebar__tab--selected': isSelected});
 	return (
-		<button className={classes} onClick={() => onTabClicked(tab)} key={tab.name}>
-			<img className="sidebar__tab-ikon" src={tab.icon} alt={tab.name} />
+		<button className={classes} onClick={() => onTabClicked(tab)} key={tab.type}>
+			<img className="sidebar__tab-ikon" src={tab.icon} alt={tab.type} />
 		</button>
 	);
 }
 
 export const Sidebar = () => {
 	const { vedtak } = useDataStore();
+	const { selectedTab, setSelectedTab, isSidebarHidden, setIsSidebarHidden } = useSidebarViewStore();
 	const sidebarRef = useRef<HTMLDivElement>(null);
-	const [selectedTabName, setSelectedTabName] = useState(finnDefaultTab(finnUtkastAlltid(vedtak)));
-	const selectedTab = finnTab(selectedTabName, sidebarTabs);
+
+	const selectedTabData = finnTab(selectedTab, sidebarTabs);
 
 	function handleOnTabClicked(tab: SidebarTab) {
-		setSelectedTabName(tab.name);
+		if (isSidebarHidden) {
+			setIsSidebarHidden(false);
+		} else if (tab.type === selectedTab) {
+			setIsSidebarHidden(true);
+		}
+
+		setSelectedTab(tab.type);
 	}
 
 	// Dette burde egentlig debounces, men det ser grusomt ut selv med lavt delay
@@ -71,6 +75,11 @@ export const Sidebar = () => {
 			sidebar.style.height = window.innerHeight - rect.top + 'px';
 		}
 	}
+
+	useEffect(() => {
+		setSelectedTab(finnDefaultTab(finnUtkastAlltid(vedtak)));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		// Set initial height
@@ -91,12 +100,14 @@ export const Sidebar = () => {
     return (
     	<div className="sidebar__wrapper">
     	<div ref={sidebarRef} className="sidebar">
-		    <div className="sidebar__tabs">
-			    {sidebarTabs.map(tab => mapTabTilView(tab, tab.name === selectedTab.name, handleOnTabClicked))}
-		    </div>
-		    <div className="sidebar__content">
-		        {selectedTab.content}
-		    </div>
+		    <Show if={selectedTabData}>
+			    <div className="sidebar__tabs">
+				    {sidebarTabs.map(tab => mapTabTilView(tab, tab.type === (selectedTabData as SidebarTab).type, handleOnTabClicked))}
+			    </div>
+			    <div className="sidebar__content">
+				    {(selectedTabData as SidebarTab).content}
+			    </div>
+		    </Show>
 	    </div>
 	    </div>
     );
