@@ -3,10 +3,10 @@
     "main.css": "/veilarbvedtaksstottefs/static/css/main.css",
     "main.js": "/veilarbvedtaksstottefs/static/js/main.js",
     "main.js.map": "/veilarbvedtaksstottefs/static/js/main.js.map",
-    "pdfjsWorker.js": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.ce5b9710.chunk.js",
-    "pdfjsWorker.js.map": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.ce5b9710.chunk.js.map",
+    "pdfjsWorker.js": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.5d526035.chunk.js",
+    "pdfjsWorker.js.map": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.5d526035.chunk.js.map",
     "index.html": "/veilarbvedtaksstottefs/index.html",
-    "precache-manifest.451bf1a048cd20f121cccb3438f31c81.js": "/veilarbvedtaksstottefs/precache-manifest.451bf1a048cd20f121cccb3438f31c81.js",
+    "precache-manifest.f00a21ea7c6588dc03103b2a02cc3477.js": "/veilarbvedtaksstottefs/precache-manifest.f00a21ea7c6588dc03103b2a02cc3477.js",
     "service-worker.js": "/veilarbvedtaksstottefs/service-worker.js",
     "static/css/main.css.map": "/veilarbvedtaksstottefs/static/css/main.css.map",
     "static/media/advarsel-sirkel.60c7de9e.svg": "/veilarbvedtaksstottefs/static/media/advarsel-sirkel.60c7de9e.svg",
@@ -38,7 +38,6 @@
     "static/media/utkast.svg": "/veilarbvedtaksstottefs/static/media/utkast.febe5329.svg",
     "static/media/vedtak-sendt-brev.e9ec96ff.svg": "/veilarbvedtaksstottefs/static/media/vedtak-sendt-brev.e9ec96ff.svg",
     "static/media/vedtak-sendt-digital.b4201799.svg": "/veilarbvedtaksstottefs/static/media/vedtak-sendt-digital.b4201799.svg",
-    "static/media/vedtak.svg": "/veilarbvedtaksstottefs/static/media/vedtak.c2eba75d.svg",
-    "static/media/veileder.svg": "/veilarbvedtaksstottefs/static/media/veileder.cf671b5e.svg"
+    "static/media/vedtak.svg": "/veilarbvedtaksstottefs/static/media/vedtak.c2eba75d.svg"
   }
 }

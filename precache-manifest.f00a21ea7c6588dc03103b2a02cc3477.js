@@ -4,16 +4,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "6c8cd28215723b25355c",
+    "revision": "3b7f56b7dbb95b32ba7f",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "6c8cd28215723b25355c",
+    "revision": "3b7f56b7dbb95b32ba7f",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
-    "revision": "09cb726e996b2fae5d60",
-    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.ce5b9710.chunk.js"
+    "revision": "f5a7f3d28eae98bbb63f",
+    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.5d526035.chunk.js"
   },
   {
     "revision": "60c7de9e28dee1c6c239b50318b59bfe",
@@ -146,9 +146,5 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "c2eba75d45221bdc872ba9162459e00a",
     "url": "/veilarbvedtaksstottefs/static/media/vedtak.c2eba75d.svg"
-  },
-  {
-    "revision": "cf671b5e9feade3e8aeddcba9dc609cf",
-    "url": "/veilarbvedtaksstottefs/static/media/veileder.cf671b5e.svg"
   }
 ]);
