@@ -10,7 +10,7 @@ import './skrivefelt.less';
 
 export const Skrivefelt = () => {
 	const { fnr } = useAppStore();
-	const { leggTilDialogMelding, innloggetVeileder } = useDataStore();
+	const { leggTilDialogMelding } = useDataStore();
 	const { showModal } = useModalStore();
 	const [melding, setMelding] = useState('');
 	const [senderMelding, setSenderMelding] = useState(false);
@@ -21,8 +21,7 @@ export const Skrivefelt = () => {
 
 		fetchWithInfo(lagSendDialogFetchInfo({ fnr, melding }))
 			.then(() => {
-				const { ident, navn } = innloggetVeileder;
-				leggTilDialogMelding(melding, ident, navn);
+				leggTilDialogMelding(melding);
 				setMelding('');
 				setSenderMelding(false);
 			}).catch(() => {

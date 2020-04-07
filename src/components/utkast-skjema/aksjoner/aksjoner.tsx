@@ -23,10 +23,10 @@ import {useTilgangStore} from '../../../stores/tilgang-store';
 import {VeilederTilgang} from '../../../utils/tilgang';
 import {erKlarTilBeslutter, erKlarTilVeileder, finnUtkastAlltid} from '../../../utils';
 import {useDataStore} from '../../../stores/data-store';
-import './aksjoner.less';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import {BeslutterProsessStatus} from '../../../rest/data/vedtak';
-import {MeldingType, SystemMeldingType} from "../../../utils/types/melding-type";
+import {SystemMeldingType} from '../../../utils/types/melding-type';
+import './aksjoner.less';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -97,7 +97,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 			sendDataTilBackend()
 				.then(() => {
 					changeView(ViewType.HOVEDSIDE);
-					leggTilSystemMelding(SystemMeldingType.UTKAST_OPPRETTET, innloggetVeileder.ident, innloggetVeileder.navn);
+					leggTilSystemMelding(SystemMeldingType.UTKAST_OPPRETTET);
 				});
 		} else {
 			changeView(ViewType.HOVEDSIDE);
@@ -111,7 +111,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
 					.then(() => {
 						setUtkastBeslutterProsessStartet();
-						leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET, innloggetVeileder.ident, innloggetVeileder.navn);
+						leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
 					})
 					.catch(() => showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS))
 					.finally(() => setLaster(false));
@@ -126,7 +126,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
 				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 				setVeilederTilgang(VeilederTilgang.BESLUTTER);
-				leggTilSystemMelding(SystemMeldingType.BLITT_BESLUTTER, innloggetVeileder.ident, innloggetVeileder.navn);
+				leggTilSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
 			.finally(() => setLaster(false));

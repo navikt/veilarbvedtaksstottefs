@@ -8,6 +8,8 @@ import historisk from './api-data/vedtak/tidligere-vedtak';
 import { ansvarligVeileder, beslutter } from './personer';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
 import { VEILARBVEDTAKSSTOTTE_API } from '../rest/api';
+import { fjernAlleMockMeldinger, leggTilMockSystemMelding } from './meldinger-mock';
+import { SystemMeldingType } from '../utils/types/melding-type';
 
 let vedtak: Vedtak[] = [
 	utkast, ...historisk
@@ -44,6 +46,9 @@ export const mockLagUtkast: Mock = {
 
 		vedtak.push(nyttUtkast);
 
+		fjernAlleMockMeldinger();
+
+		leggTilMockSystemMelding(SystemMeldingType.UTKAST_OPPRETTET);
 
 		return { status: 204 };
 	}
@@ -109,6 +114,8 @@ export const mockOvertaUtkast: Mock = {
 		gjeldendeUtkast.oppfolgingsenhetNavn = ansvarligVeileder.enhetNavn;
 		gjeldendeUtkast.oppfolgingsenhetId = ansvarligVeileder.enhetId;
 
+		leggTilMockSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER);
+
 		return { status: 204 };
 	}
 };
@@ -123,6 +130,8 @@ export const mockKlarTilBeslutter: Mock = {
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å starte beslutterprosess på');
 
 		gjeldendeUtkast.beslutterProsessStartet = true;
+
+		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
 
 		return { status: 200 };
 	}
@@ -140,6 +149,8 @@ export const mockBliBeslutter: Mock = {
 		gjeldendeUtkast.beslutterIdent = innloggetVeileder.ident;
 		gjeldendeUtkast.beslutterIdent = innloggetVeileder.navn;
 
+		leggTilMockSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
+
 		return { status: 204 };
 	}
 };
@@ -152,7 +163,9 @@ export const mockGodkjennVedtak: Mock = {
 
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å godkjenne');
 
-		gjeldendeUtkast.godkjentAvBeslutter= true;
+		gjeldendeUtkast.godkjentAvBeslutter = true;
+
+		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
 
 		return { status: 204 };
 	}

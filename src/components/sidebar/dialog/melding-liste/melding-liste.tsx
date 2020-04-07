@@ -4,10 +4,10 @@ import {
 	DialogMelding as DialogMeldingData,
 	SystemMelding as SystemMeldingData
 } from '../../../../rest/data/melding';
-import './melding-liste.less';
 import { MeldingType } from '../../../../utils/types/melding-type';
 import { DialogMelding } from './dialog-melding/dialog-melding';
 import { SystemMelding } from './system-melding/system-melding';
+import './melding-liste.less';
 
 interface MeldingListeProps {
 	meldinger: Array<DialogMeldingData | SystemMeldingData>;
@@ -15,7 +15,7 @@ interface MeldingListeProps {
 	className?: string;
 }
 
-function mapMeldingTilDialogView(melding: DialogMeldingData, key: number, innloggetVeilederIdent: string) {
+function mapTilDialogMeldingView(melding: DialogMeldingData, key: number, innloggetVeilederIdent: string) {
 	const skrevetAvMeg = melding.opprettetAvIdent === innloggetVeilederIdent;
 
 	const wrapperClasses = {
@@ -35,12 +35,12 @@ function mapMeldingTilDialogView(melding: DialogMeldingData, key: number, innlog
 	);
 }
 
-function mapMeldingTilSystemView(melding: SystemMeldingData, key: number) {
-
+function mapTilSystemMeldingView(melding: SystemMeldingData, key: number) {
 	return (
-		<div className="melding-wrapper--system" key={key}>
-			<SystemMelding systemMeldingType={melding.systemMeldingType}
-						   utfortAvNavn={melding.utfortAvNavn}
+		<div className="melding-wrapper melding-wrapper--system" key={key}>
+			<SystemMelding
+				systemMeldingType={melding.systemMeldingType}
+				utfortAvNavn={melding.utfortAvNavn}
 			/>
 		</div>
 	);
@@ -59,9 +59,9 @@ export const MeldingListe = (props: MeldingListeProps) => {
     return (
     	<div ref={listeRef} className={cls('melding-liste', className)}>
 		    {meldinger.map((melding, idx) => {
-				melding.type === MeldingType.DIALOG_MELDING ?
-		    			mapMeldingTilDialogView(melding as DialogMeldingData, idx, innloggetVeilederIdent)
-					  : mapMeldingTilSystemView(melding as SystemMeldingData, idx);
+				return melding.type === MeldingType.DIALOG_MELDING
+					? mapTilDialogMeldingView(melding as DialogMeldingData, idx, innloggetVeilederIdent)
+					: mapTilSystemMeldingView(melding as SystemMeldingData, idx);
 			})}
 	    </div>
     );

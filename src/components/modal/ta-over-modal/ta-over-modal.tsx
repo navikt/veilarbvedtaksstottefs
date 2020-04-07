@@ -73,10 +73,10 @@ function TaOverModal(props: ModalProps) {
 
 				if (tilgang === VeilederTilgang.ANSVARLIG_VEILEDER) {
 					setUtkastVeileder(ident, navn);
-					leggTilSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER, ident, navn);
+					leggTilSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER);
 				} else {
 					setUtkastBeslutter(ident, navn);
-					leggTilSystemMelding(SystemMeldingType.TATT_OVER_SOM_BESLUTTER, ident, navn);
+					leggTilSystemMelding(SystemMeldingType.TATT_OVER_SOM_BESLUTTER);
 				}
 
 				setVeilederTilgang(tilgang);

@@ -80,13 +80,13 @@ export const lagSendVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 });
 
 export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/dialog`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/meldinger`,
 	method: 'POST',
 	body: JSON.stringify({ melding: params.melding })
 });
 
 export const lagHentMeldingerFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/dialog`
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/meldinger`
 });
 
 export const lagSlettUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({

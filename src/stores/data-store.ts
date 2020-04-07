@@ -8,7 +8,6 @@ import { Veileder } from '../rest/data/veiledere';
 import { finnUtkastAlltid } from '../utils';
 import { DialogMelding as DialogMeldingData, SystemMelding as SystemMeldingData } from '../rest/data/melding';
 import { MeldingType, SystemMeldingType } from '../utils/types/melding-type';
-import index from "@navikt/navspa";
 
 // Data med placeholder er garantert av datafetcher.ts at det er tilgjengelig i hele appen
 const placeholder = {} as any;
@@ -22,25 +21,24 @@ export const useDataStore = createUseContext(() => {
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
 	const [meldinger, setMeldinger] = useState<Array<DialogMeldingData | SystemMeldingData>>([]);
 
-	function leggTilDialogMelding(dialogmelding: string, ident: string, navn: string) {
-
+	function leggTilDialogMelding(melding: string) {
 		const dialogMeldingData: DialogMeldingData = {
-			melding: dialogmelding,
+			melding,
 			opprettet: new Date().toISOString(),
-			opprettetAvIdent: ident,
-			opprettetAvNavn: navn,
+			opprettetAvIdent: innloggetVeileder.ident,
+			opprettetAvNavn: innloggetVeileder.navn,
 			type: MeldingType.DIALOG_MELDING
 		};
 
 		setMeldinger((curMeldinger) => [...curMeldinger, dialogMeldingData]);
 	}
 
-	function leggTilSystemMelding(systemMeldingType: SystemMeldingType, utfortAvIdent: string, utfortAvNavn: string) {
+	function leggTilSystemMelding(systemMeldingType: SystemMeldingType) {
 		const systemMeldingData : SystemMeldingData = {
 			opprettet: new Date().toISOString(),
 			systemMeldingType,
-			utfortAvIdent,
-			utfortAvNavn,
+			utfortAvIdent: innloggetVeileder.ident,
+			utfortAvNavn: innloggetVeileder.navn,
 			type: MeldingType.SYSTEM_MELDING
 		};
 

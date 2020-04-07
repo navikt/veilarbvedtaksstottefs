@@ -18,7 +18,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
 	const { vedtakFetcher } = useDataFetcherStore();
-	const { oppfolgingData } = useDataStore();
+	const { oppfolgingData, setMeldinger } = useDataStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
 
@@ -29,6 +29,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 				vedtakFetcher.fetch({ fnr }, () => {
 					// Wrap in timeout so that data-store-sync.tsx can pick up the changes before the view is changed
 					setTimeout(() => {
+						setMeldinger([]); // Rydd opp hvis det ligger gamle meldinger mellomlagret
 						hideModal();
 						changeView(ViewType.UTKAST);
 						frontendlogger.logMetrikk('lag-nytt-vedtak');

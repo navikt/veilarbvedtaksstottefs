@@ -1,16 +1,32 @@
-import {Mock} from './mock-utils';
-import {HandlerArgument, ResponseData} from 'yet-another-fetch-mock';
-import {VEILARBVEDTAKSSTOTTE_API} from '../rest/api';
+import { Mock } from './mock-utils';
+import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
+import { VEILARBVEDTAKSSTOTTE_API } from '../rest/api';
 import meldinger from './api-data/meldinger';
-import {DialogMelding} from '../rest/data/melding';
-import {innloggetVeileder} from './api-data/innlogget-veileder';
-import {MeldingType} from "../utils/types/melding-type";
+import { DialogMelding, SystemMelding } from '../rest/data/melding';
+import { innloggetVeileder } from './api-data/innlogget-veileder';
+import { MeldingType, SystemMeldingType } from '../utils/types/melding-type';
 
-const mockMeldinger = meldinger;
+let mockMeldinger = [...meldinger];
+
+export const fjernAlleMockMeldinger = () => {
+	mockMeldinger = [];
+};
+
+export const leggTilMockSystemMelding = (systemMeldingType: SystemMeldingType) => {
+	const nyMelding: SystemMelding = {
+		opprettet: new Date().toISOString(),
+		systemMeldingType,
+		type: MeldingType.SYSTEM_MELDING,
+		utfortAvIdent: innloggetVeileder.ident,
+		utfortAvNavn: innloggetVeileder.navn
+	};
+
+	mockMeldinger.push(nyMelding);
+};
 
 export const mockHentDialoger: Mock = {
 	method: 'GET',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/dialog`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/meldinger`,
 	handler: async (): Promise<ResponseData> => {
 		return { status: 200, body: JSON.stringify(mockMeldinger) };
 	}
@@ -18,7 +34,7 @@ export const mockHentDialoger: Mock = {
 
 export const mockSendDialogMelding: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/dialog`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/meldinger`,
 	handler: async (args: HandlerArgument): Promise<ResponseData> => {
 		const sendDialogData = args.body as { melding: string };
 		const nyMelding: DialogMelding = {

@@ -1,10 +1,9 @@
-import { JSONArray } from 'yet-another-fetch-mock';
 import { innloggetVeileder } from './innlogget-veileder';
 import { beslutter } from '../personer';
 import { DialogMelding, SystemMelding } from '../../rest/data/melding';
 import { MeldingType, SystemMeldingType } from '../../utils/types/melding-type';
 
-const dialogMeldinger: DialogMelding[] & JSONArray = [
+const dialogMeldinger: DialogMelding[] = [
 	{
 		melding: 'Kan du sjekke om alt ser greit ut?',
 		opprettet: '2020-02-05T09:47:13.716393+02:00',
@@ -28,7 +27,7 @@ const dialogMeldinger: DialogMelding[] & JSONArray = [
 	}
 ];
 
-const systemMeldinger: SystemMelding[] & JSONArray = [
+const systemMeldinger: SystemMelding[] = [
 	{
 		systemMeldingType: SystemMeldingType.UTKAST_OPPRETTET,
 		opprettet: '2020-02-05T09:47:13.716393+02:00',
@@ -45,6 +44,6 @@ const systemMeldinger: SystemMelding[] & JSONArray = [
 	},
 ];
 
-const meldinger: Array<DialogMelding | SystemMelding> & JSONArray = [...dialogMeldinger, ...systemMeldinger];
+const meldinger = [...dialogMeldinger, ...systemMeldinger];
 
 export default meldinger;
