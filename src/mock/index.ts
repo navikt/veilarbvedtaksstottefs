@@ -17,7 +17,7 @@ import {
 	mockGodkjennVedtak, mockOppdaterBeslutterProsessStatus
 } from './vedtak-mock';
 import { addToFetchMock } from './mock-utils';
-import { mockHentDialoger, mockSendDialogMelding } from './dialoger-meldinger-mock';
+import { mockHentDialoger, mockSendDialogMelding } from './meldinger-mock';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
 
 const fetchMock = FetchMock.configure({

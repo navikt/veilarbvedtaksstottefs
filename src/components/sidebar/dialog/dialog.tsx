@@ -12,25 +12,25 @@ import Spinner from '../../spinner/spinner';
 
 export const Dialog = () => {
 	const { fnr } = useAppStore();
-	const { dialogerMeldingerFetcher } = useDataFetcherStore();
-	const { dialogMeldinger, innloggetVeileder } = useDataStore();
+	const { meldingFetcher } = useDataFetcherStore();
+	const { meldinger, innloggetVeileder } = useDataStore();
 
-	const sorterteDialoger = useMemo(() => {
-		return [...dialogMeldinger].sort((d1, d2) => sortDatesAsc(d1.opprettet, d2.opprettet));
-	}, [dialogMeldinger]);
+	const sorterteMeldinger = useMemo(() => {
+		return [...meldinger].sort((d1, d2) => sortDatesAsc(d1.opprettet, d2.opprettet));
+	}, [meldinger]);
 
 	useEffect(() => {
-		if (isNotStarted(dialogerMeldingerFetcher)) {
+		if (isNotStarted(meldingFetcher)) {
 			// Dette blir plukket opp av DialogMeldingerSync
-			dialogerMeldingerFetcher.fetch({ fnr });
+			meldingFetcher.fetch({ fnr });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dialogerMeldingerFetcher.status]);
+	}, [meldingFetcher.status]);
 
     return (
     	<div className="dialog">
-		    <MeldingListe meldinger={sorterteDialoger} innloggetVeilederIdent={innloggetVeileder.ident} />
-		    <Show if={dialogerMeldingerFetcher.status === FetchStatus.PENDING}>
+		    <MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
+		    <Show if={meldingFetcher.status === FetchStatus.PENDING}>
 				<Spinner />
 		    </Show>
 		    <Skrivefelt />

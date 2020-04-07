@@ -23,9 +23,11 @@ import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
 import { erKlarTilBeslutter, erKlarTilVeileder, finnUtkastAlltid } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
-import './aksjoner.less';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
+import { SystemMeldingType } from '../../../utils/types/melding-type';
+import './aksjoner.less';
+import { SidebarTab, useSidebarViewStore } from '../../../stores/sidebar-view-store';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -42,11 +44,13 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const {
 		malform, vedtak, innloggetVeileder,
 		setUtkastBeslutterProsessStartet, setUtkastBeslutter,
-		setUtkastGodkjent, setBeslutterProsessStatus
+		setUtkastGodkjent, setBeslutterProsessStatus,
+		leggTilSystemMelding
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
 	const {validerSkjema, innsatsgruppe} = useSkjemaStore();
+	const {setSelectedTab} = useSidebarViewStore();
 
 	const [laster, setLaster] = useState(false);
 
@@ -61,6 +65,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		(erAnsvarligVeileder && erKlarTilVeileder(utkast)) ||
 		(erBeslutter && erKlarTilBeslutter(utkast));
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
+
+	function fokuserPaDialogSidebarTab() {
+		setSelectedTab(SidebarTab.DIALOG);
+	}
 
 	function sendDataTilBackend() {
 		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform)};
@@ -104,7 +112,11 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		sendDataTilBackend()
 			.then(() => {
 				fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
-					.then(() => setUtkastBeslutterProsessStartet())
+					.then(() => {
+						fokuserPaDialogSidebarTab();
+						setUtkastBeslutterProsessStartet();
+						leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
+					})
 					.catch(() => showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS))
 					.finally(() => setLaster(false));
 			});
@@ -115,9 +127,11 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 		fetchWithInfo(lagBliBeslutterFetchInfo({fnr}))
 			.then(() => {
+				fokuserPaDialogSidebarTab();
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
 				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 				setVeilederTilgang(VeilederTilgang.BESLUTTER);
+				leggTilSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
 			.finally(() => setLaster(false));
@@ -141,7 +155,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	function handleOnGodkjennClicked() {
 		setLaster(true);
 		fetchWithInfo(lagGodkjennVedtakFetchInfo({fnr}))
-			.then(() => setUtkastGodkjent())
+			.then(() => {
+				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
+				setUtkastGodkjent();
+			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
 			.finally(() => setLaster(false));
 	}
