@@ -30,14 +30,14 @@ const dialogMeldinger: DialogMelding[] = [
 const systemMeldinger: SystemMelding[] = [
 	{
 		systemMeldingType: SystemMeldingType.UTKAST_OPPRETTET,
-		opprettet: '2020-02-05T09:47:13.716393+02:00',
+		opprettet: '2020-02-05T09:47:01.716393+02:00',
 		utfortAvIdent:  innloggetVeileder.ident,
 		utfortAvNavn: innloggetVeileder.navn,
 		type: MeldingType.SYSTEM_MELDING
 	},
 	{
 		systemMeldingType: SystemMeldingType.BLITT_BESLUTTER,
-		opprettet: '2020-02-07T09:47:13.716393+02:00',
+		opprettet: '2020-02-06T12:36:37.716393+02:00',
 		utfortAvIdent: beslutter.ident,
 		utfortAvNavn: beslutter.navn,
 		type: MeldingType.SYSTEM_MELDING

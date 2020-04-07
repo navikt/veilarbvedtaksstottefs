@@ -1,41 +1,39 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import './system-melding.less';
 import { SystemMeldingType } from '../../../../../utils/types/melding-type';
+import './system-melding.less';
 
 interface SystemMeldingProps {
 	systemMeldingType: SystemMeldingType;
 	utfortAvNavn: string;
 }
 
-export const SystemMelding = (props: SystemMeldingProps) => {
-	const utfortAvNavn = props.utfortAvNavn as string;
-
-	function lagSystemMelding() {
-
-		      switch (props.systemMeldingType) {
-		     	   case SystemMeldingType.BESLUTTER_PROSESS_STARTET :
-		     	   		return 'Utkast klar for beslutter';
-		     	   case SystemMeldingType.BLITT_BESLUTTER :
-		     	   		return `${utfortAvNavn} er beslutter`;
-		     	   case SystemMeldingType.TATT_OVER_SOM_BESLUTTER :
-		     	   		return `${utfortAvNavn} er ny beslutter`;
-		     	   case SystemMeldingType.TATT_OVER_SOM_VEILEDER :
-		     	   		return `${utfortAvNavn} er ny ansvarlig veileder`;
-		     	   case SystemMeldingType.BESLUTTER_HAR_GODKJENT :
-		     	   		return `Kvalifisert av ${utfortAvNavn}`;
-		     	   case SystemMeldingType.UTKAST_OPPRETTET :
-		     	   		return  `${utfortAvNavn} opprettet utkast`;
-		     	   default :
-		     	   		return '';
-			 }
+function lagSystemMelding(type: SystemMeldingType, utfortAvNavn: string) {
+	switch (type) {
+		case SystemMeldingType.BESLUTTER_PROSESS_STARTET :
+			return 'Beslutterprosess startet';
+		case SystemMeldingType.BLITT_BESLUTTER :
+			return <span><strong>{utfortAvNavn}</strong> er beslutter</span>;
+		case SystemMeldingType.TATT_OVER_SOM_BESLUTTER :
+			return <span><strong>{utfortAvNavn}</strong> er ny beslutter</span>;
+		case SystemMeldingType.TATT_OVER_SOM_VEILEDER :
+			return <span><strong>{utfortAvNavn}</strong> er ny ansvarlig veileder</span>;
+		case SystemMeldingType.BESLUTTER_HAR_GODKJENT :
+			return <span>Kvalitetsikret av <strong>{utfortAvNavn}</strong></span>;
+		case SystemMeldingType.UTKAST_OPPRETTET :
+			return <span><strong>{utfortAvNavn}</strong> opprettet utkast</span>;
+		default :
+			return null;
 	}
+}
 
-    return (
-    	<div className="system-melding">
-		    <span className="system-melding__seperator" />
-		    <Normaltekst className="system-melding__tekst">{lagSystemMelding()}</Normaltekst>
-		    <span className="system-melding__seperator" />
-	    </div>
-    );
+export const SystemMelding = (props: SystemMeldingProps) => {
+	const { systemMeldingType, utfortAvNavn } = props;
+	return (
+		<div className="system-melding">
+			<span className="system-melding__seperator"/>
+			<Normaltekst className="system-melding__tekst">{lagSystemMelding(systemMeldingType, utfortAvNavn)}</Normaltekst>
+			<span className="system-melding__seperator"/>
+		</div>
+	);
 };
