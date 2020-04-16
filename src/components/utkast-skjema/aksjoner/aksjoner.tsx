@@ -63,7 +63,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const visTaOverUtkast = erIkkeAnsvarligVeileder;
 	const visKlarTil =
 		(erAnsvarligVeileder && erKlarTilVeileder(utkast)) ||
-		(erBeslutter && erKlarTilBeslutter(utkast));
+		(erBeslutter && erKlarTilBeslutter(utkast) && !godkjentAvBeslutter);
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function fokuserPaDialogSidebarTab() {
