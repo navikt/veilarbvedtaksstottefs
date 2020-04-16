@@ -1,5 +1,5 @@
 import React from 'react';
-import { Vedtak } from '../../../rest/data/vedtak';
+import { BeslutterProsessStatus, Vedtak } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
@@ -12,6 +12,7 @@ import { Beslutter } from '../beslutter';
 import Show from '../../show';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import './utkast-panel.less';
+import { isNothing } from '../../../utils';
 
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { changeView } = useViewStore();
@@ -23,13 +24,29 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 
 	const {
 		sistOppdatert, veilederIdent, veilederNavn,
-		oppfolgingsenhetId, oppfolgingsenhetNavn, beslutterNavn
+		oppfolgingsenhetId, oppfolgingsenhetNavn, beslutterNavn,
+		beslutterProsessStartet, beslutterProsessStatus, godkjentAvBeslutter
 	} = props.utkast;
+
+	const lagUtkastUnderTittle = ()=> {
+
+		if (godkjentAvBeslutter) {
+			return 'Klar for utsendelse';
+		} else if (beslutterProsessStartet && isNothing(beslutterNavn)) {
+			return 'Utkast trenger beslutter';
+		} else if (beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_BESLUTTER) {
+			return 'Trenger tilbakemelding fra beslutter';
+		} else if (beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_VEILEDER) {
+			return 'Trenger respons fra veileder';
+		} else {
+			return 'Utkast';
+		}
+	};
 
 	return (
 		<VedtaksstottePanel
 			tittel="Utkast til oppfølgingsvedtak"
-			undertittel="Utkast"
+			undertittel={lagUtkastUnderTittle()}
 			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
 			panelKlasse="utkast-panel"
 			knappKomponent={<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>{ kanEndreUtkast ? 'Fortsett' : 'Åpne' }</Hovedknapp>}
