@@ -1,0 +1,52 @@
+.devToggleStatus {
+  position: absolute;
+  top: 0;
+  z-index: 100000;
+  margin-top: 50px;
+  margin-left: 1rem;
+  right: -530px;
+  background-color: white;
+
+  .apne-lukk-knapp {
+    .apne {
+      cursor: pointer;
+      position: absolute;
+      right: 516px;
+      padding: 0.6rem 1rem;
+      width: 128px;
+      color: white;
+      background-color: #FF9800;
+      border-radius: 30px;
+    }
+    .lukknapp {
+      position: absolute;
+      right: 0;
+      top: -37px;
+    }
+  }
+
+  &.skjul{
+    right: -530px;
+  }
+
+  &.vis{
+    right: 0;
+    .apne-lukk-knapp {
+      .apne {
+        display: none;
+      }
+    }
+  }
+
+  legend {
+    padding: 0.5rem 2rem;
+  }
+  fieldset {
+    border: 10px solid cadetblue;
+    background-color: white;
+  }
+
+  label {
+    margin-bottom: 0.5rem;
+  }
+}
