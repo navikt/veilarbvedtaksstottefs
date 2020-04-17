@@ -1,6 +1,7 @@
 import { HovedmalType, InnsatsgruppeType, Vedtak} from '../../../rest/data/vedtak';
 import { JSONArray } from 'yet-another-fetch-mock';
 import { ansvarligVeileder, beslutter } from '../../personer';
+import { enhetId, enhetNavn } from '../../konstanter';
 
 const historisk: Vedtak[] & JSONArray = [
 	{
@@ -22,8 +23,8 @@ const historisk: Vedtak[] & JSONArray = [
 		gjeldende: false,
 		veilederNavn: ansvarligVeileder.navn,
 		veilederIdent: ansvarligVeileder.ident,
-		oppfolgingsenhetId: ansvarligVeileder.enhetId,
-		oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
+		oppfolgingsenhetId: enhetId,
+		oppfolgingsenhetNavn: enhetNavn,
 		dokumentInfoId: null,
 		journalpostId: '123456',
 		beslutterIdent: null,
@@ -50,8 +51,8 @@ const historisk: Vedtak[] & JSONArray = [
 		gjeldende: false,
 		veilederNavn: ansvarligVeileder.navn,
 		veilederIdent: ansvarligVeileder.ident,
-		oppfolgingsenhetId: ansvarligVeileder.enhetId,
-		oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
+		oppfolgingsenhetId: enhetId,
+		oppfolgingsenhetNavn: enhetNavn,
 		dokumentInfoId: '98765',
 		journalpostId: '5678',
 		beslutterIdent: beslutter.ident,
