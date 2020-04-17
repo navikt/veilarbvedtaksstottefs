@@ -13,25 +13,14 @@ export function MockPanel() {
 
     const [skalVise, setSkalVise] = useState(false);
     const visSkjul = skalVise ? 'vis' : 'skjul';
+    const toggle = () => setSkalVise(!skalVise);
 
     return (
-        <div className={`devToggleStatus ${visSkjul}`}>
-            <div
-                className="apne-lukk-knapp"
-                onClick={() => {
-                    setSkalVise(!skalVise)
-                }}
-            >
-                <div>
-                    <Normaltekst className="apne">
-                        Vis valg
-                    </Normaltekst>
-                </div>
-                <Lukknapp>
-                    Lukk
-                </Lukknapp>
-            </div>
-
+        <div className={`mock-panel ${visSkjul}`}>
+            <button className="apne-lukk-knapp" onClick={toggle}>
+                <Normaltekst className="apne">Vis valg</Normaltekst>
+            </button>
+            <Lukknapp onClick={toggle}/>
             <fieldset>
                 <legend>
                     <Normaltekst>
@@ -41,7 +30,7 @@ export function MockPanel() {
                 {Object.keys(VeilederTilgang).map((x, idx) =>
                     <RadioPanel
                         onChange={() => {
-                            setVeilederTilgang(VeilederTilgang[x as keyof typeof VeilederTilgang])
+                            setVeilederTilgang(VeilederTilgang[x as keyof typeof VeilederTilgang]);
                         }}
                         key={idx}
                         name={x}
@@ -52,5 +41,5 @@ export function MockPanel() {
                 )}
             </fieldset>
         </div>
-    )
+    );
 }
