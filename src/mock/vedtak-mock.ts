@@ -10,6 +10,7 @@ import { innloggetVeileder } from './api-data/innlogget-veileder';
 import { VEILARBVEDTAKSSTOTTE_API } from '../rest/api';
 import { fjernAlleMockMeldinger, leggTilMockSystemMelding } from './meldinger-mock';
 import { SystemMeldingType } from '../utils/types/melding-type';
+import { enhetId, enhetNavn } from './konstanter';
 
 let vedtak: Vedtak[] = [
 	utkast, ...historisk
@@ -35,8 +36,8 @@ export const mockLagUtkast: Mock = {
 			opplysninger: [],
 			veilederNavn: ansvarligVeileder.navn,
 			veilederIdent: ansvarligVeileder.ident,
-			oppfolgingsenhetId: ansvarligVeileder.enhetId,
-			oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
+			oppfolgingsenhetId: enhetId,
+			oppfolgingsenhetNavn: enhetNavn,
 			beslutterNavn: null,
 			dokumentInfoId: null,
 			journalpostId: null,
@@ -111,8 +112,8 @@ export const mockOvertaUtkast: Mock = {
 
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
 
-		gjeldendeUtkast.oppfolgingsenhetNavn = ansvarligVeileder.enhetNavn;
-		gjeldendeUtkast.oppfolgingsenhetId = ansvarligVeileder.enhetId;
+		gjeldendeUtkast.oppfolgingsenhetNavn = enhetNavn;
+		gjeldendeUtkast.oppfolgingsenhetId = enhetId;
 
 		leggTilMockSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER);
 

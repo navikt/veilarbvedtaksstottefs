@@ -1,6 +1,7 @@
 import { BeslutterProsessStatus, HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
 import { ansvarligVeileder, beslutter } from '../../personer';
+import { enhetId, enhetNavn } from '../../konstanter';
 
 const utkast: Vedtak & JSONObject = {
 	id: 100,
@@ -12,8 +13,8 @@ const utkast: Vedtak & JSONObject = {
 	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
 	veilederNavn: ansvarligVeileder.navn,
 	veilederIdent: ansvarligVeileder.ident,
-	oppfolgingsenhetId: ansvarligVeileder.enhetId,
-	oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
+	oppfolgingsenhetId: enhetId,
+	oppfolgingsenhetNavn: enhetNavn,
 	begrunnelse: 'Trenger ikke hjelp',
 	dokumentInfoId: null,
 	journalpostId: null,
@@ -35,8 +36,8 @@ const utkastMedBeslutter: Vedtak & JSONObject = {
 	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
 	veilederNavn: ansvarligVeileder.navn,
 	veilederIdent: ansvarligVeileder.ident,
-	oppfolgingsenhetId: ansvarligVeileder.enhetId,
-	oppfolgingsenhetNavn: ansvarligVeileder.enhetNavn,
+	oppfolgingsenhetId: enhetId,
+	oppfolgingsenhetNavn: enhetNavn,
 	begrunnelse: 'Trenger ikke hjelp',
 	dokumentInfoId: null,
 	journalpostId: null,
