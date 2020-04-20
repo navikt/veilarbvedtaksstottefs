@@ -1,44 +1,47 @@
-.mock-panel {
-  position: absolute;
-  top: 0;
-  z-index: 100;
-  margin-top: 50px;
-  background-color: white;
-
-  .apne-lukk-knapp {
-    .apne {
-      cursor: pointer;
-      position: absolute;
-      right: 516px;
-      padding: 0.6rem 1rem;
-      width: 100px;
-      color: white;
-      background-color: #FF9800;
-      border-radius: 30px;
-    }
-  }
-
-  &.skjul {
-    right: -530px;
-  }
-
-  &.vis {
-    right: 0;
-    .apne-lukk-knapp {
-        display: none;
-    }
-  }
-
-  legend {
-    padding: 0.5rem 2rem;
-  }
-
-  fieldset {
-    border: 10px solid cadetblue;
+.veilarbvedtaksstottefs {
+  .mock-panel {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    margin-top: 50px;
     background-color: white;
-  }
 
-  label {
-    margin-bottom: 0.5rem;
+    .apne-lukk-knapp {
+      p {
+        cursor: pointer;
+        position: absolute;
+        right: 516px;
+        padding: 0.6rem 1rem;
+        width: 100px;
+        color: white;
+        background-color: #FF9800;
+        border-radius: 30px;
+      }
+    }
+
+    &--skjul {
+      right: -530px;
+    }
+
+    &--vis {
+      right: 0;
+
+      .apne-lukk-knapp {
+        display: none;
+      }
+    }
+
+    legend {
+      padding: 0.5rem 2rem;
+    }
+
+    fieldset {
+      border: 10px solid cadetblue;
+      background-color: white;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+    }
   }
 }

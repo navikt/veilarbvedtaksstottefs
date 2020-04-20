@@ -15,9 +15,9 @@ export function MockPanel() {
     const toggle = () => setSkalVise(!skalVise);
 
     return (
-        <div className={`mock-panel ${visSkjul}`}>
+        <div className={`mock-panel mock-panel--${visSkjul}`}>
             <button className="apne-lukk-knapp" onClick={toggle}>
-                <Normaltekst className="apne">Vis valg</Normaltekst>
+                <Normaltekst>Vis valg</Normaltekst>
             </button>
             <Lukknapp onClick={toggle}/>
             <InnloggetSom/>
