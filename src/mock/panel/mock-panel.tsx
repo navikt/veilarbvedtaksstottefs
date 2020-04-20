@@ -52,16 +52,16 @@ function InnloggetSom() {
                 Innlogget som
             </Normaltekst>
         </legend>
-        {Object.keys(VeilederTilgang).map((x, idx) =>
+        {Object.keys(VeilederTilgang).map((tilgang, idx) =>
             <RadioPanel
                 onChange={() => {
-                    change(VeilederTilgang[x as keyof typeof VeilederTilgang]);
+                    change(tilgang as VeilederTilgang);
                 }}
                 key={idx}
-                name={x}
-                label={x}
-                value={x}
-                checked={x === veilederTilgang}
+                name={tilgang}
+                label={tilgang}
+                value={tilgang}
+                checked={tilgang === veilederTilgang}
             />
         )}
     </fieldset>);
