@@ -7,7 +7,6 @@ import { VeilederTilgang } from '../../utils/tilgang';
 import { useTilgangStore } from '../../stores/tilgang-store';
 import { useDataStore } from '../../stores/data-store';
 import { ansvarligVeileder, beslutter, ikkeAnsvarligVeileder } from '../personer';
-import { MalformType } from '../../rest/data/malform';
 
 export function MockPanel() {
 
@@ -22,7 +21,6 @@ export function MockPanel() {
             </button>
             <Lukknapp onClick={toggle}/>
             <InnloggetSom/>
-            <Malform/>
         </div>
     );
 }
@@ -67,29 +65,4 @@ function InnloggetSom() {
             />
         )}
     </fieldset>);
-}
-
-function Malform() {
-    const {malform, setMalform} = useDataStore();
-
-    return (
-        <fieldset>
-            <legend>
-                <Normaltekst>
-                    Målform
-                </Normaltekst>
-            </legend>
-            {Object.keys(MalformType).map((x, idx) =>
-                <RadioPanel
-                    onChange={() => {
-                        setMalform({malform: MalformType[x as keyof typeof MalformType]});
-                    }}
-                    key={idx}
-                    name={x}
-                    label={x}
-                    value={x}
-                    checked={x === malform.malform}
-                />
-            )}
-        </fieldset>);
 }
