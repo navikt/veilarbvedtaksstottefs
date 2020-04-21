@@ -21,18 +21,6 @@ export const useDataStore = createUseContext(() => {
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
 	const [meldinger, setMeldinger] = useState<Array<DialogMeldingData | SystemMeldingData>>([]);
 
-	function leggTilDialogMelding(melding: string) {
-		const dialogMeldingData: DialogMeldingData = {
-			melding,
-			opprettet: new Date().toISOString(),
-			opprettetAvIdent: innloggetVeileder.ident,
-			opprettetAvNavn: innloggetVeileder.navn,
-			type: MeldingType.DIALOG_MELDING
-		};
-
-		setMeldinger((curMeldinger) => [...curMeldinger, dialogMeldingData]);
-	}
-
 	function leggTilSystemMelding(systemMeldingType: SystemMeldingType) {
 		const systemMeldingData : SystemMeldingData = {
 			opprettet: new Date().toISOString(),
@@ -80,7 +68,6 @@ export const useDataStore = createUseContext(() => {
 		vedtak, setVedtak,
 		arenaVedtak, setArenaVedtak,
 		meldinger, setMeldinger,
-		leggTilDialogMelding,
 		leggTilSystemMelding,
 		setUtkastBeslutterProsessStartet,
 		setUtkastGodkjent,
