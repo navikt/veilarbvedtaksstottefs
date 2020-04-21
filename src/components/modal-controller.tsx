@@ -5,16 +5,20 @@ import {
 	FeilModalConfig,
 	feilVedBliBeslutterConfig,
 	feilVedForhandsvisnigConfig,
-	feilVedLagringConfig, feilVedOppdaterBeslutterProsessStatus,
+	feilVedGodkjenningAvBeslutter,
+	feilVedLagringConfig,
+	feilVedOppdaterBeslutterProsessStatus,
 	feilVedOpprettingAvUtkast,
 	feilVedOvertakelseAvUtkastConfig,
 	feilVedSendningConfig,
-	feilVedSlettingAvUtkastConfig, feilVedStartBeslutterProsessConfig, feilVedUtsendingAvDialogMelding,
+	feilVedSlettingAvUtkastConfig,
+	feilVedStartBeslutterProsessConfig,
+	feilVedUtsendingAvDialogMelding,
 	feilVedVisningConfig,
 	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
-import { VedtakSendtModal  } from './modal/vedtak-sendt/vedtak-sendt-modal';
+import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverModal from './modal/ta-over-modal/ta-over-modal';
 
@@ -44,6 +48,8 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedUtsendingAvDialogMelding;
 		case ModalType.FEIL_VED_OPPDATER_BESLUTTER_PROSESS_STATUS:
 			return feilVedOppdaterBeslutterProsessStatus;
+		case ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER:
+			return feilVedGodkjenningAvBeslutter;
 		default:
 			return null;
 	}

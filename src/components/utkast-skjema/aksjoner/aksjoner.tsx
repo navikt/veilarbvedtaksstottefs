@@ -159,7 +159,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
 				setUtkastGodkjent();
 			})
-			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
+			.catch(() => showModal(ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER))
 			.finally(() => setLaster(false));
 	}
 

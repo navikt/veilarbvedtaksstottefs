@@ -75,3 +75,8 @@ export const feilVedOppdaterBeslutterProsessStatus: FeilModalConfig = {
 	tittel: 'Klarte ikke å oppdatere status',
 	beskrivelse: 'En feil oppstod under oppdatering av status. Vennligst prøv igjen senere.'
 };
+
+export const feilVedGodkjenningAvBeslutter: FeilModalConfig = {
+	tittel: 'Klarte ikke å godkjenne vedtaket',
+	beskrivelse: 'En feil oppstod under godkjenning av vedtaket. Vennligst prøv igjen senere.'
+};
