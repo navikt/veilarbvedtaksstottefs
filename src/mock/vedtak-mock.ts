@@ -11,10 +11,14 @@ import { VEILARBVEDTAKSSTOTTE_API } from '../rest/api';
 import { fjernAlleMockMeldinger, leggTilMockSystemMelding } from './meldinger-mock';
 import { SystemMeldingType } from '../utils/types/melding-type';
 import { enhetId, enhetNavn } from './konstanter';
+import env from '../utils/environment';
 
-let vedtak: Vedtak[] = [
-	utkast, ...historisk
-];
+let vedtak: Vedtak[];
+if(env.isRunningOnGhPages) {
+	vedtak = historisk;
+} else {
+	vedtak = [utkast, ...historisk];
+}
 
 export const mockHentVedtak: Mock = {
 	method: 'GET',
