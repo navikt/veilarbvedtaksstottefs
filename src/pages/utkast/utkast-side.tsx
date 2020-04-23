@@ -33,7 +33,7 @@ export function UtkastSide() {
 	const { isSidebarHidden } = useSidebarViewStore();
 	const { showModal } = useModalStore();
 	const {
-		opplysninger, hovedmal, innsatsgruppe, begrunnelse,
+		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert,
 		setSistOppdatert, validerSkjema, validerBegrunnelseLengde
 	} = useSkjemaStore();
 
@@ -80,7 +80,7 @@ export function UtkastSide() {
 
 	return (
 		<div className="utkast-side">
-			<SkjemaHeader utkast={finnUtkastAlltid(vedtak)} />
+			<SkjemaHeader utkast={finnUtkastAlltid(vedtak)} sistOppdatert={sistOppdatert} />
 			<div className={innholdClassNames}>
 				<div>
 					<UtkastSkjema />

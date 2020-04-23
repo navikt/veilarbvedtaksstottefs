@@ -8,13 +8,13 @@ import './skjema-header.less';
 
 interface SkjemaHeaderProps {
 	utkast: Vedtak;
+	sistOppdatert?: string;
 }
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
 	const {
 		veilederIdent, oppfolgingsenhetId,
-		oppfolgingsenhetNavn, veilederNavn,
-		sistOppdatert
+		oppfolgingsenhetNavn, veilederNavn
 	} = props.utkast;
 
 	return (
@@ -33,7 +33,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 					<div className="seperator"/>
 					<Dato
 						className="skjema-header__dato"
-						sistOppdatert={sistOppdatert}
+						sistOppdatert={props.sistOppdatert || props.utkast.sistOppdatert}
 						formatType="long"
 						text="Sist endret"
 					/>

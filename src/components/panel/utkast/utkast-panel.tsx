@@ -13,17 +13,19 @@ import Show from '../../show';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import './utkast-panel.less';
 import { isNothing } from '../../../utils';
+import { useSkjemaStore } from '../../../stores/skjema-store';
 
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { changeView } = useViewStore();
 	const { kanEndreUtkast } = useTilgangStore();
+	const { sistOppdatert } = useSkjemaStore();
 
 	if (!props.utkast) {
 		return null;
 	}
 
 	const {
-		sistOppdatert, veilederIdent, veilederNavn,
+		veilederIdent, veilederNavn,
 		oppfolgingsenhetId, oppfolgingsenhetNavn, beslutterNavn,
 		beslutterProsessStartet, beslutterProsessStatus, godkjentAvBeslutter
 	} = props.utkast;
@@ -55,7 +57,7 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 					<Show if={beslutterNavn}>
 						<Beslutter className="utkast-panel__beslutter" beslutterNavn={beslutterNavn as string}/>
 					</Show>
-					<Dato className="utkast-panel__dato" sistOppdatert={sistOppdatert} formatType="long" text="Sist endret" />
+					<Dato className="utkast-panel__dato" sistOppdatert={sistOppdatert || props.utkast.sistOppdatert} formatType="long" text="Sist endret" />
 					<Veileder
 						enhetId={oppfolgingsenhetId}
 						veilederNavn={veilederNavn || veilederIdent}
