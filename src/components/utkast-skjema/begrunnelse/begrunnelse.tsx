@@ -25,7 +25,11 @@ function Begrunnelse() {
 				{ tegn: charDiff, innsatsgruppe: innsatsgruppe || '' });
 		}
 
-		setBegrunnelse(newText);
+		if (newText.length <= BEGRUNNELSE_MAX_LENGTH) {
+			setBegrunnelse(newText);
+		} else {
+			setBegrunnelse(newText.substring(0, BEGRUNNELSE_MAX_LENGTH));
+		}
 	}
 
 	useEffect(() => {
