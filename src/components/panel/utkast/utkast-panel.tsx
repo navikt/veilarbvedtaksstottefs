@@ -14,6 +14,7 @@ import { useTilgangStore } from '../../../stores/tilgang-store';
 import './utkast-panel.less';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import {
+	erBeslutterProsessStartet,
 	erGodkjentAvBeslutter,
 	erKlarTilBeslutter,
 	erKlarTilVeileder,
@@ -40,7 +41,7 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 
 		if (erGodkjentAvBeslutter(beslutterProsessStatus)) {
 			return 'Klar for utsendelse';
-		} else if (erKlarTilBeslutter(beslutterProsessStatus) && isNothing(beslutterNavn)) {
+		} else if (erBeslutterProsessStartet(beslutterProsessStatus) && isNothing(beslutterNavn)) {
 			return 'Utkast trenger beslutter';
 		} else if (erKlarTilBeslutter(beslutterProsessStatus)) {
 			return 'Trenger tilbakemelding fra beslutter';

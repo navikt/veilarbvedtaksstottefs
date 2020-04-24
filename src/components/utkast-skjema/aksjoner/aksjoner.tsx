@@ -21,11 +21,14 @@ import Show from '../../show';
 import { Element } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
-import { erKlarTilBeslutter,
-	     erKlarTilVeileder,
-		 finnUtkastAlltid,
-		 isNothing,
-		 erGodkjentAvBeslutter } from '../../../utils';
+import {
+	erKlarTilBeslutter,
+	erKlarTilVeileder,
+	finnUtkastAlltid,
+	isNothing,
+	erGodkjentAvBeslutter,
+	erBeslutterProsessStartet
+} from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
@@ -61,7 +64,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const beslutterProsessStatus = utkast.beslutterProsessStatus;
 	const godkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
 	const visGodkjentAvBeslutter = erBeslutter && godkjentAvBeslutter;
-	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(utkast.beslutterNavn) && !erKlarTilBeslutter(beslutterProsessStatus);
+	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(utkast.beslutterNavn) && !erBeslutterProsessStartet(beslutterProsessStatus);
 	const visBliBeslutter = erIkkeAnsvarligVeileder && isNothing(utkast.beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus) ;
 	const visGodkjennUtkast = erBeslutter && !godkjentAvBeslutter;
 	const visTaOverUtkast = erIkkeAnsvarligVeileder;

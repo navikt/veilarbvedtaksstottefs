@@ -20,6 +20,10 @@ export const finnUtkast = (vedtakListe: Vedtak[]): Vedtak | undefined => {
 	return vedtakListe.find(v => v.vedtakStatus === 'UTKAST');
 };
 
+export const erBeslutterProsessStartet = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
+	return beslutterProsessStatus !== null;
+};
+
 export const erKlarTilBeslutter = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
 	return beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
 };
