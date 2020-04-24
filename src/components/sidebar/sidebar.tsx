@@ -35,7 +35,7 @@ function finnTab(viewType: SidebarTabType, tabs: SidebarTab[]): SidebarTab | und
 }
 
 function finnDefaultTab(utkast: Vedtak): SidebarTabType {
-	return utkast.beslutterProsessStartet
+	return utkast.beslutterProsessStatus != null
 		? SidebarTabType.DIALOG
 		: SidebarTabType.TIPS;
 }

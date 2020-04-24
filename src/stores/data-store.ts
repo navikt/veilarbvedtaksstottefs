@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import createUseContext from 'constate';
-import { ArenaVedtak, BeslutterProsessStatus, Vedtak} from '../rest/data/vedtak';
+import { ArenaVedtak, BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
 import Oppfolging from '../rest/data/oppfolging-data';
 import { MalformData } from '../rest/data/malform';
 import { Features } from '../rest/data/features';
@@ -33,16 +33,6 @@ export const useDataStore = createUseContext(() => {
 		setMeldinger((curMeldinger) => [...curMeldinger, systemMeldingData])
 	}
 
-	function setUtkastBeslutterProsessStartet() {
-		const utkast = finnUtkastAlltid(vedtak);
-		utkast.beslutterProsessStartet = true;
-	}
-
-	function setUtkastGodkjent() {
-		const utkast = finnUtkastAlltid(vedtak);
-		utkast.godkjentAvBeslutter = true;
-	}
-
 	function setUtkastBeslutter(beslutterIdent: string, beslutterNavn: string) {
 		const utkast = finnUtkastAlltid(vedtak);
 		utkast.beslutterIdent = beslutterIdent;
@@ -69,8 +59,6 @@ export const useDataStore = createUseContext(() => {
 		arenaVedtak, setArenaVedtak,
 		meldinger, setMeldinger,
 		leggTilSystemMelding,
-		setUtkastBeslutterProsessStartet,
-		setUtkastGodkjent,
 		setUtkastBeslutter,
 		setUtkastVeileder,
 		setBeslutterProsessStatus

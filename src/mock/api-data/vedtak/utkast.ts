@@ -20,8 +20,6 @@ const utkast: Vedtak & JSONObject = {
 	journalpostId: null,
 	beslutterIdent: null,
 	beslutterNavn: null,
-	godkjentAvBeslutter: false,
-	beslutterProsessStartet: false,
 	beslutterProsessStatus: null
 };
 
@@ -43,8 +41,6 @@ const utkastMedBeslutter: Vedtak & JSONObject = {
 	journalpostId: null,
 	beslutterIdent: beslutter.ident,
 	beslutterNavn: beslutter.navn,
-	godkjentAvBeslutter: false,
-	beslutterProsessStartet: true,
 	beslutterProsessStatus: BeslutterProsessStatus.KLAR_TIL_BESLUTTER
 };
 

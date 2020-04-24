@@ -19,8 +19,6 @@ const gjeldendeVedtak: Vedtak & JSONObject = {
 	oppfolgingsenhetNavn: enhetNavn,
 	beslutterIdent: null,
 	beslutterNavn: null,
-	beslutterProsessStartet: false,
-	godkjentAvBeslutter: false,
 	dokumentInfoId: null,
 	journalpostId: null,
 	beslutterProsessStatus: null

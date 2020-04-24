@@ -13,7 +13,7 @@ import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { finnUtkastAlltid } from '../../utils';
+import { erGodkjentAvBeslutter, finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import Show from '../../components/show';
 import { useTilgangStore } from '../../stores/tilgang-store';
@@ -37,7 +37,7 @@ export function Forhandsvisning() {
 
 	const utkast = finnUtkastAlltid(vedtak);
 	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
-		? utkast.godkjentAvBeslutter
+		? erGodkjentAvBeslutter(utkast.beslutterProsessStatus)
 		: true;
 
 	const tilbakeTilSkjema = () => {
