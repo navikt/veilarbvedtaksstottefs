@@ -8,13 +8,21 @@ import { ModalType, useModalStore } from '../../../../stores/modal-store';
 import { useDataFetcherStore } from '../../../../stores/data-fetcher-store';
 import './skrivefelt.less';
 
+let midlertidigMelding = '';
+
 export const Skrivefelt = () => {
 	const { fnr } = useAppStore();
 	const { showModal } = useModalStore();
 	const { meldingFetcher } = useDataFetcherStore();
-	const [melding, setMelding] = useState('');
+
+	const [melding, setMelding] = useState(midlertidigMelding);
 	const [senderMelding, setSenderMelding] = useState(false);
 	const harIkkeSkrevetMelding = melding.trim().length === 0;
+
+	function oppdaterMelding(tekst: string) {
+		setMelding(tekst);
+		midlertidigMelding = tekst;
+	}
 
 	function handleOnDialogSendClicked() {
 		setSenderMelding(true);
@@ -22,7 +30,7 @@ export const Skrivefelt = () => {
 		fetchWithInfo(lagSendDialogFetchInfo({ fnr, melding }))
 			.then(() => {
 				meldingFetcher.fetch({ fnr }, () => {
-					setMelding('');
+					oppdaterMelding('');
 					setSenderMelding(false);
 				});
 			}).catch(() => {
@@ -33,7 +41,7 @@ export const Skrivefelt = () => {
 
 	function handleOnMeldingChanged(e: ChangeEvent<HTMLInputElement>) {
 		if (!senderMelding) {
-			setMelding(e.target.value);
+			oppdaterMelding(e.target.value);
 		}
 	}
 
