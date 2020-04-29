@@ -29,8 +29,6 @@ const historisk: Vedtak[] & JSONArray = [
 		journalpostId: '123456',
 		beslutterIdent: null,
 		beslutterNavn: null,
-		beslutterProsessStartet: false,
-		godkjentAvBeslutter: false,
 		beslutterProsessStatus: null
 	},
 	{
@@ -57,8 +55,6 @@ const historisk: Vedtak[] & JSONArray = [
 		journalpostId: '5678',
 		beslutterIdent: beslutter.ident,
 		beslutterNavn: beslutter.navn,
-		beslutterProsessStartet: true,
-		godkjentAvBeslutter: false,
 		beslutterProsessStatus: null
 	}
 ];

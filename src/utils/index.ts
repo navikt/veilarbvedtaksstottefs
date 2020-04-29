@@ -20,12 +20,20 @@ export const finnUtkast = (vedtakListe: Vedtak[]): Vedtak | undefined => {
 	return vedtakListe.find(v => v.vedtakStatus === 'UTKAST');
 };
 
-export const erKlarTilBeslutter = (vedtak: Vedtak): boolean => {
-	return vedtak.beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
+export const erBeslutterProsessStartet = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
+	return beslutterProsessStatus != null;
 };
 
-export const erKlarTilVeileder = (vedtak: Vedtak): boolean => {
-	return vedtak.beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_VEILEDER;
+export const erKlarTilBeslutter = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
+	return beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
+};
+
+export const erKlarTilVeileder = (beslutterProsessStatus: OrNothing<BeslutterProsessStatus>): boolean => {
+	return beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_VEILEDER;
+};
+
+export const erGodkjentAvBeslutter = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
+	return beslutterProsessStatus === BeslutterProsessStatus.GODKJENT_AV_BESLUTTER;
 };
 
 // If the checkboxes/radios does not swallow enter, then it will for some reason propagate to the first button and trigger onClick

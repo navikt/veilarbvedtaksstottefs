@@ -1,5 +1,5 @@
 import React from 'react';
-import { BeslutterProsessStatus, Vedtak } from '../../../rest/data/vedtak';
+import { Vedtak } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import { Dato } from '../dato';
 import { Veileder } from '../veileder';
@@ -12,8 +12,15 @@ import { Beslutter } from '../beslutter';
 import Show from '../../show';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import './utkast-panel.less';
-import { isNothing } from '../../../utils';
 import { useSkjemaStore } from '../../../stores/skjema-store';
+import {
+	erBeslutterProsessStartet,
+	erGodkjentAvBeslutter,
+	erKlarTilBeslutter,
+	erKlarTilVeileder,
+	isNothing
+} from '../../../utils';
+
 
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { changeView } = useViewStore();
@@ -27,18 +34,18 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const {
 		veilederIdent, veilederNavn,
 		oppfolgingsenhetId, oppfolgingsenhetNavn, beslutterNavn,
-		beslutterProsessStartet, beslutterProsessStatus, godkjentAvBeslutter
+		beslutterProsessStatus
 	} = props.utkast;
 
 	const lagUtkastUnderTittle = ()=> {
 
-		if (godkjentAvBeslutter) {
+		if (erGodkjentAvBeslutter(beslutterProsessStatus)) {
 			return 'Klar for utsendelse';
-		} else if (beslutterProsessStartet && isNothing(beslutterNavn)) {
+		} else if (erBeslutterProsessStartet(beslutterProsessStatus) && isNothing(beslutterNavn)) {
 			return 'Utkast trenger beslutter';
-		} else if (beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_BESLUTTER) {
+		} else if (erKlarTilBeslutter(beslutterProsessStatus)) {
 			return 'Trenger tilbakemelding fra beslutter';
-		} else if (beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_VEILEDER) {
+		} else if (erKlarTilVeileder(beslutterProsessStatus)) {
 			return 'Trenger respons fra veileder';
 		} else {
 			return 'Utkast';

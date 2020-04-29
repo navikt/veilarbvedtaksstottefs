@@ -17,7 +17,8 @@ export enum HovedmalType {
 
 export enum BeslutterProsessStatus {
 	KLAR_TIL_BESLUTTER = 'KLAR_TIL_BESLUTTER',
-	KLAR_TIL_VEILEDER = 'KLAR_TIL_VEILEDER'
+	KLAR_TIL_VEILEDER = 'KLAR_TIL_VEILEDER',
+	GODKJENT_AV_BESLUTTER = 'GODKJENT_AV_BESLUTTER'
 }
 
 export interface Vedtak {
@@ -34,8 +35,6 @@ export interface Vedtak {
 	oppfolgingsenhetNavn: string;
 	beslutterIdent: OrNothing<string>;
 	beslutterNavn: OrNothing<string>;
-	beslutterProsessStartet: boolean;
-	godkjentAvBeslutter: boolean;
 	opplysninger: string[];
 	journalpostId: OrNothing<string>;
 	dokumentInfoId: OrNothing<string>;

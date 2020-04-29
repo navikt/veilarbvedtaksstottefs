@@ -21,7 +21,14 @@ import Show from '../../show';
 import { Element } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
-import { erKlarTilBeslutter, erKlarTilVeileder, finnUtkastAlltid } from '../../../utils';
+import {
+	erKlarTilBeslutter,
+	erKlarTilVeileder,
+	finnUtkastAlltid,
+	isNothing,
+	erGodkjentAvBeslutter,
+	erBeslutterProsessStartet
+} from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
@@ -43,8 +50,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	} = useTilgangStore();
 	const {
 		malform, vedtak, innloggetVeileder,
-		setUtkastBeslutterProsessStartet, setUtkastBeslutter,
-		setUtkastGodkjent, setBeslutterProsessStatus,
+		setUtkastBeslutter, setBeslutterProsessStatus,
 		leggTilSystemMelding
 	} = useDataStore();
 	const {changeView} = useViewStore();
@@ -55,15 +61,14 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const [laster, setLaster] = useState(false);
 
 	const utkast = finnUtkastAlltid(vedtak);
-	const godkjentAvBeslutter = utkast.godkjentAvBeslutter;
-	const visGodkjentAvBeslutter = utkast.godkjentAvBeslutter && erBeslutter;
-	const visStartBeslutterProsess = !utkast.beslutterProsessStartet && trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder;
-	const visBliBeslutter = utkast.beslutterProsessStartet && utkast.beslutterIdent == null && erIkkeAnsvarligVeileder;
-	const visGodkjennUtkast = utkast.beslutterProsessStartet && !godkjentAvBeslutter && erBeslutter;
+	const beslutterProsessStatus = utkast.beslutterProsessStatus;
+	const godkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
+	const visGodkjentAvBeslutter = erBeslutter && godkjentAvBeslutter;
+	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(utkast.beslutterNavn) && !erBeslutterProsessStartet(beslutterProsessStatus);
+	const visBliBeslutter = erIkkeAnsvarligVeileder && isNothing(utkast.beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus) ;
+	const visGodkjennUtkast = erBeslutter && !godkjentAvBeslutter;
 	const visTaOverUtkast = erIkkeAnsvarligVeileder;
-	const visKlarTil =
-		(erAnsvarligVeileder && erKlarTilVeileder(utkast)) ||
-		(erBeslutter && erKlarTilBeslutter(utkast) && !godkjentAvBeslutter);
+	const visKlarTil = (erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus)) || (erBeslutter && erKlarTilBeslutter(beslutterProsessStatus));
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function fokuserPaDialogSidebarTab() {
@@ -114,7 +119,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
 					.then(() => {
 						fokuserPaDialogSidebarTab();
-						setUtkastBeslutterProsessStartet();
+						setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 						leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
 					})
 					.catch(() => showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS))
@@ -157,7 +162,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		fetchWithInfo(lagGodkjennVedtakFetchInfo({fnr}))
 			.then(() => {
 				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
-				setUtkastGodkjent();
+				setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER))
 			.finally(() => setLaster(false));

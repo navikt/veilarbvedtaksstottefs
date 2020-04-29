@@ -134,7 +134,9 @@ export const mockKlarTilBeslutter: Mock = {
 
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å starte beslutterprosess på');
 
-		gjeldendeUtkast.beslutterProsessStartet = true;
+		gjeldendeUtkast.beslutterProsessStatus = BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
+		gjeldendeUtkast.beslutterIdent = null;
+		gjeldendeUtkast.beslutterNavn = null;
 
 		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
 
@@ -168,7 +170,7 @@ export const mockGodkjennVedtak: Mock = {
 
 		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å godkjenne');
 
-		gjeldendeUtkast.godkjentAvBeslutter = true;
+		gjeldendeUtkast.beslutterProsessStatus = BeslutterProsessStatus.GODKJENT_AV_BESLUTTER;
 
 		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
 

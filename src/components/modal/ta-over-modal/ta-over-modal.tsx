@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ModalProps } from '../modal-props';
 import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { finnUtkast } from '../../../utils';
+import { erBeslutterProsessStartet, finnUtkast } from '../../../utils';
 import { useAppStore } from '../../../stores/app-store';
 import { useDataStore } from '../../../stores/data-store';
 import Show from '../../show';
@@ -53,7 +53,7 @@ function TaOverModal(props: ModalProps) {
 		return null;
 	}
 
-	const visValg = utkast.beslutterProsessStartet && utkast.beslutterNavn != null;
+	const visValg = erBeslutterProsessStartet(utkast.beslutterProsessStatus) && utkast.beslutterNavn != null;
 
 	function handleTaOverVedtak() {
 		const fetchInfo = taOverFor === TaOverFor.BESLUTTER
