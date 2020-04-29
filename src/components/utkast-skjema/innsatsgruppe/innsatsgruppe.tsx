@@ -8,7 +8,7 @@ import {
 } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../utils';
+import { erBeslutterProsessStartet, finnGjeldendeVedtak, finnUtkastAlltid, swallowEnterKeyPress } from '../../../utils';
 import './innsatsgruppe.less';
 import {
 	erStandard, erVarigEllerGradertVarig,
@@ -30,14 +30,17 @@ function Innsatsgruppe() {
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
 	const gjeldendeVedtak = finnGjeldendeVedtak(vedtak);
+	const utkast = finnUtkastAlltid(vedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
+	const visInfomelding = trengerBeslutter(innsatsgruppe)
+		&& erAnsvarligVeileder(veilederTilgang)
+		&& !erBeslutterProsessStartet(utkast.beslutterProsessStatus);
 
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
-			<Show if={trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder(veilederTilgang)}>
+			<Show if={visInfomelding}>
 				<AlertStripeInfo className="innsatsgruppe__alertstripe">
-					Vurderingen skal sendes til beslutter når du vurderer at brukeren enten har liten mulighettil å jobbe eller har mulighet til å jobbe delvis.
-					Når du går videre får du sendt til beslutter.
+					Vurderingen skal kvalitetssikres av en beslutter når bruker ansees å ha liten eller delvis mulighet til å jobbe
 				</AlertStripeInfo>
 			</Show>
 			<Show if={!harSkrevetBegrunnelse(begrunnelse) && erStandardInnsatsValgt && erGjeldendeInnsatsVarig}>
