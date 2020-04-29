@@ -7,13 +7,15 @@ import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
 import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
 import { ReactComponent as LasOppIkon } from './las-opp.svg';
 import './varsel-modal.less';
+import Show from '../../show';
 
 export enum VarselIkonType {
 	FEIL = 'FEIL',
     ADVARSEL = 'ADVARSEL',
 	VEDTAK_SENDT_BREV = 'VEDTAK_SENDT_BREV',
 	VEDTAK_SENDT_DIGITALT = 'VEDTAK_SENDT_DIGITALT',
-	LAS_OPP = 'LAS_OPP'
+	LAS_OPP = 'LAS_OPP',
+	INGEN = 'INGEN'
 }
 
 interface VarselModalProps {
@@ -40,6 +42,9 @@ export function VarselModal({
 	className,
 	portalClassName
 }: React.PropsWithChildren<VarselModalProps>) {
+	const visVarselIkon = varselIkonType !== VarselIkonType.INGEN;
+	const innholdClassName = cls('varsel-modal__innehold', { 'varsel-modal__innehold--ingen-ikon': !visVarselIkon }, className);
+
 	return (
 		<ModalWrapper
 			isOpen={isOpen}
@@ -50,8 +55,10 @@ export function VarselModal({
 			portalClassName={cls('veilarbvedtaksstottefs-varsel-modal', portalClassName)}
 			shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
 		>
-			<VarselIkon type={varselIkonType} />
-			<div className={cls('varsel-modal__innehold', className)}>{children}</div>
+			<Show if={visVarselIkon}>
+				<VarselIkon type={varselIkonType} />
+			</Show>
+			<div className={innholdClassName}>{children}</div>
 		</ModalWrapper>
 	);
 }

@@ -166,7 +166,7 @@ function TaOverModal(props: ModalProps) {
 			isOpen={props.isOpen}
 			contentLabel="Ta over utkast"
 			onRequestClose={handleOnRequestCloseModal}
-			varselIkonType={VarselIkonType.ADVARSEL}
+			varselIkonType={VarselIkonType.INGEN}
 			portalClassName="ta-over-modal"
 		>
 			{Innhold}
