@@ -18,16 +18,16 @@ import { useAppStore } from '../../../stores/app-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } from '../skjema-utils';
 import Show from '../../show';
-import { Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
 import {
+	erBeslutterProsessStartet,
+	erGodkjentAvBeslutter,
 	erKlarTilBeslutter,
 	erKlarTilVeileder,
 	finnUtkastAlltid,
-	isNothing,
-	erGodkjentAvBeslutter,
-	erBeslutterProsessStartet
+	isNothing, mapSkjemaLagringStatusTilTekst
 } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
@@ -55,7 +55,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
-	const {validerSkjema, innsatsgruppe} = useSkjemaStore();
+	const {validerSkjema, innsatsgruppe, lagringStatus} = useSkjemaStore();
 	const {setSelectedTab} = useSidebarViewStore();
 
 	const [laster, setLaster] = useState(false);
@@ -76,6 +76,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	}
 
 	function sendDataTilBackend() {
+		// Vi oppdaterer ikke lagringStatus her fordi det blir rart at dette trigges på en "urelatert" handling
 		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform)};
 		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo(params))
 			.catch(() => {
@@ -175,6 +176,12 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				onClick={handleOnTilbakeClicked}
 				disabled={laster}
 			/>
+
+			<div className="aksjoner__lagring-tekst">
+				<Normaltekst>
+					{mapSkjemaLagringStatusTilTekst(lagringStatus)}
+				</Normaltekst>
+			</div>
 
 			<div className="aksjoner__knapper-midten">
 				<Show if={laster}>

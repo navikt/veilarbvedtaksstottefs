@@ -1,5 +1,6 @@
 import { BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
 import { OrNothing } from './types/ornothing';
+import { SkjemaLagringStatus } from './types/skjema-lagring-status';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
@@ -46,5 +47,20 @@ export const swallowEnterKeyPress = (e: any) => {
 export const isNothing = (str: OrNothing<string>): boolean => {
 	return str == null || str.trim().length === 0;
 };
+
+export function mapSkjemaLagringStatusTilTekst(skjemaLagringStatus: SkjemaLagringStatus): string {
+	switch (skjemaLagringStatus) {
+		case SkjemaLagringStatus.LAGRER:
+			return 'Lagrer...';
+		case SkjemaLagringStatus.ENDRING_IKKE_LAGRET:
+			return 'Lagrer...';
+		case SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET:
+			return 'Alle endringer lagret';
+		case SkjemaLagringStatus.LAGRING_FEILET:
+			return 'Lagring feilet';
+	}
+
+	return '';
+}
 
 

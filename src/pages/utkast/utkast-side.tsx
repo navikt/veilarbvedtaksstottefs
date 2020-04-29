@@ -19,6 +19,7 @@ import { Sidebar } from '../../components/sidebar/sidebar';
 import { useDataStore } from '../../stores/data-store';
 import { useSidebarViewStore } from '../../stores/sidebar-view-store';
 import './utkast-side.less';
+import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -34,21 +35,24 @@ export function UtkastSide() {
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert,
-		setSistOppdatert, validerSkjema, validerBegrunnelseLengde
+		setSistOppdatert, validerSkjema, validerBegrunnelseLengde, lagringStatus, setLagringStatus
 	} = useSkjemaStore();
 
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 	const isAfterFirstRender = useIsAfterFirstRender();
 
-	const oppdaterSistEndret = useConst(debounce((skjema: SkjemaData) => {
+	const oppdaterUtkast = useConst(debounce((skjema: SkjemaData) => {
 		const malformType = hentMalformFraData(malform);
 
+		setLagringStatus(SkjemaLagringStatus.LAGRER);
 		fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema, malform: malformType }))
 			.then(() => {
+				setLagringStatus(SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET);
 				setSistOppdatert(new Date().toISOString());
 			})
 			.catch(() => {
 				showModal(ModalType.FEIL_VED_LAGRING);
+				setLagringStatus(SkjemaLagringStatus.LAGRING_FEILET);
 			});
 	}, 3000));
 
@@ -59,6 +63,12 @@ export function UtkastSide() {
 	});
 
 	useEffect(() => {
+		// Initialiser når utkastet åpnes
+		setLagringStatus(SkjemaLagringStatus.INGEN_ENDRING);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
 		if (harForsoktAttSende) {
 			validerSkjema(vedtak);
 		} else {
@@ -66,7 +76,11 @@ export function UtkastSide() {
 		}
 
 		if (isAfterFirstRender) {
-			oppdaterSistEndret(vedtakskjema);
+			if (lagringStatus !== SkjemaLagringStatus.ENDRING_IKKE_LAGRET) {
+				setLagringStatus(SkjemaLagringStatus.ENDRING_IKKE_LAGRET);
+			}
+
+			oppdaterUtkast(vedtakskjema);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
@@ -74,7 +88,7 @@ export function UtkastSide() {
 	useEffect(() => {
 		// Det kan bli problemer hvis gamle oppdateringer henger igjen etter at brukeren har forlatt redigeringssiden.
 		// Oppdateringen kan f.eks bli sendt etter at vedtaket har blitt fattet, eller at utkastet blir oppdatert med gammel data.
-		return oppdaterSistEndret.cancel;
+		return oppdaterUtkast.cancel;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
