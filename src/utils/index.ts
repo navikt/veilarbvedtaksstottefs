@@ -21,7 +21,7 @@ export const finnUtkast = (vedtakListe: Vedtak[]): Vedtak | undefined => {
 };
 
 export const erBeslutterProsessStartet = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
-	return beslutterProsessStatus !== null;
+	return beslutterProsessStatus != null;
 };
 
 export const erKlarTilBeslutter = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
