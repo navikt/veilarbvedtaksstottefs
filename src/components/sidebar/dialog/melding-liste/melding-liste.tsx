@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect } from 'react';
 import cls from 'classnames';
 import {
 	DialogMelding as DialogMeldingData,
@@ -48,16 +48,17 @@ function mapTilSystemMeldingView(melding: SystemMeldingData, key: number) {
 
 export const MeldingListe = (props: MeldingListeProps) => {
 	const { innloggetVeilederIdent, meldinger, className } = props;
-	const listeRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (listeRef.current) {
-			listeRef.current.scrollTop = listeRef.current.scrollHeight;
-		}
+			const meldingListeElem = document.querySelector('#veilarbvedtaksstottefs-melding-liste');
+
+			if (meldingListeElem) {
+				meldingListeElem.scrollTop = meldingListeElem.scrollHeight;
+			}
 	}, [meldinger]);
 
     return (
-    	<div ref={listeRef} className={cls('melding-liste', className)}>
+    	<div className={cls('melding-liste', className)} id="veilarbvedtaksstottefs-melding-liste">
 		    {meldinger.map((melding, idx) => {
 				return melding.type === MeldingType.DIALOG_MELDING
 					? mapTilDialogMeldingView(melding as DialogMeldingData, idx, innloggetVeilederIdent)
