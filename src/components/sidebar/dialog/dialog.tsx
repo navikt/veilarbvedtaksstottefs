@@ -27,13 +27,15 @@ export const Dialog = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [meldingFetcher.status]);
 
-    return (
-    	<div className="dialog">
-		    <MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
-		    <Show if={meldingFetcher.status === FetchStatus.PENDING}>
+	return (
+	<div className="dialog">
+		<div className="meldinger">
+			<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
+			<Show if={meldingFetcher.status === FetchStatus.PENDING}>
 				<Spinner />
 		    </Show>
-		    <Skrivefelt />
-	    </div>
+		</div>
+		<Skrivefelt />
+	</div>
     );
 };
