@@ -1,6 +1,6 @@
 import React from 'react';
 import { InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
-import { Dato } from '../dato';
+import { DatoLabel } from '../dato-label';
 import { Knapp } from 'nav-frontend-knapper';
 import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
@@ -12,12 +12,7 @@ import './gjeldende-vedtak-panel.less';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
-	const {
-		id, innsatsgruppe,
-		veilederNavn, oppfolgingsenhetId,
-		oppfolgingsenhetNavn, sistOppdatert
-	} = props.gjeldendeVedtak;
-
+	const { id, innsatsgruppe, veilederNavn, sistOppdatert } = props.gjeldendeVedtak;
 	const innsatsgruppeData = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
 
 	const handleVisVedtakClicked = () => {
@@ -35,12 +30,10 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 			tekstKomponent={
 				<>
 					<p className="typo-undertekst gjeldende-vedtak-panel__innsatsgruppe">{innsatsgruppeData.undertekst}</p>
-					<Dato className="gjeldende-vedtak-panel__dato" sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
+					<DatoLabel className="gjeldende-vedtak-panel__dato" sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
 					<Veileder
 						text="Fattet av"
 						veilederNavn={veilederNavn}
-						enhetId={oppfolgingsenhetId}
-						enhetNavn={oppfolgingsenhetNavn}
 					/>
 				</>
 			}

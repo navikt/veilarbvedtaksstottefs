@@ -1,8 +1,7 @@
 import React from 'react';
 import { Vedtak } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
-import { Dato } from '../dato';
-import { Veileder } from '../veileder';
+import { DatoLabel } from '../dato-label';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import utkastIkon from './utkast.svg';
 import utkastTilBeslutterIkon from './utkast-til-beslutter.svg';
@@ -20,6 +19,7 @@ import {
 	erKlarTilVeileder,
 	isNothing
 } from '../../../utils';
+import { Label, LabelType } from '../../label/label';
 
 
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
@@ -31,13 +31,9 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 		return null;
 	}
 
-	const {
-		veilederIdent, veilederNavn,
-		oppfolgingsenhetId, oppfolgingsenhetNavn, beslutterNavn,
-		beslutterProsessStatus
-	} = props.utkast;
+	const {veilederNavn, beslutterNavn, beslutterProsessStatus} = props.utkast;
 
-	const lagUtkastUnderTittle = ()=> {
+	const lagUtkastUnderTittle = () => {
 
 		if (erGodkjentAvBeslutter(beslutterProsessStatus)) {
 			return 'Klar for utsendelse';
@@ -64,13 +60,8 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 					<Show if={beslutterNavn}>
 						<Beslutter className="utkast-panel__beslutter" beslutterNavn={beslutterNavn as string}/>
 					</Show>
-					<Dato className="utkast-panel__dato" sistOppdatert={sistOppdatert || props.utkast.sistOppdatert} formatType="long" text="Sist endret" />
-					<Veileder
-						enhetId={oppfolgingsenhetId}
-						veilederNavn={veilederNavn || veilederIdent}
-						enhetNavn={oppfolgingsenhetNavn}
-						text="Ansvarlig"
-					/>
+					<DatoLabel className="utkast-panel__dato" sistOppdatert={sistOppdatert || props.utkast.sistOppdatert} formatType="long" text="Sist endret" />
+					<Label titleText="Ansvarlig" valueText={veilederNavn} labelType={LabelType.SMALL} />
 				</>
 			}
 		/>
