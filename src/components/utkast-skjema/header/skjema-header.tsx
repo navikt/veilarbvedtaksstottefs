@@ -2,8 +2,8 @@ import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Vedtak } from '../../../rest/data/vedtak';
 import utkastBilde from './utkast.svg';
-import { Dato } from '../../panel/dato';
-import { Veileder } from '../../panel/veileder';
+import { DatoLabel } from '../../panel/dato-label';
+import { Label, LabelType } from '../../label/label';
 import './skjema-header.less';
 
 interface SkjemaHeaderProps {
@@ -12,10 +12,7 @@ interface SkjemaHeaderProps {
 }
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
-	const {
-		veilederIdent, oppfolgingsenhetId,
-		oppfolgingsenhetNavn, veilederNavn
-	} = props.utkast;
+	const { veilederNavn, oppfolgingsenhetId, oppfolgingsenhetNavn } = props.utkast;
 
 	return (
 		<header className="skjema-header">
@@ -23,15 +20,11 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 			<div className="skjema-header__innhold">
 				<Systemtittel tag="h1" className="skjema-header__tittel">Utkast til oppfølgingsvedtak</Systemtittel>
 				<div className="skjema-header__info">
-					<Veileder
-						className="skjema-header__veileder"
-						enhetId={oppfolgingsenhetId}
-						enhetNavn={oppfolgingsenhetNavn}
-						veilederNavn={veilederNavn || veilederIdent}
-						text="Ansvarlig"
-					/>
+					<Label titleText="Ansvarlig" valueText={veilederNavn} labelType={LabelType.SMALL} />
 					<div className="seperator"/>
-					<Dato
+					<Label titleText="Brukers enhet" valueText={oppfolgingsenhetId + ' ' + oppfolgingsenhetNavn} labelType={LabelType.SMALL} />
+					<div className="seperator"/>
+					<DatoLabel
 						className="skjema-header__dato"
 						sistOppdatert={props.sistOppdatert || props.utkast.sistOppdatert}
 						formatType="long"

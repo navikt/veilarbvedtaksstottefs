@@ -29,20 +29,20 @@ export function SkjemaVisning(props: { vedtak: Vedtak }) {
 
 			<div className="skjema-visning__info">
 				<Label
-					labelClassName="label__title--gap-lg"
+					titleTextClassName="label__title-text--gap-lg"
 					className="blokk-xxs"
-					labelText="Dato"
+					titleText="Dato"
 					valueText={formatDateStr(sistOppdatert)}
 				/>
 				<Show if={beslutterNavn}>
 					<Label
-						labelClassName="label__title--gap-lg"
+						titleTextClassName="label__title-text--gap-lg"
 						className="blokk-xxs"
-						labelText="Beslutter"
+						titleText="Beslutter"
 						valueText={beslutterNavn}
 					/>
 				</Show>
-				<Label labelClassName="label__title--gap-lg" labelText="Fattet av" valueText={fattetAv} />
+				<Label titleTextClassName="label__title-text--gap-lg" titleText="Fattet av" valueText={fattetAv} />
 			</div>
 
 			<div className="skjema-visning__felter">
