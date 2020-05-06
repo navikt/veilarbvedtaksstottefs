@@ -40,7 +40,7 @@ function Innsatsgruppe() {
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
 			<Show if={visInfomelding}>
 				<AlertStripeInfo className="innsatsgruppe__alertstripe">
-					Vurderingen skal kvalitetssikres av en beslutter når bruker ansees å ha liten eller delvis mulighet til å jobbe
+					Vurderingen skal kvalitetssikres av en beslutter når bruker anses å ha liten eller delvis mulighet til å jobbe.
 				</AlertStripeInfo>
 			</Show>
 			<Show if={!harSkrevetBegrunnelse(begrunnelse) && erStandardInnsatsValgt && erGjeldendeInnsatsVarig}>
