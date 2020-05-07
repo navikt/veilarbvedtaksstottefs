@@ -39,7 +39,7 @@ addToFetchMock(mockSendDialogMelding, fetchMock);
 addToFetchMock(mockOppdaterBeslutterProsessStatus, fetchMock);
 
 fetchMock.get('/veilarbvedtaksstotte/api/:fnr/vedtakFraArena', vedtakFraArena);
-fetchMock.get('/veilarbvedtaksstotte/api/:fnr/oyblikksbilde/:vedtakId', vedlegg);
+fetchMock.get('/veilarbvedtaksstotte/api/:fnr/oyeblikksbilde/:vedtakId', vedlegg);
 fetchMock.get('/veilarbpersonflatefs/api/feature', features);
 fetchMock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', tilgangTilBrukersKontor);
 fetchMock.get('/veilarboppfolging/api/oppfolging', oppfolgingData);

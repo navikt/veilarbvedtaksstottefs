@@ -100,7 +100,7 @@ export const lagTaOverUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => (
 });
 
 export const lagHentOyblikksbildeFetchInfo = (params: HentOyblikksbildeFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/oyblikksbilde/${params.vedtakId}`
+	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/oyeblikksbilde/${params.vedtakId}`
 });
 
 export const lagHentForhandsvisningUrl = (fnr: string): string => `${VEILARBVEDTAKSSTOTTE_API}/${fnr}/utkast/pdf`;
