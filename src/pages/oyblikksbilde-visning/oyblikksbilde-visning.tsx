@@ -56,22 +56,24 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 	);
 
 	return (
-		<Page className="oyblikksbilde-visning page--grey">
-			<section className="vedlegg">
-				<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
-				<VedleggCard
-					tittel="CV og Jobbprofil"
-					json={cvOgJobbprofileJson}
-				/>
-				<VedleggCard
-					tittel="Registrering"
-					json={registreringsinfoJson}
-				/>
-				<VedleggCard
-					tittel="Egenvurdering"
-					json={egenvurderingJson}
-				/>
-			</section>
+		<>
+			<Page className="oyblikksbilde-visning page--grey">
+				<section className="vedlegg">
+					<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
+					<VedleggCard
+						tittel="CV og Jobbprofil"
+						json={cvOgJobbprofileJson}
+					/>
+					<VedleggCard
+						tittel="Registrering"
+						json={registreringsinfoJson}
+					/>
+					<VedleggCard
+						tittel="Egenvurdering"
+						json={egenvurderingJson}
+					/>
+				</section>
+			</Page>
 			<Footer className="oyblikksbilde-visning__footer">
 				<div className="oyblikksbilde-visning__aksjoner">
 					<Hovedknapp mini={true} onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}>
@@ -79,7 +81,7 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 					</Hovedknapp>
 				</div>
 			</Footer>
-		</Page>
+		</>
 	);
 }
 
