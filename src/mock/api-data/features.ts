@@ -4,12 +4,14 @@ import {
 	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
 	PRELANSERING_TOGGLE,
 	STOPPE_VEDTAKSUTSENDING_TOGGLE,
+	PILOT_TOGGLE,
 } from '../../rest/data/features';
 
 const features: Features & JSONObject = {
 	[PRELANSERING_TOGGLE]: false,
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
-	[STOPPE_VEDTAKSUTSENDING_TOGGLE]: false
+	[STOPPE_VEDTAKSUTSENDING_TOGGLE]: false,
+	[PILOT_TOGGLE]: false
 };
 
 export default features;

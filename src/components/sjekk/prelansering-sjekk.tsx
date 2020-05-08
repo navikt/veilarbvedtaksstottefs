@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { Prelansering } from '../../pages/prelansering/prelansering';
-import { PRELANSERING_TOGGLE } from '../../rest/data/features';
+import { PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../rest/data/features';
 import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../../rest/utils';
 import Spinner from '../spinner/spinner';
@@ -26,5 +26,5 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 		);
 	}
 
-	return featuresFetcher.data[PRELANSERING_TOGGLE] ? <Prelansering /> : props.children;
+	return (featuresFetcher.data[PRELANSERING_TOGGLE] && !featuresFetcher.data[PILOT_TOGGLE]) ? <Prelansering /> : props.children;
 }
