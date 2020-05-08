@@ -3,7 +3,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
-import { STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
+import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
 import { trengerBeslutter } from '../../components/utkast-skjema/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
 import { useDataFetcherStore } from '../../stores/data-fetcher-store';
@@ -30,7 +30,7 @@ export function Forhandsvisning() {
 	const { kanEndreUtkast } = useTilgangStore();
 
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
-	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE];
+	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
 	const url = env.isProduction
 		? lagHentForhandsvisningUrl(fnr)
 		: getMockVedtaksbrevUrl();
