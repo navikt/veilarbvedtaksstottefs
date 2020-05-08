@@ -12,7 +12,7 @@ export function Prelansering() {
 	return (
 		<Page>
 			<PrelanseringInfo />
-			{features[PRELANSERING_INFO_OM_LOSNING_TOGGLE] && !features[PILOT_TOGGLE] && <LosningInfo />}
+			{features[PRELANSERING_INFO_OM_LOSNING_TOGGLE] && <LosningInfo />}
 		</Page>
 	);
 }
