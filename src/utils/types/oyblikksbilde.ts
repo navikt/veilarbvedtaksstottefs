@@ -1,6 +1,6 @@
 import OyblikksbildeType from './oyblikksbilde-type';
 
 export interface Oyblikksbilde {
-	oyblikksbildeType: OyblikksbildeType;
+	oyeblikksbildeType: OyblikksbildeType;
 	json: string;
 }

@@ -20,7 +20,7 @@ import './oyblikksbilde-visning.less';
 import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } from './oyblikksbilde-fikser';
 
 function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
-	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.oyblikksbildeType === oyblikksbildeType) : null;
+	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.oyeblikksbildeType === oyblikksbildeType) : null;
 	return oyblikksbilde ? oyblikksbilde.json : null;
 }
 
