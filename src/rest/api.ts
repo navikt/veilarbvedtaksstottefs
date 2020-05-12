@@ -30,6 +30,9 @@ export const VEILARBPERSON_API = '/veilarbperson/api';
 export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
 export const VEILARBVEILEDER_API = '/veilarbveileder/api';
 
+export const HEADERS_WITH_JSON_CONTENT = {
+	'Content-Type': 'application/json'
+};
 
 export const lagHentFeaturesFetchInfo = (): FetchInfo => {
 	const toggles = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
@@ -62,6 +65,7 @@ export const lagOppdaterVedtakUtkastFetchInfo = (params: OppdaterUtkastFetchPara
 	return {
 		url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/utkast`,
 		method: 'PUT',
+		headers: HEADERS_WITH_JSON_CONTENT,
 		body: JSON.stringify(params.skjema)
 	};
 };
@@ -82,6 +86,7 @@ export const lagSendVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/${params.fnr}/meldinger`,
 	method: 'POST',
+	headers: HEADERS_WITH_JSON_CONTENT,
 	body: JSON.stringify({ melding: params.melding })
 });
 
