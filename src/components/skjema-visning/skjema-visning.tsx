@@ -9,6 +9,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
 import './skjema-visning.less';
 import { getHovedmalNavn } from '../../utils/hovedmal';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 
 export function SkjemaVisning(props: { vedtak: Vedtak }) {
 	const { changeView } = useViewStore();
@@ -58,7 +59,7 @@ export function SkjemaVisning(props: { vedtak: Vedtak }) {
 			</div>
 
 			<Element tag="span" className="skjema-visning__label blokk-xxs">Begrunnelse</Element>
-			<Normaltekst className="text--grey skjema-visning__begrunnelse">{begrunnelse}</Normaltekst>
+			<Tekstomrade className="skjema-visning__begrunnelse">{begrunnelse ? begrunnelse : ''}</Tekstomrade>
 
 			<Element tag="span" className="skjema-visning__label blokk-xxs">Kilder</Element>
 			<ul className="skjema-visning__opplysninger">{opplysninger.map((o, idx) => (<li key={idx}>{o}</li>))}</ul>
