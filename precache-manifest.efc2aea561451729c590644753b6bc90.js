@@ -4,16 +4,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "1afe8d79c41f17c057b4",
+    "revision": "4938231409da0584a5a6",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "1afe8d79c41f17c057b4",
+    "revision": "4938231409da0584a5a6",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
-    "revision": "5acd381339e13f6c10fb",
-    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.85942aea.chunk.js"
+    "revision": "1e6744bf525790ccdf5b",
+    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.2e3096aa.chunk.js"
   },
   {
     "revision": "60c7de9e28dee1c6c239b50318b59bfe",
