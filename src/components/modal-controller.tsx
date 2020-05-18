@@ -19,6 +19,7 @@ import {
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
 import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
+import { BekreftVedtakSendtModal } from './modal/vedtak-sendt/bekreft-vedtak-sendt-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverModal from './modal/ta-over-modal/ta-over-modal';
 
@@ -56,16 +57,14 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 }
 
 export function ModalController() {
-	const { modalType, modalProps } = useModalStore();
+	const { modalType } = useModalStore();
 	const feilModalConfig = finnFeilModalConfig(modalType);
 
 	return (
 		<>
 			<SpinnerModal isOpen={modalType === ModalType.LASTER} />
-			<VedtakSendtModal
-				isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS}
-				sendesVedtakDigitalt={modalProps.sendesVedtakDigitalt}
-			/>
+			<BekreftVedtakSendtModal isOpen={modalType === ModalType.BEKREFT_VEDTAK_SEND} />
+			<VedtakSendtModal isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}

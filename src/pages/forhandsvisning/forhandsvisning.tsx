@@ -6,9 +6,7 @@ import env from '../../utils/environment';
 import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
 import { trengerBeslutter } from '../../components/utkast-skjema/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
-import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
-import { fetchWithInfo } from '../../rest/utils';
+import { lagHentForhandsvisningUrl } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
@@ -23,10 +21,9 @@ import './forhandsvisning.less';
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { vedtakFetcher } = useDataFetcherStore();
-	const { vedtak, features, oppfolgingData } = useDataStore();
+	const { vedtak, features} = useDataStore();
 	const { showModal } = useModalStore();
-	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
+	const { innsatsgruppe } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
 
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
@@ -52,31 +49,13 @@ export function Forhandsvisning() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
-	const sendVedtak = () => {
-		showModal(ModalType.LASTER);
-
-		fetchWithInfo(lagSendVedtakFetchInfo({ fnr }))
-			.then(() => {
-                resetSkjema();
-				vedtakFetcher.fetch({ fnr }, () => {
-					const sendesVedtakDigitalt = !oppfolgingData.reservasjonKRR;
-					changeView(ViewType.HOVEDSIDE);
-					showModal(ModalType.VEDTAK_SENT_SUKSESS, { sendesVedtakDigitalt });
-				});
-			})
-			.catch(err => {
-				showModal(ModalType.FEIL_VED_SENDING);
-				frontendlogger.logMetrikk('feil-ved-sending', err);
-			});
-	};
-
 	const handleOnSendClicked = () => {
 		if (stoppeUtsendingfeatureToggle) {
 			showModal(ModalType.FEIL_UTSENDING_STOPPET);
 			return;
 		}
 
-		sendVedtak();
+		showModal(ModalType.BEKREFT_VEDTAK_SEND);
 	};
 
 	return (
