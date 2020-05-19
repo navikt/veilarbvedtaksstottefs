@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
-import TaOverBilde from './taover.png';
+import { ReactComponent as TaOverIkon } from './taover.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { SkjemaData } from '../../../pages/utkast/utkast-side';
 import { fetchWithInfo } from '../../../rest/utils';
@@ -248,7 +248,8 @@ function Aksjoner(props: UtkastAksjonerProps) {
 						onClick={() => showModal(ModalType.BEKREFT_TA_OVER_UTKAST)}
 						disabled={laster}
 					>
-						<img src={TaOverBilde} className="aksjoner__taover_bilde" alt="Ta Over" />
+						<TaOverIkon className="aksjoner__ikon"/>
+						Ta over
 					</Flatknapp>
 				</Show>
 

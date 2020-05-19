@@ -12,7 +12,7 @@ import { fetchWithInfo } from '../../rest/utils';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
-import { useSkjemaStore} from '../../stores/skjema-store';
+import { useSkjemaStore } from '../../stores/skjema-store';
 import { erGodkjentAvBeslutter, finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import Show from '../../components/show';
@@ -24,7 +24,7 @@ export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
 	const { vedtakFetcher } = useDataFetcherStore();
-	const { vedtak, features, oppfolgingData } = useDataStore();
+	const { vedtak, features } = useDataStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
