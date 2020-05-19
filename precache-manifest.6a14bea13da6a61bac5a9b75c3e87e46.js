@@ -4,16 +4,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "d53a5629a809ef8202af",
+    "revision": "c5d2399f28fb64fd924f",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "d53a5629a809ef8202af",
+    "revision": "c5d2399f28fb64fd924f",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
-    "revision": "1e6744bf525790ccdf5b",
-    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.2e3096aa.chunk.js"
+    "revision": "3d410adc1c1decbd39a4",
+    "url": "/veilarbvedtaksstottefs/static/js/pdfjsWorker.2cafd5ee.chunk.js"
   },
   {
     "revision": "60c7de9e28dee1c6c239b50318b59bfe",
@@ -64,10 +64,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/las-opp.7202ab3e.svg"
   },
   {
-    "revision": "e1bed2a8a4b464190ce7e0950d335789",
-    "url": "/veilarbvedtaksstottefs/static/media/locked.e1bed2a8.svg"
-  },
-  {
     "revision": "d33f8f12e1e24be6c25543e3cc6a2425",
     "url": "/veilarbvedtaksstottefs/static/media/mellomlagre.d33f8f12.svg"
   },
@@ -116,6 +112,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/synlighet-til-bruker.9a9881c9.svg"
   },
   {
+    "revision": "9f859e0400ae38f66d28d43acfc31b1a",
+    "url": "/veilarbvedtaksstottefs/static/media/taover.9f859e04.svg"
+  },
+  {
     "revision": "34bf54c5387e908eff484b28fd1a9048",
     "url": "/veilarbvedtaksstottefs/static/media/tidligere-vedtak.34bf54c5.svg"
   },
@@ -136,12 +136,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/utkast.febe5329.svg"
   },
   {
-    "revision": "e9ec96ff10dbbcb98adef82cba32c253",
-    "url": "/veilarbvedtaksstottefs/static/media/vedtak-sendt-brev.e9ec96ff.svg"
-  },
-  {
-    "revision": "b42017996ad8b2d156136b0afdb67ca7",
-    "url": "/veilarbvedtaksstottefs/static/media/vedtak-sendt-digital.b4201799.svg"
+    "revision": "d539ea37a343d285e88e6d4d8faf13ea",
+    "url": "/veilarbvedtaksstottefs/static/media/vedtak-sendt.d539ea37.svg"
   },
   {
     "revision": "c2eba75d45221bdc872ba9162459e00a",
