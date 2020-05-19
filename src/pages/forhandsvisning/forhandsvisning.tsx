@@ -24,7 +24,7 @@ export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
 	const { vedtakFetcher } = useDataFetcherStore();
-	const { vedtak, features, oppfolgingData } = useDataStore();
+	const { vedtak, features } = useDataStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
@@ -52,6 +52,7 @@ export function Forhandsvisning() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
+
 	const sendVedtak = () => {
 		showModal(ModalType.LASTER);
 
@@ -59,9 +60,8 @@ export function Forhandsvisning() {
 			.then(() => {
                 resetSkjema();
 				vedtakFetcher.fetch({ fnr }, () => {
-					const sendesVedtakDigitalt = !oppfolgingData.reservasjonKRR;
 					changeView(ViewType.HOVEDSIDE);
-					showModal(ModalType.VEDTAK_SENT_SUKSESS, { sendesVedtakDigitalt });
+					showModal(ModalType.VEDTAK_SENT_SUKSESS);
 				});
 			})
 			.catch(err => {
@@ -76,7 +76,7 @@ export function Forhandsvisning() {
 			return;
 		}
 
-		sendVedtak();
+		showModal(ModalType.BEKREFT_SEND_VEDTAK, { onSendVedtakBekreftet: sendVedtak });
 	};
 
 	return (
@@ -85,7 +85,12 @@ export function Forhandsvisning() {
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
 					<Show if={kanEndreUtkast && erUtkastKlartTilUtsending}>
-						<Hovedknapp disabled={pdfStatus !== PDFStatus.SUCCESS} mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
+						<Hovedknapp
+							disabled={pdfStatus !== PDFStatus.SUCCESS}
+							mini={true}
+							onClick={handleOnSendClicked}
+							className="forhandsvisning__knapp-sender"
+						>
 							Send til bruker
 						</Hovedknapp>
 					</Show>

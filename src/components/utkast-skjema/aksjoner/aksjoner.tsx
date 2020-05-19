@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
-import { ReactComponent as TaOverIkon } from './locked.svg';
+import { ReactComponent as TaOverIkon } from './taover.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { SkjemaData } from '../../../pages/utkast/utkast-side';
 import { fetchWithInfo } from '../../../rest/utils';
