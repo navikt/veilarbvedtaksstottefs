@@ -7,9 +7,13 @@ import { Dialog } from './dialog/dialog';
 import { Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import { finnUtkastAlltid } from '../../utils';
-import { SidebarTab as SidebarTabType, useSidebarViewStore } from '../../stores/sidebar-view-store';
 import Show from '../show';
 import './sidebar.less';
+
+enum SidebarTabType {
+	TIPS,
+	DIALOG
+}
 
 interface SidebarTab {
 	type: SidebarTabType;
@@ -44,14 +48,14 @@ function mapTabTilView(tab: SidebarTab, isSelected: boolean, onTabClicked: (tab:
 	const classes = cls('sidebar__tab', { 'sidebar__tab--selected': isSelected});
 	return (
 		<button className={classes} onClick={() => onTabClicked(tab)} key={tab.type}>
-			<img className="sidebar__tab-ikon" src={tab.icon} alt={tab.type} />
+			<img className="sidebar__tab-ikon" src={tab.icon} alt={tab.type as unknown as string} />
 		</button>
 	);
 }
 
 export const Sidebar = () => {
 	const { vedtak } = useDataStore();
-	const { selectedTab, setSelectedTab, isSidebarHidden, setIsSidebarHidden } = useSidebarViewStore();
+	const { selectedTab, setSelectedTab, isSidebarHidden, setIsSidebarHidden } = {} as any;
 	const sidebarRef = useRef<HTMLDivElement>(null);
 
 	const selectedTabData = finnTab(selectedTab, sidebarTabs);

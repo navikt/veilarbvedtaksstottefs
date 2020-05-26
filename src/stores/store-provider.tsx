@@ -6,7 +6,6 @@ import { useViewStore } from './view-store';
 import { useModalStore } from './modal-store';
 import { useSkjemaStore } from './skjema-store';
 import { useTilgangStore } from './tilgang-store';
-import { useSidebarViewStore } from './sidebar-view-store';
 import { SkjemaStoreSync } from './sync/skjema-store-sync';
 import { DataStoreSync } from './sync/data-store-sync';
 import { TilgangStoreSync } from './sync/tilgang-store-sync';
@@ -26,12 +25,10 @@ const StoreProvider = (props: StoreProviderProps) => {
 						<useViewStore.Provider>
 							<useModalStore.Provider>
 								<useSkjemaStore.Provider>
-									<useSidebarViewStore.Provider>
-										{props.children}
-										<SkjemaStoreSync />
-										<DataStoreSync />
-										<TilgangStoreSync />
-									</useSidebarViewStore.Provider>
+									{props.children}
+									<SkjemaStoreSync />
+									<DataStoreSync />
+									<TilgangStoreSync />
 								</useSkjemaStore.Provider>
 							</useModalStore.Provider>
 						</useViewStore.Provider>

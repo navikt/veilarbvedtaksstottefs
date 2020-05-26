@@ -34,7 +34,6 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
 import { SystemMeldingType } from '../../../utils/types/melding-type';
 import './aksjoner.less';
-import { SidebarTab, useSidebarViewStore } from '../../../stores/sidebar-view-store';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -56,7 +55,6 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
 	const {validerSkjema, innsatsgruppe, lagringStatus} = useSkjemaStore();
-	const {setSelectedTab} = useSidebarViewStore();
 
 	const [laster, setLaster] = useState(false);
 
@@ -72,7 +70,8 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function fokuserPaDialogSidebarTab() {
-		setSelectedTab(SidebarTab.DIALOG);
+		// TODO: Set fokus på dialog knapp
+		// setSelectedTab(SidebarTab.DIALOG);
 	}
 
 	function sendDataTilBackend() {
