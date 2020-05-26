@@ -5,8 +5,8 @@ import './skjem-bolk.less';
 
 interface SkjemaBolkProps {
 	id?: string;
-	tittel: string;
-	tittelId: string;
+	tittel: React.ReactNode;
+	tittelId?: string;
 	children?: React.ReactNode;
 	className?: string;
 }
@@ -14,9 +14,10 @@ interface SkjemaBolkProps {
 function SkjemaBolk(props: SkjemaBolkProps) {
 	return (
 		<section id={props.id} className={cls('skjemabolk', props.className)}>
-			<div className="skjemabolk__header">
-				<Undertittel id={props.tittelId}>{props.tittel}</Undertittel>
-			</div>
+			{typeof props.tittel === 'string'
+				? <Undertittel id={props.tittelId}>{props.tittel}</Undertittel>
+				: props.tittel
+			}
 			<div className="skjemabolk__innhold">{props.children}</div>
 		</section>
 	);

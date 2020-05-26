@@ -4,7 +4,7 @@ import Popover, { PopoverOrientering } from 'nav-frontend-popover';
 import './tips-popover.less';
 
 interface TipsPopoverProps {
-	popoverContent: any;
+	tipsInnhold: React.ReactNode;
 }
 
 export const TipsPopover = (props: TipsPopoverProps) => {
@@ -20,13 +20,21 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 	}
 
 	return (
-		<>
-			<button className="tips_popover__trigger" ref={popoverTriggerRef} onClick={handleOnRequestOpen} type="button">
-				<img src={tipsBilde} className="tips_popover__trigger-img" alt="Info-ikon" />
+		<div className="tips-popover">
+			<button className="tips-popover__trigger" ref={popoverTriggerRef} onClick={handleOnRequestOpen} type="button">
+				<img src={tipsBilde} className="tips-popover__trigger-img" alt="Info-ikon" />
 			</button>
-			<Popover ankerEl={popoverTrigger} orientering={PopoverOrientering.Hoyre} onRequestClose={handleOnRequestClose}>
-				{props.popoverContent}
+			<Popover
+				autoFokus={false}
+				avstandTilAnker={16}
+				ankerEl={popoverTrigger}
+				orientering={PopoverOrientering.Hoyre}
+				onRequestClose={handleOnRequestClose}
+			>
+				<div className="tips">
+					{props.tipsInnhold}
+				</div>
 			</Popover>
-		</>
+		</div>
 	);
 };

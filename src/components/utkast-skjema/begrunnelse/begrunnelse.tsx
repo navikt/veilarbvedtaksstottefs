@@ -6,10 +6,10 @@ import { useSkjemaStore } from '../../../stores/skjema-store';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { TipsPopover } from '../../tips-popover/tips-popover';
-import { BegrunnelseTips } from './begrunnelse-tips';
+import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
 import { MalformData, MalformType } from '../../../rest/data/malform';
 import { useDataStore } from '../../../stores/data-store';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../utils/types/ornothing';
 import './begrunnelse.less';
 
@@ -60,9 +60,15 @@ function Begrunnelse() {
 		setBegrunnelseFeil(errors.begrunnelse);
 	}, [errors.begrunnelse]);
 
+	const begrunnelseTittel = (
+		<div className="begrunnelse__tittel">
+			<Undertittel id="begrunnelse-tittel">Begrunnelse</Undertittel>
+			<TipsPopover tipsInnhold={<BegrunnelseTipsInnhold/>} />
+		</div>
+	);
+
 	return (
-		<SkjemaBolk tittel="Begrunnelse" tittelId="begrunnelse-tittel">
-			<TipsPopover popoverContent={<BegrunnelseTips/>} />
+		<SkjemaBolk tittel={begrunnelseTittel} className="begrunnelse-skjema-bolk">
 			<div className="begrunnelse">
 				<SkjemaGruppe feil={lagSkjemaElementFeil(begrunnelseFeil)} className="begrunnelse__container">
 					<Textarea

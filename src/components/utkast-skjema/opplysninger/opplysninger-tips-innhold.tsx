@@ -1,10 +1,9 @@
 import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { Tips } from '../../tips/tips';
 
-export const OpplysningerTips = () => {
+export const OpplysningerTipsInnhold = () => {
     return (
-	    <Tips>
+	    <>
 		    <Undertittel className="blokk-xs">Kilder</Undertittel>
 		    <Normaltekst>For andre kilder kan du for eksempel skrive:</Normaltekst>
 		    <ul className="tips__liste">
@@ -25,6 +24,6 @@ export const OpplysningerTips = () => {
 			    </li>
 			    <li>Legeerklæringen 1. november 20xx</li>
 		    </ul>
-	    </Tips>
+	    </>
     );
 };

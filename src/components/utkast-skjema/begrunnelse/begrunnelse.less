@@ -2,6 +2,11 @@
 @import "../../../variabler";
 
 .veilarbvedtaksstottefs {
+
+	.begrunnelse-skjema-bolk {
+		max-width: @begrunnelse-bredde;
+	}
+
 	.begrunnelse {
 		.textarea__container {
 			position: unset;
@@ -15,6 +20,12 @@
 			}
 		}
 
+		&__tittel {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+		}
+
 		&__malform {
 			color: @navGra60;
 		}
@@ -24,7 +35,6 @@
 		}
 
 		&__container {
-			max-width: @begrunnelse-bredde;
 
 			.skjemaelement__feilmelding {
 				font-family: Source Sans Pro, Arial, sans-serif;

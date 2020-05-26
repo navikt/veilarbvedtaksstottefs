@@ -1,10 +1,9 @@
 import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { Tips } from '../../tips/tips';
 
-export const BegrunnelseTips = () => {
+export const BegrunnelseTipsInnhold = () => {
 	return (
-		<Tips>
+		<>
 			<Undertittel className="blokk-xs">Begrunnelse</Undertittel>
 			<Normaltekst>
 				Begrunnelse må skrives for alle innsatsgrupper, bortsett fra standard innsats.
@@ -25,6 +24,6 @@ export const BegrunnelseTips = () => {
 				</li>
 				<li>Hva har dere blitt enige om?</li>
 			</ul>
-		</Tips>
+		</>
 	);
 };

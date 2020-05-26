@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { VisOpplysning } from './vis-opplysning/vis-opplysning';
 import { RedigerOpplysning } from './rediger-opplysning/rediger-opplysning';
 import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
@@ -11,7 +11,7 @@ import { useIsAfterFirstRender } from '../../../utils/hooks';
 import './opplysninger.less';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { TipsPopover } from '../../tips-popover/tips-popover';
-import { OpplysningerTips } from './opplysninger-tips';
+import { OpplysningerTipsInnhold } from './opplysninger-tips-innhold';
 
 export interface Opplysning {
 	navn: string;
@@ -73,11 +73,20 @@ function Opplysninger() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [opplysninger]);
 
+	const opplysningerTittel = (
+		<div className="opplysninger__tittel">
+			<Undertittel id="kilder-tittel">Kilder</Undertittel>
+			<TipsPopover tipsInnhold={<OpplysningerTipsInnhold/>} />
+		</div>
+	);
+
 	return (
-		<SkjemaBolk className="opplysninger-skjema-bolk" id="opplysninger-scroll-to" tittel="Kilder"
-		            tittelId="kilder-tittel">
+		<SkjemaBolk
+			className="opplysninger-skjema-bolk"
+			id="opplysninger-scroll-to"
+			tittel={opplysningerTittel}
+		>
 			<div className="opplysninger">
-				<TipsPopover popoverContent={<OpplysningerTips/>} />
 				<Normaltekst className="blokk-xxs">Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
 				<div className="opplysninger__innhold">
 					<SkjemaGruppe aria-labelledby="kilder-tittel" feil={lagSkjemaElementFeil(errors.opplysninger)}>
