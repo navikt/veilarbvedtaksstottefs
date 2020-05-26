@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import sendIkon from './send.svg';
-import { fetchWithInfo } from '../../../../rest/utils';
-import { lagSendDialogFetchInfo } from '../../../../rest/api';
-import { useAppStore } from '../../../../stores/app-store';
-import { ModalType, useModalStore } from '../../../../stores/modal-store';
-import { useDataFetcherStore } from '../../../../stores/data-fetcher-store';
+import { fetchWithInfo } from '../../../rest/utils';
+import { lagSendDialogFetchInfo } from '../../../rest/api';
+import { useAppStore } from '../../../stores/app-store';
+import { ModalType, useModalStore } from '../../../stores/modal-store';
+import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import './skrivefelt.less';
 
 let midlertidigMelding = '';

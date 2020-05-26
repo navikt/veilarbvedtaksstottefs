@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
+import dialogIkon from './dialog.svg';
 import { ReactComponent as TaOverIkon } from './taover.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { SkjemaData } from '../../../pages/utkast/utkast-side';
@@ -34,6 +35,8 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
 import { SystemMeldingType } from '../../../utils/types/melding-type';
 import './aksjoner.less';
+import { DialogModal } from '../../dialog-modal/dialog-modal';
+import ImageButton from '../../image-button/image-button';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -56,6 +59,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const {showModal} = useModalStore();
 	const {validerSkjema, innsatsgruppe, lagringStatus} = useSkjemaStore();
 
+	const [dialogModalApen, setDialogModalApen] = useState(false);
 	const [laster, setLaster] = useState(false);
 
 	const utkast = finnUtkastAlltid(vedtak);
@@ -70,8 +74,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function fokuserPaDialogSidebarTab() {
-		// TODO: Set fokus på dialog knapp
-		// setSelectedTab(SidebarTab.DIALOG);
+		setDialogModalApen(true);
 	}
 
 	function sendDataTilBackend() {
@@ -264,6 +267,15 @@ function Aksjoner(props: UtkastAksjonerProps) {
 				<Show if={visGodkjentAvBeslutter}>
 					<Element>Godkjent</Element>
 				</Show>
+
+				<ImageButton
+					src={dialogIkon}
+					alt="Snakkebobler"
+					onClick={() => setDialogModalApen(apen => !apen)}
+					className="aksjoner__dialog-knapp"
+					imgClassName="aksjoner__dialog-knapp-ikon"
+				/>
+				<DialogModal open={dialogModalApen} onRequestClose={() => setDialogModalApen(false)}/>
 			</div>
 		</div>
 	);
