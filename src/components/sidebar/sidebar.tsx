@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import cls from 'classnames';
-import tipsIkon from './tips/tips.svg';
+import tipsIkon from './dialog/dialog.svg';
 import dialogIkon from './dialog/dialog.svg';
-import { Tips } from './tips/tips';
+import { OpplysningerTips } from '../utkast-skjema/opplysninger/opplysninger-tips';
 import { Dialog } from './dialog/dialog';
 import { Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
@@ -25,7 +25,7 @@ const sidebarTabs: SidebarTab[] = [
 	{
 		type: SidebarTabType.TIPS,
 		icon: tipsIkon,
-		content: <Tips />
+		content: <OpplysningerTips />
 	},
 	{
 		type: SidebarTabType.DIALOG,

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
-import cls from 'classnames';
 import { hentMalformFraData } from '../../components/utkast-skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
 import Aksjoner from '../../components/utkast-skjema/aksjoner/aksjoner';

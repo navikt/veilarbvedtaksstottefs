@@ -10,6 +10,8 @@ import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../skjema-uti
 import { useIsAfterFirstRender } from '../../../utils/hooks';
 import './opplysninger.less';
 import { useTilgangStore } from '../../../stores/tilgang-store';
+import { TipsPopover } from '../../tips-popover/tips-popover';
+import { OpplysningerTips } from './opplysninger-tips';
 
 export interface Opplysning {
 	navn: string;
@@ -75,6 +77,7 @@ function Opplysninger() {
 		<SkjemaBolk className="opplysninger-skjema-bolk" id="opplysninger-scroll-to" tittel="Kilder"
 		            tittelId="kilder-tittel">
 			<div className="opplysninger">
+				<TipsPopover popoverContent={<OpplysningerTips/>} />
 				<Normaltekst className="blokk-xxs">Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
 				<div className="opplysninger__innhold">
 					<SkjemaGruppe aria-labelledby="kilder-tittel" feil={lagSkjemaElementFeil(errors.opplysninger)}>
