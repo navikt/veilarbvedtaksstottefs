@@ -63,7 +63,7 @@ function Begrunnelse() {
 	const begrunnelseTittel = (
 		<div className="begrunnelse__tittel">
 			<Undertittel id="begrunnelse-tittel">Begrunnelse</Undertittel>
-			<TipsPopover tipsInnhold={<BegrunnelseTipsInnhold/>} />
+			<TipsPopover id="begrunnelse-tips" tipsInnhold={<BegrunnelseTipsInnhold/>} />
 		</div>
 	);
 
