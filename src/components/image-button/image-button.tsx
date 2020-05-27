@@ -2,7 +2,7 @@ import React from 'react';
 import cls from 'classnames';
 import './image-button.less';
 
-interface ImageButtonProps {
+interface ImageButtonProps extends React.HTMLProps<HTMLButtonElement>{
 	src: string;
 	alt: string;
 	onClick?: () => void;
@@ -11,9 +11,10 @@ interface ImageButtonProps {
 }
 
 function ImageButton(props: ImageButtonProps) {
+	const {src, alt, onClick, className, imgClassName, type, ...rest} = props;
 	return (
-		<button type="button" className={cls(props.className, 'image-button')} onClick={props.onClick}>
-			<img src={props.src} alt={props.alt} className={props.imgClassName} />
+		<button type="button" className={cls(className, 'image-button')} onClick={onClick} {...rest}>
+			<img src={src} alt={alt} className={imgClassName} />
 		</button>
 	);
 }

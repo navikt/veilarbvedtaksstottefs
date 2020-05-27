@@ -21,15 +21,14 @@
 				font-family: Source Sans Pro, Arial, sans-serif;
 				font-size: 14px;
 			}
+
+			input:disabled {
+				background-color: @navLysGra;
+			}
 		}
 
 		&__send-knapp {
-			border: none;
-			padding: 0;
 			margin: auto 0.5rem;
-
-			width: 40px;
-			height: 40px;
 		}
 
 		&__send-knapp:disabled {
@@ -41,10 +40,11 @@
 			transform: scale(1.15);
 		}
 
-		&__send-ikon {
+		&__send-knapp-ikon {
 			width: 36px;
 			height: 36px;
 		}
+
 	}
 
 }
