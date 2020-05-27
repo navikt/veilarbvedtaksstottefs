@@ -1,9 +1,9 @@
 import React from 'react';
 import cls from 'classnames';
 import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
-import { formatDayMonthTime } from '../../../../../utils/date-utils';
+import { formatDayMonthTime } from '../../../../utils/date-utils';
 import './dialog-melding.less';
-import Show from '../../../../show';
+import Show from '../../../show';
 
 interface DialogMeldingProps {
 	tekst: string;

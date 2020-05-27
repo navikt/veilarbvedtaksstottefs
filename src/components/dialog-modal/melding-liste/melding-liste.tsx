@@ -3,8 +3,8 @@ import cls from 'classnames';
 import {
 	DialogMelding as DialogMeldingData,
 	SystemMelding as SystemMeldingData
-} from '../../../../rest/data/melding';
-import { MeldingType } from '../../../../utils/types/melding-type';
+} from '../../../rest/data/melding';
+import { MeldingType } from '../../../utils/types/melding-type';
 import { DialogMelding } from './dialog-melding/dialog-melding';
 import { SystemMelding } from './system-melding/system-melding';
 import './melding-liste.less';

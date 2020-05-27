@@ -1,12 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import sendIkon from './send.svg';
-import { fetchWithInfo } from '../../../../rest/utils';
-import { lagSendDialogFetchInfo } from '../../../../rest/api';
-import { useAppStore } from '../../../../stores/app-store';
-import { ModalType, useModalStore } from '../../../../stores/modal-store';
-import { useDataFetcherStore } from '../../../../stores/data-fetcher-store';
+import { fetchWithInfo } from '../../../rest/utils';
+import { lagSendDialogFetchInfo } from '../../../rest/api';
+import { useAppStore } from '../../../stores/app-store';
+import { ModalType, useModalStore } from '../../../stores/modal-store';
+import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import './skrivefelt.less';
+import ImageButton from '../../image-button/image-button';
 
 let midlertidigMelding = '';
 
@@ -55,9 +56,14 @@ export const Skrivefelt = () => {
 			    onChange={handleOnMeldingChanged}
 			    placeholder="Skriv en kommentar"
 		    />
-		    <button disabled={senderMelding || harIkkeSkrevetMelding} className="skrivefelt__send-knapp" onClick={handleOnDialogSendClicked} aria-label="Send">
-			    <img className="skrivefelt__send-ikon" src={sendIkon} alt="Send" />
-		    </button>
+		    <ImageButton
+			    disabled={senderMelding || harIkkeSkrevetMelding} src={sendIkon}
+			    alt="Send"
+			    aria-label="Send"
+			    className="skrivefelt__send-knapp"
+			    imgClassName="skrivefelt__send-knapp-ikon"
+			    onClick={handleOnDialogSendClicked}
+		    />
 	    </div>
     );
 };

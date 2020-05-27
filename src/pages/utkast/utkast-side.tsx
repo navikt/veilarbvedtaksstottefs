@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
-import cls from 'classnames';
 import { hentMalformFraData } from '../../components/utkast-skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
 import Aksjoner from '../../components/utkast-skjema/aksjoner/aksjoner';
@@ -15,9 +14,7 @@ import { useSkjemaStore } from '../../stores/skjema-store';
 import { finnUtkastAlltid } from '../../utils';
 import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
 import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
-import { Sidebar } from '../../components/sidebar/sidebar';
 import { useDataStore } from '../../stores/data-store';
-import { useSidebarViewStore } from '../../stores/sidebar-view-store';
 import './utkast-side.less';
 import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
 
@@ -31,7 +28,6 @@ export interface SkjemaData {
 export function UtkastSide() {
 	const { fnr } = useAppStore();
 	const { vedtak, malform } = useDataStore();
-	const { isSidebarHidden } = useSidebarViewStore();
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert,
@@ -57,10 +53,6 @@ export function UtkastSide() {
 	}, 3000));
 
 	const vedtakskjema = { opplysninger, begrunnelse, innsatsgruppe, hovedmal };
-	const innholdClassNames = cls('utkast-side__innhold', {
-		'utkast-side__innhold--with-sidebar': !isSidebarHidden,
-		'utkast-side__innhold--without-sidebar': isSidebarHidden
-	});
 
 	useEffect(() => {
 		// Initialiser når utkastet åpnes
@@ -93,17 +85,14 @@ export function UtkastSide() {
 	}, []);
 
 	return (
-		<div className="utkast-side">
-			<SkjemaHeader utkast={finnUtkastAlltid(vedtak)} sistOppdatert={sistOppdatert} />
-			<div className={innholdClassNames}>
-				<div>
-					<UtkastSkjema />
-					<Footer>
-						<Aksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
-					</Footer>
-				</div>
-				<Sidebar />
-			</div>
-		</div>
+        <div className="utkast-side page--grey">
+            <div className="utkast-side__utkast">
+                <SkjemaHeader utkast={finnUtkastAlltid(vedtak)} sistOppdatert={sistOppdatert} />
+                <UtkastSkjema />
+            </div>
+            <Footer>
+                <Aksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
+            </Footer>
+        </div>
 	);
 }

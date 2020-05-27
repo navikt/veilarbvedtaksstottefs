@@ -18,7 +18,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 		<header className="skjema-header">
 			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon"/>
 			<div className="skjema-header__innhold">
-				<Systemtittel tag="h1" className="skjema-header__tittel">Utkast til oppfølgingsvedtak</Systemtittel>
+				<Systemtittel tag="h1" className="skjema-header__tittel blokk-xxxs">Utkast til oppfølgingsvedtak</Systemtittel>
 				<div className="skjema-header__info">
 					<Label titleText="Ansvarlig" valueText={veilederNavn} labelType={LabelType.SMALL} />
 					<div className="seperator"/>

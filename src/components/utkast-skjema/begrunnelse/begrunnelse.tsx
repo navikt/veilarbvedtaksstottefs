@@ -4,13 +4,32 @@ import { lagSkjemaElementFeil, validerBegrunnelseMaxLength } from '../skjema-uti
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { frontendlogger } from '../../../utils/frontend-logger';
-import './begrunnelse.less';
 import { useTilgangStore } from '../../../stores/tilgang-store';
+import { TipsPopover } from '../../tips-popover/tips-popover';
+import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
+import { MalformData, MalformType } from '../../../rest/data/malform';
+import { useDataStore } from '../../../stores/data-store';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { OrNothing } from '../../../utils/types/ornothing';
+import './begrunnelse.less';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
 
+function malformToTekst(malform: OrNothing<MalformData>): string {
+	const malformType = malform ? malform.malform : null;
+
+	if (malformType === MalformType.NN || malformType === MalformType.NB) {
+		return `Norsk (${malformType === MalformType.NN ? 'Nynorsk' : 'Bokmål'})`;
+	} else if (!malformType) {
+		return 'Ukjent';
+	}
+
+	return malformType;
+}
+
 function Begrunnelse() {
+	const { malform } = useDataStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const {begrunnelse, setBegrunnelse, errors, innsatsgruppe} = useSkjemaStore();
 	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
@@ -41,8 +60,15 @@ function Begrunnelse() {
 		setBegrunnelseFeil(errors.begrunnelse);
 	}, [errors.begrunnelse]);
 
+	const begrunnelseTittel = (
+		<div className="begrunnelse__tittel">
+			<Undertittel id="begrunnelse-tittel">Begrunnelse</Undertittel>
+			<TipsPopover id="begrunnelse-tips" tipsInnhold={<BegrunnelseTipsInnhold/>} />
+		</div>
+	);
+
 	return (
-		<SkjemaBolk tittel="Begrunnelse" tittelId="begrunnelse-tittel">
+		<SkjemaBolk tittel={begrunnelseTittel} className="begrunnelse-skjema-bolk">
 			<div className="begrunnelse">
 				<SkjemaGruppe feil={lagSkjemaElementFeil(begrunnelseFeil)} className="begrunnelse__container">
 					<Textarea
@@ -57,6 +83,7 @@ function Begrunnelse() {
 						autoCorrect="on"
 						disabled={!kanEndreUtkast}
 					/>
+					<Normaltekst className="begrunnelse__malform">Brukers målform: {malformToTekst(malform)}</Normaltekst>
 				</SkjemaGruppe>
 			</div>
 		</SkjemaBolk>

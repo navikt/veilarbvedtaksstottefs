@@ -1,6 +1,6 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { SystemMeldingType } from '../../../../../utils/types/melding-type';
+import { SystemMeldingType } from '../../../../utils/types/melding-type';
 import './system-melding.less';
 
 interface SystemMeldingProps {
