@@ -173,16 +173,17 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 	return (
 		<div className="aksjoner">
-			<Tilbakeknapp
-				htmlType="button"
-				onClick={handleOnTilbakeClicked}
-				disabled={laster}
-			/>
-
-			<div className="aksjoner__lagring-tekst">
-				<Normaltekst>
-					{mapSkjemaLagringStatusTilTekst(lagringStatus)}
-				</Normaltekst>
+			<div className="aksjoner__knapper-venstre">
+				<Tilbakeknapp
+					htmlType="button"
+					onClick={handleOnTilbakeClicked}
+					disabled={laster}
+				/>
+				<div className="aksjoner__lagring-tekst">
+					<Normaltekst>
+						{mapSkjemaLagringStatusTilTekst(lagringStatus)}
+					</Normaltekst>
+				</div>
 			</div>
 
 			<div className="aksjoner__knapper-midten">

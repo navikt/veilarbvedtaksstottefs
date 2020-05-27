@@ -5,7 +5,7 @@ import './image-button.less';
 interface ImageButtonProps extends React.HTMLProps<HTMLButtonElement>{
 	src: string;
 	alt: string;
-	onClick?: () => void;
+	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	className?: string;
 	imgClassName?: string;
 }
