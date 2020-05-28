@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import tipsBilde from './tips.svg';
 import Popover, { PopoverOrientering } from 'nav-frontend-popover';
+import { frontendlogger } from '../../utils/frontend-logger';
 import './tips-popover.less';
 
 interface TipsPopoverProps {
@@ -17,12 +18,18 @@ I test/prod skal ikke dette være et problem.
 export const TipsPopover = (props: TipsPopoverProps) => {
 	const [popoverTrigger, setPopoverTrigger] = useState<HTMLButtonElement>();
 
+	function logToggleMetrikk(apnet: boolean) {
+		frontendlogger.logMetrikk('tips-togglet', { id: props.id, apnet });
+	}
+
 	function handleOnRequestOpen(e: React.MouseEvent<HTMLButtonElement>) {
 		setPopoverTrigger(e.currentTarget);
+		logToggleMetrikk(true);
 	}
 
 	function handleOnRequestClose() {
 		setPopoverTrigger(undefined);
+		logToggleMetrikk(false);
 	}
 
 	return (
