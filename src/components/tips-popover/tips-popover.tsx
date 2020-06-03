@@ -49,7 +49,7 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 				autoFokus={false}
 				avstandTilAnker={16}
 				ankerEl={popoverTrigger}
-				orientering={PopoverOrientering.Hoyre}
+				orientering={PopoverOrientering.UnderVenstre}
 				onRequestClose={handleOnRequestClose}
 			>
 				<div className="tips">
