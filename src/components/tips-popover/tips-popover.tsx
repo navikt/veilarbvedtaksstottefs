@@ -22,9 +22,10 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 		frontendlogger.logMetrikk('tips-togglet', { id: props.id, apnet });
 	}
 
-	function handleOnRequestOpen(e: React.MouseEvent<HTMLButtonElement>) {
-		setPopoverTrigger(e.currentTarget);
-		logToggleMetrikk(true);
+	function togglePopoverOpen(e: React.MouseEvent<HTMLButtonElement>) {
+		const target = popoverTrigger ? undefined : e.currentTarget;
+		setPopoverTrigger(target);
+		logToggleMetrikk(target !== undefined);
 	}
 
 	function handleOnRequestClose() {
@@ -36,7 +37,7 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 		<div className="tips-popover">
 			<button
 				className="tips-popover__trigger"
-				onClick={handleOnRequestOpen}
+				onClick={togglePopoverOpen}
 				type="button"
 				aria-expanded={popoverTrigger !== undefined}
 				aria-controls={props.id}
