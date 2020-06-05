@@ -1,22 +1,24 @@
 import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { VedtakData } from '../../../rest/data/vedtak';
+import { Vedtak } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import nyttVedtakBilde from './nytt-vedtak.svg';
 import { frontendlogger } from '../../../utils/frontend-logger';
-import { useFetchStore } from '../../../stores/fetch-store';
 import { fetchWithInfo } from '../../../rest/utils';
 import { lagNyttVedtakUtkastFetchInfo } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
+import { useDataStore } from '../../../stores/data-store';
+import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import './nytt-vedtak-panel.less';
 
-export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData> }) {
+export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
-	const { oppfolgingData, vedtak } = useFetchStore();
+	const { vedtakFetcher } = useDataFetcherStore();
+	const { oppfolgingData, setMeldinger } = useDataStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
 
@@ -24,10 +26,14 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData> }) {
 		showModal(ModalType.LASTER);
 		fetchWithInfo(lagNyttVedtakUtkastFetchInfo({ fnr }))
 			.then(() => {
-				vedtak.fetch({ fnr }, () => {
-					hideModal();
-					changeView(ViewType.UTKAST);
-					frontendlogger.logMetrikk('lag-nytt-vedtak');
+				vedtakFetcher.fetch({ fnr }, () => {
+					// Wrap in timeout so that data-store-sync.tsx can pick up the changes before the view is changed
+					setTimeout(() => {
+						setMeldinger([]); // Rydd opp hvis det ligger gamle meldinger mellomlagret
+						hideModal();
+						changeView(ViewType.UTKAST);
+						frontendlogger.logMetrikk('lag-nytt-vedtak');
+					}, 0);
 				});
 			})
 			.catch(() => {
@@ -35,7 +41,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<VedtakData> }) {
 			});
 	}
 
-	if (utkast || !oppfolgingData.data.underOppfolging) {
+	if (utkast || !oppfolgingData.underOppfolging) {
 		return null;
 	}
 

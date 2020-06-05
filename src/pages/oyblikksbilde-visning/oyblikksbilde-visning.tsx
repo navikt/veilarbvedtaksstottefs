@@ -20,7 +20,7 @@ import './oyblikksbilde-visning.less';
 import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } from './oyblikksbilde-fikser';
 
 function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
-	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.oyblikksbildeType === oyblikksbildeType) : null;
+	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.oyeblikksbildeType === oyblikksbildeType) : null;
 	return oyblikksbilde ? oyblikksbilde.json : null;
 }
 
@@ -56,22 +56,24 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 	);
 
 	return (
-		<Page className="oyblikksbilde-visning page--grey">
-			<section className="vedlegg">
-				<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
-				<VedleggCard
-					tittel="CV og Jobbprofil"
-					json={cvOgJobbprofileJson}
-				/>
-				<VedleggCard
-					tittel="Registrering"
-					json={registreringsinfoJson}
-				/>
-				<VedleggCard
-					tittel="Egenvurdering"
-					json={egenvurderingJson}
-				/>
-			</section>
+		<>
+			<Page className="oyblikksbilde-visning page--grey">
+				<section className="vedlegg">
+					<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
+					<VedleggCard
+						tittel="CV og Jobbprofil"
+						json={cvOgJobbprofileJson}
+					/>
+					<VedleggCard
+						tittel="Registrering"
+						json={registreringsinfoJson}
+					/>
+					<VedleggCard
+						tittel="Egenvurdering"
+						json={egenvurderingJson}
+					/>
+				</section>
+			</Page>
 			<Footer className="oyblikksbilde-visning__footer">
 				<div className="oyblikksbilde-visning__aksjoner">
 					<Hovedknapp mini={true} onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}>
@@ -79,7 +81,7 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 					</Hovedknapp>
 				</div>
 			</Footer>
-		</Page>
+		</>
 	);
 }
 

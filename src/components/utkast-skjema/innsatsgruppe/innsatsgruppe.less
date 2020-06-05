@@ -1,0 +1,51 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.innsatsgruppe {
+		display: grid;
+		grid-column-gap: 1rem;
+		grid-row-gap: 1rem;
+		grid-template-columns: 1fr;
+
+		&__alertstripe {
+			margin: 1rem 0;
+			animation: linear 0.25s info-fade-in;
+
+			.alertstripe__tekst {
+				max-width: none;
+			}
+		}
+
+		.innsatsgruppe-label {
+			margin-left: 0.75rem;
+
+			&__undertekst {
+				font-size: 14px;
+				color: @navGra60;
+				line-height: 1rem;
+			}
+
+			&__undertekst--valgt {
+				color: @navGra80;
+			}
+
+		}
+	}
+
+	@media (min-width: @screen-lg-min) {
+		.innsatsgruppe {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	@keyframes info-fade-in {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+}

@@ -1,0 +1,72 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.dialog-melding {
+		width: 85%;
+		padding: 0.5rem;
+
+		&__metadata {
+			display: flex;
+			margin-bottom: 0.25rem;
+		}
+
+		&__metadata-dato {
+			font-style: italic;
+		}
+
+		&__tekst {
+			padding: 0.25rem 0;
+			word-break: break-word;
+		}
+
+		&__tekst-wrapper {
+			display: flex;
+		}
+	}
+
+	.dialog-melding--fra-meg {
+		text-align: start;
+
+		.dialog-melding__metadata {
+			flex-direction: row-reverse;
+		}
+
+		.dialog-melding__tekst-wrapper {
+			flex-direction: row-reverse;
+		}
+	}
+
+	.dialog-melding--til-meg {
+		text-align: start;
+
+		.dialog-melding__metadata {
+			flex-direction: row;
+
+			&-navn {
+				margin-right: 0.5rem;
+			}
+		}
+
+		.dialog-melding__tekst-wrapper {
+			flex-direction: row;
+		}
+	}
+
+	.dialog-melding-bar {
+		min-width: 4px;
+		border-radius: 8px;
+		background-color: #0067c5;
+
+		&--fra-meg {
+			background-color: @navBla;
+			margin-left: 0.75rem;
+		}
+
+		&--til-meg {
+			background-color: #ccdee6;
+			margin-right: 0.75rem;
+		}
+	}
+
+}

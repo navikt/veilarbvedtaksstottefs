@@ -3,19 +3,25 @@ import { ModalType, useModalStore } from '../stores/modal-store';
 import { FeilModal } from './modal/feil-modal/feil-modal';
 import {
 	FeilModalConfig,
+	feilVedBliBeslutterConfig,
 	feilVedForhandsvisnigConfig,
+	feilVedGodkjenningAvBeslutter,
 	feilVedLagringConfig,
+	feilVedOppdaterBeslutterProsessStatus,
 	feilVedOpprettingAvUtkast,
+	feilVedOvertakelseAvUtkastConfig,
 	feilVedSendningConfig,
 	feilVedSlettingAvUtkastConfig,
+	feilVedStartBeslutterProsessConfig,
+	feilVedUtsendingAvDialogMelding,
 	feilVedVisningConfig,
-	stoppeInnsendingFeatureToggleConfig
+	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
-import { KvalitetsSikringModalInnsending } from './modal/kvalitetssikring-modal/kvalitetssikring-modal';
 import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
+import { BekreftSendVedtakModal } from './modal/vedtak-sendt/bekreft-send-vedtak-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
-import { BeslutterOppgaveModal } from './modal/beslutter-oppgave-modal/beslutter-oppgave-modal';
+import TaOverModal from './modal/ta-over-modal/ta-over-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
@@ -23,8 +29,8 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedOpprettingAvUtkast;
 		case ModalType.FEIL_VED_SENDING:
 			return feilVedSendningConfig;
-		case ModalType.FEIL_INNSENDING_STOPPET:
-			return stoppeInnsendingFeatureToggleConfig;
+		case ModalType.FEIL_UTSENDING_STOPPET:
+			return stoppeUtsendingFeatureToggleConfig;
 		case ModalType.FEIL_VED_FORHANDSVISNING:
 			return feilVedForhandsvisnigConfig;
 		case ModalType.FEIL_VED_SLETTING:
@@ -33,6 +39,18 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedVisningConfig;
 		case ModalType.FEIL_VED_LAGRING:
 			return feilVedLagringConfig;
+		case ModalType.FEIL_VED_OVERTAKELSE:
+			return feilVedOvertakelseAvUtkastConfig;
+		case ModalType.FEIL_VED_START_BESLUTTER_PROSESS:
+			return feilVedStartBeslutterProsessConfig;
+		case ModalType.FEIL_VED_BLI_BESLUTTER:
+			return feilVedBliBeslutterConfig;
+		case ModalType.FEIL_VED_UTSENDING_AV_DIALOG_MELDING:
+			return feilVedUtsendingAvDialogMelding;
+		case ModalType.FEIL_VED_OPPDATER_BESLUTTER_PROSESS_STATUS:
+			return feilVedOppdaterBeslutterProsessStatus;
+		case ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER:
+			return feilVedGodkjenningAvBeslutter;
 		default:
 			return null;
 	}
@@ -45,17 +63,10 @@ export function ModalController() {
 	return (
 		<>
 			<SpinnerModal isOpen={modalType === ModalType.LASTER} />
-			<KvalitetsSikringModalInnsending
-				isOpen={modalType === ModalType.KVALITETSSIKRING}
-				sendVedtak={modalProps.sendVedtak}
-				beslutterNavn={modalProps.beslutterNavn}
-			/>
-			<BeslutterOppgaveModal isOpen={modalType === ModalType.BESLUTTER_OPPGAVE} />
-			<VedtakSendtModal
-				isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS}
-				sendesVedtakDigitalt={modalProps.sendesVedtakDigitalt}
-			/>
+			<BekreftSendVedtakModal isOpen={modalType === ModalType.BEKREFT_SEND_VEDTAK} onSendVedtakBekreftet={modalProps.onSendVedtakBekreftet}/>
+			<VedtakSendtModal isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
+			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>
 	);

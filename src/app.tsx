@@ -1,12 +1,15 @@
 import React from 'react';
 import { ViewController } from './components/view-controller';
-import { DataFetcher } from './components/datafetcher';
+import { DataFetcher } from './components/data-fetcher';
 import { PrelanseringSjekk } from './components/sjekk/prelansering-sjekk';
 import { NasjonalTilgangSjekk } from './components/sjekk/nasjonal-tilgang-sjekk';
 import StoreProvider from './stores/store-provider';
 import { ModalController } from './components/modal-controller';
-import { UtkastSkjemaSync } from './components/utkast-skjema-sync';
+import { TabClickedListener } from './components/tab-clicked-listener';
 import './app.less';
+import { MockPanel } from './mock/panel/mock-panel';
+import Show from './components/show';
+import env from './utils/environment';
 
 interface AppProps {
 	fnr: string;
@@ -20,9 +23,12 @@ function App(props: AppProps) {
 				<PrelanseringSjekk>
 					<NasjonalTilgangSjekk fnr={props.fnr}>
 						<DataFetcher fnr={props.fnr}>
-							<UtkastSkjemaSync />
 							<ViewController />
 							<ModalController />
+							<TabClickedListener />
+							<Show if={!env.isProduction}>
+								<MockPanel />
+							</Show>
 						</DataFetcher>
 					</NasjonalTilgangSjekk>
 				</PrelanseringSjekk>

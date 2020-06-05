@@ -1,0 +1,72 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+	.dialog-modal {
+		position: fixed;
+		bottom: 96px;
+		right: 32px;
+		z-index: 5;
+
+		width: 450px;
+		height: 850px;
+		background-color: white;
+		border: 1px solid @navGra40;
+		border-radius: 4px;
+
+		display: flex;
+		flex-direction: column;
+
+		&__header {
+			padding: 0.75rem 0;
+			border-bottom: 1px solid @navGra20;
+
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+		}
+
+		&__header-tittel {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+		}
+
+		&__header-ikon {
+			margin: auto 0.75rem auto 1rem;
+
+			width: 32px;
+			height: 32px;
+		}
+
+		&__header-aksjoner {
+			display: flex;
+			flex-direction: row;
+			justify-items: flex-end;
+		}
+
+		&__header-aksjon-ikon {
+			margin: auto 0.25rem;
+
+			width: 24px;
+			height: 24px;
+		}
+
+		&__header-aksjon-lukk {
+			margin-right: 1rem;
+			margin-left: 1rem;
+		}
+
+		.meldinger {
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+			flex-basis: auto;
+			overflow-y: auto;
+		}
+
+		.skrivefelt {
+			flex-shrink: 1;
+		}
+	}
+
+}

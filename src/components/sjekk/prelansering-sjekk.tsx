@@ -1,23 +1,23 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { Prelansering } from '../../pages/prelansering/prelansering';
-import { PRELANSERING_TOGGLE } from '../../rest/data/features';
-import { useFetchStore } from '../../stores/fetch-store';
+import { PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../rest/data/features';
+import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../../rest/utils';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
-	const { features } = useFetchStore();
+	const { featuresFetcher } = useDataFetcherStore();
 
 	useEffect(() => {
-		if (isNotStarted(features)) {
-			features.fetch(null);
+		if (isNotStarted(featuresFetcher)) {
+			featuresFetcher.fetch(null);
 		}
-	}, [features]);
+	}, [featuresFetcher]);
 
-	if (isAnyNotStartedOrPending([features])) {
+	if (isAnyNotStartedOrPending([featuresFetcher])) {
 		return <Spinner />;
-	} else if (hasAnyFailed([features])) {
+	} else if (hasAnyFailed([featuresFetcher])) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.
@@ -26,5 +26,5 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 		);
 	}
 
-	return features.data[PRELANSERING_TOGGLE] ? <Prelansering /> : props.children;
+	return (featuresFetcher.data[PRELANSERING_TOGGLE] && !featuresFetcher.data[PILOT_TOGGLE]) ? <Prelansering /> : props.children;
 }

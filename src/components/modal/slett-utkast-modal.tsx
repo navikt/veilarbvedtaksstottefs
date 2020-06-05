@@ -9,13 +9,13 @@ import { fetchWithInfo } from '../../rest/utils';
 import { lagSlettUtkastFetchInfo } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
-import { useFetchStore } from '../../stores/fetch-store';
+import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 
 function SlettUtkastModal(props: ModalProps) {
 	const { fnr } = useAppStore();
 	const { hideModal, showModal } = useModalStore();
-	const { vedtak } = useFetchStore();
+	const { vedtakFetcher } = useDataFetcherStore();
 	const { changeView } = useViewStore();
 	const { resetSkjema } = useSkjemaStore();
 
@@ -23,7 +23,7 @@ function SlettUtkastModal(props: ModalProps) {
 		showModal(ModalType.LASTER);
 		fetchWithInfo(lagSlettUtkastFetchInfo({ fnr }))
 			.then(() => {
-				vedtak.fetch({ fnr }, () => {
+				vedtakFetcher.fetch({ fnr }, () => {
 					resetSkjema();
 					hideModal();
 					changeView(ViewType.HOVEDSIDE);

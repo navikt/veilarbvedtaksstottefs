@@ -24,16 +24,6 @@
 		border: none;
 	}
 
-	.alertstripe--info {
-		border: 1px solid #66CBEC;
-		background-color: #e0f5fb;
-	}
-
-	.alertstripe--advarsel {
-		border: 1px solid #FF9100;
-		background-color: #ffe9cc;
-	}
-
 	.vedtaksstotte-alert {
 		width: 600px;
 		margin: 3rem auto 0 auto;
@@ -63,4 +53,8 @@
 		color: @navBla;
 	}
 
+	.inputPanel__field:checked:disabled + .inputPanel__label:before {
+		background-color: @navGra40;
+		border-color: @navGra40;
+	}
 }

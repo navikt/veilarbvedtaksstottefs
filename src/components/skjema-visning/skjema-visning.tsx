@@ -1,5 +1,5 @@
 import React from 'react';
-import { InnsatsgruppeType, VedtakData } from '../../rest/data/vedtak';
+import { InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { SkjemaVisningHeader } from './header/skjema-visning-header';
 import { Label } from '../label/label';
@@ -9,16 +9,16 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
 import './skjema-visning.less';
 import { getHovedmalNavn } from '../../utils/hovedmal';
+import Tekstomrade from 'nav-frontend-tekstomrade';
 
-export function SkjemaVisning(props: { vedtak: VedtakData }) {
+export function SkjemaVisning(props: { vedtak: Vedtak }) {
 	const { changeView } = useViewStore();
 	const {
 		id, hovedmal, opplysninger,
 		innsatsgruppe, begrunnelse,
 		beslutterNavn, gjeldende,
 		veilederNavn, oppfolgingsenhetNavn,
-		oppfolgingsenhetId, sistOppdatert,
-		sendtTilBeslutter
+		oppfolgingsenhetId, sistOppdatert
 	} = props.vedtak;
 
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
@@ -30,20 +30,20 @@ export function SkjemaVisning(props: { vedtak: VedtakData }) {
 
 			<div className="skjema-visning__info">
 				<Label
-					labelClassName="label__title--gap-lg"
+					titleTextClassName="label__title-text--gap-lg"
 					className="blokk-xxs"
-					labelText="Dato"
+					titleText="Dato"
 					valueText={formatDateStr(sistOppdatert)}
 				/>
-				<Show if={sendtTilBeslutter}>
+				<Show if={beslutterNavn}>
 					<Label
-						labelClassName="label__title--gap-lg"
+						titleTextClassName="label__title-text--gap-lg"
 						className="blokk-xxs"
-						labelText="Beslutter"
+						titleText="Beslutter"
 						valueText={beslutterNavn}
 					/>
 				</Show>
-				<Label labelClassName="label__title--gap-lg" labelText="Fattet av" valueText={fattetAv} />
+				<Label titleTextClassName="label__title-text--gap-lg" titleText="Fattet av" valueText={fattetAv} />
 			</div>
 
 			<div className="skjema-visning__felter">
@@ -59,7 +59,7 @@ export function SkjemaVisning(props: { vedtak: VedtakData }) {
 			</div>
 
 			<Element tag="span" className="skjema-visning__label blokk-xxs">Begrunnelse</Element>
-			<Normaltekst className="text--grey skjema-visning__begrunnelse">{begrunnelse}</Normaltekst>
+			<Tekstomrade className="skjema-visning__begrunnelse">{begrunnelse ? begrunnelse : ''}</Tekstomrade>
 
 			<Element tag="span" className="skjema-visning__label blokk-xxs">Kilder</Element>
 			<ul className="skjema-visning__opplysninger">{opplysninger.map((o, idx) => (<li key={idx}>{o}</li>))}</ul>

@@ -15,7 +15,13 @@ export enum HovedmalType {
 	BEHOLDE_ARBEID = 'BEHOLDE_ARBEID'
 }
 
-export interface VedtakData {
+export enum BeslutterProsessStatus {
+	KLAR_TIL_BESLUTTER = 'KLAR_TIL_BESLUTTER',
+	KLAR_TIL_VEILEDER = 'KLAR_TIL_VEILEDER',
+	GODKJENT_AV_BESLUTTER = 'GODKJENT_AV_BESLUTTER'
+}
+
+export interface Vedtak {
 	id: number;
 	hovedmal: OrNothing<HovedmalType>;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
@@ -27,9 +33,17 @@ export interface VedtakData {
 	veilederNavn: string;
 	oppfolgingsenhetId: string;
 	oppfolgingsenhetNavn: string;
+	beslutterIdent: OrNothing<string>;
 	beslutterNavn: OrNothing<string>;
-	sendtTilBeslutter: boolean;
 	opplysninger: string[];
 	journalpostId: OrNothing<string>;
 	dokumentInfoId: OrNothing<string>;
+	beslutterProsessStatus: OrNothing<BeslutterProsessStatus>;
 }
+
+export interface ArenaVedtak {
+	journalpostId: string;
+	dokumentInfoId: string;
+	dato: string;
+}
+

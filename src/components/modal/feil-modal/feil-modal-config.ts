@@ -19,7 +19,7 @@ export const feilVedSendningConfig: FeilModalConfig = {
 	knappeTekst: 'Tilbake til vedtakskjema'
 };
 
-export const stoppeInnsendingFeatureToggleConfig: FeilModalConfig = {
+export const stoppeUtsendingFeatureToggleConfig: FeilModalConfig = {
 	tittel: 'Problemer med å sende',
 	beskrivelse: 'Det er problemer med å sende vedtak for øyeblikket. Vi jobber med å løse saken.',
 	viewAction: ViewType.UTKAST,
@@ -49,4 +49,34 @@ export const feilVedLagringConfig: FeilModalConfig = {
 export const feilVedSlettingAvUtkastConfig: FeilModalConfig = {
 	tittel: 'Klarte ikke å slette utkast',
 	beskrivelse: 'En feil oppstod under slettingen av utkastet. Vennligst prøv igjen senere.'
+};
+
+export const feilVedOvertakelseAvUtkastConfig: FeilModalConfig = {
+	tittel: 'Klarte ikke å ta over utkast',
+	beskrivelse: 'En feil oppstod under overtakelse av utkast. Vennligst prøv igjen senere.'
+};
+
+export const feilVedStartBeslutterProsessConfig: FeilModalConfig = {
+	tittel: 'Klarte ikke å klargjøre utkastet for beslutter',
+	beskrivelse: 'En feil oppstod under klargjøring av utkastet for beslutter. Vennligst prøv igjen senere.'
+};
+
+export const feilVedBliBeslutterConfig: FeilModalConfig = {
+	tittel: 'Klarte ikke å bli beslutter',
+	beskrivelse: 'En feil oppstod under overtakselse som beslutter. Vennligst prøv igjen senere.'
+};
+
+export const feilVedUtsendingAvDialogMelding: FeilModalConfig = {
+	tittel: 'Klarte ikke å sende meldingen',
+	beskrivelse: 'En feil oppstod under utsendingen av meldingen. Vennligst prøv igjen senere.'
+};
+
+export const feilVedOppdaterBeslutterProsessStatus: FeilModalConfig = {
+	tittel: 'Klarte ikke å oppdatere status',
+	beskrivelse: 'En feil oppstod under oppdatering av status. Vennligst prøv igjen senere.'
+};
+
+export const feilVedGodkjenningAvBeslutter: FeilModalConfig = {
+	tittel: 'Klarte ikke å godkjenne vedtaket',
+	beskrivelse: 'En feil oppstod under godkjenning av vedtaket. Vennligst prøv igjen senere.'
 };

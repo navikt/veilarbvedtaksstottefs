@@ -1,33 +1,18 @@
 import React from 'react';
-import { InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
-import { Dato } from '../dato';
+import { InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
+import { DatoLabel } from '../dato-label';
 import { Knapp } from 'nav-frontend-knapper';
-import { OrNothing } from '../../../utils/types/ornothing';
 import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
-import fullfortVedtakIcon from './fullfort.svg';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import { useViewStore, ViewType } from '../../../stores/view-store';
-import './gjeldende-vedtak-panel.less';
 import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
+import fullfortVedtakIcon from './fullfort.svg';
+import './gjeldende-vedtak-panel.less';
 
-export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakData> }) {
+export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
-
-	if (!props.gjeldendeVedtak) {
-		return null;
-	}
-
-	const {
-		id,
-		innsatsgruppe,
-		sistOppdatert,
-		veilederNavn,
-		oppfolgingsenhetId,
-		veilederIdent,
-		oppfolgingsenhetNavn
-	} = props.gjeldendeVedtak;
-
+	const { id, innsatsgruppe, veilederNavn, sistOppdatert } = props.gjeldendeVedtak;
 	const innsatsgruppeData = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
 
 	const handleVisVedtakClicked = () => {
@@ -45,12 +30,10 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: OrNothing<VedtakD
 			tekstKomponent={
 				<>
 					<p className="typo-undertekst gjeldende-vedtak-panel__innsatsgruppe">{innsatsgruppeData.undertekst}</p>
-					<Dato className="gjeldende-vedtak-panel__dato" sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
+					<DatoLabel className="gjeldende-vedtak-panel__dato" sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
 					<Veileder
 						text="Fattet av"
-						veilederNavn={veilederNavn || veilederIdent}
-						enhetId={oppfolgingsenhetId}
-						enhetNavn={oppfolgingsenhetNavn}
+						veilederNavn={veilederNavn}
 					/>
 				</>
 			}

@@ -1,26 +1,27 @@
-
-import { HovedmalType, InnsatsgruppeType, VedtakData } from '../../../rest/data/vedtak';
+import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
-import { innloggetVeileder } from '../innlogget-veileder';
+import { ansvarligVeileder } from '../../personer';
+import { enhetId, enhetNavn } from '../../konstanter';
 
-const gjeldendeVedtak: VedtakData & JSONObject = {
+const gjeldendeVedtak: Vedtak & JSONObject = {
 	id: 1000,
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
-	innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
+	innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
 	vedtakStatus: 'SENDT',
 	sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 	begrunnelse:
 		'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
 	gjeldende: true,
 	opplysninger: [],
-	veilederNavn: innloggetVeileder.navn,
-	veilederIdent: innloggetVeileder.ident,
-	oppfolgingsenhetId: innloggetVeileder.enhetId,
-	oppfolgingsenhetNavn: innloggetVeileder.enhetNavn,
+	veilederNavn: ansvarligVeileder.navn,
+	veilederIdent: ansvarligVeileder.ident,
+	oppfolgingsenhetId: enhetId,
+	oppfolgingsenhetNavn: enhetNavn,
+	beslutterIdent: null,
 	beslutterNavn: null,
 	dokumentInfoId: null,
 	journalpostId: null,
-	sendtTilBeslutter: false
+	beslutterProsessStatus: null
 };
 
 export default gjeldendeVedtak;

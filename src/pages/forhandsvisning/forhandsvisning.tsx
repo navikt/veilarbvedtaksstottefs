@@ -3,37 +3,42 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
-import { STOPPE_VEDTAKSINNSENDING_TOGGLE } from '../../rest/data/features';
-import { trengerBeslutter } from '../../components/skjema/skjema-utils';
+import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
+import { trengerBeslutter } from '../../components/utkast-skjema/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
-import { useFetchStore } from '../../stores/fetch-store';
+import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
 import { fetchWithInfo } from '../../rest/utils';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { finnUtkastAlltid } from '../../utils';
+import { erGodkjentAvBeslutter, finnUtkastAlltid } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
+import Show from '../../components/show';
+import { useTilgangStore } from '../../stores/tilgang-store';
+import { useDataStore } from '../../stores/data-store';
 import './forhandsvisning.less';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { vedtak, features, oppfolgingData } = useFetchStore();
+	const { vedtakFetcher } = useDataFetcherStore();
+	const { vedtak, features } = useDataStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
+	const { kanEndreUtkast } = useTilgangStore();
 
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
-	const trengerVedtakBeslutter = trengerBeslutter(innsatsgruppe);
-	const stoppeInnsendingfeatureToggle = features.data[STOPPE_VEDTAKSINNSENDING_TOGGLE];
+	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
 	const url = env.isProduction
 		? lagHentForhandsvisningUrl(fnr)
 		: getMockVedtaksbrevUrl();
 
-	const utkast = finnUtkastAlltid(vedtak.data);
-	const harSendtTilBeslutter = utkast.sendtTilBeslutter;
-	const visSendTilBeslutter = trengerVedtakBeslutter && !harSendtTilBeslutter;
+	const utkast = finnUtkastAlltid(vedtak);
+	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
+		? erGodkjentAvBeslutter(utkast.beslutterProsessStatus)
+		: true;
 
 	const tilbakeTilSkjema = () => {
 		changeView(ViewType.UTKAST);
@@ -47,16 +52,16 @@ export function Forhandsvisning() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
-	const sendVedtak = (beslutter?: string) => {
+
+	const sendVedtak = () => {
 		showModal(ModalType.LASTER);
 
-		fetchWithInfo(lagSendVedtakFetchInfo({ fnr, beslutterNavn: beslutter }))
+		fetchWithInfo(lagSendVedtakFetchInfo({ fnr }))
 			.then(() => {
                 resetSkjema();
-				vedtak.fetch({ fnr }, () => {
-					const sendesVedtakDigitalt = !oppfolgingData.data.reservasjonKRR;
+				vedtakFetcher.fetch({ fnr }, () => {
 					changeView(ViewType.HOVEDSIDE);
-					showModal(ModalType.VEDTAK_SENT_SUKSESS, { sendesVedtakDigitalt });
+					showModal(ModalType.VEDTAK_SENT_SUKSESS);
 				});
 			})
 			.catch(err => {
@@ -66,22 +71,12 @@ export function Forhandsvisning() {
 	};
 
 	const handleOnSendClicked = () => {
-		if (stoppeInnsendingfeatureToggle) {
-			showModal(ModalType.FEIL_INNSENDING_STOPPET);
+		if (stoppeUtsendingfeatureToggle) {
+			showModal(ModalType.FEIL_UTSENDING_STOPPET);
 			return;
 		}
 
-		if (visSendTilBeslutter) {
-			showModal(ModalType.BESLUTTER_OPPGAVE);
-			return;
-		}
-
-		if (trengerVedtakBeslutter && harSendtTilBeslutter) {
-			showModal(ModalType.KVALITETSSIKRING, { sendVedtak, beslutterNavn: utkast.beslutterNavn });
-			return;
-		}
-
-		sendVedtak();
+		showModal(ModalType.BEKREFT_SEND_VEDTAK, { onSendVedtakBekreftet: sendVedtak });
 	};
 
 	return (
@@ -89,9 +84,16 @@ export function Forhandsvisning() {
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
-					<Hovedknapp disabled={pdfStatus !== PDFStatus.SUCCESS} mini={true} onClick={handleOnSendClicked} className="forhandsvisning__knapp-sender">
-						Send til {visSendTilBeslutter ? 'beslutter' : 'bruker'}
-					</Hovedknapp>
+					<Show if={kanEndreUtkast && erUtkastKlartTilUtsending}>
+						<Hovedknapp
+							disabled={pdfStatus !== PDFStatus.SUCCESS}
+							mini={true}
+							onClick={handleOnSendClicked}
+							className="forhandsvisning__knapp-sender"
+						>
+							Send til bruker
+						</Hovedknapp>
+					</Show>
 					<Knapp mini={true} htmlType="button" onClick={tilbakeTilSkjema}>
 						Tilbake til utkast
 					</Knapp>
