@@ -4,7 +4,7 @@ import { useAppStore } from '../../stores/app-store';
 import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useDataStore } from '../../stores/data-store';
 import { formatTime, sortDatesAsc } from '../../utils/date-utils';
-import { FetchStatus, isNotStarted } from '../../rest/utils';
+import { FetchStatus, hasFinishedWithData, isNotStarted } from '../../rest/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { MeldingListe } from './melding-liste/melding-liste';
 import Show from '../show';
@@ -34,7 +34,6 @@ export const DialogModal = (props: DialogModalProps) => {
 
 	function refreshMeldinger() {
 		meldingFetcher.fetch({ fnr });
-		setSistOppdatert(new Date());
 	}
 
 	function clearAutoRefresh() {
@@ -46,9 +45,7 @@ export const DialogModal = (props: DialogModalProps) => {
 
 	useEffect(() => {
 		if (props.open && intervalRef.current === undefined) {
-			intervalRef.current = setInterval(() => {
-				refreshMeldinger();
-			}, TEN_SECONDS) as unknown as number;
+			intervalRef.current = setInterval(refreshMeldinger, TEN_SECONDS) as unknown as number;
 			// NodeJs types are being used instead of browser types so we have to override
 			// Maybe remove @types/node?
 		} else if (!props.open) {
@@ -63,6 +60,8 @@ export const DialogModal = (props: DialogModalProps) => {
 		if (isNotStarted(meldingFetcher)) {
 			// Dette blir plukket opp av DialogMeldingerSync
 			refreshMeldinger();
+		} else if (hasFinishedWithData(meldingFetcher)) {
+			setSistOppdatert(new Date());
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [meldingFetcher.status]);
