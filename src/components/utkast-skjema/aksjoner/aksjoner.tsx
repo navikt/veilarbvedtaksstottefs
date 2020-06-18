@@ -59,10 +59,10 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	const {showModal} = useModalStore();
 	const {validerSkjema, innsatsgruppe, lagringStatus} = useSkjemaStore();
 
-	const [dialogModalApen, setDialogModalApen] = useState(false);
+	const utkast = finnUtkastAlltid(vedtak);
+	const [dialogModalApen, setDialogModalApen] = useState(utkast.beslutterProsessStatus != null);
 	const [laster, setLaster] = useState(false);
 
-	const utkast = finnUtkastAlltid(vedtak);
 	const beslutterProsessStatus = utkast.beslutterProsessStatus;
 	const godkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
 	const visGodkjentAvBeslutter = erBeslutter && godkjentAvBeslutter;
