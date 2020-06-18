@@ -16,6 +16,10 @@ export function formatDate(date: Date, format: string = 'DD.MM.YYYY') {
 	return dayjs(date).format(format);
 }
 
+export function formatTime(date: Date) {
+	return dayjs(date).format('HH:mm:ss');
+}
+
 export function daysFromToday(date: Date): number {
 	const today = dayjs();
 	return today.diff(dayjs(date), 'day');
