@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, KeyboardEvent, useRef } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import sendIkon from './send.svg';
 import { fetchWithInfo } from '../../../rest/utils';
@@ -18,14 +18,22 @@ export const Skrivefelt = () => {
 
 	const [melding, setMelding] = useState(midlertidigMelding);
 	const [senderMelding, setSenderMelding] = useState(false);
-	const harIkkeSkrevetMelding = melding.trim().length === 0;
+	const skrivefeltRef = useRef<HTMLInputElement | null>(null);
+
+	const kanSendeMelding = !senderMelding && melding.trim().length > 0;
 
 	function oppdaterMelding(tekst: string) {
 		setMelding(tekst);
 		midlertidigMelding = tekst;
 	}
 
-	function handleOnDialogSendClicked() {
+	function handleSkrivefeltKeyPress(e: KeyboardEvent<HTMLInputElement>) {
+		if (e.key === 'Enter' && kanSendeMelding) {
+			sendMelding();
+		}
+	}
+
+	function sendMelding() {
 		setSenderMelding(true);
 
 		fetchWithInfo(lagSendDialogFetchInfo({ fnr, melding }))
@@ -33,6 +41,9 @@ export const Skrivefelt = () => {
 				meldingFetcher.fetch({ fnr }, () => {
 					oppdaterMelding('');
 					setSenderMelding(false);
+					if (skrivefeltRef.current) {
+						skrivefeltRef.current.focus();
+					}
 				});
 			}).catch(() => {
 				showModal(ModalType.FEIL_VED_UTSENDING_AV_DIALOG_MELDING);
@@ -49,20 +60,22 @@ export const Skrivefelt = () => {
 	return (
     	<div className="skrivefelt">
 		    <Input
+		        inputRef={(inputRef) => skrivefeltRef.current = inputRef}
 			    className="skrivefelt__input"
 			    label=""
 			    disabled={senderMelding}
 			    value={melding}
 			    onChange={handleOnMeldingChanged}
 			    placeholder="Skriv en kommentar"
+			    onKeyPress={handleSkrivefeltKeyPress}
 		    />
 		    <ImageButton
-			    disabled={senderMelding || harIkkeSkrevetMelding} src={sendIkon}
+			    disabled={!kanSendeMelding} src={sendIkon}
 			    alt="Send"
 			    aria-label="Send"
 			    className="skrivefelt__send-knapp"
 			    imgClassName="skrivefelt__send-knapp-ikon"
-			    onClick={handleOnDialogSendClicked}
+			    onClick={sendMelding}
 		    />
 	    </div>
     );
