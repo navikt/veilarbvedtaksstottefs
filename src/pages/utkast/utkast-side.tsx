@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { hentMalformFraData } from '../../components/utkast-skjema/skjema-utils';
 import { OrNothing } from '../../utils/types/ornothing';
@@ -16,6 +16,11 @@ import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak'
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
+import { useTilgangStore } from '../../stores/tilgang-store';
+import { useDataFetcherStore } from '../../stores/data-fetcher-store';
+import { useAppStore } from '../../stores/app-store';
+
+const TEN_SECONDS = 10000;
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -25,15 +30,20 @@ export interface SkjemaData {
 }
 
 export function UtkastSide() {
+	const { fnr } = useAppStore();
 	const { fattedeVedtak, malform, utkast } = useDataStore();
+	const { utkastFetcher } = useDataFetcherStore();
 	const { showModal } = useModalStore();
+	const { erBeslutter, erAnsvarligVeileder } = useTilgangStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert,
-		setSistOppdatert, validerSkjema, validerBegrunnelseLengde, lagringStatus, setLagringStatus
+		setSistOppdatert, validerSkjema, validerBegrunnelseLengde, lagringStatus,
+		setLagringStatus
 	} = useSkjemaStore();
 
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 	const isAfterFirstRender = useIsAfterFirstRender();
+	const refreshUtkastIntervalRef = useRef<number>();
 
 	const oppdaterUtkast = useConst(debounce((skjema: SkjemaData) => {
 		const malformType = hentMalformFraData(malform);
@@ -53,12 +63,37 @@ export function UtkastSide() {
 	const vedtakskjema = { opplysninger, begrunnelse, innsatsgruppe, hovedmal };
 
 	useEffect(() => {
+		/*
+			Hvis beslutterprosessen har startet og innlogget bruker er beslutter så skal vi periodisk hente
+			det nyeste utkastet slik at man ikke må refreshe manuelt når ansvarlig veileder gjør en endring
+		 */
+		if (utkast && utkast.beslutterProsessStatus != null && erBeslutter) {
+			refreshUtkastIntervalRef.current = setInterval(() => {
+				utkastFetcher.fetch({ fnr });
+			}, TEN_SECONDS) as unknown as number;
+			// NodeJs types are being used instead of browser types so we have to override
+		}
+
+		return () => {
+			if (refreshUtkastIntervalRef.current) {
+				clearInterval(refreshUtkastIntervalRef.current);
+				refreshUtkastIntervalRef.current = undefined;
+			}
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [utkast]);
+
+	useEffect(() => {
 		// Initialiser når utkastet åpnes
 		setLagringStatus(SkjemaLagringStatus.INGEN_ENDRING);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
+		if (!erAnsvarligVeileder) {
+			return;
+		}
+
 		if (harForsoktAttSende) {
 			validerSkjema(finnGjeldendeVedtak(fattedeVedtak));
 		} else {

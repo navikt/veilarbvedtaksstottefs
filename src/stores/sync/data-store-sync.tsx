@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDataFetcherStore } from '../data-fetcher-store';
-import { hasFinishedWithData } from '../../rest/utils';
+import { hasData, hasFinishedWithData, hasOkStatus } from '../../rest/utils';
 import { useDataStore } from '../data-store';
 
 export const DataStoreSync = () => {
@@ -33,7 +33,7 @@ export const DataStoreSync = () => {
 	}, [fattedeVedtakFetcher.status]);
 
 	useEffect(() => {
-		if (hasFinishedWithData(utkastFetcher)) {
+		if (hasOkStatus(utkastFetcher) && hasData(utkastFetcher)) {
 			setUtkast(utkastFetcher.data);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

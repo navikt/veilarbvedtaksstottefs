@@ -1,5 +1,5 @@
 import { HandlerArgument, JSONObject, ResponseData } from 'yet-another-fetch-mock';
-import { BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
+import { BeslutterProsessStatus, Vedtak, VedtakStatus } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
 import { SkjemaData } from '../pages/utkast/utkast-side';
@@ -95,7 +95,7 @@ export const mockFattVedtak: Mock = {
 
 		const fattetVedtak = {...vedtakUtkast};
 
-		fattetVedtak.vedtakStatus = 'SENDT';
+		fattetVedtak.vedtakStatus = VedtakStatus.SENDT;
 		fattetVedtak.gjeldende = true;
 		fattetVedtak.dokumentInfoId = '123';
 		fattetVedtak.journalpostId = '456';

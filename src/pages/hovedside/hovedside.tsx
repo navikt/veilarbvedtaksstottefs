@@ -8,24 +8,29 @@ import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { IngenTidligereVedtakPanel } from '../../components/panel/ingen-tidligere-vedtak/ingen-tidligere-vedtak-panel';
 import { IngenGjeldendeVedtakPanel } from '../../components/panel/ingen-gjeldende-vedtak/ingen-gjeldende-vedtak';
 import Show from '../../components/show';
-import { Vedtak } from '../../rest/data/vedtak';
-import { hasFailed } from '../../rest/utils';
+import { Vedtak, VedtakStatus } from '../../rest/data/vedtak';
+import { hasFailed, isNotStartedOrPending } from '../../rest/utils';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { VedtakFraArenaListe } from '../../components/vedtak-fra-arena-liste/vedtak-fra-arena-liste';
 import './hovedside.less';
 import { useDataStore } from '../../stores/data-store';
+import Spinner from '../../components/spinner/spinner';
 
 export function Hovedside() {
-	const { arenaVedtakFetcher } = useDataFetcherStore();
+	const { arenaVedtakFetcher, utkastFetcher } = useDataFetcherStore();
 	const { fattedeVedtak, utkast, arenaVedtak, oppfolgingData } = useDataStore();
 
 	const underOppfolging = oppfolgingData.underOppfolging;
 	const vedtakFraArena = arenaVedtak || [];
 
-	const tidligereVedtak = fattedeVedtak.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
+	const tidligereVedtak = fattedeVedtak.filter(v => !v.gjeldende && v.vedtakStatus === VedtakStatus.SENDT);
 	const gjeldendeVedtak = fattedeVedtak.find(v => v.gjeldende);
 
 	const harTidligereVedtak = vedtakFraArena.length > 0 || tidligereVedtak.length > 0;
+
+	if (isNotStartedOrPending(utkastFetcher)) {
+		return <Spinner />;
+	}
 
 	return (
 		<Page>

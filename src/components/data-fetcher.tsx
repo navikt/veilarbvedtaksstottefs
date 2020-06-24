@@ -12,6 +12,10 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	} = useDataFetcherStore();
 
 	useEffect(() => {
+		/*
+		 Hent utkast, men ikke sjekk om det er fullført eller feilet for å gå videre.
+		 Dette blir håndtert i hovedside.tsx
+		 */
 		if (isNotStarted(utkastFetcher)) {
 			utkastFetcher.fetch({ fnr: props.fnr });
 		}
@@ -42,9 +46,10 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkastFetcher, fattedeVedtakFetcher, oppfolgingDataFetcher, malformFetcher, featuresFetcher]);
 
-	if (isAnyNotStartedOrPending([utkastFetcher, fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher, arenaVedtakFetcher])) {
+	// Vi trenger ikke å vente på at utkastet skal bli hentet
+	if (isAnyNotStartedOrPending([fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher, arenaVedtakFetcher])) {
 		return <Spinner />;
-	} else if (hasAnyFailed([utkastFetcher, fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher])) {
+	} else if (hasAnyFailed([fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher])) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.
