@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './dialog-modal.less'
-import { useAppStore } from '../../stores/app-store';
 import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useDataStore } from '../../stores/data-store';
 import { formatTime, sortDatesAsc } from '../../utils/date-utils';
@@ -13,6 +12,7 @@ import { Skrivefelt } from './skrivefelt/skrivefelt';
 import dialogIkon from './dialog.svg';
 import lukkIkon from './lukk.svg';
 import ImageButton from '../image-button/image-button';
+import { hentId } from '../../utils';
 
 interface DialogModalProps {
 	open: boolean;
@@ -22,10 +22,10 @@ interface DialogModalProps {
 const TEN_SECONDS = 10000;
 
 export const DialogModal = (props: DialogModalProps) => {
-	const { fnr } = useAppStore();
 	const { meldingFetcher } = useDataFetcherStore();
-	const { meldinger, innloggetVeileder } = useDataStore();
+	const { meldinger, innloggetVeileder, utkast } = useDataStore();
 	const [sistOppdatert, setSistOppdatert] = useState<Date>(new Date());
+
 	const intervalRef = useRef<number>();
 
 	const sorterteMeldinger = useMemo(() => {
@@ -33,7 +33,7 @@ export const DialogModal = (props: DialogModalProps) => {
 	}, [meldinger]);
 
 	function refreshMeldinger() {
-		meldingFetcher.fetch({ fnr });
+		meldingFetcher.fetch({ vedtakId: hentId(utkast) });
 	}
 
 	function clearAutoRefresh() {

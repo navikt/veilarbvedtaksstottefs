@@ -5,11 +5,10 @@ import Oppfolging from '../rest/data/oppfolging-data';
 import { MalformData } from '../rest/data/malform';
 import { Features } from '../rest/data/features';
 import { Veileder } from '../rest/data/veiledere';
-import { finnUtkastAlltid } from '../utils';
 import { DialogMelding as DialogMeldingData, SystemMelding as SystemMeldingData } from '../rest/data/melding';
 import { MeldingType, SystemMeldingType } from '../utils/types/melding-type';
 
-// Data med placeholder er garantert av datafetcher.ts at det er tilgjengelig i hele appen
+// Data med placeholder er garantert av datafetcher.ts å være hentet
 const placeholder = {} as any;
 
 export const useDataStore = createUseContext(() => {
@@ -17,7 +16,8 @@ export const useDataStore = createUseContext(() => {
 	const [malform, setMalform] = useState<MalformData>(placeholder);
 	const [features, setFeatures] = useState<Features>(placeholder);
 	const [innloggetVeileder, setInnloggetVeileder] = useState<Veileder>(placeholder);
-	const [vedtak, setVedtak] = useState<Vedtak[]>([]);
+	const [utkast, setUtkast] = useState<Vedtak | null>(null);
+	const [fattedeVedtak, setFattedeVedtak] = useState<Vedtak[]>([]);
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
 	const [meldinger, setMeldinger] = useState<Array<DialogMeldingData | SystemMeldingData>>([]);
 
@@ -34,20 +34,21 @@ export const useDataStore = createUseContext(() => {
 	}
 
 	function setUtkastBeslutter(beslutterIdent: string, beslutterNavn: string) {
-		const utkast = finnUtkastAlltid(vedtak);
-		utkast.beslutterIdent = beslutterIdent;
-		utkast.beslutterNavn = beslutterNavn;
+		if (utkast) {
+			setUtkast({...utkast, beslutterIdent, beslutterNavn });
+		}
 	}
 
 	function setUtkastVeileder(veilederIdent: string, veilederNavn: string) {
-		const utkast = finnUtkastAlltid(vedtak);
-		utkast.veilederIdent = veilederIdent;
-		utkast.veilederNavn = veilederNavn;
+		if (utkast) {
+			setUtkast({...utkast, veilederIdent, veilederNavn });
+		}
 	}
 
 	function setBeslutterProsessStatus(beslutterProsessStatus: BeslutterProsessStatus) {
-		const utkast = finnUtkastAlltid(vedtak);
-		utkast.beslutterProsessStatus = beslutterProsessStatus;
+		if (utkast) {
+			setUtkast({...utkast, beslutterProsessStatus });
+		}
 	}
 
 	return {
@@ -55,7 +56,8 @@ export const useDataStore = createUseContext(() => {
 		malform, setMalform,
 		features, setFeatures,
 		innloggetVeileder, setInnloggetVeileder,
-		vedtak, setVedtak,
+		utkast, setUtkast,
+		fattedeVedtak, setFattedeVedtak,
 		arenaVedtak, setArenaVedtak,
 		meldinger, setMeldinger,
 		leggTilSystemMelding,

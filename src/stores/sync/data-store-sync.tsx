@@ -5,15 +5,17 @@ import { useDataStore } from '../data-store';
 
 export const DataStoreSync = () => {
 	const {
-		setVedtak, setMeldinger,
+		setFattedeVedtak, setMeldinger,
 		setInnloggetVeileder,
 		setArenaVedtak, setFeatures,
-		setMalform, setOppfolgingData
+		setMalform, setOppfolgingData,
+		setUtkast
 	} = useDataStore();
 	const {
-		vedtakFetcher, meldingFetcher,
+		fattedeVedtakFetcher, meldingFetcher,
 		innloggetVeilederFetcher, malformFetcher,
-		arenaVedtakFetcher, oppfolgingDataFetcher, featuresFetcher
+		arenaVedtakFetcher, oppfolgingDataFetcher,
+		featuresFetcher, utkastFetcher
 	} = useDataFetcherStore();
 
 	useEffect(() => {
@@ -24,11 +26,18 @@ export const DataStoreSync = () => {
 	}, [meldingFetcher.status]);
 
 	useEffect(() => {
-		if (hasFinishedWithData(vedtakFetcher)) {
-			setVedtak(vedtakFetcher.data);
+		if (hasFinishedWithData(fattedeVedtakFetcher)) {
+			setFattedeVedtak(fattedeVedtakFetcher.data);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [vedtakFetcher.status]);
+	}, [fattedeVedtakFetcher.status]);
+
+	useEffect(() => {
+		if (hasFinishedWithData(utkastFetcher)) {
+			setUtkast(utkastFetcher.data);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [utkastFetcher.status]);
 
 	useEffect(() => {
 		if (hasFinishedWithData(innloggetVeilederFetcher)) {

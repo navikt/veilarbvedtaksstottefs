@@ -5,42 +5,24 @@ import env from '../../utils/environment';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { frontendlogger } from '../../utils/frontend-logger';
 import { lagHentVedtakPdfUrl } from '../../rest/api';
-import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
-import { finnVedtakAlltid } from '../../utils';
 import './vedtaksbrev-visning.less';
-import { useDataStore } from '../../stores/data-store';
 
 interface VedtaksbrevVisningProps {
 	vedtakId?: number;
-	dokumentInfoId?: string;
-	journalpostId?: string;
+	dokumentInfoId: string;
+	journalpostId: string;
 }
 
 export function VedtaksbrevVisning(props: VedtaksbrevVisningProps) {
-	const { fnr } = useAppStore();
-	const { vedtak } = useDataStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
-
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
-	let dokumentInfoId: string;
-	let journalpostId: string;
-
-	if (props.vedtakId) {
-		const vedtaksObjekt = finnVedtakAlltid(vedtak, props.vedtakId);
-		dokumentInfoId = vedtaksObjekt.dokumentInfoId as string;
-		journalpostId = vedtaksObjekt.journalpostId as string;
-	} else {
-		dokumentInfoId = props.dokumentInfoId as string;
-		journalpostId = props.journalpostId as string;
-	}
-
 	const url = env.isProduction
-		? lagHentVedtakPdfUrl(fnr, dokumentInfoId, journalpostId)
+		? lagHentVedtakPdfUrl(props.dokumentInfoId, props.journalpostId)
 		: getMockVedtaksbrevUrl();
 
 	function handleOnTilbakeClicked() {

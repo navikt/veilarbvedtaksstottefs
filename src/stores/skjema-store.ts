@@ -15,8 +15,8 @@ export const useSkjemaStore = createUseContext(() => {
 	const [errors, setErrors] = useState<SkjemaFeil>({});
 	const [lagringStatus, setLagringStatus] = useState<SkjemaLagringStatus>(SkjemaLagringStatus.INGEN_ENDRING);
 
-	const validerSkjema = (vedtak: Vedtak[]): SkjemaFeil => {
-		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, vedtak);
+	const validerSkjema = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
+		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
 		setErrors(feil);
 		return feil;
 	};

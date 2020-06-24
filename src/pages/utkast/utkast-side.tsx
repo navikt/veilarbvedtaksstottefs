@@ -8,12 +8,11 @@ import Footer from '../../components/footer/footer';
 import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
-import { useAppStore } from '../../stores/app-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { finnUtkastAlltid } from '../../utils';
+import { finnGjeldendeVedtak, hentId } from '../../utils';
 import { useConst, useIsAfterFirstRender } from '../../utils/hooks';
-import { HovedmalType, InnsatsgruppeType } from '../../rest/data/vedtak';
+import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
@@ -26,8 +25,7 @@ export interface SkjemaData {
 }
 
 export function UtkastSide() {
-	const { fnr } = useAppStore();
-	const { vedtak, malform } = useDataStore();
+	const { fattedeVedtak, malform, utkast } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert,
@@ -41,7 +39,7 @@ export function UtkastSide() {
 		const malformType = hentMalformFraData(malform);
 
 		setLagringStatus(SkjemaLagringStatus.LAGRER);
-		fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ fnr, skjema, malform: malformType }))
+		fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ vedtakId: hentId(utkast), skjema, malform: malformType }))
 			.then(() => {
 				setLagringStatus(SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET);
 				setSistOppdatert(new Date().toISOString());
@@ -62,7 +60,7 @@ export function UtkastSide() {
 
 	useEffect(() => {
 		if (harForsoktAttSende) {
-			validerSkjema(vedtak);
+			validerSkjema(finnGjeldendeVedtak(fattedeVedtak));
 		} else {
 			validerBegrunnelseLengde();
 		}
@@ -87,7 +85,7 @@ export function UtkastSide() {
 	return (
         <div className="utkast-side page--grey">
             <div className="utkast-side__utkast">
-                <SkjemaHeader utkast={finnUtkastAlltid(vedtak)} sistOppdatert={sistOppdatert} />
+                <SkjemaHeader utkast={utkast as Vedtak} sistOppdatert={sistOppdatert} />
                 <UtkastSkjema />
             </div>
             <Footer>

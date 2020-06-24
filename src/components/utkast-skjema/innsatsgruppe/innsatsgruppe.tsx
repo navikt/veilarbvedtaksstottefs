@@ -8,7 +8,7 @@ import {
 } from '../skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { erBeslutterProsessStartet, finnGjeldendeVedtak, finnUtkastAlltid, swallowEnterKeyPress } from '../../../utils';
+import { erBeslutterProsessStartet, finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../utils';
 import './innsatsgruppe.less';
 import {
 	erStandard, erVarigEllerGradertVarig,
@@ -26,15 +26,14 @@ import { erAnsvarligVeileder } from '../../../utils/tilgang';
 function Innsatsgruppe() {
 	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
 	const {kanEndreUtkast, veilederTilgang} = useTilgangStore();
-	const {vedtak} = useDataStore();
+	const {fattedeVedtak, utkast} = useDataStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
-	const gjeldendeVedtak = finnGjeldendeVedtak(vedtak);
-	const utkast = finnUtkastAlltid(vedtak);
+	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
 	const visInfomelding = trengerBeslutter(innsatsgruppe)
 		&& erAnsvarligVeileder(veilederTilgang)
-		&& !erBeslutterProsessStartet(utkast.beslutterProsessStatus);
+		&& !erBeslutterProsessStartet(utkast!.beslutterProsessStatus);
 
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">

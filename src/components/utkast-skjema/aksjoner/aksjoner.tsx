@@ -15,7 +15,6 @@ import {
 	lagStartBeslutterProsessFetchInfo
 } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
-import { useAppStore } from '../../../stores/app-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } from '../skjema-utils';
 import Show from '../../show';
@@ -26,13 +25,13 @@ import {
 	erBeslutterProsessStartet,
 	erGodkjentAvBeslutter,
 	erKlarTilBeslutter,
-	erKlarTilVeileder,
-	finnUtkastAlltid,
-	isNothing, mapSkjemaLagringStatusTilTekst
+	erKlarTilVeileder, finnGjeldendeVedtak,
+	isNothing,
+	mapSkjemaLagringStatusTilTekst
 } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
+import { BeslutterProsessStatus, Vedtak } from '../../../rest/data/vedtak';
 import { SystemMeldingType } from '../../../utils/types/melding-type';
 import './aksjoner.less';
 import { DialogModal } from '../../dialog-modal/dialog-modal';
@@ -44,30 +43,34 @@ interface UtkastAksjonerProps {
 }
 
 function Aksjoner(props: UtkastAksjonerProps) {
-	const {fnr} = useAppStore();
 	const {
 		kanEndreUtkast,
 		setVeilederTilgang, erBeslutter,
 		erAnsvarligVeileder, erIkkeAnsvarligVeileder
 	} = useTilgangStore();
 	const {
-		malform, vedtak, innloggetVeileder,
+		malform, fattedeVedtak, innloggetVeileder,
 		setUtkastBeslutter, setBeslutterProsessStatus,
-		leggTilSystemMelding
+		leggTilSystemMelding, utkast
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
 	const {validerSkjema, innsatsgruppe, lagringStatus} = useSkjemaStore();
 
-	const utkast = finnUtkastAlltid(vedtak);
-	const [dialogModalApen, setDialogModalApen] = useState(utkast.beslutterProsessStatus != null);
+	const {
+		id: utkastId,
+		beslutterProsessStatus,
+		beslutterNavn
+	} = utkast as Vedtak;
+
+	const [dialogModalApen, setDialogModalApen] = useState(beslutterProsessStatus != null);
 	const [laster, setLaster] = useState(false);
 
-	const beslutterProsessStatus = utkast.beslutterProsessStatus;
+	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const godkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
 	const visGodkjentAvBeslutter = erBeslutter && godkjentAvBeslutter;
-	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(utkast.beslutterNavn) && !erBeslutterProsessStartet(beslutterProsessStatus);
-	const visBliBeslutter = erIkkeAnsvarligVeileder && isNothing(utkast.beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus) ;
+	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(beslutterNavn) && !erBeslutterProsessStartet(beslutterProsessStatus);
+	const visBliBeslutter = erIkkeAnsvarligVeileder && isNothing(beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus);
 	const visGodkjennUtkast = erBeslutter && !godkjentAvBeslutter;
 	const visTaOverUtkast = erIkkeAnsvarligVeileder;
 	const visKlarTil = (erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus)) || (erBeslutter && erKlarTilBeslutter(beslutterProsessStatus));
@@ -79,7 +82,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 	function sendDataTilBackend() {
 		// Vi oppdaterer ikke lagringStatus her fordi det blir rart at dette trigges på en "urelatert" handling
-		const params = {fnr, skjema: props.vedtakskjema, malform: hentMalformFraData(malform)};
+		const params = {vedtakId: utkastId, skjema: props.vedtakskjema, malform: hentMalformFraData(malform)};
 		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo(params))
 			.catch(() => {
 				setLaster(false);
@@ -88,7 +91,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	}
 
 	function handleOnForhandsvisClicked() {
-		const skjemaFeil = validerSkjema(vedtak);
+		const skjemaFeil = validerSkjema(gjeldendeVedtak);
 
 		if (harFeil(skjemaFeil)) {
 			scrollTilForsteFeil(skjemaFeil);
@@ -119,7 +122,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 		setLaster(true);
 		sendDataTilBackend()
 			.then(() => {
-				fetchWithInfo(lagStartBeslutterProsessFetchInfo({fnr}))
+				fetchWithInfo(lagStartBeslutterProsessFetchInfo({vedtakId: utkastId}))
 					.then(() => {
 						fokuserPaDialogSidebarTab();
 						setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
@@ -133,7 +136,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	function handleOnBliBeslutterClicked() {
 		setLaster(true);
 
-		fetchWithInfo(lagBliBeslutterFetchInfo({fnr}))
+		fetchWithInfo(lagBliBeslutterFetchInfo({vedtakId: utkastId}))
 			.then(() => {
 				fokuserPaDialogSidebarTab();
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
@@ -148,7 +151,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 	function handleOnKlarTilClicked() {
 		setLaster(true);
 
-		fetchWithInfo(lagOppdaterBeslutterProsessStatusFetchInfo({fnr}))
+		fetchWithInfo(lagOppdaterBeslutterProsessStatusFetchInfo({vedtakId: utkastId}))
 			.then(() => {
 				const status = erBeslutter
 					? BeslutterProsessStatus.KLAR_TIL_VEILEDER
@@ -162,7 +165,7 @@ function Aksjoner(props: UtkastAksjonerProps) {
 
 	function handleOnGodkjennClicked() {
 		setLaster(true);
-		fetchWithInfo(lagGodkjennVedtakFetchInfo({fnr}))
+		fetchWithInfo(lagGodkjennVedtakFetchInfo({vedtakId: utkastId}))
 			.then(() => {
 				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
 				setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);

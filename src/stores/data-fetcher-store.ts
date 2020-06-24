@@ -7,8 +7,8 @@ import {
 	lagHentFeaturesFetchInfo,
 	lagHentMalformFetchInfo,
 	lagHentOppfolgingDataFetchInfo,
-	lagHentVedtakFetchInfo,
-	lagHentVeilederFetchInfo
+	lagHentFattedeVedtakFetchInfo,
+	lagHentVeilederFetchInfo, lagHentUtkastFetchInfo, VedtakIdFetchParams
 } from '../rest/api';
 import Oppfolging from '../rest/data/oppfolging-data';
 import { MalformData } from '../rest/data/malform';
@@ -23,13 +23,14 @@ export const useDataFetcherStore = createUseContext(() => {
 	const malformFetcher = useFetch<MalformData, FnrFetchParams>(lagHentMalformFetchInfo);
 	const featuresFetcher = useFetch<Features>(lagHentFeaturesFetchInfo);
 	const innloggetVeilederFetcher = useFetch<Veileder>(lagHentVeilederFetchInfo);
-	const vedtakFetcher = useFetch<Vedtak[], FnrFetchParams>(lagHentVedtakFetchInfo);
+	const utkastFetcher = useFetch<Vedtak, FnrFetchParams>(lagHentUtkastFetchInfo);
+	const fattedeVedtakFetcher = useFetch<Vedtak[], FnrFetchParams>(lagHentFattedeVedtakFetchInfo);
 	const arenaVedtakFetcher = useFetch<OrNothing<ArenaVedtak[]>, FnrFetchParams>(lagHentArenaVedtakFetchInfo);
-	const meldingFetcher = useFetch<Array<DialogMelding | SystemMelding>, FnrFetchParams>(lagHentMeldingerFetchInfo);
+	const meldingFetcher = useFetch<Array<DialogMelding | SystemMelding>, VedtakIdFetchParams>(lagHentMeldingerFetchInfo);
 
 	return {
 		oppfolgingDataFetcher, featuresFetcher,
-		malformFetcher, vedtakFetcher,
+		malformFetcher, utkastFetcher, fattedeVedtakFetcher,
 		innloggetVeilederFetcher, arenaVedtakFetcher,
 		meldingFetcher
 	};

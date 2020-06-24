@@ -17,14 +17,13 @@ import { useDataStore } from '../../stores/data-store';
 
 export function Hovedside() {
 	const { arenaVedtakFetcher } = useDataFetcherStore();
-	const { vedtak, arenaVedtak, oppfolgingData } = useDataStore();
+	const { fattedeVedtak, utkast, arenaVedtak, oppfolgingData } = useDataStore();
 
 	const underOppfolging = oppfolgingData.underOppfolging;
 	const vedtakFraArena = arenaVedtak || [];
 
-	const utkast = vedtak.find(v => v.vedtakStatus === 'UTKAST');
-	const tidligereVedtak = vedtak.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
-	const gjeldendeVedtak = vedtak.find(v => v.gjeldende);
+	const tidligereVedtak = fattedeVedtak.filter(v => !v.gjeldende && v.vedtakStatus === 'SENDT');
+	const gjeldendeVedtak = fattedeVedtak.find(v => v.gjeldende);
 
 	const harTidligereVedtak = vedtakFraArena.length > 0 || tidligereVedtak.length > 0;
 

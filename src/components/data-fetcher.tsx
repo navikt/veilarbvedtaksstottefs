@@ -7,12 +7,17 @@ import Spinner from './spinner/spinner';
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const {
 		oppfolgingDataFetcher, featuresFetcher, malformFetcher,
-		vedtakFetcher, innloggetVeilederFetcher, arenaVedtakFetcher
+		utkastFetcher, fattedeVedtakFetcher,
+		innloggetVeilederFetcher, arenaVedtakFetcher
 	} = useDataFetcherStore();
 
 	useEffect(() => {
-		if (isNotStarted(vedtakFetcher)) {
-			vedtakFetcher.fetch({ fnr: props.fnr });
+		if (isNotStarted(utkastFetcher)) {
+			utkastFetcher.fetch({ fnr: props.fnr });
+		}
+
+		if (isNotStarted(fattedeVedtakFetcher)) {
+			fattedeVedtakFetcher.fetch({ fnr: props.fnr });
 		}
 
 		if (isNotStarted(arenaVedtakFetcher)) {
@@ -35,11 +40,11 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			innloggetVeilederFetcher.fetch(null);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [vedtakFetcher, oppfolgingDataFetcher, malformFetcher, featuresFetcher]);
+	}, [utkastFetcher, fattedeVedtakFetcher, oppfolgingDataFetcher, malformFetcher, featuresFetcher]);
 
-	if (isAnyNotStartedOrPending([vedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher, arenaVedtakFetcher])) {
+	if (isAnyNotStartedOrPending([utkastFetcher, fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher, arenaVedtakFetcher])) {
 		return <Spinner />;
-	} else if (hasAnyFailed([vedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher])) {
+	} else if (hasAnyFailed([utkastFetcher, fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher])) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.

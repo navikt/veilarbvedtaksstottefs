@@ -3,17 +3,18 @@ import { Input } from 'nav-frontend-skjema';
 import sendIkon from './send.svg';
 import { fetchWithInfo } from '../../../rest/utils';
 import { lagSendDialogFetchInfo } from '../../../rest/api';
-import { useAppStore } from '../../../stores/app-store';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import './skrivefelt.less';
 import ImageButton from '../../image-button/image-button';
+import { useDataStore } from '../../../stores/data-store';
+import { hentId } from '../../../utils';
 
 let midlertidigMelding = '';
 
 export const Skrivefelt = () => {
-	const { fnr } = useAppStore();
 	const { showModal } = useModalStore();
+	const { utkast } = useDataStore();
 	const { meldingFetcher } = useDataFetcherStore();
 
 	const [melding, setMelding] = useState(midlertidigMelding);
@@ -36,9 +37,9 @@ export const Skrivefelt = () => {
 	function sendMelding() {
 		setSenderMelding(true);
 
-		fetchWithInfo(lagSendDialogFetchInfo({ fnr, melding }))
+		fetchWithInfo(lagSendDialogFetchInfo({ vedtakId: hentId(utkast), melding }))
 			.then(() => {
-				meldingFetcher.fetch({ fnr }, () => {
+				meldingFetcher.fetch({ vedtakId: hentId(utkast) }, () => {
 					oppdaterMelding('');
 					setSenderMelding(false);
 					if (skrivefeltRef.current) {
