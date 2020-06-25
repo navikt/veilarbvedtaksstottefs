@@ -38,7 +38,7 @@ export const innsatsgruppeTekster: InnsatsgruppeTekst[] = [
 	},
 	{
 		tittel: 'Jobbe delvis',
-		undertekst: 'DELVIS VARIG TILPASSET INNSATS',
+		undertekst: 'DELVIS, VARIG TILPASSET INNSATS',
 		value: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS
 	},
 	{
