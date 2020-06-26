@@ -62,6 +62,7 @@ export const lagHentVeilederFetchInfo = (): FetchInfo => ({
 export const lagNyttUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
 	method: 'POST',
+	headers: HEADERS_WITH_JSON_CONTENT,
 	body: JSON.stringify({ fnr: params.fnr })
 });
 
