@@ -1,0 +1,60 @@
+@import "../../../../../node_modules/nav-frontend-core/less/_variabler";
+@import "../../../../variabler";
+
+.veilarbvedtaksstottefs {
+
+	.begrunnelse-skjema-bolk {
+		max-width: @begrunnelse-bredde;
+	}
+
+	.begrunnelse {
+		.textarea__container {
+			position: unset;
+			margin-bottom: 0.5rem;
+
+			.textarea--medMeta__teller {
+				width: 150px;
+				right: 8px;
+				bottom: -30px;
+				left: unset;
+			}
+		}
+
+		&__tittel {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+		}
+
+		&__malform {
+			color: @navGra60;
+		}
+
+		textarea {
+			overflow-y: auto;
+		}
+
+		&__container {
+
+			.skjemaelement__feilmelding {
+				font-family: Source Sans Pro, Arial, sans-serif;
+			}
+
+			.skjemaelement__label {
+				margin-bottom: 0;
+			}
+
+			.skjemaelement__input {
+				min-height: 670px;
+				max-height: 670px;
+				font-family: Source Sans Pro, Arial, sans-serif;
+				font-size: 1rem;
+			}
+		}
+	}
+
+	.begrunnelse-hjelpetekster__ingress {
+		font-size: 14px;
+	}
+
+}

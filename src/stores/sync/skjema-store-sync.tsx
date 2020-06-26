@@ -2,7 +2,7 @@ import { useDataFetcherStore } from '../data-fetcher-store';
 import { useEffect } from 'react';
 import { hasFinishedWithData } from '../../rest/utils';
 import { useSkjemaStore } from '../skjema-store';
-import { mapOpplysningerFraForskjelligMalformTilBokmal } from '../../components/utkast-skjema/skjema-utils';
+import { mapOpplysningerFraForskjelligMalformTilBokmal } from '../../utils/skjema-utils';
 
 export function SkjemaStoreSync() {
     const {initSkjema} = useSkjemaStore();

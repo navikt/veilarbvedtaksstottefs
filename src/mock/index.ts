@@ -6,16 +6,17 @@ import malform from './api-data/malform';
 import vedtakFraArena from './api-data/arena-vedtak';
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import {
+	mockBliBeslutter,
+	mockFattVedtak,
+	mockGodkjennVedtak,
 	mockHentFattedeVedtak,
 	mockHentUtkast,
 	mockLagUtkast,
+	mockOppdaterBeslutterProsessStatus,
 	mockOppdaterUtkast,
 	mockOvertaUtkast,
-	mockFattVedtak,
 	mockSlettUtkast,
-	mockKlarTilBeslutter,
-	mockBliBeslutter,
-	mockGodkjennVedtak, mockOppdaterBeslutterProsessStatus
+	mockStartBeslutterprosess
 } from './vedtak-mock';
 import { addToFetchMock } from './mock-utils';
 import { mockHentDialoger, mockSendDialogMelding } from './meldinger-mock';
@@ -33,7 +34,7 @@ addToFetchMock(mockSlettUtkast, fetchMock);
 addToFetchMock(mockLagUtkast, fetchMock);
 addToFetchMock(mockFattVedtak, fetchMock);
 addToFetchMock(mockOvertaUtkast, fetchMock);
-addToFetchMock(mockKlarTilBeslutter, fetchMock);
+addToFetchMock(mockStartBeslutterprosess, fetchMock);
 addToFetchMock(mockBliBeslutter, fetchMock);
 addToFetchMock(mockGodkjennVedtak, fetchMock);
 addToFetchMock(mockHentDialoger, fetchMock);

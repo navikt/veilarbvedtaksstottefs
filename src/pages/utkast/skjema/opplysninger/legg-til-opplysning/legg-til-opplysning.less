@@ -1,0 +1,44 @@
+@import "../../../../../../node_modules/nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.legg-til-kilde {
+		display: flex;
+		border: none;
+		background-color: transparent;
+		margin: 1.25rem 1rem 1rem;
+		padding: 0.25rem;
+		cursor: pointer;
+
+		&__ikon {
+			width: 16px;
+			height: 16px;
+			margin-top: 0.25rem;
+			background: url("pluss.svg") no-repeat;
+		}
+
+		&__tekst {
+			margin-left: 0.5rem;
+			padding-bottom: 0.25rem;
+			border-bottom: 1px solid @navGra40;
+		}
+
+		&:focus {
+			box-shadow: 0 0 0 3px @navBlaDarken60;
+			outline: none;
+		}
+
+		&:hover:not(:disabled) > .legg-til-kilde__tekst {
+			border-bottom: 1px solid @navDypBla;
+		}
+
+		&:disabled {
+			color: @navGra60;
+			cursor: not-allowed;
+			.legg-til-kilde__ikon {
+				background: url("pluss-gray.svg") no-repeat;
+			}
+		}
+	}
+
+}

@@ -2,7 +2,6 @@ import { HandlerArgument, JSONObject, ResponseData } from 'yet-another-fetch-moc
 import { BeslutterProsessStatus, Vedtak, VedtakStatus } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
-import { SkjemaData } from '../pages/utkast/utkast-side';
 import historisk from './api-data/vedtak/tidligere-vedtak';
 import { ansvarligVeileder, beslutter } from './personer';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
@@ -11,6 +10,7 @@ import { fjernAlleMockMeldinger, leggTilMockSystemMelding } from './meldinger-mo
 import { SystemMeldingType } from '../utils/types/melding-type';
 import { enhetId, enhetNavn } from './konstanter';
 import env from '../utils/environment';
+import { SkjemaData } from '../utils/skjema-utils';
 
 let vedtakUtkast = env.isRunningOnGhPages ? null : utkast;
 const fattedeVedtak = historisk;
@@ -113,8 +113,8 @@ export const mockOvertaUtkast: Mock = {
 	handler: async (): Promise<ResponseData> => {
 		if (!vedtakUtkast) throw new Error('Fant ikke utkast å overta');
 
-		vedtakUtkast.oppfolgingsenhetNavn = enhetNavn;
-		vedtakUtkast.oppfolgingsenhetId = enhetId;
+		vedtakUtkast.veilederIdent = innloggetVeileder.ident;
+		vedtakUtkast.veilederNavn = innloggetVeileder.navn;
 
 		leggTilMockSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER);
 
@@ -122,15 +122,13 @@ export const mockOvertaUtkast: Mock = {
 	}
 };
 
-export const mockKlarTilBeslutter: Mock = {
+export const mockStartBeslutterprosess: Mock = {
 	method: 'POST',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/start`,
 	handler: async (): Promise<ResponseData> => {
 		if (!vedtakUtkast) throw new Error('Fant ikke utkast å starte beslutterprosess på');
 
 		vedtakUtkast.beslutterProsessStatus = BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
-		vedtakUtkast.beslutterIdent = null;
-		vedtakUtkast.beslutterNavn = null;
 
 		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
 
@@ -145,7 +143,7 @@ export const mockBliBeslutter: Mock = {
 		if (!vedtakUtkast) throw new Error('Fant ikke utkast å bli beslutter for');
 
 		vedtakUtkast.beslutterIdent = innloggetVeileder.ident;
-		vedtakUtkast.beslutterIdent = innloggetVeileder.navn;
+		vedtakUtkast.beslutterNavn = innloggetVeileder.navn;
 
 		leggTilMockSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
 

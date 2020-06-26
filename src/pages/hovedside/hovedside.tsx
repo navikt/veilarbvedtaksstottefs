@@ -3,7 +3,7 @@ import { TidligereVedtakListe } from '../../components/tidligere-vedtak-liste/ti
 import { UtkastPanel } from '../../components/panel/utkast/utkast-panel';
 import { GjeldendeVedtakPanel } from '../../components/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
 import { NyttVedtakPanel } from '../../components/panel/nytt-vedtak/nytt-vedtak-panel';
-import Page from '../page/page';
+import Page from '../../components/page/page';
 import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { IngenTidligereVedtakPanel } from '../../components/panel/ingen-tidligere-vedtak/ingen-tidligere-vedtak-panel';
 import { IngenGjeldendeVedtakPanel } from '../../components/panel/ingen-gjeldende-vedtak/ingen-gjeldende-vedtak';
