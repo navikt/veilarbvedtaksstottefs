@@ -33,7 +33,7 @@ export const mockHentFattedeVedtak: Mock = {
 
 export const mockLagUtkast: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:fnr`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
 	handler: async (): Promise<ResponseData> => {
 		const nyttUtkast = {
 			id: fattedeVedtak.length,
