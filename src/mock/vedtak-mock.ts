@@ -113,8 +113,8 @@ export const mockOvertaUtkast: Mock = {
 	handler: async (): Promise<ResponseData> => {
 		if (!vedtakUtkast) throw new Error('Fant ikke utkast å overta');
 
-		vedtakUtkast.oppfolgingsenhetNavn = enhetNavn;
-		vedtakUtkast.oppfolgingsenhetId = enhetId;
+		vedtakUtkast.veilederIdent = innloggetVeileder.ident;
+		vedtakUtkast.veilederNavn = innloggetVeileder.navn;
 
 		leggTilMockSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER);
 
@@ -122,15 +122,13 @@ export const mockOvertaUtkast: Mock = {
 	}
 };
 
-export const mockKlarTilBeslutter: Mock = {
+export const mockStartBeslutterprosess: Mock = {
 	method: 'POST',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/start`,
 	handler: async (): Promise<ResponseData> => {
 		if (!vedtakUtkast) throw new Error('Fant ikke utkast å starte beslutterprosess på');
 
 		vedtakUtkast.beslutterProsessStatus = BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
-		vedtakUtkast.beslutterIdent = null;
-		vedtakUtkast.beslutterNavn = null;
 
 		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
 
@@ -145,7 +143,7 @@ export const mockBliBeslutter: Mock = {
 		if (!vedtakUtkast) throw new Error('Fant ikke utkast å bli beslutter for');
 
 		vedtakUtkast.beslutterIdent = innloggetVeileder.ident;
-		vedtakUtkast.beslutterIdent = innloggetVeileder.navn;
+		vedtakUtkast.beslutterNavn = innloggetVeileder.navn;
 
 		leggTilMockSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
 

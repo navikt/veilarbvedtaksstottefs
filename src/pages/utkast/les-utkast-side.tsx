@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Footer from '../../components/footer/footer';
-import { useSkjemaStore } from '../../stores/skjema-store';
-import { InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
+import { InnsatsgruppeType } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { useTilgangStore } from '../../stores/tilgang-store';
@@ -13,21 +12,18 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
 import LesUtkastAksjoner from './aksjoner/les-utkast-aksjoner';
 import UtkastSkjema from './skjema/utkast-skjema';
+import { useViewStore, ViewType } from '../../stores/view-store';
+import { OrNothing } from '../../utils/types/ornothing';
 
 const TEN_SECONDS = 10000;
 
 export function LesUtkastSide() {
 	const {fnr} = useAppStore();
 	const {utkast} = useDataStore();
-	const {utkastFetcher} = useDataFetcherStore();
+	const {utkastFetcher, fattedeVedtakFetcher} = useDataFetcherStore();
+	const {changeView} = useViewStore();
 	const {erBeslutter} = useTilgangStore();
-	const {
-		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert
-	} = useSkjemaStore();
-
 	const refreshUtkastIntervalRef = useRef<number>();
-
-	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
 
 	useEffect(() => {
 		/*
@@ -48,27 +44,34 @@ export function LesUtkastSide() {
 			}
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [utkast]);
+	}, [utkast, erBeslutter]);
+
+	// Utkast kan bli satt til null hvis man er beslutter og veileder fatter et vedtak
+	if (utkast == null) {
+		fattedeVedtakFetcher.fetch({ fnr });
+		changeView(ViewType.HOVEDSIDE);
+		return null;
+	}
+
+	const {opplysninger, begrunnelse, innsatsgruppe, hovedmal} = utkast;
 
 	return (
 		<div className="utkast-side page--grey">
-			<UtkastSkjema utkast={utkast as Vedtak} sistOppdatert={sistOppdatert}>
+			<UtkastSkjema utkast={utkast} sistOppdatert={utkast.sistOppdatert}>
 				<div className="utkast-side__visning">
 
 					<div>
 						<Element tag="span" className="skjema-visning__label blokk-xxs">Kilder</Element>
-						<ul className="skjema-visning__opplysninger">{opplysninger.map((o, idx) => (
-							<li key={idx}>{o}</li>))}</ul>
+						<ul className="skjema-visning__opplysninger">
+							{opplysninger.map((o, idx) => (<li key={idx}>{o}</li>))}
+						</ul>
 					</div>
 
 					<Element tag="span" className="skjema-visning__label blokk-xxs">Begrunnelse</Element>
 					<Tekstomrade className="skjema-visning__begrunnelse">{begrunnelse ? begrunnelse : ''}</Tekstomrade>
 
 					<div className="skjema-visning__felter">
-						<div className="blokk-m">
-							<Element>{innsatsgruppeTekst.tittel}</Element>
-							<Normaltekst className="text--grey">{innsatsgruppeTekst.undertekst}</Normaltekst>
-						</div>
+						<InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} />
 
 						<div>
 							<Element>Hovedmål</Element>
@@ -84,3 +87,22 @@ export function LesUtkastSide() {
 		</div>
 	);
 }
+
+const InnsatsgruppeVisning = (props: {innsatsgruppe: OrNothing<InnsatsgruppeType>}) => {
+	if (!props.innsatsgruppe) {
+		return (
+			<div className="blokk-m">
+				<Element>Innsatsgruppe ikke valgt</Element>
+			</div>
+		);
+	}
+
+	const innsatsgruppeTekst = getInnsatsgruppeTekst(props.innsatsgruppe);
+
+	return (
+		<div className="blokk-m">
+			<Element>{innsatsgruppeTekst.tittel}</Element>
+			<Normaltekst className="text--grey">{innsatsgruppeTekst.undertekst}</Normaltekst>
+		</div>
+	);
+};
