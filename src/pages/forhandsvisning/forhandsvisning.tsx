@@ -7,37 +7,42 @@ import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/fe
 import { trengerBeslutter } from '../../components/utkast-skjema/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
 import { useDataFetcherStore } from '../../stores/data-fetcher-store';
-import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
+import { lagHentForhandsvisningUrl, lagFattVedtakFetchInfo } from '../../rest/api';
 import { fetchWithInfo } from '../../rest/utils';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { erGodkjentAvBeslutter, finnUtkastAlltid } from '../../utils';
+import { erGodkjentAvBeslutter } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import Show from '../../components/show';
 import { useTilgangStore } from '../../stores/tilgang-store';
 import { useDataStore } from '../../stores/data-store';
 import './forhandsvisning.less';
+import { Vedtak } from '../../rest/data/vedtak';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { vedtakFetcher } = useDataFetcherStore();
-	const { vedtak, features } = useDataStore();
+	const { fattedeVedtakFetcher } = useDataFetcherStore();
+	const { utkast, setUtkast, features } = useDataStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
-
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
+
+	const {
+		id: utkastId,
+		beslutterProsessStatus
+	} = utkast as Vedtak;
+
 	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
 	const url = env.isProduction
-		? lagHentForhandsvisningUrl(fnr)
+		? lagHentForhandsvisningUrl(utkastId)
 		: getMockVedtaksbrevUrl();
 
-	const utkast = finnUtkastAlltid(vedtak);
 	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
-		? erGodkjentAvBeslutter(utkast.beslutterProsessStatus)
+		? erGodkjentAvBeslutter(beslutterProsessStatus)
 		: true;
 
 	const tilbakeTilSkjema = () => {
@@ -56,12 +61,13 @@ export function Forhandsvisning() {
 	const sendVedtak = () => {
 		showModal(ModalType.LASTER);
 
-		fetchWithInfo(lagSendVedtakFetchInfo({ fnr }))
+		fetchWithInfo(lagFattVedtakFetchInfo({ vedtakId: utkastId }))
 			.then(() => {
                 resetSkjema();
-				vedtakFetcher.fetch({ fnr }, () => {
+				fattedeVedtakFetcher.fetch({ fnr }, () => {
 					changeView(ViewType.HOVEDSIDE);
 					showModal(ModalType.VEDTAK_SENT_SUKSESS);
+					setUtkast(null);
 				});
 			})
 			.catch(err => {

@@ -26,7 +26,7 @@ export const leggTilMockSystemMelding = (systemMeldingType: SystemMeldingType) =
 
 export const mockHentDialoger: Mock = {
 	method: 'GET',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/meldinger`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/meldinger`,
 	handler: async (): Promise<ResponseData> => {
 		return { status: 200, body: JSON.stringify(mockMeldinger) };
 	}
@@ -34,7 +34,7 @@ export const mockHentDialoger: Mock = {
 
 export const mockSendDialogMelding: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/meldinger`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/meldinger`,
 	handler: async (args: HandlerArgument): Promise<ResponseData> => {
 		const sendDialogData = args.body as { melding: string };
 		const nyMelding: DialogMelding = {

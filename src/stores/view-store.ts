@@ -7,8 +7,7 @@ export enum ViewType {
 	FORHANDSVISNING = 'FORHANDSVISNING',
 	OYBLIKKSBILDE_VISNING = 'VEDLEGG',
 	VEDTAK = 'VEDTAK',
-	VEDTAK_PDF = 'VEDTAK_PDF',
-	BESLUTTER = 'BESLUTTER',
+	VEDTAK_PDF = 'VEDTAK_PDF'
 }
 
 export const useViewStore = createUseContext(() => {

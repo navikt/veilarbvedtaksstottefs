@@ -1,4 +1,4 @@
-import { HovedmalType, InnsatsgruppeType, Vedtak} from '../../../rest/data/vedtak';
+import { HovedmalType, InnsatsgruppeType, Vedtak, VedtakStatus } from '../../../rest/data/vedtak';
 import { JSONArray } from 'yet-another-fetch-mock';
 import { ansvarligVeileder, beslutter } from '../../personer';
 import { enhetId, enhetNavn } from '../../konstanter';
@@ -8,7 +8,7 @@ const historisk: Vedtak[] & JSONArray = [
 		id: 1234,
 		hovedmal: HovedmalType.BEHOLDE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
-		vedtakStatus: 'SENDT',
+		vedtakStatus: VedtakStatus.SENDT,
 		sistOppdatert: '2018-08-05T09:55:43.716393+02:00',
 		begrunnelse: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
 			'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' +
@@ -40,7 +40,7 @@ const historisk: Vedtak[] & JSONArray = [
 		id: 1235,
 		hovedmal: HovedmalType.SKAFFE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
-		vedtakStatus: 'SENDT',
+		vedtakStatus: VedtakStatus.SENDT,
 		opplysninger: [
 			'Svarene dine fra da du registrerte deg',
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit',

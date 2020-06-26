@@ -10,9 +10,9 @@ import { useDataStore } from '../../stores/data-store';
 import './vedtakskjema-visning-side.less';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
-	const {vedtak} = useDataStore();
+	const {fattedeVedtak} = useDataStore();
 	const {changeView} = useViewStore();
-	const vistVedtak = vedtak.find((v: Vedtak) => v.id === props.vedtakId);
+	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
 	if (!vistVedtak) {
 		return <AlertStripeFeil>Fant ikke vedtak å fremvise</AlertStripeFeil>;
@@ -21,7 +21,7 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	return (
 		<>
 			<Page className="vedtakskjema-visning page--white">
-				<SkjemaVisning vedtak={vistVedtak}/>
+				<SkjemaVisning fattetVedtak={vistVedtak}/>
 			</Page>
 			<Footer>
 				<div className="vedtakskjema-visning__aksjoner">

@@ -5,7 +5,7 @@ import { OrNothing } from '../../../utils/types/ornothing';
 import nyttVedtakBilde from './nytt-vedtak.svg';
 import { frontendlogger } from '../../../utils/frontend-logger';
 import { fetchWithInfo } from '../../../rest/utils';
-import { lagNyttVedtakUtkastFetchInfo } from '../../../rest/api';
+import { lagNyttUtkastFetchInfo } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
@@ -17,16 +17,16 @@ import './nytt-vedtak-panel.less';
 export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
-	const { vedtakFetcher } = useDataFetcherStore();
+	const { utkastFetcher } = useDataFetcherStore();
 	const { oppfolgingData, setMeldinger } = useDataStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
 
 	function lagNyttVedtakUtkastOgRedirectTilUtkast() {
 		showModal(ModalType.LASTER);
-		fetchWithInfo(lagNyttVedtakUtkastFetchInfo({ fnr }))
+		fetchWithInfo(lagNyttUtkastFetchInfo({ fnr }))
 			.then(() => {
-				vedtakFetcher.fetch({ fnr }, () => {
+				utkastFetcher.fetch({ fnr }, () => {
 					// Wrap in timeout so that data-store-sync.tsx can pick up the changes before the view is changed
 					setTimeout(() => {
 						setMeldinger([]); // Rydd opp hvis det ligger gamle meldinger mellomlagret

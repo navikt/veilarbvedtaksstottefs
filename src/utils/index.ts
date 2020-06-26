@@ -9,16 +9,8 @@ export const finnGjeldendeVedtak = (vedtakListe: OrNothing<Vedtak[]>): Vedtak | 
 	return vedtakListe ? vedtakListe.find(v => v.gjeldende) : undefined;
 };
 
-export const finnUtkastAlltid = (vedtakListe: Vedtak[]): Vedtak => {
-	return finnUtkast(vedtakListe) as Vedtak;
-};
-
-export const finnVedtakAlltid = (vedtakListe: Vedtak[], vedtakId: number): Vedtak => {
-	return vedtakListe.find(v => v.id === vedtakId) as Vedtak;
-};
-
-export const finnUtkast = (vedtakListe: Vedtak[]): Vedtak | undefined => {
-	return vedtakListe.find(v => v.vedtakStatus === 'UTKAST');
+export const hentId = (utkast: Vedtak | null): number => {
+	return utkast ? utkast.id : -1;
 };
 
 export const erBeslutterProsessStartet = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
@@ -37,7 +29,7 @@ export const erGodkjentAvBeslutter = (beslutterProsessStatus:  OrNothing<Beslutt
 	return beslutterProsessStatus === BeslutterProsessStatus.GODKJENT_AV_BESLUTTER;
 };
 
-// If the checkboxes/radios does not swallow enter, then it will for some reason propagate to the first button and trigger onClick
+// If the checkboxes/radios does not swallow enter, then it will propagate to the first button and trigger onClick
 export const swallowEnterKeyPress = (e: any) => {
 	if (e.charCode === 13) {
 		e.preventDefault();

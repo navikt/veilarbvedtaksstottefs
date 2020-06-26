@@ -1,9 +1,8 @@
-import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
-import { BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
+import { HandlerArgument, JSONObject, ResponseData } from 'yet-another-fetch-mock';
+import { BeslutterProsessStatus, Vedtak, VedtakStatus } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
 import { SkjemaData } from '../pages/utkast/utkast-side';
-import { finnUtkast } from '../utils';
 import historisk from './api-data/vedtak/tidligere-vedtak';
 import { ansvarligVeileder, beslutter } from './personer';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
@@ -13,27 +12,31 @@ import { SystemMeldingType } from '../utils/types/melding-type';
 import { enhetId, enhetNavn } from './konstanter';
 import env from '../utils/environment';
 
-let vedtak: Vedtak[];
-if(env.isRunningOnGhPages) {
-	vedtak = historisk;
-} else {
-	vedtak = [utkast, ...historisk];
-}
+let vedtakUtkast = env.isRunningOnGhPages ? null : utkast;
+const fattedeVedtak = historisk;
 
-export const mockHentVedtak: Mock = {
+export const mockHentUtkast: Mock = {
 	method: 'GET',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/vedtak`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
 	handler: async (): Promise<ResponseData> => {
-		return { body: JSON.stringify(vedtak) };
+		return { body: JSON.stringify(vedtakUtkast) };
+	}
+};
+
+export const mockHentFattedeVedtak: Mock = {
+	method: 'GET',
+	url: `${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet`,
+	handler: async (): Promise<ResponseData> => {
+		return { body: JSON.stringify(fattedeVedtak) };
 	}
 };
 
 export const mockLagUtkast: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/utkast`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:fnr`,
 	handler: async (): Promise<ResponseData> => {
 		const nyttUtkast = {
-			id: vedtak.length,
+			id: fattedeVedtak.length,
 			vedtakStatus: 'UTKAST',
 			sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 			gjeldende: false,
@@ -49,7 +52,7 @@ export const mockLagUtkast: Mock = {
 			beslutterIdent: null
 		} as unknown as Vedtak;
 
-		vedtak.push(nyttUtkast);
+		vedtakUtkast = nyttUtkast as Vedtak & JSONObject;
 
 		fjernAlleMockMeldinger();
 
@@ -61,48 +64,44 @@ export const mockLagUtkast: Mock = {
 
 export const mockOppdaterUtkast: Mock = {
 	method: 'PUT',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/utkast`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`,
 	handler: async (args: HandlerArgument): Promise<ResponseData> => {
 		const skjemaData: SkjemaData = args.body;
-		const gammeltUtkast = finnUtkast(vedtak);
-		const oppdatertUtkast = Object.assign(gammeltUtkast, skjemaData);
-
-		if (!gammeltUtkast) throw new Error('Fant ikke et utkast å oppdatere');
-
-		vedtak = vedtak.filter(v => v.id !== gammeltUtkast.id);
-		vedtak.push(oppdatertUtkast);
-
+		vedtakUtkast = Object.assign(vedtakUtkast || {}, skjemaData) as Vedtak & JSONObject;
 		return { status: 204 };
 	}
 };
 
 export const mockSlettUtkast: Mock = {
 	method: 'DELETE',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/utkast`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`,
 	handler: async (): Promise<ResponseData> => {
-		vedtak = vedtak.filter(v => v.vedtakStatus !== 'UTKAST');
+		vedtakUtkast = null;
 		return { status: 204 };
 	}
 };
 
-export const mockSendVedtak: Mock = {
+export const mockFattVedtak: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/vedtak/send`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/fattVedtak`,
 	handler: async (): Promise<ResponseData> => {
-		const gjeldendeVedtak = vedtak.find(v => v.gjeldende);
+		const gjeldendeVedtak = fattedeVedtak.find(v => v.gjeldende);
 
 		if (gjeldendeVedtak) {
 			gjeldendeVedtak.gjeldende = false;
 		}
 
-		const utkastTilUtsending = finnUtkast(vedtak);
+		if (!vedtakUtkast) throw new Error('Fant ikke utkast til beslutter');
 
-		if (!utkastTilUtsending) throw new Error('Fant ikke utkast til beslutter');
+		const fattetVedtak = {...vedtakUtkast};
 
-		utkastTilUtsending.vedtakStatus = 'SENDT';
-		utkastTilUtsending.gjeldende = true;
-		utkastTilUtsending.dokumentInfoId = '123';
-		utkastTilUtsending.journalpostId = '456';
+		fattetVedtak.vedtakStatus = VedtakStatus.SENDT;
+		fattetVedtak.gjeldende = true;
+		fattetVedtak.dokumentInfoId = '123';
+		fattetVedtak.journalpostId = '456';
+
+		fattedeVedtak.push(fattetVedtak);
+		vedtakUtkast = null;
 
 		return { status: 204 };
 	}
@@ -110,14 +109,12 @@ export const mockSendVedtak: Mock = {
 
 export const mockOvertaUtkast: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/utkast/overta`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/overta`,
 	handler: async (): Promise<ResponseData> => {
-		const gjeldendeUtkast = finnUtkast(vedtak);
+		if (!vedtakUtkast) throw new Error('Fant ikke utkast å overta');
 
-		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å overta');
-
-		gjeldendeUtkast.oppfolgingsenhetNavn = enhetNavn;
-		gjeldendeUtkast.oppfolgingsenhetId = enhetId;
+		vedtakUtkast.oppfolgingsenhetNavn = enhetNavn;
+		vedtakUtkast.oppfolgingsenhetId = enhetId;
 
 		leggTilMockSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER);
 
@@ -127,16 +124,13 @@ export const mockOvertaUtkast: Mock = {
 
 export const mockKlarTilBeslutter: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/beslutter/start`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/start`,
 	handler: async (): Promise<ResponseData> => {
+		if (!vedtakUtkast) throw new Error('Fant ikke utkast å starte beslutterprosess på');
 
-		const gjeldendeUtkast = finnUtkast(vedtak);
-
-		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å starte beslutterprosess på');
-
-		gjeldendeUtkast.beslutterProsessStatus = BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
-		gjeldendeUtkast.beslutterIdent = null;
-		gjeldendeUtkast.beslutterNavn = null;
+		vedtakUtkast.beslutterProsessStatus = BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
+		vedtakUtkast.beslutterIdent = null;
+		vedtakUtkast.beslutterNavn = null;
 
 		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
 
@@ -146,15 +140,12 @@ export const mockKlarTilBeslutter: Mock = {
 
 export const mockBliBeslutter: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/beslutter/bliBeslutter`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/bliBeslutter`,
 	handler: async (): Promise<ResponseData> => {
+		if (!vedtakUtkast) throw new Error('Fant ikke utkast å bli beslutter for');
 
-		const gjeldendeUtkast = finnUtkast(vedtak);
-
-		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å bli beslutter for');
-
-		gjeldendeUtkast.beslutterIdent = innloggetVeileder.ident;
-		gjeldendeUtkast.beslutterIdent = innloggetVeileder.navn;
+		vedtakUtkast.beslutterIdent = innloggetVeileder.ident;
+		vedtakUtkast.beslutterIdent = innloggetVeileder.navn;
 
 		leggTilMockSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
 
@@ -164,13 +155,11 @@ export const mockBliBeslutter: Mock = {
 
 export const mockGodkjennVedtak: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/beslutter/godkjenn`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/godkjenn`,
 	handler: async (): Promise<ResponseData> => {
-		const gjeldendeUtkast = finnUtkast(vedtak);
+		if (!vedtakUtkast) throw new Error('Fant ikke utkast å godkjenne');
 
-		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å godkjenne');
-
-		gjeldendeUtkast.beslutterProsessStatus = BeslutterProsessStatus.GODKJENT_AV_BESLUTTER;
+		vedtakUtkast.beslutterProsessStatus = BeslutterProsessStatus.GODKJENT_AV_BESLUTTER;
 
 		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
 
@@ -180,15 +169,13 @@ export const mockGodkjennVedtak: Mock = {
 
 export const mockOppdaterBeslutterProsessStatus: Mock = {
 	method: 'PUT',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/:fnr/beslutter/status`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/status`,
 	handler: async (): Promise<ResponseData> => {
-		const gjeldendeUtkast = finnUtkast(vedtak);
+		if (!vedtakUtkast) throw new Error('Fant ikke utkast å oppdatere status på');
 
-		if (!gjeldendeUtkast) throw new Error('Fant ikke utkast å oppdatere status på');
+		const erBeslutter = vedtakUtkast.beslutterIdent === beslutter.ident;
 
-		const erBeslutter = gjeldendeUtkast.beslutterIdent === beslutter.ident;
-
-		gjeldendeUtkast.beslutterProsessStatus = erBeslutter
+		vedtakUtkast.beslutterProsessStatus = erBeslutter
 			? BeslutterProsessStatus.KLAR_TIL_VEILEDER
 			: BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
 
