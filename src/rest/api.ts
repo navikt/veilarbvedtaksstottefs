@@ -108,6 +108,11 @@ export const lagSlettUtkastFetchInfo = (params: VedtakIdFetchParams): FetchInfo 
 	method: 'DELETE'
 });
 
+export const lagErUtkastGodkjentFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}/erGodkjent`,
+	method: 'GET'
+});
+
 export const lagTaOverUtkastFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}/overta`,
 	method: 'POST'

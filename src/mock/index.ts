@@ -7,6 +7,7 @@ import vedtakFraArena from './api-data/arena-vedtak';
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import {
 	mockBliBeslutter,
+	mockErUtkastGodkjent,
 	mockFattVedtak,
 	mockGodkjennVedtak,
 	mockHentFattedeVedtak,
@@ -34,6 +35,7 @@ addToFetchMock(mockSlettUtkast, fetchMock);
 addToFetchMock(mockLagUtkast, fetchMock);
 addToFetchMock(mockFattVedtak, fetchMock);
 addToFetchMock(mockOvertaUtkast, fetchMock);
+addToFetchMock(mockErUtkastGodkjent, fetchMock);
 addToFetchMock(mockStartBeslutterprosess, fetchMock);
 addToFetchMock(mockBliBeslutter, fetchMock);
 addToFetchMock(mockGodkjennVedtak, fetchMock);

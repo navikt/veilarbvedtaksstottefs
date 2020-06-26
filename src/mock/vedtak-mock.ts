@@ -122,6 +122,15 @@ export const mockOvertaUtkast: Mock = {
 	}
 };
 
+export const mockErUtkastGodkjent: Mock = {
+	method: 'GET',
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/erGodkjent`,
+	handler: async (): Promise<ResponseData> => {
+		const data = {erGodkjent: vedtakUtkast && vedtakUtkast.beslutterProsessStatus === BeslutterProsessStatus.GODKJENT_AV_BESLUTTER};
+		return { status: 200, body: JSON.stringify(data) };
+	}
+};
+
 export const mockStartBeslutterprosess: Mock = {
 	method: 'POST',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/start`,
