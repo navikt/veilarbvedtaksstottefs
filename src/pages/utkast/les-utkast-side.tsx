@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import Aksjoner from '../../components/utkast-skjema/aksjoner/aksjoner';
 import Footer from '../../components/footer/footer';
 import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
 import { useSkjemaStore } from '../../stores/skjema-store';
@@ -10,12 +9,10 @@ import { useTilgangStore } from '../../stores/tilgang-store';
 import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useAppStore } from '../../stores/app-store';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Label } from '../../components/label/label';
-import { formatDateStr } from '../../utils/date-utils';
-import Show from '../../components/show';
 import { getHovedmalNavn } from '../../utils/hovedmal';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
+import LesUtkastAksjoner from './aksjoner/les-utkast-aksjoner';
 
 const TEN_SECONDS = 10000;
 
@@ -31,8 +28,6 @@ export function LesUtkastSide() {
 	const refreshUtkastIntervalRef = useRef<number>();
 
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
-
-	const vedtakskjema = {opplysninger, begrunnelse, innsatsgruppe, hovedmal};
 
 	useEffect(() => {
 		/*
@@ -85,7 +80,7 @@ export function LesUtkastSide() {
 				</div>
 			</div>
 			<Footer>
-				<Aksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => {}}/>
+				<LesUtkastAksjoner />
 			</Footer>
 		</div>
 	);

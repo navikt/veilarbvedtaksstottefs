@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { hentMalformFraData, SkjemaData } from '../../components/utkast-skjema/skjema-utils';
-import Aksjoner from '../../components/utkast-skjema/aksjoner/aksjoner';
 import UtkastSkjema from '../../components/utkast-skjema/utkast-skjema';
 import Footer from '../../components/footer/footer';
 import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
@@ -15,6 +14,7 @@ import { Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
+import EndreUtkastAksjoner from './aksjoner/endre-utkast-aksjoner';
 
 export function EndreUtkastSide() {
 	const { fattedeVedtak, malform, utkast } = useDataStore();
@@ -82,7 +82,7 @@ export function EndreUtkastSide() {
 				<UtkastSkjema />
 			</div>
 			<Footer>
-				<Aksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
+				<EndreUtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
 			</Footer>
 		</div>
 	);

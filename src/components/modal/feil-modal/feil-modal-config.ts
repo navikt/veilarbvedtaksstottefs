@@ -80,3 +80,8 @@ export const feilVedGodkjenningAvBeslutter: FeilModalConfig = {
 	tittel: 'Klarte ikke å godkjenne vedtaket',
 	beskrivelse: 'En feil oppstod under godkjenning av vedtaket. Vennligst prøv igjen senere.'
 };
+
+export const feilVedValideringAvUtkast: FeilModalConfig = {
+	tittel: 'Utkastet kan ikke forhåndsvises',
+	beskrivelse: 'Det er mangelfull data i utkastet som gjør at det ikke kan forhåndsvises.',
+};
