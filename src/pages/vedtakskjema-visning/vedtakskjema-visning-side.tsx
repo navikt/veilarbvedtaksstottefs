@@ -27,8 +27,14 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 				<div className="vedtakskjema-visning__aksjoner">
 					<Hovedknapp
 						mini={true}
-						onClick={() => changeView(ViewType.VEDTAK_PDF, {vedtakId: vistVedtak.id})}
-					>
+						onClick={() => changeView(
+							ViewType.VEDTAK_PDF,
+							{
+								vedtakId: vistVedtak.id,
+								dokumentInfoId: vistVedtak.dokumentInfoId,
+								journalpostId: vistVedtak.journalpostId
+							}
+						)}>
 						Vis vedtaksbrev
 					</Hovedknapp>
 					<Knapp mini={true} onClick={() => changeView(ViewType.HOVEDSIDE)}>
