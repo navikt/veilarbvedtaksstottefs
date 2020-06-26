@@ -1,9 +1,9 @@
 import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Opplysning } from '../opplysninger';
-import { erDefaultOpplysning } from '../../skjema-utils';
+import { erDefaultOpplysning } from '../../../../../utils/skjema-utils';
+import { swallowEnterKeyPress } from '../../../../../utils';
 import './vis-opplysning.less';
-import { swallowEnterKeyPress } from '../../../../utils';
 
 interface VisOpplysningProps {
 	opplysning: Opplysning;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import createUseContext from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
-import { validerBegrunnelseMaxLength, validerSkjema as valider } from '../components/utkast-skjema/skjema-utils';
+import { validerBegrunnelseMaxLength, validerSkjema as valider } from '../utils/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { SkjemaLagringStatus } from '../utils/types/skjema-lagring-status';

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
-import { lagSkjemaElementFeil, validerBegrunnelseMaxLength } from '../skjema-utils';
+import { lagSkjemaElementFeil, validerBegrunnelseMaxLength } from '../../../../utils/skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
-import { useSkjemaStore } from '../../../stores/skjema-store';
-import { frontendlogger } from '../../../utils/frontend-logger';
-import { useTilgangStore } from '../../../stores/tilgang-store';
-import { TipsPopover } from '../../tips-popover/tips-popover';
+import { useSkjemaStore } from '../../../../stores/skjema-store';
+import { frontendlogger } from '../../../../utils/frontend-logger';
+import { useTilgangStore } from '../../../../stores/tilgang-store';
+import { TipsPopover } from '../../../../components/tips-popover/tips-popover';
 import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
-import { MalformData, MalformType } from '../../../rest/data/malform';
-import { useDataStore } from '../../../stores/data-store';
+import { MalformData, MalformType } from '../../../../rest/data/malform';
+import { useDataStore } from '../../../../stores/data-store';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { OrNothing } from '../../../utils/types/ornothing';
+import { OrNothing } from '../../../../utils/types/ornothing';
 import './begrunnelse.less';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;

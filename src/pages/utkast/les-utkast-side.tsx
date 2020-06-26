@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import Footer from '../../components/footer/footer';
-import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
@@ -13,6 +12,7 @@ import { getHovedmalNavn } from '../../utils/hovedmal';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
 import LesUtkastAksjoner from './aksjoner/les-utkast-aksjoner';
+import UtkastSkjema from './skjema/utkast-skjema';
 
 const TEN_SECONDS = 10000;
 
@@ -52,11 +52,10 @@ export function LesUtkastSide() {
 
 	return (
 		<div className="utkast-side page--grey">
-			<div className="utkast-side__utkast">
-				<SkjemaHeader utkast={utkast as Vedtak} sistOppdatert={sistOppdatert}/>
-				<div className="skjema-visning">
+			<UtkastSkjema utkast={utkast as Vedtak} sistOppdatert={sistOppdatert}>
+				<div className="utkast-side__visning">
 
-					<div className="skjema-visning__info">
+					<div>
 						<Element tag="span" className="skjema-visning__label blokk-xxs">Kilder</Element>
 						<ul className="skjema-visning__opplysninger">{opplysninger.map((o, idx) => (
 							<li key={idx}>{o}</li>))}</ul>
@@ -78,7 +77,7 @@ export function LesUtkastSide() {
 					</div>
 
 				</div>
-			</div>
+			</UtkastSkjema>
 			<Footer>
 				<LesUtkastAksjoner />
 			</Footer>

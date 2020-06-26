@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import debounce from 'lodash.debounce';
-import { hentMalformFraData, SkjemaData } from '../../components/utkast-skjema/skjema-utils';
-import UtkastSkjema from '../../components/utkast-skjema/utkast-skjema';
+import { hentMalformFraData, SkjemaData } from '../../utils/skjema-utils';
+import UtkastSkjema from './skjema/utkast-skjema';
 import Footer from '../../components/footer/footer';
-import SkjemaHeader from '../../components/utkast-skjema/header/skjema-header';
 import { fetchWithInfo } from '../../rest/utils';
 import { lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
 import { ModalType, useModalStore } from '../../stores/modal-store';
@@ -15,6 +14,10 @@ import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
 import EndreUtkastAksjoner from './aksjoner/endre-utkast-aksjoner';
+import Opplysninger from './skjema/opplysninger/opplysninger';
+import Begrunnelse from './skjema/begrunnelse/begrunnelse';
+import Innsatsgruppe from './skjema/innsatsgruppe/innsatsgruppe';
+import Hovedmal from './skjema/hovedmal/hovedmal';
 
 export function EndreUtkastSide() {
 	const { fattedeVedtak, malform, utkast } = useDataStore();
@@ -77,10 +80,14 @@ export function EndreUtkastSide() {
 
 	return (
 		<div className="utkast-side page--grey">
-			<div className="utkast-side__utkast">
-				<SkjemaHeader utkast={utkast as Vedtak} sistOppdatert={sistOppdatert} />
-				<UtkastSkjema />
-			</div>
+			<UtkastSkjema utkast={utkast as Vedtak} sistOppdatert={sistOppdatert}>
+				<form className="utkast-side__form">
+					<Opplysninger />
+					<Begrunnelse />
+					<Innsatsgruppe />
+					<Hovedmal />
+				</form>
+			</UtkastSkjema>
 			<Footer>
 				<EndreUtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
 			</Footer>

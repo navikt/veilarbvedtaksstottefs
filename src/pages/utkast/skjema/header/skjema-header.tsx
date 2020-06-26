@@ -1,9 +1,9 @@
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { Vedtak } from '../../../rest/data/vedtak';
+import { Vedtak } from '../../../../rest/data/vedtak';
 import utkastBilde from './utkast.svg';
-import { DatoLabel } from '../../panel/dato-label';
-import { Label, LabelType } from '../../label/label';
+import { DatoLabel } from '../../../../components/panel/dato-label';
+import { Label, LabelType } from '../../../../components/label/label';
 import './skjema-header.less';
 
 interface SkjemaHeaderProps {

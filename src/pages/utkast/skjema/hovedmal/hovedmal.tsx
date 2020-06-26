@@ -1,15 +1,15 @@
 import React from 'react';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
-import { OrNothing } from '../../../utils/types/ornothing';
+import { OrNothing } from '../../../../utils/types/ornothing';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
-import { useSkjemaStore } from '../../../stores/skjema-store';
-import { swallowEnterKeyPress } from '../../../utils';
-import { lagSkjemaElementFeil } from '../skjema-utils';
-import { HovedmalType, InnsatsgruppeType } from '../../../rest/data/vedtak';
-import { alleHovedmal } from '../../../utils/hovedmal';
+import { useSkjemaStore } from '../../../../stores/skjema-store';
+import { swallowEnterKeyPress } from '../../../../utils';
+import { lagSkjemaElementFeil } from '../../../../utils/skjema-utils';
+import { HovedmalType, InnsatsgruppeType } from '../../../../rest/data/vedtak';
+import { alleHovedmal } from '../../../../utils/hovedmal';
 import './hovedmal.less';
-import { useTilgangStore } from '../../../stores/tilgang-store';
+import { useTilgangStore } from '../../../../stores/tilgang-store';
 
 function Hovedmal() {
 	const {innsatsgruppe, hovedmal, setHovedmal, errors} = useSkjemaStore();

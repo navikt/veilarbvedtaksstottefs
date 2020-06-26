@@ -1,11 +1,11 @@
-import { SkjemaFeil } from '../../utils/types/skjema-feil';
-import { BEGRUNNELSE_MAX_LENGTH } from './begrunnelse/begrunnelse';
-import { OrNothing } from '../../utils/types/ornothing';
-import { Opplysning } from './opplysninger/opplysninger';
-import { MalformData, MalformType } from '../../rest/data/malform';
+import { SkjemaFeil } from './types/skjema-feil';
+import { BEGRUNNELSE_MAX_LENGTH } from '../pages/utkast/skjema/begrunnelse/begrunnelse';
+import { OrNothing } from './types/ornothing';
+import { Opplysning } from '../pages/utkast/skjema/opplysninger/opplysninger';
+import { MalformData, MalformType } from '../rest/data/malform';
 import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
-import { HovedmalType, InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
-import { erStandard, erVarigEllerGradertVarig } from '../../utils/innsatsgruppe';
+import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
+import { erStandard, erVarigEllerGradertVarig } from './innsatsgruppe';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;

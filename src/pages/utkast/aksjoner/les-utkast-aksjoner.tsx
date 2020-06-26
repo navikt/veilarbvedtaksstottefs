@@ -8,11 +8,11 @@ import { fetchWithInfo } from '../../../rest/utils';
 import {
 	lagBliBeslutterFetchInfo,
 	lagGodkjennVedtakFetchInfo,
-	lagOppdaterBeslutterProsessStatusFetchInfo,
+	lagOppdaterBeslutterProsessStatusFetchInfo
 } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { harFeil, trengerBeslutter } from '../../../components/utkast-skjema/skjema-utils';
+import { harFeil, trengerBeslutter } from '../../../utils/skjema-utils';
 import Show from '../../../components/show';
 import { Element } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../stores/tilgang-store';

@@ -7,16 +7,25 @@ import { fetchWithInfo } from '../../../rest/utils';
 import { ReactComponent as SlettIkon } from './delete.svg';
 import {
 	lagOppdaterBeslutterProsessStatusFetchInfo,
-	lagOppdaterVedtakUtkastFetchInfo, lagStartBeslutterProsessFetchInfo
+	lagOppdaterVedtakUtkastFetchInfo,
+	lagStartBeslutterProsessFetchInfo
 } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { harFeil, hentMalformFraData, scrollTilForsteFeil, SkjemaData, trengerBeslutter } from '../../../components/utkast-skjema/skjema-utils';
+import {
+	harFeil,
+	hentMalformFraData,
+	scrollTilForsteFeil,
+	SkjemaData,
+	trengerBeslutter
+} from '../../../utils/skjema-utils';
 import Show from '../../../components/show';
 import { Normaltekst } from 'nav-frontend-typografi';
 import {
 	erBeslutterProsessStartet,
-	erKlarTilVeileder, finnGjeldendeVedtak, isNothing,
+	erKlarTilVeileder,
+	finnGjeldendeVedtak,
+	isNothing,
 	mapSkjemaLagringStatusTilTekst
 } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';

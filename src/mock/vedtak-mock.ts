@@ -10,7 +10,7 @@ import { fjernAlleMockMeldinger, leggTilMockSystemMelding } from './meldinger-mo
 import { SystemMeldingType } from '../utils/types/melding-type';
 import { enhetId, enhetNavn } from './konstanter';
 import env from '../utils/environment';
-import { SkjemaData } from '../components/utkast-skjema/skjema-utils';
+import { SkjemaData } from '../utils/skjema-utils';
 
 let vedtakUtkast = env.isRunningOnGhPages ? null : utkast;
 const fattedeVedtak = historisk;

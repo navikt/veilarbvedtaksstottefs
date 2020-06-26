@@ -2,26 +2,24 @@ import React from 'react';
 import cls from 'classnames';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import {
-	lagSkjemaElementFeil,
-	trengerBeslutter, harSkrevetBegrunnelse
-} from '../skjema-utils';
+import { harSkrevetBegrunnelse, lagSkjemaElementFeil, trengerBeslutter } from '../../../../utils/skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
-import { useSkjemaStore } from '../../../stores/skjema-store';
-import { erBeslutterProsessStartet, finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../utils';
+import { useSkjemaStore } from '../../../../stores/skjema-store';
+import { erBeslutterProsessStartet, finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../../utils';
 import './innsatsgruppe.less';
+import { useTilgangStore } from '../../../../stores/tilgang-store';
+import { useDataStore } from '../../../../stores/data-store';
 import {
-	erStandard, erVarigEllerGradertVarig,
+	erStandard,
+	erVarigEllerGradertVarig,
 	InnsatsgruppeTekst,
 	innsatsgruppeTekster
-} from '../../../utils/innsatsgruppe';
-import { InnsatsgruppeType } from '../../../rest/data/vedtak';
-import { OrNothing } from '../../../utils/types/ornothing';
+} from '../../../../utils/innsatsgruppe';
+import { erAnsvarligVeileder } from '../../../../utils/tilgang';
+import Show from '../../../../components/show';
+import { OrNothing } from '../../../../utils/types/ornothing';
+import { InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import Show from '../../show';
-import { useTilgangStore } from '../../../stores/tilgang-store';
-import { useDataStore } from '../../../stores/data-store';
-import { erAnsvarligVeileder } from '../../../utils/tilgang';
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();

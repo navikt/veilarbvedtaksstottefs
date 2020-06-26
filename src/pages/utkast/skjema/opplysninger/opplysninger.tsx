@@ -5,13 +5,13 @@ import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
-import { useSkjemaStore } from '../../../stores/skjema-store';
-import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../skjema-utils';
-import { useIsAfterFirstRender } from '../../../utils/hooks';
+import { useSkjemaStore } from '../../../../stores/skjema-store';
+import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../../../../utils/skjema-utils';
+import { useIsAfterFirstRender } from '../../../../utils/hooks';
 import './opplysninger.less';
-import { useTilgangStore } from '../../../stores/tilgang-store';
-import { TipsPopover } from '../../tips-popover/tips-popover';
 import { OpplysningerTipsInnhold } from './opplysninger-tips-innhold';
+import { useTilgangStore } from '../../../../stores/tilgang-store';
+import { TipsPopover } from '../../../../components/tips-popover/tips-popover';
 
 export interface Opplysning {
 	navn: string;
