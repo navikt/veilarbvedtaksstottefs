@@ -5,7 +5,7 @@ import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
 import Card from '../../components/card/card';
 import { OrNothing } from '../../utils/types/ornothing';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
-import Page from '../page/page';
+import Page from '../../components/page/page';
 import OyblikksbildeType from '../../utils/types/oyblikksbilde-type';
 import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';

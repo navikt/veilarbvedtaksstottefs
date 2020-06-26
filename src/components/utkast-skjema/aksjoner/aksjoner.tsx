@@ -4,7 +4,6 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import dialogIkon from './dialog.svg';
 import { ReactComponent as TaOverIkon } from './taover.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { SkjemaData } from '../../../pages/utkast/utkast-side';
 import { fetchWithInfo } from '../../../rest/utils';
 import { ReactComponent as SlettIkon } from './delete.svg';
 import {
@@ -16,7 +15,7 @@ import {
 } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { harFeil, hentMalformFraData, scrollTilForsteFeil, trengerBeslutter } from '../skjema-utils';
+import { harFeil, hentMalformFraData, scrollTilForsteFeil, SkjemaData, trengerBeslutter } from '../skjema-utils';
 import Show from '../../show';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../stores/tilgang-store';

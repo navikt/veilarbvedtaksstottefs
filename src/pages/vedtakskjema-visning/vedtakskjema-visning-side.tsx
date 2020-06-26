@@ -1,6 +1,6 @@
 import React from 'react';
 import { Vedtak } from '../../rest/data/vedtak';
-import Page from '../page/page';
+import Page from '../../components/page/page';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';

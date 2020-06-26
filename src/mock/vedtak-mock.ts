@@ -2,7 +2,6 @@ import { HandlerArgument, JSONObject, ResponseData } from 'yet-another-fetch-moc
 import { BeslutterProsessStatus, Vedtak, VedtakStatus } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
-import { SkjemaData } from '../pages/utkast/utkast-side';
 import historisk from './api-data/vedtak/tidligere-vedtak';
 import { ansvarligVeileder, beslutter } from './personer';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
@@ -11,6 +10,7 @@ import { fjernAlleMockMeldinger, leggTilMockSystemMelding } from './meldinger-mo
 import { SystemMeldingType } from '../utils/types/melding-type';
 import { enhetId, enhetNavn } from './konstanter';
 import env from '../utils/environment';
+import { SkjemaData } from '../components/utkast-skjema/skjema-utils';
 
 let vedtakUtkast = env.isRunningOnGhPages ? null : utkast;
 const fattedeVedtak = historisk;
