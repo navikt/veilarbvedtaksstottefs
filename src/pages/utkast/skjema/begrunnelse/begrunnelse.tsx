@@ -4,7 +4,6 @@ import { lagSkjemaElementFeil, validerBegrunnelseMaxLength } from '../../../../u
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
 import { frontendlogger } from '../../../../utils/frontend-logger';
-import { useTilgangStore } from '../../../../stores/tilgang-store';
 import { TipsPopover } from '../../../../components/tips-popover/tips-popover';
 import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
 import { MalformData, MalformType } from '../../../../rest/data/malform';
@@ -30,7 +29,6 @@ function malformToTekst(malform: OrNothing<MalformData>): string {
 
 function Begrunnelse() {
 	const { malform } = useDataStore();
-	const { kanEndreUtkast } = useTilgangStore();
 	const {begrunnelse, setBegrunnelse, errors, innsatsgruppe} = useSkjemaStore();
 	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 
@@ -81,7 +79,6 @@ function Begrunnelse() {
 						aria-labelledby="begrunnelse-tittel"
 						aria-describedby="begrunnelse-tips"
 						autoCorrect="on"
-						disabled={!kanEndreUtkast}
 					/>
 					<Normaltekst className="begrunnelse__malform">Brukers målform: {malformToTekst(malform)}</Normaltekst>
 				</SkjemaGruppe>

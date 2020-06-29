@@ -10,7 +10,6 @@ import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../../../../u
 import { useIsAfterFirstRender } from '../../../../utils/hooks';
 import './opplysninger.less';
 import { OpplysningerTipsInnhold } from './opplysninger-tips-innhold';
-import { useTilgangStore } from '../../../../stores/tilgang-store';
 import { TipsPopover } from '../../../../components/tips-popover/tips-popover';
 
 export interface Opplysning {
@@ -20,7 +19,6 @@ export interface Opplysning {
 
 function Opplysninger() {
 	const { opplysninger: skjemaOpplysninger, setOpplysninger: setSkjemaOpplysninger, errors } = useSkjemaStore();
-	const { kanEndreUtkast } = useTilgangStore();
 	const [opplysninger, setOpplysninger] = useState<Opplysning[]>(mergeMedDefaultOpplysninger(skjemaOpplysninger));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
 	const [visLeggTilNyOpplysning, setVisLeggTilNyOpplysning] = useState<boolean>(true);
@@ -101,7 +99,6 @@ function Opplysninger() {
 									key={index}
 									onChange={(o) => handleOpplysningerChecked(index, o)}
 									erSistEndretIndeks={index === sistEndretIndeks}
-									disabled={!kanEndreUtkast}
 								/>
 							) : (
 								<RedigerOpplysning
@@ -122,7 +119,6 @@ function Opplysninger() {
 					</SkjemaGruppe>
 					{visLeggTilNyOpplysning ? (
 						<LeggTilOpplysning
-							disabled={!kanEndreUtkast}
 							leggTilOpplysning={() => {
 								setVisLeggTilNyOpplysning(false);
 								nullstilState();

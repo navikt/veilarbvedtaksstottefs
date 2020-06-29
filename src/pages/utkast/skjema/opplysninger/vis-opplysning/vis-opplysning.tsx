@@ -10,12 +10,11 @@ interface VisOpplysningProps {
 	handleOpplysning: () => void;
 	onChange: (opplysning: Opplysning) => void;
 	erSistEndretIndeks: boolean;
-	disabled: boolean;
 }
 
 export function VisOpplysning(props: VisOpplysningProps) {
 	const { navn, erValgt } = props.opplysning;
-	const kanRedigeres = !erDefaultOpplysning(navn) && !props.disabled;
+	const kanRedigeres = !erDefaultOpplysning(navn);
 
 	return (
 		<div className="vis-opplysning">
@@ -25,13 +24,11 @@ export function VisOpplysning(props: VisOpplysningProps) {
 				value={navn}
 				onKeyPress={swallowEnterKeyPress}
 				onChange={(e: any) => props.onChange(({ navn, erValgt: e.target.checked}))}
-				disabled={props.disabled}
 			/>
 			{kanRedigeres && (
 				<button
 					aria-label={'Rediger ' + navn}
 					className="vis-opplysning__rediger-knapp"
-					disabled={props.disabled}
 					onClick={(e) => {
 					if (document.activeElement === e.currentTarget) {
 						props.handleOpplysning();
