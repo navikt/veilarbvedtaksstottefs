@@ -7,6 +7,7 @@ import { VeilederTilgang } from '../../utils/tilgang';
 import { useTilgangStore } from '../../stores/tilgang-store';
 import { useDataStore } from '../../stores/data-store';
 import { ansvarligVeileder, beslutter, ikkeAnsvarligVeileder } from '../personer';
+import { updateInnloggetVeilederMock } from '../api-data/innlogget-veileder';
 
 export function MockPanel() {
 
@@ -34,12 +35,15 @@ function InnloggetSom() {
         switch (tilgang) {
             case VeilederTilgang.BESLUTTER:
                 setInnloggetVeileder(beslutter);
+                updateInnloggetVeilederMock(beslutter)
                 break;
             case VeilederTilgang.ANSVARLIG_VEILEDER:
                 setInnloggetVeileder(ansvarligVeileder);
+                updateInnloggetVeilederMock(ansvarligVeileder)
                 break;
             case VeilederTilgang.IKKE_ANSVARLIG_VEILEDER:
                 setInnloggetVeileder(ikkeAnsvarligVeileder);
+                updateInnloggetVeilederMock(ikkeAnsvarligVeileder)
                 break;
 
         }
