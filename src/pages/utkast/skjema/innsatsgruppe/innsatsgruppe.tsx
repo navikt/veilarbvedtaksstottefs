@@ -7,7 +7,6 @@ import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
 import { erBeslutterProsessStartet, finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../../utils';
 import './innsatsgruppe.less';
-import { useTilgangStore } from '../../../../stores/tilgang-store';
 import { useDataStore } from '../../../../stores/data-store';
 import {
 	erStandard,
@@ -15,7 +14,6 @@ import {
 	InnsatsgruppeTekst,
 	innsatsgruppeTekster
 } from '../../../../utils/innsatsgruppe';
-import { erAnsvarligVeileder } from '../../../../utils/tilgang';
 import Show from '../../../../components/show';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../../../../rest/data/vedtak';
@@ -23,14 +21,12 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
-	const {kanEndreUtkast, veilederTilgang} = useTilgangStore();
 	const {fattedeVedtak, utkast} = useDataStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
 	const visInfomelding = trengerBeslutter(innsatsgruppe)
-		&& erAnsvarligVeileder(veilederTilgang)
 		&& !erBeslutterProsessStartet(utkast!.beslutterProsessStatus);
 
 	return (
@@ -52,7 +48,6 @@ function Innsatsgruppe() {
 					handleInnsatsgruppeChanged={setInnsatsgruppe}
 					innsatsgruppe={innsatsgruppe}
 					setHovedmal={setHovedmal}
-					disabled={!kanEndreUtkast}
 				/>
 			</SkjemaGruppe>
 		</SkjemaBolk>
@@ -65,7 +60,6 @@ interface InnsatsgruppeRadioProps {
 	handleInnsatsgruppeChanged: (e: any) => void;
 	setHovedmal: (e: any) => void;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
-	disabled: boolean
 }
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
@@ -84,7 +78,6 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 						value={innsatsgruppeTekst.value}
 						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
 						inputProps={{onKeyPress: swallowEnterKeyPress, 'aria-labelledby': 'innsatsgruppe-tittel'}}
-						disabled={props.disabled}
 						onChange={(e: any) => {
 							const innsatsgruppe = e.target.value;
 							props.handleInnsatsgruppeChanged(innsatsgruppe);
