@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-export function useConst<T>(value: T): T {
-	const ref = useRef(value);
-	return ref.current;
-}
-
 export function useIsAfterFirstRender(): boolean {
 	const hasRenderedOnce = useRef(false);
 

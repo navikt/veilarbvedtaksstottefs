@@ -20,9 +20,10 @@ import {
 	trengerBeslutter
 } from '../../../utils/skjema-utils';
 import Show from '../../../components/show';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import {
 	erBeslutterProsessStartet,
+	erGodkjentAvBeslutter,
 	erKlarTilVeileder,
 	finnGjeldendeVedtak,
 	isNothing,
@@ -62,6 +63,7 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 	const [laster, setLaster] = useState(false);
 
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
+	const visGodkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
 	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(beslutterNavn) && !erBeslutterProsessStartet(beslutterProsessStatus);
 	const visKlarTilBeslutter = erKlarTilVeileder(beslutterProsessStatus);
 	const erForhandsvisHovedknapp = !visKlarTilBeslutter;
@@ -177,6 +179,10 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 			</div>
 
 			<div className="aksjoner__knapper-hoyre">
+				<Show if={visGodkjentAvBeslutter}>
+					<Element style={{ marginRight: '1rem' }}>Klar for utsendelse</Element>
+				</Show>
+
 				<Flatknapp
 					mini={true}
 					htmlType="button"
