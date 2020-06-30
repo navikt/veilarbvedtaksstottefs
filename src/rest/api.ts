@@ -124,8 +124,11 @@ export const lagHentOyblikksbildeFetchInfo = (params: VedtakIdFetchParams): Fetc
 
 export const lagHentForhandsvisningUrl = (vedtakId: number): string => `${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/pdf`;
 
-export const lagHentVedtakPdfUrl = (dokumentInfoId: string, journalpostId: string): string =>
-	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/pdf?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
+export const lagHentVedtakPdfUrl = (vedtakId: number): string =>
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/${vedtakId}/pdf`;
+
+export const lagHentArenaVedtakPdfUrl = (dokumentInfoId: string, journalpostId: string): string =>
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena/pdf?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
 
 export const lagStartBeslutterProsessFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/start?vedtakId=${params.vedtakId}`,
