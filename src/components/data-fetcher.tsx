@@ -1,15 +1,49 @@
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDataFetcherStore } from '../stores/data-fetcher-store';
-import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../rest/utils';
+import {
+	FetchResponse,
+	hasAnyFailed,
+	hasData,
+	isAnyNotStartedOrPending,
+	isNotStarted,
+	usePromise
+} from '../rest/utils';
 import Spinner from './spinner/spinner';
+import { fetchFattedeVedtak } from '../rest/api';
+import { useDataStore } from '../stores/data-store';
+import { Vedtak } from '../rest/data/vedtak';
 
-export function DataFetcher(props: { fnr: string; children: any }) {
+export function DataFetcher(props: { fnr: string; children: React.ReactNode }) {
+	const fattVedtakPromise = usePromise<FetchResponse<Vedtak[]>>();
+
 	const {
 		oppfolgingDataFetcher, featuresFetcher, malformFetcher,
 		utkastFetcher, fattedeVedtakFetcher,
 		innloggetVeilederFetcher, arenaVedtakFetcher
 	} = useDataFetcherStore();
+
+	const { setFattedeVedtak } = useDataStore();
+
+	useEffect(() => {
+		fattVedtakPromise.evaluate(fetchFattedeVedtak(props.fnr));
+
+		//
+		// fetchFattedeVedtak(props.fnr)
+		// 	.then(response => {
+		// 		if (response.data) {
+		// 			setFattedeVedtak(response.data);
+		// 		}
+		//
+		// 	});
+	}, []);
+
+	useEffect(() => {
+		if (hasData(fattVedtakPromise)) {
+			setFattedeVedtak(fattVedtakPromise.data.data);
+		}
+
+	}, [fattVedtakPromise]);
 
 	useEffect(() => {
 		/*

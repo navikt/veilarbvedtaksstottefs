@@ -1,7 +1,8 @@
-import { FetchInfo } from './utils';
+import { FetchInfo, fetchJson, FetchResponse } from './utils';
 import { ALL_TOGGLES } from './data/features';
 import { mapOpplysningerFraBokmalTilBrukersMalform, SkjemaData } from '../utils/skjema-utils';
 import { MalformType } from './data/malform';
+import { Vedtak } from './data/vedtak';
 
 export interface SendDialogFetchParams {
 	vedtakId: number;
@@ -79,6 +80,10 @@ export const lagHentUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${params.fnr}`
 });
 
+export const fetchFattedeVedtak = (fnr: string): Promise<FetchResponse<Vedtak[]>> => fetchJson(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`
+);
+
 export const lagHentFattedeVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${params.fnr}`
 });
@@ -149,3 +154,9 @@ export const lagOppdaterBeslutterProsessStatusFetchInfo = (params: VedtakIdFetch
 	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/status?vedtakId=${params.vedtakId}`,
 	method: 'PUT'
 });
+
+export const fetchOppdaterBeslutterProsessStatus = (vedtakId: number): Promise<Response> => {
+	return fetch(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/status?vedtakId=${vedtakId}`, {
+		method: 'PUT'
+	})
+};
