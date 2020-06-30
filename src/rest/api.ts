@@ -1,8 +1,10 @@
 import { FetchInfo, fetchJson, FetchResponse } from './utils';
-import { ALL_TOGGLES } from './data/features';
+import { ALL_TOGGLES, Features } from './data/features';
 import { mapOpplysningerFraBokmalTilBrukersMalform, SkjemaData } from '../utils/skjema-utils';
-import { MalformType } from './data/malform';
-import { Vedtak } from './data/vedtak';
+import { MalformData, MalformType } from './data/malform';
+import { ArenaVedtak, Vedtak } from './data/vedtak';
+import { Veileder } from './data/veiledere';
+import Oppfolging from './data/oppfolging-data';
 
 export interface SendDialogFetchParams {
 	vedtakId: number;
@@ -38,26 +40,26 @@ export const HEADERS_WITH_JSON_CONTENT = {
 	'Content-Type': 'application/json'
 };
 
-export const lagHentFeaturesFetchInfo = (): FetchInfo => {
+export const fetchFeatures = (): Promise<FetchResponse<Features>> => {
 	const toggles = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
-	return { url: `${FEATURE_TOGGLE_URL}/?${toggles}` };
-};
+	return fetchJson(`${FEATURE_TOGGLE_URL}/?${toggles}`);
+}
 
-export const lagHentOppfolgingDataFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBOPPFOLGING_API}/oppfolging?fnr=${params.fnr}`
-});
+export const fetchOppfolging = (fnr: string): Promise<FetchResponse<Oppfolging>> => fetchJson(
+	`${VEILARBOPPFOLGING_API}/oppfolging?fnr=${fnr}`
+);
 
 export const lagHentTilgangTilKontorFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBOPPFOLGING_API}/oppfolging/veilederTilgang?fnr=${params.fnr}`
 });
 
-export const lagHentMalformFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBPERSON_API}/person/${params.fnr}/malform`
-});
+export const fetchMalform = (fnr: string): Promise<FetchResponse<MalformData>> => fetchJson(
+	`${VEILARBPERSON_API}/person/${fnr}/malform`
+);
 
-export const lagHentVeilederFetchInfo = (): FetchInfo => ({
-	url: `${VEILARBVEILEDER_API}/veileder/me`
-});
+export const fetchInnloggetVeileder = (): Promise<FetchResponse<Veileder>> => fetchJson(
+	`${VEILARBVEILEDER_API}/veileder/me`
+);
 
 export const lagNyttUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
@@ -76,21 +78,17 @@ export const lagOppdaterVedtakUtkastFetchInfo = (params: OppdaterUtkastFetchPara
 	};
 };
 
-export const lagHentUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${params.fnr}`
-});
+export const fetchUtkast = (fnr: string): Promise<FetchResponse<Vedtak>> => fetchJson(
+	`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`
+);
 
 export const fetchFattedeVedtak = (fnr: string): Promise<FetchResponse<Vedtak[]>> => fetchJson(
 	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`
 );
 
-export const lagHentFattedeVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${params.fnr}`
-});
-
-export const lagHentArenaVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena?fnr=${params.fnr}`
-});
+export const fetchArenaVedtak = (fnr: string): Promise<FetchResponse<ArenaVedtak[]>> => fetchJson(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena?fnr=${fnr}`
+);
 
 export const lagFattVedtakFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}/fattVedtak`,

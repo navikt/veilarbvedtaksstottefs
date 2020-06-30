@@ -56,9 +56,9 @@ export const hasOkStatus = (fetch: FetchState): boolean => {
 	return fetch.httpCode >= 200 && fetch.httpCode < 300;
 };
 
-// export const hasData = (fetch: FetchState): boolean => {
-// 	return fetch.data != null;
-// };
+export const hasData = (fetch: FetchState): boolean => {
+	return fetch.data != null;
+};
 
 export const fetchWithInfo = (fetchInfo: FetchInfo) => {
 	const { url, ...rest } = fetchInfo;
@@ -129,18 +129,36 @@ export interface PromiseState<D> {
 }
 
 interface PromiseStateWithEvaluate<D> extends PromiseState<D>{
-	evaluate: (promise: Promise<D>) => void;
+	evaluate: (promise: Promise<FetchResponse<D>>) => void;
 }
 
-export function hasData<D>(status: PromiseState<D>): status is PromiseStatusWithData<D>  {
+export function hasData2<D>(status: PromiseState<D>): status is PromiseStatusWithData<D>  {
 	return status.status === Status.SUCCEEDED;
 }
 
-export function hasError<D>(status: PromiseState<D>): status is PromiseStatusWithError  {
+export function hasFailed2<D>(status: PromiseState<D>): status is PromiseStatusWithError  {
 	return status.status === Status.FAILED;
 }
 
-export function usePromise<D>(): PromiseStateWithEvaluate<D> {
+export function isNotStartedOrPending2<D>(state: PromiseState<D>) {
+	return state.status === Status.NOT_STARTED || state.status === Status.PENDING;
+}
+
+export const hasAnyFailed2 = (state: PromiseState<any> | Array<PromiseState<any>>): boolean => {
+	if (Array.isArray(state)) {
+		return state.some(s => hasFailed2(s));
+	}
+	return hasFailed2(state);
+}
+
+export const isAnyNotStartedOrPending2 = (state: PromiseState<any> | Array<PromiseState<any>>): boolean => {
+	if (Array.isArray(state)) {
+		return state.some(s => isNotStartedOrPending2(s));
+	}
+	return isNotStartedOrPending2(state);
+}
+
+/*export function usePromise<D>(): PromiseStateWithEvaluate<D> {
 	const [data, setData] = useState<D>();
 	const [error, setError] = useState<any>();
 	const [status, setStatus] = useState<Status>(Status.NOT_STARTED);
@@ -160,9 +178,10 @@ export function usePromise<D>(): PromiseStateWithEvaluate<D> {
 	}, []);
 
 	return useMemo<PromiseStateWithEvaluate<D>>(() => ({ error, data, status, evaluate }), [error, data, status, evaluate]);
-}
+}*/
 
-export function useFetchJsonPromise<D>(): PromiseStateWithEvaluate<D> {
+
+export function useFetchResonsPromise<D>(): PromiseStateWithEvaluate<D> {
 	const [data, setData] = useState<D>();
 	const [error, setError] = useState<any>();
 	const [status, setStatus] = useState<Status>(Status.NOT_STARTED);
@@ -171,9 +190,14 @@ export function useFetchJsonPromise<D>(): PromiseStateWithEvaluate<D> {
 		setStatus(Status.PENDING);
 
 		promise
-			.then(responseData => {
-				setData(responseData.data);
-				setStatus(Status.SUCCEEDED);
+			.then(response => {
+				if (response.error) {
+					setError(response.error)
+					setStatus(Status.FAILED);
+				} else {
+					setData(response.data);
+					setStatus(Status.SUCCEEDED);
+				}
 			})
 			.catch(responseError => {
 				setError(responseError);

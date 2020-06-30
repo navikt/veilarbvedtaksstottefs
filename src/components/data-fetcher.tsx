@@ -1,96 +1,89 @@
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { useDataFetcherStore } from '../stores/data-fetcher-store';
-import {
-	FetchResponse,
-	hasAnyFailed,
-	hasData,
-	isAnyNotStartedOrPending,
-	isNotStarted,
-	usePromise
-} from '../rest/utils';
+import { hasAnyFailed2, hasData2, isAnyNotStartedOrPending2, useFetchResonsPromise, } from '../rest/utils';
 import Spinner from './spinner/spinner';
-import { fetchFattedeVedtak } from '../rest/api';
+import { fetchArenaVedtak, fetchFattedeVedtak, fetchFeatures, fetchInnloggetVeileder, fetchMalform, fetchOppfolging, fetchUtkast } from '../rest/api';
 import { useDataStore } from '../stores/data-store';
-import { Vedtak } from '../rest/data/vedtak';
+import { ArenaVedtak, Vedtak } from '../rest/data/vedtak';
+import OppfolgingData from '../rest/data/oppfolging-data';
+import { Features } from '../rest/data/features';
+import { MalformData } from '../rest/data/malform';
+import { Veileder } from '../rest/data/veiledere';
 
 export function DataFetcher(props: { fnr: string; children: React.ReactNode }) {
-	const fattVedtakPromise = usePromise<FetchResponse<Vedtak[]>>();
+    const fattedeVedtakPromise = useFetchResonsPromise<Vedtak[]>();
+    const oppfolgingDataPromise = useFetchResonsPromise<OppfolgingData>();
+    const featuresPromise = useFetchResonsPromise<Features>();
+    const malformDataPromise = useFetchResonsPromise<MalformData>();
+    const utkastPromise = useFetchResonsPromise<Vedtak>();
+    const innloggetVeilederPromise = useFetchResonsPromise<Veileder>();
+    const arenaVedtakPromise = useFetchResonsPromise<ArenaVedtak[]>();
 
-	const {
-		oppfolgingDataFetcher, featuresFetcher, malformFetcher,
-		utkastFetcher, fattedeVedtakFetcher,
-		innloggetVeilederFetcher, arenaVedtakFetcher
-	} = useDataFetcherStore();
+    const fetchResponsePromises = [
+        fattedeVedtakPromise,
+        oppfolgingDataPromise,
+        featuresPromise,
+        malformDataPromise,
+        utkastPromise,
+        innloggetVeilederPromise,
+        arenaVedtakPromise
+    ];
 
-	const { setFattedeVedtak } = useDataStore();
+    const {
+        setFattedeVedtak,
+        setOppfolgingData,
+        setFeatures,
+        setMalform,
+        setUtkast,
+        setInnloggetVeileder,
+        setArenaVedtak,
+    } = useDataStore();
 
-	useEffect(() => {
-		fattVedtakPromise.evaluate(fetchFattedeVedtak(props.fnr));
+    useEffect(() => {
+        fattedeVedtakPromise.evaluate(fetchFattedeVedtak(props.fnr));
+        oppfolgingDataPromise.evaluate(fetchOppfolging(props.fnr));
+        featuresPromise.evaluate(fetchFeatures());
+        malformDataPromise.evaluate(fetchMalform(props.fnr));
+        utkastPromise.evaluate(fetchUtkast(props.fnr));
+        innloggetVeilederPromise.evaluate(fetchInnloggetVeileder());
+        arenaVedtakPromise.evaluate(fetchArenaVedtak(props.fnr));
+    }, [props.fnr]);
 
-		//
-		// fetchFattedeVedtak(props.fnr)
-		// 	.then(response => {
-		// 		if (response.data) {
-		// 			setFattedeVedtak(response.data);
-		// 		}
-		//
-		// 	});
-	}, []);
+    useEffect(() => {
+        if (hasData2(fattedeVedtakPromise)) {
+            setFattedeVedtak(fattedeVedtakPromise.data);
+        }
+        if (hasData2(oppfolgingDataPromise)) {
+            setOppfolgingData(oppfolgingDataPromise.data);
+        }
+        if (hasData2(featuresPromise)) {
+            setFeatures(featuresPromise.data);
+        }
+        if (hasData2(malformDataPromise)) {
+            setMalform(malformDataPromise.data);
+        }
+        if (hasData2(utkastPromise)) {
+            setUtkast(utkastPromise.data);
+        }
+        if (hasData2(innloggetVeilederPromise)) {
+            setInnloggetVeileder(innloggetVeilederPromise.data);
+        }
+        if (hasData2(arenaVedtakPromise)) {
+            setArenaVedtak(arenaVedtakPromise.data);
+        }
 
-	useEffect(() => {
-		if (hasData(fattVedtakPromise)) {
-			setFattedeVedtak(fattVedtakPromise.data.data);
-		}
+    }, fetchResponsePromises);
 
-	}, [fattVedtakPromise]);
+    if (isAnyNotStartedOrPending2(fetchResponsePromises)) {
+        return <Spinner/>;
+    } else if (hasAnyFailed2(fetchResponsePromises)) {
+        return (
+            <AlertStripeFeil className="vedtaksstotte-alert">
+                Det oppnås for tiden ikke kontakt med alle baksystemer.
+                Vi jobber med å løse saken. Vennligst prøv igjen senere.
+            </AlertStripeFeil>
+        );
+    }
 
-	useEffect(() => {
-		/*
-		 Hent utkast, men ikke sjekk om det er fullført eller feilet for å gå videre.
-		 Dette blir håndtert i hovedside.tsx
-		 */
-		if (isNotStarted(utkastFetcher)) {
-			utkastFetcher.fetch({ fnr: props.fnr });
-		}
-
-		if (isNotStarted(fattedeVedtakFetcher)) {
-			fattedeVedtakFetcher.fetch({ fnr: props.fnr });
-		}
-
-		if (isNotStarted(arenaVedtakFetcher)) {
-			arenaVedtakFetcher.fetch({ fnr: props.fnr });
-		}
-
-		if (isNotStarted(oppfolgingDataFetcher)) {
-			oppfolgingDataFetcher.fetch({ fnr: props.fnr });
-		}
-
-		if (isNotStarted(malformFetcher)) {
-			malformFetcher.fetch({ fnr: props.fnr });
-		}
-
-		if (isNotStarted(featuresFetcher)) {
-			featuresFetcher.fetch(null);
-		}
-
-		if (isNotStarted(innloggetVeilederFetcher)) {
-			innloggetVeilederFetcher.fetch(null);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [utkastFetcher, fattedeVedtakFetcher, oppfolgingDataFetcher, malformFetcher, featuresFetcher]);
-
-	// Vi trenger ikke å vente på at utkastet skal bli hentet
-	if (isAnyNotStartedOrPending([fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher, arenaVedtakFetcher])) {
-		return <Spinner />;
-	} else if (hasAnyFailed([fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher])) {
-		return (
-			<AlertStripeFeil className="vedtaksstotte-alert">
-				Det oppnås for tiden ikke kontakt med alle baksystemer.
-				Vi jobber med å løse saken. Vennligst prøv igjen senere.
-			</AlertStripeFeil>
-		);
-	}
-
-	return props.children;
+    return props.children;
 }
