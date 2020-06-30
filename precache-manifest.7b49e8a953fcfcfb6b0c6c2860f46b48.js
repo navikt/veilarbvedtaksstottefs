@@ -4,11 +4,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "2012b2fe322a1063d9d0",
+    "revision": "1cf3de4a4b6ee617a6c6",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "2012b2fe322a1063d9d0",
+    "revision": "1cf3de4a4b6ee617a6c6",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
