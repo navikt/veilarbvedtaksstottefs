@@ -4,7 +4,6 @@ import { InnsatsgruppeType } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { useTilgangStore } from '../../stores/tilgang-store';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useAppStore } from '../../stores/app-store';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getHovedmalNavn } from '../../utils/hovedmal';
@@ -14,13 +13,13 @@ import LesUtkastAksjoner from './aksjoner/les-utkast-aksjoner';
 import UtkastSkjema from './skjema/utkast-skjema';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { OrNothing } from '../../utils/types/ornothing';
+import { fetchFattedeVedtak, fetchUtkast } from '../../rest/api';
 
 const TEN_SECONDS = 10000;
 
 export function LesUtkastSide() {
 	const {fnr} = useAppStore();
-	const {utkast} = useDataStore();
-	const {utkastFetcher, fattedeVedtakFetcher} = useDataFetcherStore();
+	const {utkast, setUtkast, setFattedeVedtak} = useDataStore();
 	const {changeView} = useViewStore();
 	const {erBeslutter} = useTilgangStore();
 	const refreshUtkastIntervalRef = useRef<number>();
@@ -32,7 +31,11 @@ export function LesUtkastSide() {
 		 */
 		if (utkast && utkast.beslutterProsessStatus != null && erBeslutter) {
 			refreshUtkastIntervalRef.current = setInterval(() => {
-				utkastFetcher.fetch({fnr});
+				fetchUtkast(fnr).then(response => {
+					if (response.data) {
+						setUtkast(response.data);
+					}
+				})
 			}, TEN_SECONDS) as unknown as number;
 			// NodeJs types are being used instead of browser types so we have to override
 		}
@@ -48,7 +51,11 @@ export function LesUtkastSide() {
 
 	// Utkast kan bli satt til null hvis man er beslutter og veileder fatter et vedtak
 	if (utkast == null) {
-		fattedeVedtakFetcher.fetch({ fnr });
+		fetchFattedeVedtak(fnr).then(response => {
+			if (response.data) {
+				setFattedeVedtak(response.data);
+			}
+		})
 		changeView(ViewType.HOVEDSIDE);
 		return null;
 	}
