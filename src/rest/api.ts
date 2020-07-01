@@ -1,4 +1,4 @@
-import { FetchInfo, fetchJson, FetchResponse } from './utils';
+import { FetchInfo, fetchJson, FetchResponse, fetchWithChecks } from './utils';
 import { ALL_TOGGLES, Features } from './data/features';
 import { mapOpplysningerFraBokmalTilBrukersMalform, SkjemaData } from '../utils/skjema-utils';
 import { MalformData, MalformType } from './data/malform';
@@ -62,7 +62,7 @@ export const fetchInnloggetVeileder = (): Promise<FetchResponse<Veileder>> => fe
 );
 
 export const fetchLagNyttUtkast = (fnr: string): Promise<Response> => {
-	return fetch(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, {
 		method: 'POST',
 		headers: HEADERS_WITH_JSON_CONTENT,
 		body: JSON.stringify({fnr})
@@ -91,10 +91,11 @@ export const fetchArenaVedtak = (fnr: string): Promise<FetchResponse<ArenaVedtak
 	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena?fnr=${fnr}`
 );
 
-export const lagFattVedtakFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}/fattVedtak`,
-	method: 'POST',
-});
+export const fetchFattVedtak = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/fattVedtak`, {
+		method: 'POST'
+	})
+};
 
 export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${params.vedtakId}`,
@@ -155,7 +156,7 @@ export const lagOppdaterBeslutterProsessStatusFetchInfo = (params: VedtakIdFetch
 });
 
 export const fetchOppdaterBeslutterProsessStatus = (vedtakId: number): Promise<Response> => {
-	return fetch(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/status?vedtakId=${vedtakId}`, {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/status?vedtakId=${vedtakId}`, {
 		method: 'PUT'
 	})
 };

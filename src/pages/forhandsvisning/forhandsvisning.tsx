@@ -6,9 +6,7 @@ import env from '../../utils/environment';
 import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
 import { trengerBeslutter } from '../../utils/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
-import { lagFattVedtakFetchInfo, lagHentForhandsvisningUrl } from '../../rest/api';
-import { fetchWithInfo } from '../../rest/utils';
+import { fetchFattedeVedtak, fetchFattVedtak, lagHentForhandsvisningUrl } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
@@ -24,8 +22,7 @@ import { Vedtak } from '../../rest/data/vedtak';
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { fattedeVedtakFetcher } = useDataFetcherStore();
-	const { utkast, setUtkast, features } = useDataStore();
+	const { utkast, setUtkast, features, setFattedeVedtak } = useDataStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
@@ -57,22 +54,30 @@ export function Forhandsvisning() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
-
 	const sendVedtak = () => {
 		showModal(ModalType.LASTER);
 
-		fetchWithInfo(lagFattVedtakFetchInfo({ vedtakId: utkastId }))
-			.then(() => {
-                resetSkjema();
-				fattedeVedtakFetcher.fetch({ fnr }, () => {
-					changeView(ViewType.HOVEDSIDE);
-					showModal(ModalType.VEDTAK_SENT_SUKSESS);
-					setUtkast(null);
-				});
-			})
+		fetchFattVedtak(utkastId)
 			.catch(err => {
 				showModal(ModalType.FEIL_VED_SENDING);
 				frontendlogger.logMetrikk('feil-ved-sending', err);
+				throw err;
+			})
+			.then(() => {
+				resetSkjema();
+				setUtkast(null);
+
+				return fetchFattedeVedtak(fnr)
+					.then(fattedeVedtak => {
+						if (fattedeVedtak.data) {
+							setFattedeVedtak(fattedeVedtak.data);
+						}
+					})
+					// Feiler ikke selv om fattede vedtak ikke oppdateres
+					.finally(() => {
+						changeView(ViewType.HOVEDSIDE);
+						showModal(ModalType.VEDTAK_SENT_SUKSESS);
+					});
 			});
 	};
 

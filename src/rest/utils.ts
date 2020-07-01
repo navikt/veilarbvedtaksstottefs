@@ -60,7 +60,7 @@ export const hasData = (fetch: FetchState): boolean => {
 	return fetch.data != null;
 };
 
-export const fetchWithInfo = (fetchInfo: FetchInfo) => {
+export const fetchWithInfo: (fetchInfo: FetchInfo) => Promise<Response> = (fetchInfo: FetchInfo) => {
 	const { url, ...rest } = fetchInfo;
 	return fetch(url, rest).then(res => {
 		if (res.status >= 400) {
@@ -84,6 +84,23 @@ export interface FetchResponse<D = any> {
 	httpCode?: number;
 }
 
+export function fetchWithChecks<D>(input: RequestInfo, init?: RequestInit): Promise<Response> {
+	return fetch(input, init)
+		.then(res => {
+		if (res.status >= 400) {
+			res.clone()
+				.text()
+				.then(txt => {
+					frontendlogger.logError({ error: txt });
+				})
+				.catch();
+
+			throw new Error('Kall feilet med status ' + res.status);
+		}
+
+		return res;
+	});
+}
 export function fetchJson<D>(input: RequestInfo, init?: RequestInit): Promise<FetchResponse<D>> {
 	return fetch(input, init)
 		.then(async (res) => {
