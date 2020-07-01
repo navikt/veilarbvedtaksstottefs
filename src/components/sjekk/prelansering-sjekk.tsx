@@ -1,23 +1,29 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { Prelansering } from '../../pages/prelansering/prelansering';
-import { PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../rest/data/features';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
-import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../../rest/utils';
+import { Features, PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../rest/data/features';
+import { hasAnyFailed2, hasData2, isAnyNotStartedOrPending2, useFetchResonsPromise } from '../../rest/utils';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { useDataStore } from '../../stores/data-store';
+import { fetchFeatures } from '../../rest/api';
 
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
-	const { featuresFetcher } = useDataFetcherStore();
+	const featuresPromise = useFetchResonsPromise<Features>();
+
+	const {features, setFeatures} = useDataStore();
+	useEffect(() => {
+		featuresPromise.evaluate(fetchFeatures());
+	}, []);
 
 	useEffect(() => {
-		if (isNotStarted(featuresFetcher)) {
-			featuresFetcher.fetch(null);
+		if (hasData2(featuresPromise)) {
+			setFeatures(featuresPromise.data);
 		}
-	}, [featuresFetcher]);
+	}, [featuresPromise]);
 
-	if (isAnyNotStartedOrPending([featuresFetcher])) {
+	if (isAnyNotStartedOrPending2(featuresPromise)) {
 		return <Spinner />;
-	} else if (hasAnyFailed([featuresFetcher])) {
+	} else if (hasAnyFailed2(featuresPromise)) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.
@@ -26,5 +32,5 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 		);
 	}
 
-	return (featuresFetcher.data[PRELANSERING_TOGGLE] && !featuresFetcher.data[PILOT_TOGGLE]) ? <Prelansering /> : props.children;
+	return (features[PRELANSERING_TOGGLE] && !features[PILOT_TOGGLE]) ? <Prelansering /> : props.children;
 }

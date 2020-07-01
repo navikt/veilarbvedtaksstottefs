@@ -32,7 +32,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
     const {
         setFattedeVedtak,
         setOppfolgingData,
-        setFeatures,
+        features, setFeatures, isFeaturesHentet,
         setMalform,
         setUtkast,
         setInnloggetVeileder,
@@ -42,7 +42,11 @@ export function DataFetcher(props: { fnr: string; children: any }) {
     useEffect(() => {
         fattedeVedtakPromise.evaluate(fetchFattedeVedtak(props.fnr));
         oppfolgingDataPromise.evaluate(fetchOppfolging(props.fnr));
-        featuresPromise.evaluate(fetchFeatures());
+        if (isFeaturesHentet()) {
+            featuresPromise.resolve(features)
+        } else {
+            featuresPromise.evaluate(fetchFeatures());
+        }
         malformDataPromise.evaluate(fetchMalform(props.fnr));
         utkastPromise.evaluate(fetchUtkast(props.fnr));
         innloggetVeilederPromise.evaluate(fetchInnloggetVeileder());

@@ -130,6 +130,7 @@ export interface PromiseState<D> {
 
 interface PromiseStateWithEvaluate<D> extends PromiseState<D>{
 	evaluate: (promise: Promise<FetchResponse<D>>) => void;
+	resolve: (d: D) => void;
 }
 
 export function hasData2<D>(status: PromiseState<D>): status is PromiseStatusWithData<D>  {
@@ -205,5 +206,12 @@ export function useFetchResonsPromise<D>(): PromiseStateWithEvaluate<D> {
 			});
 	}, []);
 
-	return useMemo<PromiseStateWithEvaluate<D>>(() => ({ error, data, status, evaluate }), [error, data, status, evaluate]);
+	const resolve = useCallback((d: D) => {
+		setData(d);
+		setStatus(Status.SUCCEEDED)
+	}, []);
+
+	return useMemo<PromiseStateWithEvaluate<D>>(
+		() => ({error, data, status, evaluate, resolve}),
+		[error, data, status, evaluate, resolve]);
 }

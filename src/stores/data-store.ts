@@ -21,6 +21,10 @@ export const useDataStore = createUseContext(() => {
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
 	const [meldinger, setMeldinger] = useState<Array<DialogMeldingData | SystemMeldingData>>([]);
 
+	function isFeaturesHentet() {
+		return features !== placeholder;
+	}
+
 	function leggTilSystemMelding(systemMeldingType: SystemMeldingType) {
 		const systemMeldingData : SystemMeldingData = {
 			opprettet: new Date().toISOString(),
@@ -54,7 +58,7 @@ export const useDataStore = createUseContext(() => {
 	return {
 		oppfolgingData, setOppfolgingData,
 		malform, setMalform,
-		features, setFeatures,
+		features, setFeatures, isFeaturesHentet,
 		innloggetVeileder, setInnloggetVeileder,
 		utkast, setUtkast,
 		fattedeVedtak, setFattedeVedtak,
