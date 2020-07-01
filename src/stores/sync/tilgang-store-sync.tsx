@@ -1,19 +1,15 @@
 import { useEffect } from 'react';
-import { hasFinishedWithData } from '../../rest/utils';
-import { useDataFetcherStore } from '../data-fetcher-store';
 import { useTilgangStore } from '../tilgang-store';
 import { finnVeilederTilgang } from '../../utils/tilgang';
+import { useDataStore } from '../data-store';
 
 export function TilgangStoreSync() {
     const { setVeilederTilgang } = useTilgangStore();
-    const {utkastFetcher, innloggetVeilederFetcher} = useDataFetcherStore();
+    const { utkast, innloggetVeileder } = useDataStore();
 
     useEffect(() => {
-        if (hasFinishedWithData(utkastFetcher) && hasFinishedWithData(innloggetVeilederFetcher)) {
-            setVeilederTilgang(finnVeilederTilgang(innloggetVeilederFetcher.data, utkastFetcher.data));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [utkastFetcher.status, innloggetVeilederFetcher.status]);
+        setVeilederTilgang(finnVeilederTilgang(innloggetVeileder, utkast));
+    }, [utkast, innloggetVeileder]);
 
     return null;
 }
