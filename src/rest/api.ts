@@ -5,6 +5,7 @@ import { MalformData, MalformType } from './data/malform';
 import { ArenaVedtak, Vedtak } from './data/vedtak';
 import { Veileder } from './data/veiledere';
 import Oppfolging from './data/oppfolging-data';
+import { DialogMelding, SystemMelding } from './data/melding';
 
 export interface SendDialogFetchParams {
 	vedtakId: number;
@@ -104,9 +105,9 @@ export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo
 	body: JSON.stringify({ melding: params.melding })
 });
 
-export const lagHentMeldingerFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${params.vedtakId}`
-});
+export const fetchMeldinger = (vedtakId: number): Promise<FetchResponse<Array<DialogMelding | SystemMelding>>> => {
+	return fetchJson(`${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${vedtakId}`);
+};
 
 export const lagSlettUtkastFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}`,
