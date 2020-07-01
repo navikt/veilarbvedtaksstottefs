@@ -61,12 +61,13 @@ export const fetchInnloggetVeileder = (): Promise<FetchResponse<Veileder>> => fe
 	`${VEILARBVEILEDER_API}/veileder/me`
 );
 
-export const lagNyttUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
-	method: 'POST',
-	headers: HEADERS_WITH_JSON_CONTENT,
-	body: JSON.stringify({ fnr: params.fnr })
-});
+export const fetchLagNyttUtkast = (fnr: string): Promise<Response> => {
+	return fetch(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, {
+		method: 'POST',
+		headers: HEADERS_WITH_JSON_CONTENT,
+		body: JSON.stringify({fnr})
+	});
+};
 
 export const lagOppdaterVedtakUtkastFetchInfo = (params: OppdaterUtkastFetchParams): FetchInfo => {
 	params.skjema.opplysninger = mapOpplysningerFraBokmalTilBrukersMalform(params.skjema.opplysninger, params.malform);

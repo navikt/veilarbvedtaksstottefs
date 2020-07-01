@@ -10,7 +10,7 @@ import { Features } from '../rest/data/features';
 import { MalformData } from '../rest/data/malform';
 import { Veileder } from '../rest/data/veiledere';
 
-export function DataFetcher(props: { fnr: string; children: React.ReactNode }) {
+export function DataFetcher(props: { fnr: string; children: any }) {
     const fattedeVedtakPromise = useFetchResonsPromise<Vedtak[]>();
     const oppfolgingDataPromise = useFetchResonsPromise<OppfolgingData>();
     const featuresPromise = useFetchResonsPromise<Features>();
