@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../components/json-viewer/json-viewer';
 import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
@@ -10,10 +10,8 @@ import OyblikksbildeType from '../../utils/types/oyblikksbilde-type';
 import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import useFetch from '../../rest/use-fetch';
-import { HentOyblikksbildeFetchParams, lagHentOyblikksbildeFetchInfo } from '../../rest/api';
-import { hasFailed, isNotStarted, isNotStartedOrPending } from '../../rest/utils';
-import { useAppStore } from '../../stores/app-store';
+import { fetchOyblikksbilde } from '../../rest/api';
+import { FetchResponse } from '../../rest/utils';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
 import './oyblikksbilde-visning.less';
@@ -25,21 +23,17 @@ function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder:
 }
 
 export function OyblikksbildeVisning(props: { vedtakId: number }) {
-	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const oyblikksbilder = useFetch<Oyblikksbilde[], HentOyblikksbildeFetchParams>(lagHentOyblikksbildeFetchInfo);
+    const [oyblikksbilder, setOyeblikksbilder] = useState<FetchResponse<Oyblikksbilde[]> | null>();
 
 	useEffect(() => {
 		frontendlogger.logMetrikk('vis-oyblikksbilde');
-		if (isNotStarted(oyblikksbilder)) {
-			oyblikksbilder.fetch({ fnr, vedtakId: props.vedtakId });
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		fetchOyblikksbilde(props.vedtakId).then(setOyeblikksbilder)
+	}, [props.vedtakId]);
 
-	if (isNotStartedOrPending(oyblikksbilder)) {
+	if (!oyblikksbilder) {
 		return <Spinner />;
-	} else if (hasFailed(oyblikksbilder)) {
+	} else if (oyblikksbilder.error) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 

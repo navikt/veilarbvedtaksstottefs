@@ -1,8 +1,7 @@
-import React, { ChangeEvent, useState, KeyboardEvent, useRef } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import sendIkon from './send.svg';
-import { fetchWithInfo } from '../../../rest/utils';
-import { fetchMeldinger, lagSendDialogFetchInfo } from '../../../rest/api';
+import { fetchMeldinger, fetchSendDialog } from '../../../rest/api';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import './skrivefelt.less';
 import ImageButton from '../../image-button/image-button';
@@ -35,7 +34,7 @@ export const Skrivefelt = () => {
 	function sendMelding() {
 		setSenderMelding(true);
 
-		fetchWithInfo(lagSendDialogFetchInfo({vedtakId: hentId(utkast), melding}))
+		fetchSendDialog({vedtakId: hentId(utkast), melding})
 			.then(() => fetchMeldinger(hentId(utkast)))
 			.then(response => {
 				if (response.data) {

@@ -5,8 +5,7 @@ import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ModalProps } from './modal-props';
 import { ModalType, useModalStore } from '../../stores/modal-store';
-import { fetchWithInfo } from '../../rest/utils';
-import { lagSlettUtkastFetchInfo } from '../../rest/api';
+import { fetchSlettUtkast } from '../../rest/api';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { useDataStore } from '../../stores/data-store';
@@ -20,7 +19,7 @@ function SlettUtkastModal(props: ModalProps) {
 
 	function handleOnDeleteClicked() {
 		showModal(ModalType.LASTER);
-		fetchWithInfo(lagSlettUtkastFetchInfo({ vedtakId: hentId(utkast) }))
+		fetchSlettUtkast(hentId(utkast))
 			.then(() => {
 				resetSkjema();
 				hideModal();

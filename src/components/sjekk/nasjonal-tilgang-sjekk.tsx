@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import TilgangTilBrukersKontor from '../../utils/types/tilgang-til-brukers-kontor';
-import useFetch from '../../rest/use-fetch';
-import { FnrFetchParams, lagHentTilgangTilKontorFetchInfo } from '../../rest/api';
-import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../../rest/utils';
+import { fetchTilgangTilKontor } from '../../rest/api';
+import { FetchResponse } from '../../rest/utils';
 import Spinner from '../spinner/spinner';
 
 interface NasjonalTilgangSjekkProps {
@@ -12,18 +11,16 @@ interface NasjonalTilgangSjekkProps {
 }
 
 export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
-	const tilgangTilKontor = useFetch<TilgangTilBrukersKontor, FnrFetchParams>(lagHentTilgangTilKontorFetchInfo);
+
+	const [tilgangTilKontor, setTilgangTilKontor] = useState<FetchResponse<TilgangTilBrukersKontor> | null>();
 
 	useEffect(() => {
-		if (isNotStarted(tilgangTilKontor)) {
-			tilgangTilKontor.fetch({ fnr: props.fnr });
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		fetchTilgangTilKontor(props.fnr).then(setTilgangTilKontor);
+	}, [props.fnr]);
 
-	if (isAnyNotStartedOrPending(tilgangTilKontor)) {
+	if (!tilgangTilKontor) {
 		return <Spinner />;
-	} else if (hasAnyFailed(tilgangTilKontor)) {
+	} else if (tilgangTilKontor.error || !tilgangTilKontor.data) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 

@@ -6,26 +6,16 @@ import { ArenaVedtak, Vedtak } from './data/vedtak';
 import { Veileder } from './data/veiledere';
 import Oppfolging from './data/oppfolging-data';
 import { DialogMelding, SystemMelding } from './data/melding';
+import { Oyblikksbilde } from '../utils/types/oyblikksbilde';
+import TilgangTilBrukersKontor from '../utils/types/tilgang-til-brukers-kontor';
+import { ErGodkjent } from './data/er-godkjent';
 
-export interface SendDialogFetchParams {
+export interface SendDialogPayload {
 	vedtakId: number;
 	melding: string;
 }
 
-export interface FnrFetchParams {
-	fnr: string;
-}
-
-export interface VedtakIdFetchParams {
-	vedtakId: number;
-}
-
-export interface HentOyblikksbildeFetchParams {
-	fnr: string;
-	vedtakId: number;
-}
-
-export interface OppdaterUtkastFetchParams {
+export interface OppdaterUtkastPayload {
 	vedtakId: number;
 	malform: MalformType | null;
 	skjema: SkjemaData;
@@ -50,9 +40,9 @@ export const fetchOppfolging = (fnr: string): Promise<FetchResponse<Oppfolging>>
 	`${VEILARBOPPFOLGING_API}/oppfolging?fnr=${fnr}`
 );
 
-export const lagHentTilgangTilKontorFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	url: `${VEILARBOPPFOLGING_API}/oppfolging/veilederTilgang?fnr=${params.fnr}`
-});
+export const fetchTilgangTilKontor = (fnr: string): Promise<FetchResponse<TilgangTilBrukersKontor>> => {
+	return fetchJson( `${VEILARBOPPFOLGING_API}/oppfolging/veilederTilgang?fnr=${fnr}`);
+};
 
 export const fetchMalform = (fnr: string): Promise<FetchResponse<MalformData>> => fetchJson(
 	`${VEILARBPERSON_API}/person/${fnr}/malform`
@@ -70,14 +60,14 @@ export const fetchLagNyttUtkast = (fnr: string): Promise<Response> => {
 	});
 };
 
-export const lagOppdaterVedtakUtkastFetchInfo = (params: OppdaterUtkastFetchParams): FetchInfo => {
+export const fetchOppdaterVedtakUtkast = (params: OppdaterUtkastPayload): Promise<Response> => {
 	params.skjema.opplysninger = mapOpplysningerFraBokmalTilBrukersMalform(params.skjema.opplysninger, params.malform);
-	return {
-		url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}`,
-		method: 'PUT',
-		headers: HEADERS_WITH_JSON_CONTENT,
-		body: JSON.stringify(params.skjema)
-	};
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}`,
+		{
+			method: 'PUT',
+			headers: HEADERS_WITH_JSON_CONTENT,
+			body: JSON.stringify(params.skjema)
+		});
 };
 
 export const fetchUtkast = (fnr: string): Promise<FetchResponse<Vedtak>> => fetchJson(
@@ -98,35 +88,37 @@ export const fetchFattVedtak = (vedtakId: number): Promise<Response> => {
 	})
 };
 
-export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${params.vedtakId}`,
-	method: 'POST',
-	headers: HEADERS_WITH_JSON_CONTENT,
-	body: JSON.stringify({ melding: params.melding })
-});
+export const fetchSendDialog = (params: SendDialogPayload): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${params.vedtakId}`, {
+		method: 'POST',
+		headers: HEADERS_WITH_JSON_CONTENT,
+		body: JSON.stringify({melding: params.melding})
+	});
+};
 
 export const fetchMeldinger = (vedtakId: number): Promise<FetchResponse<Array<DialogMelding | SystemMelding>>> => {
 	return fetchJson(`${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${vedtakId}`);
 };
 
-export const lagSlettUtkastFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}`,
-	method: 'DELETE'
-});
+export const fetchSlettUtkast = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}`, {
+		method: 'DELETE'
+	});
+};
 
-export const lagErUtkastGodkjentFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}/erGodkjent`,
-	method: 'GET'
-});
+export const fetchErUtkastGodkjent = (vedtakId: number): Promise<FetchResponse<ErGodkjent>> => {
+	return fetchJson(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/erGodkjent`);
+};
 
-export const lagTaOverUtkastFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}/overta`,
-	method: 'POST'
-});
+export const fetchTaOverUtkast = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/overta`, {
+		method: 'POST'
+	})
+};
 
-export const lagHentOyblikksbildeFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/vedtak/${params.vedtakId}/oyeblikksbilde`
-});
+export const fetchOyblikksbilde = (vedtakId: number): Promise<FetchResponse<Oyblikksbilde[]>> => {
+	return fetchJson(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/${vedtakId}/oyeblikksbilde`);
+};
 
 export const lagHentForhandsvisningUrl = (vedtakId: number): string => `${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/pdf`;
 
@@ -136,25 +128,23 @@ export const lagHentVedtakPdfUrl = (vedtakId: number): string =>
 export const lagHentArenaVedtakPdfUrl = (dokumentInfoId: string, journalpostId: string): string =>
 	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena/pdf?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
 
-export const lagStartBeslutterProsessFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/start?vedtakId=${params.vedtakId}`,
-	method: 'POST'
-});
+export const fetchStartBeslutterProsess = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/start?vedtakId=${vedtakId}`, {
+		method: 'POST'
+	})
+};
 
-export const lagBliBeslutterFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/bliBeslutter?vedtakId=${params.vedtakId}`,
-	method: 'POST'
-});
+export const fetchBliBeslutter = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/bliBeslutter?vedtakId=${vedtakId}`, {
+		method: 'POST'
+	})
+};
 
-export const lagGodkjennVedtakFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/godkjenn?vedtakId=${params.vedtakId}`,
-	method: 'POST'
-});
-
-export const lagOppdaterBeslutterProsessStatusFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/status?vedtakId=${params.vedtakId}`,
-	method: 'PUT'
-});
+export const fetchGodkjennVedtak = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/godkjenn?vedtakId=${vedtakId}`, {
+		method: 'POST'
+	})
+};
 
 export const fetchOppdaterBeslutterProsessStatus = (vedtakId: number): Promise<Response> => {
 	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/status?vedtakId=${vedtakId}`, {
