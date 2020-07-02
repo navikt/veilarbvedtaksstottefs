@@ -72,7 +72,6 @@ export interface PromiseState<D> {
 
 interface PromiseStateWithEvaluate<D> extends PromiseState<D>{
 	evaluate: (promise: Promise<FetchResponse<D>>) => void;
-	resolve: (d: D) => void;
 }
 
 export function hasData<D>(status: PromiseState<D>): status is PromiseStatusWithData<D>  {
@@ -101,7 +100,7 @@ export const isAnyNotStartedOrPending = (state: PromiseState<any> | Array<Promis
 	return isNotStartedOrPending(state);
 }
 
-export function useFetchResonsPromise<D>(): PromiseStateWithEvaluate<D> {
+export function useFetchResponsPromise<D>(): PromiseStateWithEvaluate<D> {
 	const [data, setData] = useState<D>();
 	const [error, setError] = useState<any>();
 	const [status, setStatus] = useState<Status>(Status.NOT_STARTED);
@@ -125,12 +124,7 @@ export function useFetchResonsPromise<D>(): PromiseStateWithEvaluate<D> {
 			});
 	}, []);
 
-	const resolve = useCallback((d: D) => {
-		setData(d);
-		setStatus(Status.SUCCEEDED)
-	}, []);
-
 	return useMemo<PromiseStateWithEvaluate<D>>(
-		() => ({error, data, status, evaluate, resolve}),
-		[error, data, status, evaluate, resolve]);
+		() => ({error, data, status, evaluate}),
+		[error, data, status, evaluate]);
 }

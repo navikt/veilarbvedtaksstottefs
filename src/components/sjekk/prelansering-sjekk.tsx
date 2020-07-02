@@ -1,14 +1,15 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { Prelansering } from '../../pages/prelansering/prelansering';
 import { Features, PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../rest/data/features';
-import { hasAnyFailed, hasData, isAnyNotStartedOrPending, useFetchResonsPromise } from '../../rest/utils';
+import { hasAnyFailed, hasData, isAnyNotStartedOrPending, useFetchResponsPromise } from '../../rest/utils';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDataStore } from '../../stores/data-store';
 import { fetchFeatures } from '../../rest/api';
 
+// NB! Henting av features og populering i data store hook må flyttes til data-fetcher.tsx når denne komponenten skal fjernes
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
-	const featuresPromise = useFetchResonsPromise<Features>();
+	const featuresPromise = useFetchResponsPromise<Features>();
 
 	const {features, setFeatures} = useDataStore();
 

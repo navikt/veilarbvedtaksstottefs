@@ -55,8 +55,8 @@ export function LesUtkastSide() {
 			if (response.data) {
 				setFattedeVedtak(response.data);
 			}
+			changeView(ViewType.HOVEDSIDE);
 		})
-		changeView(ViewType.HOVEDSIDE);
 		return null;
 	}
 

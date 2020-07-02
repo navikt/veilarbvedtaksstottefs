@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import TilgangTilBrukersKontor from '../../utils/types/tilgang-til-brukers-kontor';
 import { fetchTilgangTilKontor } from '../../rest/api';
-import { FetchResponse } from '../../rest/utils';
+import { hasData, hasFailed, isNotStartedOrPending, useFetchResponsPromise } from '../../rest/utils';
 import Spinner from '../spinner/spinner';
 
 interface NasjonalTilgangSjekkProps {
@@ -12,15 +12,15 @@ interface NasjonalTilgangSjekkProps {
 
 export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
 
-	const [tilgangTilKontor, setTilgangTilKontor] = useState<FetchResponse<TilgangTilBrukersKontor> | null>();
+	const tilgangTilKontor = useFetchResponsPromise<TilgangTilBrukersKontor>();
 
 	useEffect(() => {
-		fetchTilgangTilKontor(props.fnr).then(setTilgangTilKontor);
+		tilgangTilKontor.evaluate(fetchTilgangTilKontor(props.fnr));
 	}, [props.fnr]);
 
-	if (!tilgangTilKontor) {
+	if (isNotStartedOrPending(tilgangTilKontor)) {
 		return <Spinner />;
-	} else if (tilgangTilKontor.error || !tilgangTilKontor.data) {
+	} else if (hasFailed(tilgangTilKontor) || !hasData(tilgangTilKontor)) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 

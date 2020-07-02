@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../components/json-viewer/json-viewer';
 import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
@@ -11,7 +11,7 @@ import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { fetchOyblikksbilde } from '../../rest/api';
-import { FetchResponse } from '../../rest/utils';
+import { hasFailed, isNotStartedOrPending, useFetchResponsPromise } from '../../rest/utils';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
 import './oyblikksbilde-visning.less';
@@ -24,29 +24,29 @@ function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder:
 
 export function OyblikksbildeVisning(props: { vedtakId: number }) {
 	const { changeView } = useViewStore();
-    const [oyblikksbilder, setOyeblikksbilder] = useState<FetchResponse<Oyblikksbilde[]> | null>();
+	const oyeblikksbilde = useFetchResponsPromise<Oyblikksbilde[]>();
 
 	useEffect(() => {
 		frontendlogger.logMetrikk('vis-oyblikksbilde');
-		fetchOyblikksbilde(props.vedtakId).then(setOyeblikksbilder)
+		oyeblikksbilde.evaluate(fetchOyblikksbilde(props.vedtakId))
 	}, [props.vedtakId]);
 
-	if (!oyblikksbilder) {
-		return <Spinner />;
-	} else if (oyblikksbilder.error) {
+	if (isNotStartedOrPending(oyeblikksbilde)) {
+		return <Spinner/>;
+	} else if (hasFailed(oyeblikksbilde)) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 
 	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
-		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)
+		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, oyeblikksbilde.data)
 	);
 
 	const registreringsinfoJson = fiksRegistreringsinfoJson(
-		finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, oyblikksbilder.data)
+		finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, oyeblikksbilde.data)
 	);
 
 	const egenvurderingJson = fiksEgenvurderingJson(
-		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, oyblikksbilder.data)
+		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, oyeblikksbilde.data)
 	);
 
 	return (

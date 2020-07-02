@@ -8,7 +8,7 @@ import { Veileder } from '../rest/data/veiledere';
 import { DialogMelding as DialogMeldingData, SystemMelding as SystemMeldingData } from '../rest/data/melding';
 import { MeldingType, SystemMeldingType } from '../utils/types/melding-type';
 
-// Data med placeholder er garantert av datafetcher.ts å være hentet
+// Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
 const placeholder = {} as any;
 
 export const useDataStore = createUseContext(() => {
@@ -20,10 +20,6 @@ export const useDataStore = createUseContext(() => {
 	const [fattedeVedtak, setFattedeVedtak] = useState<Vedtak[]>([]);
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
 	const [meldinger, setMeldinger] = useState<Array<DialogMeldingData | SystemMeldingData>>([]);
-
-	function isFeaturesHentet() {
-		return features !== placeholder;
-	}
 
 	function leggTilSystemMelding(systemMeldingType: SystemMeldingType) {
 		const systemMeldingData : SystemMeldingData = {
@@ -58,7 +54,7 @@ export const useDataStore = createUseContext(() => {
 	return {
 		oppfolgingData, setOppfolgingData,
 		malform, setMalform,
-		features, setFeatures, isFeaturesHentet,
+		features, setFeatures,
 		innloggetVeileder, setInnloggetVeileder,
 		utkast, setUtkast,
 		fattedeVedtak, setFattedeVedtak,
