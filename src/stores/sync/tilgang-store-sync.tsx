@@ -9,6 +9,7 @@ export function TilgangStoreSync() {
 
     useEffect(() => {
         setVeilederTilgang(finnVeilederTilgang(innloggetVeileder, utkast));
+        // eslint-disable-next-line
     }, [utkast, innloggetVeileder]);
 
     return null;

@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { Prelansering } from '../../pages/prelansering/prelansering';
 import { Features, PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../rest/data/features';
-import { hasAnyFailed2, hasData2, isAnyNotStartedOrPending2, useFetchResonsPromise } from '../../rest/utils';
+import { hasAnyFailed, hasData, isAnyNotStartedOrPending, useFetchResonsPromise } from '../../rest/utils';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDataStore } from '../../stores/data-store';
@@ -11,19 +11,22 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 	const featuresPromise = useFetchResonsPromise<Features>();
 
 	const {features, setFeatures} = useDataStore();
+
 	useEffect(() => {
 		featuresPromise.evaluate(fetchFeatures());
+		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
-		if (hasData2(featuresPromise)) {
+		if (hasData(featuresPromise)) {
 			setFeatures(featuresPromise.data);
 		}
+		// eslint-disable-next-line
 	}, [featuresPromise]);
 
-	if (isAnyNotStartedOrPending2(featuresPromise)) {
+	if (isAnyNotStartedOrPending(featuresPromise)) {
 		return <Spinner />;
-	} else if (hasAnyFailed2(featuresPromise)) {
+	} else if (hasAnyFailed(featuresPromise)) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.

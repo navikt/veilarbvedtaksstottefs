@@ -1,4 +1,4 @@
-import { FetchInfo, fetchJson, FetchResponse, fetchWithChecks } from './utils';
+import { fetchJson, FetchResponse, fetchWithChecks } from './utils';
 import { ALL_TOGGLES, Features } from './data/features';
 import { mapOpplysningerFraBokmalTilBrukersMalform, SkjemaData } from '../utils/skjema-utils';
 import { MalformData, MalformType } from './data/malform';

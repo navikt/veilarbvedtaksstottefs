@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { hasAnyFailed2, hasData2, isAnyNotStartedOrPending2, useFetchResonsPromise, } from '../rest/utils';
+import { hasAnyFailed, hasData, isAnyNotStartedOrPending, useFetchResonsPromise, } from '../rest/utils';
 import Spinner from './spinner/spinner';
 import { fetchArenaVedtak, fetchFattedeVedtak, fetchFeatures, fetchInnloggetVeileder, fetchMalform, fetchOppfolging, fetchUtkast } from '../rest/api';
 import { useDataStore } from '../stores/data-store';
@@ -51,36 +51,37 @@ export function DataFetcher(props: { fnr: string; children: any }) {
         utkastPromise.evaluate(fetchUtkast(props.fnr));
         innloggetVeilederPromise.evaluate(fetchInnloggetVeileder());
         arenaVedtakPromise.evaluate(fetchArenaVedtak(props.fnr));
+        // eslint-disable-next-line
     }, [props.fnr]);
 
     useEffect(() => {
-        if (hasData2(fattedeVedtakPromise)) {
+        if (hasData(fattedeVedtakPromise)) {
             setFattedeVedtak(fattedeVedtakPromise.data);
         }
-        if (hasData2(oppfolgingDataPromise)) {
+        if (hasData(oppfolgingDataPromise)) {
             setOppfolgingData(oppfolgingDataPromise.data);
         }
-        if (hasData2(featuresPromise)) {
+        if (hasData(featuresPromise)) {
             setFeatures(featuresPromise.data);
         }
-        if (hasData2(malformDataPromise)) {
+        if (hasData(malformDataPromise)) {
             setMalform(malformDataPromise.data);
         }
-        if (hasData2(utkastPromise)) {
+        if (hasData(utkastPromise)) {
             setUtkast(utkastPromise.data);
         }
-        if (hasData2(innloggetVeilederPromise)) {
+        if (hasData(innloggetVeilederPromise)) {
             setInnloggetVeileder(innloggetVeilederPromise.data);
         }
-        if (hasData2(arenaVedtakPromise)) {
+        if (hasData(arenaVedtakPromise)) {
             setArenaVedtak(arenaVedtakPromise.data);
         }
-
+    // eslint-disable-next-line
     }, fetchResponsePromises);
 
-    if (isAnyNotStartedOrPending2(fetchResponsePromises)) {
+    if (isAnyNotStartedOrPending(fetchResponsePromises)) {
         return <Spinner/>;
-    } else if (hasAnyFailed2(fetchResponsePromises)) {
+    } else if (hasAnyFailed(fetchResponsePromises)) {
         return (
             <AlertStripeFeil className="vedtaksstotte-alert">
                 Det oppnås for tiden ikke kontakt med alle baksystemer.
