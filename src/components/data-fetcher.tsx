@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { hasAnyFailed, hasData, isAnyNotStartedOrPending, useFetchResponsPromise, } from '../rest/utils';
+import { hasAnyFailed, isAnyNotStartedOrPending, Status, useFetchResponsePromise, } from '../rest/utils';
 import Spinner from './spinner/spinner';
 import { fetchArenaVedtak, fetchFattedeVedtak, fetchInnloggetVeileder, fetchMalform, fetchOppfolging, fetchUtkast } from '../rest/api';
 import { useDataStore } from '../stores/data-store';
@@ -10,20 +10,20 @@ import { MalformData } from '../rest/data/malform';
 import { Veileder } from '../rest/data/veiledere';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
-    const fattedeVedtakPromise = useFetchResponsPromise<Vedtak[]>();
-    const oppfolgingDataPromise = useFetchResponsPromise<OppfolgingData>();
-    const malformDataPromise = useFetchResponsPromise<MalformData>();
-    const utkastPromise = useFetchResponsPromise<Vedtak>();
-    const innloggetVeilederPromise = useFetchResponsPromise<Veileder>();
-    const arenaVedtakPromise = useFetchResponsPromise<ArenaVedtak[]>();
+    const [fattedeVedtakState, evaluateFattedeVedtak] = useFetchResponsePromise<Vedtak[]>();
+    const [oppfolgingDataState, evaluateOppfolgingData] = useFetchResponsePromise<OppfolgingData>();
+    const [malformDataState, evaluateMalformData] = useFetchResponsePromise<MalformData>();
+    const [utkastState, evaluateUtkast] = useFetchResponsePromise<Vedtak>();
+    const [innloggetVeilederState, evaluateInnloggetVeileder] = useFetchResponsePromise<Veileder>();
+    const [arenaVedtakState, evaluateArenaVedtak] = useFetchResponsePromise<ArenaVedtak[]>();
 
-    const fetchResponsePromises = [
-        fattedeVedtakPromise,
-        oppfolgingDataPromise,
-        malformDataPromise,
-        utkastPromise,
-        innloggetVeilederPromise,
-        arenaVedtakPromise
+    const fetchResponseStates = [
+        fattedeVedtakState,
+        oppfolgingDataState,
+        malformDataState,
+        utkastState,
+        innloggetVeilederState,
+        arenaVedtakState
     ];
 
     const {
@@ -36,40 +36,40 @@ export function DataFetcher(props: { fnr: string; children: any }) {
     } = useDataStore();
 
     useEffect(() => {
-        fattedeVedtakPromise.evaluate(fetchFattedeVedtak(props.fnr));
-        oppfolgingDataPromise.evaluate(fetchOppfolging(props.fnr));
-        malformDataPromise.evaluate(fetchMalform(props.fnr));
-        utkastPromise.evaluate(fetchUtkast(props.fnr));
-        innloggetVeilederPromise.evaluate(fetchInnloggetVeileder());
-        arenaVedtakPromise.evaluate(fetchArenaVedtak(props.fnr));
+        evaluateFattedeVedtak(fetchFattedeVedtak(props.fnr));
+        evaluateOppfolgingData(fetchOppfolging(props.fnr));
+        evaluateMalformData(fetchMalform(props.fnr));
+        evaluateUtkast(fetchUtkast(props.fnr));
+        evaluateInnloggetVeileder(fetchInnloggetVeileder());
+        evaluateArenaVedtak(fetchArenaVedtak(props.fnr));
         // eslint-disable-next-line
     }, [props.fnr]);
 
     useEffect(() => {
-        if (hasData(fattedeVedtakPromise)) {
-            setFattedeVedtak(fattedeVedtakPromise.data);
+        if (fattedeVedtakState.status === Status.SUCCEEDED_WITH_DATA) {
+            setFattedeVedtak(fattedeVedtakState.data);
         }
-        if (hasData(oppfolgingDataPromise)) {
-            setOppfolgingData(oppfolgingDataPromise.data);
+        if (oppfolgingDataState.status === Status.SUCCEEDED_WITH_DATA) {
+            setOppfolgingData(oppfolgingDataState.data);
         }
-        if (hasData(malformDataPromise)) {
-            setMalform(malformDataPromise.data);
+        if (malformDataState.status === Status.SUCCEEDED_WITH_DATA) {
+            setMalform(malformDataState.data);
         }
-        if (hasData(utkastPromise)) {
-            setUtkast(utkastPromise.data);
+        if (utkastState.status === Status.SUCCEEDED_WITH_DATA) {
+            setUtkast(utkastState.data);
         }
-        if (hasData(innloggetVeilederPromise)) {
-            setInnloggetVeileder(innloggetVeilederPromise.data);
+        if (innloggetVeilederState.status === Status.SUCCEEDED_WITH_DATA) {
+            setInnloggetVeileder(innloggetVeilederState.data);
         }
-        if (hasData(arenaVedtakPromise)) {
-            setArenaVedtak(arenaVedtakPromise.data);
+        if (arenaVedtakState.status === Status.SUCCEEDED_WITH_DATA) {
+            setArenaVedtak(arenaVedtakState.data);
         }
     // eslint-disable-next-line
-    }, fetchResponsePromises);
+    }, fetchResponseStates);
 
-    if (isAnyNotStartedOrPending(fetchResponsePromises)) {
+    if (isAnyNotStartedOrPending(fetchResponseStates)) {
         return <Spinner/>;
-    } else if (hasAnyFailed(fetchResponsePromises)) {
+    } else if (hasAnyFailed(fetchResponseStates)) {
         return (
             <AlertStripeFeil className="vedtaksstotte-alert">
                 Det oppnås for tiden ikke kontakt med alle baksystemer.

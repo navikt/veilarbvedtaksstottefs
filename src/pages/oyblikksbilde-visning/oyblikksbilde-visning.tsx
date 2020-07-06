@@ -11,7 +11,7 @@ import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { fetchOyblikksbilde } from '../../rest/api';
-import { hasFailed, isNotStartedOrPending, useFetchResponsPromise } from '../../rest/utils';
+import { Status, useFetchResponsePromise } from '../../rest/utils';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
 import './oyblikksbilde-visning.less';
@@ -23,30 +23,40 @@ function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder:
 }
 
 export function OyblikksbildeVisning(props: { vedtakId: number }) {
-	const { changeView } = useViewStore();
-	const oyeblikksbilde = useFetchResponsPromise<Oyblikksbilde[]>();
+	const [oyeblikksbildeState, evaluateOyeblikksbilde] = useFetchResponsePromise<Oyblikksbilde[]>();
 
 	useEffect(() => {
 		frontendlogger.logMetrikk('vis-oyblikksbilde');
-		oyeblikksbilde.evaluate(fetchOyblikksbilde(props.vedtakId))
+		evaluateOyeblikksbilde(fetchOyblikksbilde(props.vedtakId))
+		// eslint-disable-next-line
 	}, [props.vedtakId]);
 
-	if (isNotStartedOrPending(oyeblikksbilde)) {
-		return <Spinner/>;
-	} else if (hasFailed(oyeblikksbilde)) {
-		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
+	switch (oyeblikksbildeState.status) {
+		case Status.NOT_STARTED:
+		case Status.PENDING:
+			return <Spinner/>;
+		case Status.SUCCEEDED_WITH_DATA:
+			return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={oyeblikksbildeState.data}/>
+		case Status.SUCCEEDED_NO_DATA:
+			return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={null}/>
+		default:
+			return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
+}
+
+function Oyeblikksbilde(props: {vedtakId: number, oyeblikksbilde: OrNothing<Oyblikksbilde[]>}) {
+	const { changeView } = useViewStore();
 
 	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
-		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, oyeblikksbilde.data)
+		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, props.oyeblikksbilde)
 	);
 
 	const registreringsinfoJson = fiksRegistreringsinfoJson(
-		finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, oyeblikksbilde.data)
+		finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, props.oyeblikksbilde)
 	);
 
 	const egenvurderingJson = fiksEgenvurderingJson(
-		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, oyeblikksbilde.data)
+		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, props.oyeblikksbilde)
 	);
 
 	return (

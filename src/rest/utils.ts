@@ -50,81 +50,84 @@ export function fetchJson<D>(input: RequestInfo, init?: RequestInit): Promise<Fe
 export enum Status {
 	NOT_STARTED = 'NOT_STARTED',
 	PENDING = 'PENDING',
-	SUCCEEDED = 'SUCCEEDED',
+	SUCCEEDED_WITH_DATA = 'SUCCEEDED_WITH_DATA',
+	SUCCEEDED_NO_DATA = 'SUCCEEDED_NO_DATA',
 	FAILED = 'FAILED'
 }
 
-export interface PromiseStatusWithError {
-	error: any;
-	status: Status;
+interface StateNotStarted<D> {
+	status: Status.NOT_STARTED;
 }
 
-export interface PromiseStatusWithData<D> {
+interface StatePending {
+	status: Status.PENDING;
+}
+
+interface StateSucceededWithData<D> {
+	status: Status.SUCCEEDED_WITH_DATA;
 	data: D;
-	status: Status;
 }
 
-export interface PromiseState<D> {
-	data?: D;
-	error?: any;
-	status: Status;
+interface StateSucceededNoData {
+	status: Status.SUCCEEDED_NO_DATA;
 }
 
-interface PromiseStateWithEvaluate<D> extends PromiseState<D>{
-	evaluate: (promise: Promise<FetchResponse<D>>) => void;
+interface StateFailed {
+	status: Status.FAILED;
+	error: any;
 }
 
-export function hasData<D>(status: PromiseState<D>): status is PromiseStatusWithData<D>  {
-	return status.status === Status.SUCCEEDED;
+type State<D> = StateNotStarted<D> | StatePending | StateSucceededWithData<D> | StateSucceededNoData | StateFailed;
+
+
+export function hasData<D>(status: State<D>) {
+	return status.status === Status.SUCCEEDED_WITH_DATA;
 }
 
-export function hasFailed<D>(status: PromiseState<D>): status is PromiseStatusWithError  {
+export function hasFailed<D>(status: State<D>) {
 	return status.status === Status.FAILED;
 }
 
-export function isNotStartedOrPending<D>(state: PromiseState<D>) {
-	return state.status === Status.NOT_STARTED || state.status === Status.PENDING;
-}
-
-export const hasAnyFailed = (state: PromiseState<any> | Array<PromiseState<any>>): boolean => {
+export const hasAnyFailed = (state: State<any> | Array<State<any>>): boolean => {
 	if (Array.isArray(state)) {
 		return state.some(s => hasFailed(s));
 	}
 	return hasFailed(state);
 }
 
-export const isAnyNotStartedOrPending = (state: PromiseState<any> | Array<PromiseState<any>>): boolean => {
+export function isNotStartedOrPending<D>(state: State<D>) {
+	return state.status === Status.NOT_STARTED || state.status === Status.PENDING;
+}
+
+export const isAnyNotStartedOrPending = (state: State<any> | Array<State<any>>): boolean => {
 	if (Array.isArray(state)) {
 		return state.some(s => isNotStartedOrPending(s));
 	}
 	return isNotStartedOrPending(state);
 }
 
-export function useFetchResponsPromise<D>(): PromiseStateWithEvaluate<D> {
-	const [data, setData] = useState<D>();
-	const [error, setError] = useState<any>();
-	const [status, setStatus] = useState<Status>(Status.NOT_STARTED);
+export function useFetchResponsePromise<D>(): [State<D>, (promise: Promise<FetchResponse<D>>) => void] {
+	const [state, setState] =  useState<State<D>>({ status: Status.NOT_STARTED })
 
 	const evaluate = useCallback((promise: Promise<FetchResponse<D>>) => {
-		setStatus(Status.PENDING);
+		setState({ status: Status.PENDING });
 
 		promise
 			.then(response => {
 				if (response.error) {
-					setError(response.error)
-					setStatus(Status.FAILED);
+					setState({ status: Status.FAILED, error: response.error });
+				} else if (response.data) {
+					setState({status:Status.SUCCEEDED_WITH_DATA, data: response.data});
 				} else {
-					setData(response.data);
-					setStatus(Status.SUCCEEDED);
+					setState({status:Status.SUCCEEDED_NO_DATA});
 				}
 			})
 			.catch(responseError => {
-				setError(responseError);
-				setStatus(Status.FAILED);
+				setState({ status: Status.FAILED, error: responseError });
 			});
 	}, []);
 
-	return useMemo<PromiseStateWithEvaluate<D>>(
-		() => ({error, data, status, evaluate}),
-		[error, data, status, evaluate]);
+	return useMemo(
+		() => ([state, evaluate]),
+		[state, evaluate]);
 }
