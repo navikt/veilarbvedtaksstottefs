@@ -64,9 +64,6 @@ export function Forhandsvisning() {
 				throw err;
 			})
 			.then(() => {
-				resetSkjema();
-				setUtkast(null);
-
 				return fetchFattedeVedtak(fnr)
 					.then(fattedeVedtak => {
 						if (fattedeVedtak.data) {
@@ -75,8 +72,10 @@ export function Forhandsvisning() {
 					})
 					// Feiler ikke selv om fattede vedtak ikke oppdateres
 					.finally(() => {
+						resetSkjema();
 						changeView(ViewType.HOVEDSIDE);
 						showModal(ModalType.VEDTAK_SENT_SUKSESS);
+						setUtkast(null);
 					});
 			});
 	};
