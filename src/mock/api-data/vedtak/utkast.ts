@@ -6,7 +6,7 @@ import {
 	VedtakStatus
 } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
-import { ansvarligVeileder, beslutter } from '../../personer';
+import { veileder1, veileder3 } from '../../veiledere-mock';
 import { enhetId, enhetNavn } from '../../konstanter';
 
 const utkast: Vedtak & JSONObject = {
@@ -17,8 +17,8 @@ const utkast: Vedtak & JSONObject = {
 	sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 	gjeldende: false,
 	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
-	veilederNavn: ansvarligVeileder.navn,
-	veilederIdent: ansvarligVeileder.ident,
+	veilederNavn: veileder1.navn,
+	veilederIdent: veileder1.ident,
 	oppfolgingsenhetId: enhetId,
 	oppfolgingsenhetNavn: enhetNavn,
 	begrunnelse: 'Trenger ikke hjelp',
@@ -38,15 +38,15 @@ const utkastMedBeslutter: Vedtak & JSONObject = {
 	sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 	gjeldende: false,
 	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
-	veilederNavn: ansvarligVeileder.navn,
-	veilederIdent: ansvarligVeileder.ident,
+	veilederNavn: veileder1.navn,
+	veilederIdent: veileder1.ident,
 	oppfolgingsenhetId: enhetId,
 	oppfolgingsenhetNavn: enhetNavn,
 	begrunnelse: 'Trenger ikke hjelp',
 	dokumentInfoId: null,
 	journalpostId: null,
-	beslutterIdent: beslutter.ident,
-	beslutterNavn: beslutter.navn,
+	beslutterIdent: veileder3.ident,
+	beslutterNavn: veileder3.navn,
 	beslutterProsessStatus: BeslutterProsessStatus.KLAR_TIL_BESLUTTER
 };
 

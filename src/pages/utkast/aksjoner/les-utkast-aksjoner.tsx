@@ -80,7 +80,6 @@ function LesUtkastAksjoner() {
 			.then(() => {
 				fokuserPaDialogSidebarTab();
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
-				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 				setVeilederTilgang(VeilederTilgang.BESLUTTER);
 				leggTilSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
 			})
