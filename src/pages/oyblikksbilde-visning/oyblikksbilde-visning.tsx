@@ -11,7 +11,7 @@ import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { fetchOyblikksbilde } from '../../rest/api';
-import { Status, useFetchResponsePromise } from '../../rest/utils';
+import { hasFailed, isNotStartedOrPending, useFetchResponsePromise } from '../../rest/utils';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
 import './oyblikksbilde-visning.less';
@@ -23,25 +23,21 @@ function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder:
 }
 
 export function OyblikksbildeVisning(props: { vedtakId: number }) {
-	const [oyeblikksbildeState, evaluateOyeblikksbilde] = useFetchResponsePromise<Oyblikksbilde[]>();
+	const oyeblikksbildePromise = useFetchResponsePromise<Oyblikksbilde[]>();
 
 	useEffect(() => {
 		frontendlogger.logMetrikk('vis-oyblikksbilde');
-		evaluateOyeblikksbilde(fetchOyblikksbilde(props.vedtakId))
+		oyeblikksbildePromise.evaluate(fetchOyblikksbilde(props.vedtakId));
 		// eslint-disable-next-line
 	}, [props.vedtakId]);
 
-	switch (oyeblikksbildeState.status) {
-		case Status.NOT_STARTED:
-		case Status.PENDING:
-			return <Spinner/>;
-		case Status.SUCCEEDED_WITH_DATA:
-			return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={oyeblikksbildeState.data}/>
-		case Status.SUCCEEDED_NO_DATA:
-			return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={null}/>
-		default:
-			return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
+	if (isNotStartedOrPending(oyeblikksbildePromise)) {
+		return <Spinner/>;
+	} else if (hasFailed(oyeblikksbildePromise)) {
+		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
+
+	return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={oyeblikksbildePromise.data}/>;
 }
 
 function Oyeblikksbilde(props: {vedtakId: number, oyeblikksbilde: OrNothing<Oyblikksbilde[]>}) {
