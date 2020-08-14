@@ -1,33 +1,29 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Prelansering } from '../../pages/prelansering/prelansering';
-import { Features, PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../rest/data/features';
-import { hasData, hasFailed, isNotStartedOrPending, useFetchResponsePromise } from '../../rest/utils';
+import { PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../rest/data/features';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDataStore } from '../../stores/data-store';
-import { fetchFeatures } from '../../rest/api';
+import { useFetchFeatures } from '../../rest/api';
 
 // NB! Henting av features og populering i data store hook må flyttes til data-fetcher.tsx når denne komponenten skal fjernes
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
-	const featuresPromise = useFetchResponsePromise<Features>();
+
+	const featuresState = useFetchFeatures();
+	const [harSattFeatures, setHarSattFeatures] = useState(false);
 
 	const {features, setFeatures} = useDataStore();
 
 	useEffect(() => {
-		featuresPromise.evaluate(fetchFeatures());
-		// eslint-disable-next-line
-	}, []);
-
-	useEffect(() => {
-		if (hasData(featuresPromise)) {
-			setFeatures(featuresPromise.data);
+		if (featuresState.data) {
+			setFeatures(featuresState.data);
+			setHarSattFeatures(true);
 		}
-		// eslint-disable-next-line
-	}, [featuresPromise]);
+	}, [featuresState, setFeatures]);
 
-	if (isNotStartedOrPending(featuresPromise)) {
+	if (featuresState.isLoading || !harSattFeatures) {
 		return <Spinner />;
-	} else if (hasFailed(featuresPromise)) {
+	} else if (featuresState.error) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.

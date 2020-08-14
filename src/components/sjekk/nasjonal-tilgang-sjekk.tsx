@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import TilgangTilBrukersKontor from '../../utils/types/tilgang-til-brukers-kontor';
-import { fetchTilgangTilKontor } from '../../rest/api';
-import { hasData, hasFailed, isNotStartedOrPending, useFetchResponsePromise } from '../../rest/utils';
+import { useFetchTilgangTilKontor } from '../../rest/api';
 import Spinner from '../spinner/spinner';
 
 interface NasjonalTilgangSjekkProps {
@@ -12,20 +10,15 @@ interface NasjonalTilgangSjekkProps {
 
 export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
 
-    const tilgangTilKontorPromise = useFetchResponsePromise<TilgangTilBrukersKontor>();
+    const tilgangTilKontor = useFetchTilgangTilKontor(props.fnr);
 
-    useEffect(() => {
-        tilgangTilKontorPromise.evaluate(fetchTilgangTilKontor(props.fnr));
-        // eslint-disable-next-line
-    }, [props.fnr]);
-
-    if (isNotStartedOrPending(tilgangTilKontorPromise)) {
+    if (tilgangTilKontor.isLoading) {
         return <Spinner/>;
-    } else if (hasFailed(tilgangTilKontorPromise) || !hasData(tilgangTilKontorPromise)) {
+    } else if (tilgangTilKontor.error) {
         return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
     }
 
-    if (!tilgangTilKontorPromise.data.tilgangTilBrukersKontor) {
+    if (!tilgangTilKontor.data || !tilgangTilKontor.data.tilgangTilBrukersKontor) {
         return (
             <AlertStripeAdvarsel className="vedtaksstotte-alert">
                 Du har ikke tilgang til å se brukers oppfølgingsvedtak.

@@ -1,4 +1,4 @@
-import { fetchJson, FetchResponse, fetchWithChecks } from './utils';
+import { fetchJson, FetchResponse, fetchWithChecks, useFetch } from './utils';
 import { ALL_TOGGLES, Features } from './data/features';
 import { mapOpplysningerFraBokmalTilBrukersMalform, SkjemaData } from '../utils/skjema-utils';
 import { MalformData, MalformType } from './data/malform';
@@ -31,24 +31,24 @@ export const HEADERS_WITH_JSON_CONTENT = {
 	'Content-Type': 'application/json'
 };
 
-export const fetchFeatures = (): Promise<FetchResponse<Features>> => {
+export const useFetchFeatures = () => {
 	const toggles = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
-	return fetchJson(`${FEATURE_TOGGLE_URL}/?${toggles}`);
+	return useFetch<Features>(`${FEATURE_TOGGLE_URL}/?${toggles}`)
 }
 
-export const fetchOppfolging = (fnr: string): Promise<FetchResponse<Oppfolging>> => fetchJson(
-	`${VEILARBOPPFOLGING_API}/oppfolging?fnr=${fnr}`
+export const useFetchOppfolging = (fnr: string) => useFetch<Oppfolging>(
+	`${VEILARBOPPFOLGING_API}/oppfolging?fnr=${fnr}`, {depends: [fnr]}
 );
 
-export const fetchTilgangTilKontor = (fnr: string): Promise<FetchResponse<TilgangTilBrukersKontor>> => {
-	return fetchJson( `${VEILARBOPPFOLGING_API}/oppfolging/veilederTilgang?fnr=${fnr}`);
-};
-
-export const fetchMalform = (fnr: string): Promise<FetchResponse<MalformData>> => fetchJson(
-	`${VEILARBPERSON_API}/person/${fnr}/malform`
+export const useFetchTilgangTilKontor = (fnr: string) => useFetch<TilgangTilBrukersKontor>(
+	`${VEILARBOPPFOLGING_API}/oppfolging/veilederTilgang?fnr=${fnr}`, {depends: [fnr]}
 );
 
-export const fetchInnloggetVeileder = (): Promise<FetchResponse<Veileder>> => fetchJson(
+export const useFetchMalform = (fnr: string) => useFetch<MalformData>(
+	`${VEILARBPERSON_API}/person/${fnr}/malform`, {depends: [fnr]}
+);
+
+export const useFetchInnloggetVeileder = () => useFetch<Veileder>(
 	`${VEILARBVEILEDER_API}/veileder/me`
 );
 
@@ -60,6 +60,28 @@ export const fetchLagNyttUtkast = (fnr: string): Promise<Response> => {
 	});
 };
 
+export const useFetchUtkast = (fnr: string) => useFetch<Vedtak>(
+	`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`, {depends: [fnr]}
+);
+
+// TODO duplikat
+export const fetchUtkast = (fnr: string): Promise<FetchResponse<Vedtak>> => fetchJson(
+	`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`
+);
+
+export const useFetchFattedeVedtak = (fnr: string) => useFetch<Vedtak[]>(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`, {depends: [fnr]}
+);
+
+// TODO duplikat
+export const fetchFattedeVedtak = (fnr: string): Promise<FetchResponse<Vedtak[]>> => fetchJson(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`
+);
+
+export const useFetchArenaVedtak = (fnr: string) => useFetch<ArenaVedtak[]>(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena?fnr=${fnr}`, {depends: [fnr]}
+);
+
 export const fetchOppdaterVedtakUtkast = (params: OppdaterUtkastPayload): Promise<Response> => {
 	params.skjema.opplysninger = mapOpplysningerFraBokmalTilBrukersMalform(params.skjema.opplysninger, params.malform);
 	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}`,
@@ -69,18 +91,6 @@ export const fetchOppdaterVedtakUtkast = (params: OppdaterUtkastPayload): Promis
 			body: JSON.stringify(params.skjema)
 		});
 };
-
-export const fetchUtkast = (fnr: string): Promise<FetchResponse<Vedtak>> => fetchJson(
-	`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`
-);
-
-export const fetchFattedeVedtak = (fnr: string): Promise<FetchResponse<Vedtak[]>> => fetchJson(
-	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`
-);
-
-export const fetchArenaVedtak = (fnr: string): Promise<FetchResponse<ArenaVedtak[]>> => fetchJson(
-	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena?fnr=${fnr}`
-);
 
 export const fetchFattVedtak = (vedtakId: number): Promise<Response> => {
 	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/fattVedtak`, {

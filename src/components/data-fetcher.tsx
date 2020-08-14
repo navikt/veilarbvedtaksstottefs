@@ -1,21 +1,17 @@
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { hasAnyFailed, hasData, isAnyNotStartedOrPending, useFetchResponsePromise, } from '../rest/utils';
+import { hasAnyFailed, isAnyNotStartedOrPending, } from '../rest/utils';
 import Spinner from './spinner/spinner';
-import { fetchArenaVedtak, fetchFattedeVedtak, fetchInnloggetVeileder, fetchMalform, fetchOppfolging, fetchUtkast } from '../rest/api';
+import { useFetchArenaVedtak, useFetchFattedeVedtak, useFetchInnloggetVeileder, useFetchMalform, useFetchOppfolging, useFetchUtkast } from '../rest/api';
 import { useDataStore } from '../stores/data-store';
-import { ArenaVedtak, Vedtak } from '../rest/data/vedtak';
-import OppfolgingData from '../rest/data/oppfolging-data';
-import { MalformData } from '../rest/data/malform';
-import { Veileder } from '../rest/data/veiledere';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
-    const fattedeVedtakPromise = useFetchResponsePromise<Vedtak[]>();
-    const oppfolgingDataPromise = useFetchResponsePromise<OppfolgingData>();
-    const malformDataPromise = useFetchResponsePromise<MalformData>();
-    const utkastPromise = useFetchResponsePromise<Vedtak>();
-    const innloggetVeilederPromise = useFetchResponsePromise<Veileder>();
-    const arenaVedtakPromise = useFetchResponsePromise<ArenaVedtak[]>();
+    const fattedeVedtakPromise = useFetchFattedeVedtak(props.fnr);
+    const oppfolgingDataPromise = useFetchOppfolging(props.fnr);
+    const malformDataPromise = useFetchMalform(props.fnr);
+    const utkastPromise = useFetchUtkast(props.fnr);
+    const innloggetVeilederPromise = useFetchInnloggetVeileder();
+    const arenaVedtakPromise = useFetchArenaVedtak(props.fnr);
 
     const fetchResponsePromises = [
         fattedeVedtakPromise,
@@ -36,32 +32,22 @@ export function DataFetcher(props: { fnr: string; children: any }) {
     } = useDataStore();
 
     useEffect(() => {
-        fattedeVedtakPromise.evaluate(fetchFattedeVedtak(props.fnr));
-        oppfolgingDataPromise.evaluate(fetchOppfolging(props.fnr));
-        malformDataPromise.evaluate(fetchMalform(props.fnr));
-        utkastPromise.evaluate(fetchUtkast(props.fnr));
-        innloggetVeilederPromise.evaluate(fetchInnloggetVeileder());
-        arenaVedtakPromise.evaluate(fetchArenaVedtak(props.fnr));
-        // eslint-disable-next-line
-    }, [props.fnr]);
-
-    useEffect(() => {
-        if (hasData(fattedeVedtakPromise)) {
+        if (fattedeVedtakPromise.data) {
             setFattedeVedtak(fattedeVedtakPromise.data);
         }
-        if (hasData(oppfolgingDataPromise)) {
+        if (oppfolgingDataPromise.data) {
             setOppfolgingData(oppfolgingDataPromise.data);
         }
-        if (hasData(malformDataPromise)) {
+        if (malformDataPromise.data) {
             setMalform(malformDataPromise.data);
         }
-        if (hasData(utkastPromise)) {
+        if (utkastPromise.data) {
             setUtkast(utkastPromise.data);
         }
-        if (hasData(innloggetVeilederPromise)) {
+        if (innloggetVeilederPromise.data) {
             setInnloggetVeileder(innloggetVeilederPromise.data);
         }
-        if (hasData(arenaVedtakPromise)) {
+        if (arenaVedtakPromise.data) {
             setArenaVedtak(arenaVedtakPromise.data);
         }
     // eslint-disable-next-line

@@ -1,6 +1,7 @@
 import { frontendlogger } from '../utils/frontend-logger';
 import { useCallback, useMemo, useState } from 'react';
 import { logger } from '../utils/logger';
+import useFetchHook from 'react-fetch-hook';
 
 export interface FetchResponse<D = any> {
 	error?: any;
@@ -86,18 +87,18 @@ export function isNotStartedOrPending<D>(state: PromiseState<D>) {
 	return state.status === Status.NOT_STARTED || state.status === Status.PENDING;
 }
 
-export const hasAnyFailed = (state: PromiseState<any> | Array<PromiseState<any>>): boolean => {
+export const hasAnyFailed = (state: UseFetchState<any> | Array<UseFetchState<any>>): boolean => {
 	if (Array.isArray(state)) {
-		return state.some(s => hasFailed(s));
+		return state.some(s => s.error !== undefined);
 	}
-	return hasFailed(state);
+	return state.error !== undefined;
 }
 
-export const isAnyNotStartedOrPending = (state: PromiseState<any> | Array<PromiseState<any>>): boolean => {
+export const isAnyNotStartedOrPending = (state: UseFetchState<any> | Array<UseFetchState<any>>): boolean => {
 	if (Array.isArray(state)) {
-		return state.some(s => isNotStartedOrPending(s));
+		return state.some(s => s.isLoading);
 	}
-	return isNotStartedOrPending(state);
+	return state.isLoading;
 }
 
 export function useFetchResponsePromise<D>(): PromiseStateWithEvaluate<D> {
@@ -127,4 +128,18 @@ export function useFetchResponsePromise<D>(): PromiseStateWithEvaluate<D> {
 	return useMemo<PromiseStateWithEvaluate<D>>(
 		() => ({error, data, status, evaluate}),
 		[error, data, status, evaluate]);
+}
+
+export type UseFetchState<T> = useFetchHook.FetchResult<T> & { refetch: () => void}
+export function useFetch<T>(requestInfo: RequestInfo,
+							options?: useFetchHook.HookOptions | useFetchHook.HookOptionsWithFormatter<T>,
+							specialOptions?: useFetchHook.HookOptions): UseFetchState<T> {
+	const [trigger, setTrigger] = useState(1);
+	const dependsWithTrigger = options && options.depends ? [...options.depends, trigger] : [trigger];
+	const fetchState = useFetchHook<T>(requestInfo, Object.assign(options || {}, {depends: dependsWithTrigger}), specialOptions);
+	const refetch = useCallback(() => {
+		setTrigger(prev => ++prev);
+	}, []);
+
+	return useMemo(() => ({...fetchState, refetch}), [fetchState, refetch]);
 }
