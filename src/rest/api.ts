@@ -134,9 +134,8 @@ export const fetchTaOverUtkast = (vedtakId: number): Promise<Response> => {
 	})
 };
 
-export const fetchOyblikksbilde = (vedtakId: number): Promise<FetchResponse<Oyblikksbilde[]>> => {
-	return fetchJson(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/${vedtakId}/oyeblikksbilde`, {credentials});
-};
+export const useFetchOyblikksbilde = (vedtakId: number) => useFetch<Oyblikksbilde[]>(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/${vedtakId}/oyeblikksbilde`, {credentials}, {depends: [vedtakId]});
 
 export const lagHentForhandsvisningUrl = (vedtakId: number): string => `${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/pdf`;
 

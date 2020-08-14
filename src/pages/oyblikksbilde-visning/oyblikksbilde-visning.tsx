@@ -10,8 +10,7 @@ import OyblikksbildeType from '../../utils/types/oyblikksbilde-type';
 import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { fetchOyblikksbilde } from '../../rest/api';
-import { hasFailed, isNotStartedOrPending, useFetchResponsePromise } from '../../rest/utils';
+import { useFetchOyblikksbilde } from '../../rest/api';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
 import './oyblikksbilde-visning.less';
@@ -23,17 +22,16 @@ function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder:
 }
 
 export function OyblikksbildeVisning(props: { vedtakId: number }) {
-	const oyeblikksbildePromise = useFetchResponsePromise<Oyblikksbilde[]>();
+	const oyeblikksbildePromise = useFetchOyblikksbilde(props.vedtakId);
 
 	useEffect(() => {
 		frontendlogger.logMetrikk('vis-oyblikksbilde');
-		oyeblikksbildePromise.evaluate(fetchOyblikksbilde(props.vedtakId));
 		// eslint-disable-next-line
 	}, [props.vedtakId]);
 
-	if (isNotStartedOrPending(oyeblikksbildePromise)) {
+	if (oyeblikksbildePromise.isLoading) {
 		return <Spinner/>;
-	} else if (hasFailed(oyeblikksbildePromise)) {
+	} else if (oyeblikksbildePromise.error) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 
