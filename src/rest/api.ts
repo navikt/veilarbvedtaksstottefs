@@ -64,7 +64,7 @@ export const useFetchUtkast = (fnr: string) => useFetch<Vedtak>(
 	`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`, {depends: [fnr]}
 );
 
-// TODO duplikat
+// TODO definert dobbelt for fetch og hook
 export const fetchUtkast = (fnr: string): Promise<FetchResponse<Vedtak>> => fetchJson(
 	`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`
 );
@@ -73,7 +73,7 @@ export const useFetchFattedeVedtak = (fnr: string) => useFetch<Vedtak[]>(
 	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`, {depends: [fnr]}
 );
 
-// TODO duplikat
+// TODO definert dobbelt for fetch og hook
 export const fetchFattedeVedtak = (fnr: string): Promise<FetchResponse<Vedtak[]>> => fetchJson(
 	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`
 );

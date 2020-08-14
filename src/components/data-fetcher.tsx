@@ -6,20 +6,20 @@ import { useFetchArenaVedtak, useFetchFattedeVedtak, useFetchInnloggetVeileder, 
 import { useDataStore } from '../stores/data-store';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
-    const fattedeVedtakPromise = useFetchFattedeVedtak(props.fnr);
-    const oppfolgingDataPromise = useFetchOppfolging(props.fnr);
-    const malformDataPromise = useFetchMalform(props.fnr);
-    const utkastPromise = useFetchUtkast(props.fnr);
-    const innloggetVeilederPromise = useFetchInnloggetVeileder();
-    const arenaVedtakPromise = useFetchArenaVedtak(props.fnr);
+    const fattedeVedtakState = useFetchFattedeVedtak(props.fnr);
+    const oppfolgingDataState = useFetchOppfolging(props.fnr);
+    const malformDataState = useFetchMalform(props.fnr);
+    const utkastState = useFetchUtkast(props.fnr);
+    const innloggetVeilederState = useFetchInnloggetVeileder();
+    const arenaVedtakState = useFetchArenaVedtak(props.fnr);
 
     const fetchResponsePromises = [
-        fattedeVedtakPromise,
-        oppfolgingDataPromise,
-        malformDataPromise,
-        utkastPromise,
-        innloggetVeilederPromise,
-        arenaVedtakPromise
+        fattedeVedtakState,
+        oppfolgingDataState,
+        malformDataState,
+        utkastState,
+        innloggetVeilederState,
+        arenaVedtakState
     ];
 
     const {
@@ -32,23 +32,23 @@ export function DataFetcher(props: { fnr: string; children: any }) {
     } = useDataStore();
 
     useEffect(() => {
-        if (fattedeVedtakPromise.data) {
-            setFattedeVedtak(fattedeVedtakPromise.data);
+        if (fattedeVedtakState.data) {
+            setFattedeVedtak(fattedeVedtakState.data);
         }
-        if (oppfolgingDataPromise.data) {
-            setOppfolgingData(oppfolgingDataPromise.data);
+        if (oppfolgingDataState.data) {
+            setOppfolgingData(oppfolgingDataState.data);
         }
-        if (malformDataPromise.data) {
-            setMalform(malformDataPromise.data);
+        if (malformDataState.data) {
+            setMalform(malformDataState.data);
         }
-        if (utkastPromise.data) {
-            setUtkast(utkastPromise.data);
+        if (utkastState.data) {
+            setUtkast(utkastState.data);
         }
-        if (innloggetVeilederPromise.data) {
-            setInnloggetVeileder(innloggetVeilederPromise.data);
+        if (innloggetVeilederState.data) {
+            setInnloggetVeileder(innloggetVeilederState.data);
         }
-        if (arenaVedtakPromise.data) {
-            setArenaVedtak(arenaVedtakPromise.data);
+        if (arenaVedtakState.data) {
+            setArenaVedtak(arenaVedtakState.data);
         }
     // eslint-disable-next-line
     }, fetchResponsePromises);
