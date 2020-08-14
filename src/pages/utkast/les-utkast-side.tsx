@@ -14,6 +14,7 @@ import UtkastSkjema from './skjema/utkast-skjema';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { OrNothing } from '../../utils/types/ornothing';
 import { fetchFattedeVedtak, fetchUtkast } from '../../rest/api';
+import { useSkjemaStore } from '../../stores/skjema-store';
 
 const TEN_SECONDS = 10000;
 
@@ -22,6 +23,7 @@ export function LesUtkastSide() {
 	const {utkast, setUtkast, setFattedeVedtak} = useDataStore();
 	const {changeView} = useViewStore();
 	const {erBeslutter} = useTilgangStore();
+	const {initSkjema} = useSkjemaStore();
 	const refreshUtkastIntervalRef = useRef<number>();
 
 	useEffect(() => {
@@ -34,6 +36,7 @@ export function LesUtkastSide() {
 				fetchUtkast(fnr).then(response => {
 					if (response.data) {
 						setUtkast(response.data);
+						initSkjema(response.data);
 					}
 				})
 			}, TEN_SECONDS) as unknown as number;

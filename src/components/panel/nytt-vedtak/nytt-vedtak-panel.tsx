@@ -11,6 +11,7 @@ import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
 import { useDataStore } from '../../../stores/data-store';
 import './nytt-vedtak-panel.less';
+import { useSkjemaStore } from '../../../stores/skjema-store';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
@@ -18,6 +19,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { oppfolgingData, setMeldinger, setUtkast } = useDataStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
+	const {initSkjema} = useSkjemaStore();
 
 	function lagNyttVedtakUtkastOgRedirectTilUtkast() {
 		showModal(ModalType.LASTER);
@@ -28,6 +30,8 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 					throw Error('Fant ikke utkast');
 				}
 				setUtkast(fetchResponse.data);
+				// overskriv gammel evt. gammel data
+				initSkjema(fetchResponse.data);
 				setMeldinger([]); // Rydd opp hvis det ligger gamle meldinger mellomlagret
 				hideModal();
 				changeView(ViewType.UTKAST);
