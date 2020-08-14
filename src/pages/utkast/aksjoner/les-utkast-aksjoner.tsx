@@ -4,12 +4,7 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import dialogIkon from './dialog.svg';
 import { ReactComponent as TaOverIkon } from './taover.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { fetchWithInfo } from '../../../rest/utils';
-import {
-	lagBliBeslutterFetchInfo,
-	lagGodkjennVedtakFetchInfo,
-	lagOppdaterBeslutterProsessStatusFetchInfo
-} from '../../../rest/api';
+import { fetchBliBeslutter, fetchGodkjennVedtak, fetchOppdaterBeslutterProsessStatus, } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, trengerBeslutter } from '../../../utils/skjema-utils';
@@ -17,14 +12,7 @@ import Show from '../../../components/show';
 import { Element } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
-import {
-	erBeslutterProsessStartet,
-	erGodkjentAvBeslutter,
-	erKlarTilBeslutter,
-	erKlarTilVeileder,
-	finnGjeldendeVedtak,
-	isNothing
-} from '../../../utils';
+import { erBeslutterProsessStartet, erGodkjentAvBeslutter, erKlarTilBeslutter, erKlarTilVeileder, finnGjeldendeVedtak, isNothing } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus, Vedtak } from '../../../rest/data/vedtak';
@@ -88,11 +76,10 @@ function LesUtkastAksjoner() {
 	function handleOnBliBeslutterClicked() {
 		setLaster(true);
 
-		fetchWithInfo(lagBliBeslutterFetchInfo({vedtakId: utkastId}))
+		fetchBliBeslutter(utkastId)
 			.then(() => {
 				fokuserPaDialogSidebarTab();
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
-				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 				setVeilederTilgang(VeilederTilgang.BESLUTTER);
 				leggTilSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
 			})
@@ -102,7 +89,7 @@ function LesUtkastAksjoner() {
 
 	function handleOnKlarTilClicked() {
 		setLaster(true);
-		fetchWithInfo(lagOppdaterBeslutterProsessStatusFetchInfo({vedtakId: utkastId}))
+		fetchOppdaterBeslutterProsessStatus(utkastId)
 			.then(() => {
 				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_VEILEDER);
 			})
@@ -112,7 +99,7 @@ function LesUtkastAksjoner() {
 
 	function handleOnGodkjennClicked() {
 		setLaster(true);
-		fetchWithInfo(lagGodkjennVedtakFetchInfo({vedtakId: utkastId}))
+		fetchGodkjennVedtak(utkastId)
 			.then(() => {
 				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
 				setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);

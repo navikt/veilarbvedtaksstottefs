@@ -1,67 +1,17 @@
 import { frontendlogger } from '../utils/frontend-logger';
+import { useCallback, useMemo, useState } from 'react';
+import { logger } from '../utils/logger';
+import useFetchHook from 'react-fetch-hook';
 
-export type FetchInfo = RequestInit & { url: string };
-
-export enum FetchStatus {
-	NOT_STARTED = 'NOT_STARTED',
-	PENDING = 'PENDING',
-	FINISHED = 'FINISHED'
+export interface FetchResponse<D = any> {
+	error?: any;
+	data?: D;
+	httpCode?: number;
 }
 
-export interface FetchState<D = any> {
-	status: FetchStatus;
-	error: any;
-	data: D;
-	httpCode: number;
-}
-
-export const isAnyNotStartedOrPending = (fetch: FetchState | FetchState[]): boolean => {
-	if (Array.isArray(fetch)) {
-		return fetch.some(f => isNotStartedOrPending(f));
-	}
-
-	return isNotStartedOrPending(fetch);
-};
-
-export const hasAnyFailed = (fetch: FetchState | FetchState[]): boolean => {
-	if (Array.isArray(fetch)) {
-		return fetch.some(f => hasFailed(f));
-	}
-
-	return hasFailed(fetch);
-};
-
-export const isNotStarted = (fetch: FetchState): boolean => {
-	return fetch.status === FetchStatus.NOT_STARTED;
-};
-
-export const isNotStartedOrPending = (fetch: FetchState): boolean => {
-	return fetch.status === FetchStatus.NOT_STARTED || fetch.status === FetchStatus.PENDING;
-};
-
-export const hasFinished = (fetch: FetchState): boolean => {
-	return fetch.status === FetchStatus.FINISHED;
-};
-
-export const hasFinishedWithData = (fetch: FetchState): boolean => {
-	return hasFinished(fetch) && hasData(fetch);
-};
-
-export const hasFailed = (fetch: FetchState): boolean => {
-	return fetch.error != null || fetch.httpCode >= 400;
-};
-
-export const hasOkStatus = (fetch: FetchState): boolean => {
-	return fetch.httpCode >= 200 && fetch.httpCode < 300;
-};
-
-export const hasData = (fetch: FetchState): boolean => {
-	return fetch.data != null;
-};
-
-export const fetchWithInfo = (fetchInfo: FetchInfo) => {
-	const { url, ...rest } = fetchInfo;
-	return fetch(url, rest).then(res => {
+export function fetchWithChecks<D>(input: RequestInfo, init?: RequestInit): Promise<Response> {
+	return fetch(input, init)
+		.then(res => {
 		if (res.status >= 400) {
 			res.clone()
 				.text()
@@ -75,4 +25,54 @@ export const fetchWithInfo = (fetchInfo: FetchInfo) => {
 
 		return res;
 	});
-};
+}
+
+export function fetchJson<D>(input: RequestInfo, init?: RequestInit): Promise<FetchResponse<D>> {
+	return fetch(input, init)
+		.then(async (res) => {
+			const status = res.status;
+			try {
+				if (status >= 300) {
+					const error = await res.text();
+					logger.error('API kall feilet med status ', status);
+					return { error, httpCode: status };
+				}
+				const json = await res.json();
+				return { data: json, httpCode: status };
+			} catch (err) {
+				return { error: err, httpCode: status };
+			}
+		})
+		.catch(error => {
+			return { error };
+		});
+}
+
+export type UseFetchState<T> = useFetchHook.FetchResult<T> & { refetch: () => void}
+
+export function useFetch<T>(requestInfo: RequestInfo,
+							options?: useFetchHook.HookOptions | useFetchHook.HookOptionsWithFormatter<T>,
+							specialOptions?: useFetchHook.HookOptions): UseFetchState<T> {
+	const [trigger, setTrigger] = useState(1);
+	const dependsWithTrigger = options && options.depends ? [...options.depends, trigger] : [trigger];
+	const fetchState = useFetchHook<T>(requestInfo, Object.assign(options || {}, {depends: dependsWithTrigger}), specialOptions);
+	const refetch = useCallback(() => {
+		setTrigger(prev => ++prev);
+	}, []);
+
+	return useMemo(() => ({...fetchState, refetch}), [fetchState, refetch]);
+}
+
+export const hasAnyFailed = (state: UseFetchState<any> | Array<UseFetchState<any>>): boolean => {
+	if (Array.isArray(state)) {
+		return state.some(s => s.error !== undefined);
+	}
+	return state.error !== undefined;
+}
+
+export const isAnyNotStartedOrPending = (state: UseFetchState<any> | Array<UseFetchState<any>>): boolean => {
+	if (Array.isArray(state)) {
+		return state.some(s => s.isLoading);
+	}
+	return state.isLoading;
+}

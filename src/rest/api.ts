@@ -1,27 +1,21 @@
-import { FetchInfo } from './utils';
-import { ALL_TOGGLES } from './data/features';
+import { fetchJson, FetchResponse, fetchWithChecks, useFetch } from './utils';
+import { ALL_TOGGLES, Features } from './data/features';
 import { mapOpplysningerFraBokmalTilBrukersMalform, SkjemaData } from '../utils/skjema-utils';
-import { MalformType } from './data/malform';
+import { MalformData, MalformType } from './data/malform';
+import { ArenaVedtak, Vedtak } from './data/vedtak';
+import { Veileder } from './data/veiledere';
+import Oppfolging from './data/oppfolging-data';
+import { DialogMelding, SystemMelding } from './data/melding';
+import { Oyblikksbilde } from '../utils/types/oyblikksbilde';
+import TilgangTilBrukersKontor from '../utils/types/tilgang-til-brukers-kontor';
+import { ErGodkjent } from './data/er-godkjent';
 
-export interface SendDialogFetchParams {
+export interface SendDialogPayload {
 	vedtakId: number;
 	melding: string;
 }
 
-export interface FnrFetchParams {
-	fnr: string;
-}
-
-export interface VedtakIdFetchParams {
-	vedtakId: number;
-}
-
-export interface HentOyblikksbildeFetchParams {
-	fnr: string;
-	vedtakId: number;
-}
-
-export interface OppdaterUtkastFetchParams {
+export interface OppdaterUtkastPayload {
 	vedtakId: number;
 	malform: MalformType | null;
 	skjema: SkjemaData;
@@ -39,106 +33,109 @@ export const HEADERS_WITH_JSON_CONTENT = {
 	'Content-Type': 'application/json'
 };
 
-export const lagHentFeaturesFetchInfo = (): FetchInfo => {
+export const useFetchFeatures = () => {
 	const toggles = ALL_TOGGLES.map(element => 'feature=' + element).join('&');
-	return { url: `${FEATURE_TOGGLE_URL}/?${toggles}` };
-};
+	return useFetch<Features>(`${FEATURE_TOGGLE_URL}/?${toggles}`, {credentials})
+}
 
-export const lagHentOppfolgingDataFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBOPPFOLGING_API}/oppfolging?fnr=${params.fnr}`
-});
+export const useFetchOppfolging = (fnr: string) => useFetch<Oppfolging>(
+	`${VEILARBOPPFOLGING_API}/oppfolging?fnr=${fnr}`, {credentials},{depends: [fnr]}
+);
 
-export const lagHentTilgangTilKontorFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBOPPFOLGING_API}/oppfolging/veilederTilgang?fnr=${params.fnr}`
-});
+export const useFetchTilgangTilKontor = (fnr: string) => useFetch<TilgangTilBrukersKontor>(
+	`${VEILARBOPPFOLGING_API}/oppfolging/veilederTilgang?fnr=${fnr}`, {credentials},{depends: [fnr]}
+);
 
-export const lagHentMalformFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBPERSON_API}/person/${params.fnr}/malform`
-});
+export const useFetchMalform = (fnr: string) => useFetch<MalformData>(
+	`${VEILARBPERSON_API}/person/${fnr}/malform`, {credentials},{depends: [fnr]}
+);
 
-export const lagHentVeilederFetchInfo = (): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEILEDER_API}/veileder/me`
-});
+export const useFetchInnloggetVeileder = () => useFetch<Veileder>(
+	`${VEILARBVEILEDER_API}/veileder/me`, {credentials}
+);
 
-export const lagNyttUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
-	method: 'POST',
-	headers: HEADERS_WITH_JSON_CONTENT,
-	body: JSON.stringify({ fnr: params.fnr })
-});
-
-export const lagOppdaterVedtakUtkastFetchInfo = (params: OppdaterUtkastFetchParams): FetchInfo => {
-	params.skjema.opplysninger = mapOpplysningerFraBokmalTilBrukersMalform(params.skjema.opplysninger, params.malform);
-	return {
-		credentials,
-		url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}`,
-		method: 'PUT',
+export const fetchLagNyttUtkast = (fnr: string): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, {
+		method: 'POST',
 		headers: HEADERS_WITH_JSON_CONTENT,
-		body: JSON.stringify(params.skjema)
-	};
+		body: JSON.stringify({fnr}),
+		credentials
+	});
 };
 
-export const lagHentUtkastFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${params.fnr}`
-});
+export const useFetchUtkast = (fnr: string) => useFetch<Vedtak>(
+	`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`, {credentials}, {depends: [fnr]}
+);
 
-export const lagHentFattedeVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${params.fnr}`
-});
+// TODO definert dobbelt for fetch og hook
+export const fetchUtkast = (fnr: string): Promise<FetchResponse<Vedtak>> => fetchJson(
+	`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`,{credentials}
+);
 
-export const lagHentArenaVedtakFetchInfo = (params: FnrFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena?fnr=${params.fnr}`
-});
+export const useFetchFattedeVedtak = (fnr: string) => useFetch<Vedtak[]>(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`, {credentials},{depends: [fnr]}
+);
 
-export const lagFattVedtakFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}/fattVedtak`,
-	method: 'POST',
-});
+// TODO definert dobbelt for fetch og hook
+export const fetchFattedeVedtak = (fnr: string): Promise<FetchResponse<Vedtak[]>> => fetchJson(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`,{credentials}
+);
 
-export const lagSendDialogFetchInfo = (params: SendDialogFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${params.vedtakId}`,
-	method: 'POST',
-	headers: HEADERS_WITH_JSON_CONTENT,
-	body: JSON.stringify({ melding: params.melding })
-});
+export const useFetchArenaVedtak = (fnr: string) => useFetch<ArenaVedtak[]>(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena?fnr=${fnr}`, {credentials},{depends: [fnr]}
+);
 
-export const lagHentMeldingerFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${params.vedtakId}`
-});
+export const fetchOppdaterVedtakUtkast = (params: OppdaterUtkastPayload): Promise<Response> => {
+	params.skjema.opplysninger = mapOpplysningerFraBokmalTilBrukersMalform(params.skjema.opplysninger, params.malform);
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}`,
+		{
+			method: 'PUT',
+			headers: HEADERS_WITH_JSON_CONTENT,
+			body: JSON.stringify(params.skjema),
+			credentials
+		});
+};
 
-export const lagSlettUtkastFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}`,
-	method: 'DELETE'
-});
+export const fetchFattVedtak = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/fattVedtak`, {
+		method: 'POST',
+		credentials
+	})
+};
 
-export const lagErUtkastGodkjentFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}/erGodkjent`,
-	method: 'GET'
-});
+export const fetchSendDialog = (params: SendDialogPayload): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${params.vedtakId}`, {
+		method: 'POST',
+		headers: HEADERS_WITH_JSON_CONTENT,
+		body: JSON.stringify({melding: params.melding}),
+		credentials
+	});
+};
 
-export const lagTaOverUtkastFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}/overta`,
-	method: 'POST'
-});
+export const fetchMeldinger = (vedtakId: number): Promise<FetchResponse<Array<DialogMelding | SystemMelding>>> => {
+	return fetchJson(`${VEILARBVEDTAKSSTOTTE_API}/meldinger?vedtakId=${vedtakId}`, {credentials});
+};
 
-export const lagHentOyblikksbildeFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/vedtak/${params.vedtakId}/oyeblikksbilde`
-});
+export const fetchSlettUtkast = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}`, {
+		method: 'DELETE',
+		credentials
+	});
+};
+
+export const fetchErUtkastGodkjent = (vedtakId: number): Promise<FetchResponse<ErGodkjent>> => {
+	return fetchJson(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/erGodkjent`, {credentials});
+};
+
+export const fetchTaOverUtkast = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/overta`, {
+		method: 'POST',
+		credentials
+	})
+};
+
+export const useFetchOyblikksbilde = (vedtakId: number) => useFetch<Oyblikksbilde[]>(
+	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/${vedtakId}/oyeblikksbilde`, {credentials}, {depends: [vedtakId]});
 
 export const lagHentForhandsvisningUrl = (vedtakId: number): string => `${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/pdf`;
 
@@ -148,26 +145,30 @@ export const lagHentVedtakPdfUrl = (vedtakId: number): string =>
 export const lagHentArenaVedtakPdfUrl = (dokumentInfoId: string, journalpostId: string): string =>
 	`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena/pdf?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
 
-export const lagStartBeslutterProsessFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/start?vedtakId=${params.vedtakId}`,
-	method: 'POST'
-});
+export const fetchStartBeslutterProsess = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/start?vedtakId=${vedtakId}`, {
+		method: 'POST',
+		credentials
+	})
+};
 
-export const lagBliBeslutterFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/bliBeslutter?vedtakId=${params.vedtakId}`,
-	method: 'POST'
-});
+export const fetchBliBeslutter = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/bliBeslutter?vedtakId=${vedtakId}`, {
+		method: 'POST',
+		credentials
+	})
+};
 
-export const lagGodkjennVedtakFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/godkjenn?vedtakId=${params.vedtakId}`,
-	method: 'POST'
-});
+export const fetchGodkjennVedtak = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/godkjenn?vedtakId=${vedtakId}`, {
+		method: 'POST',
+		credentials
+	})
+};
 
-export const lagOppdaterBeslutterProsessStatusFetchInfo = (params: VedtakIdFetchParams): FetchInfo => ({
-	credentials,
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/status?vedtakId=${params.vedtakId}`,
-	method: 'PUT'
-});
+export const fetchOppdaterBeslutterProsessStatus = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/status?vedtakId=${vedtakId}`, {
+		method: 'PUT',
+		credentials
+	})
+};

@@ -3,8 +3,7 @@ import debounce from 'lodash.debounce';
 import { hentMalformFraData, SkjemaData } from '../../utils/skjema-utils';
 import UtkastSkjema from './skjema/utkast-skjema';
 import Footer from '../../components/footer/footer';
-import { fetchWithInfo } from '../../rest/utils';
-import { lagErUtkastGodkjentFetchInfo, lagOppdaterVedtakUtkastFetchInfo } from '../../rest/api';
+import { fetchErUtkastGodkjent, fetchOppdaterVedtakUtkast } from '../../rest/api';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { erBeslutterProsessStartet, erGodkjentAvBeslutter, finnGjeldendeVedtak, hentId } from '../../utils';
@@ -18,7 +17,6 @@ import Opplysninger from './skjema/opplysninger/opplysninger';
 import Begrunnelse from './skjema/begrunnelse/begrunnelse';
 import Innsatsgruppe from './skjema/innsatsgruppe/innsatsgruppe';
 import Hovedmal from './skjema/hovedmal/hovedmal';
-import { ErGodkjent } from '../../rest/data/er-godkjent';
 
 const TEN_SECONDS = 10000;
 
@@ -39,7 +37,7 @@ export function EndreUtkastSide() {
 		const malformType = hentMalformFraData(malform);
 
 		setLagringStatus(SkjemaLagringStatus.LAGRER);
-		fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo({ vedtakId: hentId(utkast), skjema, malform: malformType }))
+		fetchOppdaterVedtakUtkast({ vedtakId: hentId(utkast), skjema, malform: malformType })
 			.then(() => {
 				setLagringStatus(SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET);
 				setSistOppdatert(new Date().toISOString());
@@ -97,10 +95,9 @@ export function EndreUtkastSide() {
 		    */
 
 			pollUtkastGodkjentIntervalRef.current = setInterval(() => {
-				fetchWithInfo(lagErUtkastGodkjentFetchInfo({ vedtakId: utkast.id}))
-					.then((res) => res.json())
-					.then((data: ErGodkjent) => {
-						if (data.erGodkjent) {
+				fetchErUtkastGodkjent(utkast.id)
+					.then(response => {
+						if (response.data && response.data.erGodkjent) {
 							setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);
 						}
 					});

@@ -1,62 +1,68 @@
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { useDataFetcherStore } from '../stores/data-fetcher-store';
-import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../rest/utils';
+import { hasAnyFailed, isAnyNotStartedOrPending, } from '../rest/utils';
 import Spinner from './spinner/spinner';
+import { useFetchArenaVedtak, useFetchFattedeVedtak, useFetchInnloggetVeileder, useFetchMalform, useFetchOppfolging, useFetchUtkast } from '../rest/api';
+import { useDataStore } from '../stores/data-store';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
-	const {
-		oppfolgingDataFetcher, featuresFetcher, malformFetcher,
-		utkastFetcher, fattedeVedtakFetcher,
-		innloggetVeilederFetcher, arenaVedtakFetcher
-	} = useDataFetcherStore();
+    const fattedeVedtakState = useFetchFattedeVedtak(props.fnr);
+    const oppfolgingDataState = useFetchOppfolging(props.fnr);
+    const malformDataState = useFetchMalform(props.fnr);
+    const utkastState = useFetchUtkast(props.fnr);
+    const innloggetVeilederState = useFetchInnloggetVeileder();
+    const arenaVedtakState = useFetchArenaVedtak(props.fnr);
 
-	useEffect(() => {
-		/*
-		 Hent utkast, men ikke sjekk om det er fullført eller feilet for å gå videre.
-		 Dette blir håndtert i hovedside.tsx
-		 */
-		if (isNotStarted(utkastFetcher)) {
-			utkastFetcher.fetch({ fnr: props.fnr });
-		}
+    const fetchResponsePromises = [
+        fattedeVedtakState,
+        oppfolgingDataState,
+        malformDataState,
+        utkastState,
+        innloggetVeilederState,
+        arenaVedtakState
+    ];
 
-		if (isNotStarted(fattedeVedtakFetcher)) {
-			fattedeVedtakFetcher.fetch({ fnr: props.fnr });
-		}
+    const {
+        setFattedeVedtak,
+        setOppfolgingData,
+        setMalform,
+        setUtkast,
+        setInnloggetVeileder,
+        setArenaVedtak,
+    } = useDataStore();
 
-		if (isNotStarted(arenaVedtakFetcher)) {
-			arenaVedtakFetcher.fetch({ fnr: props.fnr });
-		}
+    useEffect(() => {
+        if (fattedeVedtakState.data) {
+            setFattedeVedtak(fattedeVedtakState.data);
+        }
+        if (oppfolgingDataState.data) {
+            setOppfolgingData(oppfolgingDataState.data);
+        }
+        if (malformDataState.data) {
+            setMalform(malformDataState.data);
+        }
+        if (utkastState.data) {
+            setUtkast(utkastState.data);
+        }
+        if (innloggetVeilederState.data) {
+            setInnloggetVeileder(innloggetVeilederState.data);
+        }
+        if (arenaVedtakState.data) {
+            setArenaVedtak(arenaVedtakState.data);
+        }
+    // eslint-disable-next-line
+    }, fetchResponsePromises);
 
-		if (isNotStarted(oppfolgingDataFetcher)) {
-			oppfolgingDataFetcher.fetch({ fnr: props.fnr });
-		}
+    if (isAnyNotStartedOrPending(fetchResponsePromises)) {
+        return <Spinner/>;
+    } else if (hasAnyFailed(fetchResponsePromises)) {
+        return (
+            <AlertStripeFeil className="vedtaksstotte-alert">
+                Det oppnås for tiden ikke kontakt med alle baksystemer.
+                Vi jobber med å løse saken. Vennligst prøv igjen senere.
+            </AlertStripeFeil>
+        );
+    }
 
-		if (isNotStarted(malformFetcher)) {
-			malformFetcher.fetch({ fnr: props.fnr });
-		}
-
-		if (isNotStarted(featuresFetcher)) {
-			featuresFetcher.fetch(null);
-		}
-
-		if (isNotStarted(innloggetVeilederFetcher)) {
-			innloggetVeilederFetcher.fetch(null);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [utkastFetcher, fattedeVedtakFetcher, oppfolgingDataFetcher, malformFetcher, featuresFetcher]);
-
-	// Vi trenger ikke å vente på at utkastet skal bli hentet
-	if (isAnyNotStartedOrPending([fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher, arenaVedtakFetcher])) {
-		return <Spinner />;
-	} else if (hasAnyFailed([fattedeVedtakFetcher, malformFetcher, oppfolgingDataFetcher, featuresFetcher, innloggetVeilederFetcher])) {
-		return (
-			<AlertStripeFeil className="vedtaksstotte-alert">
-				Det oppnås for tiden ikke kontakt med alle baksystemer.
-				Vi jobber med å løse saken. Vennligst prøv igjen senere.
-			</AlertStripeFeil>
-		);
-	}
-
-	return props.children;
+    return props.children;
 }

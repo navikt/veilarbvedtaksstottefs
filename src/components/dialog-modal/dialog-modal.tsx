@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './dialog-modal.less'
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useDataStore } from '../../stores/data-store';
 import { formatTime, sortDatesAsc } from '../../utils/date-utils';
-import { FetchStatus, hasFinishedWithData, isNotStarted } from '../../rest/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { MeldingListe } from './melding-liste/melding-liste';
 import Show from '../show';
@@ -13,6 +11,7 @@ import dialogIkon from './dialog.svg';
 import lukkIkon from './lukk.svg';
 import ImageButton from '../image-button/image-button';
 import { hentId } from '../../utils';
+import { fetchMeldinger } from '../../rest/api';
 
 interface DialogModalProps {
 	open: boolean;
@@ -22,9 +21,9 @@ interface DialogModalProps {
 const TEN_SECONDS = 10000;
 
 export const DialogModal = (props: DialogModalProps) => {
-	const { meldingFetcher } = useDataFetcherStore();
-	const { meldinger, innloggetVeileder, utkast } = useDataStore();
+	const { meldinger, setMeldinger, innloggetVeileder, utkast } = useDataStore();
 	const [sistOppdatert, setSistOppdatert] = useState<Date>(new Date());
+	const [harLastetMeldinger, setHarLastetMeldinger] = useState(false);
 
 	const intervalRef = useRef<number>();
 
@@ -33,7 +32,16 @@ export const DialogModal = (props: DialogModalProps) => {
 	}, [meldinger]);
 
 	function refreshMeldinger() {
-		meldingFetcher.fetch({ vedtakId: hentId(utkast) });
+		fetchMeldinger(hentId(utkast))
+			.then(response => {
+				if (response.data) {
+					setMeldinger(response.data);
+					setSistOppdatert(new Date());
+				}
+			})
+			.finally(() => {
+				setHarLastetMeldinger(true);
+			});
 	}
 
 	function clearAutoRefresh() {
@@ -57,14 +65,9 @@ export const DialogModal = (props: DialogModalProps) => {
 	}, [props.open]);
 
 	useEffect(() => {
-		if (isNotStarted(meldingFetcher)) {
-			// Dette blir plukket opp av DialogMeldingerSync
 			refreshMeldinger();
-		} else if (hasFinishedWithData(meldingFetcher)) {
-			setSistOppdatert(new Date());
-		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [meldingFetcher.status]);
+	}, []);
 
 	if (!props.open) {
 		return null;
@@ -91,7 +94,7 @@ export const DialogModal = (props: DialogModalProps) => {
 			</div>
 			<div className="meldinger">
 				<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
-				<Show if={meldingFetcher.status === FetchStatus.PENDING && sorterteMeldinger.length === 0}>
+				<Show if={!harLastetMeldinger && sorterteMeldinger.length === 0}>
 					<Spinner />
 				</Show>
 			</div>

@@ -8,7 +8,7 @@ import { Veileder } from '../rest/data/veiledere';
 import { DialogMelding as DialogMeldingData, SystemMelding as SystemMeldingData } from '../rest/data/melding';
 import { MeldingType, SystemMeldingType } from '../utils/types/melding-type';
 
-// Data med placeholder er garantert av datafetcher.ts å være hentet
+// Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
 const placeholder = {} as any;
 
 export const useDataStore = createUseContext(() => {

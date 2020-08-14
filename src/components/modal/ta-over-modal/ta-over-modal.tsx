@@ -8,8 +8,7 @@ import Show from '../../show';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { fetchWithInfo } from '../../../rest/utils';
-import { lagBliBeslutterFetchInfo, lagTaOverUtkastFetchInfo } from '../../../rest/api';
+import { fetchBliBeslutter, fetchTaOverUtkast } from '../../../rest/api';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
 import './ta-over-modal.less';
@@ -52,13 +51,13 @@ function TaOverModal(props: ModalProps) {
 	const visValg = erBeslutterProsessStartet(utkast.beslutterProsessStatus) && utkast.beslutterNavn != null;
 
 	function handleTaOverVedtak() {
-		const fetchInfo = taOverFor === TaOverFor.BESLUTTER
-			? lagBliBeslutterFetchInfo({vedtakId: hentId(utkast)})
-			: lagTaOverUtkastFetchInfo({vedtakId: hentId(utkast)});
-
 		setLaster(true);
 
-		fetchWithInfo(fetchInfo)
+		const taOverResponse = taOverFor === TaOverFor.BESLUTTER
+			? fetchBliBeslutter(hentId(utkast))
+			: fetchTaOverUtkast(hentId(utkast));
+
+		taOverResponse
 			.then(() => {
 				const navn = innloggetVeileder.navn;
 				const ident = innloggetVeileder.ident;

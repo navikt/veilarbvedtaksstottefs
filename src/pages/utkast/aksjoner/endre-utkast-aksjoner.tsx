@@ -3,32 +3,14 @@ import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import dialogIkon from './dialog.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { fetchWithInfo } from '../../../rest/utils';
 import { ReactComponent as SlettIkon } from './delete.svg';
-import {
-	lagOppdaterBeslutterProsessStatusFetchInfo,
-	lagOppdaterVedtakUtkastFetchInfo,
-	lagStartBeslutterProsessFetchInfo
-} from '../../../rest/api';
+import { fetchOppdaterBeslutterProsessStatus, fetchOppdaterVedtakUtkast, fetchStartBeslutterProsess } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import {
-	harFeil,
-	hentMalformFraData,
-	scrollTilForsteFeil,
-	SkjemaData,
-	trengerBeslutter
-} from '../../../utils/skjema-utils';
+import { harFeil, hentMalformFraData, scrollTilForsteFeil, SkjemaData, trengerBeslutter } from '../../../utils/skjema-utils';
 import Show from '../../../components/show';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import {
-	erBeslutterProsessStartet,
-	erGodkjentAvBeslutter,
-	erKlarTilVeileder,
-	finnGjeldendeVedtak,
-	isNothing,
-	mapSkjemaLagringStatusTilTekst
-} from '../../../utils';
+import { erBeslutterProsessStartet, erGodkjentAvBeslutter, erKlarTilVeileder, finnGjeldendeVedtak, isNothing, mapSkjemaLagringStatusTilTekst } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus, Vedtak } from '../../../rest/data/vedtak';
@@ -71,7 +53,7 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 	function sendDataTilBackend() {
 		// Vi oppdaterer ikke lagringStatus her fordi det blir rart at dette trigges på en "urelatert" handling
 		const params = {vedtakId: utkastId, skjema: props.vedtakskjema, malform: hentMalformFraData(malform)};
-		return fetchWithInfo(lagOppdaterVedtakUtkastFetchInfo(params))
+		return fetchOppdaterVedtakUtkast(params)
 			.catch(() => {
 				setLaster(false);
 				showModal(ModalType.FEIL_VED_LAGRING);
@@ -100,7 +82,7 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 		setLaster(true);
 		sendDataTilBackend()
 			.then(() => {
-				fetchWithInfo(lagStartBeslutterProsessFetchInfo({vedtakId: utkastId}))
+				fetchStartBeslutterProsess(utkastId)
 					.then(() => {
 						fokuserPaDialogSidebarTab();
 						setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
@@ -120,7 +102,7 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 	function handleOnKlarTilClicked() {
 		setLaster(true);
 
-		fetchWithInfo(lagOppdaterBeslutterProsessStatusFetchInfo({vedtakId: utkastId}))
+		fetchOppdaterBeslutterProsessStatus(utkastId)
 			.then(() => {
 				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 			})

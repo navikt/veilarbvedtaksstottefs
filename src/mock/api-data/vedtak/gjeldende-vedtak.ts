@@ -1,6 +1,6 @@
 import { HovedmalType, InnsatsgruppeType, Vedtak, VedtakStatus } from '../../../rest/data/vedtak';
 import { JSONObject } from 'yet-another-fetch-mock';
-import { ansvarligVeileder } from '../../personer';
+import { veileder1 } from '../../veiledere-mock';
 import { enhetId, enhetNavn } from '../../konstanter';
 
 const gjeldendeVedtak: Vedtak & JSONObject = {
@@ -13,8 +13,8 @@ const gjeldendeVedtak: Vedtak & JSONObject = {
 		'herps derps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derpsherps derps',
 	gjeldende: true,
 	opplysninger: [],
-	veilederNavn: ansvarligVeileder.navn,
-	veilederIdent: ansvarligVeileder.ident,
+	veilederNavn: veileder1.navn,
+	veilederIdent: veileder1.ident,
 	oppfolgingsenhetId: enhetId,
 	oppfolgingsenhetNavn: enhetNavn,
 	beslutterIdent: null,

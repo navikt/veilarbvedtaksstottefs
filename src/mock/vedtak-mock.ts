@@ -3,7 +3,6 @@ import { BeslutterProsessStatus, Vedtak, VedtakStatus } from '../rest/data/vedta
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
 import historisk from './api-data/vedtak/tidligere-vedtak';
-import { ansvarligVeileder, beslutter } from './personer';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
 import { VEILARBVEDTAKSSTOTTE_API } from '../rest/api';
 import { fjernAlleMockMeldinger, leggTilMockSystemMelding } from './meldinger-mock';
@@ -41,8 +40,8 @@ export const mockLagUtkast: Mock = {
 			sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 			gjeldende: false,
 			opplysninger: [],
-			veilederNavn: ansvarligVeileder.navn,
-			veilederIdent: ansvarligVeileder.ident,
+			veilederNavn: innloggetVeileder.navn,
+			veilederIdent: innloggetVeileder.ident,
 			oppfolgingsenhetId: enhetId,
 			oppfolgingsenhetNavn: enhetNavn,
 			beslutterNavn: null,
@@ -180,7 +179,7 @@ export const mockOppdaterBeslutterProsessStatus: Mock = {
 	handler: async (): Promise<ResponseData> => {
 		if (!vedtakUtkast) throw new Error('Fant ikke utkast å oppdatere status på');
 
-		const erBeslutter = vedtakUtkast.beslutterIdent === beslutter.ident;
+		const erBeslutter = vedtakUtkast.beslutterIdent === innloggetVeileder.ident;
 
 		vedtakUtkast.beslutterProsessStatus = erBeslutter
 			? BeslutterProsessStatus.KLAR_TIL_VEILEDER

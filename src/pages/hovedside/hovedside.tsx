@@ -4,20 +4,15 @@ import { UtkastPanel } from '../../components/panel/utkast/utkast-panel';
 import { GjeldendeVedtakPanel } from '../../components/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
 import { NyttVedtakPanel } from '../../components/panel/nytt-vedtak/nytt-vedtak-panel';
 import Page from '../../components/page/page';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { IngenTidligereVedtakPanel } from '../../components/panel/ingen-tidligere-vedtak/ingen-tidligere-vedtak-panel';
 import { IngenGjeldendeVedtakPanel } from '../../components/panel/ingen-gjeldende-vedtak/ingen-gjeldende-vedtak';
 import Show from '../../components/show';
 import { Vedtak, VedtakStatus } from '../../rest/data/vedtak';
-import { hasFailed, isNotStartedOrPending } from '../../rest/utils';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { VedtakFraArenaListe } from '../../components/vedtak-fra-arena-liste/vedtak-fra-arena-liste';
 import './hovedside.less';
 import { useDataStore } from '../../stores/data-store';
-import Spinner from '../../components/spinner/spinner';
 
 export function Hovedside() {
-	const { arenaVedtakFetcher, utkastFetcher } = useDataFetcherStore();
 	const { fattedeVedtak, utkast, arenaVedtak, oppfolgingData } = useDataStore();
 
 	const underOppfolging = oppfolgingData.underOppfolging;
@@ -28,17 +23,8 @@ export function Hovedside() {
 
 	const harTidligereVedtak = vedtakFraArena.length > 0 || tidligereVedtak.length > 0;
 
-	if (isNotStartedOrPending(utkastFetcher)) {
-		return <Spinner />;
-	}
-
 	return (
 		<Page>
-			<Show if={hasFailed(arenaVedtakFetcher)}>
-				<AlertStripeFeil className="hovedside__feil-arena-vedtak">
-					Klarte ikke å hente oppfølgingsvedtak fra Arena
-				</AlertStripeFeil>
-			</Show>
 			<div className="hovedside">
 				<div className="hovedside__vedtak-paneler">
 					<Show if={!underOppfolging}>

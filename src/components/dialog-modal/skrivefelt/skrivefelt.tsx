@@ -1,10 +1,8 @@
-import React, { ChangeEvent, useState, KeyboardEvent, useRef } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import sendIkon from './send.svg';
-import { fetchWithInfo } from '../../../rest/utils';
-import { lagSendDialogFetchInfo } from '../../../rest/api';
+import { fetchMeldinger, fetchSendDialog } from '../../../rest/api';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import './skrivefelt.less';
 import ImageButton from '../../image-button/image-button';
 import { useDataStore } from '../../../stores/data-store';
@@ -14,8 +12,7 @@ let midlertidigMelding = '';
 
 export const Skrivefelt = () => {
 	const { showModal } = useModalStore();
-	const { utkast } = useDataStore();
-	const { meldingFetcher } = useDataFetcherStore();
+	const { utkast, setMeldinger} = useDataStore();
 
 	const [melding, setMelding] = useState(midlertidigMelding);
 	const [senderMelding, setSenderMelding] = useState(false);
@@ -37,19 +34,21 @@ export const Skrivefelt = () => {
 	function sendMelding() {
 		setSenderMelding(true);
 
-		fetchWithInfo(lagSendDialogFetchInfo({ vedtakId: hentId(utkast), melding }))
-			.then(() => {
-				meldingFetcher.fetch({ vedtakId: hentId(utkast) }, () => {
-					oppdaterMelding('');
-					setSenderMelding(false);
-					if (skrivefeltRef.current) {
-						skrivefeltRef.current.focus();
-					}
-				});
-			}).catch(() => {
+		fetchSendDialog({vedtakId: hentId(utkast), melding})
+			.then(() => fetchMeldinger(hentId(utkast)))
+			.then(response => {
+				if (response.data) {
+					setMeldinger(response.data);
+				}
+				oppdaterMelding('');
+				if (skrivefeltRef.current) {
+					skrivefeltRef.current.focus();
+				}
+			})
+			.catch(() => {
 				showModal(ModalType.FEIL_VED_UTSENDING_AV_DIALOG_MELDING);
-				setSenderMelding(false);
-			});
+			})
+			.finally(() => setSenderMelding(false));
 	}
 
 	function handleOnMeldingChanged(e: ChangeEvent<HTMLInputElement>) {
