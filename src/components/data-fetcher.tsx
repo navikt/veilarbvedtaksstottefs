@@ -5,6 +5,8 @@ import Spinner from './spinner/spinner';
 import { useFetchArenaVedtak, useFetchFattedeVedtak, useFetchInnloggetVeileder, useFetchMalform, useFetchOppfolging, useFetchUtkast } from '../rest/api';
 import { useDataStore } from '../stores/data-store';
 import { useSkjemaStore } from '../stores/skjema-store';
+import { finnVeilederTilgang } from '../utils/tilgang';
+import { useTilgangStore } from '../stores/tilgang-store';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
     const {initSkjema} = useSkjemaStore();
@@ -16,6 +18,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
         setInnloggetVeileder,
         setArenaVedtak,
     } = useDataStore();
+    const { setVeilederTilgang } = useTilgangStore();
 
     const fattedeVedtakState = useFetchFattedeVedtak(props.fnr);
     const oppfolgingDataState = useFetchOppfolging(props.fnr);
@@ -45,7 +48,6 @@ export function DataFetcher(props: { fnr: string; children: any }) {
             setMalform(malformDataState.data);
         }
         if (utkastState.data) {
-            console.log('data-fetcher', utkastState.data)
             setUtkast(utkastState.data);
             initSkjema(utkastState.data);
         }
@@ -54,6 +56,9 @@ export function DataFetcher(props: { fnr: string; children: any }) {
         }
         if (arenaVedtakState.data) {
             setArenaVedtak(arenaVedtakState.data);
+        }
+        if(innloggetVeilederState.data && !utkastState.isLoading) {
+            setVeilederTilgang(finnVeilederTilgang(innloggetVeilederState.data, utkastState.data));
         }
     // eslint-disable-next-line
     }, fetchResponseStates);

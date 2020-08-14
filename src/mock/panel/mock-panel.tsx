@@ -7,6 +7,8 @@ import { useDataStore } from '../../stores/data-store';
 import { veiledere } from '../veiledere-mock';
 import { Veileder } from '../../rest/data/veiledere';
 import { updateInnloggetVeilederMock } from '../api-data/innlogget-veileder';
+import { useTilgangStore } from '../../stores/tilgang-store';
+import { finnVeilederTilgang } from '../../utils/tilgang';
 
 export function MockPanel() {
 
@@ -26,11 +28,13 @@ export function MockPanel() {
 }
 
 function InnloggetSom() {
-    const {innloggetVeileder, setInnloggetVeileder} = useDataStore();
+    const {innloggetVeileder, setInnloggetVeileder, utkast} = useDataStore();
+    const { setVeilederTilgang } = useTilgangStore();
 
     function change(veileder: Veileder) {
         updateInnloggetVeilederMock(veileder);
         setInnloggetVeileder(veileder);
+        setVeilederTilgang(finnVeilederTilgang(veileder, utkast));
     }
 
     return (<fieldset>
