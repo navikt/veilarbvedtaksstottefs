@@ -5,7 +5,6 @@ import { useViewStore } from './view-store';
 import { useModalStore } from './modal-store';
 import { useSkjemaStore } from './skjema-store';
 import { useTilgangStore } from './tilgang-store';
-import { SkjemaStoreSync } from './sync/skjema-store-sync';
 import { TilgangStoreSync } from './sync/tilgang-store-sync';
 
 interface StoreProviderProps {
@@ -23,7 +22,6 @@ const StoreProvider = (props: StoreProviderProps) => {
 							<useModalStore.Provider>
 								<useSkjemaStore.Provider>
 									{props.children}
-									<SkjemaStoreSync />
 									<TilgangStoreSync />
 								</useSkjemaStore.Provider>
 							</useModalStore.Provider>

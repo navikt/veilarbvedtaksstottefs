@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import createUseContext from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
-import { validerBegrunnelseMaxLength, validerSkjema as valider } from '../utils/skjema-utils';
+import { mapOpplysningerFraForskjelligMalformTilBokmal, validerBegrunnelseMaxLength, validerSkjema as valider } from '../utils/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { SkjemaLagringStatus } from '../utils/types/skjema-lagring-status';
@@ -27,8 +27,9 @@ export const useSkjemaStore = createUseContext(() => {
 	};
 
 	const initSkjema = (utkast: Vedtak) => {
+		const mappetOpplysninger = mapOpplysningerFraForskjelligMalformTilBokmal(utkast.opplysninger);
 		setHovedmal(utkast.hovedmal);
-		setOpplysninger(utkast.opplysninger);
+		setOpplysninger(mappetOpplysninger);
 		setInnsatsgruppe(utkast.innsatsgruppe);
 		setBegrunnelse(utkast.begrunnelse);
 		setSistOppdatert(utkast.sistOppdatert);
