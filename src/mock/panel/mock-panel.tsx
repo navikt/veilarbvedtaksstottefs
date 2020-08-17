@@ -9,6 +9,7 @@ import { Veileder } from '../../rest/data/veiledere';
 import { updateInnloggetVeilederMock } from '../api-data/innlogget-veileder';
 import { useTilgangStore } from '../../stores/tilgang-store';
 import { finnVeilederTilgang } from '../../utils/tilgang';
+import Lenke from 'nav-frontend-lenker';
 
 export function MockPanel() {
 
@@ -23,6 +24,7 @@ export function MockPanel() {
             </button>
             <Lukknapp onClick={toggle}/>
             <InnloggetSom/>
+            <BeslutteroversiktLenke/>
         </div>
     );
 }
@@ -55,5 +57,11 @@ function InnloggetSom() {
                 checked={veileder.ident === innloggetVeileder.ident}
             />
         )}
+    </fieldset>);
+}
+
+function BeslutteroversiktLenke() {
+    return (<fieldset>
+        <Lenke href={'https://navikt.github.io/beslutteroversikt/'} target="_blank">Til beslutteroversikt</Lenke>
     </fieldset>);
 }
