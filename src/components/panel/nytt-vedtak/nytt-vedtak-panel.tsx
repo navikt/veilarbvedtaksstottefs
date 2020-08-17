@@ -12,11 +12,14 @@ import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
 import { useDataStore } from '../../../stores/data-store';
 import './nytt-vedtak-panel.less';
 import { useSkjemaStore } from '../../../stores/skjema-store';
+import { VeilederTilgang } from '../../../utils/tilgang';
+import { useTilgangStore } from '../../../stores/tilgang-store';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
-	const { oppfolgingData, setMeldinger, setUtkast } = useDataStore();
+	const { oppfolgingData, setMeldinger, setUtkast, innloggetVeileder } = useDataStore();
+	const { setVeilederTilgang } = useTilgangStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
 	const {initSkjema} = useSkjemaStore();
@@ -29,9 +32,11 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 				if (!fetchResponse.data) {
 					throw Error('Fant ikke utkast');
 				}
-				setUtkast(fetchResponse.data);
+				const nyttUtkast = fetchResponse.data;
+				setUtkast(nyttUtkast);
 				// overskriv gammel evt. gammel data
-				initSkjema(fetchResponse.data);
+				initSkjema(nyttUtkast);
+				setVeilederTilgang(VeilederTilgang.ANSVARLIG_VEILEDER);
 				setMeldinger([]); // Rydd opp hvis det ligger gamle meldinger mellomlagret
 				hideModal();
 				changeView(ViewType.UTKAST);
