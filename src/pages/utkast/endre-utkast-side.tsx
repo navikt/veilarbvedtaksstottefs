@@ -17,11 +17,12 @@ import Opplysninger from './skjema/opplysninger/opplysninger';
 import Begrunnelse from './skjema/begrunnelse/begrunnelse';
 import Innsatsgruppe from './skjema/innsatsgruppe/innsatsgruppe';
 import Hovedmal from './skjema/hovedmal/hovedmal';
+import { SKRU_AV_POLLING_UTKAST } from '../../rest/data/features';
 
 const TEN_SECONDS = 10000;
 
 export function EndreUtkastSide() {
-	const { fattedeVedtak, malform, utkast, setBeslutterProsessStatus } = useDataStore();
+	const { fattedeVedtak, malform, utkast, setBeslutterProsessStatus, features } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert,
@@ -74,7 +75,7 @@ export function EndreUtkastSide() {
 	}, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
 
 	useEffect(() => {
-		if (!utkast) {
+		if (!utkast || features[SKRU_AV_POLLING_UTKAST]) {
 			return;
 		}
 

@@ -15,12 +15,13 @@ import { useViewStore, ViewType } from '../../stores/view-store';
 import { OrNothing } from '../../utils/types/ornothing';
 import { fetchFattedeVedtak, fetchUtkast } from '../../rest/api';
 import { useSkjemaStore } from '../../stores/skjema-store';
+import { SKRU_AV_POLLING_UTKAST } from '../../rest/data/features';
 
 const TEN_SECONDS = 10000;
 
 export function LesUtkastSide() {
 	const {fnr} = useAppStore();
-	const {utkast, setUtkast, setFattedeVedtak} = useDataStore();
+	const {utkast, setUtkast, setFattedeVedtak, features} = useDataStore();
 	const {changeView} = useViewStore();
 	const {erBeslutter} = useTilgangStore();
 	const {initSkjema} = useSkjemaStore();
@@ -31,7 +32,7 @@ export function LesUtkastSide() {
 			Hvis beslutterprosessen har startet og innlogget bruker er beslutter så skal vi periodisk hente
 			det nyeste utkastet slik at man ikke må refreshe manuelt når ansvarlig veileder gjør en endring
 		 */
-		if (utkast && utkast.beslutterProsessStatus != null && erBeslutter) {
+		if (utkast && !features[SKRU_AV_POLLING_UTKAST] && utkast.beslutterProsessStatus != null && erBeslutter) {
 			refreshUtkastIntervalRef.current = setInterval(() => {
 				fetchUtkast(fnr).then(response => {
 					if (response.data) {
