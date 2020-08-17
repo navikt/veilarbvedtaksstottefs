@@ -18,7 +18,10 @@ export const mockHentUtkast: Mock = {
 	method: 'GET',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
 	handler: async (): Promise<ResponseData> => {
-		return { body: JSON.stringify(vedtakUtkast) };
+		if (vedtakUtkast) {
+			return { body: JSON.stringify(vedtakUtkast) };
+		}
+		return { status: 404 };
 	}
 };
 

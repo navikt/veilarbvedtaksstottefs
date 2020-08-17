@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { hasAnyFailed, isAnyNotStartedOrPending, } from '../rest/utils';
+import { hasAnyFailed, isAnyLoading, } from '../rest/utils';
 import Spinner from './spinner/spinner';
 import { useFetchArenaVedtak, useFetchFattedeVedtak, useFetchInnloggetVeileder, useFetchMalform, useFetchOppfolging, useFetchUtkast } from '../rest/api';
 import { useDataStore } from '../stores/data-store';
@@ -27,16 +27,6 @@ export function DataFetcher(props: { fnr: string; children: any }) {
     const innloggetVeilederState = useFetchInnloggetVeileder();
     const arenaVedtakState = useFetchArenaVedtak(props.fnr);
 
-    const fetchResponseStates = [
-        fattedeVedtakState,
-        oppfolgingDataState,
-        malformDataState,
-        utkastState,
-        innloggetVeilederState,
-        arenaVedtakState
-    ];
-
-
     useEffect(() => {
         if (fattedeVedtakState.data) {
             setFattedeVedtak(fattedeVedtakState.data);
@@ -61,11 +51,17 @@ export function DataFetcher(props: { fnr: string; children: any }) {
             setVeilederTilgang(finnVeilederTilgang(innloggetVeilederState.data, utkastState.data));
         }
     // eslint-disable-next-line
-    }, fetchResponseStates);
+    }, [fattedeVedtakState, oppfolgingDataState, malformDataState, utkastState, innloggetVeilederState, arenaVedtakState]);
 
-    if (isAnyNotStartedOrPending(fetchResponseStates)) {
+    if (isAnyLoading([
+        fattedeVedtakState, oppfolgingDataState, malformDataState, utkastState, innloggetVeilederState, arenaVedtakState
+    ])) {
         return <Spinner/>;
-    } else if (hasAnyFailed(fetchResponseStates)) {
+    } else if (hasAnyFailed([
+        fattedeVedtakState, oppfolgingDataState, malformDataState, innloggetVeilederState, arenaVedtakState
+    ]) ||
+        // API gir 404 dersom utkast ikke eksisterer
+        (utkastState.error && utkastState.error.status !== 404)) {
         return (
             <AlertStripeFeil className="vedtaksstotte-alert">
                 Det oppnås for tiden ikke kontakt med alle baksystemer.
