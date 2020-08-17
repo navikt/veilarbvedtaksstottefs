@@ -18,7 +18,7 @@ import { useTilgangStore } from '../../../stores/tilgang-store';
 export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
-	const { oppfolgingData, setMeldinger, setUtkast, innloggetVeileder } = useDataStore();
+	const { oppfolgingData, setMeldinger, setUtkast } = useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
