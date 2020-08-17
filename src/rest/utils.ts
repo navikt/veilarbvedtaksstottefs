@@ -70,7 +70,7 @@ export const hasAnyFailed = (state: UseFetchState<any> | Array<UseFetchState<any
 	return state.error !== undefined;
 }
 
-export const isAnyNotStartedOrPending = (state: UseFetchState<any> | Array<UseFetchState<any>>): boolean => {
+export const isAnyLoading = (state: UseFetchState<any> | Array<UseFetchState<any>>): boolean => {
 	if (Array.isArray(state)) {
 		return state.some(s => s.isLoading);
 	}
