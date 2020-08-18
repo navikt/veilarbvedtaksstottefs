@@ -8,7 +8,7 @@ import Oppfolging from './data/oppfolging-data';
 import { DialogMelding, SystemMelding } from './data/melding';
 import { Oyblikksbilde } from '../utils/types/oyblikksbilde';
 import TilgangTilBrukersKontor from '../utils/types/tilgang-til-brukers-kontor';
-import { ErGodkjent } from './data/er-godkjent';
+import { BeslutterprosessStatusData } from './data/beslutterprosess-status-data';
 
 export interface SendDialogPayload {
 	vedtakId: number;
@@ -123,8 +123,8 @@ export const fetchSlettUtkast = (vedtakId: number): Promise<Response> => {
 	});
 };
 
-export const fetchErUtkastGodkjent = (vedtakId: number): Promise<FetchResponse<ErGodkjent>> => {
-	return fetchJson(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/erGodkjent`, {credentials});
+export const fetchBeslutterprosessStatus = (vedtakId: number): Promise<FetchResponse<BeslutterprosessStatusData>> => {
+	return fetchJson(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/beslutterprosessStatus`, {credentials});
 };
 
 export const fetchTaOverUtkast = (vedtakId: number): Promise<Response> => {

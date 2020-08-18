@@ -3,7 +3,7 @@ import debounce from 'lodash.debounce';
 import { hentMalformFraData, SkjemaData } from '../../utils/skjema-utils';
 import UtkastSkjema from './skjema/utkast-skjema';
 import Footer from '../../components/footer/footer';
-import { fetchErUtkastGodkjent, fetchOppdaterVedtakUtkast } from '../../rest/api';
+import { fetchBeslutterprosessStatus, fetchOppdaterVedtakUtkast } from '../../rest/api';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { erBeslutterProsessStartet, erGodkjentAvBeslutter, finnGjeldendeVedtak, hentId } from '../../utils';
@@ -96,10 +96,10 @@ export function EndreUtkastSide() {
 		    */
 
 			pollUtkastGodkjentIntervalRef.current = setInterval(() => {
-				fetchErUtkastGodkjent(utkast.id)
+				fetchBeslutterprosessStatus(utkast.id)
 					.then(response => {
-						if (response.data && response.data.erGodkjent) {
-							setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);
+						if (response.data && response.data.status) {
+							setBeslutterProsessStatus(response.data.status);
 						}
 					});
 			}, TEN_SECONDS) as unknown as number;
