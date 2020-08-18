@@ -12,6 +12,7 @@ import lukkIkon from './lukk.svg';
 import ImageButton from '../image-button/image-button';
 import { hentId } from '../../utils';
 import { fetchMeldinger } from '../../rest/api';
+import { SKRU_AV_POLLING_DIALOG } from '../../rest/data/features';
 
 interface DialogModalProps {
 	open: boolean;
@@ -21,7 +22,7 @@ interface DialogModalProps {
 const TEN_SECONDS = 10000;
 
 export const DialogModal = (props: DialogModalProps) => {
-	const { meldinger, setMeldinger, innloggetVeileder, utkast } = useDataStore();
+	const { meldinger, setMeldinger, innloggetVeileder, utkast, features } = useDataStore();
 	const [sistOppdatert, setSistOppdatert] = useState<Date>(new Date());
 	const [harLastetMeldinger, setHarLastetMeldinger] = useState(false);
 
@@ -52,7 +53,7 @@ export const DialogModal = (props: DialogModalProps) => {
 	}
 
 	useEffect(() => {
-		if (props.open && intervalRef.current === undefined) {
+		if (props.open && !features[SKRU_AV_POLLING_DIALOG] && intervalRef.current === undefined) {
 			intervalRef.current = setInterval(refreshMeldinger, TEN_SECONDS) as unknown as number;
 			// NodeJs types are being used instead of browser types so we have to override
 			// Maybe remove @types/node?
