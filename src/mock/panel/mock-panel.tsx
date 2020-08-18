@@ -10,6 +10,8 @@ import { updateInnloggetVeilederMock } from '../api-data/innlogget-veileder';
 import { useTilgangStore } from '../../stores/tilgang-store';
 import { finnVeilederTilgang } from '../../utils/tilgang';
 import Lenke from 'nav-frontend-lenker';
+import { oppdaterVedtakUtkastMockFraSkjema, vedtakUtkastMock } from '../vedtak-mock';
+import { useSkjemaStore } from '../../stores/skjema-store';
 
 export function MockPanel() {
 
@@ -30,13 +32,15 @@ export function MockPanel() {
 }
 
 function InnloggetSom() {
-    const {innloggetVeileder, setInnloggetVeileder, utkast} = useDataStore();
+    const {innloggetVeileder, setInnloggetVeileder, setUtkast} = useDataStore();
     const { setVeilederTilgang } = useTilgangStore();
-
+    const skjemaData  = useSkjemaStore();
     function change(veileder: Veileder) {
+        oppdaterVedtakUtkastMockFraSkjema(skjemaData)
+        setUtkast(vedtakUtkastMock);
         updateInnloggetVeilederMock(veileder);
         setInnloggetVeileder(veileder);
-        setVeilederTilgang(finnVeilederTilgang(veileder, utkast));
+        setVeilederTilgang(finnVeilederTilgang(veileder, vedtakUtkastMock));
     }
 
     return (<fieldset>
