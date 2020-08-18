@@ -90,13 +90,16 @@ export function EndreUtkastSide() {
 		const erGodkjent = erGodkjentAvBeslutter(utkast.beslutterProsessStatus);
 		const erHosBeslutter = erKlarTilBeslutter(utkast.beslutterProsessStatus);
 
+		/*
+            Hvis beslutterprosessen har startet og innlogget bruker er ansvarlig veileder så skal vi periodisk hente
+            status for beslutterprosessen, slik at handlinger kan utføres av veileder ved endringer fra beslutter, uten refresh av siden:
+                - hvis beslutter har satt utkastet tilbake til veileder, så kan veileder sette utkastet tilbake til beslutter
+                - hvis beslutter har godkjent utkastet, så kan veileder sende vedtaket
+
+            Polling skjer kun dersom utkastet er hos beslutter, så dersom utkastet er hos veileder og beslutter godkjenner, så vil ikke
+            statusen bli oppdatert av pollingen.
+        */
 		if (erStartet && !erGodkjent && erHosBeslutter) {
-			/*
-				Hvis beslutterprosessen har startet og innlogget bruker er ansvarlig veileder så skal vi periodisk hente
-				status for beslutterprosessen, slik at handlinger kan utføres av veileder ved endringer fra beslutter, uten refresh av siden:
-					- hvis beslutter har satt utkastet tilbake til veileder, så kan veileder sette utkastet tilbake til beslutter
-					- hvis beslutter har godkjent utkastet, så kan veileder sende vedtaket
-		    */
 
 			pollBeslutterstatusIntervalRef.current = setInterval(() => {
 				fetchBeslutterprosessStatus(utkast.id)
