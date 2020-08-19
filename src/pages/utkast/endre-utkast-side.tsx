@@ -3,12 +3,12 @@ import debounce from 'lodash.debounce';
 import { hentMalformFraData, SkjemaData } from '../../utils/skjema-utils';
 import UtkastSkjema from './skjema/utkast-skjema';
 import Footer from '../../components/footer/footer';
-import { fetchErUtkastGodkjent, fetchOppdaterVedtakUtkast } from '../../rest/api';
+import { fetchBeslutterprosessStatus, fetchOppdaterVedtakUtkast } from '../../rest/api';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { erBeslutterProsessStartet, erGodkjentAvBeslutter, finnGjeldendeVedtak, hentId } from '../../utils';
+import { erBeslutterProsessStartet, erGodkjentAvBeslutter, erKlarTilBeslutter, finnGjeldendeVedtak, hentId } from '../../utils';
 import { useIsAfterFirstRender } from '../../utils/hooks';
-import { BeslutterProsessStatus, Vedtak } from '../../rest/data/vedtak';
+import { Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
@@ -30,7 +30,7 @@ export function EndreUtkastSide() {
 		setLagringStatus
 	} = useSkjemaStore();
 
-	const pollUtkastGodkjentIntervalRef = useRef<number>();
+	const pollBeslutterstatusIntervalRef = useRef<number>();
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 	const isAfterFirstRender = useIsAfterFirstRender();
 
@@ -80,26 +80,32 @@ export function EndreUtkastSide() {
 		}
 
 		const stopPolling = () => {
-			if (pollUtkastGodkjentIntervalRef.current) {
-				clearInterval(pollUtkastGodkjentIntervalRef.current);
-				pollUtkastGodkjentIntervalRef.current = undefined;
+			if (pollBeslutterstatusIntervalRef.current) {
+				clearInterval(pollBeslutterstatusIntervalRef.current);
+				pollBeslutterstatusIntervalRef.current = undefined;
 			}
 		};
 
 		const erStartet = erBeslutterProsessStartet(utkast.beslutterProsessStatus);
 		const erGodkjent = erGodkjentAvBeslutter(utkast.beslutterProsessStatus);
+		const erHosBeslutter = erKlarTilBeslutter(utkast.beslutterProsessStatus);
 
-		if (erStartet && !erGodkjent) {
-			/*
-				Hvis beslutterprosessen har startet og innlogget bruker er ansvarlig veileder så skal vi periodisk hente
-				om utkastet har blitt godkjent slik at bruker kan sende uten å refreshe
-		    */
+		/*
+            Hvis beslutterprosessen har startet og innlogget bruker er ansvarlig veileder så skal vi periodisk hente
+            status for beslutterprosessen, slik at handlinger kan utføres av veileder ved endringer fra beslutter, uten refresh av siden:
+                - hvis beslutter har satt utkastet tilbake til veileder, så kan veileder sette utkastet tilbake til beslutter
+                - hvis beslutter har godkjent utkastet, så kan veileder sende vedtaket
 
-			pollUtkastGodkjentIntervalRef.current = setInterval(() => {
-				fetchErUtkastGodkjent(utkast.id)
+            Polling skjer kun dersom utkastet er hos beslutter, så dersom utkastet er hos veileder og beslutter godkjenner, så vil ikke
+            statusen bli oppdatert av pollingen.
+        */
+		if (erStartet && !erGodkjent && erHosBeslutter) {
+
+			pollBeslutterstatusIntervalRef.current = setInterval(() => {
+				fetchBeslutterprosessStatus(utkast.id)
 					.then(response => {
-						if (response.data && response.data.erGodkjent) {
-							setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);
+						if (response.data && response.data.status) {
+							setBeslutterProsessStatus(response.data.status);
 						}
 					});
 			}, TEN_SECONDS) as unknown as number;

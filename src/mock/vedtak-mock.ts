@@ -130,9 +130,9 @@ export const mockOvertaUtkast: Mock = {
 
 export const mockErUtkastGodkjent: Mock = {
 	method: 'GET',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/erGodkjent`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/beslutterprosessStatus`,
 	handler: async (): Promise<ResponseData> => {
-		const data = {erGodkjent: vedtakUtkastMock && vedtakUtkastMock.beslutterProsessStatus === BeslutterProsessStatus.GODKJENT_AV_BESLUTTER};
+		const data = {status: vedtakUtkastMock ? vedtakUtkastMock.beslutterProsessStatus : null};
 		return { status: 200, body: JSON.stringify(data) };
 	}
 };
