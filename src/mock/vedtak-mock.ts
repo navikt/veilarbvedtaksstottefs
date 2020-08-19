@@ -192,6 +192,12 @@ export const mockOppdaterBeslutterProsessStatus: Mock = {
 			? BeslutterProsessStatus.KLAR_TIL_VEILEDER
 			: BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
 
+		leggTilMockSystemMelding(
+			erBeslutter
+				? SystemMeldingType.SENDT_TIL_VEILEDER
+				: SystemMeldingType.SENDT_TIL_BESLUTTER
+		);
+
 		return { status: 204 };
 	}
 };
