@@ -1,6 +1,9 @@
 import { OrNothing } from '../../utils/types/ornothing';
 
-type VedtakStatus = 'UTKAST' | 'SENDT';
+export enum VedtakStatus {
+	UTKAST = 'UTKAST',
+	SENDT = 'SENDT'
+}
 
 export enum InnsatsgruppeType {
 	STANDARD_INNSATS = 'STANDARD_INNSATS',

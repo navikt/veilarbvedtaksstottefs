@@ -11,7 +11,7 @@ import './skjema-visning.less';
 import { getHovedmalNavn } from '../../utils/hovedmal';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 
-export function SkjemaVisning(props: { vedtak: Vedtak }) {
+export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
 	const {
 		id, hovedmal, opplysninger,
@@ -19,7 +19,7 @@ export function SkjemaVisning(props: { vedtak: Vedtak }) {
 		beslutterNavn, gjeldende,
 		veilederNavn, oppfolgingsenhetNavn,
 		oppfolgingsenhetId, sistOppdatert
-	} = props.vedtak;
+	} = props.fattetVedtak;
 
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
 	const fattetAv = `${veilederNavn}, ${oppfolgingsenhetId} ${oppfolgingsenhetNavn}`;

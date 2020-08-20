@@ -6,15 +6,18 @@ import malform from './api-data/malform';
 import vedtakFraArena from './api-data/arena-vedtak';
 import FetchMock, { MiddlewareUtils } from 'yet-another-fetch-mock';
 import {
-	mockHentVedtak,
+	mockBliBeslutter,
+	mockErUtkastGodkjent,
+	mockFattVedtak,
+	mockGodkjennVedtak,
+	mockHentFattedeVedtak,
+	mockHentUtkast,
 	mockLagUtkast,
+	mockOppdaterBeslutterProsessStatus,
 	mockOppdaterUtkast,
 	mockOvertaUtkast,
-	mockSendVedtak,
 	mockSlettUtkast,
-	mockKlarTilBeslutter,
-	mockBliBeslutter,
-	mockGodkjennVedtak, mockOppdaterBeslutterProsessStatus
+	mockStartBeslutterprosess
 } from './vedtak-mock';
 import { addToFetchMock } from './mock-utils';
 import { mockHentDialoger, mockSendDialogMelding } from './meldinger-mock';
@@ -25,21 +28,23 @@ const fetchMock = FetchMock.configure({
 	middleware: MiddlewareUtils.combine(MiddlewareUtils.delayMiddleware(500), MiddlewareUtils.loggingMiddleware())
 });
 
-addToFetchMock(mockHentVedtak, fetchMock);
+addToFetchMock(mockHentUtkast, fetchMock);
+addToFetchMock(mockHentFattedeVedtak, fetchMock);
 addToFetchMock(mockOppdaterUtkast, fetchMock);
 addToFetchMock(mockSlettUtkast, fetchMock);
 addToFetchMock(mockLagUtkast, fetchMock);
-addToFetchMock(mockSendVedtak, fetchMock);
+addToFetchMock(mockFattVedtak, fetchMock);
 addToFetchMock(mockOvertaUtkast, fetchMock);
-addToFetchMock(mockKlarTilBeslutter, fetchMock);
+addToFetchMock(mockErUtkastGodkjent, fetchMock);
+addToFetchMock(mockStartBeslutterprosess, fetchMock);
 addToFetchMock(mockBliBeslutter, fetchMock);
 addToFetchMock(mockGodkjennVedtak, fetchMock);
 addToFetchMock(mockHentDialoger, fetchMock);
 addToFetchMock(mockSendDialogMelding, fetchMock);
 addToFetchMock(mockOppdaterBeslutterProsessStatus, fetchMock);
 
-fetchMock.get('/veilarbvedtaksstotte/api/:fnr/vedtakFraArena', vedtakFraArena);
-fetchMock.get('/veilarbvedtaksstotte/api/:fnr/oyeblikksbilde/:vedtakId', vedlegg);
+fetchMock.get('/veilarbvedtaksstotte/api/vedtak/arena', vedtakFraArena);
+fetchMock.get('/veilarbvedtaksstotte/api/vedtak/:vedtakId/oyeblikksbilde', vedlegg);
 fetchMock.get('/veilarbpersonflatefs/api/feature', features);
 fetchMock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', tilgangTilBrukersKontor);
 fetchMock.get('/veilarboppfolging/api/oppfolging', oppfolgingData);

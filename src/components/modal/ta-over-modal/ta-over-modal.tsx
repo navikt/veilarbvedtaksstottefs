@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { ModalProps } from '../modal-props';
 import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { erBeslutterProsessStartet, finnUtkast } from '../../../utils';
-import { useAppStore } from '../../../stores/app-store';
+import { erBeslutterProsessStartet, hentId } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import Show from '../../show';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { fetchWithInfo } from '../../../rest/utils';
-import { lagBliBeslutterFetchInfo, lagTaOverUtkastFetchInfo } from '../../../rest/api';
+import { fetchBliBeslutter, fetchTaOverUtkast } from '../../../rest/api';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
 import './ta-over-modal.less';
@@ -38,16 +36,13 @@ function mapTaOverForTilTekst(taOverFor: TaOverFor): string {
 }
 
 function TaOverModal(props: ModalProps) {
-	const {fnr} = useAppStore();
 	const {hideModal, showModal} = useModalStore();
 	const {setVeilederTilgang} = useTilgangStore();
-	const {vedtak, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilSystemMelding} = useDataStore();
+	const {utkast, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilSystemMelding} = useDataStore();
 
 	const [taOverFor, setTaOverFor] = useState<TaOverFor>();
 	const [vedtakOvertatt, setVedtakOvertatt] = useState(false);
 	const [laster, setLaster] = useState(false);
-
-	const utkast = finnUtkast(vedtak);
 
 	if (!utkast) {
 		return null;
@@ -56,13 +51,13 @@ function TaOverModal(props: ModalProps) {
 	const visValg = erBeslutterProsessStartet(utkast.beslutterProsessStatus) && utkast.beslutterNavn != null;
 
 	function handleTaOverVedtak() {
-		const fetchInfo = taOverFor === TaOverFor.BESLUTTER
-			? lagBliBeslutterFetchInfo({fnr})
-			: lagTaOverUtkastFetchInfo({fnr});
-
 		setLaster(true);
 
-		fetchWithInfo(fetchInfo)
+		const taOverResponse = taOverFor === TaOverFor.BESLUTTER
+			? fetchBliBeslutter(hentId(utkast))
+			: fetchTaOverUtkast(hentId(utkast));
+
+		taOverResponse
 			.then(() => {
 				const navn = innloggetVeileder.navn;
 				const ident = innloggetVeileder.ident;

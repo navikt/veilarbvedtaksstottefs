@@ -1,11 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './dialog-modal.less'
-import { useAppStore } from '../../stores/app-store';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useDataStore } from '../../stores/data-store';
-import { formatTime, sortDatesAsc } from '../../utils/date-utils';
-import { FetchStatus, hasFinishedWithData, isNotStarted } from '../../rest/utils';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { sortDatesAsc } from '../../utils/date-utils';
+import { Element } from 'nav-frontend-typografi';
 import { MeldingListe } from './melding-liste/melding-liste';
 import Show from '../show';
 import Spinner from '../spinner/spinner';
@@ -13,6 +10,9 @@ import { Skrivefelt } from './skrivefelt/skrivefelt';
 import dialogIkon from './dialog.svg';
 import lukkIkon from './lukk.svg';
 import ImageButton from '../image-button/image-button';
+import { hentId } from '../../utils';
+import { fetchMeldinger } from '../../rest/api';
+import { SKRU_AV_POLLING_DIALOG } from '../../rest/data/features';
 
 interface DialogModalProps {
 	open: boolean;
@@ -22,10 +22,9 @@ interface DialogModalProps {
 const TEN_SECONDS = 10000;
 
 export const DialogModal = (props: DialogModalProps) => {
-	const { fnr } = useAppStore();
-	const { meldingFetcher } = useDataFetcherStore();
-	const { meldinger, innloggetVeileder } = useDataStore();
-	const [sistOppdatert, setSistOppdatert] = useState<Date>(new Date());
+	const { meldinger, setMeldinger, innloggetVeileder, utkast, features } = useDataStore();
+	const [harLastetMeldinger, setHarLastetMeldinger] = useState(false);
+
 	const intervalRef = useRef<number>();
 
 	const sorterteMeldinger = useMemo(() => {
@@ -33,7 +32,15 @@ export const DialogModal = (props: DialogModalProps) => {
 	}, [meldinger]);
 
 	function refreshMeldinger() {
-		meldingFetcher.fetch({ fnr });
+		fetchMeldinger(hentId(utkast))
+			.then(response => {
+				if (response.data) {
+					setMeldinger(response.data);
+				}
+			})
+			.finally(() => {
+				setHarLastetMeldinger(true);
+			});
 	}
 
 	function clearAutoRefresh() {
@@ -44,7 +51,7 @@ export const DialogModal = (props: DialogModalProps) => {
 	}
 
 	useEffect(() => {
-		if (props.open && intervalRef.current === undefined) {
+		if (props.open && !features[SKRU_AV_POLLING_DIALOG] && intervalRef.current === undefined) {
 			intervalRef.current = setInterval(refreshMeldinger, TEN_SECONDS) as unknown as number;
 			// NodeJs types are being used instead of browser types so we have to override
 			// Maybe remove @types/node?
@@ -57,14 +64,9 @@ export const DialogModal = (props: DialogModalProps) => {
 	}, [props.open]);
 
 	useEffect(() => {
-		if (isNotStarted(meldingFetcher)) {
-			// Dette blir plukket opp av DialogMeldingerSync
 			refreshMeldinger();
-		} else if (hasFinishedWithData(meldingFetcher)) {
-			setSistOppdatert(new Date());
-		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [meldingFetcher.status]);
+	}, []);
 
 	if (!props.open) {
 		return null;
@@ -76,7 +78,6 @@ export const DialogModal = (props: DialogModalProps) => {
 				<div className="dialog-modal__header-tittel">
 					<img src={dialogIkon} alt="Snakkebobler" className="dialog-modal__header-ikon" />
 					<Element>Kvalitetsikring av vedtak</Element>
-					<Normaltekst style={{marginLeft: '1rem'}}>Oppdatert: {formatTime(sistOppdatert)}</Normaltekst>
 				</div>
 
 				<div className="dialog-modal__header-aksjoner">
@@ -91,7 +92,7 @@ export const DialogModal = (props: DialogModalProps) => {
 			</div>
 			<div className="meldinger">
 				<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
-				<Show if={meldingFetcher.status === FetchStatus.PENDING && sorterteMeldinger.length === 0}>
+				<Show if={!harLastetMeldinger && sorterteMeldinger.length === 0}>
 					<Spinner />
 				</Show>
 			</div>

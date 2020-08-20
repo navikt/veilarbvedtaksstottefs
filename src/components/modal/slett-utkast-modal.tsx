@@ -5,29 +5,26 @@ import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ModalProps } from './modal-props';
 import { ModalType, useModalStore } from '../../stores/modal-store';
-import { fetchWithInfo } from '../../rest/utils';
-import { lagSlettUtkastFetchInfo } from '../../rest/api';
-import { useAppStore } from '../../stores/app-store';
+import { fetchSlettUtkast } from '../../rest/api';
 import { useViewStore, ViewType } from '../../stores/view-store';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
+import { useDataStore } from '../../stores/data-store';
+import { hentId } from '../../utils';
 
 function SlettUtkastModal(props: ModalProps) {
-	const { fnr } = useAppStore();
 	const { hideModal, showModal } = useModalStore();
-	const { vedtakFetcher } = useDataFetcherStore();
+	const { utkast, setUtkast } = useDataStore();
 	const { changeView } = useViewStore();
 	const { resetSkjema } = useSkjemaStore();
 
 	function handleOnDeleteClicked() {
 		showModal(ModalType.LASTER);
-		fetchWithInfo(lagSlettUtkastFetchInfo({ fnr }))
+		fetchSlettUtkast(hentId(utkast))
 			.then(() => {
-				vedtakFetcher.fetch({ fnr }, () => {
-					resetSkjema();
-					hideModal();
-					changeView(ViewType.HOVEDSIDE);
-				});
+				resetSkjema();
+				hideModal();
+				changeView(ViewType.HOVEDSIDE);
+				setUtkast(null);
 			})
 			.catch(() => {
 				showModal(ModalType.FEIL_VED_SLETTING);

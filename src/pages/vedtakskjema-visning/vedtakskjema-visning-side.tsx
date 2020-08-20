@@ -1,6 +1,6 @@
 import React from 'react';
 import { Vedtak } from '../../rest/data/vedtak';
-import Page from '../page/page';
+import Page from '../../components/page/page';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
@@ -10,9 +10,9 @@ import { useDataStore } from '../../stores/data-store';
 import './vedtakskjema-visning-side.less';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
-	const {vedtak} = useDataStore();
+	const {fattedeVedtak} = useDataStore();
 	const {changeView} = useViewStore();
-	const vistVedtak = vedtak.find((v: Vedtak) => v.id === props.vedtakId);
+	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
 	if (!vistVedtak) {
 		return <AlertStripeFeil>Fant ikke vedtak å fremvise</AlertStripeFeil>;
@@ -21,14 +21,20 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	return (
 		<>
 			<Page className="vedtakskjema-visning page--white">
-				<SkjemaVisning vedtak={vistVedtak}/>
+				<SkjemaVisning fattetVedtak={vistVedtak}/>
 			</Page>
 			<Footer>
 				<div className="vedtakskjema-visning__aksjoner">
 					<Hovedknapp
 						mini={true}
-						onClick={() => changeView(ViewType.VEDTAK_PDF, {vedtakId: vistVedtak.id})}
-					>
+						onClick={() => changeView(
+							ViewType.VEDTAK_PDF,
+							{
+								vedtakId: vistVedtak.id,
+								dokumentInfoId: vistVedtak.dokumentInfoId,
+								journalpostId: vistVedtak.journalpostId
+							}
+						)}>
 						Vis vedtaksbrev
 					</Hovedknapp>
 					<Knapp mini={true} onClick={() => changeView(ViewType.HOVEDSIDE)}>

@@ -4,40 +4,42 @@ import PdfViewer, { PDFStatus } from '../../components/pdf-viewer/pdf-viewer';
 import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
-import { trengerBeslutter } from '../../components/utkast-skjema/skjema-utils';
+import { trengerBeslutter } from '../../utils/skjema-utils';
 import { frontendlogger } from '../../utils/frontend-logger';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
-import { lagHentForhandsvisningUrl, lagSendVedtakFetchInfo } from '../../rest/api';
-import { fetchWithInfo } from '../../rest/utils';
+import { fetchFattedeVedtak, fetchFattVedtak, lagHentForhandsvisningUrl } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { erGodkjentAvBeslutter, finnUtkastAlltid } from '../../utils';
+import { erGodkjentAvBeslutter } from '../../utils';
 import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import Show from '../../components/show';
 import { useTilgangStore } from '../../stores/tilgang-store';
 import { useDataStore } from '../../stores/data-store';
 import './forhandsvisning.less';
+import { Vedtak } from '../../rest/data/vedtak';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { vedtakFetcher } = useDataFetcherStore();
-	const { vedtak, features } = useDataStore();
+	const { utkast, setUtkast, features, setFattedeVedtak } = useDataStore();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
-
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
+
+	const {
+		id: utkastId,
+		beslutterProsessStatus
+	} = utkast as Vedtak;
+
 	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
 	const url = env.isProduction
-		? lagHentForhandsvisningUrl(fnr)
+		? lagHentForhandsvisningUrl(utkastId)
 		: getMockVedtaksbrevUrl();
 
-	const utkast = finnUtkastAlltid(vedtak);
 	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
-		? erGodkjentAvBeslutter(utkast.beslutterProsessStatus)
+		? erGodkjentAvBeslutter(beslutterProsessStatus)
 		: true;
 
 	const tilbakeTilSkjema = () => {
@@ -52,21 +54,29 @@ export function Forhandsvisning() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pdfStatus]);
 
-
 	const sendVedtak = () => {
 		showModal(ModalType.LASTER);
 
-		fetchWithInfo(lagSendVedtakFetchInfo({ fnr }))
-			.then(() => {
-                resetSkjema();
-				vedtakFetcher.fetch({ fnr }, () => {
-					changeView(ViewType.HOVEDSIDE);
-					showModal(ModalType.VEDTAK_SENT_SUKSESS);
-				});
-			})
+		fetchFattVedtak(utkastId)
 			.catch(err => {
 				showModal(ModalType.FEIL_VED_SENDING);
 				frontendlogger.logMetrikk('feil-ved-sending', err);
+				throw err;
+			})
+			.then(() => {
+				return fetchFattedeVedtak(fnr)
+					.then(fattedeVedtak => {
+						if (fattedeVedtak.data) {
+							setFattedeVedtak(fattedeVedtak.data);
+						}
+					})
+					// Feiler ikke selv om fattede vedtak ikke oppdateres
+					.finally(() => {
+						resetSkjema();
+						changeView(ViewType.HOVEDSIDE);
+						showModal(ModalType.VEDTAK_SENT_SUKSESS);
+						setUtkast(null);
+					});
 			});
 	};
 

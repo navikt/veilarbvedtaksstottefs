@@ -8,10 +8,14 @@
 		z-index: 5;
 
 		width: 450px;
-		height: 850px;
+		height: 80vh;
 		background-color: white;
 		border: 1px solid @navGra40;
 		border-radius: 4px;
+
+		@media(min-height: 1000px) {
+			height: 850px;
+		}
 
 		display: flex;
 		flex-direction: column;

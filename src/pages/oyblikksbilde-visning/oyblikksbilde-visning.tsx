@@ -5,15 +5,12 @@ import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
 import Card from '../../components/card/card';
 import { OrNothing } from '../../utils/types/ornothing';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
-import Page from '../page/page';
+import Page from '../../components/page/page';
 import OyblikksbildeType from '../../utils/types/oyblikksbilde-type';
 import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import useFetch from '../../rest/use-fetch';
-import { HentOyblikksbildeFetchParams, lagHentOyblikksbildeFetchInfo } from '../../rest/api';
-import { hasFailed, isNotStarted, isNotStartedOrPending } from '../../rest/utils';
-import { useAppStore } from '../../stores/app-store';
+import { useFetchOyblikksbilde } from '../../rest/api';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
 import './oyblikksbilde-visning.less';
@@ -25,34 +22,35 @@ function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder:
 }
 
 export function OyblikksbildeVisning(props: { vedtakId: number }) {
-	const { fnr } = useAppStore();
-	const { changeView } = useViewStore();
-	const oyblikksbilder = useFetch<Oyblikksbilde[], HentOyblikksbildeFetchParams>(lagHentOyblikksbildeFetchInfo);
+	const oyeblikksbildePromise = useFetchOyblikksbilde(props.vedtakId);
 
 	useEffect(() => {
 		frontendlogger.logMetrikk('vis-oyblikksbilde');
-		if (isNotStarted(oyblikksbilder)) {
-			oyblikksbilder.fetch({ fnr, vedtakId: props.vedtakId });
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		// eslint-disable-next-line
+	}, [props.vedtakId]);
 
-	if (isNotStartedOrPending(oyblikksbilder)) {
-		return <Spinner />;
-	} else if (hasFailed(oyblikksbilder)) {
+	if (oyeblikksbildePromise.isLoading) {
+		return <Spinner/>;
+	} else if (oyeblikksbildePromise.error) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 
+	return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={oyeblikksbildePromise.data}/>;
+}
+
+function Oyeblikksbilde(props: {vedtakId: number, oyeblikksbilde: OrNothing<Oyblikksbilde[]>}) {
+	const { changeView } = useViewStore();
+
 	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
-		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, oyblikksbilder.data)
+		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, props.oyeblikksbilde)
 	);
 
 	const registreringsinfoJson = fiksRegistreringsinfoJson(
-		finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, oyblikksbilder.data)
+		finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, props.oyeblikksbilde)
 	);
 
 	const egenvurderingJson = fiksEgenvurderingJson(
-		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, oyblikksbilder.data)
+		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, props.oyeblikksbilde)
 	);
 
 	return (

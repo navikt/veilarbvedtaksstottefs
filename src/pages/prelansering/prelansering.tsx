@@ -1,5 +1,5 @@
 import React from 'react';
-import Page from '../page/page';
+import Page from '../../components/page/page';
 import PrelanseringInfo from './prelansering-info';
 import { LosningInfo } from './losning-info/losning-info';
 import { PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../../rest/data/features';

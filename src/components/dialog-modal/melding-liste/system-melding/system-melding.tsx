@@ -22,6 +22,10 @@ function lagSystemMelding(type: SystemMeldingType, utfortAvNavn: string) {
 			return <span>Kvalitetsikret av <strong>{utfortAvNavn}</strong></span>;
 		case SystemMeldingType.UTKAST_OPPRETTET :
 			return <span><strong>{utfortAvNavn}</strong> opprettet utkast</span>;
+		case SystemMeldingType.SENDT_TIL_VEILEDER :
+			return 'Trenger respons fra veileder';
+		case SystemMeldingType.SENDT_TIL_BESLUTTER :
+			return 'Trenger tilbakemelding fra beslutter';
 		default :
 			return null;
 	}
