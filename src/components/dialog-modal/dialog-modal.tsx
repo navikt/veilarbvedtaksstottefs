@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import './dialog-modal.less'
 import { useDataStore } from '../../stores/data-store';
-import { formatTime, sortDatesAsc } from '../../utils/date-utils';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { sortDatesAsc } from '../../utils/date-utils';
+import { Element } from 'nav-frontend-typografi';
 import { MeldingListe } from './melding-liste/melding-liste';
 import Show from '../show';
 import Spinner from '../spinner/spinner';
@@ -23,7 +23,6 @@ const TEN_SECONDS = 10000;
 
 export const DialogModal = (props: DialogModalProps) => {
 	const { meldinger, setMeldinger, innloggetVeileder, utkast, features } = useDataStore();
-	const [sistOppdatert, setSistOppdatert] = useState<Date>(new Date());
 	const [harLastetMeldinger, setHarLastetMeldinger] = useState(false);
 
 	const intervalRef = useRef<number>();
@@ -37,7 +36,6 @@ export const DialogModal = (props: DialogModalProps) => {
 			.then(response => {
 				if (response.data) {
 					setMeldinger(response.data);
-					setSistOppdatert(new Date());
 				}
 			})
 			.finally(() => {
@@ -80,7 +78,6 @@ export const DialogModal = (props: DialogModalProps) => {
 				<div className="dialog-modal__header-tittel">
 					<img src={dialogIkon} alt="Snakkebobler" className="dialog-modal__header-ikon" />
 					<Element>Kvalitetsikring av vedtak</Element>
-					<Normaltekst style={{marginLeft: '1rem'}}>Oppdatert: {formatTime(sistOppdatert)}</Normaltekst>
 				</div>
 
 				<div className="dialog-modal__header-aksjoner">
