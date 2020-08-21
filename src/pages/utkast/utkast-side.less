@@ -11,10 +11,87 @@
 		&__form {
 			padding: 3.5rem 5rem 0 5rem;
 		}
+	}
 
-		&__visning {
-			padding: 3.5rem 5rem 0 5rem;
+	.les-utkast-side {
+
+		.utkast-side__visning {
+			padding: 3.5rem 5rem 2rem 5rem;
 		}
+
+		.les-utkast__kilder {
+			margin-top: 0;
+		}
+
+		.kilder-liste {
+			padding-left: 0;
+		}
+
+		.kilder-liste__item {
+			display: flex;
+			align-items: center;
+
+			padding: 1rem;
+
+			list-style: none;
+
+			&:first-child {
+				border-top: 1px solid @navGra40;
+			}
+
+			border-bottom: 1px solid @navGra40;
+		}
+
+		.kilder-liste__item-icon {
+			width: 24px;
+			height: 24px;
+			margin-right: 1.5rem;
+		}
+
+		.begrunnelse__tekstomrade-wrapper {
+			padding: 2rem 1rem;
+			border-top: 1px solid @navGra40;
+			border-bottom: 1px solid @navGra40;
+		}
+
+		.begrunnelse__tekstomrade {
+			padding-left: 1rem;
+			color: #615147;
+			border-left: 4px solid @navGra20;
+		}
+
+		.begrunnelse__tegnteller {
+			margin-top: 0.5rem;
+
+			display: flex;
+			justify-content: flex-end;
+		}
+
+		.begrunnelse__tegnteller-tekst {
+			color: @navGra60;
+		}
+
+		.checkbox-visning__content {
+			display: inline-block;
+		}
+
+		.checkbox-visning {
+			display: inline-flex;
+			justify-content: flex-start;
+
+			min-width: 400px;
+
+			padding: 1rem 2rem 1rem 1rem;
+			border: 1px solid @navGra60;
+			border-radius: 0.25rem;
+		}
+
+		.checkbox-visning__icon {
+			width: 24px;
+			height: 24px;
+			margin-right: 1rem;
+		}
+
 	}
 
 }
