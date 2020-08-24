@@ -12,7 +12,7 @@ import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { erGodkjentAvBeslutter } from '../../utils';
-import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
+import { lagMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import Show from '../../components/show';
 import { useTilgangStore } from '../../stores/tilgang-store';
 import { useDataStore } from '../../stores/data-store';
@@ -24,19 +24,16 @@ export function Forhandsvisning() {
 	const { changeView } = useViewStore();
 	const { utkast, setUtkast, features, setFattedeVedtak } = useDataStore();
 	const { showModal } = useModalStore();
-	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
+	const { innsatsgruppe, hovedmal, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
-	const {
-		id: utkastId,
-		beslutterProsessStatus
-	} = utkast as Vedtak;
+	const {id: utkastId, beslutterProsessStatus} = utkast as Vedtak;
 
 	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
 	const url = env.isProduction
 		? lagHentForhandsvisningUrl(utkastId)
-		: getMockVedtaksbrevUrl();
+		: lagMockVedtaksbrevUrl(innsatsgruppe, hovedmal);
 
 	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
 		? erGodkjentAvBeslutter(beslutterProsessStatus)

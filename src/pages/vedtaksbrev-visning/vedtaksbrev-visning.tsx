@@ -7,19 +7,32 @@ import { frontendlogger } from '../../utils/frontend-logger';
 import { lagHentArenaVedtakPdfUrl, lagHentVedtakPdfUrl } from '../../rest/api';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { ModalType, useModalStore } from '../../stores/modal-store';
-import { getMockVedtaksbrevUrl } from '../../mock/mock-utils';
+import { lagMockArenabrevUrl, lagMockVedtaksbrevUrl } from '../../mock/mock-utils';
 import './vedtaksbrev-visning.less';
+import { useDataStore } from '../../stores/data-store';
+import { Vedtak } from '../../rest/data/vedtak';
 
 interface VedtaksbrevVisningProps {
 	vedtakId: number;
 }
 
+function lagMockUrl(fattedeVedtak: Vedtak[], vedtakId: number): string {
+	const vistVedtak = fattedeVedtak.find(v => v.id === vedtakId) as Vedtak;
+	return lagMockVedtaksbrevUrl(vistVedtak.innsatsgruppe, vistVedtak.hovedmal);
+}
+
 export function VedtaksbrevVisning(props: VedtaksbrevVisningProps) {
     const { changeView } = useViewStore();
+    const { fattedeVedtak } = useDataStore();
+
+    const vedtaksbrevUrl = env.isProduction
+	    ? lagHentVedtakPdfUrl(props.vedtakId)
+	    : lagMockUrl(fattedeVedtak, props.vedtakId);
+
     return (
         <>
             <GenericVedtaksbrevVisning
-                vedtaksbrevUrl={lagHentVedtakPdfUrl(props.vedtakId)}
+                vedtaksbrevUrl={vedtaksbrevUrl}
                 tilbakeTekst="Tilbake  til vedtak"
                 handleOnTilbakeClicked={ () => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}
             />
@@ -33,14 +46,18 @@ interface ArenaVedtaksbrevVisningProps {
 
 export function ArenaVedtaksbrevVisning(props: ArenaVedtaksbrevVisningProps) {
 	const { changeView } = useViewStore();
+
+	const vedtaksbrevUrl = env.isProduction
+		? lagHentArenaVedtakPdfUrl(props.dokumentInfoId, props.journalpostId)
+		: lagMockArenabrevUrl();
+
 	return (
-		<>
-			<GenericVedtaksbrevVisning
-				vedtaksbrevUrl={lagHentArenaVedtakPdfUrl(props.dokumentInfoId, props.journalpostId)}
-				tilbakeTekst="Tilbake til hovedside"
-				handleOnTilbakeClicked={ () => changeView(ViewType.HOVEDSIDE)}
-			/>
-		</>);
+		<GenericVedtaksbrevVisning
+			vedtaksbrevUrl={vedtaksbrevUrl}
+			tilbakeTekst="Tilbake til hovedside"
+			handleOnTilbakeClicked={ () => changeView(ViewType.HOVEDSIDE)}
+		/>
+	);
 }
 
 interface GenericVedtaksbrevVisningProps {
@@ -53,10 +70,6 @@ function GenericVedtaksbrevVisning(props: GenericVedtaksbrevVisningProps) {
 	const { showModal } = useModalStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
-	const url = env.isProduction
-		? props.vedtaksbrevUrl
-		: getMockVedtaksbrevUrl();
-
 	useEffect(() => frontendlogger.logMetrikk('vis-vedtaksbrev'), []);
 
 	useEffect(() => {
@@ -68,7 +81,7 @@ function GenericVedtaksbrevVisning(props: GenericVedtaksbrevVisningProps) {
 
 	return (
 		<>
-			<PdfViewer url={url} title="Visning av vedtaksbrev" onStatusUpdate={setPdfStatus} />
+			<PdfViewer url={props.vedtaksbrevUrl} title="Visning av vedtaksbrev" onStatusUpdate={setPdfStatus} />
 			<Footer>
 				<div className="vedtaksbrev-visning__aksjoner">
 					<Hovedknapp mini={true} onClick={props.handleOnTilbakeClicked}>
