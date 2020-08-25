@@ -31,11 +31,14 @@ export function lagMockArenabrevUrl() {
 }
 
 export function lagMockVedtaksbrevUrl(innsatsgruppe: OrNothing<InnsatsgruppeType>, hovedmal: OrNothing<HovedmalType>): string {
+	const basePath = getContextPath() +  '/test-brev/';
+
 	if (!innsatsgruppe) {
-		throw new Error('Kan ikke lage mock vedtaksbrev url uten innsatsgruppe');
+		// Default brev
+		return basePath + mapInnsatsgruppeOgHovedmalTilTestbrevNavn(InnsatsgruppeType.STANDARD_INNSATS, HovedmalType.SKAFFE_ARBEID);
 	}
 
-	return getContextPath() +  '/test-brev/' + mapInnsatsgruppeOgHovedmalTilTestbrevNavn(innsatsgruppe, hovedmal);
+	return basePath + mapInnsatsgruppeOgHovedmalTilTestbrevNavn(innsatsgruppe, hovedmal);
 }
 
 function getContextPath() {
