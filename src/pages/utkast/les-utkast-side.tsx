@@ -104,9 +104,13 @@ export function LesUtkastSide() {
 					</SkjemaBolk>
 
 					<SkjemaBolk tittel="Hovedmål">
-						<CheckboxVisning>
-							<Normaltekst>{getHovedmalNavn(hovedmal)}</Normaltekst>
-						</CheckboxVisning>
+						{hovedmal ? (
+							<CheckboxVisning>
+								<Normaltekst>{getHovedmalNavn(hovedmal)}</Normaltekst>
+							</CheckboxVisning>
+						) : (
+							<Normaltekst>Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt arbeidsevne)</Normaltekst>
+						)}
 					</SkjemaBolk>
 				</div>
 			</UtkastSkjema>
