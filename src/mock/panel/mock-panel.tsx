@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { RadioPanel } from 'nav-frontend-skjema';
 import Lukknapp from 'nav-frontend-lukknapp';
-import './mock-panel.less';
 import { useDataStore } from '../../stores/data-store';
 import { veiledere } from '../veiledere-mock';
 import { Veileder } from '../../rest/data/veiledere';
@@ -12,6 +11,7 @@ import { finnVeilederTilgang } from '../../utils/tilgang';
 import Lenke from 'nav-frontend-lenker';
 import { oppdaterVedtakUtkastMockFraSkjema, vedtakUtkastMock } from '../vedtak-mock';
 import { useSkjemaStore } from '../../stores/skjema-store';
+import './mock-panel.less';
 
 export function MockPanel() {
 
@@ -35,37 +35,42 @@ function InnloggetSom() {
     const {innloggetVeileder, setInnloggetVeileder, setUtkast} = useDataStore();
     const { setVeilederTilgang } = useTilgangStore();
     const skjemaData  = useSkjemaStore();
+
     function change(veileder: Veileder) {
-        oppdaterVedtakUtkastMockFraSkjema(skjemaData)
+        oppdaterVedtakUtkastMockFraSkjema(skjemaData);
         setUtkast(vedtakUtkastMock);
         updateInnloggetVeilederMock(veileder);
         setInnloggetVeileder(veileder);
         setVeilederTilgang(finnVeilederTilgang(veileder, vedtakUtkastMock));
     }
 
-    return (<fieldset>
-        <legend>
-            <Normaltekst>
-                Innlogget som
-            </Normaltekst>
-        </legend>
-        {veiledere.map((veileder, idx) =>
-            <RadioPanel
-                onChange={() => {
-                    change(veileder);
-                }}
-                key={idx}
-                name={veileder.navn}
-                label={veileder.navn}
-                value={veileder.navn}
-                checked={veileder.ident === innloggetVeileder.ident}
-            />
-        )}
-    </fieldset>);
+    return (
+        <fieldset>
+            <legend>
+                <Normaltekst>
+                    Innlogget som
+                </Normaltekst>
+            </legend>
+            {veiledere.map((veileder, idx) =>
+                <RadioPanel
+                    onChange={() => {
+                        change(veileder);
+                    }}
+                    key={idx}
+                    name={veileder.navn}
+                    label={veileder.navn}
+                    value={veileder.navn}
+                    checked={veileder.ident === innloggetVeileder.ident}
+                />
+            )}
+        </fieldset>
+    );
 }
 
 function BeslutteroversiktLenke() {
-    return (<fieldset>
-        <Lenke href={'https://navikt.github.io/beslutteroversikt/'} target="_blank">Til beslutteroversikt</Lenke>
-    </fieldset>);
+    return (
+        <fieldset>
+            <Lenke href={'https://navikt.github.io/beslutteroversikt/'} target="_blank">Til beslutteroversikt</Lenke>
+        </fieldset>
+    );
 }
