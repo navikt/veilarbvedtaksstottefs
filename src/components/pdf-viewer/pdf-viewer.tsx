@@ -76,6 +76,8 @@ class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
 					onLoadSuccess={(object: { numPages: number }) => {
 						this.props.onStatusUpdate(PDFStatus.SUCCESS);
 						this.setState({ numPages: object.numPages });
+						// Sometimes after the PDF is loaded the page is centered, scroll back to the top
+						window.scrollTo({ top: 0 });
 					}}
 				>
 					<Pages numPages={this.state.numPages} />

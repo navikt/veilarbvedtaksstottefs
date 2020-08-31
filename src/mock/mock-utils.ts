@@ -1,6 +1,7 @@
 import FetchMock, { HandlerArgument, HttpMethod, ResponseData } from 'yet-another-fetch-mock';
 import env from '../utils/environment';
-import { vedtaksbrevUrlGhPages, vedtaksBrevUrlLokal } from './konstanter';
+import { HovedmalType, InnsatsgruppeType } from '../rest/data/vedtak';
+import { OrNothing } from '../utils/types/ornothing';
 
 export interface Mock {
 	method: HttpMethod,
@@ -25,6 +26,29 @@ export function addToFetchMock(mock: Mock, fetchMock: FetchMock) {
 	}
 }
 
-export function getMockVedtaksbrevUrl() {
-	return env.isRunningOnGhPages ? vedtaksbrevUrlGhPages : vedtaksBrevUrlLokal;
+export function lagMockArenabrevUrl() {
+	return getContextPath() +  '/test-brev/arenabrev.pdf';
+}
+
+export function lagMockVedtaksbrevUrl(innsatsgruppe: OrNothing<InnsatsgruppeType>, hovedmal: OrNothing<HovedmalType>): string {
+	const basePath = getContextPath() +  '/test-brev/';
+
+	if (!innsatsgruppe) {
+		// Default brev
+		return basePath + mapInnsatsgruppeOgHovedmalTilTestbrevNavn(InnsatsgruppeType.STANDARD_INNSATS, HovedmalType.SKAFFE_ARBEID);
+	}
+
+	return basePath + mapInnsatsgruppeOgHovedmalTilTestbrevNavn(innsatsgruppe, hovedmal);
+}
+
+function getContextPath() {
+	return env.isRunningOnGhPages ? '/veilarbvedtaksstottefs' : '';
+}
+
+function mapInnsatsgruppeOgHovedmalTilTestbrevNavn(innsatsgruppe: InnsatsgruppeType, hovedmal: OrNothing<HovedmalType>): string {
+	if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
+		return InnsatsgruppeType.VARIG_TILPASSET_INNSATS + '.pdf';
+	}
+
+	return `${innsatsgruppe}-${hovedmal}.pdf`;
 }

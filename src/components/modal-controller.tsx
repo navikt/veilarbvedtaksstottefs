@@ -13,7 +13,7 @@ import {
 	feilVedSendningConfig,
 	feilVedSlettingAvUtkastConfig,
 	feilVedStartBeslutterProsessConfig,
-	feilVedUtsendingAvDialogMelding,
+	feilVedUtsendingAvDialogMelding, feilVedValideringAvUtkast,
 	feilVedVisningConfig,
 	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
@@ -51,6 +51,8 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedOppdaterBeslutterProsessStatus;
 		case ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER:
 			return feilVedGodkjenningAvBeslutter;
+		case ModalType.FEIL_VED_VALIDERING_AV_UTKAST:
+			return feilVedValideringAvUtkast;
 		default:
 			return null;
 	}

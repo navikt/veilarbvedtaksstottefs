@@ -1,43 +1,54 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import sendIkon from './send.svg';
-import { fetchWithInfo } from '../../../rest/utils';
-import { lagSendDialogFetchInfo } from '../../../rest/api';
-import { useAppStore } from '../../../stores/app-store';
+import { fetchMeldinger, fetchSendDialog } from '../../../rest/api';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { useDataFetcherStore } from '../../../stores/data-fetcher-store';
 import './skrivefelt.less';
 import ImageButton from '../../image-button/image-button';
+import { useDataStore } from '../../../stores/data-store';
+import { hentId } from '../../../utils';
 
 let midlertidigMelding = '';
 
 export const Skrivefelt = () => {
-	const { fnr } = useAppStore();
 	const { showModal } = useModalStore();
-	const { meldingFetcher } = useDataFetcherStore();
+	const { utkast, setMeldinger} = useDataStore();
 
 	const [melding, setMelding] = useState(midlertidigMelding);
 	const [senderMelding, setSenderMelding] = useState(false);
-	const harIkkeSkrevetMelding = melding.trim().length === 0;
+	const skrivefeltRef = useRef<HTMLInputElement | null>(null);
+
+	const kanSendeMelding = !senderMelding && melding.trim().length > 0;
 
 	function oppdaterMelding(tekst: string) {
 		setMelding(tekst);
 		midlertidigMelding = tekst;
 	}
 
-	function handleOnDialogSendClicked() {
+	function handleSkrivefeltKeyPress(e: KeyboardEvent<HTMLInputElement>) {
+		if (e.key === 'Enter' && kanSendeMelding) {
+			sendMelding();
+		}
+	}
+
+	function sendMelding() {
 		setSenderMelding(true);
 
-		fetchWithInfo(lagSendDialogFetchInfo({ fnr, melding }))
-			.then(() => {
-				meldingFetcher.fetch({ fnr }, () => {
-					oppdaterMelding('');
-					setSenderMelding(false);
-				});
-			}).catch(() => {
+		fetchSendDialog({vedtakId: hentId(utkast), melding})
+			.then(() => fetchMeldinger(hentId(utkast)))
+			.then(response => {
+				if (response.data) {
+					setMeldinger(response.data);
+				}
+				oppdaterMelding('');
+				if (skrivefeltRef.current) {
+					skrivefeltRef.current.focus();
+				}
+			})
+			.catch(() => {
 				showModal(ModalType.FEIL_VED_UTSENDING_AV_DIALOG_MELDING);
-				setSenderMelding(false);
-			});
+			})
+			.finally(() => setSenderMelding(false));
 	}
 
 	function handleOnMeldingChanged(e: ChangeEvent<HTMLInputElement>) {
@@ -49,20 +60,22 @@ export const Skrivefelt = () => {
 	return (
     	<div className="skrivefelt">
 		    <Input
+		        inputRef={(inputRef) => skrivefeltRef.current = inputRef}
 			    className="skrivefelt__input"
 			    label=""
 			    disabled={senderMelding}
 			    value={melding}
 			    onChange={handleOnMeldingChanged}
 			    placeholder="Skriv en kommentar"
+			    onKeyPress={handleSkrivefeltKeyPress}
 		    />
 		    <ImageButton
-			    disabled={senderMelding || harIkkeSkrevetMelding} src={sendIkon}
+			    disabled={!kanSendeMelding} src={sendIkon}
 			    alt="Send"
 			    aria-label="Send"
 			    className="skrivefelt__send-knapp"
 			    imgClassName="skrivefelt__send-knapp-ikon"
-			    onClick={handleOnDialogSendClicked}
+			    onClick={sendMelding}
 		    />
 	    </div>
     );

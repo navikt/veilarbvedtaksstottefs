@@ -1,5 +1,5 @@
 import { innloggetVeileder } from './innlogget-veileder';
-import { beslutter } from '../personer';
+import { veileder3 } from '../veiledere-mock';
 import { DialogMelding, SystemMelding } from '../../rest/data/melding';
 import { MeldingType, SystemMeldingType } from '../../utils/types/melding-type';
 
@@ -14,8 +14,8 @@ const dialogMeldinger: DialogMelding[] = [
 	{
 		melding: 'Kanskje du burde skrive litt mer utfyllende i begrunnelsen. Ellers så ser det bra ut :)',
 		opprettet: '2020-02-06T12:37:44.716393+02:00',
-		opprettetAvIdent: beslutter.ident,
-		opprettetAvNavn: beslutter.navn,
+		opprettetAvIdent: veileder3.ident,
+		opprettetAvNavn: veileder3.navn,
 		type: MeldingType.DIALOG_MELDING
 	},
 	{
@@ -38,8 +38,8 @@ const systemMeldinger: SystemMelding[] = [
 	{
 		systemMeldingType: SystemMeldingType.BLITT_BESLUTTER,
 		opprettet: '2020-02-06T12:36:37.716393+02:00',
-		utfortAvIdent: beslutter.ident,
-		utfortAvNavn: beslutter.navn,
+		utfortAvIdent: veileder3.ident,
+		utfortAvNavn: veileder3.navn,
 		type: MeldingType.SYSTEM_MELDING
 	},
 ];

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import createUseContext from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
-import { validerBegrunnelseMaxLength, validerSkjema as valider } from '../components/utkast-skjema/skjema-utils';
+import { mapOpplysningerFraForskjelligMalformTilBokmal, validerBegrunnelseMaxLength, validerSkjema as valider } from '../utils/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { SkjemaLagringStatus } from '../utils/types/skjema-lagring-status';
@@ -15,8 +15,8 @@ export const useSkjemaStore = createUseContext(() => {
 	const [errors, setErrors] = useState<SkjemaFeil>({});
 	const [lagringStatus, setLagringStatus] = useState<SkjemaLagringStatus>(SkjemaLagringStatus.INGEN_ENDRING);
 
-	const validerSkjema = (vedtak: Vedtak[]): SkjemaFeil => {
-		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, vedtak);
+	const validerSkjema = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
+		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
 		setErrors(feil);
 		return feil;
 	};
@@ -27,8 +27,9 @@ export const useSkjemaStore = createUseContext(() => {
 	};
 
 	const initSkjema = (utkast: Vedtak) => {
+		const mappetOpplysninger = mapOpplysningerFraForskjelligMalformTilBokmal(utkast.opplysninger);
 		setHovedmal(utkast.hovedmal);
-		setOpplysninger(utkast.opplysninger);
+		setOpplysninger(mappetOpplysninger);
 		setInnsatsgruppe(utkast.innsatsgruppe);
 		setBegrunnelse(utkast.begrunnelse);
 		setSistOppdatert(utkast.sistOppdatert);

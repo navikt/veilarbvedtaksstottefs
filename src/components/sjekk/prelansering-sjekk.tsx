@@ -1,23 +1,29 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Prelansering } from '../../pages/prelansering/prelansering';
 import { PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../rest/data/features';
-import { useDataFetcherStore } from '../../stores/data-fetcher-store';
-import { hasAnyFailed, isAnyNotStartedOrPending, isNotStarted } from '../../rest/utils';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { useDataStore } from '../../stores/data-store';
+import { useFetchFeatures } from '../../rest/api';
 
+// NB! Henting av features og populering i data store hook må flyttes til data-fetcher.tsx når denne komponenten skal fjernes
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
-	const { featuresFetcher } = useDataFetcherStore();
+
+	const featuresState = useFetchFeatures();
+	const [harSattFeatures, setHarSattFeatures] = useState(false);
+
+	const {features, setFeatures} = useDataStore();
 
 	useEffect(() => {
-		if (isNotStarted(featuresFetcher)) {
-			featuresFetcher.fetch(null);
+		if (featuresState.data) {
+			setFeatures(featuresState.data);
+			setHarSattFeatures(true);
 		}
-	}, [featuresFetcher]);
+	}, [featuresState, setFeatures]);
 
-	if (isAnyNotStartedOrPending([featuresFetcher])) {
+	if (featuresState.isLoading || !harSattFeatures) {
 		return <Spinner />;
-	} else if (hasAnyFailed([featuresFetcher])) {
+	} else if (featuresState.error) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer.
@@ -26,5 +32,5 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 		);
 	}
 
-	return (featuresFetcher.data[PRELANSERING_TOGGLE] && !featuresFetcher.data[PILOT_TOGGLE]) ? <Prelansering /> : props.children;
+	return (features[PRELANSERING_TOGGLE] && !features[PILOT_TOGGLE]) ? <Prelansering /> : props.children;
 }

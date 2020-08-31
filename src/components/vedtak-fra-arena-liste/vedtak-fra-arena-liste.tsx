@@ -31,7 +31,7 @@ export function VedtakFraArenaListe({ vedtakListe }: { vedtakListe: ArenaVedtak[
 	}, [vedtakListe]);
 
 	function handleTidligereVedtakClicked(vedtakData: ArenaVedtak, idx: number) {
-		changeView(ViewType.VEDTAK_PDF, {
+		changeView(ViewType.ARENA_VEDTAK_PDF, {
 			journalpostId: vedtakData.journalpostId,
 			dokumentInfoId: vedtakData.dokumentInfoId
 		});
