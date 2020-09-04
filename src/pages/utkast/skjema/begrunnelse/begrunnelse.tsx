@@ -11,8 +11,11 @@ import { useDataStore } from '../../../../stores/data-store';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import './begrunnelse.less';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import Show from '../../../../components/show';
 
-export const BEGRUNNELSE_MAX_LENGTH = 4000;
+export const BEGRUNNELSE_BEGRENSET_LENGTH = 4000;
+export const BEGRUNNELSE_MAX_LENGTH = 10000;
 const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
 
 function malformToTekst(malform: OrNothing<MalformData>): string {
@@ -30,7 +33,7 @@ function malformToTekst(malform: OrNothing<MalformData>): string {
 function Begrunnelse() {
 	const { malform } = useDataStore();
 	const {begrunnelse, setBegrunnelse, errors, innsatsgruppe} = useSkjemaStore();
-	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
+	const [begrunnelseFeil, setBegrunnelseFeil ] = useState(errors.begrunnelse);
 
 	function onBegrunnelseChanged(e: any) {
 		const newText = e.target.value;
@@ -48,6 +51,8 @@ function Begrunnelse() {
 			setBegrunnelse(newText.substring(0, BEGRUNNELSE_MAX_LENGTH));
 		}
 	}
+
+	useEffect(() => frontendlogger.logMetrikk('vis-vedtaksbrev'), []);
 
 	useEffect(() => {
 		const feil = validerBegrunnelseMaxLength(begrunnelse);
@@ -74,13 +79,18 @@ function Begrunnelse() {
 						value={begrunnelse || ''}
 						label=""
 						placeholder="Skriv inn din begrunnelse/arbeidsevnevurdering her"
-						maxLength={BEGRUNNELSE_MAX_LENGTH}
+						maxLength={BEGRUNNELSE_BEGRENSET_LENGTH}
 						onChange={onBegrunnelseChanged}
 						aria-labelledby="begrunnelse-tittel"
 						aria-describedby="begrunnelse-tips"
 						autoCorrect="on"
 					/>
 					<Normaltekst className="begrunnelse__malform">Brukers målform: {malformToTekst(malform)}</Normaltekst>
+					<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_BEGRENSET_LENGTH}>
+						<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
+							Begrunnelsen du har skrevet er veldig lang og derfor tung å lese for mottaker. Prøv å korte den ned.
+						</AlertStripeAdvarsel>
+					</Show>
 				</SkjemaGruppe>
 			</div>
 		</SkjemaBolk>
