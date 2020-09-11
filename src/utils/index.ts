@@ -13,8 +13,12 @@ export const hentId = (utkast: Vedtak | null): number => {
 	return utkast ? utkast.id : -1;
 };
 
+export const hentBeslutterProsessStatus = (utkast: Vedtak | null): OrNothing<BeslutterProsessStatus> => {
+	return utkast ? utkast.beslutterProsessStatus : null;
+};
+
 export const erBeslutterProsessStartet = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
-	return beslutterProsessStatus != null;
+	return beslutterProsessStatus != null && beslutterProsessStatus !== BeslutterProsessStatus.BESLUTTER_PROSESS_AVBRUTT;
 };
 
 export const erKlarTilBeslutter = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {

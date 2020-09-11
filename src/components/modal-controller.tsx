@@ -13,15 +13,18 @@ import {
 	feilVedSendningConfig,
 	feilVedSlettingAvUtkastConfig,
 	feilVedStartBeslutterProsessConfig,
-	feilVedUtsendingAvDialogMelding, feilVedValideringAvUtkast,
+	feilVedUtsendingAvDialogMelding,
+	feilVedValideringAvUtkast,
 	feilVedVisningConfig,
-	stoppeUtsendingFeatureToggleConfig
+	stoppeUtsendingFeatureToggleConfig,
+	feilVedAvbruttBeslutterProsessConfig
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
 import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import { BekreftSendVedtakModal } from './modal/vedtak-sendt/bekreft-send-vedtak-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverModal from './modal/ta-over-modal/ta-over-modal';
+import AvbrytBeslutterProsessModal from './modal/AvbryteBeslutterProsess/avbryte-beslutterprosess-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
@@ -43,6 +46,8 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedOvertakelseAvUtkastConfig;
 		case ModalType.FEIL_VED_START_BESLUTTER_PROSESS:
 			return feilVedStartBeslutterProsessConfig;
+		case ModalType.FEIL_VED_AVBRUTT_BESLUTTER_PROSESS:
+			return feilVedAvbruttBeslutterProsessConfig;
 		case ModalType.FEIL_VED_BLI_BESLUTTER:
 			return feilVedBliBeslutterConfig;
 		case ModalType.FEIL_VED_UTSENDING_AV_DIALOG_MELDING:
@@ -69,6 +74,7 @@ export function ModalController() {
 			<VedtakSendtModal isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
+			<AvbrytBeslutterProsessModal isOpen = {modalType === ModalType.AVBRYT_BESLUTTER_PROSESS} />
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>
 	);

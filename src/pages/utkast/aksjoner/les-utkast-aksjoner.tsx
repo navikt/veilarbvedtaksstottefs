@@ -12,7 +12,14 @@ import Show from '../../../components/show';
 import { Element } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
-import { erBeslutterProsessStartet, erGodkjentAvBeslutter, erKlarTilBeslutter, erKlarTilVeileder, finnGjeldendeVedtak, isNothing } from '../../../utils';
+import {
+	erBeslutterProsessStartet,
+	erGodkjentAvBeslutter,
+	erKlarTilBeslutter,
+	erKlarTilVeileder,
+	finnGjeldendeVedtak,
+	isNothing
+} from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus, Vedtak } from '../../../rest/data/vedtak';
@@ -48,10 +55,10 @@ function LesUtkastAksjoner() {
 	const godkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
 	const visGodkjentAvBeslutter = erBeslutter && godkjentAvBeslutter;
 	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(beslutterNavn) && !erBeslutterProsessStartet(beslutterProsessStatus);
-	const visBliBeslutter = erIkkeAnsvarligVeileder && isNothing(beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus);
-	const visGodkjennUtkast = erBeslutter && !godkjentAvBeslutter;
+	const visBliBeslutter = erIkkeAnsvarligVeileder && isNothing(beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus) && trengerBeslutter(innsatsgruppe);
+	const visGodkjennUtkast = erBeslutter && !godkjentAvBeslutter && trengerBeslutter(innsatsgruppe);
 	const visTaOverUtkast = erIkkeAnsvarligVeileder;
-	const visKlarTil = (erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus)) || (erBeslutter && erKlarTilBeslutter(beslutterProsessStatus));
+	const visKlarTil = trengerBeslutter(innsatsgruppe) && ((erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus)) || (erBeslutter && erKlarTilBeslutter(beslutterProsessStatus)));
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function fokuserPaDialogSidebarTab() {

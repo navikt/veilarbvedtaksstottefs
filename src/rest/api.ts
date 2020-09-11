@@ -152,6 +152,13 @@ export const fetchStartBeslutterProsess = (vedtakId: number): Promise<Response> 
 	})
 };
 
+export const fetchAvbruttBeslutterProsess = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/avbrutt?vedtakId=${vedtakId}`, {
+		method: 'POST',
+		credentials
+	})
+};
+
 export const fetchBliBeslutter = (vedtakId: number): Promise<Response> => {
 	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/bliBeslutter?vedtakId=${vedtakId}`, {
 		method: 'POST',

@@ -18,6 +18,7 @@ import Show from '../../../../components/show';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { ModalType, useModalStore } from '../../../../stores/modal-store';
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
@@ -57,12 +58,23 @@ function Innsatsgruppe() {
 export default Innsatsgruppe;
 
 interface InnsatsgruppeRadioProps {
-	handleInnsatsgruppeChanged: (e: any) => void;
+	handleInnsatsgruppeChanged: (e: InnsatsgruppeType) => void;
 	setHovedmal: (e: any) => void;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
 }
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
+	const {utkast} = useDataStore();
+	const {showModal} = useModalStore();
+
+	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
+		if (erBeslutterProsessStartet(utkast!.beslutterProsessStatus) && !trengerBeslutter(innsatsgruppe)) {
+			showModal(ModalType.AVBRYT_BESLUTTER_PROSESS);
+		}
+
+		props.handleInnsatsgruppeChanged(innsatsgruppe);
+	}
+
 	return (
 		<div className="innsatsgruppe">
 			{innsatsgruppeTekster.map(innsatsgruppeTekst => (
@@ -80,7 +92,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 						inputProps={{onKeyPress: swallowEnterKeyPress, 'aria-labelledby': 'innsatsgruppe-tittel'}}
 						onChange={(e: any) => {
 							const innsatsgruppe = e.target.value;
-							props.handleInnsatsgruppeChanged(innsatsgruppe);
+							handleInnsatsgruppeChanged(innsatsgruppe);
 							if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
 								props.setHovedmal(null);
 							}
