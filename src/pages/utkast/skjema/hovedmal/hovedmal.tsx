@@ -5,17 +5,17 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
 import { swallowEnterKeyPress } from '../../../../utils';
-import { lagSkjemaElementFeil } from '../../../../utils/skjema-utils';
 import { HovedmalType, InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { alleHovedmal } from '../../../../utils/hovedmal';
 import './hovedmal.less';
+import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 function Hovedmal() {
 	const {innsatsgruppe, hovedmal, setHovedmal, errors} = useSkjemaStore();
 	const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
 	return (
 		<SkjemaBolk id="hovedmal-scroll-to" tittel="Hovedmål" tittelId="hovedmal-tittel">
-			<SkjemaGruppe feil={lagSkjemaElementFeil(errors.hovedmal)}>
+			<SkjemaGruppe feil={errors.hovedmal && <SkjemaelementFeilmelding>{errors.hovedmal}</SkjemaelementFeilmelding>}>
 				{erVarigTilpassetInnsats ? (
 					<AlertStripeInfo className="hovedmal-info">
 						<span className="hovedmal-info__tekst">
@@ -48,7 +48,7 @@ function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
 					value={mal.value}
 					onChange={(e: any) => props.handleHovedmalChanged(e.target.value)}
 					checked={props.hovedmal === mal.value}
-					inputProps={{onKeyPress: swallowEnterKeyPress}}
+					onKeyPress={swallowEnterKeyPress}
 				/>
 			))}
 		</div>

@@ -6,11 +6,12 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
-import { lagSkjemaElementFeil, mergeMedDefaultOpplysninger } from '../../../../utils/skjema-utils';
+import { mergeMedDefaultOpplysninger } from '../../../../utils/skjema-utils';
 import { useIsAfterFirstRender } from '../../../../utils/hooks';
 import './opplysninger.less';
 import { OpplysningerTipsInnhold } from './opplysninger-tips-innhold';
 import { TipsPopover } from '../../../../components/tips-popover/tips-popover';
+import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 export interface Opplysning {
 	navn: string;
@@ -87,7 +88,8 @@ function Opplysninger() {
 			<div className="opplysninger">
 				<Normaltekst className="blokk-xxs">Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
 				<div className="opplysninger__innhold">
-					<SkjemaGruppe aria-labelledby="kilder-tittel" feil={lagSkjemaElementFeil(errors.opplysninger)}>
+					<SkjemaGruppe aria-labelledby="kilder-tittel"
+								  feil={errors.opplysninger && <SkjemaelementFeilmelding>{errors.opplysninger}</SkjemaelementFeilmelding>}>
 						{opplysninger.map((opplysning, index) =>
 							redigeringModusIndeks !== index ? (
 								<VisOpplysning

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
-import { lagSkjemaElementFeil, validerBegrunnelseMaxLength } from '../../../../utils/skjema-utils';
+import { validerBegrunnelseMaxLength } from '../../../../utils/skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
 import { frontendlogger } from '../../../../utils/frontend-logger';
@@ -11,6 +11,7 @@ import { useDataStore } from '../../../../stores/data-store';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import './begrunnelse.less';
+import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 export const BEGRUNNELSE_MAX_LENGTH = 4000;
 const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
@@ -68,7 +69,8 @@ function Begrunnelse() {
 	return (
 		<SkjemaBolk tittel={begrunnelseTittel} className="begrunnelse-skjema-bolk">
 			<div className="begrunnelse">
-				<SkjemaGruppe feil={lagSkjemaElementFeil(begrunnelseFeil)} className="begrunnelse__container">
+				<SkjemaGruppe feil={begrunnelseFeil && <SkjemaelementFeilmelding>{begrunnelseFeil}</SkjemaelementFeilmelding>}
+							  className="begrunnelse__container">
 					<Textarea
 						id="begrunnelse-scroll-to"
 						value={begrunnelse || ''}
