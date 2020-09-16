@@ -1,4 +1,4 @@
-import FetchMock, { HandlerArgument, HttpMethod, ResponseData } from 'yet-another-fetch-mock';
+import FetchMock, { MockHandler, HttpMethod } from 'yet-another-fetch-mock';
 import env from '../utils/environment';
 import { HovedmalType, InnsatsgruppeType } from '../rest/data/vedtak';
 import { OrNothing } from '../utils/types/ornothing';
@@ -6,7 +6,7 @@ import { OrNothing } from '../utils/types/ornothing';
 export interface Mock {
 	method: HttpMethod,
 	url: string;
-	handler: (args: HandlerArgument) => Promise<ResponseData>
+	handler: MockHandler
 }
 
 export function addToFetchMock(mock: Mock, fetchMock: FetchMock) {
