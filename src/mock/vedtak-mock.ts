@@ -75,7 +75,9 @@ export const mockOppdaterUtkast: Mock = {
 };
 
 export const oppdaterVedtakUtkastMockFraSkjema = (skjemaData: SkjemaData) => {
-	vedtakUtkastMock = Object.assign(vedtakUtkastMock || {}, skjemaData) as Vedtak;
+	if (vedtakUtkastMock) {
+		vedtakUtkastMock = Object.assign(vedtakUtkastMock || {}, skjemaData) as Vedtak;
+	}
 };
 
 export const mockSlettUtkast: Mock = {
