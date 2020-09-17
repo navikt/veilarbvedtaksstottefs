@@ -10,15 +10,20 @@ import { useSkjemaStore } from '../../../stores/skjema-store';
 import { useDataStore } from '../../../stores/data-store';
 import { fetchAvbruttBeslutterProsess } from '../../../rest/api';
 import { SystemMeldingType } from '../../../utils/types/melding-type';
-import { hentBeslutterProsessStatus, hentId } from '../../../utils';
-import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
+import { erBeslutterProsessStartet, hentId } from '../../../utils';
+import { InnsatsgruppeType } from '../../../rest/data/vedtak';
+import { OrNothing } from '../../../utils/types/ornothing';
 
-function AvbrytBeslutterProsessModal(props: ModalProps) {
+interface AvbrytBeslutterProsessModalProps extends ModalProps{
+    Innsatsgruppe: OrNothing<InnsatsgruppeType>;
+}
+
+function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
     const { hideModal, showModal } = useModalStore();
-    const { utkast, setUtkast, leggTilSystemMelding, setBeslutterProsessStatus } = useDataStore();
     const { changeView } = useViewStore();
-    const { innsatsgruppe, setInnsatsgruppe, resetSkjema } = useSkjemaStore();
-    const [dialogModalApen, setDialogModalApen] = useState(hentBeslutterProsessStatus(utkast) != null);
+    const { utkast, setUtkast, leggTilSystemMelding, setUtkastBeslutter } = useDataStore();
+    const { innsatsgruppe, setInnsatsgruppe, resetSkjema, beslutterProsessStatus, setBeslutterProsessStatus } = useSkjemaStore();
+    const [dialogModalApen, setDialogModalApen] = useState(erBeslutterProsessStartet(beslutterProsessStatus));
     const [ laster, setLaster ] = useState(false);
 
     function handleOnJaClicked() {
@@ -27,10 +32,12 @@ function AvbrytBeslutterProsessModal(props: ModalProps) {
             .then(() => {
                 hideModal();
                 setDialogModalApen(true);
-                setBeslutterProsessStatus(BeslutterProsessStatus.BESLUTTER_PROSESS_AVBRUTT);
+                setInnsatsgruppe(props.Innsatsgruppe);
+                setBeslutterProsessStatus(null);
+                setUtkastBeslutter(null, null);
                 leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_AVBRUTT);
             })
-            .catch(() => showModal(ModalType.FEIL_VED_AVBRUTT_BESLUTTER_PROSESS))
+            .catch(() => showModal(ModalType.FEIL_VED_AVBRYT_BESLUTTER_PROSESS))
             .finally(() => setLaster(false));
     }
 
@@ -42,7 +49,7 @@ function AvbrytBeslutterProsessModal(props: ModalProps) {
             varselIkonType={VarselIkonType.ADVARSEL}
         >
             <Systemtittel className="blokk-xxxs">Endre innsatsgruppe</Systemtittel>
-            <Normaltekst>Beslutterprossessen vil avbrytes. Er du sikker på at du vil endre innsatsgruppe?</Normaltekst>
+            <Normaltekst>Beslutterprosessen vil avbrytes. Er du sikker på at du vil endre innsatsgruppe?</Normaltekst>
             <div className="varsel-modal__knapper">
                 <Hovedknapp onClick={handleOnJaClicked}>Ja</Hovedknapp>
                 <Knapp onClick={hideModal}>Nei</Knapp>

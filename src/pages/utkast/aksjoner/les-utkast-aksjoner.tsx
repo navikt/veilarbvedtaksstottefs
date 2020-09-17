@@ -35,30 +35,29 @@ function LesUtkastAksjoner() {
 	} = useTilgangStore();
 	const {
 		fattedeVedtak, innloggetVeileder,
-		setUtkastBeslutter, setBeslutterProsessStatus,
+		setUtkastBeslutter,
 		leggTilSystemMelding, utkast
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
-	const {validerSkjema, innsatsgruppe} = useSkjemaStore();
+	const {validerSkjema, innsatsgruppe, beslutterProsessStatus, setBeslutterProsessStatus} = useSkjemaStore();
 
 	const {
 		id: utkastId,
-		beslutterProsessStatus,
 		beslutterNavn
 	} = utkast as Vedtak;
 
-	const [dialogModalApen, setDialogModalApen] = useState(beslutterProsessStatus != null);
+	const [dialogModalApen, setDialogModalApen] = useState(erBeslutterProsessStartet(beslutterProsessStatus));
 	const [laster, setLaster] = useState(false);
 
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const godkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
 	const visGodkjentAvBeslutter = erBeslutter && godkjentAvBeslutter;
 	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(beslutterNavn) && !erBeslutterProsessStartet(beslutterProsessStatus);
-	const visBliBeslutter = erIkkeAnsvarligVeileder && isNothing(beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus) && trengerBeslutter(innsatsgruppe);
-	const visGodkjennUtkast = erBeslutter && !godkjentAvBeslutter && trengerBeslutter(innsatsgruppe);
+	const visBliBeslutter = erIkkeAnsvarligVeileder && isNothing(beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus);
+	const visGodkjennUtkast = erBeslutterProsessStartet(beslutterProsessStatus) && erBeslutter && !godkjentAvBeslutter;
 	const visTaOverUtkast = erIkkeAnsvarligVeileder;
-	const visKlarTil = trengerBeslutter(innsatsgruppe) && ((erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus)) || (erBeslutter && erKlarTilBeslutter(beslutterProsessStatus)));
+	const visKlarTil = erBeslutterProsessStartet(beslutterProsessStatus) && ((erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus)) || (erBeslutter && erKlarTilBeslutter(beslutterProsessStatus)));
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function fokuserPaDialogSidebarTab() {

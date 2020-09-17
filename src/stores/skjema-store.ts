@@ -3,7 +3,7 @@ import createUseContext from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
 import { mapOpplysningerFraForskjelligMalformTilBokmal, validerBegrunnelseMaxLength, validerSkjema as valider } from '../utils/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
-import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
+import { BeslutterProsessStatus, HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { SkjemaLagringStatus } from '../utils/types/skjema-lagring-status';
 
 export const useSkjemaStore = createUseContext(() => {
@@ -14,6 +14,7 @@ export const useSkjemaStore = createUseContext(() => {
 	const [sistOppdatert, setSistOppdatert] = useState('');
 	const [errors, setErrors] = useState<SkjemaFeil>({});
 	const [lagringStatus, setLagringStatus] = useState<SkjemaLagringStatus>(SkjemaLagringStatus.INGEN_ENDRING);
+	const [beslutterProsessStatus, setBeslutterProsessStatus] = useState<OrNothing<BeslutterProsessStatus>>();
 
 	const validerSkjema = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
 		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
@@ -33,6 +34,7 @@ export const useSkjemaStore = createUseContext(() => {
 		setInnsatsgruppe(utkast.innsatsgruppe);
 		setBegrunnelse(utkast.begrunnelse);
 		setSistOppdatert(utkast.sistOppdatert);
+		setBeslutterProsessStatus(utkast.beslutterProsessStatus);
 	};
 
 	const resetSkjema = () => {
@@ -42,6 +44,7 @@ export const useSkjemaStore = createUseContext(() => {
 		setBegrunnelse(undefined);
 		setSistOppdatert('');
 		setErrors({});
+		setBeslutterProsessStatus(undefined);
 	};
 
 	return {
@@ -51,6 +54,7 @@ export const useSkjemaStore = createUseContext(() => {
 		begrunnelse, setBegrunnelse,
 		sistOppdatert, setSistOppdatert, errors,
 		lagringStatus, setLagringStatus,
+		beslutterProsessStatus, setBeslutterProsessStatus,
 		validerSkjema, validerBegrunnelseLengde,
 		initSkjema, resetSkjema
 	};

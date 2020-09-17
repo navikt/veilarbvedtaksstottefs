@@ -25,13 +25,13 @@ import { Label, LabelType } from '../../label/label';
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { changeView } = useViewStore();
 	const { kanEndreUtkast } = useTilgangStore();
-	const { sistOppdatert } = useSkjemaStore();
+	const { sistOppdatert, beslutterProsessStatus } = useSkjemaStore();
 
 	if (!props.utkast) {
 		return null;
 	}
 
-	const {veilederNavn, beslutterNavn, beslutterProsessStatus} = props.utkast;
+	const {veilederNavn, beslutterNavn} = props.utkast;
 
 	const lagUtkastUnderTittle = () => {
 

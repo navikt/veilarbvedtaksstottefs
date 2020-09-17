@@ -7,6 +7,7 @@ import { Features } from '../rest/data/features';
 import { Veileder } from '../rest/data/veiledere';
 import { DialogMelding as DialogMeldingData, SystemMelding as SystemMeldingData } from '../rest/data/melding';
 import { MeldingType, SystemMeldingType } from '../utils/types/melding-type';
+import { OrNothing } from '../utils/types/ornothing';
 
 // Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
 const placeholder = {} as any;
@@ -33,7 +34,7 @@ export const useDataStore = createUseContext(() => {
 		setMeldinger((curMeldinger) => [...curMeldinger, systemMeldingData])
 	}
 
-	function setUtkastBeslutter(beslutterIdent: string, beslutterNavn: string) {
+	function setUtkastBeslutter(beslutterIdent: OrNothing<string>, beslutterNavn: OrNothing<string>) {
 		if (utkast) {
 			setUtkast({...utkast, beslutterIdent, beslutterNavn });
 		}
@@ -42,12 +43,6 @@ export const useDataStore = createUseContext(() => {
 	function setUtkastVeileder(veilederIdent: string, veilederNavn: string) {
 		if (utkast) {
 			setUtkast({...utkast, veilederIdent, veilederNavn });
-		}
-	}
-
-	function setBeslutterProsessStatus(beslutterProsessStatus: BeslutterProsessStatus) {
-		if (utkast) {
-			setUtkast({...utkast, beslutterProsessStatus });
 		}
 	}
 
@@ -62,7 +57,6 @@ export const useDataStore = createUseContext(() => {
 		meldinger, setMeldinger,
 		leggTilSystemMelding,
 		setUtkastBeslutter,
-		setUtkastVeileder,
-		setBeslutterProsessStatus
+		setUtkastVeileder
 	};
 });

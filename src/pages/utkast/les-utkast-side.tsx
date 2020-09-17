@@ -27,7 +27,7 @@ export function LesUtkastSide() {
 	const {utkast, setUtkast, setFattedeVedtak, features} = useDataStore();
 	const {changeView} = useViewStore();
 	const {erBeslutter} = useTilgangStore();
-	const {initSkjema} = useSkjemaStore();
+	const {initSkjema, beslutterProsessStatus} = useSkjemaStore();
 	const refreshUtkastIntervalRef = useRef<number>();
 
 	useEffect(() => {
@@ -35,7 +35,7 @@ export function LesUtkastSide() {
 			Hvis beslutterprosessen har startet og innlogget bruker er beslutter så skal vi periodisk hente
 			det nyeste utkastet slik at man ikke må refreshe manuelt når ansvarlig veileder gjør en endring
 		 */
-		if (utkast && !features[SKRU_AV_POLLING_UTKAST] && utkast.beslutterProsessStatus != null && erBeslutter) {
+		if (utkast && !features[SKRU_AV_POLLING_UTKAST] && beslutterProsessStatus != null && erBeslutter) {
 			refreshUtkastIntervalRef.current = setInterval(() => {
 				fetchUtkast(fnr).then(response => {
 					if (response.data) {
