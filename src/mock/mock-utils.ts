@@ -1,12 +1,11 @@
-import FetchMock, { HandlerArgument, HttpMethod, ResponseData } from 'yet-another-fetch-mock';
-import env from '../utils/environment';
+import FetchMock, { MockHandler, HttpMethod } from 'yet-another-fetch-mock';
 import { HovedmalType, InnsatsgruppeType } from '../rest/data/vedtak';
 import { OrNothing } from '../utils/types/ornothing';
 
 export interface Mock {
 	method: HttpMethod,
 	url: string;
-	handler: (args: HandlerArgument) => Promise<ResponseData>
+	handler: MockHandler
 }
 
 export function addToFetchMock(mock: Mock, fetchMock: FetchMock) {
@@ -27,11 +26,11 @@ export function addToFetchMock(mock: Mock, fetchMock: FetchMock) {
 }
 
 export function lagMockArenabrevUrl() {
-	return getContextPath() +  '/test-brev/arenabrev.pdf';
+	return '/veilarbvedtaksstottefs/test-brev/arenabrev.pdf';
 }
 
 export function lagMockVedtaksbrevUrl(innsatsgruppe: OrNothing<InnsatsgruppeType>, hovedmal: OrNothing<HovedmalType>): string {
-	const basePath = getContextPath() +  '/test-brev/';
+	const basePath = '/veilarbvedtaksstottefs/test-brev/';
 
 	if (!innsatsgruppe) {
 		// Default brev
@@ -39,10 +38,6 @@ export function lagMockVedtaksbrevUrl(innsatsgruppe: OrNothing<InnsatsgruppeType
 	}
 
 	return basePath + mapInnsatsgruppeOgHovedmalTilTestbrevNavn(innsatsgruppe, hovedmal);
-}
-
-function getContextPath() {
-	return env.isRunningOnGhPages ? '/veilarbvedtaksstottefs' : '';
 }
 
 function mapInnsatsgruppeOgHovedmalTilTestbrevNavn(innsatsgruppe: InnsatsgruppeType, hovedmal: OrNothing<HovedmalType>): string {

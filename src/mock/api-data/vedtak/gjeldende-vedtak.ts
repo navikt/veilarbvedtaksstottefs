@@ -1,9 +1,8 @@
 import { HovedmalType, InnsatsgruppeType, Vedtak, VedtakStatus } from '../../../rest/data/vedtak';
-import { JSONObject } from 'yet-another-fetch-mock';
 import { veileder1 } from '../../veiledere-mock';
 import { enhetId, enhetNavn } from '../../konstanter';
 
-const gjeldendeVedtak: Vedtak & JSONObject = {
+const gjeldendeVedtak: Vedtak = {
 	id: 1000,
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
 	innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,

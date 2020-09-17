@@ -2,7 +2,7 @@ import React from 'react';
 import cls from 'classnames';
 import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { harSkrevetBegrunnelse, lagSkjemaElementFeil, trengerBeslutter } from '../../../../utils/skjema-utils';
+import { harSkrevetBegrunnelse, trengerBeslutter } from '../../../../utils/skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
 import { erBeslutterProsessStartet, finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../../utils';
@@ -18,6 +18,7 @@ import Show from '../../../../components/show';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 function Innsatsgruppe() {
 	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
@@ -43,7 +44,7 @@ function Innsatsgruppe() {
 					Når det gjøres en ny vurdering er det viktig å fremheve hva som er årsaken til endring i brukers situasjon.
 				</AlertStripe>
 			</Show>
-			<SkjemaGruppe feil={lagSkjemaElementFeil(errors.innsatsgruppe)}>
+			<SkjemaGruppe feil={errors.innsatsgruppe && <SkjemaelementFeilmelding>{errors.innsatsgruppe}</SkjemaelementFeilmelding>}>
 				<InnsatsgruppeRadioButtons
 					handleInnsatsgruppeChanged={setInnsatsgruppe}
 					innsatsgruppe={innsatsgruppe}
@@ -77,7 +78,8 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 						key={innsatsgruppeTekst.value}
 						value={innsatsgruppeTekst.value}
 						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
-						inputProps={{onKeyPress: swallowEnterKeyPress, 'aria-labelledby': 'innsatsgruppe-tittel'}}
+						onKeyPress={swallowEnterKeyPress}
+						aria-labelledby={'innsatsgruppe-tittel'}
 						onChange={(e: any) => {
 							const innsatsgruppe = e.target.value;
 							props.handleInnsatsgruppeChanged(innsatsgruppe);
