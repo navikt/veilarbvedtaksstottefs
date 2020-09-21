@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Undertittel } from 'nav-frontend-typografi';
 import svaertBraBilde from './svaert_bra.svg';
 import svaertDarligBilde from './svaert_darlig.svg';
@@ -41,7 +41,7 @@ function TilbakemeldingEkspanderbartpanel(props: TilbakemeldingEkspanderbartpane
 	);
 
 	return (
-		<EkspanderbartpanelBase heading={<Heading />} border={true} ariaTittel={props.tittel}>
+		<Ekspanderbartpanel tittel={<Heading />} border={true}>
 			<div className="tilbakemelding-ekspanderbartpanel__innhold">
 				{props.children}
 				{visTilbakemelding && (
@@ -64,7 +64,7 @@ function TilbakemeldingEkspanderbartpanel(props: TilbakemeldingEkspanderbartpane
 					</div>
 				)}
 			</div>
-		</EkspanderbartpanelBase>
+		</Ekspanderbartpanel>
 	);
 }
 

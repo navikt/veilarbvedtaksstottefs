@@ -3,7 +3,6 @@ import { BEGRUNNELSE_MAX_LENGTH } from '../pages/utkast/skjema/begrunnelse/begru
 import { OrNothing } from './types/ornothing';
 import { Opplysning } from '../pages/utkast/skjema/opplysninger/opplysninger';
 import { MalformData, MalformType } from '../rest/data/malform';
-import { SkjemaelementFeil } from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { erStandard, erVarigEllerGradertVarig } from './innsatsgruppe';
 
@@ -67,10 +66,6 @@ export function mergeMedDefaultOpplysninger(opplysningListe: string[]): Opplysni
 
 export function erDefaultOpplysning(opplysning: string) {
 	return opplysningslisteBokmal.some(defaultOpplysning => defaultOpplysning === opplysning);
-}
-
-export function lagSkjemaElementFeil(error: string | undefined): SkjemaelementFeil | undefined {
-	return error ? { feilmelding: error } : undefined;
 }
 
 export function harFeil(skjemaFeil: SkjemaFeil): boolean {

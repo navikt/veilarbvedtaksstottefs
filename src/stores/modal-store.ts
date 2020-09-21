@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import createUseContext from 'constate';
+import constate from 'constate';
 
 export enum ModalType {
 	INGEN = 'INGEN',
@@ -24,7 +24,7 @@ export enum ModalType {
 	FEIL_VED_VALIDERING_AV_UTKAST = 'FEIL_VED_VALIDERING_AV_UTKAST'
 }
 
-export const useModalStore = createUseContext(() => {
+export const [ModalStoreProvider, useModalStore] = constate(() => {
 	const [modalType, setModalType] = useState<ModalType>(ModalType.INGEN);
 	const [modalProps, setModalProps] = useState<any>({});
 
