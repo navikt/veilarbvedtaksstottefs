@@ -1,4 +1,3 @@
-import { JSONObject } from 'yet-another-fetch-mock';
 import {
 	Features,
 	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
@@ -9,7 +8,7 @@ import {
 	SKRU_AV_POLLING_DIALOG,
 } from '../../rest/data/features';
 
-const features: Features & JSONObject = {
+const features: Features = {
 	[PRELANSERING_TOGGLE]: false,
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
 	[STOPPE_VEDTAKSUTSENDING_TOGGLE]: false,

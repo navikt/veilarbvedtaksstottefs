@@ -23,6 +23,7 @@ import {
 import { addToFetchMock } from './mock-utils';
 import { mockHentDialoger, mockSendDialogMelding } from './meldinger-mock';
 import { innloggetVeileder } from './api-data/innlogget-veileder';
+import { MockHandler } from 'yet-another-fetch-mock/dist/types/types';
 
 const fetchMock = FetchMock.configure({
 	enableFallback: true,
@@ -45,10 +46,14 @@ addToFetchMock(mockHentDialoger, fetchMock);
 addToFetchMock(mockSendDialogMelding, fetchMock);
 addToFetchMock(mockOppdaterBeslutterProsessStatus, fetchMock);
 
-fetchMock.get('/veilarbvedtaksstotte/api/vedtak/arena', vedtakFraArena);
-fetchMock.get('/veilarbvedtaksstotte/api/vedtak/:vedtakId/oyeblikksbilde', vedlegg);
-fetchMock.get('/veilarbpersonflatefs/api/feature', features);
-fetchMock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', tilgangTilBrukersKontor);
-fetchMock.get('/veilarboppfolging/api/oppfolging', oppfolgingData);
-fetchMock.get('/veilarbperson/api/person/:fnr/malform', malform);
-fetchMock.get('/veilarbveileder/api/veileder/me', innloggetVeileder);
+fetchMock.get('/veilarbvedtaksstotte/api/vedtak/arena', jsonResponse(vedtakFraArena));
+fetchMock.get('/veilarbvedtaksstotte/api/vedtak/:vedtakId/oyeblikksbilde', jsonResponse(vedlegg));
+fetchMock.get('/veilarbpersonflatefs/api/feature', jsonResponse(features));
+fetchMock.get('/veilarboppfolging/api/oppfolging/veilederTilgang', jsonResponse(tilgangTilBrukersKontor));
+fetchMock.get('/veilarboppfolging/api/oppfolging', jsonResponse(oppfolgingData));
+fetchMock.get('/veilarbperson/api/person/:fnr/malform', jsonResponse(malform));
+fetchMock.get('/veilarbveileder/api/veileder/me', jsonResponse(innloggetVeileder));
+
+function jsonResponse(value: any): MockHandler {
+	return (req, res, ctx) => res(ctx.json(value));
+}

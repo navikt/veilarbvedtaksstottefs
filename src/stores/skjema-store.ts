@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import createUseContext from 'constate';
+import constate from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
 import { mapOpplysningerFraForskjelligMalformTilBokmal, validerBegrunnelseMaxLength, validerSkjema as valider } from '../utils/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
 import { BeslutterProsessStatus, HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { SkjemaLagringStatus } from '../utils/types/skjema-lagring-status';
 
-export const useSkjemaStore = createUseContext(() => {
+export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	const [opplysninger, setOpplysninger] = useState<string[]>([]);
 	const [hovedmal, setHovedmal] = useState<OrNothing<HovedmalType>>();
 	const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>();

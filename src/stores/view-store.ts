@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import createUseContext from 'constate';
+import constate from 'constate';
 
 export enum ViewType {
 	HOVEDSIDE = 'HOVEDSIDE',
@@ -11,7 +11,7 @@ export enum ViewType {
 	ARENA_VEDTAK_PDF = 'ARENA_VEDTAK_PDF'
 }
 
-export const useViewStore = createUseContext(() => {
+export const [ViewStoreProvider, useViewStore] = constate(() => {
 	const [view, setView] = useState<ViewType>(ViewType.HOVEDSIDE);
 	const [viewProps, setViewProps] = useState<any>({});
 

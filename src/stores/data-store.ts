@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import createUseContext from 'constate';
+import constate from 'constate';
 import { ArenaVedtak, BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
 import Oppfolging from '../rest/data/oppfolging-data';
 import { MalformData } from '../rest/data/malform';
@@ -12,7 +12,7 @@ import { OrNothing } from '../utils/types/ornothing';
 // Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
 const placeholder = {} as any;
 
-export const useDataStore = createUseContext(() => {
+export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [oppfolgingData, setOppfolgingData] = useState<Oppfolging>(placeholder);
 	const [malform, setMalform] = useState<MalformData>(placeholder);
 	const [features, setFeatures] = useState<Features>(placeholder);
