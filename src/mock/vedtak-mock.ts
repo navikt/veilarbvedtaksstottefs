@@ -11,7 +11,7 @@ import { enhetId, enhetNavn } from './konstanter';
 import env from '../utils/environment';
 import { SkjemaData } from '../utils/skjema-utils';
 
-export let vedtakUtkastMock = env.isRunningOnGhPages ? null : utkast;
+export let vedtakUtkastMock: Vedtak | null = env.isRunningOnGhPages ? null : utkast;
 const fattedeVedtak = historisk;
 
 export const mockHentUtkast: Mock = {
@@ -76,7 +76,10 @@ export const mockOppdaterUtkast: Mock = {
 
 export const oppdaterVedtakUtkastMockFraSkjema = (skjemaData: SkjemaData) => {
 	if (vedtakUtkastMock) {
-		vedtakUtkastMock = Object.assign(vedtakUtkastMock || {}, skjemaData) as Vedtak;
+		vedtakUtkastMock.begrunnelse = skjemaData.begrunnelse;
+		vedtakUtkastMock.hovedmal = skjemaData.hovedmal;
+		vedtakUtkastMock.innsatsgruppe = skjemaData.innsatsgruppe;
+		vedtakUtkastMock.opplysninger = skjemaData.opplysninger ? skjemaData.opplysninger : [];
 	}
 };
 
