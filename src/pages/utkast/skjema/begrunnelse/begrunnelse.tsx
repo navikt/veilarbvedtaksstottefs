@@ -16,7 +16,7 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 
-export const BEGRUNNELSE_BEGRENSET_LENGTH = 4000;
+export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
 const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
 
@@ -54,8 +54,6 @@ function Begrunnelse() {
 		}
 	}
 
-	useEffect(() => frontendlogger.logMetrikk('vis-vedtaksbrev'), []);
-
 	useEffect(() => {
 		const feil = validerBegrunnelseMaxLength(begrunnelse);
 		setBegrunnelseFeil(feil.begrunnelse);
@@ -82,14 +80,14 @@ function Begrunnelse() {
 						value={begrunnelse || ''}
 						label=""
 						placeholder="Skriv inn din begrunnelse/arbeidsevnevurdering her"
-						maxLength={BEGRUNNELSE_BEGRENSET_LENGTH}
+						maxLength={BEGRUNNELSE_ANBEFALT_LENGTH}
 						onChange={onBegrunnelseChanged}
 						aria-labelledby="begrunnelse-tittel"
 						aria-describedby="begrunnelse-tips"
 						autoCorrect="on"
 					/>
 					<Normaltekst className="begrunnelse__malform">Brukers målform: {malformToTekst(malform)}</Normaltekst>
-					<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_BEGRENSET_LENGTH}>
+					<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH}>
 						<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
 							Begrunnelsen du har skrevet er veldig lang og derfor tung å lese for mottaker. Prøv å korte den ned.
 						</AlertStripeAdvarsel>
