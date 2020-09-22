@@ -39,7 +39,6 @@ function TaOverModal(props: ModalProps) {
 	const {hideModal, showModal} = useModalStore();
 	const {setVeilederTilgang} = useTilgangStore();
 	const {utkast, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilSystemMelding} = useDataStore();
-
 	const [taOverFor, setTaOverFor] = useState<TaOverFor>();
 	const [vedtakOvertatt, setVedtakOvertatt] = useState(false);
 	const [laster, setLaster] = useState(false);

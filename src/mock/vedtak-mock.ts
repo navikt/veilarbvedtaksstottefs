@@ -156,6 +156,22 @@ export const mockStartBeslutterprosess: Mock = {
 	}
 };
 
+export const mockAvbrytBeslutterprosess: Mock = {
+	method: 'POST',
+	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/avbryt`,
+	handler: async (): Promise<ResponseData> => {
+		if (!vedtakUtkastMock) throw new Error('Fant ikke utkast å avbrute beslutterprosess på');
+
+		vedtakUtkastMock.beslutterProsessStatus = null;
+		vedtakUtkastMock.beslutterIdent = null;
+		vedtakUtkastMock.beslutterNavn = null;
+
+		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_AVBRUTT);
+
+		return { status: 200 };
+	}
+};
+
 export const mockBliBeslutter: Mock = {
 	method: 'POST',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/bliBeslutter`,

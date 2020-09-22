@@ -17,7 +17,8 @@ import {
 	mockOppdaterUtkast,
 	mockOvertaUtkast,
 	mockSlettUtkast,
-	mockStartBeslutterprosess
+	mockStartBeslutterprosess,
+	mockAvbrytBeslutterprosess
 } from './vedtak-mock';
 import { addToFetchMock } from './mock-utils';
 import { mockHentDialoger, mockSendDialogMelding } from './meldinger-mock';
@@ -38,6 +39,7 @@ addToFetchMock(mockFattVedtak, fetchMock);
 addToFetchMock(mockOvertaUtkast, fetchMock);
 addToFetchMock(mockErUtkastGodkjent, fetchMock);
 addToFetchMock(mockStartBeslutterprosess, fetchMock);
+addToFetchMock(mockAvbrytBeslutterprosess, fetchMock);
 addToFetchMock(mockBliBeslutter, fetchMock);
 addToFetchMock(mockGodkjennVedtak, fetchMock);
 addToFetchMock(mockHentDialoger, fetchMock);
