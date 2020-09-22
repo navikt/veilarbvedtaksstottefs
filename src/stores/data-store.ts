@@ -20,7 +20,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [utkast, setUtkast] = useState<Vedtak | null>(null);
 	const [fattedeVedtak, setFattedeVedtak] = useState<Vedtak[]>([]);
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
-	const [meldinger, setMeldinger] = useState<Array<DialogMeldingData | SystemMeldingData>>([]);
+	const [meldinger, setMeldinger] = useState<(DialogMeldingData | SystemMeldingData)[]>([]);
 
 	function leggTilSystemMelding(systemMeldingType: SystemMeldingType) {
 		const systemMeldingData : SystemMeldingData = {
@@ -46,6 +46,12 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		}
 	}
 
+	function setBeslutterProsessStatus(beslutterProsessStatus: OrNothing<BeslutterProsessStatus>) {
+		if (utkast) {
+			setUtkast({...utkast, beslutterProsessStatus });
+		}
+	}
+
 	return {
 		oppfolgingData, setOppfolgingData,
 		malform, setMalform,
@@ -57,6 +63,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		meldinger, setMeldinger,
 		leggTilSystemMelding,
 		setUtkastBeslutter,
-		setUtkastVeileder
+		setUtkastVeileder,
+		setBeslutterProsessStatus
 	};
 });

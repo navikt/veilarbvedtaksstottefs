@@ -24,11 +24,11 @@ export function Forhandsvisning() {
 	const { changeView } = useViewStore();
 	const { utkast, setUtkast, features, setFattedeVedtak } = useDataStore();
 	const { showModal } = useModalStore();
-	const { innsatsgruppe, hovedmal, resetSkjema, beslutterProsessStatus } = useSkjemaStore();
+	const { innsatsgruppe, hovedmal, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
-	const {id: utkastId} = utkast as Vedtak;
+	const {id: utkastId, beslutterProsessStatus} = utkast as Vedtak;
 
 	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
 	const url = env.isProduction

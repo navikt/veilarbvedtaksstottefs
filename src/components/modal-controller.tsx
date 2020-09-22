@@ -24,7 +24,7 @@ import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import { BekreftSendVedtakModal } from './modal/vedtak-sendt/bekreft-send-vedtak-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverModal from './modal/ta-over-modal/ta-over-modal';
-import AvbrytBeslutterProsessModal from './modal/AvbryteBeslutterProsess/avbryte-beslutterprosess-modal';
+import AvbrytBeslutterProsessModal from './modal/AvbrytBeslutterProsessModel/avbryt-beslutterprosess-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
@@ -74,7 +74,7 @@ export function ModalController() {
 			<VedtakSendtModal isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
-			<AvbrytBeslutterProsessModal isOpen={modalType === ModalType.AVBRYT_BESLUTTER_PROSESS} Innsatsgruppe={modalProps.Innsatsgruppe}/>
+			<AvbrytBeslutterProsessModal isOpen={modalType === ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS} innsatsgruppe={modalProps.innsatsgruppe}/>
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>
 	);

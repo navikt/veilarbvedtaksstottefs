@@ -156,9 +156,9 @@ export const mockStartBeslutterprosess: Mock = {
 	}
 };
 
-export const mockAvbruttBeslutterprosess: Mock = {
+export const mockAvbrytBeslutterprosess: Mock = {
 	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/Avbrutt`,
+	url: `${VEILARBVEDTAKSSTOTTE_API}/beslutter/avbryt`,
 	handler: async (): Promise<ResponseData> => {
 		if (!vedtakUtkastMock) throw new Error('Fant ikke utkast å avbrute beslutterprosess på');
 

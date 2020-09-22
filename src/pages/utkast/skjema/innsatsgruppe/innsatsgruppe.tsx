@@ -22,13 +22,13 @@ import { ModalType, useModalStore } from '../../../../stores/modal-store';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 function Innsatsgruppe() {
-	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, beslutterProsessStatus, setHovedmal, errors} = useSkjemaStore();
+	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
 	const {fattedeVedtak, utkast} = useDataStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
-	const visInfomelding = trengerBeslutter(innsatsgruppe) && !erBeslutterProsessStartet(beslutterProsessStatus);
+	const visInfomelding = trengerBeslutter(innsatsgruppe) && !erBeslutterProsessStartet(utkast!.beslutterProsessStatus);
 
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
@@ -64,12 +64,12 @@ interface InnsatsgruppeRadioProps {
 }
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
-	const {beslutterProsessStatus} = useSkjemaStore();
 	const {showModal} = useModalStore();
+	const {utkast} = useDataStore();
 
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
-		if (erBeslutterProsessStartet(beslutterProsessStatus) && !trengerBeslutter(innsatsgruppe)) {
-			showModal(ModalType.AVBRYT_BESLUTTER_PROSESS, {Innsatsgruppe: innsatsgruppe});
+		if (erBeslutterProsessStartet(utkast && utkast.beslutterProsessStatus) && !trengerBeslutter(innsatsgruppe)) {
+			showModal(ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS, {innsatsgruppe});
 		} else {
 			props.handleInnsatsgruppeChanged(innsatsgruppe);
 		}

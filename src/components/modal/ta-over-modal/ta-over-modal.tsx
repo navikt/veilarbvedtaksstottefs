@@ -13,7 +13,6 @@ import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
 import './ta-over-modal.less';
 import { SystemMeldingType } from '../../../utils/types/melding-type';
-import { useSkjemaStore } from '../../../stores/skjema-store';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
@@ -40,7 +39,6 @@ function TaOverModal(props: ModalProps) {
 	const {hideModal, showModal} = useModalStore();
 	const {setVeilederTilgang} = useTilgangStore();
 	const {utkast, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilSystemMelding} = useDataStore();
-	const {beslutterProsessStatus} = useSkjemaStore();
 	const [taOverFor, setTaOverFor] = useState<TaOverFor>();
 	const [vedtakOvertatt, setVedtakOvertatt] = useState(false);
 	const [laster, setLaster] = useState(false);
@@ -49,7 +47,7 @@ function TaOverModal(props: ModalProps) {
 		return null;
 	}
 
-	const visValg = erBeslutterProsessStartet(beslutterProsessStatus) && utkast.beslutterNavn != null;
+	const visValg = erBeslutterProsessStartet(utkast.beslutterProsessStatus) && utkast.beslutterNavn != null;
 
 	function handleTaOverVedtak() {
 		setLaster(true);

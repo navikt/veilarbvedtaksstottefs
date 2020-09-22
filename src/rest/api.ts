@@ -152,8 +152,8 @@ export const fetchStartBeslutterProsess = (vedtakId: number): Promise<Response> 
 	})
 };
 
-export const fetchAvbruttBeslutterProsess = (vedtakId: number): Promise<Response> => {
-	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/avbrutt?vedtakId=${vedtakId}`, {
+export const fetchAvbrytBeslutterProsess = (vedtakId: number): Promise<Response> => {
+	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/avbryt?vedtakId=${vedtakId}`, {
 		method: 'POST',
 		credentials
 	})

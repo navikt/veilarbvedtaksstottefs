@@ -36,15 +36,17 @@ function LesUtkastAksjoner() {
 	const {
 		fattedeVedtak, innloggetVeileder,
 		setUtkastBeslutter,
-		leggTilSystemMelding, utkast
+		leggTilSystemMelding, utkast,
+		setBeslutterProsessStatus
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
-	const {validerSkjema, innsatsgruppe, beslutterProsessStatus, setBeslutterProsessStatus} = useSkjemaStore();
+	const {validerSkjema, innsatsgruppe} = useSkjemaStore();
 
 	const {
 		id: utkastId,
-		beslutterNavn
+		beslutterNavn,
+		beslutterProsessStatus
 	} = utkast as Vedtak;
 
 	const [dialogModalApen, setDialogModalApen] = useState(erBeslutterProsessStartet(beslutterProsessStatus));

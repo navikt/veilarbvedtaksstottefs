@@ -22,12 +22,12 @@ import { SKRU_AV_POLLING_UTKAST } from '../../rest/data/features';
 const TEN_SECONDS = 10000;
 
 export function EndreUtkastSide() {
-	const { fattedeVedtak, malform, utkast, features } = useDataStore();
+	const { fattedeVedtak, malform, utkast, features, setBeslutterProsessStatus } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert,
 		setSistOppdatert, validerSkjema, validerBegrunnelseLengde, lagringStatus,
-		setLagringStatus, beslutterProsessStatus, setBeslutterProsessStatus
+		setLagringStatus
 	} = useSkjemaStore();
 
 	const pollBeslutterstatusIntervalRef = useRef<number>();
@@ -86,9 +86,9 @@ export function EndreUtkastSide() {
 			}
 		};
 
-		const erStartet = erBeslutterProsessStartet(beslutterProsessStatus);
-		const erGodkjent = erGodkjentAvBeslutter(beslutterProsessStatus);
-		const erHosBeslutter = erKlarTilBeslutter(beslutterProsessStatus);
+		const erStartet = erBeslutterProsessStartet(utkast.beslutterProsessStatus);
+		const erGodkjent = erGodkjentAvBeslutter(utkast.beslutterProsessStatus);
+		const erHosBeslutter = erKlarTilBeslutter(utkast.beslutterProsessStatus);
 
 		/*
             Hvis beslutterprosessen har startet og innlogget bruker er ansvarlig veileder så skal vi periodisk hente
