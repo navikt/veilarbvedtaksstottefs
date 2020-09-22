@@ -62,8 +62,8 @@ export const feilVedStartBeslutterProsessConfig: FeilModalConfig = {
 };
 
 export const feilVedAvbrytBeslutterProsessConfig: FeilModalConfig = {
-	tittel: 'Klarte ikke å endre innsatsgruppe for veileder',
-	beskrivelse: 'En feil oppstod mens å endre innsatsgruppe som trenger ikke beslutter lenge. Vennligst prøv igjen senere.'
+	tittel: 'Klarte ikke å avbryte beslutterprosessen',
+	beskrivelse: 'En feil oppstod under avbryting av beslutterprosessen. Innsatsgruppe vil ikke bli endret.'
 };
 
 export const feilVedBliBeslutterConfig: FeilModalConfig = {
