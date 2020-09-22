@@ -5,11 +5,10 @@ import {
 	Vedtak,
 	VedtakStatus
 } from '../../../rest/data/vedtak';
-import { JSONObject } from 'yet-another-fetch-mock';
 import { veileder1, veileder3 } from '../../veiledere-mock';
 import { enhetId, enhetNavn } from '../../konstanter';
 
-const utkast: Vedtak & JSONObject = {
+const utkast: Vedtak = {
 	id: 100,
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
 	innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
@@ -30,7 +29,7 @@ const utkast: Vedtak & JSONObject = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const utkastMedBeslutter: Vedtak & JSONObject = {
+const utkastMedBeslutter: Vedtak = {
 	id: 100,
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
 	innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,

@@ -1,4 +1,4 @@
-import { HandlerArgument, JSONObject, ResponseData } from 'yet-another-fetch-mock';
+import { MockRequest, ResponseData } from 'yet-another-fetch-mock';
 import { BeslutterProsessStatus, Vedtak, VedtakStatus } from '../rest/data/vedtak';
 import { Mock } from './mock-utils';
 import utkast from './api-data/vedtak/utkast';
@@ -11,7 +11,7 @@ import { enhetId, enhetNavn } from './konstanter';
 import env from '../utils/environment';
 import { SkjemaData } from '../utils/skjema-utils';
 
-export let vedtakUtkastMock = env.isRunningOnGhPages ? null : utkast;
+export let vedtakUtkastMock: Vedtak | null = env.isRunningOnGhPages ? null : utkast;
 const fattedeVedtak = historisk;
 
 export const mockHentUtkast: Mock = {
@@ -54,7 +54,7 @@ export const mockLagUtkast: Mock = {
 			beslutterIdent: null
 		} as unknown as Vedtak;
 
-		vedtakUtkastMock = nyttUtkast as Vedtak & JSONObject;
+		vedtakUtkastMock = nyttUtkast as Vedtak;
 
 		fjernAlleMockMeldinger();
 
@@ -67,7 +67,7 @@ export const mockLagUtkast: Mock = {
 export const mockOppdaterUtkast: Mock = {
 	method: 'PUT',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`,
-	handler: async (args: HandlerArgument): Promise<ResponseData> => {
+	handler: async (args: MockRequest): Promise<ResponseData> => {
 		const skjemaData: SkjemaData = args.body;
 		oppdaterVedtakUtkastMockFraSkjema(skjemaData);
 		return { status: 204 };
@@ -75,7 +75,12 @@ export const mockOppdaterUtkast: Mock = {
 };
 
 export const oppdaterVedtakUtkastMockFraSkjema = (skjemaData: SkjemaData) => {
-	vedtakUtkastMock = Object.assign(vedtakUtkastMock || {}, skjemaData) as Vedtak & JSONObject;
+	if (vedtakUtkastMock) {
+		vedtakUtkastMock.begrunnelse = skjemaData.begrunnelse;
+		vedtakUtkastMock.hovedmal = skjemaData.hovedmal;
+		vedtakUtkastMock.innsatsgruppe = skjemaData.innsatsgruppe;
+		vedtakUtkastMock.opplysninger = skjemaData.opplysninger ? skjemaData.opplysninger : [];
+	}
 };
 
 export const mockSlettUtkast: Mock = {

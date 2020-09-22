@@ -1,5 +1,5 @@
 import { Mock } from './mock-utils';
-import { HandlerArgument, ResponseData } from 'yet-another-fetch-mock';
+import { MockRequest, ResponseData } from 'yet-another-fetch-mock';
 import { VEILARBVEDTAKSSTOTTE_API } from '../rest/api';
 import meldinger from './api-data/meldinger';
 import { DialogMelding, SystemMelding } from '../rest/data/melding';
@@ -35,7 +35,7 @@ export const mockHentDialoger: Mock = {
 export const mockSendDialogMelding: Mock = {
 	method: 'POST',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/meldinger`,
-	handler: async (args: HandlerArgument): Promise<ResponseData> => {
+	handler: async (args: MockRequest): Promise<ResponseData> => {
 		const sendDialogData = args.body as { melding: string };
 		const nyMelding: DialogMelding = {
 			opprettet: new Date().toISOString(),
