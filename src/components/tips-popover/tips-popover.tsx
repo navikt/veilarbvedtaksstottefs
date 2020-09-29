@@ -7,6 +7,7 @@ import './tips-popover.less';
 interface TipsPopoverProps {
 	id: string;
 	tipsInnhold: React.ReactNode;
+	ariaLabel?: string;
 }
 
 /*
@@ -41,6 +42,7 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 				type="button"
 				aria-expanded={popoverTrigger !== undefined}
 				aria-controls={props.id}
+				aria-label={props.ariaLabel}
 				aria-haspopup="dialog"
 			>
 				<img src={tipsBilde} className="tips-popover__trigger-img" alt="Info-ikon" />

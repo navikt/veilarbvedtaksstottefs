@@ -3,6 +3,7 @@ import { ModalType, useModalStore } from '../stores/modal-store';
 import { FeilModal } from './modal/feil-modal/feil-modal';
 import {
 	FeilModalConfig,
+	feilVedAvbrytBeslutterProsessConfig,
 	feilVedBliBeslutterConfig,
 	feilVedForhandsvisnigConfig,
 	feilVedGodkjenningAvBeslutter,
@@ -16,15 +17,14 @@ import {
 	feilVedUtsendingAvDialogMelding,
 	feilVedValideringAvUtkast,
 	feilVedVisningConfig,
-	stoppeUtsendingFeatureToggleConfig,
-	feilVedAvbrytBeslutterProsessConfig
+	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
 import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import { BekreftSendVedtakModal } from './modal/vedtak-sendt/bekreft-send-vedtak-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverModal from './modal/ta-over-modal/ta-over-modal';
-import AvbrytBeslutterProsessModal from './modal/AvbrytBeslutterProsessModel/avbryt-beslutterprosess-modal';
+import AvbrytBeslutterProsessModal from './modal/avbryt-beslutter-prosess-modal/avbryt-beslutterprosess-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {

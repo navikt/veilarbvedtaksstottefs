@@ -75,7 +75,7 @@ function Opplysninger() {
 	const opplysningerTittel = (
 		<div className="opplysninger__tittel">
 			<Undertittel id="kilder-tittel">Kilder</Undertittel>
-			<TipsPopover id="opplysninger-tips" tipsInnhold={<OpplysningerTipsInnhold/>} />
+			<TipsPopover id="opplysninger-tips" tipsInnhold={<OpplysningerTipsInnhold/>} ariaLabel="Kilder tips" />
 		</div>
 	);
 
