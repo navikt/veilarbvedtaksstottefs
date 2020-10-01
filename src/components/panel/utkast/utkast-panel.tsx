@@ -20,18 +20,19 @@ import {
 	isNothing
 } from '../../../utils';
 import { Label, LabelType } from '../../label/label';
-
+import { useDataStore } from '../../../stores/data-store';
 
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { changeView } = useViewStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const { sistOppdatert } = useSkjemaStore();
+	const { beslutterProsessStatus } = useDataStore();
 
 	if (!props.utkast) {
 		return null;
 	}
 
-	const {veilederNavn, beslutterNavn, beslutterProsessStatus} = props.utkast;
+	const {veilederNavn, beslutterNavn} = props.utkast;
 
 	const lagUtkastUnderTittle = () => {
 

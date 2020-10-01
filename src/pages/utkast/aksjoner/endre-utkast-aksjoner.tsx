@@ -29,15 +29,14 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 	const {
 		malform, fattedeVedtak,
 		utkast, leggTilSystemMelding,
-		setBeslutterProsessStatus
+		beslutterProsessStatus, setBeslutterProsessStatus
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
 	const {validerSkjema, lagringStatus, innsatsgruppe} = useSkjemaStore();
 	const {
 		id: utkastId,
-		beslutterNavn,
-		beslutterProsessStatus
+		beslutterNavn
 	} = utkast as Vedtak;
 
 	const [dialogModalApen, setDialogModalApen] = useState(erBeslutterProsessStartet(beslutterProsessStatus));

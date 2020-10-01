@@ -19,7 +19,8 @@ interface AvbrytBeslutterProsessModalProps extends ModalProps{
 
 function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
     const { hideModal, showModal } = useModalStore();
-    const { utkast, leggTilSystemMelding, setUtkastBeslutter, setBeslutterProsessStatus } = useDataStore();
+    const { utkast, leggTilSystemMelding, setUtkastBeslutter,
+            beslutterProsessStatus, setBeslutterProsessStatus } = useDataStore();
     const { setInnsatsgruppe } = useSkjemaStore();
 
     function handleOnJaClicked() {
