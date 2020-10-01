@@ -38,10 +38,7 @@ function mapTaOverForTilTekst(taOverFor: TaOverFor): string {
 function TaOverModal(props: ModalProps) {
 	const {hideModal, showModal} = useModalStore();
 	const {setVeilederTilgang} = useTilgangStore();
-	const {utkast, innloggetVeileder,
-		   setUtkastBeslutter, setUtkastVeileder,
-		   beslutterProsessStatus, leggTilSystemMelding
-	} = useDataStore();
+	const {utkast, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilSystemMelding} = useDataStore();
 	const [taOverFor, setTaOverFor] = useState<TaOverFor>();
 	const [vedtakOvertatt, setVedtakOvertatt] = useState(false);
 	const [laster, setLaster] = useState(false);
@@ -50,7 +47,7 @@ function TaOverModal(props: ModalProps) {
 		return null;
 	}
 
-	const visValg = erBeslutterProsessStartet(beslutterProsessStatus) && utkast.beslutterNavn != null;
+	const visValg = erBeslutterProsessStartet(utkast.beslutterProsessStatus) && utkast.beslutterNavn != null;
 
 	function handleTaOverVedtak() {
 		setLaster(true);

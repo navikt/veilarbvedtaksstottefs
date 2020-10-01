@@ -65,10 +65,10 @@ interface InnsatsgruppeRadioProps {
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	const {showModal} = useModalStore();
-	const {beslutterProsessStatus} = useDataStore();
+	const {utkast} = useDataStore();
 
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
-		if (erBeslutterProsessStartet(beslutterProsessStatus) && !trengerBeslutter(innsatsgruppe)) {
+		if (erBeslutterProsessStartet(utkast && utkast.beslutterProsessStatus) && !trengerBeslutter(innsatsgruppe)) {
 			showModal(ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS, {innsatsgruppe});
 		} else {
 			props.handleInnsatsgruppeChanged(innsatsgruppe);
