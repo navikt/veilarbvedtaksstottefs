@@ -7,10 +7,8 @@ export enum VarselType {
 
 export const [VarselStoreProvider, useVarselStore] = constate(() => {
 	const [varselType, setVarselType] = useState<VarselType | null>(null);
-	const [varselProps, setVarselProps] = useState<any>({});
 
 	const showVarsel = (type: VarselType, props: object = {}) => {
-		setVarselProps(props);
 		setVarselType(type);
 	};
 
@@ -18,5 +16,5 @@ export const [VarselStoreProvider, useVarselStore] = constate(() => {
 		setVarselType(null);
 	};
 
-	return { varselType, varselProps, showVarsel, hideVarsel };
+	return { varselType, showVarsel, hideVarsel };
 });
