@@ -21,7 +21,6 @@ import {
 } from '../../../utils';
 import { Label, LabelType } from '../../label/label';
 
-
 export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { changeView } = useViewStore();
 	const { kanEndreUtkast } = useTilgangStore();

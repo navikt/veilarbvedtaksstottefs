@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
@@ -19,7 +19,7 @@ interface AvbrytBeslutterProsessModalProps extends ModalProps{
 
 function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
     const { hideModal, showModal } = useModalStore();
-    const { utkast, leggTilSystemMelding, setUtkastBeslutter, setBeslutterProsessStatus } = useDataStore();
+    const { utkast, leggTilSystemMelding, nullStillBeslutterProsess } = useDataStore();
     const { setInnsatsgruppe } = useSkjemaStore();
 
     function handleOnJaClicked() {
@@ -27,8 +27,7 @@ function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
             .then(() => {
                 hideModal();
                 setInnsatsgruppe(props.innsatsgruppe);
-                setBeslutterProsessStatus(null);
-                setUtkastBeslutter(null, null);
+                nullStillBeslutterProsess();
                 leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_AVBRUTT);
             })
             .catch(() => showModal(ModalType.FEIL_VED_AVBRYT_BESLUTTER_PROSESS));

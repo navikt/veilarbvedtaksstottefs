@@ -52,6 +52,12 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		}
 	}
 
+	function nullStillBeslutterProsess(){
+		if (utkast) {
+			setUtkast({...utkast, beslutterProsessStatus: null, beslutterIdent: null, beslutterNavn: null });
+		}
+	}
+
 	return {
 		oppfolgingData, setOppfolgingData,
 		malform, setMalform,
@@ -64,6 +70,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		leggTilSystemMelding,
 		setUtkastBeslutter,
 		setUtkastVeileder,
-		setBeslutterProsessStatus
+		setBeslutterProsessStatus,
+		nullStillBeslutterProsess
 	};
 });
