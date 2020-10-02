@@ -18,12 +18,14 @@ import { useTilgangStore } from '../../stores/tilgang-store';
 import { useDataStore } from '../../stores/data-store';
 import './forhandsvisning.less';
 import { Vedtak } from '../../rest/data/vedtak';
+import { useVarselStore, VarselType } from '../../stores/varsel-store';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
 	const { utkast, setUtkast, features, setFattedeVedtak } = useDataStore();
-	const { showModal } = useModalStore();
+	const { showModal, hideModal } = useModalStore();
+	const { showVarsel } = useVarselStore();
 	const { innsatsgruppe, hovedmal, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
@@ -70,8 +72,9 @@ export function Forhandsvisning() {
 					// Feiler ikke selv om fattede vedtak ikke oppdateres
 					.finally(() => {
 						resetSkjema();
+						hideModal();
 						changeView(ViewType.HOVEDSIDE);
-						showModal(ModalType.VEDTAK_SENT_SUKSESS);
+						showVarsel(VarselType.VEDTAK_SENT_SUKSESS);
 						setUtkast(null);
 					});
 			});

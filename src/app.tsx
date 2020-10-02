@@ -10,7 +10,7 @@ import './app.less';
 import { MockPanel } from './mock/panel/mock-panel';
 import Show from './components/show';
 import env from './utils/environment';
-import { VarselController } from './components/varsel-controller/varsel-controller';
+import { VarselController } from './components/varsel/varsel-controller';
 
 interface AppProps {
 	fnr: string;
