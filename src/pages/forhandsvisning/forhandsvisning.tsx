@@ -18,7 +18,8 @@ import { useTilgangStore } from '../../stores/tilgang-store';
 import { useDataStore } from '../../stores/data-store';
 import './forhandsvisning.less';
 import { Vedtak } from '../../rest/data/vedtak';
-import { useVarselStore, VarselType } from '../../stores/varsel-store';
+import { useVarselStore } from '../../stores/varsel-store';
+import { VarselType } from '../../components/varsel/varsel-type';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
