@@ -19,21 +19,15 @@ interface AvbrytBeslutterProsessModalProps extends ModalProps{
 
 function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
     const { hideModal, showModal } = useModalStore();
-    const { utkast, leggTilSystemMelding, setUtkastBeslutter, setBeslutterProsessStatus } = useDataStore();
+    const { utkast, leggTilSystemMelding, nullStillBeslutterProsess } = useDataStore();
     const { setInnsatsgruppe } = useSkjemaStore();
-    const beslutterProsessStatus = utkast && utkast.beslutterProsessStatus;
-
-    useEffect(() => {
-            setBeslutterProsessStatus(beslutterProsessStatus);
-    }, [beslutterProsessStatus]);
 
     function handleOnJaClicked() {
         fetchAvbrytBeslutterProsess(hentId(utkast))
             .then(() => {
                 hideModal();
                 setInnsatsgruppe(props.innsatsgruppe);
-                setBeslutterProsessStatus(null);
-                setUtkastBeslutter(null, null);
+                nullStillBeslutterProsess();
                 leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_AVBRUTT);
             })
             .catch(() => showModal(ModalType.FEIL_VED_AVBRYT_BESLUTTER_PROSESS));
