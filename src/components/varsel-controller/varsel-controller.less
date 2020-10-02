@@ -1,0 +1,33 @@
+.veilarbvedtaksstottefs {
+  .toast {
+    display: flex;
+    justify-content: flex-end;
+    z-index: 100;
+
+
+    .alertstripe {
+      margin: 0.5rem;
+      position: absolute;
+      box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .vis-varsel {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 500ms linear;
+    }
+
+    .skjul-varsel {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 500ms linear 500ms,
+      opacity 500ms
+    }
+  }
+    .toast.av-siden {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+}
