@@ -19,3 +19,8 @@ export const tattOverSomBeslutter: VarselConfig = {
     type: 'info',
     tekst: 'Du har nå tatt over som beslutter.'
 }
+
+export const utkastOppdatert: VarselConfig = {
+    type: 'info',
+    tekst: 'Utkastet har blitt oppdatert.'
+}

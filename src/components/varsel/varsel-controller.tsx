@@ -1,7 +1,7 @@
 import React from 'react';
 import { useVarselStore } from '../../stores/varsel-store';
 import { VarselToast } from './varsel-toast';
-import { tattOverSomBeslutter, tattOverSomVeileder, VarselConfig, vedtakSendt } from './varsel-config';
+import { VarselConfig, tattOverSomBeslutter, tattOverSomVeileder, utkastOppdatert, vedtakSendt } from './varsel-config';
 import { VarselType } from './varsel-type';
 
 export function VarselController() {
@@ -28,5 +28,7 @@ function varselConfig(varselType: VarselType): VarselConfig  {
 			return tattOverSomBeslutter;
 		case VarselType.VEDTAK_SENT_SUKSESS:
 			return vedtakSendt;
+		case VarselType.UTKAST_OPPDATERT:
+			return utkastOppdatert;
 	}
 }

@@ -19,6 +19,8 @@ import { SKRU_AV_POLLING_UTKAST } from '../../rest/data/features';
 import SkjemaBolk from './skjema/bolk/skjema-bolk';
 import checkmark from './check.svg';
 import { BEGRUNNELSE_MAX_LENGTH } from './skjema/begrunnelse/begrunnelse';
+import { useVarselStore } from '../../stores/varsel-store';
+import { VarselType } from '../../components/varsel/varsel-type';
 
 const TEN_SECONDS = 10000;
 
@@ -28,6 +30,7 @@ export function LesUtkastSide() {
 	const {changeView} = useViewStore();
 	const {erBeslutter} = useTilgangStore();
 	const {initSkjema} = useSkjemaStore();
+	const {showVarsel} = useVarselStore();
 	const refreshUtkastIntervalRef = useRef<number>();
 
 	useEffect(() => {
@@ -39,6 +42,9 @@ export function LesUtkastSide() {
 			refreshUtkastIntervalRef.current = setInterval(() => {
 				fetchUtkast(fnr).then(response => {
 					if (response.data) {
+						if (response.data.sistOppdatert !== utkast.sistOppdatert){
+							showVarsel(VarselType.UTKAST_OPPDATERT);
+						}
 						setUtkast(response.data);
 						initSkjema(response.data);
 					}
