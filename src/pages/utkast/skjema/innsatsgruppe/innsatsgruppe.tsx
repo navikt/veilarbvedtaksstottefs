@@ -18,6 +18,7 @@ import Show from '../../../../components/show';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { ModalType, useModalStore } from '../../../../stores/modal-store';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 function Innsatsgruppe() {
@@ -27,8 +28,7 @@ function Innsatsgruppe() {
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
-	const visInfomelding = trengerBeslutter(innsatsgruppe)
-		&& !erBeslutterProsessStartet(utkast!.beslutterProsessStatus);
+	const visInfomelding = trengerBeslutter(innsatsgruppe) && !erBeslutterProsessStartet(utkast!.beslutterProsessStatus);
 
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
@@ -58,12 +58,23 @@ function Innsatsgruppe() {
 export default Innsatsgruppe;
 
 interface InnsatsgruppeRadioProps {
-	handleInnsatsgruppeChanged: (e: any) => void;
+	handleInnsatsgruppeChanged: (e: InnsatsgruppeType) => void;
 	setHovedmal: (e: any) => void;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
 }
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
+	const {showModal} = useModalStore();
+	const {utkast} = useDataStore();
+
+	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
+		if (erBeslutterProsessStartet(utkast && utkast.beslutterProsessStatus) && !trengerBeslutter(innsatsgruppe)) {
+			showModal(ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS, {innsatsgruppe});
+		} else {
+			props.handleInnsatsgruppeChanged(innsatsgruppe);
+		}
+	}
+
 	return (
 		<div className="innsatsgruppe">
 			{innsatsgruppeTekster.map(innsatsgruppeTekst => (
@@ -82,7 +93,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 						aria-labelledby={'innsatsgruppe-tittel'}
 						onChange={(e: any) => {
 							const innsatsgruppe = e.target.value;
-							props.handleInnsatsgruppeChanged(innsatsgruppe);
+							handleInnsatsgruppeChanged(innsatsgruppe);
 							if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
 								props.setHovedmal(null);
 							}
