@@ -53,7 +53,7 @@ export function VarselToast(props: PropsWithChildren<VarselToastProps>) {
     }
 
     return (
-        <div className={'toast'}>
+        <div className={'toast'} role={'alert'}>
             <AlertStripe type={props.type} className={fadeClass}>{props.children}</AlertStripe>
         </div>
     );
