@@ -89,7 +89,7 @@ function Begrunnelse() {
 					<Normaltekst className="begrunnelse__malform">Brukers målform: {malformToTekst(malform)}</Normaltekst>
 					<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH}>
 						<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
-							Begrunnelsen du har skrevet er veldig lang og derfor tung å lese for mottaker. Prøv å korte den ned.
+							Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv å korte den ned.
 						</AlertStripeAdvarsel>
 					</Show>
 				</SkjemaGruppe>

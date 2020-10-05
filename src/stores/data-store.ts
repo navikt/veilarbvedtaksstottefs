@@ -52,7 +52,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		}
 	}
 
-	function nullStillBeslutterProsess(){
+	function nullStillBeslutterProsess() {
 		if (utkast) {
 			setUtkast({...utkast, beslutterProsessStatus: null, beslutterIdent: null, beslutterNavn: null });
 		}
