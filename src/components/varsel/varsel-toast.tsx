@@ -1,5 +1,4 @@
 import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
-import { useEventListener } from '../../utils/hooks';
 import AlertStripe, { AlertStripeType } from 'nav-frontend-alertstriper';
 import './varsel-toast.less';
 import cls from 'classnames';
@@ -12,31 +11,10 @@ interface VarselToastProps {
 }
 
 export function VarselToast(props: PropsWithChildren<VarselToastProps>) {
-    const toastRef = useRef<HTMLDivElement | null>(null);
-    const [isMounted, setMounted] = useState(true);
-    const [isFixedPosition, setFixedPosition] = useState(false);
+    const [hide, setHide] = useState(false);
     const [fadeClass, setFadeClass] = useState<'fade-in' | 'fade-out'>('fade-out');
-    const [offsetTop, setOffsetTop] = useState<number | null>(null);
 
     const {onHide, durationMs} = props;
-
-    useEffect(() => {
-        if (toastRef.current && !offsetTop) {
-            setOffsetTop(toastRef.current.offsetTop);
-        }
-    }, [toastRef, offsetTop]);
-
-
-    useEventListener('scroll', event => {
-        if (toastRef.current && offsetTop) {
-            if (window.scrollY > offsetTop) {
-                setFixedPosition(true);
-            } else {
-                setFixedPosition(false);
-            }
-        }
-    }, [offsetTop]);
-
 
     const fadeIn = useCallback(
         () => {
@@ -53,7 +31,7 @@ export function VarselToast(props: PropsWithChildren<VarselToastProps>) {
 
     const unmount = useCallback(
         () => {
-            setMounted(false);
+            setHide(true);
             if (onHide) {
                 onHide();
             }
@@ -70,12 +48,12 @@ export function VarselToast(props: PropsWithChildren<VarselToastProps>) {
 			.then(unmount);
 	}, [durationMs, fadeIn, fadeOut, unmount]);
 
-    if (!isMounted) {
+    if (hide) {
         return null;
     }
 
     return (
-        <div ref={toastRef} className={cls('toast',(isFixedPosition ? 'fixed-position' : undefined))}>
+        <div className={'toast'}>
             <AlertStripe type={props.type} className={fadeClass}>{props.children}</AlertStripe>
         </div>
     );

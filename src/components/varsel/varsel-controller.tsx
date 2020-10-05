@@ -14,7 +14,7 @@ export function VarselController() {
 	const {type, tekst} = varselConfig(varselType);
 
 	return (
-		<VarselToast type={type} durationMs={4000} onHide={hideVarsel}>
+		<VarselToast type={type} durationMs={6000} onHide={hideVarsel}>
 			{tekst}
 		</VarselToast>
 	);
