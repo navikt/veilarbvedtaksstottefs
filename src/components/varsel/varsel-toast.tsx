@@ -1,7 +1,6 @@
-import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
+import React, { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import AlertStripe, { AlertStripeType } from 'nav-frontend-alertstriper';
 import './varsel-toast.less';
-import cls from 'classnames';
 import { delay } from '../../utils/promise-utils';
 
 interface VarselToastProps {

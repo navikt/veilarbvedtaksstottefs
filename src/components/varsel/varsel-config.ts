@@ -24,3 +24,17 @@ export const utkastOppdatert: VarselConfig = {
     type: 'info',
     tekst: 'Utkastet har blitt oppdatert.'
 }
+export const beslutterprosessTilVeileder: VarselConfig = {
+    type: 'info',
+    tekst: 'Trenger respons fra veileder.'
+}
+
+export const beslutterprosessTilBeslutter: VarselConfig = {
+    type: 'info',
+    tekst: 'Trenger tilbakemelding fra beslutter.'
+}
+
+export const beslutterprosessGodkjent: VarselConfig = {
+    type: 'suksess',
+    tekst: 'Kvalitetsikret av beslutter.'
+}

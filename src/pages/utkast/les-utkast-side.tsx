@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Footer from '../../components/footer/footer';
-import { InnsatsgruppeType } from '../../rest/data/vedtak';
+import { BeslutterProsessStatus, InnsatsgruppeType } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { useTilgangStore } from '../../stores/tilgang-store';
@@ -45,6 +45,7 @@ export function LesUtkastSide() {
 						if (response.data.sistOppdatert !== utkast.sistOppdatert){
 							showVarsel(VarselType.UTKAST_OPPDATERT);
 						}
+						varsleBeslutterProsessStatusEndring(response.data.beslutterProsessStatus);
 						setUtkast(response.data);
 						initSkjema(response.data);
 					}
@@ -62,6 +63,17 @@ export function LesUtkastSide() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkast, erBeslutter]);
 
+	function varsleBeslutterProsessStatusEndring(nyStatus: OrNothing<BeslutterProsessStatus>) {
+		if (
+			utkast &&
+			nyStatus &&
+			nyStatus !== utkast.beslutterProsessStatus &&
+			nyStatus === BeslutterProsessStatus.KLAR_TIL_BESLUTTER
+		) {
+			showVarsel(VarselType.BESLUTTERPROSESS_TIL_BESLUTTER);
+		}
+	}
+	
 	// Utkast kan bli satt til null hvis man er beslutter og veileder fatter et vedtak
 	if (utkast == null) {
 		fetchFattedeVedtak(fnr).then(response => {

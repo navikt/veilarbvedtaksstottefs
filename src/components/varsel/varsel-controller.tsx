@@ -1,7 +1,16 @@
 import React from 'react';
 import { useVarselStore } from '../../stores/varsel-store';
 import { VarselToast } from './varsel-toast';
-import { VarselConfig, tattOverSomBeslutter, tattOverSomVeileder, utkastOppdatert, vedtakSendt } from './varsel-config';
+import {
+	VarselConfig,
+	tattOverSomBeslutter,
+	tattOverSomVeileder,
+	utkastOppdatert,
+	vedtakSendt,
+	beslutterprosessTilVeileder,
+	beslutterprosessTilBeslutter,
+	beslutterprosessGodkjent
+} from './varsel-config';
 import { VarselType } from './varsel-type';
 
 export function VarselController() {
@@ -30,5 +39,11 @@ function varselConfig(varselType: VarselType): VarselConfig  {
 			return vedtakSendt;
 		case VarselType.UTKAST_OPPDATERT:
 			return utkastOppdatert;
+		case VarselType.BESLUTTERPROSESS_TIL_VEILEDER:
+			return beslutterprosessTilVeileder;
+		case VarselType.BESLUTTERPROSESS_TIL_BESLUTTER:
+			return beslutterprosessTilBeslutter;
+		case VarselType.BESLUTTERPROSESS_GODKJENT:
+			return beslutterprosessGodkjent;
 	}
 }
