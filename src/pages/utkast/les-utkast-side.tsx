@@ -18,7 +18,7 @@ import { useSkjemaStore } from '../../stores/skjema-store';
 import { SKRU_AV_POLLING_UTKAST } from '../../rest/data/features';
 import SkjemaBolk from './skjema/bolk/skjema-bolk';
 import checkmark from './check.svg';
-import { BEGRUNNELSE_MAX_LENGTH } from './skjema/begrunnelse/begrunnelse';
+import { BEGRUNNELSE_ANBEFALT_LENGTH } from './skjema/begrunnelse/begrunnelse';
 
 const TEN_SECONDS = 10000;
 
@@ -92,9 +92,15 @@ export function LesUtkastSide() {
 						<div className="begrunnelse__tekstomrade-wrapper">
 							<Tekstomrade className="begrunnelse__tekstomrade">{begrunnelse ? begrunnelse : ''}</Tekstomrade>
 						</div>
-						<div className="begrunnelse__tegnteller">
-							<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">Du har {BEGRUNNELSE_MAX_LENGTH - begrunnelseLength} tegn igjen</Normaltekst>
-						</div>
+						{begrunnelseLength > BEGRUNNELSE_ANBEFALT_LENGTH ? (
+							<div className="begrunnelse__tegnteller">
+								<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">Du har {begrunnelseLength - BEGRUNNELSE_ANBEFALT_LENGTH} tegn for mye </Normaltekst>
+							</div>
+						) : (
+							<div className="begrunnelse__tegnteller">
+								<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">Du har {BEGRUNNELSE_ANBEFALT_LENGTH - begrunnelseLength} tegn igjen </Normaltekst>
+							</div>
+						)}
 					</SkjemaBolk>
 
 					<SkjemaBolk tittel="Innsatsgruppe">

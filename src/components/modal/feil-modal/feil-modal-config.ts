@@ -61,6 +61,11 @@ export const feilVedStartBeslutterProsessConfig: FeilModalConfig = {
 	beskrivelse: 'En feil oppstod under klargjøring av utkastet for beslutter. Vennligst prøv igjen senere.'
 };
 
+export const feilVedAvbrytBeslutterProsessConfig: FeilModalConfig = {
+	tittel: 'Klarte ikke å avbryte beslutterprosessen',
+	beskrivelse: 'En feil oppstod under avbryting av beslutterprosessen. Innsatsgruppe vil ikke bli endret.'
+};
+
 export const feilVedBliBeslutterConfig: FeilModalConfig = {
 	tittel: 'Klarte ikke å bli beslutter',
 	beskrivelse: 'En feil oppstod under overtakselse som beslutter. Vennligst prøv igjen senere.'

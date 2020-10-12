@@ -28,20 +28,19 @@ interface UtkastAksjonerProps {
 function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 	const {
 		malform, fattedeVedtak,
-		setBeslutterProsessStatus,
-		utkast, leggTilSystemMelding
+		utkast, leggTilSystemMelding,
+		setBeslutterProsessStatus
 	} = useDataStore();
 	const {changeView} = useViewStore();
 	const {showModal} = useModalStore();
 	const {validerSkjema, lagringStatus, innsatsgruppe} = useSkjemaStore();
-
 	const {
 		id: utkastId,
-		beslutterProsessStatus,
-		beslutterNavn
+		beslutterNavn,
+		beslutterProsessStatus
 	} = utkast as Vedtak;
 
-	const [dialogModalApen, setDialogModalApen] = useState(beslutterProsessStatus != null);
+	const [dialogModalApen, setDialogModalApen] = useState(erBeslutterProsessStartet(beslutterProsessStatus));
 	const [laster, setLaster] = useState(false);
 
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);

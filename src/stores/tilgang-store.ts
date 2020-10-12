@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import createUseContext from 'constate';
+import constate from 'constate';
 import {
 	erAnsvarligVeileder,
 	erBeslutter,
@@ -8,7 +8,7 @@ import {
 	VeilederTilgang
 } from '../utils/tilgang';
 
-export const useTilgangStore = createUseContext(() => {
+export const [TilgangStoreProvider, useTilgangStore] = constate(() => {
 	const [veilederTilgang, setVeilederTilgang] = useState<VeilederTilgang>(VeilederTilgang.IKKE_ANSVARLIG_VEILEDER);
 
 	return {

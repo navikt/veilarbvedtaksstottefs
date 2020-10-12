@@ -1,9 +1,8 @@
 import { HovedmalType, InnsatsgruppeType, Vedtak, VedtakStatus } from '../../../rest/data/vedtak';
-import { JSONArray } from 'yet-another-fetch-mock';
 import { veileder1, veileder3 } from '../../veiledere-mock';
 import { enhetId, enhetNavn } from '../../konstanter';
 
-const historisk: Vedtak[] & JSONArray = [
+const historisk: Vedtak[] = [
 	{
 		id: 1234,
 		hovedmal: HovedmalType.BEHOLDE_ARBEID,

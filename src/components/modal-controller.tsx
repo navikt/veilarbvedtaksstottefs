@@ -3,6 +3,7 @@ import { ModalType, useModalStore } from '../stores/modal-store';
 import { FeilModal } from './modal/feil-modal/feil-modal';
 import {
 	FeilModalConfig,
+	feilVedAvbrytBeslutterProsessConfig,
 	feilVedBliBeslutterConfig,
 	feilVedForhandsvisnigConfig,
 	feilVedGodkjenningAvBeslutter,
@@ -13,7 +14,8 @@ import {
 	feilVedSendningConfig,
 	feilVedSlettingAvUtkastConfig,
 	feilVedStartBeslutterProsessConfig,
-	feilVedUtsendingAvDialogMelding, feilVedValideringAvUtkast,
+	feilVedUtsendingAvDialogMelding,
+	feilVedValideringAvUtkast,
 	feilVedVisningConfig,
 	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
@@ -22,6 +24,7 @@ import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import { BekreftSendVedtakModal } from './modal/vedtak-sendt/bekreft-send-vedtak-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverModal from './modal/ta-over-modal/ta-over-modal';
+import AvbrytBeslutterProsessModal from './modal/avbryt-beslutter-prosess-modal/avbryt-beslutterprosess-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
@@ -43,6 +46,8 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 			return feilVedOvertakelseAvUtkastConfig;
 		case ModalType.FEIL_VED_START_BESLUTTER_PROSESS:
 			return feilVedStartBeslutterProsessConfig;
+		case ModalType.FEIL_VED_AVBRYT_BESLUTTER_PROSESS:
+			return feilVedAvbrytBeslutterProsessConfig;
 		case ModalType.FEIL_VED_BLI_BESLUTTER:
 			return feilVedBliBeslutterConfig;
 		case ModalType.FEIL_VED_UTSENDING_AV_DIALOG_MELDING:
@@ -69,6 +74,7 @@ export function ModalController() {
 			<VedtakSendtModal isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
+			<AvbrytBeslutterProsessModal isOpen={modalType === ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS} innsatsgruppe={modalProps.innsatsgruppe}/>
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>
 	);

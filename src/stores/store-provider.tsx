@@ -1,10 +1,10 @@
 import React from 'react';
-import { useAppStore } from './app-store';
-import { useDataStore } from './data-store';
-import { useViewStore } from './view-store';
-import { useModalStore } from './modal-store';
-import { useSkjemaStore } from './skjema-store';
-import { useTilgangStore } from './tilgang-store';
+import { AppStoreProvider } from './app-store';
+import { DataStoreProvider } from './data-store';
+import { ViewStoreProvider } from './view-store';
+import { ModalStoreProvider } from './modal-store';
+import { SkjemaStoreProvider } from './skjema-store';
+import { TilgangStoreProvider } from './tilgang-store';
 
 interface StoreProviderProps {
 	fnr: string;
@@ -14,19 +14,19 @@ interface StoreProviderProps {
 
 const StoreProvider = (props: StoreProviderProps) => {
 	return (
-		<useAppStore.Provider fnr={props.fnr} enhetId={props.enhetId}>
-				<useDataStore.Provider>
-					<useTilgangStore.Provider>
-						<useViewStore.Provider>
-							<useModalStore.Provider>
-								<useSkjemaStore.Provider>
+		<AppStoreProvider fnr={props.fnr} enhetId={props.enhetId}>
+				<DataStoreProvider>
+					<TilgangStoreProvider>
+						<ViewStoreProvider>
+							<ModalStoreProvider>
+								<SkjemaStoreProvider>
 									{props.children}
-								</useSkjemaStore.Provider>
-							</useModalStore.Provider>
-						</useViewStore.Provider>
-					</useTilgangStore.Provider>
-				</useDataStore.Provider>
-		</useAppStore.Provider>
+								</SkjemaStoreProvider>
+							</ModalStoreProvider>
+						</ViewStoreProvider>
+					</TilgangStoreProvider>
+				</DataStoreProvider>
+		</AppStoreProvider>
 	);
 };
 
