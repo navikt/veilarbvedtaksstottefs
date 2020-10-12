@@ -66,7 +66,7 @@ function Begrunnelse() {
 	const begrunnelseTittel = (
 		<div className="begrunnelse__tittel">
 			<Undertittel id="begrunnelse-tittel">Begrunnelse</Undertittel>
-			<TipsPopover id="begrunnelse-tips" tipsInnhold={<BegrunnelseTipsInnhold/>} />
+			<TipsPopover id="begrunnelse-tips" tipsInnhold={<BegrunnelseTipsInnhold/>} ariaLabel="Begrunnelse tips" />
 		</div>
 	);
 
@@ -83,13 +83,12 @@ function Begrunnelse() {
 						maxLength={BEGRUNNELSE_ANBEFALT_LENGTH}
 						onChange={onBegrunnelseChanged}
 						aria-labelledby="begrunnelse-tittel"
-						aria-describedby="begrunnelse-tips"
 						autoCorrect="on"
 					/>
 					<Normaltekst className="begrunnelse__malform">Brukers målform: {malformToTekst(malform)}</Normaltekst>
 					<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH}>
 						<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
-							Begrunnelsen du har skrevet er veldig lang og derfor tung å lese for mottaker. Prøv å korte den ned.
+							Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv å korte den ned.
 						</AlertStripeAdvarsel>
 					</Show>
 				</SkjemaGruppe>

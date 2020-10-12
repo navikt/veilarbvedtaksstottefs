@@ -4,7 +4,10 @@ import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import './pdf-viewer.less';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+// We include our own pdfjs to workaround restrictive firewalls.
+// The original can be found at: https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.4.456/pdf.worker.js
+// The version used should match the output 'pdfjs.version'
+pdfjs.GlobalWorkerOptions.workerSrc = process.env.PUBLIC_URL + '/pdf-worker.js';
 
 interface PdfViewerProps {
 	url: string;

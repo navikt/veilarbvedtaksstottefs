@@ -86,6 +86,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 								innsatsgruppeTekst={innsatsgruppeTekst}
 							/>
 						)}
+						aria-label={innsatsgruppeTekst.tittel}
 						key={innsatsgruppeTekst.value}
 						value={innsatsgruppeTekst.value}
 						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
