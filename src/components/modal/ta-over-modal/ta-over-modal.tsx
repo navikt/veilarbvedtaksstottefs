@@ -13,6 +13,8 @@ import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
 import './ta-over-modal.less';
 import { SystemMeldingType } from '../../../utils/types/melding-type';
+import { useVarselStore } from '../../../stores/varsel-store';
+import { VarselType } from '../../varsel/varsel-type';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
@@ -39,8 +41,9 @@ function TaOverModal(props: ModalProps) {
 	const {hideModal, showModal} = useModalStore();
 	const {setVeilederTilgang} = useTilgangStore();
 	const {utkast, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilSystemMelding} = useDataStore();
+	const {showVarsel} = useVarselStore();
+
 	const [taOverFor, setTaOverFor] = useState<TaOverFor>();
-	const [vedtakOvertatt, setVedtakOvertatt] = useState(false);
 	const [laster, setLaster] = useState(false);
 
 	if (!utkast) {
@@ -74,10 +77,18 @@ function TaOverModal(props: ModalProps) {
 				}
 
 				setVeilederTilgang(tilgang);
-				setVedtakOvertatt(true);
+				hideModal();
+				visTattOverVarsel();
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_OVERTAKELSE))
 			.finally(() => setLaster(false));
+	}
+
+	function visTattOverVarsel() {
+		const varselType =
+			taOverFor === TaOverFor.BESLUTTER ? VarselType.TATT_OVER_SOM_BESLUTTER : VarselType.TATT_OVER_SOM_VEILEDER;
+
+		showVarsel(varselType);
 	}
 
 	function handleOnRequestCloseModal() {
@@ -129,31 +140,8 @@ function TaOverModal(props: ModalProps) {
 		</>
 	);
 
-	const VedtakOvertattVisning = (
-		<>
-			<Normaltekst className="varsel-modal__tekstinnehold">
-				Du har nå tatt over som {mapTaOverForTilTekst(taOverFor || TaOverFor.VEILEDER)}
-			</Normaltekst>
-			<Hovedknapp
-				mini={true}
-				htmlType="button"
-				onClick={hideModal}
-				className="varsel-modal__knapper"
-			>
-				Ok
-			</Hovedknapp>
-		</>
-	);
 
-	let Innhold;
-
-	if (vedtakOvertatt) {
-		Innhold = VedtakOvertattVisning;
-	} else if (visValg) {
-		Innhold = OvertaValgVisning;
-	} else {
-		Innhold = OvertaForVeilederVisning;
-	}
+	const Innhold = visValg ? OvertaValgVisning : OvertaForVeilederVisning;
 
 	return (
 		<VarselModal

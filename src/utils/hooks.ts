@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { DependencyList, useCallback, useEffect, useRef } from 'react';
 
 export function useIsAfterFirstRender(): boolean {
 	const hasRenderedOnce = useRef(false);
@@ -12,8 +12,8 @@ export function useIsAfterFirstRender(): boolean {
 	return hasRenderedOnce.current;
 }
 
-export function useEventListener(name: string, listener: EventListener) {
-	const callback: any = useCallback(listener, []);
+export function useEventListener(name: string, listener: EventListener, deps?: DependencyList) {
+	const callback: any = useCallback(listener, (deps ? deps : []));
 	useEffect(() => {
 		window.addEventListener(name, callback);
 		return () => window.removeEventListener(name, callback);

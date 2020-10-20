@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Footer from '../../components/footer/footer';
-import { InnsatsgruppeType } from '../../rest/data/vedtak';
+import { BeslutterProsessStatus, InnsatsgruppeType } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { useTilgangStore } from '../../stores/tilgang-store';
@@ -19,6 +19,8 @@ import { SKRU_AV_POLLING_UTKAST } from '../../rest/data/features';
 import SkjemaBolk from './skjema/bolk/skjema-bolk';
 import checkmark from './check.svg';
 import { BEGRUNNELSE_ANBEFALT_LENGTH } from './skjema/begrunnelse/begrunnelse';
+import { useVarselStore } from '../../stores/varsel-store';
+import { VarselType } from '../../components/varsel/varsel-type';
 
 const TEN_SECONDS = 10000;
 
@@ -28,6 +30,7 @@ export function LesUtkastSide() {
 	const {changeView} = useViewStore();
 	const {erBeslutter} = useTilgangStore();
 	const {initSkjema} = useSkjemaStore();
+	const {showVarsel} = useVarselStore();
 	const refreshUtkastIntervalRef = useRef<number>();
 
 	useEffect(() => {
@@ -39,6 +42,10 @@ export function LesUtkastSide() {
 			refreshUtkastIntervalRef.current = setInterval(() => {
 				fetchUtkast(fnr).then(response => {
 					if (response.data) {
+						if (response.data.sistOppdatert !== utkast.sistOppdatert){
+							showVarsel(VarselType.UTKAST_OPPDATERT);
+						}
+						varsleBeslutterProsessStatusEndring(response.data.beslutterProsessStatus);
 						setUtkast(response.data);
 						initSkjema(response.data);
 					}
@@ -55,6 +62,17 @@ export function LesUtkastSide() {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkast, erBeslutter]);
+
+	function varsleBeslutterProsessStatusEndring(nyStatus: OrNothing<BeslutterProsessStatus>) {
+		if (
+			utkast &&
+			nyStatus &&
+			nyStatus !== utkast.beslutterProsessStatus &&
+			nyStatus === BeslutterProsessStatus.KLAR_TIL_BESLUTTER
+		) {
+			showVarsel(VarselType.BESLUTTERPROSESS_TIL_BESLUTTER);
+		}
+	}
 
 	// Utkast kan bli satt til null hvis man er beslutter og veileder fatter et vedtak
 	if (utkast == null) {

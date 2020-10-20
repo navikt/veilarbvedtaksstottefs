@@ -20,7 +20,6 @@ import {
 	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
-import { VedtakSendtModal } from './modal/vedtak-sendt/vedtak-sendt-modal';
 import { BekreftSendVedtakModal } from './modal/vedtak-sendt/bekreft-send-vedtak-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverModal from './modal/ta-over-modal/ta-over-modal';
@@ -71,7 +70,6 @@ export function ModalController() {
 		<>
 			<SpinnerModal isOpen={modalType === ModalType.LASTER} />
 			<BekreftSendVedtakModal isOpen={modalType === ModalType.BEKREFT_SEND_VEDTAK} onSendVedtakBekreftet={modalProps.onSendVedtakBekreftet}/>
-			<VedtakSendtModal isOpen={modalType === ModalType.VEDTAK_SENT_SUKSESS} />
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
 			<AvbrytBeslutterProsessModal isOpen={modalType === ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS} innsatsgruppe={modalProps.innsatsgruppe}/>
