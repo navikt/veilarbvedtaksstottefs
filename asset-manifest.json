@@ -4,7 +4,7 @@
     "main.js": "/veilarbvedtaksstottefs/static/js/main.js",
     "main.js.map": "/veilarbvedtaksstottefs/static/js/main.js.map",
     "index.html": "/veilarbvedtaksstottefs/index.html",
-    "precache-manifest.210d069d4020368648af8d76933cd70a.js": "/veilarbvedtaksstottefs/precache-manifest.210d069d4020368648af8d76933cd70a.js",
+    "precache-manifest.342e1cdc4426a92909bbd36021c7d732.js": "/veilarbvedtaksstottefs/precache-manifest.342e1cdc4426a92909bbd36021c7d732.js",
     "service-worker.js": "/veilarbvedtaksstottefs/service-worker.js",
     "static/css/main.css.map": "/veilarbvedtaksstottefs/static/css/main.css.map",
     "static/js/main.js.LICENSE.txt": "/veilarbvedtaksstottefs/static/js/main.js.LICENSE.txt",
@@ -37,7 +37,6 @@
     "static/media/tips.svg": "/veilarbvedtaksstottefs/static/media/tips.2d4d3225.svg",
     "static/media/utkast-til-beslutter.svg": "/veilarbvedtaksstottefs/static/media/utkast-til-beslutter.9add9957.svg",
     "static/media/utkast.svg": "/veilarbvedtaksstottefs/static/media/utkast.febe5329.svg",
-    "static/media/vedtak-sendt.d539ea37.svg": "/veilarbvedtaksstottefs/static/media/vedtak-sendt.d539ea37.svg",
     "static/media/vedtak.svg": "/veilarbvedtaksstottefs/static/media/vedtak.c2eba75d.svg"
   },
   "entrypoints": [
