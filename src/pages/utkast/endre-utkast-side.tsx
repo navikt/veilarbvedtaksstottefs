@@ -24,7 +24,7 @@ import { VarselType } from '../../components/varsel/varsel-type';
 const TEN_SECONDS = 10000;
 
 export function EndreUtkastSide() {
-	const { fattedeVedtak, malform, utkast, setBeslutterProsessStatus, features } = useDataStore();
+	const { fattedeVedtak, malform, utkast, features, setBeslutterProsessStatus } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
 		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert,

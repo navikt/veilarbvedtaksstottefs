@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
 import cls from 'classnames';
-import {
-	DialogMelding as DialogMeldingData,
-	SystemMelding as SystemMeldingData
-} from '../../../rest/data/melding';
+import { DialogMelding as DialogMeldingData, SystemMelding as SystemMeldingData } from '../../../rest/data/melding';
 import { MeldingType } from '../../../utils/types/melding-type';
 import { DialogMelding } from './dialog-melding/dialog-melding';
 import { SystemMelding } from './system-melding/system-melding';
@@ -58,7 +55,7 @@ export const MeldingListe = (props: MeldingListeProps) => {
 	}, [meldinger]);
 
     return (
-    	<div className={cls('melding-liste', className)} id="veilarbvedtaksstottefs-melding-liste">
+    	<div aria-live="polite" className={cls('melding-liste', className)} id="veilarbvedtaksstottefs-melding-liste">
 		    {meldinger.map((melding, idx) => {
 				return melding.type === MeldingType.DIALOG_MELDING
 					? mapTilDialogMeldingView(melding as DialogMeldingData, idx, innloggetVeilederIdent)

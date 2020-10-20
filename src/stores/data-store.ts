@@ -7,6 +7,7 @@ import { Features } from '../rest/data/features';
 import { Veileder } from '../rest/data/veiledere';
 import { DialogMelding as DialogMeldingData, SystemMelding as SystemMeldingData } from '../rest/data/melding';
 import { MeldingType, SystemMeldingType } from '../utils/types/melding-type';
+import { OrNothing } from '../utils/types/ornothing';
 
 // Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
 const placeholder = {} as any;
@@ -19,7 +20,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [utkast, setUtkast] = useState<Vedtak | null>(null);
 	const [fattedeVedtak, setFattedeVedtak] = useState<Vedtak[]>([]);
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
-	const [meldinger, setMeldinger] = useState<Array<DialogMeldingData | SystemMeldingData>>([]);
+	const [meldinger, setMeldinger] = useState<(DialogMeldingData | SystemMeldingData)[]>([]);
 
 	function leggTilSystemMelding(systemMeldingType: SystemMeldingType) {
 		const systemMeldingData : SystemMeldingData = {
@@ -33,7 +34,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		setMeldinger((curMeldinger) => [...curMeldinger, systemMeldingData])
 	}
 
-	function setUtkastBeslutter(beslutterIdent: string, beslutterNavn: string) {
+	function setUtkastBeslutter(beslutterIdent: OrNothing<string>, beslutterNavn: OrNothing<string>) {
 		if (utkast) {
 			setUtkast({...utkast, beslutterIdent, beslutterNavn });
 		}
@@ -45,9 +46,15 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		}
 	}
 
-	function setBeslutterProsessStatus(beslutterProsessStatus: BeslutterProsessStatus) {
+	function setBeslutterProsessStatus(beslutterProsessStatus: OrNothing<BeslutterProsessStatus>) {
 		if (utkast) {
 			setUtkast({...utkast, beslutterProsessStatus });
+		}
+	}
+
+	function nullStillBeslutterProsess() {
+		if (utkast) {
+			setUtkast({...utkast, beslutterProsessStatus: null, beslutterIdent: null, beslutterNavn: null });
 		}
 	}
 
@@ -63,6 +70,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		leggTilSystemMelding,
 		setUtkastBeslutter,
 		setUtkastVeileder,
-		setBeslutterProsessStatus
+		setBeslutterProsessStatus,
+		nullStillBeslutterProsess
 	};
 });

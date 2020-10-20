@@ -2,8 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: veilarbvedtaksstottefs
-  namespace: {{namespace}}
-  cluster: dev-fss
+  namespace: pto
   labels:
     team: pto
 spec:
@@ -27,5 +26,5 @@ spec:
       cpu: "1"
       memory: 1Gi
   ingresses:
-    - https://veilarbvedtaksstottefs-{{namespace}}.nais.preprod.local
-    - https://app-{{namespace}}.adeo.no/veilarbvedtaksstottefs
+    - https://veilarbvedtaksstottefs-q1.nais.preprod.local
+    - https://app-q1.adeo.no/veilarbvedtaksstottefs
