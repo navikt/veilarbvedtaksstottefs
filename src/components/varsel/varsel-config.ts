@@ -11,12 +11,12 @@ export const vedtakSendt: VarselConfig = {
 }
 
 export const tattOverSomVeileder: VarselConfig = {
-    type: 'info',
+    type: 'suksess',
     tekst: 'Du har nå tatt over som veileder.'
 }
 
 export const tattOverSomBeslutter: VarselConfig = {
-    type: 'info',
+    type: 'suksess',
     tekst: 'Du har nå tatt over som beslutter.'
 }
 
