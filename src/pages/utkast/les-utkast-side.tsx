@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Footer from '../../components/footer/footer';
-import { BeslutterProsessStatus, InnsatsgruppeType } from '../../rest/data/vedtak';
+import { BeslutterProsessStatus, InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { useTilgangStore } from '../../stores/tilgang-store';
@@ -21,6 +21,7 @@ import checkmark from './check.svg';
 import { BEGRUNNELSE_ANBEFALT_LENGTH } from './skjema/begrunnelse/begrunnelse';
 import { useVarselStore } from '../../stores/varsel-store';
 import { VarselType } from '../../components/varsel/varsel-type';
+import _ from 'lodash'
 
 const TEN_SECONDS = 10000;
 
@@ -42,7 +43,7 @@ export function LesUtkastSide() {
 			refreshUtkastIntervalRef.current = setInterval(() => {
 				fetchUtkast(fnr).then(response => {
 					if (response.data) {
-						if (response.data.sistOppdatert !== utkast.sistOppdatert){
+						if (erUtkastOppdatert(utkast, response.data)) {
 							showVarsel(VarselType.UTKAST_OPPDATERT);
 						}
 						varsleBeslutterProsessStatusEndring(response.data.beslutterProsessStatus);
@@ -62,6 +63,18 @@ export function LesUtkastSide() {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkast, erBeslutter]);
+
+	function erUtkastOppdatert(gjeldende: Vedtak, nytt: Vedtak) {
+		return (
+			gjeldende.begrunnelse !== nytt.begrunnelse ||
+			gjeldende.hovedmal !== nytt.hovedmal ||
+			gjeldende.innsatsgruppe !== nytt.innsatsgruppe ||
+			!(
+				gjeldende.opplysninger.length === nytt.opplysninger.length &&
+				_.intersection(gjeldende.opplysninger, nytt.opplysninger).length === gjeldende.opplysninger.length
+			)
+		);
+	}
 
 	function varsleBeslutterProsessStatusEndring(nyStatus: OrNothing<BeslutterProsessStatus>) {
 		if (
