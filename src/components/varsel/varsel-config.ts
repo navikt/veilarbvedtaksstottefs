@@ -35,6 +35,6 @@ export const beslutterprosessTilBeslutter: VarselConfig = {
 }
 
 export const beslutterprosessGodkjent: VarselConfig = {
-    type: 'suksess',
+    type: 'info',
     tekst: 'Kvalitetsikret av beslutter.'
 }
