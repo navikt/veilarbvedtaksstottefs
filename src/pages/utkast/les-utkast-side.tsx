@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Footer from '../../components/footer/footer';
-import { BeslutterProsessStatus, InnsatsgruppeType } from '../../rest/data/vedtak';
+import { BeslutterProsessStatus, InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { useTilgangStore } from '../../stores/tilgang-store';
@@ -21,16 +21,17 @@ import checkmark from './check.svg';
 import { BEGRUNNELSE_ANBEFALT_LENGTH } from './skjema/begrunnelse/begrunnelse';
 import { useVarselStore } from '../../stores/varsel-store';
 import { VarselType } from '../../components/varsel/varsel-type';
+import isEqual from 'lodash/isEqual';
 
 const TEN_SECONDS = 10000;
 
 export function LesUtkastSide() {
-	const {fnr} = useAppStore();
-	const {utkast, setUtkast, setFattedeVedtak, features} = useDataStore();
-	const {changeView} = useViewStore();
-	const {erBeslutter} = useTilgangStore();
-	const {initSkjema} = useSkjemaStore();
-	const {showVarsel} = useVarselStore();
+	const { fnr } = useAppStore();
+	const { utkast, setUtkast, setFattedeVedtak, features } = useDataStore();
+	const { changeView } = useViewStore();
+	const { erBeslutter } = useTilgangStore();
+	const { initSkjema } = useSkjemaStore();
+	const { showVarsel } = useVarselStore();
 	const refreshUtkastIntervalRef = useRef<number>();
 
 	useEffect(() => {
@@ -39,18 +40,18 @@ export function LesUtkastSide() {
 			det nyeste utkastet slik at man ikke må refreshe manuelt når ansvarlig veileder gjør en endring
 		 */
 		if (utkast && !features[SKRU_AV_POLLING_UTKAST] && utkast.beslutterProsessStatus != null && erBeslutter) {
-			refreshUtkastIntervalRef.current = setInterval(() => {
+			refreshUtkastIntervalRef.current = (setInterval(() => {
 				fetchUtkast(fnr).then(response => {
 					if (response.data) {
-						if (response.data.sistOppdatert !== utkast.sistOppdatert){
+						if (erVedtakSkjemafeltEndret(utkast, response.data)) {
 							showVarsel(VarselType.UTKAST_OPPDATERT);
 						}
 						varsleBeslutterProsessStatusEndring(response.data.beslutterProsessStatus);
 						setUtkast(response.data);
 						initSkjema(response.data);
 					}
-				})
-			}, TEN_SECONDS) as unknown as number;
+				});
+			}, TEN_SECONDS) as unknown) as number;
 			// NodeJs types are being used instead of browser types so we have to override
 		}
 
@@ -62,6 +63,15 @@ export function LesUtkastSide() {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkast, erBeslutter]);
+
+	function erVedtakSkjemafeltEndret(v1: Vedtak, v2: Vedtak) {
+		return (
+			v1.begrunnelse !== v2.begrunnelse ||
+			v1.hovedmal !== v2.hovedmal ||
+			v1.innsatsgruppe !== v2.innsatsgruppe ||
+			!isEqual(v1.opplysninger, v2.opplysninger)
+		);
+	}
 
 	function varsleBeslutterProsessStatusEndring(nyStatus: OrNothing<BeslutterProsessStatus>) {
 		if (
@@ -85,14 +95,13 @@ export function LesUtkastSide() {
 		return null;
 	}
 
-	const {opplysninger, begrunnelse, innsatsgruppe, hovedmal} = utkast;
+	const { opplysninger, begrunnelse, innsatsgruppe, hovedmal } = utkast;
 	const begrunnelseLength = begrunnelse ? begrunnelse.length : 0;
 
 	return (
 		<div className="utkast-side les-utkast-side page--grey">
 			<UtkastSkjema utkast={utkast} sistOppdatert={utkast.sistOppdatert}>
 				<div className="utkast-side__visning">
-
 					<SkjemaBolk tittel="Kilder" className="les-utkast__kilder">
 						<ul className="kilder-liste">
 							{opplysninger.map((o, idx) => {
@@ -108,15 +117,21 @@ export function LesUtkastSide() {
 
 					<SkjemaBolk tittel="Begrunnelse">
 						<div className="begrunnelse__tekstomrade-wrapper">
-							<Tekstomrade className="begrunnelse__tekstomrade">{begrunnelse ? begrunnelse : ''}</Tekstomrade>
+							<Tekstomrade className="begrunnelse__tekstomrade">
+								{begrunnelse ? begrunnelse : ''}
+							</Tekstomrade>
 						</div>
 						{begrunnelseLength > BEGRUNNELSE_ANBEFALT_LENGTH ? (
 							<div className="begrunnelse__tegnteller">
-								<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">Du har {begrunnelseLength - BEGRUNNELSE_ANBEFALT_LENGTH} tegn for mye </Normaltekst>
+								<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">
+									Du har {begrunnelseLength - BEGRUNNELSE_ANBEFALT_LENGTH} tegn for mye{' '}
+								</Normaltekst>
 							</div>
 						) : (
 							<div className="begrunnelse__tegnteller">
-								<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">Du har {BEGRUNNELSE_ANBEFALT_LENGTH - begrunnelseLength} tegn igjen </Normaltekst>
+								<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">
+									Du har {BEGRUNNELSE_ANBEFALT_LENGTH - begrunnelseLength} tegn igjen{' '}
+								</Normaltekst>
 							</div>
 						)}
 					</SkjemaBolk>
@@ -133,7 +148,9 @@ export function LesUtkastSide() {
 								<Normaltekst>{getHovedmalNavn(hovedmal)}</Normaltekst>
 							</CheckboxVisning>
 						) : (
-							<Normaltekst>Hovedmål settes ikke ved varig tilpasset innsats (varig nedsatt arbeidsevne)</Normaltekst>
+							<Normaltekst>
+								Hovedmål settes ikke ved varig tilpasset innsats (varig nedsatt arbeidsevne)
+							</Normaltekst>
 						)}
 					</SkjemaBolk>
 				</div>
@@ -154,19 +171,17 @@ const CheckboxVisning = (props: { children: any }) => {
 	);
 };
 
-const InnsatsgruppeVisning = (props: {innsatsgruppe: OrNothing<InnsatsgruppeType>}) => {
+const InnsatsgruppeVisning = (props: { innsatsgruppe: OrNothing<InnsatsgruppeType> }) => {
 	if (!props.innsatsgruppe) {
-		return (
-			<Element>Innsatsgruppe ikke valgt</Element>
-		);
+		return <Element>Innsatsgruppe ikke valgt</Element>;
 	}
 
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(props.innsatsgruppe);
 
 	return (
 		<div>
-            <Element>{innsatsgruppeTekst.tittel}</Element>
-            <Normaltekst className="text--grey">{innsatsgruppeTekst.undertekst}</Normaltekst>
+			<Element>{innsatsgruppeTekst.tittel}</Element>
+			<Normaltekst className="text--grey">{innsatsgruppeTekst.undertekst}</Normaltekst>
 		</div>
 	);
 };
