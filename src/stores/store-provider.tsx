@@ -5,6 +5,7 @@ import { ViewStoreProvider } from './view-store';
 import { ModalStoreProvider } from './modal-store';
 import { SkjemaStoreProvider } from './skjema-store';
 import { TilgangStoreProvider } from './tilgang-store';
+import { VarselStoreProvider } from './varsel-store';
 
 interface StoreProviderProps {
 	fnr: string;
@@ -19,9 +20,11 @@ const StoreProvider = (props: StoreProviderProps) => {
 					<TilgangStoreProvider>
 						<ViewStoreProvider>
 							<ModalStoreProvider>
-								<SkjemaStoreProvider>
-									{props.children}
-								</SkjemaStoreProvider>
+								<VarselStoreProvider>
+									<SkjemaStoreProvider>
+										{props.children}
+									</SkjemaStoreProvider>
+								</VarselStoreProvider>
 							</ModalStoreProvider>
 						</ViewStoreProvider>
 					</TilgangStoreProvider>

@@ -8,7 +8,7 @@ import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
 import { erBeslutterProsessStartet, erGodkjentAvBeslutter, erKlarTilBeslutter, finnGjeldendeVedtak, hentId } from '../../utils';
 import { useIsAfterFirstRender } from '../../utils/hooks';
-import { Vedtak } from '../../rest/data/vedtak';
+import { BeslutterProsessStatus, Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
@@ -18,6 +18,8 @@ import Begrunnelse from './skjema/begrunnelse/begrunnelse';
 import Innsatsgruppe from './skjema/innsatsgruppe/innsatsgruppe';
 import Hovedmal from './skjema/hovedmal/hovedmal';
 import { SKRU_AV_POLLING_UTKAST } from '../../rest/data/features';
+import { useVarselStore } from '../../stores/varsel-store';
+import { VarselType } from '../../components/varsel/varsel-type';
 
 const TEN_SECONDS = 10000;
 
@@ -29,6 +31,7 @@ export function EndreUtkastSide() {
 		setSistOppdatert, validerSkjema, validerBegrunnelseLengde, lagringStatus,
 		setLagringStatus
 	} = useSkjemaStore();
+	const {showVarsel} = useVarselStore();
 
 	const pollBeslutterstatusIntervalRef = useRef<number>();
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
@@ -105,6 +108,7 @@ export function EndreUtkastSide() {
 				fetchBeslutterprosessStatus(utkast.id)
 					.then(response => {
 						if (response.data && response.data.status) {
+							varsleBeslutterProsessStatusEndring(response.data.status)
 							setBeslutterProsessStatus(response.data.status);
 						}
 					});
@@ -119,7 +123,18 @@ export function EndreUtkastSide() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkast]);
 
-
+	function varsleBeslutterProsessStatusEndring(nyStatus: BeslutterProsessStatus) {
+		if (utkast && nyStatus !== utkast.beslutterProsessStatus) {
+			switch (nyStatus) {
+				case BeslutterProsessStatus.KLAR_TIL_VEILEDER:
+					showVarsel(VarselType.BESLUTTERPROSESS_TIL_VEILEDER);
+					break;
+				case BeslutterProsessStatus.GODKJENT_AV_BESLUTTER:
+					showVarsel(VarselType.BESLUTTERPROSESS_GODKJENT);
+					break;
+			}
+		}
+	}
 
 	useEffect(() => {
 		// Det kan bli problemer hvis gamle oppdateringer henger igjen etter at brukeren har forlatt redigeringssiden.
