@@ -1,9 +1,10 @@
 import React from 'react';
 import cls from 'classnames';
-import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
+import { Element, EtikettLiten } from 'nav-frontend-typografi';
 import { formatDayMonthTime } from '../../../../utils/date-utils';
-import './dialog-melding.less';
 import Show from '../../../show';
+import './dialog-melding.less';
+import { purfiyUnsafeHtml, replaceTextUrlsWithTags } from '../../../../utils/html-utils';
 
 interface DialogMeldingProps {
 	tekst: string;
@@ -26,7 +27,7 @@ export const DialogMelding = (props: DialogMeldingProps) => {
 
 	const meldingBarClasses = {
 		'dialog-melding-bar--fra-meg': skrevetAvMeg,
-		'dialog-melding-bar--til-meg': !skrevetAvMeg,
+		'dialog-melding-bar--til-meg': !skrevetAvMeg
 	};
 
 	return (
@@ -39,7 +40,10 @@ export const DialogMelding = (props: DialogMeldingProps) => {
 			</div>
 			<div className="dialog-melding__tekst-wrapper">
 				<DialogMeldingBar className={cls(meldingBarClasses)} />
-				<Normaltekst className="dialog-melding__tekst">{tekst}</Normaltekst>
+				<div
+					className="typo-normal dialog-melding__tekst"
+					dangerouslySetInnerHTML={{ __html: purfiyUnsafeHtml(replaceTextUrlsWithTags(tekst)) }}
+				/>
 			</div>
 		</div>
 	);

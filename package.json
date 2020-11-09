@@ -42,6 +42,7 @@
     "constate": "^3.0.1",
     "craco-less": "^1.17.0",
     "dayjs": "^1.8.36",
+    "dompurify": "^2.2.2",
     "lodash": "^4.17.20",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
@@ -92,6 +93,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",
+    "@types/dompurify": "^2.0.4",
     "@types/jest": "^26.0.14",
     "@types/lodash.debounce": "^4.0.6",
     "@types/node": "^14.10.3",
