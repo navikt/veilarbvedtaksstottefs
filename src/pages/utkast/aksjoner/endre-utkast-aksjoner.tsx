@@ -4,13 +4,30 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import dialogIkon from './dialog.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { ReactComponent as SlettIkon } from './delete.svg';
-import { fetchOppdaterBeslutterProsessStatus, fetchOppdaterVedtakUtkast, fetchStartBeslutterProsess } from '../../../rest/api';
+import {
+	fetchOppdaterBeslutterProsessStatus,
+	fetchOppdaterVedtakUtkast,
+	fetchStartBeslutterProsess
+} from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
-import { harFeil, hentMalformFraData, scrollTilForsteFeil, SkjemaData, trengerBeslutter } from '../../../utils/skjema-utils';
+import {
+	harFeil,
+	hentMalformFraData,
+	scrollTilForsteFeil,
+	SkjemaData,
+	trengerBeslutter
+} from '../../../utils/skjema-utils';
 import Show from '../../../components/show';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { erBeslutterProsessStartet, erGodkjentAvBeslutter, erKlarTilVeileder, finnGjeldendeVedtak, isNothing, mapSkjemaLagringStatusTilTekst } from '../../../utils';
+import {
+	erBeslutterProsessStartet,
+	erGodkjentAvBeslutter,
+	erKlarTilVeileder,
+	finnGjeldendeVedtak,
+	isNothing,
+	mapSkjemaLagringStatusTilTekst
+} from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { BeslutterProsessStatus, Vedtak } from '../../../rest/data/vedtak';
@@ -26,37 +43,32 @@ interface UtkastAksjonerProps {
 }
 
 function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
-	const {
-		malform, fattedeVedtak,
-		utkast, leggTilSystemMelding,
-		setBeslutterProsessStatus
-	} = useDataStore();
-	const {changeView} = useViewStore();
-	const {showModal} = useModalStore();
-	const {validerSkjema, lagringStatus, innsatsgruppe} = useSkjemaStore();
-	const {
-		id: utkastId,
-		beslutterNavn,
-		beslutterProsessStatus
-	} = utkast as Vedtak;
+	const { malform, fattedeVedtak, utkast, leggTilSystemMelding, setBeslutterProsessStatus } = useDataStore();
+	const { changeView } = useViewStore();
+	const { showModal } = useModalStore();
+	const { validerSkjema, lagringStatus, innsatsgruppe } = useSkjemaStore();
+	const { id: utkastId, beslutterNavn, beslutterProsessStatus } = utkast as Vedtak;
 
 	const [dialogModalApen, setDialogModalApen] = useState(erBeslutterProsessStartet(beslutterProsessStatus));
 	const [laster, setLaster] = useState(false);
 
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const visGodkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
-	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(beslutterNavn) && !erBeslutterProsessStartet(beslutterProsessStatus);
+	const visStartBeslutterProsess =
+		trengerBeslutter(innsatsgruppe) &&
+		erAnsvarligVeileder &&
+		isNothing(beslutterNavn) &&
+		!erBeslutterProsessStartet(beslutterProsessStatus);
 	const visKlarTilBeslutter = erKlarTilVeileder(beslutterProsessStatus);
 	const erForhandsvisHovedknapp = !visKlarTilBeslutter;
 
 	function sendDataTilBackend() {
 		// Vi oppdaterer ikke lagringStatus her fordi det blir rart at dette trigges på en "urelatert" handling
-		const params = {vedtakId: utkastId, skjema: props.vedtakskjema, malform: hentMalformFraData(malform)};
-		return fetchOppdaterVedtakUtkast(params)
-			.catch(() => {
-				setLaster(false);
-				showModal(ModalType.FEIL_VED_LAGRING);
-			});
+		const params = { vedtakId: utkastId, skjema: props.vedtakskjema, malform: hentMalformFraData(malform) };
+		return fetchOppdaterVedtakUtkast(params).catch(() => {
+			setLaster(false);
+			showModal(ModalType.FEIL_VED_LAGRING);
+		});
 	}
 
 	function fokuserPaDialogSidebarTab() {
@@ -73,29 +85,26 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 		}
 
 		setLaster(true);
-		sendDataTilBackend()
-			.then(() => changeView(ViewType.FORHANDSVISNING));
+		sendDataTilBackend().then(() => changeView(ViewType.FORHANDSVISNING));
 	}
 
 	function handleOnStartBeslutterProsessClicked() {
 		setLaster(true);
-		sendDataTilBackend()
-			.then(() => {
-				fetchStartBeslutterProsess(utkastId)
-					.then(() => {
-						fokuserPaDialogSidebarTab();
-						setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
-						leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
-					})
-					.catch(() => showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS))
-					.finally(() => setLaster(false));
-			});
+		sendDataTilBackend().then(() => {
+			fetchStartBeslutterProsess(utkastId)
+				.then(() => {
+					fokuserPaDialogSidebarTab();
+					setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
+					leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
+				})
+				.catch(() => showModal(ModalType.FEIL_VED_START_BESLUTTER_PROSESS))
+				.finally(() => setLaster(false));
+		});
 	}
 
 	function handleOnTilbakeClicked() {
 		setLaster(true);
-		sendDataTilBackend()
-			.then(() => changeView(ViewType.HOVEDSIDE));
+		sendDataTilBackend().then(() => changeView(ViewType.HOVEDSIDE));
 	}
 
 	function handleOnKlarTilClicked() {
@@ -112,15 +121,9 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 	return (
 		<div className="aksjoner">
 			<div className="aksjoner__knapper-venstre">
-				<Tilbakeknapp
-					htmlType="button"
-					onClick={handleOnTilbakeClicked}
-					disabled={laster}
-				/>
+				<Tilbakeknapp htmlType="button" onClick={handleOnTilbakeClicked} disabled={laster} />
 				<div className="aksjoner__lagring-tekst">
-					<Normaltekst>
-						{mapSkjemaLagringStatusTilTekst(lagringStatus)}
-					</Normaltekst>
+					<Normaltekst>{mapSkjemaLagringStatusTilTekst(lagringStatus)}</Normaltekst>
 				</div>
 			</div>
 
@@ -139,13 +142,8 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 					</Hovedknapp>
 				</Show>
 				<Show if={visKlarTilBeslutter}>
-					<Hovedknapp
-						mini={true}
-						htmlType="button"
-						onClick={handleOnKlarTilClicked}
-						disabled={laster}
-					>
-						Klar til beslutter
+					<Hovedknapp mini={true} htmlType="button" onClick={handleOnKlarTilClicked} disabled={laster}>
+						Send til beslutter
 					</Hovedknapp>
 				</Show>
 				<Knapp
@@ -170,7 +168,7 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 					onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
 					disabled={laster}
 				>
-					<SlettIkon className="aksjoner__ikon"/>
+					<SlettIkon className="aksjoner__ikon" />
 					Slett
 				</Flatknapp>
 
@@ -181,7 +179,7 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 					className="aksjoner__dialog-knapp"
 					imgClassName="aksjoner__dialog-knapp-ikon"
 				/>
-				<DialogModal open={dialogModalApen} onRequestClose={() => setDialogModalApen(false)}/>
+				<DialogModal open={dialogModalApen} onRequestClose={() => setDialogModalApen(false)} />
 			</div>
 		</div>
 	);

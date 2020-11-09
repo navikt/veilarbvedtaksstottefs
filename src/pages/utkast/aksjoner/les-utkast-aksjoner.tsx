@@ -4,7 +4,7 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import dialogIkon from './dialog.svg';
 import { ReactComponent as TaOverIkon } from './taover.svg';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
-import { fetchBliBeslutter, fetchGodkjennVedtak, fetchOppdaterBeslutterProsessStatus, } from '../../../rest/api';
+import { fetchBliBeslutter, fetchGodkjennVedtak, fetchOppdaterBeslutterProsessStatus } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, trengerBeslutter } from '../../../utils/skjema-utils';
@@ -29,25 +29,20 @@ import { DialogModal } from '../../../components/dialog-modal/dialog-modal';
 import ImageButton from '../../../components/image-button/image-button';
 
 function LesUtkastAksjoner() {
+	const { setVeilederTilgang, erBeslutter, erAnsvarligVeileder, erIkkeAnsvarligVeileder } = useTilgangStore();
 	const {
-		setVeilederTilgang, erBeslutter,
-		erAnsvarligVeileder, erIkkeAnsvarligVeileder
-	} = useTilgangStore();
-	const {
-		fattedeVedtak, innloggetVeileder,
+		fattedeVedtak,
+		innloggetVeileder,
 		setUtkastBeslutter,
-		leggTilSystemMelding, utkast,
+		leggTilSystemMelding,
+		utkast,
 		setBeslutterProsessStatus
 	} = useDataStore();
-	const {changeView} = useViewStore();
-	const {showModal} = useModalStore();
-	const {validerSkjema, innsatsgruppe} = useSkjemaStore();
+	const { changeView } = useViewStore();
+	const { showModal } = useModalStore();
+	const { validerSkjema, innsatsgruppe } = useSkjemaStore();
 
-	const {
-		id: utkastId,
-		beslutterNavn,
-		beslutterProsessStatus
-	} = utkast as Vedtak;
+	const { id: utkastId, beslutterNavn, beslutterProsessStatus } = utkast as Vedtak;
 
 	const [dialogModalApen, setDialogModalApen] = useState(erBeslutterProsessStartet(beslutterProsessStatus));
 	const [laster, setLaster] = useState(false);
@@ -55,11 +50,19 @@ function LesUtkastAksjoner() {
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const godkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
 	const visGodkjentAvBeslutter = erBeslutter && godkjentAvBeslutter;
-	const visStartBeslutterProsess = trengerBeslutter(innsatsgruppe) && erAnsvarligVeileder && isNothing(beslutterNavn) && !erBeslutterProsessStartet(beslutterProsessStatus);
-	const visBliBeslutter = erIkkeAnsvarligVeileder && isNothing(beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus);
+	const visStartBeslutterProsess =
+		trengerBeslutter(innsatsgruppe) &&
+		erAnsvarligVeileder &&
+		isNothing(beslutterNavn) &&
+		!erBeslutterProsessStartet(beslutterProsessStatus);
+	const visBliBeslutter =
+		erIkkeAnsvarligVeileder && isNothing(beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus);
 	const visGodkjennUtkast = erBeslutterProsessStartet(beslutterProsessStatus) && erBeslutter && !godkjentAvBeslutter;
 	const visTaOverUtkast = erIkkeAnsvarligVeileder;
-	const visKlarTil = erBeslutterProsessStartet(beslutterProsessStatus) && ((erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus)) || (erBeslutter && erKlarTilBeslutter(beslutterProsessStatus)));
+	const visKlarTil =
+		erBeslutterProsessStartet(beslutterProsessStatus) &&
+		((erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus)) ||
+			(erBeslutter && erKlarTilBeslutter(beslutterProsessStatus)));
 	const erForhandsvisHovedknapp = !visStartBeslutterProsess && !visBliBeslutter && !visKlarTil;
 
 	function fokuserPaDialogSidebarTab() {
@@ -119,11 +122,7 @@ function LesUtkastAksjoner() {
 	return (
 		<div className="aksjoner">
 			<div className="aksjoner__knapper-venstre">
-				<Tilbakeknapp
-					htmlType="button"
-					onClick={handleOnTilbakeClicked}
-					disabled={laster}
-				/>
+				<Tilbakeknapp htmlType="button" onClick={handleOnTilbakeClicked} disabled={laster} />
 			</div>
 
 			<div className="aksjoner__knapper-midten">
@@ -131,23 +130,13 @@ function LesUtkastAksjoner() {
 					<NavFrontendSpinner type="XS" />
 				</Show>
 				<Show if={visBliBeslutter}>
-					<Hovedknapp
-						mini={true}
-						htmlType="button"
-						onClick={handleOnBliBeslutterClicked}
-						disabled={laster}
-					>
+					<Hovedknapp mini={true} htmlType="button" onClick={handleOnBliBeslutterClicked} disabled={laster}>
 						Bli beslutter
 					</Hovedknapp>
 				</Show>
 				<Show if={visKlarTil}>
-					<Hovedknapp
-						mini={true}
-						htmlType="button"
-						onClick={handleOnKlarTilClicked}
-						disabled={laster}
-					>
-						Klar til veileder
+					<Hovedknapp mini={true} htmlType="button" onClick={handleOnKlarTilClicked} disabled={laster}>
+						Send til veileder
 					</Hovedknapp>
 				</Show>
 				<Knapp
@@ -169,17 +158,13 @@ function LesUtkastAksjoner() {
 						onClick={() => showModal(ModalType.BEKREFT_TA_OVER_UTKAST)}
 						disabled={laster}
 					>
-						<TaOverIkon className="aksjoner__ikon"/>
+						<TaOverIkon className="aksjoner__ikon" />
 						Ta over
 					</Flatknapp>
 				</Show>
 
 				<Show if={visGodkjennUtkast}>
-					<Flatknapp
-						mini={true}
-						htmlType="button"
-						onClick={handleOnGodkjennClicked}
-					>
+					<Flatknapp mini={true} htmlType="button" onClick={handleOnGodkjennClicked}>
 						Godkjenn
 					</Flatknapp>
 				</Show>
@@ -195,7 +180,7 @@ function LesUtkastAksjoner() {
 					className="aksjoner__dialog-knapp"
 					imgClassName="aksjoner__dialog-knapp-ikon"
 				/>
-				<DialogModal open={dialogModalApen} onRequestClose={() => setDialogModalApen(false)}/>
+				<DialogModal open={dialogModalApen} onRequestClose={() => setDialogModalApen(false)} />
 			</div>
 		</div>
 	);
