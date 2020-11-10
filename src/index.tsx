@@ -12,9 +12,9 @@ dayjs.locale('nb');
 
 ModalWrapper.setAppElement(document.getElementById('modal-a11y-wrapper'));
 
-if (env.isProduction) {
-	NAVSPA.eksporter('veilarbvedtaksstottefs', App);
-} else {
+NAVSPA.eksporter('veilarbvedtaksstottefs', App);
+
+if (env.isDevelopment) {
 	require('./mock');
-	ReactDOM.render(<App fnr={fnr} enhet={enhetId} />, document.getElementById('root'));
+	ReactDOM.render(<App fnr={fnr} enhet={enhetId} />, document.getElementById('veilarbvedtaksstottefs-root'));
 }
