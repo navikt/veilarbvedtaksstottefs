@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import tipsBilde from './tips.svg';
 import Popover, { PopoverOrientering } from 'nav-frontend-popover';
-import { frontendlogger } from '../../utils/frontend-logger';
 import './tips-popover.less';
+import { logMetrikk } from '../../utils/logger';
 
 interface TipsPopoverProps {
 	id: string;
@@ -20,7 +20,7 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 	const [popoverTrigger, setPopoverTrigger] = useState<HTMLButtonElement>();
 
 	function logToggleMetrikk(apnet: boolean) {
-		frontendlogger.logMetrikk('tips-togglet', { id: props.id, apnet });
+		logMetrikk('tips-togglet', { id: props.id, apnet });
 	}
 
 	function togglePopoverOpen(e: React.MouseEvent<HTMLButtonElement>) {
@@ -55,9 +55,7 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 				orientering={PopoverOrientering.UnderVenstre}
 				onRequestClose={handleOnRequestClose}
 			>
-				<div className="tips">
-					{props.tipsInnhold}
-				</div>
+				<div className="tips">{props.tipsInnhold}</div>
 			</Popover>
 		</div>
 	);

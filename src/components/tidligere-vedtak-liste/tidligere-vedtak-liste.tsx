@@ -2,13 +2,13 @@ import React, { useMemo } from 'react';
 import { InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { Element, EtikettLiten } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../stores/view-store';
-import { frontendlogger } from '../../utils/frontend-logger';
 import { sortDatesDesc } from '../../utils/date-utils';
 import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
 import vedtakBilde from './vedtak.svg';
 import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import './tidligere-vedtak-liste.less';
+import { logMetrikk } from '../../utils/logger';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(vedtak.innsatsgruppe as InnsatsgruppeType);
@@ -21,7 +21,9 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 			ikon={vedtakBilde}
 		>
 			<Element className="tidligere-vedtak-panel__innsats--tittel">{innsatsgruppeTekst.tittel}</Element>
-			<EtikettLiten className="tidligere-vedtak-panel__innsats--undertekst">{innsatsgruppeTekst.undertekst}</EtikettLiten>
+			<EtikettLiten className="tidligere-vedtak-panel__innsats--undertekst">
+				{innsatsgruppeTekst.undertekst}
+			</EtikettLiten>
 		</VedtakPanel>
 	);
 }
@@ -35,7 +37,7 @@ export function TidligereVedtakListe({ vedtakListe }: { vedtakListe: Vedtak[] })
 
 	function handleTidligereVedtakClicked(vedtakData: Vedtak, idx: number) {
 		changeView(ViewType.VEDTAK, { vedtakId: (vedtakData as Vedtak).id });
-		frontendlogger.logMetrikk('vis-tidligere-vedtak', { index: idx });
+		logMetrikk('vis-tidligere-vedtak', { index: idx });
 	}
 
 	return (
@@ -45,9 +47,8 @@ export function TidligereVedtakListe({ vedtakListe }: { vedtakListe: Vedtak[] })
 			vedtak={tidligereVedtak}
 			vedtakMapper={(vedtak, posisjon) => {
 				const onClick = (v: Vedtak, idx: number) => handleTidligereVedtakClicked(vedtak, idx);
-				return mapVedtakTilPanel(vedtak, onClick, posisjon)
+				return mapVedtakTilPanel(vedtak, onClick, posisjon);
 			}}
 		/>
 	);
 }
-

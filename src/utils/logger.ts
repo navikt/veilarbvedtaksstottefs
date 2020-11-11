@@ -1,35 +1,19 @@
 import env from './environment';
-import { frontendlogger } from './frontend-logger';
+import {
+	createFrontendLogger,
+	createMockFrontendLogger,
+	DEFAULT_FRONTENDLOGGER_API_URL
+} from '@navikt/frontendlogger/lib';
+import { APP_NAME } from './constants';
 
-export const log = (...args: any[]): void => {
-	if (env.isDevelopment) {
-		console.log(...args); // tslint:disable-line
-	}
+export const logger = env.isDevelopment
+	? createMockFrontendLogger(APP_NAME)
+	: createFrontendLogger(DEFAULT_FRONTENDLOGGER_API_URL, APP_NAME);
+
+export const logError = (fields?: {}, tags?: {}): void => {
+	logger.event(`${APP_NAME}.error`, fields, tags);
 };
 
-export const warn = (...args: any[]): void => {
-	if (env.isDevelopment) {
-		console.warn(...args); // tslint:disable-line
-	}
-};
-
-export const info = (...args: any[]): void => {
-	if (env.isDevelopment) {
-		console.info(...args); // tslint:disable-line
-	}
-};
-
-export const error = (...args: any[]): void => {
-	if (env.isDevelopment) {
-		console.error(...args); // tslint:disable-line
-	} else if (env.isProduction) {
-		frontendlogger.logError({ error: JSON.stringify(args) });
-	}
-};
-
-export const logger = {
-	log,
-	error,
-	warn,
-	info
+export const logMetrikk = (metrikkNavn: string, fields?: {}, tags?: {}): void => {
+	logger.event(`${APP_NAME}.metrikker.${metrikkNavn}`, fields, tags);
 };
