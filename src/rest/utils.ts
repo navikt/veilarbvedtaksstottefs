@@ -1,6 +1,5 @@
-import { frontendlogger } from '../utils/frontend-logger';
 import { useCallback, useMemo, useState } from 'react';
-import { logger } from '../utils/logger';
+import { logError, logger } from '../utils/logger';
 import useFetchHook from 'react-fetch-hook';
 
 export interface FetchResponse<D = any> {
@@ -10,13 +9,12 @@ export interface FetchResponse<D = any> {
 }
 
 export function fetchWithChecks<D>(input: RequestInfo, init?: RequestInit): Promise<Response> {
-	return fetch(input, init)
-		.then(res => {
+	return fetch(input, init).then(res => {
 		if (res.status >= 400) {
 			res.clone()
 				.text()
 				.then(txt => {
-					frontendlogger.logError({ error: txt });
+					logError({ error: txt });
 				})
 				.catch();
 
@@ -29,12 +27,12 @@ export function fetchWithChecks<D>(input: RequestInfo, init?: RequestInit): Prom
 
 export function fetchJson<D>(input: RequestInfo, init?: RequestInit): Promise<FetchResponse<D>> {
 	return fetch(input, init)
-		.then(async (res) => {
+		.then(async res => {
 			const status = res.status;
 			try {
 				if (status >= 300) {
 					const error = await res.text();
-					logger.error('API kall feilet med status ', status);
+					logger.error('API kall feilet med status ' + status);
 					return { error, httpCode: status };
 				}
 				const json = await res.json();
@@ -48,31 +46,37 @@ export function fetchJson<D>(input: RequestInfo, init?: RequestInit): Promise<Fe
 		});
 }
 
-export type UseFetchState<T> = useFetchHook.FetchResult<T> & { refetch: () => void}
+export type UseFetchState<T> = useFetchHook.FetchResult<T> & { refetch: () => void };
 
-export function useFetch<T>(requestInfo: RequestInfo,
-							options?: useFetchHook.HookOptions | useFetchHook.HookOptionsWithFormatter<T>,
-							specialOptions?: useFetchHook.HookOptions): UseFetchState<T> {
+export function useFetch<T>(
+	requestInfo: RequestInfo,
+	options?: useFetchHook.HookOptions | useFetchHook.HookOptionsWithFormatter<T>,
+	specialOptions?: useFetchHook.HookOptions
+): UseFetchState<T> {
 	const [trigger, setTrigger] = useState(1);
 	const dependsWithTrigger = options && options.depends ? [...options.depends, trigger] : [trigger];
-	const fetchState = useFetchHook<T>(requestInfo, Object.assign(options || {}, {depends: dependsWithTrigger}), specialOptions);
+	const fetchState = useFetchHook<T>(
+		requestInfo,
+		Object.assign(options || {}, { depends: dependsWithTrigger }),
+		specialOptions
+	);
 	const refetch = useCallback(() => {
 		setTrigger(prev => ++prev);
 	}, []);
 
-	return useMemo(() => ({...fetchState, refetch}), [fetchState, refetch]);
+	return useMemo(() => ({ ...fetchState, refetch }), [fetchState, refetch]);
 }
 
-export const hasAnyFailed = (state: UseFetchState<any> | Array<UseFetchState<any>>): boolean => {
+export const hasAnyFailed = (state: UseFetchState<any> | UseFetchState<any>[]): boolean => {
 	if (Array.isArray(state)) {
 		return state.some(s => s.error !== undefined);
 	}
 	return state.error !== undefined;
-}
+};
 
-export const isAnyLoading = (state: UseFetchState<any> | Array<UseFetchState<any>>): boolean => {
+export const isAnyLoading = (state: UseFetchState<any> | UseFetchState<any>[]): boolean => {
 	if (Array.isArray(state)) {
 		return state.some(s => s.isLoading);
 	}
 	return state.isLoading;
-}
+};

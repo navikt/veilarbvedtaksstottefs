@@ -5,8 +5,8 @@ import svaertBraBilde from './svaert_bra.svg';
 import svaertDarligBilde from './svaert_darlig.svg';
 import ImageButton from '../../../components/image-button/image-button';
 import { APP_NAME } from '../../../utils/constants';
-import { frontendlogger } from '../../../utils/frontend-logger';
 import './tilbakemelding-ekspanderbartpanel.less';
+import { logger } from '../../../utils/logger';
 
 interface TilbakemeldingEkspanderbartpanelProps {
 	tittel: string;
@@ -27,7 +27,7 @@ function TilbakemeldingEkspanderbartpanel(props: TilbakemeldingEkspanderbartpane
 	const handleTilbakemeldingValgClicked = (valg: TilbakemeldingValg) => {
 		localStorage.setItem(localStorageName, 'true');
 		setVisTilbakemelding(false);
-		frontendlogger.logEvent(`${APP_NAME}.tilbakemeldinger.info-om-ny-losning`, {
+		logger.event(`${APP_NAME}.tilbakemeldinger.info-om-ny-losning`, {
 			tag: props.tilbakemeldingTag,
 			valg
 		});

@@ -5,7 +5,6 @@ import Footer from '../../components/footer/footer';
 import env from '../../utils/environment';
 import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../rest/data/features';
 import { trengerBeslutter } from '../../utils/skjema-utils';
-import { frontendlogger } from '../../utils/frontend-logger';
 import { fetchFattedeVedtak, fetchFattVedtak, lagHentForhandsvisningUrl } from '../../rest/api';
 import { useAppStore } from '../../stores/app-store';
 import { useViewStore, ViewType } from '../../stores/view-store';
@@ -20,6 +19,7 @@ import './forhandsvisning.less';
 import { Vedtak } from '../../rest/data/vedtak';
 import { useVarselStore } from '../../stores/varsel-store';
 import { VarselType } from '../../components/varsel/varsel-type';
+import { logMetrikk } from '../../utils/logger';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
@@ -31,12 +31,10 @@ export function Forhandsvisning() {
 	const { kanEndreUtkast } = useTilgangStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
-	const {id: utkastId, beslutterProsessStatus} = utkast as Vedtak;
+	const { id: utkastId, beslutterProsessStatus } = utkast as Vedtak;
 
 	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
-	const url = env.isProduction
-		? lagHentForhandsvisningUrl(utkastId)
-		: lagMockVedtaksbrevUrl(innsatsgruppe, hovedmal);
+	const url = env.isProduction ? lagHentForhandsvisningUrl(utkastId) : lagMockVedtaksbrevUrl(innsatsgruppe, hovedmal);
 
 	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
 		? erGodkjentAvBeslutter(beslutterProsessStatus)
@@ -44,7 +42,7 @@ export function Forhandsvisning() {
 
 	const tilbakeTilSkjema = () => {
 		changeView(ViewType.UTKAST);
-		frontendlogger.logMetrikk('tilbake-fra-forhandsvisning');
+		logMetrikk('tilbake-fra-forhandsvisning');
 	};
 
 	useEffect(() => {
@@ -60,24 +58,26 @@ export function Forhandsvisning() {
 		fetchFattVedtak(utkastId)
 			.catch(err => {
 				showModal(ModalType.FEIL_VED_SENDING);
-				frontendlogger.logMetrikk('feil-ved-sending', err);
+				logMetrikk('feil-ved-sending', err);
 				throw err;
 			})
 			.then(() => {
-				return fetchFattedeVedtak(fnr)
-					.then(fattedeVedtak => {
-						if (fattedeVedtak.data) {
-							setFattedeVedtak(fattedeVedtak.data);
-						}
-					})
-					// Feiler ikke selv om fattede vedtak ikke oppdateres
-					.finally(() => {
-						resetSkjema();
-						hideModal();
-						changeView(ViewType.HOVEDSIDE);
-						showVarsel(VarselType.VEDTAK_SENT_SUKSESS);
-						setUtkast(null);
-					});
+				return (
+					fetchFattedeVedtak(fnr)
+						.then(fattedeVedtak => {
+							if (fattedeVedtak.data) {
+								setFattedeVedtak(fattedeVedtak.data);
+							}
+						})
+						// Feiler ikke selv om fattede vedtak ikke oppdateres
+						.finally(() => {
+							resetSkjema();
+							hideModal();
+							changeView(ViewType.HOVEDSIDE);
+							showVarsel(VarselType.VEDTAK_SENT_SUKSESS);
+							setUtkast(null);
+						})
+				);
 			});
 	};
 
