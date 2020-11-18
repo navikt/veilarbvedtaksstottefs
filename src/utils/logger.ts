@@ -8,7 +8,7 @@ import { APP_NAME } from './constants';
 
 export const logger = env.isDevelopment
 	? createMockFrontendLogger(APP_NAME)
-	: createFrontendLogger(DEFAULT_FRONTENDLOGGER_API_URL, APP_NAME);
+	: createFrontendLogger(APP_NAME, DEFAULT_FRONTENDLOGGER_API_URL);
 
 export const logError = (fields?: {}, tags?: {}): void => {
 	logger.event(`${APP_NAME}.error`, fields, tags);
