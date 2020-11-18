@@ -3,7 +3,6 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { Vedtak } from '../../../rest/data/vedtak';
 import { OrNothing } from '../../../utils/types/ornothing';
 import nyttVedtakBilde from './nytt-vedtak.svg';
-import { frontendlogger } from '../../../utils/frontend-logger';
 import { fetchLagNyttUtkast, fetchUtkast } from '../../../rest/api';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useAppStore } from '../../../stores/app-store';
@@ -14,6 +13,7 @@ import './nytt-vedtak-panel.less';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
 import { useTilgangStore } from '../../../stores/tilgang-store';
+import { logMetrikk } from '../../../utils/logger';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
@@ -22,7 +22,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { setVeilederTilgang } = useTilgangStore();
 	const { changeView } = useViewStore();
 	const { utkast } = props;
-	const {initSkjema} = useSkjemaStore();
+	const { initSkjema } = useSkjemaStore();
 
 	function lagNyttVedtakUtkastOgRedirectTilUtkast() {
 		showModal(ModalType.LASTER);
@@ -40,7 +40,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 				setMeldinger([]); // Rydd opp hvis det ligger gamle meldinger mellomlagret
 				hideModal();
 				changeView(ViewType.UTKAST);
-				frontendlogger.logMetrikk('lag-nytt-vedtak');
+				logMetrikk('lag-nytt-vedtak');
 			})
 			.catch(() => {
 				showModal(ModalType.FEIL_VED_OPPRETTING_AV_UTKAST);
@@ -54,8 +54,10 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	return (
 		<button className="nytt-vedtak-panel__btn-wrapper" onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>
 			<HovedsidePanel className="nytt-vedtak-panel">
-				<img src={nyttVedtakBilde} alt="" className="nytt-vedtak-panel__bilde"/>
-				<Undertittel tag="h1" className="nytt-vedtak-panel__tittel">Lag nytt vedtak</Undertittel>
+				<img src={nyttVedtakBilde} alt="" className="nytt-vedtak-panel__bilde" />
+				<Undertittel tag="h1" className="nytt-vedtak-panel__tittel">
+					Lag nytt vedtak
+				</Undertittel>
 				<Normaltekst>Opprett nytt oppfølgingsvedtak for denne brukeren.</Normaltekst>
 			</HovedsidePanel>
 		</button>

@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import { ArenaVedtak } from '../../rest/data/vedtak';
 import { Element } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../stores/view-store';
-import { frontendlogger } from '../../utils/frontend-logger';
 import { sortDatesDesc } from '../../utils/date-utils';
 import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
 import vedtakBilde from './pdf.svg';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import './vedtak-fra-arena-liste.less';
+import { logMetrikk } from '../../utils/logger';
 
 function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<ArenaVedtak>, posisjon: number) {
 	return (
@@ -35,7 +35,7 @@ export function VedtakFraArenaListe({ vedtakListe }: { vedtakListe: ArenaVedtak[
 			journalpostId: vedtakData.journalpostId,
 			dokumentInfoId: vedtakData.dokumentInfoId
 		});
-		frontendlogger.logMetrikk('vis-arena-vedtak', { index: idx });
+		logMetrikk('vis-arena-vedtak', { index: idx });
 	}
 
 	return (
@@ -46,9 +46,8 @@ export function VedtakFraArenaListe({ vedtakListe }: { vedtakListe: ArenaVedtak[
 			className="arena-vedtak-panel"
 			vedtakMapper={(vedtak, posisjon) => {
 				const onClick = (v: ArenaVedtak, idx: number) => handleTidligereVedtakClicked(vedtak, idx);
-				return mapArenaVedtakTilPanel(vedtak, onClick, posisjon)
+				return mapArenaVedtakTilPanel(vedtak, onClick, posisjon);
 			}}
 		/>
 	);
 }
-

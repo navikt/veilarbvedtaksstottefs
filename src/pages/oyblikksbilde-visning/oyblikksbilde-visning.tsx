@@ -7,7 +7,6 @@ import { OrNothing } from '../../utils/types/ornothing';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import Page from '../../components/page/page';
 import OyblikksbildeType from '../../utils/types/oyblikksbilde-type';
-import { frontendlogger } from '../../utils/frontend-logger';
 import Footer from '../../components/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { useFetchOyblikksbilde } from '../../rest/api';
@@ -15,8 +14,12 @@ import { useViewStore, ViewType } from '../../stores/view-store';
 import Spinner from '../../components/spinner/spinner';
 import './oyblikksbilde-visning.less';
 import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } from './oyblikksbilde-fikser';
+import { logMetrikk } from '../../utils/logger';
 
-function finnOyblikksbilde(oyblikksbildeType: OyblikksbildeType, oyblikksbilder: OrNothing<Oyblikksbilde[]>): string | null {
+function finnOyblikksbilde(
+	oyblikksbildeType: OyblikksbildeType,
+	oyblikksbilder: OrNothing<Oyblikksbilde[]>
+): string | null {
 	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.oyeblikksbildeType === oyblikksbildeType) : null;
 	return oyblikksbilde ? oyblikksbilde.json : null;
 }
@@ -25,20 +28,20 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 	const oyeblikksbildePromise = useFetchOyblikksbilde(props.vedtakId);
 
 	useEffect(() => {
-		frontendlogger.logMetrikk('vis-oyblikksbilde');
+		logMetrikk('vis-oyblikksbilde');
 		// eslint-disable-next-line
 	}, [props.vedtakId]);
 
 	if (oyeblikksbildePromise.isLoading) {
-		return <Spinner/>;
+		return <Spinner />;
 	} else if (oyeblikksbildePromise.error) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 
-	return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={oyeblikksbildePromise.data}/>;
+	return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={oyeblikksbildePromise.data} />;
 }
 
-function Oyeblikksbilde(props: {vedtakId: number, oyeblikksbilde: OrNothing<Oyblikksbilde[]>}) {
+function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyblikksbilde[]> }) {
 	const { changeView } = useViewStore();
 
 	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
@@ -58,18 +61,9 @@ function Oyeblikksbilde(props: {vedtakId: number, oyeblikksbilde: OrNothing<Oybl
 			<Page className="oyblikksbilde-visning page--grey">
 				<section className="vedlegg">
 					<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
-					<VedleggCard
-						tittel="CV og Jobbprofil"
-						json={cvOgJobbprofileJson}
-					/>
-					<VedleggCard
-						tittel="Registrering"
-						json={registreringsinfoJson}
-					/>
-					<VedleggCard
-						tittel="Egenvurdering"
-						json={egenvurderingJson}
-					/>
+					<VedleggCard tittel="CV og Jobbprofil" json={cvOgJobbprofileJson} />
+					<VedleggCard tittel="Registrering" json={registreringsinfoJson} />
+					<VedleggCard tittel="Egenvurdering" json={egenvurderingJson} />
 				</section>
 			</Page>
 			<Footer className="oyblikksbilde-visning__footer">

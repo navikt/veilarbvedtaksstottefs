@@ -4,11 +4,11 @@ import { DatoLabel } from '../dato-label';
 import { Knapp } from 'nav-frontend-knapper';
 import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
-import { frontendlogger } from '../../../utils/frontend-logger';
 import { useViewStore, ViewType } from '../../../stores/view-store';
 import { getInnsatsgruppeTekst } from '../../../utils/innsatsgruppe';
 import fullfortVedtakIcon from './fullfort.svg';
 import './gjeldende-vedtak-panel.less';
+import { logMetrikk } from '../../../utils/logger';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
@@ -17,7 +17,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 
 	const handleVisVedtakClicked = () => {
 		changeView(ViewType.VEDTAK, { vedtakId: id });
-		frontendlogger.logMetrikk('vis-gjeldende-vedtak');
+		logMetrikk('vis-gjeldende-vedtak');
 	};
 
 	return (
@@ -29,12 +29,16 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 			undertittelClassName="gjeldende-vedtak-panel__undertittel"
 			tekstKomponent={
 				<>
-					<p className="typo-undertekst gjeldende-vedtak-panel__innsatsgruppe">{innsatsgruppeData.undertekst}</p>
-					<DatoLabel className="gjeldende-vedtak-panel__dato" sistOppdatert={sistOppdatert} formatType="short" text="Dato" />
-					<Veileder
-						text="Fattet av"
-						veilederNavn={veilederNavn}
+					<p className="typo-undertekst gjeldende-vedtak-panel__innsatsgruppe">
+						{innsatsgruppeData.undertekst}
+					</p>
+					<DatoLabel
+						className="gjeldende-vedtak-panel__dato"
+						sistOppdatert={sistOppdatert}
+						formatType="short"
+						text="Dato"
 					/>
+					<Veileder text="Fattet av" veilederNavn={veilederNavn} />
 				</>
 			}
 			knappKomponent={<Knapp onClick={handleVisVedtakClicked}>Vis vedtak</Knapp>}
