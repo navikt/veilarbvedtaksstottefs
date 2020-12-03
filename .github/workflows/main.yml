@@ -1,27 +1,15 @@
-name: Test, build, push and deploy
-on: push
+name: Build -> Push -> Deploy
+on:
+  push:
+    branches:
+      - master
+      - dev
 env:
   IMAGE_TAG: ${{ github.sha }}
   IMAGE: docker.pkg.github.com/${{ github.repository }}/veilarbvedtaksstottefs
   PRINT_PAYLOAD: true
 jobs:
-  test:
-    name: Run tests
-    runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/dev' && github.ref != 'refs/heads/master'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - name: Install dependencies
-        run: npm ci
-      - name: Run tests
-        run: npm run test
-
-  test-build-and-push:
+  build-and-push:
     name: Test, build and push
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'

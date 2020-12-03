@@ -10,7 +10,10 @@
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "test": "echo \"Tests not yet implemented\"",
-    "prettier": "prettier --write \"src/**/*.{ts,tsx}\""
+    "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "test:e2e": "cypress run",
+    "cy:open": "cypress open",
+    "cy:clear": "cypress cache clear"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -103,6 +106,8 @@
     "@types/react-modal": "^3.10.6",
     "@types/react-select": "^3.0.19",
     "cross-env": "^7.0.2",
+    "cypress": "^6.0.1",
+    "cypress-axe": "^0.12.0",
     "husky": "^4.3.0",
     "lint-staged": "^10.4.0",
     "prettier": "^2.1.2",
