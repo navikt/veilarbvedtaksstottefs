@@ -11,7 +11,7 @@
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "test": "echo \"Tests not yet implemented\"",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "test:e2e": "cypress run",
+    "cy:run": "cypress run",
     "cy:open": "cypress open",
     "cy:clear": "cypress cache clear"
   },
@@ -105,6 +105,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-modal": "^3.10.6",
     "@types/react-select": "^3.0.19",
+    "axe-core": "^4.1.1",
     "cross-env": "^7.0.2",
     "cypress": "^6.0.1",
     "cypress-axe": "^0.12.0",
