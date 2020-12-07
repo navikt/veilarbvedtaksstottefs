@@ -1,10 +1,10 @@
 import React from 'react';
 import cls from 'classnames';
 import { Element, EtikettLiten } from 'nav-frontend-typografi';
-import { formatDayMonthTime } from '../../../../utils/date-utils';
-import Show from '../../../show';
+import { formatDayMonthTime } from '../../../../../utils/date-utils';
 import './dialog-melding.less';
-import { purfiyUnsafeHtml, replaceTextUrlsWithTags } from '../../../../utils/html-utils';
+import { purfiyUnsafeHtml, replaceTextUrlsWithTags } from '../../../../../utils/html-utils';
+import Show from '../../../../../components/show';
 
 interface DialogMeldingProps {
 	tekst: string;

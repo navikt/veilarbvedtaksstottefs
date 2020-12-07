@@ -1,5 +1,5 @@
 import React from 'react';
-import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Radio, RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import SkjemaBolk from '../bolk/skjema-bolk';
@@ -11,11 +11,13 @@ import './hovedmal.less';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 function Hovedmal() {
-	const {innsatsgruppe, hovedmal, setHovedmal, errors} = useSkjemaStore();
+	const { innsatsgruppe, hovedmal, setHovedmal, errors } = useSkjemaStore();
 	const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
 	return (
 		<SkjemaBolk id="hovedmal-scroll-to" tittel="Hovedmål" tittelId="hovedmal-tittel">
-			<SkjemaGruppe feil={errors.hovedmal && <SkjemaelementFeilmelding>{errors.hovedmal}</SkjemaelementFeilmelding>}>
+			<SkjemaGruppe
+				feil={errors.hovedmal && <SkjemaelementFeilmelding>{errors.hovedmal}</SkjemaelementFeilmelding>}
+			>
 				{erVarigTilpassetInnsats ? (
 					<AlertStripeInfo className="hovedmal-info">
 						<span className="hovedmal-info__tekst">
@@ -41,7 +43,7 @@ function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
 	return (
 		<div className="hovedmal">
 			{alleHovedmal.map((mal, idx) => (
-				<RadioPanel
+				<Radio
 					name="hovedmal"
 					key={idx}
 					label={mal.label}

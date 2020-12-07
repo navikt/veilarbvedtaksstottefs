@@ -5,19 +5,16 @@
 	.skjema-header {
 		display: flex;
 		flex-direction: row;
-		height: 90px;
 		overflow-y: visible;
 		background-color: @navBlaLighten80;
 		border-bottom: 3px solid @navBla;
-		border-radius: 4px 4px 0 0;
 
 		// Shadow: top, right and left
 		box-shadow: 0 -4px 4px -4px @navGra20, 4px 0 4px -4px @navGra20, -4px 0 4px -4px @navGra20;
 
 		&__ikon {
-			margin-top: 0.75rem;
-			margin-left: 1.25rem;
-			height: 64px;
+			margin: 0.5rem 0 0.5rem 1.5rem;
+			height: 56px;
 		}
 
 		&__tittel {
@@ -25,13 +22,18 @@
 		}
 
 		&__innhold {
+			display: flex;
+			flex-direction: row;
+
 			width: 100%;
-			margin: auto 7rem 0.75rem 1.25rem;
+			margin: auto 0 auto 1.25rem;
 		}
 
 		&__info {
 			display: flex;
 			flex-direction: row;
+
+			margin-left: 2rem;
 
 			.seperator {
 				margin-left: 1rem;

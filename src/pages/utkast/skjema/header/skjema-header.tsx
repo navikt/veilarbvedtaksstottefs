@@ -12,18 +12,18 @@ interface SkjemaHeaderProps {
 }
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
-	const { veilederNavn, oppfolgingsenhetId, oppfolgingsenhetNavn } = props.utkast;
+	const { veilederNavn } = props.utkast;
 
 	return (
 		<header className="skjema-header">
-			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon"/>
+			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon" />
 			<div className="skjema-header__innhold">
-				<Systemtittel tag="h1" className="skjema-header__tittel blokk-xxxs">Utkast til oppfølgingsvedtak</Systemtittel>
+				<Systemtittel tag="h1" className="skjema-header__tittel blokk-xxxs">
+					Utkast
+				</Systemtittel>
 				<div className="skjema-header__info">
 					<Label titleText="Ansvarlig" valueText={veilederNavn} labelType={LabelType.SMALL} />
-					<div className="seperator"/>
-					<Label titleText="Brukers enhet" valueText={oppfolgingsenhetId + ' ' + oppfolgingsenhetNavn} labelType={LabelType.SMALL} />
-					<div className="seperator"/>
+					<div className="seperator" />
 					<DatoLabel
 						className="skjema-header__dato"
 						sistOppdatert={props.sistOppdatert || props.utkast.sistOppdatert}

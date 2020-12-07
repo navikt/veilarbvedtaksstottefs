@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from 'classnames';
-import { RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Radio, RadioGruppe, RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { harSkrevetBegrunnelse, trengerBeslutter } from '../../../../utils/skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
@@ -22,29 +22,35 @@ import { ModalType, useModalStore } from '../../../../stores/modal-store';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 
 function Innsatsgruppe() {
-	const {innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors} = useSkjemaStore();
-	const {fattedeVedtak, utkast} = useDataStore();
+	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();
+	const { fattedeVedtak, utkast } = useDataStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
-	const visInfomelding = trengerBeslutter(innsatsgruppe) && !erBeslutterProsessStartet(utkast!.beslutterProsessStatus);
+	const visInfomelding =
+		trengerBeslutter(innsatsgruppe) && !erBeslutterProsessStartet(utkast!.beslutterProsessStatus);
 
 	return (
 		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
 			<Show if={visInfomelding}>
 				<AlertStripeInfo className="innsatsgruppe__alertstripe">
-					Vurderingen skal kvalitetssikres av en beslutter når bruker anses å ha liten eller delvis mulighet til å jobbe.
+					Vurderingen skal kvalitetssikres av en beslutter når bruker anses å ha liten eller delvis mulighet
+					til å jobbe.
 				</AlertStripeInfo>
 			</Show>
 			<Show if={!harSkrevetBegrunnelse(begrunnelse) && erStandardInnsatsValgt && erGjeldendeInnsatsVarig}>
 				<AlertStripe form="inline" type="advarsel" className="innsatsgruppe__alertstripe">
-					Begrunnelse må i dette tilfellet også fylles ut for standard innsats.
-					Dette er fordi gjeldende vedtak viser varig eller delvis varig tilpasset innsats.
-					Når det gjøres en ny vurdering er det viktig å fremheve hva som er årsaken til endring i brukers situasjon.
+					Begrunnelse må i dette tilfellet også fylles ut for standard innsats. Dette er fordi gjeldende
+					vedtak viser varig eller delvis varig tilpasset innsats. Når det gjøres en ny vurdering er det
+					viktig å fremheve hva som er årsaken til endring i brukers situasjon.
 				</AlertStripe>
 			</Show>
-			<SkjemaGruppe feil={errors.innsatsgruppe && <SkjemaelementFeilmelding>{errors.innsatsgruppe}</SkjemaelementFeilmelding>}>
+			<SkjemaGruppe
+				feil={
+					errors.innsatsgruppe && <SkjemaelementFeilmelding>{errors.innsatsgruppe}</SkjemaelementFeilmelding>
+				}
+			>
 				<InnsatsgruppeRadioButtons
 					handleInnsatsgruppeChanged={setInnsatsgruppe}
 					innsatsgruppe={innsatsgruppe}
@@ -64,12 +70,12 @@ interface InnsatsgruppeRadioProps {
 }
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
-	const {showModal} = useModalStore();
-	const {utkast} = useDataStore();
+	const { showModal } = useModalStore();
+	const { utkast } = useDataStore();
 
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
 		if (erBeslutterProsessStartet(utkast && utkast.beslutterProsessStatus) && !trengerBeslutter(innsatsgruppe)) {
-			showModal(ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS, {innsatsgruppe});
+			showModal(ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS, { innsatsgruppe });
 		} else {
 			props.handleInnsatsgruppeChanged(innsatsgruppe);
 		}
@@ -77,21 +83,15 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 
 	return (
 		<div className="innsatsgruppe">
-			{innsatsgruppeTekster.map(innsatsgruppeTekst => (
-					<RadioPanel
-						name="innsatsgruppe"
-						label={(
-							<InnatsgruppeVisning
-								erValgt={props.innsatsgruppe === innsatsgruppeTekst.value}
-								innsatsgruppeTekst={innsatsgruppeTekst}
-							/>
-						)}
-						aria-label={innsatsgruppeTekst.tittel}
+			<RadioGruppe legend="Hvor vil du sitte?">
+				{innsatsgruppeTekster.map(innsatsgruppeTekst => (
+					<Radio
 						key={innsatsgruppeTekst.value}
+						label={innsatsgruppeTekst.tittel}
+						name="innsatsgruppe"
 						value={innsatsgruppeTekst.value}
-						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
 						onKeyPress={swallowEnterKeyPress}
-						aria-labelledby={'innsatsgruppe-tittel'}
+						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
 						onChange={(e: any) => {
 							const innsatsgruppe = e.target.value;
 							handleInnsatsgruppeChanged(innsatsgruppe);
@@ -101,21 +101,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 						}}
 					/>
 				))}
-		</div>
-	);
-}
-
-function InnatsgruppeVisning({innsatsgruppeTekst, erValgt}: {erValgt: boolean, innsatsgruppeTekst: InnsatsgruppeTekst}) {
-	return (
-		<div className="innsatsgruppe-label">
-			<Element>{innsatsgruppeTekst.tittel}</Element>
-			<Normaltekst
-				className={
-					cls('innsatsgruppe-label__undertekst', { 'innsatsgruppe-label__undertekst--valgt': erValgt})
-				}
-			>
-				{innsatsgruppeTekst.undertekst}
-			</Normaltekst>
+			</RadioGruppe>
 		</div>
 	);
 }

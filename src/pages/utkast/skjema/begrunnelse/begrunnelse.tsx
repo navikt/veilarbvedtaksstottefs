@@ -84,6 +84,7 @@ function Begrunnelse() {
 						onChange={onBegrunnelseChanged}
 						aria-labelledby="begrunnelse-tittel"
 						autoCorrect="on"
+						className="begrunnelse-tekstomrade skjemaelement__input textarea--medMeta"
 					/>
 					<Normaltekst className="begrunnelse__malform">
 						Brukers målform: {malformToTekst(malform)}

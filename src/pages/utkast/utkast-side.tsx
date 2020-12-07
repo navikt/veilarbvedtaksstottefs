@@ -1,12 +1,41 @@
 import React from 'react';
-import { useTilgangStore } from '../../stores/tilgang-store';
-import { EndreUtkastSide } from './endre-utkast-side';
-import { LesUtkastSide } from './les-utkast-side';
+import { EndreUtkastSkjema } from './endre-utkast-skjema';
 import './utkast-side.less';
+import { useSkjemaStore } from '../../stores/skjema-store';
+import { DialogPanelInnhold } from './dialog-panel/dialog-panel-innhold';
+import { DialogPanelHeader } from './dialog-panel/dialog-panel-header';
+import { UtkastFooter } from './footer/utkast-footer';
+import { DialogPanel } from './dialog-panel/dialog-panel';
 
 export function UtkastSide() {
-	const { erAnsvarligVeileder } = useTilgangStore();
-	return erAnsvarligVeileder
-		? <EndreUtkastSide />
-		: <LesUtkastSide />;
+	// const { erAnsvarligVeileder } = useTilgangStore();
+	// return erAnsvarligVeileder
+	// 	? <EndreUtkastSkjema />
+	// 	: <LesUtkastSkjema />;
+	const {
+		opplysninger,
+		hovedmal,
+		innsatsgruppe,
+		begrunnelse,
+		sistOppdatert,
+		setSistOppdatert,
+		validerSkjema,
+		validerBegrunnelseLengde,
+		lagringStatus,
+		setLagringStatus
+	} = useSkjemaStore();
+
+	const vedtakskjema = { opplysninger, begrunnelse, innsatsgruppe, hovedmal };
+
+	return (
+		<div className="utkast-side-grid">
+			<div className="utkast-side-grid-innhold">
+				<div className="utkast-skjema-panel">
+					<EndreUtkastSkjema />
+				</div>
+				<DialogPanel />
+			</div>
+			<UtkastFooter />
+		</div>
+	);
 }

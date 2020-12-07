@@ -9,7 +9,6 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getHovedmalNavn } from '../../utils/hovedmal';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
-import LesUtkastAksjoner from './aksjoner/les-utkast-aksjoner';
 import UtkastSkjema from './skjema/utkast-skjema';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { OrNothing } from '../../utils/types/ornothing';
@@ -25,7 +24,7 @@ import isEqual from 'lodash/isEqual';
 
 const TEN_SECONDS = 10000;
 
-export function LesUtkastSide() {
+export function LesUtkastSkjema() {
 	const { fnr } = useAppStore();
 	const { utkast, setUtkast, setFattedeVedtak, features } = useDataStore();
 	const { changeView } = useViewStore();
@@ -155,9 +154,6 @@ export function LesUtkastSide() {
 					</SkjemaBolk>
 				</div>
 			</UtkastSkjema>
-			<Footer>
-				<LesUtkastAksjoner />
-			</Footer>
 		</div>
 	);
 }

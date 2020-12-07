@@ -6,13 +6,19 @@ import Footer from '../../components/footer/footer';
 import { fetchBeslutterprosessStatus, fetchOppdaterVedtakUtkast } from '../../rest/api';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
-import { erBeslutterProsessStartet, erGodkjentAvBeslutter, erKlarTilBeslutter, finnGjeldendeVedtak, hentId } from '../../utils';
+import {
+	erBeslutterProsessStartet,
+	erGodkjentAvBeslutter,
+	erKlarTilBeslutter,
+	finnGjeldendeVedtak,
+	hentId
+} from '../../utils';
 import { useIsAfterFirstRender } from '../../utils/hooks';
 import { BeslutterProsessStatus, Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
-import EndreUtkastAksjoner from './aksjoner/endre-utkast-aksjoner';
+import UtkastInnhold from './footer/utkast-innhold';
 import Opplysninger from './skjema/opplysninger/opplysninger';
 import Begrunnelse from './skjema/begrunnelse/begrunnelse';
 import Innsatsgruppe from './skjema/innsatsgruppe/innsatsgruppe';
@@ -23,34 +29,44 @@ import { VarselType } from '../../components/varsel/varsel-type';
 
 const TEN_SECONDS = 10000;
 
-export function EndreUtkastSide() {
+export function EndreUtkastSkjema() {
 	const { fattedeVedtak, malform, utkast, features, setBeslutterProsessStatus } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
-		opplysninger, hovedmal, innsatsgruppe, begrunnelse, sistOppdatert,
-		setSistOppdatert, validerSkjema, validerBegrunnelseLengde, lagringStatus,
+		opplysninger,
+		hovedmal,
+		innsatsgruppe,
+		begrunnelse,
+		sistOppdatert,
+		setSistOppdatert,
+		validerSkjema,
+		validerBegrunnelseLengde,
+		lagringStatus,
 		setLagringStatus
 	} = useSkjemaStore();
-	const {showVarsel} = useVarselStore();
+	const { showVarsel } = useVarselStore();
 
 	const pollBeslutterstatusIntervalRef = useRef<number>();
 	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 	const isAfterFirstRender = useIsAfterFirstRender();
 
-	const oppdaterUtkast = useCallback(debounce((skjema: SkjemaData) => {
-		const malformType = hentMalformFraData(malform);
+	const oppdaterUtkast = useCallback(
+		debounce((skjema: SkjemaData) => {
+			const malformType = hentMalformFraData(malform);
 
-		setLagringStatus(SkjemaLagringStatus.LAGRER);
-		fetchOppdaterVedtakUtkast({ vedtakId: hentId(utkast), skjema, malform: malformType })
-			.then(() => {
-				setLagringStatus(SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET);
-				setSistOppdatert(new Date().toISOString());
-			})
-			.catch(() => {
-				showModal(ModalType.FEIL_VED_LAGRING);
-				setLagringStatus(SkjemaLagringStatus.LAGRING_FEILET);
-			});
-	}, 3000), []);
+			setLagringStatus(SkjemaLagringStatus.LAGRER);
+			fetchOppdaterVedtakUtkast({ vedtakId: hentId(utkast), skjema, malform: malformType })
+				.then(() => {
+					setLagringStatus(SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET);
+					setSistOppdatert(new Date().toISOString());
+				})
+				.catch(() => {
+					showModal(ModalType.FEIL_VED_LAGRING);
+					setLagringStatus(SkjemaLagringStatus.LAGRING_FEILET);
+				});
+		}, 3000),
+		[]
+	);
 
 	const vedtakskjema = { opplysninger, begrunnelse, innsatsgruppe, hovedmal };
 
@@ -103,16 +119,14 @@ export function EndreUtkastSide() {
             statusen bli oppdatert av pollingen.
         */
 		if (erStartet && !erGodkjent && erHosBeslutter) {
-
-			pollBeslutterstatusIntervalRef.current = setInterval(() => {
-				fetchBeslutterprosessStatus(utkast.id)
-					.then(response => {
-						if (response.data && response.data.status) {
-							varsleBeslutterProsessStatusEndring(response.data.status)
-							setBeslutterProsessStatus(response.data.status);
-						}
-					});
-			}, TEN_SECONDS) as unknown as number;
+			pollBeslutterstatusIntervalRef.current = (setInterval(() => {
+				fetchBeslutterprosessStatus(utkast.id).then(response => {
+					if (response.data && response.data.status) {
+						varsleBeslutterProsessStatusEndring(response.data.status);
+						setBeslutterProsessStatus(response.data.status);
+					}
+				});
+			}, TEN_SECONDS) as unknown) as number;
 			// NodeJs types are being used instead of browser types so we have to override
 		} else if (erGodkjent) {
 			// Trenger ikke å polle lenger hvis utkastet er godkjent
@@ -144,18 +158,17 @@ export function EndreUtkastSide() {
 	}, []);
 
 	return (
-		<div className="utkast-side page--grey">
+		<div className="utkast-side">
 			<UtkastSkjema utkast={utkast as Vedtak} sistOppdatert={sistOppdatert}>
 				<form className="utkast-side__form">
-					<Opplysninger />
+					<div>
+						<Opplysninger />
+						<Innsatsgruppe />
+						<Hovedmal />
+					</div>
 					<Begrunnelse />
-					<Innsatsgruppe />
-					<Hovedmal />
 				</form>
 			</UtkastSkjema>
-			<Footer>
-				<EndreUtkastAksjoner vedtakskjema={vedtakskjema} harForsoktForhandsvisning={() => setHarForsoktAttSende(true)} />
-			</Footer>
 		</div>
 	);
 }
