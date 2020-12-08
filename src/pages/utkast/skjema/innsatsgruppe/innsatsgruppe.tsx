@@ -1,6 +1,5 @@
 import React from 'react';
-import cls from 'classnames';
-import { Radio, RadioGruppe, RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Radio, RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { harSkrevetBegrunnelse, trengerBeslutter } from '../../../../utils/skjema-utils';
 import SkjemaBolk from '../bolk/skjema-bolk';
@@ -8,16 +7,10 @@ import { useSkjemaStore } from '../../../../stores/skjema-store';
 import { erBeslutterProsessStartet, finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../../utils';
 import './innsatsgruppe.less';
 import { useDataStore } from '../../../../stores/data-store';
-import {
-	erStandard,
-	erVarigEllerGradertVarig,
-	InnsatsgruppeTekst,
-	innsatsgruppeTekster
-} from '../../../../utils/innsatsgruppe';
+import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekster } from '../../../../utils/innsatsgruppe';
 import Show from '../../../../components/show';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../../../../rest/data/vedtak';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { ModalType, useModalStore } from '../../../../stores/modal-store';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 

@@ -63,14 +63,12 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 
 	return (
 		<div className="utkast-footer__utkast-innhold">
-			<div>
+			<div className="utkast-footer--innhold-sidestilt">
 				<Tilbakeknapp htmlType="button" onClick={handleOnTilbakeClicked} disabled={laster} />
-				<div>
-					<Normaltekst>{mapSkjemaLagringStatusTilTekst(lagringStatus)}</Normaltekst>
-				</div>
+				<Normaltekst>{mapSkjemaLagringStatusTilTekst(lagringStatus)}</Normaltekst>
 			</div>
 
-			<div>
+			<div className="utkast-footer--innhold-sidestilt">
 				<Show if={laster}>
 					<NavFrontendSpinner type="XS" />
 				</Show>

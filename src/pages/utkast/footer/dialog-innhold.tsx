@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Show from '../../../components/show';
 import { Element } from 'nav-frontend-typografi';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { useDataStore } from '../../../stores/data-store';
 import { ModalType, useModalStore } from '../../../stores/modal-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
@@ -11,12 +11,12 @@ import {
 	erGodkjentAvBeslutter,
 	erKlarTilBeslutter,
 	erKlarTilVeileder,
-	finnGjeldendeVedtak,
 	isNothing
 } from '../../../utils';
 import { hentMalformFraData, SkjemaData, trengerBeslutter } from '../../../utils/skjema-utils';
 import {
 	fetchBliBeslutter,
+	fetchGodkjennVedtak,
 	fetchOppdaterBeslutterProsessStatus,
 	fetchOppdaterVedtakUtkast,
 	fetchStartBeslutterProsess
@@ -24,6 +24,7 @@ import {
 import { SystemMeldingType } from '../../../utils/types/melding-type';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 import { VeilederTilgang } from '../../../utils/tilgang';
+import { UtkastStatusMelding } from './utkast-status-melding';
 
 interface DialogFooterInnholdProps {
 	vedtakskjema: SkjemaData;
@@ -31,7 +32,13 @@ interface DialogFooterInnholdProps {
 }
 
 export function DialogInnhold(props: DialogFooterInnholdProps) {
-	const { erBeslutter, erAnsvarligVeileder, erIkkeAnsvarligVeileder, setVeilederTilgang } = useTilgangStore();
+	const {
+		erBeslutter,
+		erAnsvarligVeileder,
+		erIkkeAnsvarligVeileder,
+		veilederTilgang,
+		setVeilederTilgang
+	} = useTilgangStore();
 	const {
 		malform,
 		utkast,
@@ -46,7 +53,6 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 
 	const [laster, setLaster] = useState(false);
 
-	const visGodkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
 	const visStartBeslutterProsess =
 		trengerBeslutter(innsatsgruppe) &&
 		erAnsvarligVeileder &&
@@ -61,8 +67,6 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 		erIkkeAnsvarligVeileder && isNothing(beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus);
 
 	const visGodkjennUtkast = erBeslutterProsessStartet(beslutterProsessStatus) && erBeslutter && !godkjentAvBeslutter;
-
-	const visTaOverUtkast = erIkkeAnsvarligVeileder;
 
 	const visKlarTil =
 		erBeslutterProsessStartet(beslutterProsessStatus) &&
@@ -93,7 +97,6 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 
 	function handleOnKlarTilClicked() {
 		setLaster(true);
-
 		fetchOppdaterBeslutterProsessStatus(utkastId)
 			.then(() => {
 				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
@@ -104,7 +107,6 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 
 	function handleOnBliBeslutterClicked() {
 		setLaster(true);
-
 		fetchBliBeslutter(utkastId)
 			.then(() => {
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
@@ -115,36 +117,63 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 			.finally(() => setLaster(false));
 	}
 
+	function handleOnGodkjennClicked() {
+		setLaster(true);
+		fetchGodkjennVedtak(utkastId)
+			.then(() => {
+				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
+				setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);
+			})
+			.catch(() => showModal(ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER))
+			.finally(() => setLaster(false));
+	}
+
 	return (
 		<div className="utkast-footer__dialog-innhold">
-			<Show if={visBliBeslutter}>
-				<Hovedknapp mini={true} htmlType="button" onClick={handleOnBliBeslutterClicked} disabled={laster}>
-					Bli beslutter
-				</Hovedknapp>
-			</Show>
-			<Show if={visKlarTil}>
-				<Hovedknapp mini={true} htmlType="button" onClick={handleOnKlarTilClicked} disabled={laster}>
-					Send til veileder
-				</Hovedknapp>
-			</Show>
-			<Show if={visStartBeslutterProsess}>
-				<Hovedknapp
-					disabled={laster}
-					mini={true}
-					htmlType="button"
-					onClick={handleOnStartBeslutterProsessClicked}
-				>
-					Start beslutterprosess
-				</Hovedknapp>
-			</Show>
-			<Show if={visGodkjentAvBeslutter}>
-				<Element style={{ marginRight: '1rem' }}>Klar for utsendelse</Element>
-			</Show>
-			<Show if={visKlarTilBeslutter}>
-				<Hovedknapp mini={true} htmlType="button" onClick={handleOnKlarTilClicked} disabled={laster}>
-					Send til beslutter
-				</Hovedknapp>
-			</Show>
+			<div>
+				<UtkastStatusMelding
+					utkast={utkast!}
+					veilederTilgang={veilederTilgang}
+					skjemaInnsatsgruppe={innsatsgruppe}
+				/>
+			</div>
+
+			<div className="utkast-footer--innhold-sidestilt">
+				<Show if={visStartBeslutterProsess}>
+					<Hovedknapp
+						disabled={laster}
+						mini={true}
+						htmlType="button"
+						onClick={handleOnStartBeslutterProsessClicked}
+					>
+						Start beslutterprosess
+					</Hovedknapp>
+				</Show>
+
+				<Show if={visBliBeslutter}>
+					<Hovedknapp mini={true} htmlType="button" onClick={handleOnBliBeslutterClicked} disabled={laster}>
+						Bli beslutter
+					</Hovedknapp>
+				</Show>
+
+				<Show if={visKlarTil}>
+					<Hovedknapp mini={true} htmlType="button" onClick={handleOnKlarTilClicked} disabled={laster}>
+						Send til veileder
+					</Hovedknapp>
+				</Show>
+
+				<Show if={visKlarTilBeslutter}>
+					<Hovedknapp mini={true} htmlType="button" onClick={handleOnKlarTilClicked} disabled={laster}>
+						Send til beslutter
+					</Hovedknapp>
+				</Show>
+
+				<Show if={visGodkjennUtkast}>
+					<Flatknapp mini={true} htmlType="button" onClick={handleOnGodkjennClicked}>
+						Godkjenn
+					</Flatknapp>
+				</Show>
+			</div>
 		</div>
 	);
 }
