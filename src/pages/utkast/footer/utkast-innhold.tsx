@@ -13,7 +13,9 @@ import { erKlarTilVeileder, finnGjeldendeVedtak, mapSkjemaLagringStatusTilTekst 
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Vedtak } from '../../../rest/data/vedtak';
+import { ReactComponent as TaOverIkon } from './taover.svg';
 import './aksjoner.less';
+import { useTilgangStore } from '../../../stores/tilgang-store';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -21,6 +23,7 @@ interface UtkastAksjonerProps {
 }
 
 function UtkastInnhold(props: UtkastAksjonerProps) {
+	const { erAnsvarligVeileder } = useTilgangStore();
 	const { malform, fattedeVedtak, utkast } = useDataStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
@@ -68,12 +71,13 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 				<Normaltekst>{mapSkjemaLagringStatusTilTekst(lagringStatus)}</Normaltekst>
 			</div>
 
-			<div className="utkast-footer--innhold-sidestilt">
+			<div className="utkast-footer__knapper-hoyre utkast-footer--innhold-sidestilt">
 				<Show if={laster}>
 					<NavFrontendSpinner type="XS" />
 				</Show>
 
 				<Knapp
+					className="utkast-footer__forhandsvis-knapp"
 					type={erForhandsvisHovedknapp ? 'hoved' : 'standard'}
 					disabled={laster}
 					mini={true}
@@ -83,15 +87,29 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 					Forhåndsvis
 				</Knapp>
 
-				<Flatknapp
-					mini={true}
-					htmlType="button"
-					onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
-					disabled={laster}
-				>
-					<SlettIkon className="aksjoner__ikon" />
-					Slett
-				</Flatknapp>
+				<Show if={!erAnsvarligVeileder}>
+					<Flatknapp
+						mini={true}
+						htmlType="button"
+						onClick={() => showModal(ModalType.BEKREFT_TA_OVER_UTKAST)}
+						disabled={laster}
+					>
+						<TaOverIkon className="aksjoner__ikon" />
+						Ta over
+					</Flatknapp>
+				</Show>
+
+				<Show if={erAnsvarligVeileder}>
+					<Flatknapp
+						mini={true}
+						htmlType="button"
+						onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
+						disabled={laster}
+					>
+						<SlettIkon className="aksjoner__ikon" />
+						Slett
+					</Flatknapp>
+				</Show>
 			</div>
 		</div>
 	);

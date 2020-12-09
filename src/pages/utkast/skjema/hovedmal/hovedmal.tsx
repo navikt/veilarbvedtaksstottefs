@@ -1,13 +1,12 @@
 import React from 'react';
-import { Radio, RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../../utils/types/ornothing';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
 import { lagSkjemaelementFeilmelding, swallowEnterKeyPress } from '../../../../utils';
 import { HovedmalType, InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { alleHovedmal } from '../../../../utils/hovedmal';
-import './hovedmal.less';
 import FeltHeader from '../felt-header/felt-header';
+import './hovedmal.less';
 
 function Hovedmal() {
 	const { innsatsgruppe, hovedmal, setHovedmal, errors } = useSkjemaStore();

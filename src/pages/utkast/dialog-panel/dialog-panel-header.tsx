@@ -1,12 +1,21 @@
 import React from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Label } from '../../../components/label/label';
+import './dialog-panel.less';
+import Show from '../../../components/show';
+import { OrNothing } from '../../../utils/types/ornothing';
 
-export function DialogPanelHeader() {
+interface DialogPanelHeaderProps {
+	beslutterNavn?: OrNothing<string>;
+}
+
+export function DialogPanelHeader(props: DialogPanelHeaderProps) {
 	return (
 		<div className="dialog-panel-header">
 			<Undertittel className="dialog-panel-header__tittel">Kollegaveiledning</Undertittel>
-			<Label titleText="Ansvarlig" valueText="TODO" />
+			<Show if={props.beslutterNavn}>
+				<Label titleText="Ansvarlig" valueText={props.beslutterNavn} />
+			</Show>
 		</div>
 	);
 }

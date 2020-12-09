@@ -27,10 +27,13 @@
 	}
 
 	.dialog-panel-innhold {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
 		padding: 1rem;
 		background-color: white;
-		//margin-bottom: 3rem; // TODO: Not a permanent fix
-		overflow-y: scroll;
+		flex-grow: 1;
 
 		&__send {
 			display: flex;

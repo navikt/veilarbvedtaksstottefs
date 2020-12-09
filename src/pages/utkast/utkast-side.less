@@ -2,37 +2,48 @@
 
 .veilarbvedtaksstottefs {
 
-	.utkast-side-grid-innhold {
+	.utkast-side {
+		width: 100%;
+		height: 100%;
+	}
+
+	.utkast-side__hovedinnhold {
 		display: grid;
 		grid-template-columns: 7fr 3fr;
 		max-width: 1920px;
+		background-color: white;
+		width: 100%;
+		height: 100%;
 
+		padding-bottom: 72px; // Height of the footer
 		margin: 0 auto;
 	}
 
-	.utkast-side {
+	.utkast-side__dialog-panel {
 		display: flex;
 		flex-direction: column;
+		justify-content: space-between;
+		background-color: white;
 
-		width: 100%;
+		border-left: 1px solid @navGra40;
+	}
 
-		&__form {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-column-gap: 4rem;
-			padding: 2rem;
-		}
+	.endre-utkast-skjema {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-column-gap: 4rem;
+		padding: 2rem;
 	}
 
 	// TODO: Cleanup stuff below
 
-	.les-utkast-side {
+	.les-utkast-skjema {
 
-		.utkast-side__visning {
+		.les-utkast-skjema__visning {
 			padding: 3.5rem 5rem 2rem 5rem;
 		}
 
-		.les-utkast__kilder {
+		.les-utkast-skjema__kilder {
 			margin-top: 0;
 		}
 

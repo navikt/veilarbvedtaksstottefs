@@ -1,5 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
-import './dialog-panel.less';
+import React, { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { fetchMeldinger, fetchSendDialog } from '../../../rest/api';
@@ -10,6 +9,7 @@ import { useDataStore } from '../../../stores/data-store';
 import { sortDatesAsc } from '../../../utils/date-utils';
 import { SKRU_AV_POLLING_DIALOG } from '../../../rest/data/features';
 import Spinner from '../../../components/spinner/spinner';
+import './dialog-panel.less';
 
 let midlertidigMelding = '';
 
@@ -96,20 +96,28 @@ export function DialogPanelInnhold() {
 		}
 	}
 
-	if (!harLastetMeldinger) {
-		return (
-			<div className="dialog-panel-innhold__spinner">
-				<Spinner />
-			</div>
-		);
-	}
-
 	return (
 		<div className="dialog-panel-innhold">
-			<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
-			<Textarea onChange={handleOnMeldingChanged} value={melding} />
-			<div className="dialog-panel-innhold__send">
-				<Hovedknapp onClick={sendMelding}>Send</Hovedknapp>
+			<div>
+				{harLastetMeldinger ? (
+					<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
+				) : (
+					<div className="dialog-panel-innhold__spinner">
+						<Spinner />
+					</div>
+				)}
+			</div>
+			<div className="blokk-s">
+				<Textarea onChange={handleOnMeldingChanged} value={melding} />
+				<div className="dialog-panel-innhold__send">
+					<Hovedknapp
+						onClick={sendMelding}
+						spinner={senderMelding}
+						disabled={!kanSendeMelding || senderMelding}
+					>
+						Send
+					</Hovedknapp>
+				</div>
 			</div>
 		</div>
 	);

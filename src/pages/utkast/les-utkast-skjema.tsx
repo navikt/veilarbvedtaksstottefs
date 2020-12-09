@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import Footer from '../../components/footer/footer';
 import { BeslutterProsessStatus, InnsatsgruppeType, Vedtak } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
@@ -9,7 +8,6 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getHovedmalNavn } from '../../utils/hovedmal';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { getInnsatsgruppeTekst } from '../../utils/innsatsgruppe';
-import UtkastSkjema from './skjema/utkast-skjema';
 import { useViewStore, ViewType } from '../../stores/view-store';
 import { OrNothing } from '../../utils/types/ornothing';
 import { fetchFattedeVedtak, fetchUtkast } from '../../rest/api';
@@ -98,62 +96,58 @@ export function LesUtkastSkjema() {
 	const begrunnelseLength = begrunnelse ? begrunnelse.length : 0;
 
 	return (
-		<div className="utkast-side les-utkast-side page--grey">
-			<UtkastSkjema utkast={utkast} sistOppdatert={utkast.sistOppdatert}>
-				<div className="utkast-side__visning">
-					<SkjemaBolk tittel="Kilder" className="les-utkast__kilder">
-						<ul className="kilder-liste">
-							{opplysninger.map((o, idx) => {
-								return (
-									<li key={idx} className="kilder-liste__item">
-										<img src={checkmark} alt="Checkmerke" className="kilder-liste__item-icon" />
-										<Normaltekst>{o}</Normaltekst>
-									</li>
-								);
-							})}
-						</ul>
-					</SkjemaBolk>
+		<div className="les-utkast-skjema">
+			<div className="les-utkast-skjema__visning">
+				<SkjemaBolk tittel="Kilder" className="les-utkast-skjema__kilder">
+					<ul className="kilder-liste">
+						{opplysninger.map((o, idx) => {
+							return (
+								<li key={idx} className="kilder-liste__item">
+									<img src={checkmark} alt="Checkmerke" className="kilder-liste__item-icon" />
+									<Normaltekst>{o}</Normaltekst>
+								</li>
+							);
+						})}
+					</ul>
+				</SkjemaBolk>
 
-					<SkjemaBolk tittel="Begrunnelse">
-						<div className="begrunnelse__tekstomrade-wrapper">
-							<Tekstomrade className="begrunnelse__tekstomrade">
-								{begrunnelse ? begrunnelse : ''}
-							</Tekstomrade>
-						</div>
-						{begrunnelseLength > BEGRUNNELSE_ANBEFALT_LENGTH ? (
-							<div className="begrunnelse__tegnteller">
-								<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">
-									Du har {begrunnelseLength - BEGRUNNELSE_ANBEFALT_LENGTH} tegn for mye{' '}
-								</Normaltekst>
-							</div>
-						) : (
-							<div className="begrunnelse__tegnteller">
-								<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">
-									Du har {BEGRUNNELSE_ANBEFALT_LENGTH - begrunnelseLength} tegn igjen{' '}
-								</Normaltekst>
-							</div>
-						)}
-					</SkjemaBolk>
-
-					<SkjemaBolk tittel="Innsatsgruppe">
-						<CheckboxVisning>
-							<InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} />
-						</CheckboxVisning>
-					</SkjemaBolk>
-
-					<SkjemaBolk tittel="Hovedmål">
-						{hovedmal ? (
-							<CheckboxVisning>
-								<Normaltekst>{getHovedmalNavn(hovedmal)}</Normaltekst>
-							</CheckboxVisning>
-						) : (
-							<Normaltekst>
-								Hovedmål settes ikke ved varig tilpasset innsats (varig nedsatt arbeidsevne)
+				<SkjemaBolk tittel="Begrunnelse">
+					<div className="begrunnelse__tekstomrade-wrapper">
+						<Tekstomrade className="begrunnelse__tekstomrade">{begrunnelse ? begrunnelse : ''}</Tekstomrade>
+					</div>
+					{begrunnelseLength > BEGRUNNELSE_ANBEFALT_LENGTH ? (
+						<div className="begrunnelse__tegnteller">
+							<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">
+								Du har {begrunnelseLength - BEGRUNNELSE_ANBEFALT_LENGTH} tegn for mye{' '}
 							</Normaltekst>
-						)}
-					</SkjemaBolk>
-				</div>
-			</UtkastSkjema>
+						</div>
+					) : (
+						<div className="begrunnelse__tegnteller">
+							<Normaltekst tag="span" className="begrunnelse__tegnteller-tekst">
+								Du har {BEGRUNNELSE_ANBEFALT_LENGTH - begrunnelseLength} tegn igjen{' '}
+							</Normaltekst>
+						</div>
+					)}
+				</SkjemaBolk>
+
+				<SkjemaBolk tittel="Innsatsgruppe">
+					<CheckboxVisning>
+						<InnsatsgruppeVisning innsatsgruppe={innsatsgruppe} />
+					</CheckboxVisning>
+				</SkjemaBolk>
+
+				<SkjemaBolk tittel="Hovedmål">
+					{hovedmal ? (
+						<CheckboxVisning>
+							<Normaltekst>{getHovedmalNavn(hovedmal)}</Normaltekst>
+						</CheckboxVisning>
+					) : (
+						<Normaltekst>
+							Hovedmål settes ikke ved varig tilpasset innsats (varig nedsatt arbeidsevne)
+						</Normaltekst>
+					)}
+				</SkjemaBolk>
+			</div>
 		</div>
 	);
 }

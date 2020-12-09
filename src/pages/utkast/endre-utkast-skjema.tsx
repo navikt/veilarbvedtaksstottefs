@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { hentMalformFraData, SkjemaData } from '../../utils/skjema-utils';
-import UtkastSkjema from './skjema/utkast-skjema';
 import { fetchBeslutterprosessStatus, fetchOppdaterVedtakUtkast } from '../../rest/api';
 import { ModalType, useModalStore } from '../../stores/modal-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
@@ -13,7 +12,7 @@ import {
 	hentId
 } from '../../utils';
 import { useIsAfterFirstRender } from '../../utils/hooks';
-import { BeslutterProsessStatus, Vedtak } from '../../rest/data/vedtak';
+import { BeslutterProsessStatus } from '../../rest/data/vedtak';
 import { useDataStore } from '../../stores/data-store';
 import './utkast-side.less';
 import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
@@ -156,17 +155,13 @@ export function EndreUtkastSkjema() {
 	}, []);
 
 	return (
-		<div className="utkast-side">
-			<UtkastSkjema utkast={utkast as Vedtak} sistOppdatert={sistOppdatert}>
-				<form className="utkast-side__form">
-					<div>
-						<Opplysninger />
-						<Innsatsgruppe />
-						<Hovedmal />
-					</div>
-					<Begrunnelse />
-				</form>
-			</UtkastSkjema>
-		</div>
+		<form className="endre-utkast-skjema">
+			<div>
+				<Opplysninger />
+				<Innsatsgruppe />
+				<Hovedmal />
+			</div>
+			<Begrunnelse />
+		</form>
 	);
 }
