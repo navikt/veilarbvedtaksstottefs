@@ -13,17 +13,14 @@ function Hovedmal() {
 	const { innsatsgruppe, hovedmal, setHovedmal, errors } = useSkjemaStore();
 	const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
 
-	// Settes ikke for brukere med liten mulighet til å jobbe
 	return (
 		<div id="hovedmal-scroll-to">
 			<FeltHeader tittel="Hovedmål" tittelId="hovedmal-tittel" />
 			<SkjemaGruppe feil={lagSkjemaelementFeilmelding(errors.hovedmal)}>
 				{erVarigTilpassetInnsats ? (
-					<AlertStripeInfo className="hovedmal-info">
-						<span className="hovedmal-info__tekst">
-							Hovedmål kan ikke velges ved varig tilpasset innsats (varig nedsatt arbeidsevne)
-						</span>
-					</AlertStripeInfo>
+					<span className="hovedmal__empty-tekst">
+						Settes ikke for brukere med liten mulighet til å jobbe
+					</span>
 				) : (
 					<HovedmalRadioButtons handleHovedmalChanged={setHovedmal} hovedmal={hovedmal} />
 				)}
