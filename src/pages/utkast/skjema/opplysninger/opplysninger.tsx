@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { VisOpplysning } from './vis-opplysning/vis-opplysning';
 import { RedigerOpplysning } from './rediger-opplysning/rediger-opplysning';
 import { LeggTilOpplysning } from './legg-til-opplysning/legg-til-opplysning';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
-import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
 import { mergeMedDefaultOpplysninger } from '../../../../utils/skjema-utils';
 import { useIsAfterFirstRender } from '../../../../utils/hooks';
-import './opplysninger.less';
 import { OpplysningerTipsInnhold } from './opplysninger-tips-innhold';
-import { TipsPopover } from '../../../../components/tips-popover/tips-popover';
-import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
+import FeltHeader from '../felt-header/felt-header';
+import { lagSkjemaelementFeilmelding } from '../../../../utils';
+import './opplysninger.less';
 
 export interface Opplysning {
 	navn: string;
@@ -72,24 +70,22 @@ function Opplysninger() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [opplysninger]);
 
-	const opplysningerTittel = (
-		<div className="opplysninger__tittel">
-			<Undertittel id="kilder-tittel">Kilder</Undertittel>
-			<TipsPopover id="opplysninger-tips" tipsInnhold={<OpplysningerTipsInnhold/>} ariaLabel="Kilder tips" />
-		</div>
-	);
-
 	return (
-		<SkjemaBolk
-			className="opplysninger-skjema-bolk"
-			id="opplysninger-scroll-to"
-			tittel={opplysningerTittel}
-		>
+		<div className="blokk-l" id="opplysninger-scroll-to">
+			<FeltHeader
+				id="kilder-tittel"
+				tittel="Kilder"
+				tipsId="opplysninger-tips"
+				tipsInnhold={<OpplysningerTipsInnhold />}
+				tipsAriaLabel="Kilder tips"
+			/>
+
 			<div className="opplysninger">
-				<Normaltekst className="blokk-xxs">Velg eller skriv inn kilder som vises i vedtaksbrevet.</Normaltekst>
 				<div className="opplysninger__innhold">
-					<SkjemaGruppe aria-labelledby="kilder-tittel"
-								  feil={errors.opplysninger && <SkjemaelementFeilmelding>{errors.opplysninger}</SkjemaelementFeilmelding>}>
+					<SkjemaGruppe
+						aria-labelledby="kilder-tittel"
+						feil={lagSkjemaelementFeilmelding(errors.opplysninger)}
+					>
 						{opplysninger.map((opplysning, index) =>
 							redigeringModusIndeks !== index ? (
 								<VisOpplysning
@@ -99,7 +95,7 @@ function Opplysninger() {
 										setVisLeggTilNyOpplysning(true);
 									}}
 									key={index}
-									onChange={(o) => handleOpplysningerChecked(index, o)}
+									onChange={o => handleOpplysningerChecked(index, o)}
 									erSistEndretIndeks={index === sistEndretIndeks}
 								/>
 							) : (
@@ -128,7 +124,7 @@ function Opplysninger() {
 						/>
 					) : (
 						<RedigerOpplysning
-							opplysning={{navn: '', erValgt: true}}
+							opplysning={{ navn: '', erValgt: true }}
 							negativeBtn="CANCEL"
 							onTekstSubmit={endretOpplysning => {
 								handleOpplysningerChanged(opplysninger.length, endretOpplysning);
@@ -141,7 +137,7 @@ function Opplysninger() {
 					)}
 				</div>
 			</div>
-		</SkjemaBolk>
+		</div>
 	);
 }
 

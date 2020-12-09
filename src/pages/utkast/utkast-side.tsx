@@ -35,7 +35,9 @@ export function UtkastSide() {
 				</div>
 				<DialogPanel />
 			</div>
-			<UtkastFooter />
+			<div className="utkast-side-grid-footer">
+				<UtkastFooter />
+			</div>
 		</div>
 	);
 }

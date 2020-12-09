@@ -1,10 +1,14 @@
 import React from 'react';
 import { Radio, RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
-import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import { harSkrevetBegrunnelse, trengerBeslutter } from '../../../../utils/skjema-utils';
-import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
-import { erBeslutterProsessStartet, finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../../utils';
+import {
+	erBeslutterProsessStartet,
+	finnGjeldendeVedtak,
+	lagSkjemaelementFeilmelding,
+	swallowEnterKeyPress
+} from '../../../../utils';
 import './innsatsgruppe.less';
 import { useDataStore } from '../../../../stores/data-store';
 import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekster } from '../../../../utils/innsatsgruppe';
@@ -13,25 +17,19 @@ import { OrNothing } from '../../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { ModalType, useModalStore } from '../../../../stores/modal-store';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
+import FeltHeader from '../felt-header/felt-header';
 
 function Innsatsgruppe() {
 	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();
-	const { fattedeVedtak, utkast } = useDataStore();
+	const { fattedeVedtak } = useDataStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
-	const visInfomelding =
-		trengerBeslutter(innsatsgruppe) && !erBeslutterProsessStartet(utkast!.beslutterProsessStatus);
 
 	return (
-		<SkjemaBolk id="innsatsgruppe-scroll-to" tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel">
-			<Show if={visInfomelding}>
-				<AlertStripeInfo className="innsatsgruppe__alertstripe">
-					Vurderingen skal kvalitetssikres av en beslutter når bruker anses å ha liten eller delvis mulighet
-					til å jobbe.
-				</AlertStripeInfo>
-			</Show>
+		<div className="blokk-l" id="innsatsgruppe-scroll-to">
+			<FeltHeader tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel" />
 			<Show if={!harSkrevetBegrunnelse(begrunnelse) && erStandardInnsatsValgt && erGjeldendeInnsatsVarig}>
 				<AlertStripe form="inline" type="advarsel" className="innsatsgruppe__alertstripe">
 					Begrunnelse må i dette tilfellet også fylles ut for standard innsats. Dette er fordi gjeldende
@@ -39,18 +37,14 @@ function Innsatsgruppe() {
 					viktig å fremheve hva som er årsaken til endring i brukers situasjon.
 				</AlertStripe>
 			</Show>
-			<SkjemaGruppe
-				feil={
-					errors.innsatsgruppe && <SkjemaelementFeilmelding>{errors.innsatsgruppe}</SkjemaelementFeilmelding>
-				}
-			>
+			<SkjemaGruppe feil={lagSkjemaelementFeilmelding(errors.innsatsgruppe)}>
 				<InnsatsgruppeRadioButtons
 					handleInnsatsgruppeChanged={setInnsatsgruppe}
 					innsatsgruppe={innsatsgruppe}
 					setHovedmal={setHovedmal}
 				/>
 			</SkjemaGruppe>
-		</SkjemaBolk>
+		</div>
 	);
 }
 
@@ -76,7 +70,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 
 	return (
 		<div className="innsatsgruppe">
-			<RadioGruppe legend="Hvor vil du sitte?">
+			<RadioGruppe legend={null}>
 				{innsatsgruppeTekster.map(innsatsgruppeTekst => (
 					<Radio
 						key={innsatsgruppeTekst.value}

@@ -1,8 +1,12 @@
 @import "../../../../../node_modules/nav-frontend-core/less/_variabler";
 
 .veilarbvedtaksstottefs {
-
 	.innsatsgruppe {
+		.skjemaelement {
+			margin-bottom: 0;
+			padding: 0.5rem 0;
+		}
+
 		&__alertstripe {
 			margin: 1rem 0;
 			animation: linear 0.25s info-fade-in;
@@ -10,21 +14,6 @@
 			.alertstripe__tekst {
 				max-width: none;
 			}
-		}
-
-		.innsatsgruppe-label {
-			margin-left: 0.75rem;
-
-			&__undertekst {
-				font-size: 14px;
-				color: @navGra60;
-				line-height: 1rem;
-			}
-
-			&__undertekst--valgt {
-				color: @navGra80;
-			}
-
 		}
 	}
 

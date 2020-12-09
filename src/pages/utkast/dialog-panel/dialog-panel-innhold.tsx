@@ -9,6 +9,7 @@ import { MeldingListe } from './melding-liste/melding-liste';
 import { useDataStore } from '../../../stores/data-store';
 import { sortDatesAsc } from '../../../utils/date-utils';
 import { SKRU_AV_POLLING_DIALOG } from '../../../rest/data/features';
+import Spinner from '../../../components/spinner/spinner';
 
 let midlertidigMelding = '';
 
@@ -93,6 +94,14 @@ export function DialogPanelInnhold() {
 		if (!senderMelding) {
 			oppdaterMelding(e.target.value);
 		}
+	}
+
+	if (!harLastetMeldinger) {
+		return (
+			<div className="dialog-panel-innhold__spinner">
+				<Spinner />
+			</div>
+		);
 	}
 
 	return (

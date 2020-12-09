@@ -5,7 +5,7 @@ import './tips-popover.less';
 import { logMetrikk } from '../../utils/logger';
 
 interface TipsPopoverProps {
-	id: string;
+	id?: string;
 	tipsInnhold: React.ReactNode;
 	ariaLabel?: string;
 }

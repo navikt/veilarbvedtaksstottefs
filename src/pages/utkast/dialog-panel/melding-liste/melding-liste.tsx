@@ -43,13 +43,13 @@ function mapTilSystemMeldingView(melding: SystemMeldingData, key: number) {
 export const MeldingListe = (props: MeldingListeProps) => {
 	const { innloggetVeilederIdent, meldinger, className } = props;
 
-	useEffect(() => {
-		const meldingListeElem = document.querySelector('#veilarbvedtaksstottefs-melding-liste');
-
-		if (meldingListeElem) {
-			meldingListeElem.scrollTop = meldingListeElem.scrollHeight;
-		}
-	}, [meldinger]);
+	// useEffect(() => {
+	// 	const meldingListeElem = document.querySelector('#veilarbvedtaksstottefs-melding-liste');
+	//
+	// 	if (meldingListeElem) {
+	// 		meldingListeElem.scrollTop = meldingListeElem.scrollHeight;
+	// 	}
+	// }, [meldinger]);
 
 	return (
 		<div aria-live="polite" className={cls('melding-liste', className)} id="veilarbvedtaksstottefs-melding-liste">

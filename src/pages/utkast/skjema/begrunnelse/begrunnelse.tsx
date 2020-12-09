@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { validerBegrunnelseMaxLength } from '../../../../utils/skjema-utils';
-import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
-import { TipsPopover } from '../../../../components/tips-popover/tips-popover';
 import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
 import { MalformData, MalformType } from '../../../../rest/data/malform';
 import { useDataStore } from '../../../../stores/data-store';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import Show from '../../../../components/show';
-import './begrunnelse.less';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import { logMetrikk } from '../../../../utils/logger';
+import FeltHeader from '../felt-header/felt-header';
+import './begrunnelse.less';
+import { lagSkjemaelementFeilmelding } from '../../../../utils';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
@@ -61,22 +61,18 @@ function Begrunnelse() {
 		setBegrunnelseFeil(errors.begrunnelse);
 	}, [errors.begrunnelse]);
 
-	const begrunnelseTittel = (
-		<div className="begrunnelse__tittel">
-			<Undertittel id="begrunnelse-tittel">Begrunnelse</Undertittel>
-			<TipsPopover id="begrunnelse-tips" tipsInnhold={<BegrunnelseTipsInnhold />} ariaLabel="Begrunnelse tips" />
-		</div>
-	);
-
 	return (
-		<SkjemaBolk tittel={begrunnelseTittel} className="begrunnelse-skjema-bolk">
+		<div id="begrunnelse-scroll-to">
+			<FeltHeader
+				tittel="Begrunnelse"
+				tittelId="begrunnelse-tittel"
+				tipsId="begrunnelse-tips"
+				tipsInnhold={<BegrunnelseTipsInnhold />}
+				tipsAriaLabel="Begrunnelse tips"
+			/>
 			<div className="begrunnelse">
-				<SkjemaGruppe
-					feil={begrunnelseFeil && <SkjemaelementFeilmelding>{begrunnelseFeil}</SkjemaelementFeilmelding>}
-					className="begrunnelse__container"
-				>
+				<SkjemaGruppe feil={lagSkjemaelementFeilmelding(begrunnelseFeil)} className="begrunnelse__container">
 					<Textarea
-						id="begrunnelse-scroll-to"
 						value={begrunnelse || ''}
 						label=""
 						placeholder="Skriv inn din begrunnelse/arbeidsevnevurdering her"
@@ -97,7 +93,7 @@ function Begrunnelse() {
 					</Show>
 				</SkjemaGruppe>
 			</div>
-		</SkjemaBolk>
+		</div>
 	);
 }
 

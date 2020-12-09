@@ -2,22 +2,22 @@ import React from 'react';
 import { Radio, RadioPanel, SkjemaGruppe } from 'nav-frontend-skjema';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import SkjemaBolk from '../bolk/skjema-bolk';
 import { useSkjemaStore } from '../../../../stores/skjema-store';
-import { swallowEnterKeyPress } from '../../../../utils';
+import { lagSkjemaelementFeilmelding, swallowEnterKeyPress } from '../../../../utils';
 import { HovedmalType, InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { alleHovedmal } from '../../../../utils/hovedmal';
 import './hovedmal.less';
-import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
+import FeltHeader from '../felt-header/felt-header';
 
 function Hovedmal() {
 	const { innsatsgruppe, hovedmal, setHovedmal, errors } = useSkjemaStore();
 	const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
+
+	// Settes ikke for brukere med liten mulighet til å jobbe
 	return (
-		<SkjemaBolk id="hovedmal-scroll-to" tittel="Hovedmål" tittelId="hovedmal-tittel">
-			<SkjemaGruppe
-				feil={errors.hovedmal && <SkjemaelementFeilmelding>{errors.hovedmal}</SkjemaelementFeilmelding>}
-			>
+		<div id="hovedmal-scroll-to">
+			<FeltHeader tittel="Hovedmål" tittelId="hovedmal-tittel" />
+			<SkjemaGruppe feil={lagSkjemaelementFeilmelding(errors.hovedmal)}>
 				{erVarigTilpassetInnsats ? (
 					<AlertStripeInfo className="hovedmal-info">
 						<span className="hovedmal-info__tekst">
@@ -28,7 +28,7 @@ function Hovedmal() {
 					<HovedmalRadioButtons handleHovedmalChanged={setHovedmal} hovedmal={hovedmal} />
 				)}
 			</SkjemaGruppe>
-		</SkjemaBolk>
+		</div>
 	);
 }
 

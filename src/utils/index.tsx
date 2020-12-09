@@ -1,9 +1,15 @@
 import { BeslutterProsessStatus, Vedtak } from '../rest/data/vedtak';
 import { OrNothing } from './types/ornothing';
 import { SkjemaLagringStatus } from './types/skjema-lagring-status';
+import React from 'react';
+import { SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
+
+export const lagSkjemaelementFeilmelding = (muligFeil: string | undefined): React.ReactNode => {
+	return muligFeil ? <SkjemaelementFeilmelding>{muligFeil}</SkjemaelementFeilmelding> : null;
+};
 
 export const finnGjeldendeVedtak = (vedtakListe: OrNothing<Vedtak[]>): Vedtak | undefined => {
 	return vedtakListe ? vedtakListe.find(v => v.gjeldende) : undefined;
@@ -25,7 +31,7 @@ export const erKlarTilVeileder = (beslutterProsessStatus: OrNothing<BeslutterPro
 	return beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_VEILEDER;
 };
 
-export const erGodkjentAvBeslutter = (beslutterProsessStatus:  OrNothing<BeslutterProsessStatus>): boolean => {
+export const erGodkjentAvBeslutter = (beslutterProsessStatus: OrNothing<BeslutterProsessStatus>): boolean => {
 	return beslutterProsessStatus === BeslutterProsessStatus.GODKJENT_AV_BESLUTTER;
 };
 
@@ -54,5 +60,3 @@ export function mapSkjemaLagringStatusTilTekst(skjemaLagringStatus: SkjemaLagrin
 
 	return '';
 }
-
-
