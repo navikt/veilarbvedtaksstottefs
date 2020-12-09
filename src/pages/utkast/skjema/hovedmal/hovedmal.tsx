@@ -13,7 +13,7 @@ function Hovedmal() {
 	const erVarigTilpassetInnsats = innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS;
 
 	return (
-		<div id="hovedmal-scroll-to">
+		<div className="hovedmal-bolk" id="hovedmal-scroll-to">
 			<FeltHeader tittel="Hovedmål" tittelId="hovedmal-tittel" />
 			<SkjemaGruppe feil={lagSkjemaelementFeilmelding(errors.hovedmal)}>
 				{erVarigTilpassetInnsats ? (

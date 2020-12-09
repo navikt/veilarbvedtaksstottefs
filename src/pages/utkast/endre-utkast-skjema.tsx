@@ -34,7 +34,6 @@ export function EndreUtkastSkjema() {
 		hovedmal,
 		innsatsgruppe,
 		begrunnelse,
-		sistOppdatert,
 		setSistOppdatert,
 		validerSkjema,
 		validerBegrunnelseLengde,
@@ -156,11 +155,9 @@ export function EndreUtkastSkjema() {
 
 	return (
 		<form className="endre-utkast-skjema">
-			<div>
-				<Opplysninger />
-				<Innsatsgruppe />
-				<Hovedmal />
-			</div>
+			<Opplysninger />
+			<Innsatsgruppe />
+			<Hovedmal />
 			<Begrunnelse />
 		</form>
 	);

@@ -30,9 +30,23 @@
 
 	.endre-utkast-skjema {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-column-gap: 4rem;
 		padding: 2rem;
+
+		grid-row-gap: 2rem;
+		grid-template-areas:
+			"opplysninger"
+			"begrunnelse"
+			"innsatsgruppe"
+			"hovedmal";
+
+		@media (min-width: 1300px) {
+			grid-column-gap: 4rem;
+			grid-row-gap: 0;
+			grid-template-areas:
+			"opplysninger begrunnelse"
+			"innsatsgruppe begrunnelse"
+			"hovedmal begrunnelse";
+		}
 	}
 
 	// TODO: Cleanup stuff below

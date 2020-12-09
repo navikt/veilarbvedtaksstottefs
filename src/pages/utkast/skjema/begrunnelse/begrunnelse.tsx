@@ -9,7 +9,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import Show from '../../../../components/show';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import { logMetrikk } from '../../../../utils/logger';
 import FeltHeader from '../felt-header/felt-header';
 import './begrunnelse.less';
@@ -62,7 +61,7 @@ function Begrunnelse() {
 	}, [errors.begrunnelse]);
 
 	return (
-		<div id="begrunnelse-scroll-to">
+		<div className="begrunnelse-bolk" id="begrunnelse-scroll-to">
 			<FeltHeader
 				tittel="Begrunnelse"
 				tittelId="begrunnelse-tittel"
