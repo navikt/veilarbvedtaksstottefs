@@ -22,11 +22,11 @@ import Hovedmal from './hovedmal/hovedmal';
 import { SKRU_AV_POLLING_UTKAST } from '../../../rest/data/features';
 import { useVarselStore } from '../../../stores/varsel-store';
 import { VarselType } from '../../../components/varsel/varsel-type';
-import './utkast-skjema.less';
+import './skjema-section.less';
 
 const TEN_SECONDS = 10000;
 
-export function EndreUtkastSkjema() {
+export function EndreSkjemaSection() {
 	const { fattedeVedtak, malform, utkast, features, setBeslutterProsessStatus } = useDataStore();
 	const { showModal } = useModalStore();
 	const {

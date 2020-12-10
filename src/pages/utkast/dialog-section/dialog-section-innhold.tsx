@@ -9,13 +9,13 @@ import { useDataStore } from '../../../stores/data-store';
 import { sortDatesAsc } from '../../../utils/date-utils';
 import { SKRU_AV_POLLING_DIALOG } from '../../../rest/data/features';
 import Spinner from '../../../components/spinner/spinner';
-import './dialog-panel.less';
+import './dialog-section.less';
 
 let midlertidigMelding = '';
 
 const TEN_SECONDS = 10000;
 
-export function DialogPanelInnhold() {
+export function DialogSectionInnhold() {
 	const { showModal } = useModalStore();
 	const { meldinger, setMeldinger, innloggetVeileder, utkast, features } = useDataStore();
 
@@ -95,19 +95,19 @@ export function DialogPanelInnhold() {
 	}
 
 	return (
-		<div className="dialog-panel-innhold">
+		<div className="dialog-section-innhold">
 			<div>
 				{harLastetMeldinger ? (
 					<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
 				) : (
-					<div className="dialog-panel-innhold__spinner">
+					<div className="dialog-section-innhold__spinner">
 						<Spinner />
 					</div>
 				)}
 			</div>
 			<div className="blokk-s">
 				<Textarea onChange={handleOnMeldingChanged} value={melding} />
-				<div className="dialog-panel-innhold__send">
+				<div className="dialog-section-innhold__send">
 					<Hovedknapp
 						onClick={sendMelding}
 						spinner={senderMelding}

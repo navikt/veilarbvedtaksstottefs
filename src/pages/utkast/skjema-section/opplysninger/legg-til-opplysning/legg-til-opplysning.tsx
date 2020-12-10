@@ -8,11 +8,7 @@ interface LeggTilOpplysningProps {
 
 export function LeggTilOpplysning(props: LeggTilOpplysningProps) {
 	return (
-		<button
-			className="legg-til-kilde"
-			onClick={props.leggTilOpplysning}
-			aria-describedby="legg-til-kilde-tekst"
-		>
+		<button className="legg-til-kilde" onClick={props.leggTilOpplysning} aria-describedby="legg-til-kilde-tekst">
 			<div className="legg-til-kilde__ikon" />
 			<Normaltekst id="legg-til-kilde-tekst" tag="span" className="legg-til-kilde__tekst">
 				Legg til andre kilder

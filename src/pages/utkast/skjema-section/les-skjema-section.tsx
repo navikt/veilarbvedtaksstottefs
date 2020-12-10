@@ -16,11 +16,11 @@ import { useVarselStore } from '../../../stores/varsel-store';
 import { VarselType } from '../../../components/varsel/varsel-type';
 import isEqual from 'lodash/isEqual';
 import FeltHeader from './felt-header/felt-header';
-import './utkast-skjema.less';
+import './skjema-section.less';
 
 const TEN_SECONDS = 10000;
 
-export function LesUtkastSkjema() {
+export function LesSkjemaSection() {
 	const { fnr } = useAppStore();
 	const { utkast, setUtkast, setFattedeVedtak, features } = useDataStore();
 	const { changeView } = useViewStore();

@@ -1,7 +1,7 @@
 import { SkjemaFeil } from './types/skjema-feil';
-import { BEGRUNNELSE_MAX_LENGTH } from '../pages/utkast/skjema/begrunnelse/begrunnelse';
+import { BEGRUNNELSE_MAX_LENGTH } from '../pages/utkast/skjema-section/begrunnelse/begrunnelse';
 import { OrNothing } from './types/ornothing';
-import { Opplysning } from '../pages/utkast/skjema/opplysninger/opplysninger';
+import { Opplysning } from '../pages/utkast/skjema-section/opplysninger/opplysninger';
 import { MalformData, MalformType } from '../rest/data/malform';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { erStandard, erVarigEllerGradertVarig } from './innsatsgruppe';
@@ -32,13 +32,14 @@ export function hentMalformFraData(malformData: MalformData | null): MalformType
 export function mapOpplysningerFraForskjelligMalformTilBokmal(opplysningerListe: string[]): string[] {
 	return opplysningerListe.map(opplysning => {
 		const translationPos = opplysningslisteNynorsk.indexOf(opplysning);
-		return translationPos === -1
-			? opplysning
-			: opplysningslisteBokmal[translationPos];
+		return translationPos === -1 ? opplysning : opplysningslisteBokmal[translationPos];
 	});
 }
 
-export function mapOpplysningerFraBokmalTilBrukersMalform(opplysningerListe: string[] | undefined, malformType: MalformType | null): string[] {
+export function mapOpplysningerFraBokmalTilBrukersMalform(
+	opplysningerListe: string[] | undefined,
+	malformType: MalformType | null
+): string[] {
 	if (!opplysningerListe) return [];
 
 	// Trenger ikke å mappe hvis vi ikke vet malform eller det allerede er på bokmål
@@ -46,9 +47,7 @@ export function mapOpplysningerFraBokmalTilBrukersMalform(opplysningerListe: str
 
 	return opplysningerListe.map(opplysning => {
 		const translationPos = opplysningslisteBokmal.indexOf(opplysning);
-		return translationPos === -1
-			? opplysning
-			: opplysningslisteNynorsk[translationPos];
+		return translationPos === -1 ? opplysning : opplysningslisteNynorsk[translationPos];
 	});
 }
 
@@ -58,7 +57,8 @@ export function mergeMedDefaultOpplysninger(opplysningListe: string[]): Opplysni
 		erValgt: opplysningListe.includes(opplysningTekst)
 	}));
 
-	opplysningListe.filter(opplysningTekst => !opplysningslisteBokmal.includes(opplysningTekst))
+	opplysningListe
+		.filter(opplysningTekst => !opplysningslisteBokmal.includes(opplysningTekst))
 		.forEach(opplysningTekst => opplysninger.push({ navn: opplysningTekst, erValgt: true }));
 
 	return opplysninger;

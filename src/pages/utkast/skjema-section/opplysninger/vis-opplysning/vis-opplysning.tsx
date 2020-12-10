@@ -23,17 +23,18 @@ export function VisOpplysning(props: VisOpplysningProps) {
 				label={navn}
 				value={navn}
 				onKeyPress={swallowEnterKeyPress}
-				onChange={(e: any) => props.onChange(({ navn, erValgt: e.target.checked}))}
+				onChange={(e: any) => props.onChange({ navn, erValgt: e.target.checked })}
 			/>
 			{kanRedigeres && (
 				<button
 					aria-label={'Rediger ' + navn}
 					className="vis-opplysning__rediger-knapp"
-					onClick={(e) => {
-					if (document.activeElement === e.currentTarget) {
-						props.handleOpplysning();
-					}
-				}}>
+					onClick={e => {
+						if (document.activeElement === e.currentTarget) {
+							props.handleOpplysning();
+						}
+					}}
+				>
 					<div className="vis-opplysning__rediger-ikon" />
 				</button>
 			)}

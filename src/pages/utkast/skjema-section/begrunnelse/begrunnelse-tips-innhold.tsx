@@ -6,8 +6,8 @@ export const BegrunnelseTipsInnhold = () => {
 		<>
 			<Undertittel className="blokk-xs">Begrunnelse</Undertittel>
 			<Normaltekst>
-				Begrunnelse må skrives for alle innsatsgrupper, bortsett fra standard innsats.
-				Når du skal skrive begrunnelse og gjøre vurderingen din, er følgende spørsmål nyttige å stille:
+				Begrunnelse må skrives for alle innsatsgrupper, bortsett fra standard innsats. Når du skal skrive
+				begrunnelse og gjøre vurderingen din, er følgende spørsmål nyttige å stille:
 			</Normaltekst>
 			<ul className="tips__liste">
 				<li>Hva tenker denne personen selv om mulighetene sine til å være eller komme i jobb?</li>
