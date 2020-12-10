@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import debounce from 'lodash.debounce';
 import { hentMalformFraData, SkjemaData } from '../../../utils/skjema-utils';
 import { fetchBeslutterprosessStatus, fetchOppdaterVedtakUtkast } from '../../../rest/api';
@@ -38,12 +38,12 @@ export function EndreSkjemaSection() {
 		validerSkjema,
 		validerBegrunnelseLengde,
 		lagringStatus,
-		setLagringStatus
+		setLagringStatus,
+		harForsoktAForhandsvise
 	} = useSkjemaStore();
 	const { showVarsel } = useVarselStore();
 
 	const pollBeslutterstatusIntervalRef = useRef<number>();
-	const [harForsoktAttSende, setHarForsoktAttSende] = useState<boolean>(false);
 	const isAfterFirstRender = useIsAfterFirstRender();
 
 	const oppdaterUtkast = useCallback(
@@ -73,7 +73,7 @@ export function EndreSkjemaSection() {
 	}, []);
 
 	useEffect(() => {
-		if (harForsoktAttSende) {
+		if (harForsoktAForhandsvise) {
 			validerSkjema(finnGjeldendeVedtak(fattedeVedtak));
 		} else {
 			validerBegrunnelseLengde();

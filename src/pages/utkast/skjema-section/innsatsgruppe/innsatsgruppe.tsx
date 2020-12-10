@@ -16,7 +16,6 @@ import Show from '../../../../components/show';
 import { OrNothing } from '../../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { ModalType, useModalStore } from '../../../../stores/modal-store';
-import SkjemaelementFeilmelding from 'nav-frontend-skjema/lib/skjemaelement-feilmelding';
 import FeltHeader from '../felt-header/felt-header';
 
 function Innsatsgruppe() {

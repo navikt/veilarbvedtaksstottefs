@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import constate from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
-import { mapOpplysningerFraForskjelligMalformTilBokmal, validerBegrunnelseMaxLength, validerSkjema as valider } from '../utils/skjema-utils';
+import {
+	mapOpplysningerFraForskjelligMalformTilBokmal,
+	validerBegrunnelseMaxLength,
+	validerSkjema as valider
+} from '../utils/skjema-utils';
 import { OrNothing } from '../utils/types/ornothing';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { SkjemaLagringStatus } from '../utils/types/skjema-lagring-status';
@@ -14,6 +18,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	const [sistOppdatert, setSistOppdatert] = useState('');
 	const [errors, setErrors] = useState<SkjemaFeil>({});
 	const [lagringStatus, setLagringStatus] = useState<SkjemaLagringStatus>(SkjemaLagringStatus.INGEN_ENDRING);
+	const [harForsoktAForhandsvise, setHarForsoktAForhandsvise] = useState<boolean>(false);
 
 	const validerSkjema = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
 		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
@@ -45,13 +50,24 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	};
 
 	return {
-		opplysninger, setOpplysninger,
-		hovedmal, setHovedmal,
-		innsatsgruppe, setInnsatsgruppe,
-		begrunnelse, setBegrunnelse,
-		sistOppdatert, setSistOppdatert, errors,
-		lagringStatus, setLagringStatus,
-		validerSkjema, validerBegrunnelseLengde,
-		initSkjema, resetSkjema
+		opplysninger,
+		setOpplysninger,
+		hovedmal,
+		setHovedmal,
+		innsatsgruppe,
+		setInnsatsgruppe,
+		begrunnelse,
+		setBegrunnelse,
+		sistOppdatert,
+		setSistOppdatert,
+		errors,
+		lagringStatus,
+		setLagringStatus,
+		harForsoktAForhandsvise,
+		setHarForsoktAForhandsvise,
+		validerSkjema,
+		validerBegrunnelseLengde,
+		initSkjema,
+		resetSkjema
 	};
 });

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Show from '../../../components/show';
-import { Element } from 'nav-frontend-typografi';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { useDataStore } from '../../../stores/data-store';
 import { ModalType, useModalStore } from '../../../stores/modal-store';

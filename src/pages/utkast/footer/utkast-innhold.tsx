@@ -27,7 +27,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 	const { malform, fattedeVedtak, utkast } = useDataStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
-	const { validerSkjema, lagringStatus } = useSkjemaStore();
+	const { validerSkjema, lagringStatus, setHarForsoktAForhandsvise } = useSkjemaStore();
 	const { id: utkastId, beslutterProsessStatus } = utkast as Vedtak;
 
 	const [laster, setLaster] = useState(false);
@@ -51,7 +51,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 
 		if (harFeil(skjemaFeil)) {
 			scrollTilForsteFeil(skjemaFeil);
-			props.harForsoktForhandsvisning();
+			setHarForsoktAForhandsvise(true);
 			return;
 		}
 

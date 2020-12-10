@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { UtkastFooter } from './footer/utkast-footer';
 import SkjemaHeader from './skjema-section/header/skjema-header';
 import { useDataStore } from '../../stores/data-store';
@@ -12,8 +12,14 @@ import './utkast-side.less';
 
 export function UtkastSide() {
 	const { utkast } = useDataStore();
-	const { sistOppdatert } = useSkjemaStore();
+	const { sistOppdatert, setHarForsoktAForhandsvise } = useSkjemaStore();
 	const { erAnsvarligVeileder } = useTilgangStore();
+
+	useEffect(() => {
+		// Nullstill forsøk på forhåndsvisning hvis man har vært inne på utkastet og forhåndsvist før
+		setHarForsoktAForhandsvise(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import cls from 'classnames';
 import { DialogMelding as DialogMeldingData, SystemMelding as SystemMeldingData } from '../../../../rest/data/melding';
 import { DialogMelding } from './dialog-melding/dialog-melding';
