@@ -27,7 +27,6 @@ import { UtkastStatusMelding } from './utkast-status-melding';
 
 interface DialogFooterInnholdProps {
 	vedtakskjema: SkjemaData;
-	harForsoktForhandsvisning: () => void;
 }
 
 export function DialogInnhold(props: DialogFooterInnholdProps) {
@@ -53,24 +52,23 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 	const [laster, setLaster] = useState(false);
 
 	const visStartBeslutterProsess =
-		trengerBeslutter(innsatsgruppe) &&
 		erAnsvarligVeileder &&
+		trengerBeslutter(innsatsgruppe) &&
 		isNothing(beslutterNavn) &&
 		!erBeslutterProsessStartet(beslutterProsessStatus);
 
-	const godkjentAvBeslutter = erGodkjentAvBeslutter(beslutterProsessStatus);
+	const visSendTilBeslutter = erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus);
 
-	const visKlarTilBeslutter = erKlarTilVeileder(beslutterProsessStatus);
+	const visSendTilVeileder =
+		erBeslutter && erBeslutterProsessStartet(beslutterProsessStatus) && erKlarTilBeslutter(beslutterProsessStatus);
+
+	const visGodkjennUtkast =
+		erBeslutter &&
+		erBeslutterProsessStartet(beslutterProsessStatus) &&
+		!erGodkjentAvBeslutter(beslutterProsessStatus);
 
 	const visBliBeslutter =
 		erIkkeAnsvarligVeileder && isNothing(beslutterNavn) && erKlarTilBeslutter(beslutterProsessStatus);
-
-	const visGodkjennUtkast = erBeslutterProsessStartet(beslutterProsessStatus) && erBeslutter && !godkjentAvBeslutter;
-
-	const visKlarTil =
-		erBeslutterProsessStartet(beslutterProsessStatus) &&
-		((erAnsvarligVeileder && erKlarTilVeileder(beslutterProsessStatus)) ||
-			(erBeslutter && erKlarTilBeslutter(beslutterProsessStatus)));
 
 	function sendDataTilBackend() {
 		// Vi oppdaterer ikke lagringStatus her fordi det blir rart at dette trigges på en "urelatert" handling
@@ -94,16 +92,6 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 		});
 	}
 
-	function handleOnKlarTilClicked() {
-		setLaster(true);
-		fetchOppdaterBeslutterProsessStatus(utkastId)
-			.then(() => {
-				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
-			})
-			.catch(() => showModal(ModalType.FEIL_VED_OPPDATER_BESLUTTER_PROSESS_STATUS))
-			.finally(() => setLaster(false));
-	}
-
 	function handleOnBliBeslutterClicked() {
 		setLaster(true);
 		fetchBliBeslutter(utkastId)
@@ -113,6 +101,20 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 				leggTilSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_BLI_BESLUTTER))
+			.finally(() => setLaster(false));
+	}
+
+	function handleOnSendTilClicked() {
+		setLaster(true);
+		fetchOppdaterBeslutterProsessStatus(utkastId)
+			.then(() => {
+				const status = erAnsvarligVeileder
+					? BeslutterProsessStatus.KLAR_TIL_BESLUTTER
+					: BeslutterProsessStatus.KLAR_TIL_VEILEDER;
+
+				setBeslutterProsessStatus(status);
+			})
+			.catch(() => showModal(ModalType.FEIL_VED_OPPDATER_BESLUTTER_PROSESS_STATUS))
 			.finally(() => setLaster(false));
 	}
 
@@ -155,20 +157,25 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 					</Hovedknapp>
 				</Show>
 
-				<Show if={visKlarTil}>
-					<Hovedknapp mini={true} htmlType="button" onClick={handleOnKlarTilClicked} disabled={laster}>
+				<Show if={visSendTilVeileder}>
+					<Hovedknapp mini={true} htmlType="button" onClick={handleOnSendTilClicked} disabled={laster}>
 						Send til veileder
 					</Hovedknapp>
 				</Show>
 
-				<Show if={visKlarTilBeslutter}>
-					<Hovedknapp mini={true} htmlType="button" onClick={handleOnKlarTilClicked} disabled={laster}>
+				<Show if={visSendTilBeslutter}>
+					<Hovedknapp mini={true} htmlType="button" onClick={handleOnSendTilClicked} disabled={laster}>
 						Send til beslutter
 					</Hovedknapp>
 				</Show>
 
 				<Show if={visGodkjennUtkast}>
-					<Flatknapp mini={true} htmlType="button" onClick={handleOnGodkjennClicked}>
+					<Flatknapp
+						className="utkast-footer__godkjenn-knapp"
+						mini={true}
+						htmlType="button"
+						onClick={handleOnGodkjennClicked}
+					>
 						Godkjenn
 					</Flatknapp>
 				</Show>

@@ -19,7 +19,6 @@ import { useTilgangStore } from '../../../stores/tilgang-store';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
-	harForsoktForhandsvisning: () => void;
 }
 
 function UtkastInnhold(props: UtkastAksjonerProps) {
@@ -73,7 +72,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 
 			<div className="utkast-footer__knapper-hoyre utkast-footer--innhold-sidestilt">
 				<Show if={laster}>
-					<NavFrontendSpinner type="XS" />
+					<NavFrontendSpinner className="utkast-footer__spinner" type="XS" />
 				</Show>
 
 				<Knapp
