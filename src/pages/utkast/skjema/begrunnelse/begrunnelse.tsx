@@ -61,7 +61,7 @@ function Begrunnelse() {
 	}, [errors.begrunnelse]);
 
 	return (
-		<div className="begrunnelse-bolk" id="begrunnelse-scroll-to">
+		<div className="begrunnelse-felt" id="begrunnelse-scroll-to">
 			<FeltHeader
 				tittel="Begrunnelse"
 				tittelId="begrunnelse-tittel"

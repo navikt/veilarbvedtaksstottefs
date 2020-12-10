@@ -7,6 +7,22 @@
 		height: 100%;
 	}
 
+	.opplysninger-felt {
+		grid-area: opplysninger;
+	}
+
+	.begrunnelse-felt{
+		grid-area: begrunnelse;
+	}
+
+	.innsatsgruppe-felt {
+		grid-area: innsatsgruppe;
+	}
+
+	.hovedmal-felt {
+		grid-area: hovedmal;
+	}
+
 	.utkast-side__hovedinnhold {
 		display: grid;
 		grid-template-columns: 7fr 3fr;
@@ -26,110 +42,6 @@
 		background-color: white;
 
 		border-left: 1px solid @navGra40;
-	}
-
-	.endre-utkast-skjema {
-		display: grid;
-		padding: 2rem;
-
-		grid-row-gap: 2rem;
-		grid-template-areas:
-			"opplysninger"
-			"begrunnelse"
-			"innsatsgruppe"
-			"hovedmal";
-
-		@media (min-width: 1300px) {
-			grid-column-gap: 4rem;
-			grid-row-gap: 0;
-			grid-template-areas:
-			"opplysninger begrunnelse"
-			"innsatsgruppe begrunnelse"
-			"hovedmal begrunnelse";
-		}
-	}
-
-	// TODO: Cleanup stuff below
-
-	.les-utkast-skjema {
-
-		.les-utkast-skjema__visning {
-			padding: 3.5rem 5rem 2rem 5rem;
-		}
-
-		.les-utkast-skjema__kilder {
-			margin-top: 0;
-		}
-
-		.kilder-liste {
-			padding-left: 0;
-		}
-
-		.kilder-liste__item {
-			display: flex;
-			align-items: center;
-
-			padding: 1rem;
-
-			list-style: none;
-
-			&:first-child {
-				border-top: 1px solid @navGra40;
-			}
-
-			border-bottom: 1px solid @navGra40;
-		}
-
-		.kilder-liste__item-icon {
-			width: 24px;
-			height: 24px;
-			margin-right: 1.5rem;
-		}
-
-		.begrunnelse__tekstomrade-wrapper {
-			padding: 2rem 1rem;
-			border-top: 1px solid @navGra40;
-			border-bottom: 1px solid @navGra40;
-		}
-
-		.begrunnelse__tekstomrade {
-			padding-left: 1rem;
-			color: #615147;
-			border-left: 4px solid @navGra20;
-		}
-
-		.begrunnelse__tegnteller {
-			margin-top: 0.5rem;
-
-			display: flex;
-			justify-content: flex-end;
-		}
-
-		.begrunnelse__tegnteller-tekst {
-			color: @navGra60;
-		}
-
-		.checkbox-visning__content {
-			display: inline-block;
-		}
-
-		.checkbox-visning {
-			display: inline-flex;
-			justify-content: flex-start;
-
-			min-width: 400px;
-
-			padding: 1rem 2rem 1rem 1rem;
-			border: 1px solid @navGra60;
-			border-radius: 0.25rem;
-		}
-
-		.checkbox-visning__icon {
-			width: 24px;
-			height: 24px;
-			margin-right: 1rem;
-		}
-
 	}
 
 }

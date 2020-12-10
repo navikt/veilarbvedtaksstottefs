@@ -1,14 +1,14 @@
 import React from 'react';
-import { EndreUtkastSkjema } from './endre-utkast-skjema';
-import './utkast-side.less';
 import { UtkastFooter } from './footer/utkast-footer';
 import SkjemaHeader from './skjema/header/skjema-header';
 import { useDataStore } from '../../stores/data-store';
 import { useSkjemaStore } from '../../stores/skjema-store';
+import { useTilgangStore } from '../../stores/tilgang-store';
 import { DialogPanelHeader } from './dialog-panel/dialog-panel-header';
 import { DialogPanelInnhold } from './dialog-panel/dialog-panel-innhold';
-import { useTilgangStore } from '../../stores/tilgang-store';
-import { LesUtkastSkjema } from './les-utkast-skjema';
+import { EndreUtkastSkjema } from './skjema/endre-utkast-skjema';
+import { LesUtkastSkjema } from './skjema/les-utkast-skjema';
+import './utkast-side.less';
 
 export function UtkastSide() {
 	const { utkast } = useDataStore();

@@ -56,9 +56,7 @@ export function DialogPanelInnhold() {
 
 		// Start polling of new dialogs
 		if (!features[SKRU_AV_POLLING_DIALOG] && intervalRef.current === undefined) {
-			intervalRef.current = (setInterval(refreshMeldinger, TEN_SECONDS) as unknown) as number;
-			// NodeJs types are being used instead of browser types so we have to override
-			// Maybe remove @types/node?
+			intervalRef.current = window.setInterval(refreshMeldinger, TEN_SECONDS);
 		}
 
 		return clearAutoRefresh;

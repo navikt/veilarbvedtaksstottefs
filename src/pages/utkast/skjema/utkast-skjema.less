@@ -1,0 +1,35 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.skjema-grid {
+		display: grid;
+		padding: 2rem;
+		grid-row-gap: 2rem;
+
+		grid-template-areas:
+			"opplysninger"
+			"begrunnelse"
+			"innsatsgruppe"
+			"hovedmal";
+
+		@media (min-width: 1300px) {
+			grid-column-gap: 4rem;
+			grid-template-areas:
+			"opplysninger begrunnelse"
+			"innsatsgruppe begrunnelse"
+			"hovedmal begrunnelse";
+		}
+	}
+
+	.les-utkast-skjema {
+		grid-row-gap: 4rem;
+
+		.opplysninger-felt__liste {
+			li {
+				padding: 0.5rem 0;
+			}
+		}
+	}
+
+}

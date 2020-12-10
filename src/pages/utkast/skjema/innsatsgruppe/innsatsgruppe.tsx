@@ -28,7 +28,7 @@ function Innsatsgruppe() {
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
 
 	return (
-		<div className="innsatsgruppe-bolk blokk-l" id="innsatsgruppe-scroll-to">
+		<div className="innsatsgruppe-felt" id="innsatsgruppe-scroll-to">
 			<FeltHeader tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel" />
 			<Show if={!harSkrevetBegrunnelse(begrunnelse) && erStandardInnsatsValgt && erGjeldendeInnsatsVarig}>
 				<AlertStripe form="inline" type="advarsel" className="innsatsgruppe__alertstripe">

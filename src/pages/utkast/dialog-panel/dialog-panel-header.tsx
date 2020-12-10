@@ -11,11 +11,11 @@ interface DialogPanelHeaderProps {
 
 export function DialogPanelHeader(props: DialogPanelHeaderProps) {
 	return (
-		<div className="dialog-panel-header">
+		<header className="dialog-panel-header">
 			<Undertittel className="dialog-panel-header__tittel">Kollegaveiledning</Undertittel>
 			<Show if={props.beslutterNavn}>
 				<Label titleText="Ansvarlig" valueText={props.beslutterNavn} />
 			</Show>
-		</div>
+		</header>
 	);
 }

@@ -1,28 +1,28 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
-import { hentMalformFraData, SkjemaData } from '../../utils/skjema-utils';
-import { fetchBeslutterprosessStatus, fetchOppdaterVedtakUtkast } from '../../rest/api';
-import { ModalType, useModalStore } from '../../stores/modal-store';
-import { useSkjemaStore } from '../../stores/skjema-store';
+import { hentMalformFraData, SkjemaData } from '../../../utils/skjema-utils';
+import { fetchBeslutterprosessStatus, fetchOppdaterVedtakUtkast } from '../../../rest/api';
+import { ModalType, useModalStore } from '../../../stores/modal-store';
+import { useSkjemaStore } from '../../../stores/skjema-store';
 import {
 	erBeslutterProsessStartet,
 	erGodkjentAvBeslutter,
 	erKlarTilBeslutter,
 	finnGjeldendeVedtak,
 	hentId
-} from '../../utils';
-import { useIsAfterFirstRender } from '../../utils/hooks';
-import { BeslutterProsessStatus } from '../../rest/data/vedtak';
-import { useDataStore } from '../../stores/data-store';
-import './utkast-side.less';
-import { SkjemaLagringStatus } from '../../utils/types/skjema-lagring-status';
-import Opplysninger from './skjema/opplysninger/opplysninger';
-import Begrunnelse from './skjema/begrunnelse/begrunnelse';
-import Innsatsgruppe from './skjema/innsatsgruppe/innsatsgruppe';
-import Hovedmal from './skjema/hovedmal/hovedmal';
-import { SKRU_AV_POLLING_UTKAST } from '../../rest/data/features';
-import { useVarselStore } from '../../stores/varsel-store';
-import { VarselType } from '../../components/varsel/varsel-type';
+} from '../../../utils';
+import { useIsAfterFirstRender } from '../../../utils/hooks';
+import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
+import { useDataStore } from '../../../stores/data-store';
+import { SkjemaLagringStatus } from '../../../utils/types/skjema-lagring-status';
+import Opplysninger from './opplysninger/opplysninger';
+import Begrunnelse from './begrunnelse/begrunnelse';
+import Innsatsgruppe from './innsatsgruppe/innsatsgruppe';
+import Hovedmal from './hovedmal/hovedmal';
+import { SKRU_AV_POLLING_UTKAST } from '../../../rest/data/features';
+import { useVarselStore } from '../../../stores/varsel-store';
+import { VarselType } from '../../../components/varsel/varsel-type';
+import './utkast-skjema.less';
 
 const TEN_SECONDS = 10000;
 
@@ -115,15 +115,14 @@ export function EndreUtkastSkjema() {
             statusen bli oppdatert av pollingen.
         */
 		if (erStartet && !erGodkjent && erHosBeslutter) {
-			pollBeslutterstatusIntervalRef.current = (setInterval(() => {
+			pollBeslutterstatusIntervalRef.current = window.setInterval(() => {
 				fetchBeslutterprosessStatus(utkast.id).then(response => {
 					if (response.data && response.data.status) {
 						varsleBeslutterProsessStatusEndring(response.data.status);
 						setBeslutterProsessStatus(response.data.status);
 					}
 				});
-			}, TEN_SECONDS) as unknown) as number;
-			// NodeJs types are being used instead of browser types so we have to override
+			}, TEN_SECONDS);
 		} else if (erGodkjent) {
 			// Trenger ikke å polle lenger hvis utkastet er godkjent
 			stopPolling();
@@ -154,7 +153,7 @@ export function EndreUtkastSkjema() {
 	}, []);
 
 	return (
-		<form className="endre-utkast-skjema">
+		<form className="skjema-grid">
 			<Opplysninger />
 			<Innsatsgruppe />
 			<Hovedmal />

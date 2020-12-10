@@ -71,7 +71,7 @@ function Opplysninger() {
 	}, [opplysninger]);
 
 	return (
-		<div className="opplysninger-bolk blokk-l" id="opplysninger-scroll-to">
+		<div className="opplysninger-felt" id="opplysninger-scroll-to">
 			<FeltHeader
 				id="kilder-tittel"
 				tittel="Kilder"
