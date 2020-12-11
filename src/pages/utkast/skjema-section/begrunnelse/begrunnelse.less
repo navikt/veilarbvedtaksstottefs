@@ -1,13 +1,6 @@
-@import "../../../../../node_modules/nav-frontend-core/less/_variabler";
-@import "../../../../variabler";
-
 .veilarbvedtaksstottefs {
 
-	.begrunnelse-tekstomrade {
-		max-width: 560px;
-	}
-
-	.begrunnelse {
+	.begrunnelse-felt {
 		.textarea__container {
 			position: unset;
 			margin-bottom: 0.5rem;
@@ -19,44 +12,15 @@
 				left: unset;
 			}
 		}
-
-		&__tittel {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-		}
-
-		&__malform {
-			color: @navGra60;
-		}
-
-		textarea {
-			overflow-y: auto;
-		}
-
-		&__container {
-			.skjemaelement__label {
-				margin-bottom: 0;
-			}
-
-			.skjemaelement__input {
-				min-height: 670px;
-				max-height: 670px;
-				font-size: 1rem;
-			}
-		}
 	}
 
-	.begrunnelse-hjelpetekster__ingress {
-		font-size: 14px;
+	.begrunnelse__tekstomrade {
+		min-height: 670px;
+		max-height: 670px;
+		overflow-y: auto;
 	}
 
 	.begrunnelse-for-langt-varsel {
-		width: 770px;
 		margin: 1rem 0;
-
-		.alertstripe__tekst{
-			max-width: 42rem;
-		}
 	}
 }

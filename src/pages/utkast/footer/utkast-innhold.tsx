@@ -14,7 +14,6 @@ import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Vedtak } from '../../../rest/data/vedtak';
 import { ReactComponent as TaOverIkon } from './taover.svg';
-import './aksjoner.less';
 import { useTilgangStore } from '../../../stores/tilgang-store';
 
 interface UtkastAksjonerProps {
