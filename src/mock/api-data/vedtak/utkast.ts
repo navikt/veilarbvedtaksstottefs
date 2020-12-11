@@ -1,12 +1,11 @@
+import { enhetId, enhetNavn, veileder1, veileder3 } from '../../data';
 import {
 	BeslutterProsessStatus,
 	HovedmalType,
 	InnsatsgruppeType,
 	Vedtak,
 	VedtakStatus
-} from '../../../rest/data/vedtak';
-import { veileder1, veileder3 } from '../../veiledere-mock';
-import { enhetId, enhetNavn } from '../../konstanter';
+} from '../../../api/veilarbvedtaksstotte';
 
 const utkast: Vedtak = {
 	id: 100,

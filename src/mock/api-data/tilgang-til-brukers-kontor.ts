@@ -1,4 +1,4 @@
-import TilgangTilBrukersKontor from '../../utils/types/tilgang-til-brukers-kontor';
+import TilgangTilBrukersKontor from '../../util/type/tilgang-til-brukers-kontor';
 
 const tilgangTilBrukersKontor: TilgangTilBrukersKontor = {
 	tilgangTilBrukersKontor: true

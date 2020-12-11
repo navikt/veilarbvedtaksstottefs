@@ -1,7 +1,7 @@
 import { innloggetVeileder } from './innlogget-veileder';
-import { veileder3 } from '../veiledere-mock';
-import { DialogMelding, SystemMelding } from '../../rest/data/melding';
-import { MeldingType, SystemMeldingType } from '../../utils/types/melding-type';
+import { MeldingType, SystemMeldingType } from '../../util/type/melding-type';
+import { DialogMelding, SystemMelding } from '../../api/veilarbvedtaksstotte/meldinger';
+import { veileder3 } from '../data';
 
 const dialogMeldinger: DialogMelding[] = [
 	{

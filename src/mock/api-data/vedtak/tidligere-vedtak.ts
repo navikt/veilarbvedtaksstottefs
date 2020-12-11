@@ -1,6 +1,5 @@
-import { HovedmalType, InnsatsgruppeType, Vedtak, VedtakStatus } from '../../../rest/data/vedtak';
-import { veileder1, veileder3 } from '../../veiledere-mock';
-import { enhetId, enhetNavn } from '../../konstanter';
+import { enhetId, enhetNavn, veileder1, veileder3 } from '../../data';
+import { HovedmalType, InnsatsgruppeType, Vedtak, VedtakStatus } from '../../../api/veilarbvedtaksstotte';
 
 const historisk: Vedtak[] = [
 	{
@@ -9,10 +8,11 @@ const historisk: Vedtak[] = [
 		innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
 		vedtakStatus: VedtakStatus.SENDT,
 		sistOppdatert: '2018-08-05T09:55:43.716393+02:00',
-		begrunnelse: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
+		begrunnelse:
+			'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
 			'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' +
 			'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' +
-			'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n'+
+			'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n' +
 			'Secundum durationem temporis speciem numeri ex sequentibus statim Unitates\n' +
 			'- listepunkt 1\n' +
 			'- listepunkt 2\n' +
@@ -42,13 +42,14 @@ const historisk: Vedtak[] = [
 		vedtakStatus: VedtakStatus.SENDT,
 		opplysninger: [
 			'Svarene dine fra da du registrerte deg',
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 		],
 		sistOppdatert: '2019-12-12T12:58:43.716393+02:00',
-		begrunnelse: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
+		begrunnelse:
+			'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
 			'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' +
 			'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' +
-			'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n'+
+			'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n' +
 			'Secundum durationem temporis speciem numeri ex sequentibus statim Unitates\n' +
 			'- listepunkt 1\n' +
 			'- listepunkt 2\n' +

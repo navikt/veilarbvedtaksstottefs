@@ -1,6 +1,5 @@
-import { HovedmalType, InnsatsgruppeType, Vedtak, VedtakStatus } from '../../../rest/data/vedtak';
-import { veileder1 } from '../../veiledere-mock';
-import { enhetId, enhetNavn } from '../../konstanter';
+import { enhetId, enhetNavn, veileder1 } from '../../data';
+import { HovedmalType, InnsatsgruppeType, Vedtak, VedtakStatus } from '../../../api/veilarbvedtaksstotte';
 
 const gjeldendeVedtak: Vedtak = {
 	id: 1000,

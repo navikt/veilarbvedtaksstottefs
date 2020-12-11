@@ -1,4 +1,4 @@
-import OppfolgingData from '../../rest/data/oppfolging-data';
+import OppfolgingData from '../../api/veilarboppfolging';
 
 const oppfolgingData: OppfolgingData = {
 	reservasjonKRR: false,

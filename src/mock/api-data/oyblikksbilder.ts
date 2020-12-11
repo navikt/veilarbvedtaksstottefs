@@ -1,5 +1,5 @@
-import { Oyblikksbilde } from '../../utils/types/oyblikksbilde';
-import OyblikksbildeType from '../../utils/types/oyblikksbilde-type';
+import { Oyblikksbilde } from '../../util/type/oyblikksbilde';
+import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
 
 // tslint:disable max-line-length
 const oyblikksbilder: Oyblikksbilde[] = [
