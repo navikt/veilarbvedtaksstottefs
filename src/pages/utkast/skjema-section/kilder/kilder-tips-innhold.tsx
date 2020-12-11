@@ -1,7 +1,7 @@
 import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-export const OpplysningerTipsInnhold = () => {
+export const KilderTipsInnhold = () => {
 	return (
 		<>
 			<Undertittel className="blokk-xs">Kilder</Undertittel>

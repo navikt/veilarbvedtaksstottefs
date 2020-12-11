@@ -1,43 +1,43 @@
 import React, { useState } from 'react';
 import { Textarea } from 'nav-frontend-skjema';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Opplysning } from '../opplysninger';
-import './rediger-opplysning.less';
+import { Kilde } from '../kilder';
+import './rediger-kilde.less';
 
-interface OpplysningProps {
-	opplysning: Opplysning;
+interface RedigerKildeProps {
+	kilde: Kilde;
 	negativeBtn: 'CANCEL' | 'DELETE';
-	onTekstSubmit: (opplysning: Opplysning) => void;
+	onTekstSubmit: (kilde: Kilde) => void;
 	onTekstDeleteOrCancel: () => void;
 }
 
-const OPPLYSNING_MAX_LENGTH = 150;
+const KILDE_MAX_LENGTH = 150;
 
-export function RedigerOpplysning(props: OpplysningProps) {
-	const { opplysning, negativeBtn, onTekstSubmit, onTekstDeleteOrCancel } = props;
-	const [tekst, setTekst] = useState(opplysning.navn);
+export function RedigerKilde(props: RedigerKildeProps) {
+	const { kilde, negativeBtn, onTekstSubmit, onTekstDeleteOrCancel } = props;
+	const [tekst, setTekst] = useState(kilde.navn);
 
 	function onSubmit() {
 		onTekstSubmit({ navn: tekst, erValgt: true });
 	}
 
 	return (
-		<div className="rediger">
+		<div className="rediger-kilde">
 			<Textarea
 				label=""
 				value={tekst}
 				placeholder="Legg til kilde og dato"
-				maxLength={OPPLYSNING_MAX_LENGTH}
+				maxLength={KILDE_MAX_LENGTH}
 				onChange={(e: any) => {
-					let nyOpplysning = e.target.value;
-					if (nyOpplysning.length > OPPLYSNING_MAX_LENGTH) {
-						nyOpplysning = nyOpplysning.substr(0, OPPLYSNING_MAX_LENGTH);
+					let nyKilde = e.target.value;
+					if (nyKilde.length > KILDE_MAX_LENGTH) {
+						nyKilde = nyKilde.substr(0, KILDE_MAX_LENGTH);
 					}
-					setTekst(nyOpplysning);
+					setTekst(nyKilde);
 				}}
 				autoFocus={true}
 			/>
-			<div className="rediger__aksjoner">
+			<div className="rediger-kilde__aksjoner">
 				<Hovedknapp mini={true} htmlType="button" onClick={onSubmit}>
 					Lagre
 				</Hovedknapp>

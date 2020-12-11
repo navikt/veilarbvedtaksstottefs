@@ -15,7 +15,7 @@ import { useIsAfterFirstRender } from '../../../utils/hooks';
 import { BeslutterProsessStatus } from '../../../rest/data/vedtak';
 import { useDataStore } from '../../../stores/data-store';
 import { SkjemaLagringStatus } from '../../../utils/types/skjema-lagring-status';
-import Opplysninger from './opplysninger/opplysninger';
+import Kilder from './kilder/kilder';
 import Begrunnelse from './begrunnelse/begrunnelse';
 import Innsatsgruppe from './innsatsgruppe/innsatsgruppe';
 import Hovedmal from './hovedmal/hovedmal';
@@ -30,7 +30,7 @@ export function EndreSkjemaSection() {
 	const { fattedeVedtak, malform, utkast, features, setBeslutterProsessStatus } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
-		opplysninger,
+		kilder,
 		hovedmal,
 		innsatsgruppe,
 		begrunnelse,
@@ -64,7 +64,7 @@ export function EndreSkjemaSection() {
 		[]
 	);
 
-	const vedtakskjema = { opplysninger, begrunnelse, innsatsgruppe, hovedmal };
+	const vedtakskjema = { kilder, begrunnelse, innsatsgruppe, hovedmal };
 
 	useEffect(() => {
 		// Initialiser når utkastet åpnes
@@ -87,7 +87,7 @@ export function EndreSkjemaSection() {
 			oppdaterUtkast(vedtakskjema);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [opplysninger, begrunnelse, innsatsgruppe, hovedmal]);
+	}, [kilder, begrunnelse, innsatsgruppe, hovedmal]);
 
 	useEffect(() => {
 		if (!utkast || features[SKRU_AV_POLLING_UTKAST]) {
@@ -154,7 +154,7 @@ export function EndreSkjemaSection() {
 
 	return (
 		<form className="skjema-grid">
-			<Opplysninger />
+			<Kilder />
 			<Innsatsgruppe />
 			<Hovedmal />
 			<Begrunnelse />

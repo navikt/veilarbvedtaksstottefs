@@ -93,9 +93,9 @@ export function LesSkjemaSection() {
 
 	return (
 		<div className="skjema-grid les-utkast-skjema">
-			<div className="opplysninger-felt">
+			<div className="kilder-felt">
 				<FeltHeader tittel="Kilder" />
-				<ul className="opplysninger-felt__liste">
+				<ul className="kilder-felt__liste">
 					{opplysninger.map((opplysning, idx) => {
 						return <li key={idx}>{opplysning}</li>;
 					})}

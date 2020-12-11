@@ -2,7 +2,7 @@ import { useState } from 'react';
 import constate from 'constate';
 import { SkjemaFeil } from '../utils/types/skjema-feil';
 import {
-	mapOpplysningerFraForskjelligMalformTilBokmal,
+	mapKilderFraForskjelligMalformTilBokmal,
 	validerBegrunnelseMaxLength,
 	validerSkjema as valider
 } from '../utils/skjema-utils';
@@ -11,7 +11,7 @@ import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { SkjemaLagringStatus } from '../utils/types/skjema-lagring-status';
 
 export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
-	const [opplysninger, setOpplysninger] = useState<string[]>([]);
+	const [kilder, setKilder] = useState<string[]>([]);
 	const [hovedmal, setHovedmal] = useState<OrNothing<HovedmalType>>();
 	const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>();
 	const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
@@ -21,7 +21,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	const [harForsoktAForhandsvise, setHarForsoktAForhandsvise] = useState<boolean>(false);
 
 	const validerSkjema = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
-		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
+		const feil = valider({ kilder, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
 		setErrors(feil);
 		return feil;
 	};
@@ -32,9 +32,9 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	};
 
 	const initSkjema = (utkast: Vedtak) => {
-		const mappetOpplysninger = mapOpplysningerFraForskjelligMalformTilBokmal(utkast.opplysninger);
+		const mappetKilder = mapKilderFraForskjelligMalformTilBokmal(utkast.opplysninger);
 		setHovedmal(utkast.hovedmal);
-		setOpplysninger(mappetOpplysninger);
+		setKilder(mappetKilder);
 		setInnsatsgruppe(utkast.innsatsgruppe);
 		setBegrunnelse(utkast.begrunnelse);
 		setSistOppdatert(utkast.sistOppdatert);
@@ -42,7 +42,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 
 	const resetSkjema = () => {
 		setHovedmal(undefined);
-		setOpplysninger([]);
+		setKilder([]);
 		setInnsatsgruppe(undefined);
 		setBegrunnelse(undefined);
 		setSistOppdatert('');
@@ -50,8 +50,8 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	};
 
 	return {
-		opplysninger,
-		setOpplysninger,
+		kilder,
+		setKilder,
 		hovedmal,
 		setHovedmal,
 		innsatsgruppe,

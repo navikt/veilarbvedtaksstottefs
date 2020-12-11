@@ -6,9 +6,9 @@ import { DialogInnhold } from './dialog-innhold';
 import './utkast-footer.less';
 
 export function UtkastFooter() {
-	const { opplysninger, hovedmal, innsatsgruppe, begrunnelse } = useSkjemaStore();
+	const { kilder, hovedmal, innsatsgruppe, begrunnelse } = useSkjemaStore();
 
-	const vedtakskjema = { opplysninger, begrunnelse, innsatsgruppe, hovedmal };
+	const vedtakskjema = { kilder, begrunnelse, innsatsgruppe, hovedmal };
 
 	return (
 		<Footer className="utkast-footer">

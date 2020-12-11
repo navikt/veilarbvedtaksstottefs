@@ -38,7 +38,7 @@ export interface Vedtak {
 	oppfolgingsenhetNavn: string;
 	beslutterIdent: OrNothing<string>;
 	beslutterNavn: OrNothing<string>;
-	opplysninger: string[];
+	opplysninger: string[]; // Har blitt renamet til "kilder" i etterkant
 	journalpostId: OrNothing<string>;
 	dokumentInfoId: OrNothing<string>;
 	beslutterProsessStatus: OrNothing<BeslutterProsessStatus>;
@@ -49,4 +49,3 @@ export interface ArenaVedtak {
 	dokumentInfoId: string;
 	dato: string;
 }
-
