@@ -37,8 +37,10 @@ export const mockLagUtkast: Mock = {
 	method: 'POST',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
 	handler: async (): Promise<ResponseData> => {
-		const nyttUtkast = {
-			id: fattedeVedtak.length,
+		const nyId = fattedeVedtak.length > 0 ? fattedeVedtak.sort((fv1, fv2) => fv2.id - fv1.id)[0].id + 1 : 1;
+
+		const nyttUtkast = ({
+			id: nyId,
 			vedtakStatus: 'UTKAST',
 			sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 			gjeldende: false,
@@ -52,7 +54,7 @@ export const mockLagUtkast: Mock = {
 			journalpostId: null,
 			sendtTilBeslutter: false,
 			beslutterIdent: null
-		} as unknown as Vedtak;
+		} as unknown) as Vedtak;
 
 		vedtakUtkastMock = nyttUtkast as Vedtak;
 
@@ -104,7 +106,7 @@ export const mockFattVedtak: Mock = {
 
 		if (!vedtakUtkastMock) throw new Error('Fant ikke utkast til beslutter');
 
-		const fattetVedtak = {...vedtakUtkastMock};
+		const fattetVedtak = { ...vedtakUtkastMock };
 
 		fattetVedtak.vedtakStatus = VedtakStatus.SENDT;
 		fattetVedtak.gjeldende = true;
@@ -137,7 +139,7 @@ export const mockErUtkastGodkjent: Mock = {
 	method: 'GET',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/beslutterprosessStatus`,
 	handler: async (): Promise<ResponseData> => {
-		const data = {status: vedtakUtkastMock ? vedtakUtkastMock.beslutterProsessStatus : null};
+		const data = { status: vedtakUtkastMock ? vedtakUtkastMock.beslutterProsessStatus : null };
 		return { status: 200, body: JSON.stringify(data) };
 	}
 };
@@ -214,9 +216,7 @@ export const mockOppdaterBeslutterProsessStatus: Mock = {
 			: BeslutterProsessStatus.KLAR_TIL_BESLUTTER;
 
 		leggTilMockSystemMelding(
-			erBeslutter
-				? SystemMeldingType.SENDT_TIL_VEILEDER
-				: SystemMeldingType.SENDT_TIL_BESLUTTER
+			erBeslutter ? SystemMeldingType.SENDT_TIL_VEILEDER : SystemMeldingType.SENDT_TIL_BESLUTTER
 		);
 
 		return { status: 204 };
