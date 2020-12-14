@@ -3,7 +3,6 @@ import debounce from 'lodash.debounce';
 import { hentMalformFraData, SkjemaData } from '../../util/skjema-utils';
 import UtkastSkjema from './skjema/utkast-skjema';
 import Footer from '../../component/footer/footer';
-import { fetchBeslutterprosessStatus, fetchOppdaterVedtakUtkast } from '../../api/api';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { useSkjemaStore } from '../../store/skjema-store';
 import {
@@ -22,10 +21,11 @@ import Opplysninger from './skjema/opplysninger/opplysninger';
 import Begrunnelse from './skjema/begrunnelse/begrunnelse';
 import Innsatsgruppe from './skjema/innsatsgruppe/innsatsgruppe';
 import Hovedmal from './skjema/hovedmal/hovedmal';
-import { SKRU_AV_POLLING_UTKAST } from '../../api/data/features';
 import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../../component/varsel/varsel-type';
 import { BeslutterProsessStatus, Vedtak } from '../../api/veilarbvedtaksstotte';
+import { SKRU_AV_POLLING_UTKAST } from '../../api/veilarbpersonflatefs';
+import { hentBeslutterprosessStatus, oppdaterVedtakUtkast } from '../../api/veilarbvedtaksstotte/utkast';
 
 const TEN_SECONDS = 10000;
 
@@ -55,7 +55,7 @@ export function EndreUtkastSide() {
 			const malformType = hentMalformFraData(malform);
 
 			setLagringStatus(SkjemaLagringStatus.LAGRER);
-			fetchOppdaterVedtakUtkast({ vedtakId: hentId(utkast), skjema, malform: malformType })
+			oppdaterVedtakUtkast(hentId(utkast), malformType, skjema)
 				.then(() => {
 					setLagringStatus(SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET);
 					setSistOppdatert(new Date().toISOString());
@@ -120,7 +120,7 @@ export function EndreUtkastSide() {
         */
 		if (erStartet && !erGodkjent && erHosBeslutter) {
 			pollBeslutterstatusIntervalRef.current = (setInterval(() => {
-				fetchBeslutterprosessStatus(utkast.id).then(response => {
+				hentBeslutterprosessStatus(utkast.id).then(response => {
 					if (response.data && response.data.status) {
 						varsleBeslutterProsessStatusEndring(response.data.status);
 						setBeslutterProsessStatus(response.data.status);

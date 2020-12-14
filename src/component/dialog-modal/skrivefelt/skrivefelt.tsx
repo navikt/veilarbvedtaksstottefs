@@ -1,12 +1,12 @@
 import React, { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
 import { Input } from 'nav-frontend-skjema';
 import sendIkon from './send.svg';
-import { fetchMeldinger, fetchSendDialog } from '../../../api/api';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import './skrivefelt.less';
 import ImageButton from '../../image-button/image-button';
 import { useDataStore } from '../../../store/data-store';
 import { hentId } from '../../../util';
+import { hentMeldinger, sendDialog } from '../../../api/veilarbvedtaksstotte/meldinger';
 
 let midlertidigMelding = '';
 
@@ -34,8 +34,8 @@ export const Skrivefelt = () => {
 	function sendMelding() {
 		setSenderMelding(true);
 
-		fetchSendDialog({ vedtakId: hentId(utkast), melding })
-			.then(() => fetchMeldinger(hentId(utkast)))
+		sendDialog(hentId(utkast), melding)
+			.then(() => hentMeldinger(hentId(utkast)))
 			.then(response => {
 				if (response.data) {
 					setMeldinger(response.data);

@@ -4,11 +4,6 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import dialogIkon from './dialog.svg';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { ReactComponent as SlettIkon } from './delete.svg';
-import {
-	fetchOppdaterBeslutterProsessStatus,
-	fetchOppdaterVedtakUtkast,
-	fetchStartBeslutterProsess
-} from '../../../api/api';
 import { useViewStore, ViewType } from '../../../store/view-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import {
@@ -36,6 +31,11 @@ import { DialogModal } from '../../../component/dialog-modal/dialog-modal';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { erAnsvarligVeileder } from '../../../util/tilgang';
 import { BeslutterProsessStatus, Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
+import {
+	fetchStartBeslutterProsess,
+	oppdaterBeslutterProsessStatus
+} from '../../../api/veilarbvedtaksstotte/beslutter';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -64,8 +64,7 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 
 	function sendDataTilBackend() {
 		// Vi oppdaterer ikke lagringStatus her fordi det blir rart at dette trigges på en "urelatert" handling
-		const params = { vedtakId: utkastId, skjema: props.vedtakskjema, malform: hentMalformFraData(malform) };
-		return fetchOppdaterVedtakUtkast(params).catch(() => {
+		return oppdaterVedtakUtkast(utkastId, hentMalformFraData(malform), props.vedtakskjema).catch(() => {
 			setLaster(false);
 			showModal(ModalType.FEIL_VED_LAGRING);
 		});
@@ -110,7 +109,7 @@ function EndreUtkastAksjoner(props: UtkastAksjonerProps) {
 	function handleOnKlarTilClicked() {
 		setLaster(true);
 
-		fetchOppdaterBeslutterProsessStatus(utkastId)
+		oppdaterBeslutterProsessStatus(utkastId)
 			.then(() => {
 				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_BESLUTTER);
 			})

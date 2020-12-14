@@ -7,11 +7,11 @@ import { ModalProps } from '../modal-props';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import { useDataStore } from '../../../store/data-store';
-import { fetchAvbrytBeslutterProsess } from '../../../api/api';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { hentId } from '../../../util';
 import { OrNothing } from '../../../util/type/ornothing';
 import { InnsatsgruppeType } from '../../../api/veilarbvedtaksstotte';
+import { avbrytBeslutterProsess } from '../../../api/veilarbvedtaksstotte/beslutter';
 
 interface AvbrytBeslutterProsessModalProps extends ModalProps {
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
@@ -23,7 +23,7 @@ function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
 	const { setInnsatsgruppe } = useSkjemaStore();
 
 	function handleOnJaClicked() {
-		fetchAvbrytBeslutterProsess(hentId(utkast))
+		avbrytBeslutterProsess(hentId(utkast))
 			.then(() => {
 				hideModal();
 				setInnsatsgruppe(props.innsatsgruppe);

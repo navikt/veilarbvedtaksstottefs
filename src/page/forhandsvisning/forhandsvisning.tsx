@@ -3,9 +3,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
 import env from '../../util/environment';
-import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/data/features';
 import { trengerBeslutter } from '../../util/skjema-utils';
-import { fetchFattedeVedtak, fetchFattVedtak, lagHentForhandsvisningUrl } from '../../api/api';
 import { useAppStore } from '../../store/app-store';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
@@ -20,6 +18,9 @@ import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../../component/varsel/varsel-type';
 import { logMetrikk } from '../../util/logger';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
+import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/veilarbpersonflatefs';
+import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbvedtaksstotte/vedtak';
+import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
@@ -55,7 +56,7 @@ export function Forhandsvisning() {
 	const sendVedtak = () => {
 		showModal(ModalType.LASTER);
 
-		fetchFattVedtak(utkastId)
+		fattVedtak(utkastId)
 			.catch(err => {
 				showModal(ModalType.FEIL_VED_SENDING);
 				logMetrikk('feil-ved-sending', err);
@@ -63,10 +64,10 @@ export function Forhandsvisning() {
 			})
 			.then(() => {
 				return (
-					fetchFattedeVedtak(fnr)
-						.then(fattedeVedtak => {
-							if (fattedeVedtak.data) {
-								setFattedeVedtak(fattedeVedtak.data);
+					hentFattedeVedtak(fnr)
+						.then(response => {
+							if (response.data) {
+								setFattedeVedtak(response.data);
 							}
 						})
 						// Feiler ikke selv om fattede vedtak ikke oppdateres

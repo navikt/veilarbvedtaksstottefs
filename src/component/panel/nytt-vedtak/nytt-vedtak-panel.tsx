@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../util/type/ornothing';
 import nyttVedtakBilde from './nytt-vedtak.svg';
-import { fetchLagNyttUtkast, fetchOppdaterVedtakUtkast, fetchUtkast, OppdaterUtkastPayload } from '../../../api/api';
 import { useViewStore, ViewType } from '../../../store/view-store';
 import { useAppStore } from '../../../store/app-store';
 import { ModalType, useModalStore } from '../../../store/modal-store';
@@ -16,6 +15,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
 import './nytt-vedtak-panel.less';
 import { Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { fetchUtkast, lagNyttUtkast, oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 	const { fnr } = useAppStore();
@@ -33,7 +33,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 
 	function lagNyttVedtakUtkastOgRedirectTilUtkast() {
 		showModal(ModalType.LASTER);
-		fetchLagNyttUtkast(fnr)
+		lagNyttUtkast(fnr)
 			.then(() => fetchUtkast(fnr)) // TODO: Kunne egentlig droppet fetchUtkast() hvis man returnerte det opprettede utkastet
 			.then(async fetchResponse => {
 				if (!fetchResponse.data) {
@@ -43,21 +43,17 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
 				const nyttUtkast = fetchResponse.data;
 
 				if (kopierSisteVedtak && sisteVedtak) {
-					const payload: OppdaterUtkastPayload = {
-						vedtakId: nyttUtkast.id,
-						malform: null,
-						skjema: {
-							opplysninger: sisteVedtak.opplysninger,
-							begrunnelse: sisteVedtak.begrunnelse,
-							hovedmal: null,
-							innsatsgruppe: null
-						}
+					const skjema = {
+						opplysninger: sisteVedtak.opplysninger,
+						begrunnelse: sisteVedtak.begrunnelse,
+						hovedmal: null,
+						innsatsgruppe: null
 					};
 
 					nyttUtkast.opplysninger = sisteVedtak.opplysninger;
 					nyttUtkast.begrunnelse = sisteVedtak.begrunnelse;
 
-					await fetchOppdaterVedtakUtkast(payload);
+					await oppdaterVedtakUtkast(nyttUtkast.id, null, skjema);
 				}
 
 				setUtkast(nyttUtkast);

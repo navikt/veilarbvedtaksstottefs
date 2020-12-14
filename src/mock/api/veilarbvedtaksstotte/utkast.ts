@@ -1,33 +1,61 @@
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { Mock } from '../../utils';
-import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/api';
-import { MockRequest, ResponseData } from 'yet-another-fetch-mock';
-import { enhetId, enhetNavn } from '../../data';
-import { Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { enhetId, enhetNavn, veileder1 } from '../../data';
+import {
+	HovedmalType,
+	InnsatsgruppeType,
+	Vedtak,
+	VedtakStatus,
+	VEILARBVEDTAKSSTOTTE_API
+} from '../../../api/veilarbvedtaksstotte';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { SkjemaData } from '../../../util/skjema-utils';
-import { vedtakUtkastMock } from '../../vedtak-mock';
 import env from '../../../util/environment';
-import utkast from '../../api-data/vedtak/utkast';
+import { rest } from 'msw';
+import { fjernAlleMockMeldinger, leggTilMockSystemMelding } from './meldinger';
+import { innloggetVeilederMock } from '../veilarbveileder';
+import { fattedeVedtakMock } from './vedtak';
+
+const utkast: Vedtak = {
+	id: 100,
+	hovedmal: HovedmalType.BEHOLDE_ARBEID,
+	innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
+	vedtakStatus: VedtakStatus.UTKAST,
+	sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
+	gjeldende: false,
+	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
+	veilederNavn: veileder1.navn,
+	veilederIdent: veileder1.ident,
+	oppfolgingsenhetId: enhetId,
+	oppfolgingsenhetNavn: enhetNavn,
+	begrunnelse: 'Trenger ikke hjelp',
+	dokumentInfoId: null,
+	journalpostId: null,
+	beslutterIdent: null,
+	beslutterNavn: null,
+	beslutterProsessStatus: null
+};
 
 export let vedtakUtkastMock: Vedtak | null = env.isRunningOnGhPages ? null : utkast;
 
-export const mockHentUtkast: Mock = {
-	method: 'GET',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
-	handler: async (): Promise<ResponseData> => {
-		if (vedtakUtkastMock) {
-			return { body: JSON.stringify(vedtakUtkastMock) };
-		}
-		return { status: 404 };
+export const oppdaterVedtakUtkastMockFraSkjema = (skjemaData: SkjemaData) => {
+	if (vedtakUtkastMock) {
+		vedtakUtkastMock.begrunnelse = skjemaData.begrunnelse;
+		vedtakUtkastMock.hovedmal = skjemaData.hovedmal;
+		vedtakUtkastMock.innsatsgruppe = skjemaData.innsatsgruppe;
+		vedtakUtkastMock.opplysninger = skjemaData.opplysninger ? skjemaData.opplysninger : [];
 	}
 };
 
-export const mockLagUtkast: Mock = {
-	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
-	handler: async (): Promise<ResponseData> => {
-		const nyId = fattedeVedtak.length > 0 ? fattedeVedtak.sort((fv1, fv2) => fv2.id - fv1.id)[0].id + 1 : 1;
+export const utkastHandlers: RequestHandlersList = [
+	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, (req, res, ctx) => {
+		if (!vedtakUtkastMock) {
+			return res(ctx.delay(500), ctx.status(404));
+		}
+
+		return res(ctx.delay(500), ctx.json(vedtakUtkastMock));
+	}),
+	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, (req, res, ctx) => {
+		const nyId = fattedeVedtakMock.length > 0 ? fattedeVedtakMock.sort((fv1, fv2) => fv2.id - fv1.id)[0].id + 1 : 1;
 
 		const nyttUtkast = ({
 			id: nyId,
@@ -35,8 +63,8 @@ export const mockLagUtkast: Mock = {
 			sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 			gjeldende: false,
 			opplysninger: [],
-			veilederNavn: innloggetVeileder.navn,
-			veilederIdent: innloggetVeileder.ident,
+			veilederNavn: innloggetVeilederMock.navn,
+			veilederIdent: innloggetVeilederMock.ident,
 			oppfolgingsenhetId: enhetId,
 			oppfolgingsenhetNavn: enhetNavn,
 			beslutterNavn: null,
@@ -52,60 +80,50 @@ export const mockLagUtkast: Mock = {
 
 		leggTilMockSystemMelding(SystemMeldingType.UTKAST_OPPRETTET);
 
-		return { status: 204 };
-	}
-};
-
-export const mockOppdaterUtkast: Mock = {
-	method: 'PUT',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`,
-	handler: async (args: MockRequest): Promise<ResponseData> => {
-		const skjemaData: SkjemaData = args.body;
+		return res(ctx.delay(500), ctx.status(204));
+	}),
+	rest.put(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`, (req, res, ctx) => {
+		const skjemaData = req.body as SkjemaData;
 		oppdaterVedtakUtkastMockFraSkjema(skjemaData);
-		return { status: 204 };
-	}
-};
-
-export const oppdaterVedtakUtkastMockFraSkjema = (skjemaData: SkjemaData) => {
-	if (vedtakUtkastMock) {
-		vedtakUtkastMock.begrunnelse = skjemaData.begrunnelse;
-		vedtakUtkastMock.hovedmal = skjemaData.hovedmal;
-		vedtakUtkastMock.innsatsgruppe = skjemaData.innsatsgruppe;
-		vedtakUtkastMock.opplysninger = skjemaData.opplysninger ? skjemaData.opplysninger : [];
-	}
-};
-
-export const mockSlettUtkast: Mock = {
-	method: 'DELETE',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`,
-	handler: async (): Promise<ResponseData> => {
+		return res(ctx.delay(500), ctx.status(204));
+	}),
+	rest.delete(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`, (req, res, ctx) => {
 		vedtakUtkastMock = null;
-		return { status: 204 };
-	}
-};
-
-export const mockOvertaUtkast: Mock = {
-	method: 'POST',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/overta`,
-	handler: async (): Promise<ResponseData> => {
+		return res(ctx.delay(500), ctx.status(204));
+	}),
+	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/overta`, (req, res, ctx) => {
 		if (!vedtakUtkastMock) throw new Error('Fant ikke utkast å overta');
 
-		vedtakUtkastMock.veilederIdent = innloggetVeileder.ident;
-		vedtakUtkastMock.veilederNavn = innloggetVeileder.navn;
+		vedtakUtkastMock.veilederIdent = innloggetVeilederMock.ident;
+		vedtakUtkastMock.veilederNavn = innloggetVeilederMock.navn;
 
 		leggTilMockSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER);
 
-		return { status: 204 };
-	}
-};
-
-export const mockErUtkastGodkjent: Mock = {
-	method: 'GET',
-	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/beslutterprosessStatus`,
-	handler: async (): Promise<ResponseData> => {
+		return res(ctx.delay(500), ctx.status(204));
+	}),
+	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/beslutterprosessStatus`, (req, res, ctx) => {
 		const data = { status: vedtakUtkastMock ? vedtakUtkastMock.beslutterProsessStatus : null };
-		return { status: 200, body: JSON.stringify(data) };
-	}
-};
+		return res(ctx.delay(500), ctx.json(data));
+	}),
+	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/fattVedtak`, (req, res, ctx) => {
+		const gjeldendeVedtak = fattedeVedtakMock.find(v => v.gjeldende);
 
-export const veilarbvedtaksstotteUtkastHandlers: RequestHandlersList = [];
+		if (gjeldendeVedtak) {
+			gjeldendeVedtak.gjeldende = false;
+		}
+
+		if (!vedtakUtkastMock) throw new Error('Fant ikke utkast til beslutter');
+
+		const fattetVedtak = { ...vedtakUtkastMock };
+
+		fattetVedtak.vedtakStatus = VedtakStatus.SENDT;
+		fattetVedtak.gjeldende = true;
+		fattetVedtak.dokumentInfoId = '123';
+		fattetVedtak.journalpostId = '456';
+
+		fattedeVedtakMock.push(fattetVedtak);
+		vedtakUtkastMock = null;
+
+		return res(ctx.delay(500), ctx.status(204));
+	})
+];

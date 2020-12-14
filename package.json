@@ -2,11 +2,10 @@
   "name": "veilarbvedtaksstottefs",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/veilarbvedtaksstottefs",
   "scripts": {
     "start": "cross-env REACT_APP_DEV=true craco start",
-    "build": "craco build",
-    "build:mock": "cross-env REACT_APP_DEV=true craco build",
+    "build": "cross-env PUBLIC_URL=/veilarbvedtaksstotte craco build",
+    "build:mock": "cross-env PUBLIC_URL=/veilarbvedtaksstotte REACT_APP_DEV=true craco build",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "test": "echo \"Tests not yet implemented\"",

@@ -12,9 +12,7 @@ import LesUtkastAksjoner from './aksjoner/les-utkast-aksjoner';
 import UtkastSkjema from './skjema/utkast-skjema';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { OrNothing } from '../../util/type/ornothing';
-import { fetchFattedeVedtak, fetchUtkast } from '../../api/api';
 import { useSkjemaStore } from '../../store/skjema-store';
-import { SKRU_AV_POLLING_UTKAST } from '../../api/data/features';
 import SkjemaBolk from './skjema/bolk/skjema-bolk';
 import checkmark from './check.svg';
 import { BEGRUNNELSE_ANBEFALT_LENGTH } from './skjema/begrunnelse/begrunnelse';
@@ -22,6 +20,9 @@ import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../../component/varsel/varsel-type';
 import isEqual from 'lodash/isEqual';
 import { BeslutterProsessStatus, InnsatsgruppeType, Vedtak } from '../../api/veilarbvedtaksstotte';
+import { SKRU_AV_POLLING_UTKAST } from '../../api/veilarbpersonflatefs';
+import { fetchUtkast } from '../../api/veilarbvedtaksstotte/utkast';
+import { hentFattedeVedtak } from '../../api/veilarbvedtaksstotte/vedtak';
 
 const TEN_SECONDS = 10000;
 
@@ -86,7 +87,7 @@ export function LesUtkastSide() {
 
 	// Utkast kan bli satt til null hvis man er beslutter og veileder fatter et vedtak
 	if (utkast == null) {
-		fetchFattedeVedtak(fnr).then(response => {
+		hentFattedeVedtak(fnr).then(response => {
 			if (response.data) {
 				setFattedeVedtak(response.data);
 			}

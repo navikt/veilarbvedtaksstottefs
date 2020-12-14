@@ -3,7 +3,6 @@ import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
 import env from '../../util/environment';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { lagHentArenaVedtakPdfUrl, lagHentVedtakPdfUrl } from '../../api/api';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { lagMockArenabrevUrl, lagMockVedtaksbrevUrl } from '../../mock/utils';
@@ -11,6 +10,7 @@ import './vedtaksbrev-visning.less';
 import { useDataStore } from '../../store/data-store';
 import { logMetrikk } from '../../util/logger';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
+import { lagHentArenaVedtakPdfUrl, lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 
 interface VedtaksbrevVisningProps {
 	vedtakId: number;

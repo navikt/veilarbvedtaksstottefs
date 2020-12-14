@@ -4,7 +4,6 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import dialogIkon from './dialog.svg';
 import { ReactComponent as TaOverIkon } from './taover.svg';
 import { ModalType, useModalStore } from '../../../store/modal-store';
-import { fetchBliBeslutter, fetchGodkjennVedtak, fetchOppdaterBeslutterProsessStatus } from '../../../api/api';
 import { useViewStore, ViewType } from '../../../store/view-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import { harFeil, trengerBeslutter } from '../../../util/skjema-utils';
@@ -27,6 +26,11 @@ import './aksjoner.less';
 import { DialogModal } from '../../../component/dialog-modal/dialog-modal';
 import ImageButton from '../../../component/image-button/image-button';
 import { BeslutterProsessStatus, Vedtak } from '../../../api/veilarbvedtaksstotte';
+import {
+	bliBeslutter,
+	godkjennVedtak,
+	oppdaterBeslutterProsessStatus
+} from '../../../api/veilarbvedtaksstotte/beslutter';
 
 function LesUtkastAksjoner() {
 	const { setVeilederTilgang, erBeslutter, erAnsvarligVeileder, erIkkeAnsvarligVeileder } = useTilgangStore();
@@ -87,7 +91,7 @@ function LesUtkastAksjoner() {
 	function handleOnBliBeslutterClicked() {
 		setLaster(true);
 
-		fetchBliBeslutter(utkastId)
+		bliBeslutter(utkastId)
 			.then(() => {
 				fokuserPaDialogSidebarTab();
 				setUtkastBeslutter(innloggetVeileder.ident, innloggetVeileder.navn);
@@ -100,7 +104,7 @@ function LesUtkastAksjoner() {
 
 	function handleOnKlarTilClicked() {
 		setLaster(true);
-		fetchOppdaterBeslutterProsessStatus(utkastId)
+		oppdaterBeslutterProsessStatus(utkastId)
 			.then(() => {
 				setBeslutterProsessStatus(BeslutterProsessStatus.KLAR_TIL_VEILEDER);
 			})
@@ -110,7 +114,7 @@ function LesUtkastAksjoner() {
 
 	function handleOnGodkjennClicked() {
 		setLaster(true);
-		fetchGodkjennVedtak(utkastId)
+		godkjennVedtak(utkastId)
 			.then(() => {
 				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
 				setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);

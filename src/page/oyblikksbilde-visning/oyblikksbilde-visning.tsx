@@ -9,12 +9,13 @@ import Page from '../../component/page/page';
 import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
 import Footer from '../../component/footer/footer';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { useFetchOyblikksbilde } from '../../api/api';
 import { useViewStore, ViewType } from '../../store/view-store';
 import Spinner from '../../component/spinner/spinner';
 import './oyblikksbilde-visning.less';
 import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } from './oyblikksbilde-fikser';
 import { logMetrikk } from '../../util/logger';
+import { useAxiosFetcher } from '../../util/use-axios-fetcher';
+import { hentOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 
 function finnOyblikksbilde(
 	oyblikksbildeType: OyblikksbildeType,
@@ -25,20 +26,22 @@ function finnOyblikksbilde(
 }
 
 export function OyblikksbildeVisning(props: { vedtakId: number }) {
-	const oyeblikksbildePromise = useFetchOyblikksbilde(props.vedtakId);
+	const oyeblikksbildeFetcher = useAxiosFetcher(hentOyblikksbilde);
 
 	useEffect(() => {
+		oyeblikksbildeFetcher.fetch(props.vedtakId);
+
 		logMetrikk('vis-oyblikksbilde');
 		// eslint-disable-next-line
 	}, [props.vedtakId]);
 
-	if (oyeblikksbildePromise.isLoading) {
+	if (oyeblikksbildeFetcher.loading) {
 		return <Spinner />;
-	} else if (oyeblikksbildePromise.error) {
+	} else if (oyeblikksbildeFetcher.error) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 
-	return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={oyeblikksbildePromise.data} />;
+	return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={oyeblikksbildeFetcher.data} />;
 }
 
 function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyblikksbilde[]> }) {

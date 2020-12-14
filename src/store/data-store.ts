@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import constate from 'constate';
-import { Features } from '../api/data/features';
 import { MeldingType, SystemMeldingType } from '../util/type/melding-type';
 import { OrNothing } from '../util/type/ornothing';
 import { Veileder } from '../api/veilarbveileder';
@@ -12,6 +11,7 @@ import {
 } from '../api/veilarbvedtaksstotte/meldinger';
 import { BeslutterProsessStatus, Vedtak } from '../api/veilarbvedtaksstotte';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
+import { FeatureToggles } from '../api/veilarbpersonflatefs';
 
 // Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
 const placeholder = {} as any;
@@ -19,7 +19,7 @@ const placeholder = {} as any;
 export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [oppfolgingData, setOppfolgingData] = useState<Oppfolging>(placeholder);
 	const [malform, setMalform] = useState<MalformData>(placeholder);
-	const [features, setFeatures] = useState<Features>(placeholder);
+	const [features, setFeatures] = useState<FeatureToggles>(placeholder);
 	const [innloggetVeileder, setInnloggetVeileder] = useState<Veileder>(placeholder);
 	const [utkast, setUtkast] = useState<Vedtak | null>(null);
 	const [fattedeVedtak, setFattedeVedtak] = useState<Vedtak[]>([]);

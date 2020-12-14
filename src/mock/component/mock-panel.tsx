@@ -3,15 +3,15 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RadioPanel } from 'nav-frontend-skjema';
 import Lukknapp from 'nav-frontend-lukknapp';
 import { useDataStore } from '../../store/data-store';
-import { updateInnloggetVeilederMock } from '../api-data/innlogget-veileder';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { finnVeilederTilgang } from '../../util/tilgang';
 import Lenke from 'nav-frontend-lenker';
-import { oppdaterVedtakUtkastMockFraSkjema, vedtakUtkastMock } from '../vedtak-mock';
 import { useSkjemaStore } from '../../store/skjema-store';
 import './mock-panel.less';
 import { Veileder } from '../../api/veilarbveileder';
 import { veiledere } from '../data';
+import { oppdaterVedtakUtkastMockFraSkjema, vedtakUtkastMock } from '../api/veilarbvedtaksstotte/utkast';
+import { updateInnloggetVeilederMock } from '../api/veilarbveileder';
 
 export function MockPanel() {
 	const [skalVise, setSkalVise] = useState(false);

@@ -1,28 +1,27 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { Prelansering } from '../../page/prelansering/prelansering';
-import { PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../api/data/features';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDataStore } from '../../store/data-store';
-import { useFetchFeatures } from '../../api/api';
+import { fetchFeaturesToggles, PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../api/veilarbpersonflatefs';
+import { useAxiosFetcher } from '../../util/use-axios-fetcher';
+import { ifResponseHasData } from '../../api/utils';
 
 // NB! Henting av features og populering i data store hook må flyttes til data-fetcher.tsx når denne komponenten skal fjernes
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
-	const featuresState = useFetchFeatures();
-	const [harSattFeatures, setHarSattFeatures] = useState(false);
+	const featureFetcher = useAxiosFetcher(fetchFeaturesToggles);
 
 	const { features, setFeatures } = useDataStore();
 
 	useEffect(() => {
-		if (featuresState.data) {
-			setFeatures(featuresState.data);
-			setHarSattFeatures(true);
-		}
-	}, [featuresState, setFeatures]);
+		featureFetcher.fetch().then(ifResponseHasData(setFeatures));
 
-	if (featuresState.isLoading || !harSattFeatures) {
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	if (featureFetcher.loading) {
 		return <Spinner />;
-	} else if (featuresState.error) {
+	} else if (featureFetcher.error) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen

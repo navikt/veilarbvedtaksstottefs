@@ -21,7 +21,7 @@ export function slettUtkast(vedtakId: number): AxiosPromise {
 	return axiosInstance.delete(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}`);
 }
 
-export function beslutterprosessStatus(vedtakId: number): AxiosPromise<BeslutterprosessStatusData> {
+export function hentBeslutterprosessStatus(vedtakId: number): AxiosPromise<BeslutterprosessStatusData> {
 	return axiosInstance.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}/beslutterprosessStatus`);
 }
 

@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { hasAnyFailed, isAnyLoading } from '../api/utils-old';
 import Spinner from './spinner/spinner';
-import {
-	useFetchArenaVedtak,
-	useFetchFattedeVedtak,
-	useFetchInnloggetVeileder,
-	useFetchMalform,
-	useFetchOppfolging,
-	useFetchUtkast
-} from '../api/api';
 import { useDataStore } from '../store/data-store';
 import { useSkjemaStore } from '../store/skjema-store';
 import { finnVeilederTilgang } from '../util/tilgang';
 import { useTilgangStore } from '../store/tilgang-store';
+import { useAxiosFetcher } from '../util/use-axios-fetcher';
+import { hentArenaVedtak, hentFattedeVedtak } from '../api/veilarbvedtaksstotte/vedtak';
+import { fetchOppfolging } from '../api/veilarboppfolging';
+import { fetchMalform } from '../api/veilarbperson';
+import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
+import { fetchInnloggetVeileder } from '../api/veilarbveileder';
+import { ifResponseHasData, hasAnyFailed, isAnyLoading } from '../api/utils';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const { initSkjema } = useSkjemaStore();
@@ -27,67 +25,63 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	} = useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
 
-	const fattedeVedtakState = useFetchFattedeVedtak(props.fnr);
-	const oppfolgingDataState = useFetchOppfolging(props.fnr);
-	const malformDataState = useFetchMalform(props.fnr);
-	const utkastState = useFetchUtkast(props.fnr);
-	const innloggetVeilederState = useFetchInnloggetVeileder();
-	const arenaVedtakState = useFetchArenaVedtak(props.fnr);
+	const fattedeVedtakFetcher = useAxiosFetcher(hentFattedeVedtak);
+	const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
+	const malformFetcher = useAxiosFetcher(fetchMalform);
+	const utkastFetcher = useAxiosFetcher(fetchUtkast);
+	const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
+	const arenaVedtakFetcher = useAxiosFetcher(hentArenaVedtak);
 
 	useEffect(() => {
-		if (fattedeVedtakState.data) {
-			setFattedeVedtak(fattedeVedtakState.data);
+		fattedeVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setFattedeVedtak));
+
+		oppfolgingFetcher.fetch(props.fnr).then(ifResponseHasData(setOppfolgingData));
+
+		malformFetcher.fetch(props.fnr).then(ifResponseHasData(setMalform));
+
+		utkastFetcher.fetch(props.fnr).then(
+			ifResponseHasData(utkast => {
+				setUtkast(utkast);
+				initSkjema(utkast);
+			})
+		);
+
+		innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder));
+
+		arenaVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setArenaVedtak));
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		if (innloggetVeilederFetcher.data && !utkastFetcher.loading) {
+			setVeilederTilgang(finnVeilederTilgang(innloggetVeilederFetcher.data, utkastFetcher.data));
 		}
-		if (oppfolgingDataState.data) {
-			setOppfolgingData(oppfolgingDataState.data);
-		}
-		if (malformDataState.data) {
-			setMalform(malformDataState.data);
-		}
-		if (utkastState.data) {
-			setUtkast(utkastState.data);
-			initSkjema(utkastState.data);
-		}
-		if (innloggetVeilederState.data) {
-			setInnloggetVeileder(innloggetVeilederState.data);
-		}
-		if (arenaVedtakState.data) {
-			setArenaVedtak(arenaVedtakState.data);
-		}
-		if (innloggetVeilederState.data && !utkastState.isLoading) {
-			setVeilederTilgang(finnVeilederTilgang(innloggetVeilederState.data, utkastState.data));
-		}
-		// eslint-disable-next-line
-	}, [
-		fattedeVedtakState,
-		oppfolgingDataState,
-		malformDataState,
-		utkastState,
-		innloggetVeilederState,
-		arenaVedtakState
-	]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [innloggetVeilederFetcher, utkastFetcher]);
 
 	if (
-		isAnyLoading([
-			fattedeVedtakState,
-			oppfolgingDataState,
-			malformDataState,
-			utkastState,
-			innloggetVeilederState,
-			arenaVedtakState
-		])
+		isAnyLoading(
+			fattedeVedtakFetcher,
+			oppfolgingFetcher,
+			malformFetcher,
+			utkastFetcher,
+			innloggetVeilederFetcher,
+			arenaVedtakFetcher
+		)
 	) {
 		return <Spinner />;
 	} else if (
-		hasAnyFailed([
-			fattedeVedtakState,
-			oppfolgingDataState,
-			malformDataState,
-			innloggetVeilederState,
-			arenaVedtakState
-		]) ||
-		// API gir 404 dersom utkast ikke eksisterer
-		(utkastState.error && utkastState.error.status !== 404)
+		hasAnyFailed(
+			fattedeVedtakFetcher,
+			oppfolgingFetcher,
+			malformFetcher,
+			utkastFetcher,
+			innloggetVeilederFetcher,
+			arenaVedtakFetcher
+		) ||
+		(utkastFetcher.error && utkastFetcher.error.response?.status !== 404) // API gir 404 dersom utkast ikke eksisterer
 	) {
 		return (
 			<AlertStripeFeil className="vedtaksstotte-alert">

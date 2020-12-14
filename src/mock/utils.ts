@@ -2,14 +2,14 @@ import { OrNothing } from '../util/type/ornothing';
 import { HovedmalType, InnsatsgruppeType } from '../api/veilarbvedtaksstotte';
 
 export function lagMockArenabrevUrl() {
-	return '/veilarbvedtaksstottefs/test-brev/arenabrev.pdf';
+	return '/test-brev/arenabrev.pdf';
 }
 
 export function lagMockVedtaksbrevUrl(
 	innsatsgruppe: OrNothing<InnsatsgruppeType>,
 	hovedmal: OrNothing<HovedmalType>
 ): string {
-	const basePath = '/veilarbvedtaksstottefs/test-brev/';
+	const basePath = '/test-brev/';
 
 	if (!innsatsgruppe) {
 		// Default brev

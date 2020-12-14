@@ -11,8 +11,8 @@ import dialogIkon from './dialog.svg';
 import lukkIkon from './lukk.svg';
 import ImageButton from '../image-button/image-button';
 import { hentId } from '../../util';
-import { fetchMeldinger } from '../../api/api';
-import { SKRU_AV_POLLING_DIALOG } from '../../api/data/features';
+import { SKRU_AV_POLLING_DIALOG } from '../../api/veilarbpersonflatefs';
+import { hentMeldinger } from '../../api/veilarbvedtaksstotte/meldinger';
 
 interface DialogModalProps {
 	open: boolean;
@@ -32,7 +32,7 @@ export const DialogModal = (props: DialogModalProps) => {
 	}, [meldinger]);
 
 	function refreshMeldinger() {
-		fetchMeldinger(hentId(utkast))
+		hentMeldinger(hentId(utkast))
 			.then(response => {
 				if (response.data) {
 					setMeldinger(response.data);

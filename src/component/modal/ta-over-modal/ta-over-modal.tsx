@@ -8,13 +8,14 @@ import Show from '../../show';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { fetchBliBeslutter, fetchTaOverUtkast } from '../../../api/api';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { VeilederTilgang } from '../../../util/tilgang';
 import './ta-over-modal.less';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { useVarselStore } from '../../../store/varsel-store';
 import { VarselType } from '../../varsel/varsel-type';
+import { bliBeslutter } from '../../../api/veilarbvedtaksstotte/beslutter';
+import { fetchTaOverUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
@@ -56,7 +57,7 @@ function TaOverModal(props: ModalProps) {
 		setLaster(true);
 
 		const taOverResponse =
-			taOverFor === TaOverFor.BESLUTTER ? fetchBliBeslutter(hentId(utkast)) : fetchTaOverUtkast(hentId(utkast));
+			taOverFor === TaOverFor.BESLUTTER ? bliBeslutter(hentId(utkast)) : fetchTaOverUtkast(hentId(utkast));
 
 		taOverResponse
 			.then(() => {

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { useFetchTilgangTilKontor } from '../../api/api';
 import Spinner from '../spinner/spinner';
+import { useAxiosFetcher } from '../../util/use-axios-fetcher';
+import { fetchTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 
 interface NasjonalTilgangSjekkProps {
 	fnr: string;
@@ -9,15 +10,20 @@ interface NasjonalTilgangSjekkProps {
 }
 
 export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
-	const tilgangTilKontor = useFetchTilgangTilKontor(props.fnr);
+	const tilgangTilKontorFetcher = useAxiosFetcher(fetchTilgangTilBrukersKontor);
 
-	if (tilgangTilKontor.isLoading) {
+	useEffect(() => {
+		tilgangTilKontorFetcher.fetch(props.fnr);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	if (tilgangTilKontorFetcher.loading) {
 		return <Spinner />;
-	} else if (tilgangTilKontor.error) {
+	} else if (tilgangTilKontorFetcher.error) {
 		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
 	}
 
-	if (!tilgangTilKontor.data || !tilgangTilKontor.data.tilgangTilBrukersKontor) {
+	if (!tilgangTilKontorFetcher.data?.tilgangTilBrukersKontor) {
 		return (
 			<AlertStripeAdvarsel className="vedtaksstotte-alert">
 				Du har ikke tilgang til å se brukers oppfølgingsvedtak.
