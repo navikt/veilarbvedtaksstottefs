@@ -1,0 +1,37 @@
+name: Test branch
+on:
+  push:
+    branches-ignore:
+      - master
+      - dev
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test
+
+  test-e2e:
+    name: Run e2e tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          headless: true
+          start: npm start
+          wait-on: http://localhost:3666
+          record: false
