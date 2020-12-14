@@ -14,6 +14,7 @@ import { rest } from 'msw';
 import { fjernAlleMockMeldinger, leggTilMockSystemMelding } from './meldinger';
 import { innloggetVeilederMock } from '../veilarbveileder';
 import { fattedeVedtakMock } from './vedtak';
+import { lagVedtakBrevMockUrl } from '../../utils';
 
 const utkast: Vedtak = {
 	id: 100,
@@ -125,5 +126,16 @@ export const utkastHandlers: RequestHandlersList = [
 		vedtakUtkastMock = null;
 
 		return res(ctx.delay(500), ctx.status(204));
+	}),
+	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/pdf`, async (req, res, ctx) => {
+		if (!vedtakUtkastMock?.innsatsgruppe) {
+			throw new Error('Mangler innsatsgruppe for brev mock');
+		}
+
+		const brevMockUrl = lagVedtakBrevMockUrl(vedtakUtkastMock!.innsatsgruppe!, vedtakUtkastMock?.hovedmal);
+
+		const brevBlob = await (ctx.fetch(brevMockUrl) as Promise<Response>).then(brevRes => brevRes.blob());
+
+		return res(ctx.delay(500), ctx.body(brevBlob));
 	})
 ];

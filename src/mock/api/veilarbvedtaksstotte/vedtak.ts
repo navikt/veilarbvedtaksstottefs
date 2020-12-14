@@ -11,6 +11,7 @@ import { enhetId, enhetNavn, veileder1, veileder3 } from '../../data';
 import { ArenaVedtak } from '../../../api/veilarbvedtaksstotte/vedtak';
 import { Oyblikksbilde } from '../../../util/type/oyblikksbilde';
 import OyblikksbildeType from '../../../util/type/oyblikksbilde-type';
+import { lagVedtakBrevMockUrl } from '../../utils';
 
 const historisk: Vedtak[] = [
 	{
@@ -114,5 +115,27 @@ export const vedtakHandlers: RequestHandlersList = [
 	}),
 	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde`, (req, res, ctx) => {
 		return res(ctx.delay(500), ctx.json(oyblikksbilder));
+	}),
+	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/pdf`, async (req, res, ctx) => {
+		const vedtakId = parseInt(req.params.vedtakId, 10);
+
+		const vedtak = fattedeVedtakMock.find(v => v.id === vedtakId);
+
+		if (!vedtak?.innsatsgruppe) {
+			throw new Error('Mangler innsatsgruppe for brev mock');
+		}
+
+		const brevBlob = await (ctx.fetch(lagVedtakBrevMockUrl(vedtak.innsatsgruppe, vedtak.hovedmal)) as Promise<
+			Response
+		>).then(brevRes => brevRes.blob());
+
+		return res(ctx.delay(500), ctx.body(brevBlob));
+	}),
+	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena/pdf`, async (req, res, ctx) => {
+		const brevBlob = await (ctx.fetch('/test-brev/arenabrev.pdf') as Promise<Response>).then(brevRes =>
+			brevRes.blob()
+		);
+
+		return res(ctx.delay(500), ctx.body(brevBlob));
 	})
 ];

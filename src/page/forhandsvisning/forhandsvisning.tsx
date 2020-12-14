@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
-import env from '../../util/environment';
 import { trengerBeslutter } from '../../util/skjema-utils';
 import { useAppStore } from '../../store/app-store';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { useSkjemaStore } from '../../store/skjema-store';
 import { erGodkjentAvBeslutter } from '../../util';
-import { lagMockVedtaksbrevUrl } from '../../mock/utils';
 import Show from '../../component/show';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { useDataStore } from '../../store/data-store';
@@ -28,14 +26,14 @@ export function Forhandsvisning() {
 	const { utkast, setUtkast, features, setFattedeVedtak } = useDataStore();
 	const { showModal, hideModal } = useModalStore();
 	const { showVarsel } = useVarselStore();
-	const { innsatsgruppe, hovedmal, resetSkjema } = useSkjemaStore();
+	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
 	const { id: utkastId, beslutterProsessStatus } = utkast as Vedtak;
 
 	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
-	const url = env.isProduction ? lagHentForhandsvisningUrl(utkastId) : lagMockVedtaksbrevUrl(innsatsgruppe, hovedmal);
+	const url = lagHentForhandsvisningUrl(utkastId);
 
 	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
 		? erGodkjentAvBeslutter(beslutterProsessStatus)

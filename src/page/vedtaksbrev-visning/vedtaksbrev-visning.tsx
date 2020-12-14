@@ -1,42 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
-import env from '../../util/environment';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
-import { lagMockArenabrevUrl, lagMockVedtaksbrevUrl } from '../../mock/utils';
 import './vedtaksbrev-visning.less';
-import { useDataStore } from '../../store/data-store';
 import { logMetrikk } from '../../util/logger';
-import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { lagHentArenaVedtakPdfUrl, lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 
 interface VedtaksbrevVisningProps {
 	vedtakId: number;
 }
 
-function lagMockUrl(fattedeVedtak: Vedtak[], vedtakId: number): string {
-	const vistVedtak = fattedeVedtak.find(v => v.id === vedtakId) as Vedtak;
-	return lagMockVedtaksbrevUrl(vistVedtak.innsatsgruppe, vistVedtak.hovedmal);
-}
-
 export function VedtaksbrevVisning(props: VedtaksbrevVisningProps) {
 	const { changeView } = useViewStore();
-	const { fattedeVedtak } = useDataStore();
 
-	const vedtaksbrevUrl = env.isProduction
-		? lagHentVedtakPdfUrl(props.vedtakId)
-		: lagMockUrl(fattedeVedtak, props.vedtakId);
+	const vedtaksbrevUrl = lagHentVedtakPdfUrl(props.vedtakId);
 
 	return (
-		<>
-			<GenericVedtaksbrevVisning
-				vedtaksbrevUrl={vedtaksbrevUrl}
-				tilbakeTekst="Tilbake  til vedtak"
-				handleOnTilbakeClicked={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}
-			/>
-		</>
+		<GenericVedtaksbrevVisning
+			vedtaksbrevUrl={vedtaksbrevUrl}
+			tilbakeTekst="Tilbake  til vedtak"
+			handleOnTilbakeClicked={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}
+		/>
 	);
 }
 
@@ -48,9 +34,7 @@ interface ArenaVedtaksbrevVisningProps {
 export function ArenaVedtaksbrevVisning(props: ArenaVedtaksbrevVisningProps) {
 	const { changeView } = useViewStore();
 
-	const vedtaksbrevUrl = env.isProduction
-		? lagHentArenaVedtakPdfUrl(props.dokumentInfoId, props.journalpostId)
-		: lagMockArenabrevUrl();
+	const vedtaksbrevUrl = lagHentArenaVedtakPdfUrl(props.dokumentInfoId, props.journalpostId);
 
 	return (
 		<GenericVedtaksbrevVisning
