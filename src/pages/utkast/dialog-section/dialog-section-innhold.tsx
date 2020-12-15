@@ -14,6 +14,7 @@ import './dialog-section.less';
 let midlertidigMelding = '';
 
 const TEN_SECONDS = 10000;
+const MESSAGE_MAX_LENGTH = 1000;
 
 export function DialogSectionInnhold() {
 	const { showModal } = useModalStore();
@@ -89,7 +90,7 @@ export function DialogSectionInnhold() {
 	}
 
 	function handleOnMeldingChanged(e: ChangeEvent<HTMLTextAreaElement>) {
-		if (!senderMelding) {
+		if (!senderMelding && e.target.value.length <= MESSAGE_MAX_LENGTH) {
 			oppdaterMelding(e.target.value);
 		}
 	}
@@ -106,7 +107,7 @@ export function DialogSectionInnhold() {
 				)}
 			</div>
 			<div className="blokk-s">
-				<Textarea onChange={handleOnMeldingChanged} value={melding} />
+				<Textarea onChange={handleOnMeldingChanged} value={melding} maxLength={MESSAGE_MAX_LENGTH} />
 				<div className="dialog-section-innhold__send">
 					<Hovedknapp
 						onClick={sendMelding}
