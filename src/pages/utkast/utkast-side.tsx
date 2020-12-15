@@ -12,7 +12,7 @@ import './utkast-side.less';
 
 export function UtkastSide() {
 	const { utkast } = useDataStore();
-	const { sistOppdatert, setHarForsoktAForhandsvise } = useSkjemaStore();
+	const { sistOppdatert, setHarForsoktAForhandsvise, lagringStatus } = useSkjemaStore();
 	const { erAnsvarligVeileder } = useTilgangStore();
 
 	useEffect(() => {
@@ -21,13 +21,19 @@ export function UtkastSide() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const sisteOppdatering = sistOppdatert || utkast!.sistOppdatert;
+
 	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
 
 	return (
 		<div className="utkast-side">
 			<div className="utkast-side__hovedinnhold">
 				<div className="utkast-side__skjema-section">
-					<SkjemaHeader utkast={utkast!} sistOppdatert={sistOppdatert} />
+					<SkjemaHeader
+						veilederNavn={utkast!.veilederNavn}
+						sistOppdatert={sisteOppdatering}
+						skjemaLagringStatus={lagringStatus}
+					/>
 					{utkastSkjema}
 				</div>
 				<div className="utkast-side__dialog-section">

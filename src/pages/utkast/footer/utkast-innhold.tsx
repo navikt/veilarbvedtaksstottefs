@@ -8,8 +8,7 @@ import { useViewStore, ViewType } from '../../../stores/view-store';
 import { useSkjemaStore } from '../../../stores/skjema-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil, SkjemaData } from '../../../utils/skjema-utils';
 import Show from '../../../components/show';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { erKlarTilVeileder, finnGjeldendeVedtak, mapSkjemaLagringStatusTilTekst } from '../../../utils';
+import { erKlarTilVeileder, finnGjeldendeVedtak } from '../../../utils';
 import { useDataStore } from '../../../stores/data-store';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { Vedtak } from '../../../rest/data/vedtak';
@@ -25,7 +24,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 	const { malform, fattedeVedtak, utkast } = useDataStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
-	const { validerSkjema, lagringStatus, setHarForsoktAForhandsvise } = useSkjemaStore();
+	const { validerSkjema, setHarForsoktAForhandsvise } = useSkjemaStore();
 	const { id: utkastId, beslutterProsessStatus } = utkast as Vedtak;
 
 	const [laster, setLaster] = useState(false);
@@ -64,10 +63,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 
 	return (
 		<div className="utkast-footer__utkast-innhold">
-			<div className="utkast-footer--innhold-sidestilt">
-				<Tilbakeknapp htmlType="button" onClick={handleOnTilbakeClicked} disabled={laster} />
-				<Normaltekst>{mapSkjemaLagringStatusTilTekst(lagringStatus)}</Normaltekst>
-			</div>
+			<Tilbakeknapp htmlType="button" onClick={handleOnTilbakeClicked} disabled={laster} />
 
 			<div className="utkast-footer__knapper-hoyre utkast-footer--innhold-sidestilt">
 				<Show if={laster}>

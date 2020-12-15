@@ -1,18 +1,34 @@
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { Vedtak } from '../../../../rest/data/vedtak';
 import utkastBilde from './utkast.svg';
-import { DatoLabel } from '../../../../components/panel/dato-label';
 import { Label, LabelType } from '../../../../components/label/label';
+import { SkjemaLagringStatus } from '../../../../utils/types/skjema-lagring-status';
 import './skjema-header.less';
+import { formatDateTime } from '../../../../utils/date-utils';
 
 interface SkjemaHeaderProps {
-	utkast: Vedtak;
-	sistOppdatert?: string;
+	veilederNavn: string;
+	sistOppdatert: string;
+	skjemaLagringStatus: SkjemaLagringStatus;
+}
+
+function utledLagreTekst(status: SkjemaLagringStatus, sistOppdatert: string): string {
+	switch (status) {
+		case SkjemaLagringStatus.LAGRER:
+		case SkjemaLagringStatus.ENDRING_IKKE_LAGRET:
+			return 'Lagrer...';
+		case SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET:
+		case SkjemaLagringStatus.INGEN_ENDRING:
+			return formatDateTime(sistOppdatert);
+		case SkjemaLagringStatus.LAGRING_FEILET:
+			return 'Lagring feilet';
+	}
+
+	return '';
 }
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
-	const { veilederNavn } = props.utkast;
+	const sistEndretTekst = utledLagreTekst(props.skjemaLagringStatus, props.sistOppdatert);
 
 	return (
 		<header className="skjema-header">
@@ -22,13 +38,13 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 					Utkast
 				</Systemtittel>
 				<div className="skjema-header__info">
-					<Label titleText="Ansvarlig" valueText={veilederNavn} labelType={LabelType.SMALL} />
+					<Label titleText="Ansvarlig" valueText={props.veilederNavn} labelType={LabelType.SMALL} />
 					<div className="seperator" />
-					<DatoLabel
+					<Label
 						className="skjema-header__dato"
-						sistOppdatert={props.sistOppdatert || props.utkast.sistOppdatert}
-						formatType="long"
-						text="Sist endret"
+						valueText={sistEndretTekst}
+						titleText="Sist endret"
+						labelType={LabelType.SMALL}
 					/>
 				</div>
 			</div>
