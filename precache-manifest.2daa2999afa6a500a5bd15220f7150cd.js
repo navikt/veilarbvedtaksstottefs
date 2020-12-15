@@ -1,18 +1,18 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fd9916654f488b40846e7034333fde2b",
+    "revision": "adbaec4584eaa9238ac4f492899acaf3",
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "4d7c0c548a802497c4da",
+    "revision": "46a7d0f981fbaec108f0",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "4d7c0c548a802497c4da",
+    "revision": "46a7d0f981fbaec108f0",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
-    "revision": "e252acb81b88ea6f3dd6dbca6c48bb7f",
+    "revision": "f4c65639f808582195c641d19303a466",
     "url": "/veilarbvedtaksstottefs/static/js/main.js.LICENSE.txt"
   },
   {
@@ -24,20 +24,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/beslutterfunksjon.7b1b80d9.svg"
   },
   {
-    "revision": "61b60bf0ce08835007c6ed8fa7b7cc43",
-    "url": "/veilarbvedtaksstottefs/static/media/check.61b60bf0.svg"
-  },
-  {
     "revision": "7e641224c473f655aaac89e9159d3ff7",
     "url": "/veilarbvedtaksstottefs/static/media/delete.7e641224.svg"
-  },
-  {
-    "revision": "8297b83ec46875b09c9ca229ca9c63ca",
-    "url": "/veilarbvedtaksstottefs/static/media/dialog.8297b83e.svg"
-  },
-  {
-    "revision": "91418ce5421fc0892378cff796646897",
-    "url": "/veilarbvedtaksstottefs/static/media/dialog.91418ce5.svg"
   },
   {
     "revision": "6663e652df5420af74420d64a58434a4",
@@ -72,10 +60,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/las-opp.7202ab3e.svg"
   },
   {
-    "revision": "6285882407076387c917ef326667e9f7",
-    "url": "/veilarbvedtaksstottefs/static/media/lukk.62858824.svg"
-  },
-  {
     "revision": "d33f8f12e1e24be6c25543e3cc6a2425",
     "url": "/veilarbvedtaksstottefs/static/media/mellomlagre.d33f8f12.svg"
   },
@@ -104,12 +88,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/rediger-fylt.aee0274b.svg"
   },
   {
-    "revision": "e1f53933edffcf1acf83651f3629a45a",
-    "url": "/veilarbvedtaksstottefs/static/media/rediger.e1f53933.svg"
-  },
-  {
-    "revision": "5c35d935afbee01d20a382845e0f68d3",
-    "url": "/veilarbvedtaksstottefs/static/media/send.5c35d935.svg"
+    "revision": "7d28370c3c01912386ad8d46c473fee6",
+    "url": "/veilarbvedtaksstottefs/static/media/rediger.7d28370c.svg"
   },
   {
     "revision": "cc939bc278ddb7962de8663c1b9a49a0",
