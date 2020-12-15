@@ -70,6 +70,30 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 					<NavFrontendSpinner className="utkast-footer__spinner" type="XS" />
 				</Show>
 
+				<Show if={erAnsvarligVeileder}>
+					<Flatknapp
+						mini={true}
+						htmlType="button"
+						onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
+						disabled={laster}
+					>
+						<SlettIkon className="utkast_footer__knapp-ikon" />
+						Slett
+					</Flatknapp>
+				</Show>
+
+				<Show if={!erAnsvarligVeileder}>
+					<Flatknapp
+						mini={true}
+						htmlType="button"
+						onClick={() => showModal(ModalType.BEKREFT_TA_OVER_UTKAST)}
+						disabled={laster}
+					>
+						<TaOverIkon className="utkast_footer__knapp-ikon" />
+						Ta over
+					</Flatknapp>
+				</Show>
+
 				<Knapp
 					className="utkast-footer__forhandsvis-knapp"
 					type={erForhandsvisHovedknapp ? 'hoved' : 'standard'}
@@ -80,30 +104,6 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 				>
 					Forhåndsvis
 				</Knapp>
-
-				<Show if={!erAnsvarligVeileder}>
-					<Flatknapp
-						mini={true}
-						htmlType="button"
-						onClick={() => showModal(ModalType.BEKREFT_TA_OVER_UTKAST)}
-						disabled={laster}
-					>
-						<TaOverIkon className="aksjoner__ikon" />
-						Ta over
-					</Flatknapp>
-				</Show>
-
-				<Show if={erAnsvarligVeileder}>
-					<Flatknapp
-						mini={true}
-						htmlType="button"
-						onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
-						disabled={laster}
-					>
-						<SlettIkon className="aksjoner__ikon" />
-						Slett
-					</Flatknapp>
-				</Show>
 			</div>
 		</div>
 	);
