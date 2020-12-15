@@ -14,11 +14,17 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
 	const {
-		id, hovedmal, opplysninger,
-		innsatsgruppe, begrunnelse,
-		beslutterNavn, gjeldende,
-		veilederNavn, oppfolgingsenhetNavn,
-		oppfolgingsenhetId, sistOppdatert
+		id,
+		hovedmal,
+		opplysninger,
+		innsatsgruppe,
+		begrunnelse,
+		beslutterNavn,
+		gjeldende,
+		veilederNavn,
+		oppfolgingsenhetNavn,
+		oppfolgingsenhetId,
+		sistOppdatert
 	} = props.fattetVedtak;
 
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
@@ -26,7 +32,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 
 	return (
 		<div className="skjema-visning">
-			<SkjemaVisningHeader erGjeldende={gjeldende}/>
+			<SkjemaVisningHeader erGjeldende={gjeldende} />
 
 			<div className="skjema-visning__info">
 				<Label
@@ -58,11 +64,19 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 				</div>
 			</div>
 
-			<Element tag="span" className="skjema-visning__label blokk-xxs">Begrunnelse</Element>
+			<Element tag="span" className="skjema-visning__label blokk-xxs">
+				Begrunnelse
+			</Element>
 			<Tekstomrade className="skjema-visning__begrunnelse">{begrunnelse ? begrunnelse : ''}</Tekstomrade>
 
-			<Element tag="span" className="skjema-visning__label blokk-xxs">Kilder</Element>
-			<ul className="skjema-visning__opplysninger">{opplysninger.map((o, idx) => (<li key={idx}>{o}</li>))}</ul>
+			<Element tag="span" className="skjema-visning__label blokk-xxs">
+				Kilder
+			</Element>
+			<ul className="skjema-visning__kilder">
+				{opplysninger.map((o, idx) => (
+					<li key={idx}>{o}</li>
+				))}
+			</ul>
 
 			<button
 				className="skjema-visning__oyblikksbilde-lenke"

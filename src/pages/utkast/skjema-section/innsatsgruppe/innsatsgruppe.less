@@ -1,0 +1,39 @@
+@import "../../../../../node_modules/nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.innsatsgruppe {
+
+		.radiogruppe {
+			margin-bottom: 0;
+		}
+
+		.skjemaelement {
+			margin-bottom: 0;
+			padding: 0.5rem 0;
+		}
+
+		.skjemaelement__label{
+			padding-left: 2.75rem;
+		}
+
+		&__alertstripe {
+			margin: 1rem 0;
+			animation: linear 0.25s info-fade-in;
+
+			.alertstripe__tekst {
+				max-width: none;
+			}
+		}
+	}
+
+	@keyframes info-fade-in {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+}

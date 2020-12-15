@@ -1,0 +1,39 @@
+@import "~nav-frontend-core/less/_variabler";
+@import "../../../variabler";
+
+.veilarbvedtaksstottefs {
+
+	.skjema-grid {
+		display: grid;
+		padding: 2rem;
+		grid-row-gap: 2rem;
+		grid-template-columns: @begrunnelse-bredde;
+		grid-template-areas:
+			"kilder"
+			"begrunnelse"
+			"innsatsgruppe"
+			"hovedmal";
+
+		@media (min-width: @utkast-breakpoint) {
+			grid-template-columns: 1fr 1fr;
+			grid-column-gap: 4rem;
+			grid-template-areas:
+			"kilder begrunnelse"
+			"innsatsgruppe begrunnelse"
+			"hovedmal begrunnelse";
+		}
+	}
+
+	.les-utkast-skjema {
+		grid-row-gap: 4rem;
+
+		.kilder-felt__liste {
+			padding-left: 1rem;
+
+			li {
+				padding: 0.5rem 0;
+			}
+		}
+	}
+
+}
