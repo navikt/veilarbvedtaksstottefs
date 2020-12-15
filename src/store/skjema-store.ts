@@ -1,26 +1,27 @@
 import { useState } from 'react';
 import constate from 'constate';
-import { SkjemaFeil } from '../util/type/skjema-feil';
-import {
-	mapOpplysningerFraForskjelligMalformTilBokmal,
-	validerBegrunnelseMaxLength,
-	validerSkjema as valider
-} from '../util/skjema-utils';
 import { OrNothing } from '../util/type/ornothing';
-import { SkjemaLagringStatus } from '../util/type/skjema-lagring-status';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../api/veilarbvedtaksstotte';
+import { SkjemaFeil } from '../util/type/skjema-feil';
+import { SkjemaLagringStatus } from '../util/type/skjema-lagring-status';
+import {
+	mapKilderFraForskjelligMalformTilBokmal,
+	validerBegrunnelseMaxLength,
+	validerSkjema
+} from '../util/skjema-utils';
 
 export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
-	const [opplysninger, setOpplysninger] = useState<string[]>([]);
+	const [kilder, setKilder] = useState<string[]>([]);
 	const [hovedmal, setHovedmal] = useState<OrNothing<HovedmalType>>();
 	const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>();
 	const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
 	const [sistOppdatert, setSistOppdatert] = useState('');
 	const [errors, setErrors] = useState<SkjemaFeil>({});
 	const [lagringStatus, setLagringStatus] = useState<SkjemaLagringStatus>(SkjemaLagringStatus.INGEN_ENDRING);
+	const [harForsoktAForhandsvise, setHarForsoktAForhandsvise] = useState<boolean>(false);
 
-	const validerSkjema = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
-		const feil = valider({ opplysninger, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
+	const valider = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
+		const feil = validerSkjema({ opplysninger: kilder, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
 		setErrors(feil);
 		return feil;
 	};
@@ -31,9 +32,9 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	};
 
 	const initSkjema = (utkast: Vedtak) => {
-		const mappetOpplysninger = mapOpplysningerFraForskjelligMalformTilBokmal(utkast.opplysninger);
+		const mappetKilder = mapKilderFraForskjelligMalformTilBokmal(utkast.opplysninger);
 		setHovedmal(utkast.hovedmal);
-		setOpplysninger(mappetOpplysninger);
+		setKilder(mappetKilder);
 		setInnsatsgruppe(utkast.innsatsgruppe);
 		setBegrunnelse(utkast.begrunnelse);
 		setSistOppdatert(utkast.sistOppdatert);
@@ -41,7 +42,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 
 	const resetSkjema = () => {
 		setHovedmal(undefined);
-		setOpplysninger([]);
+		setKilder([]);
 		setInnsatsgruppe(undefined);
 		setBegrunnelse(undefined);
 		setSistOppdatert('');
@@ -49,8 +50,8 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	};
 
 	return {
-		opplysninger,
-		setOpplysninger,
+		kilder,
+		setKilder,
 		hovedmal,
 		setHovedmal,
 		innsatsgruppe,
@@ -62,7 +63,9 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 		errors,
 		lagringStatus,
 		setLagringStatus,
-		validerSkjema,
+		harForsoktAForhandsvise,
+		setHarForsoktAForhandsvise,
+		validerSkjema: valider,
 		validerBegrunnelseLengde,
 		initSkjema,
 		resetSkjema

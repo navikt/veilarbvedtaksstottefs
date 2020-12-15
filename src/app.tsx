@@ -19,7 +19,7 @@ interface AppProps {
 
 function App(props: AppProps) {
 	return (
-		<main className="veilarbvedtaksstottefs">
+		<main className="app veilarbvedtaksstottefs">
 			<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
 				<PrelanseringSjekk>
 					<NasjonalTilgangSjekk fnr={props.fnr}>

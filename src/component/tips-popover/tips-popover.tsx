@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import cls from 'classnames';
 import tipsBilde from './tips.svg';
 import Popover, { PopoverOrientering } from 'nav-frontend-popover';
 import './tips-popover.less';
 import { logMetrikk } from '../../util/logger';
 
 interface TipsPopoverProps {
-	id: string;
+	id?: string;
 	tipsInnhold: React.ReactNode;
 	ariaLabel?: string;
+	orientering?: PopoverOrientering;
+	className?: string;
 }
 
 /*
@@ -35,7 +38,7 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 	}
 
 	return (
-		<div className="tips-popover">
+		<div className={cls('tips-popover', props.className)}>
 			<button
 				className="tips-popover__trigger"
 				onClick={togglePopoverOpen}
@@ -52,7 +55,7 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 				autoFokus={false}
 				avstandTilAnker={16}
 				ankerEl={popoverTrigger}
-				orientering={PopoverOrientering.UnderVenstre}
+				orientering={props.orientering || PopoverOrientering.UnderVenstre}
 				onRequestClose={handleOnRequestClose}
 			>
 				<div className="tips">{props.tipsInnhold}</div>

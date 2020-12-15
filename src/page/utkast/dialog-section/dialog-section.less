@@ -1,0 +1,53 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.dialog-section {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		background-color: white;
+
+		border-left: 1px solid @navGra40;
+	}
+
+	.dialog-section-header {
+		display: flex;
+		flex-direction: row;
+
+		align-items: center;
+
+		background-color: white;
+		height: 75px;
+		border-bottom: 1px solid @navGra40;
+
+		&__tittel {
+			margin: 0 1rem 0 2rem;
+		}
+
+		&__tips {
+			margin-right: 2rem;
+		}
+	}
+
+	.dialog-section-innhold {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+
+		padding: 1rem;
+		background-color: white;
+		flex-grow: 1;
+
+		&__send {
+			display: flex;
+			justify-content: flex-end;
+			margin-top: 1rem;
+		}
+
+		&__spinner {
+			margin: auto auto;
+		}
+	}
+
+}

@@ -1,0 +1,123 @@
+@import "~nav-frontend-core/less/_variabler";
+@import "../../../variabler";
+
+.veilarbvedtaksstottefs {
+	.utkast-footer {
+		padding: 0;
+	}
+
+	.utkast-footer--innhold-sidestilt {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.utkast-footer__innhold {
+		display: grid;
+		grid-template-columns: 6fr 4fr;
+		max-width: 1920px;
+		margin: 0 auto;
+
+		@media (min-width: @utkast-breakpoint) {
+			grid-template-columns: 7fr 3fr;
+		}
+	}
+
+	.utkast-footer__knapper-hoyre {
+		margin-right: 2rem;
+	}
+
+	.utkast-footer__spinner {
+		margin-right: 2rem;
+	}
+
+	.utkast-footer__godkjenn-knapp {
+		margin-left: 1rem;
+	}
+
+	.utkast-footer__forhandsvis-knapp {
+		margin-left: 2rem;
+	}
+
+	.utkast_footer__knapp-ikon {
+		margin-bottom: 1px;
+		margin-right: 5px;
+	}
+
+	.utkast-footer__utkast-innhold {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		padding: 1rem;
+	}
+
+	.utkast-footer__dialog-innhold {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		padding: 1rem;
+		border-left: 1px solid @navGra40;
+	}
+
+	// TODO: Cleanup
+	.utkast-innhold {
+		display: flex;
+		justify-content: space-between;
+
+		max-width: 1200px;
+		margin: 0 1rem;
+
+		&__dialog-knapp {
+			margin-left: 2rem;
+		}
+
+		&__dialog-knapp-ikon {
+			width: 36px;
+			height: 36px;
+		}
+
+		&__lagring-tekst {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			color: @navGra80;
+
+			min-width: 150px;
+			margin: 0 1rem;
+		}
+
+		&__knapper-venstre {
+			display: flex;
+			align-items: center;
+		}
+
+		&__knapper-midten {
+			margin: auto;
+			:not(:first-child) {
+				margin-left: 1rem;
+			}
+		}
+
+		&__knapper-hoyre {
+			display: flex;
+			align-items: center;
+		}
+
+		&__ikon {
+			margin-bottom: 1px;
+			margin-right: 5px;
+		}
+
+		&__taover_bilde {
+			width: 80px;
+		}
+	}
+
+	@media (min-width: 1232px) {
+		.aksjoner {
+			margin: 0 auto;
+		}
+	}
+}

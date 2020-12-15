@@ -1,7 +1,7 @@
 import { MalformType } from '../veilarbperson';
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from '../utils';
-import { mapOpplysningerFraBokmalTilBrukersMalform, SkjemaData } from '../../util/skjema-utils';
+import { mapKilderFraBokmalTilBrukersMalform, SkjemaData } from '../../util/skjema-utils';
 import { VEILARBVEDTAKSSTOTTE_API, Vedtak, BeslutterProsessStatus } from './index';
 
 export interface BeslutterprosessStatusData {
@@ -9,7 +9,7 @@ export interface BeslutterprosessStatusData {
 }
 
 export function oppdaterVedtakUtkast(vedtakId: number, malform: MalformType | null, skjema: SkjemaData): AxiosPromise {
-	skjema.opplysninger = mapOpplysningerFraBokmalTilBrukersMalform(skjema.opplysninger, malform);
+	skjema.opplysninger = mapKilderFraBokmalTilBrukersMalform(skjema.opplysninger, malform);
 	return axiosInstance.put(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}`, skjema);
 }
 

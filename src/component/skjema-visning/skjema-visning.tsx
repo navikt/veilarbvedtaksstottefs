@@ -72,7 +72,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 			<Element tag="span" className="skjema-visning__label blokk-xxs">
 				Kilder
 			</Element>
-			<ul className="skjema-visning__opplysninger">
+			<ul className="skjema-visning__kilder">
 				{opplysninger.map((o, idx) => (
 					<li key={idx}>{o}</li>
 				))}

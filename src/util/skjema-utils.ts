@@ -1,10 +1,10 @@
-import { SkjemaFeil } from './type/skjema-feil';
-import { BEGRUNNELSE_MAX_LENGTH } from '../page/utkast/skjema/begrunnelse/begrunnelse';
-import { OrNothing } from './type/ornothing';
-import { Opplysning } from '../page/utkast/skjema/opplysninger/opplysninger';
 import { erStandard, erVarigEllerGradertVarig } from './innsatsgruppe';
-import { MalformData, MalformType } from '../api/veilarbperson';
+import { OrNothing } from './type/ornothing';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../api/veilarbvedtaksstotte';
+import { MalformData, MalformType } from '../api/veilarbperson';
+import { Kilde } from '../page/utkast/skjema-section/kilder/kilder';
+import { SkjemaFeil } from './type/skjema-feil';
+import { BEGRUNNELSE_MAX_LENGTH } from '../page/utkast/skjema-section/begrunnelse/begrunnelse';
 
 export interface SkjemaData {
 	opplysninger: string[] | undefined;
@@ -13,13 +13,13 @@ export interface SkjemaData {
 	begrunnelse: OrNothing<string>;
 }
 
-export const opplysningslisteBokmal = [
+export const kildelisteBokmal = [
 	'Svarene dine fra da du registrerte deg',
 	'CV-en/jobbprofilen din på nav.no',
 	'Svarene dine om behov for veiledning'
 ];
 
-export const opplysningslisteNynorsk = [
+export const kildelisteNynorsk = [
 	'Svara dine frå då du registrerte deg',
 	'CV-en/jobbprofilen din på nav.no',
 	'Svara dine om behov for rettleiing'
@@ -29,43 +29,43 @@ export function hentMalformFraData(malformData: MalformData | null): MalformType
 	return malformData ? malformData.malform : null;
 }
 
-export function mapOpplysningerFraForskjelligMalformTilBokmal(opplysningerListe: string[]): string[] {
-	return opplysningerListe.map(opplysning => {
-		const translationPos = opplysningslisteNynorsk.indexOf(opplysning);
-		return translationPos === -1 ? opplysning : opplysningslisteBokmal[translationPos];
+export function mapKilderFraForskjelligMalformTilBokmal(kildeListe: string[]): string[] {
+	return kildeListe.map(kilde => {
+		const translationPos = kildelisteNynorsk.indexOf(kilde);
+		return translationPos === -1 ? kilde : kildelisteBokmal[translationPos];
 	});
 }
 
-export function mapOpplysningerFraBokmalTilBrukersMalform(
-	opplysningerListe: string[] | undefined,
+export function mapKilderFraBokmalTilBrukersMalform(
+	kildeListe: string[] | undefined,
 	malformType: MalformType | null
 ): string[] {
-	if (!opplysningerListe) return [];
+	if (!kildeListe) return [];
 
 	// Trenger ikke å mappe hvis vi ikke vet malform eller det allerede er på bokmål
-	if (!malformType || malformType === MalformType.NB) return opplysningerListe;
+	if (!malformType || malformType === MalformType.NB) return kildeListe;
 
-	return opplysningerListe.map(opplysning => {
-		const translationPos = opplysningslisteBokmal.indexOf(opplysning);
-		return translationPos === -1 ? opplysning : opplysningslisteNynorsk[translationPos];
+	return kildeListe.map(kilde => {
+		const translationPos = kildelisteBokmal.indexOf(kilde);
+		return translationPos === -1 ? kilde : kildelisteNynorsk[translationPos];
 	});
 }
 
-export function mergeMedDefaultOpplysninger(opplysningListe: string[]): Opplysning[] {
-	const opplysninger = opplysningslisteBokmal.map(opplysningTekst => ({
-		navn: opplysningTekst,
-		erValgt: opplysningListe.includes(opplysningTekst)
+export function mergeMedDefaultKilder(kildeListe: string[]): Kilde[] {
+	const kilder = kildelisteBokmal.map(kildeTekst => ({
+		navn: kildeTekst,
+		erValgt: kildeListe.includes(kildeTekst)
 	}));
 
-	opplysningListe
-		.filter(opplysningTekst => !opplysningslisteBokmal.includes(opplysningTekst))
-		.forEach(opplysningTekst => opplysninger.push({ navn: opplysningTekst, erValgt: true }));
+	kildeListe
+		.filter(kildeTekst => !kildelisteBokmal.includes(kildeTekst))
+		.forEach(kildeTekst => kilder.push({ navn: kildeTekst, erValgt: true }));
 
-	return opplysninger;
+	return kilder;
 }
 
-export function erDefaultOpplysning(opplysning: string) {
-	return opplysningslisteBokmal.some(defaultOpplysning => defaultOpplysning === opplysning);
+export function erDefaultKilde(kilde: string) {
+	return kildelisteBokmal.some(defaultKilde => defaultKilde === kilde);
 }
 
 export function harFeil(skjemaFeil: SkjemaFeil): boolean {
@@ -75,8 +75,8 @@ export function harFeil(skjemaFeil: SkjemaFeil): boolean {
 export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
 	let forsteFeilNavn;
 
-	if (skjemaFeil.opplysninger) {
-		forsteFeilNavn = 'opplysninger';
+	if (skjemaFeil.kilder) {
+		forsteFeilNavn = 'kilder';
 	} else if (skjemaFeil.begrunnelse) {
 		forsteFeilNavn = 'begrunnelse';
 	} else if (skjemaFeil.innsatsgruppe) {
@@ -113,7 +113,7 @@ export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Ved
 	Object.assign(errors, begrunnelsefeil);
 
 	if (!opplysninger || opplysninger.length < 1) {
-		errors.opplysninger = 'Mangler kilder';
+		errors.kilder = 'Mangler kilder';
 	}
 
 	return errors;
