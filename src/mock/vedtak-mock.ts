@@ -37,8 +37,10 @@ export const mockLagUtkast: Mock = {
 	method: 'POST',
 	url: `${VEILARBVEDTAKSSTOTTE_API}/utkast`,
 	handler: async (): Promise<ResponseData> => {
+		const nyId = fattedeVedtak.length > 0 ? fattedeVedtak.sort((fv1, fv2) => fv2.id - fv1.id)[0].id + 1 : 1;
+
 		const nyttUtkast = ({
-			id: fattedeVedtak.length,
+			id: nyId,
 			vedtakStatus: 'UTKAST',
 			sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 			gjeldende: false,
@@ -79,7 +81,7 @@ export const oppdaterVedtakUtkastMockFraSkjema = (skjemaData: SkjemaData) => {
 		vedtakUtkastMock.begrunnelse = skjemaData.begrunnelse;
 		vedtakUtkastMock.hovedmal = skjemaData.hovedmal;
 		vedtakUtkastMock.innsatsgruppe = skjemaData.innsatsgruppe;
-		vedtakUtkastMock.opplysninger = skjemaData.kilder ? skjemaData.kilder : [];
+		vedtakUtkastMock.opplysninger = skjemaData.opplysninger ? skjemaData.opplysninger : [];
 	}
 };
 

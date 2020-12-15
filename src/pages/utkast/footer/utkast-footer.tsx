@@ -8,7 +8,7 @@ import './utkast-footer.less';
 export function UtkastFooter() {
 	const { kilder, hovedmal, innsatsgruppe, begrunnelse } = useSkjemaStore();
 
-	const vedtakskjema = { kilder, begrunnelse, innsatsgruppe, hovedmal };
+	const vedtakskjema = { opplysninger: kilder, begrunnelse, innsatsgruppe, hovedmal };
 
 	return (
 		<Footer className="utkast-footer">

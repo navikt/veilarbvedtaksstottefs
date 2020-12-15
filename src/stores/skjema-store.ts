@@ -21,7 +21,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	const [harForsoktAForhandsvise, setHarForsoktAForhandsvise] = useState<boolean>(false);
 
 	const validerSkjema = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
-		const feil = valider({ kilder, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
+		const feil = valider({ opplysninger: kilder, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
 		setErrors(feil);
 		return feil;
 	};

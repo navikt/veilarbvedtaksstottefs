@@ -81,7 +81,7 @@ export const useFetchArenaVedtak = (fnr: string) =>
 	useFetch<ArenaVedtak[]>(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena?fnr=${fnr}`, { credentials }, { depends: [fnr] });
 
 export const fetchOppdaterVedtakUtkast = (params: OppdaterUtkastPayload): Promise<Response> => {
-	params.skjema.kilder = mapKilderFraBokmalTilBrukersMalform(params.skjema.kilder, params.malform);
+	params.skjema.opplysninger = mapKilderFraBokmalTilBrukersMalform(params.skjema.opplysninger, params.malform);
 	return fetchWithChecks(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${params.vedtakId}`, {
 		method: 'PUT',
 		headers: HEADERS_WITH_JSON_CONTENT,

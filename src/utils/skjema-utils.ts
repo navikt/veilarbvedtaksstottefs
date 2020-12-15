@@ -7,7 +7,7 @@ import { HovedmalType, InnsatsgruppeType, Vedtak } from '../rest/data/vedtak';
 import { erStandard, erVarigEllerGradertVarig } from './innsatsgruppe';
 
 export interface SkjemaData {
-	kilder: string[] | undefined;
+	opplysninger: string[] | undefined;
 	hovedmal: OrNothing<HovedmalType>;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
 	begrunnelse: OrNothing<string>;
@@ -95,7 +95,7 @@ export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
 
 export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil {
 	const errors: SkjemaFeil = {};
-	const { innsatsgruppe, kilder, begrunnelse, hovedmal } = skjema;
+	const { innsatsgruppe, opplysninger, begrunnelse, hovedmal } = skjema;
 
 	if (!innsatsgruppe) {
 		errors.innsatsgruppe = 'Mangler innsatsgruppe';
@@ -112,7 +112,7 @@ export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Ved
 	const begrunnelsefeil = validerBegrunnelseMaxLength(begrunnelse);
 	Object.assign(errors, begrunnelsefeil);
 
-	if (!kilder || kilder.length < 1) {
+	if (!opplysninger || opplysninger.length < 1) {
 		errors.kilder = 'Mangler kilder';
 	}
 
