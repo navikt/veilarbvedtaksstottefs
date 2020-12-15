@@ -10,8 +10,7 @@ import { useSkjemaStore } from '../../store/skjema-store';
 import './mock-panel.less';
 import { Veileder } from '../../api/veilarbveileder';
 import { veiledere } from '../data';
-import { oppdaterVedtakUtkastMockFraSkjema, vedtakUtkastMock } from '../api/veilarbvedtaksstotte/utkast';
-import { updateInnloggetVeilederMock } from '../api/veilarbveileder';
+import { hentUtkast, oppdaterVedtakUtkastMockFraSkjema, updateInnloggetVeilederMock } from '../api-data';
 
 export function MockPanel() {
 	const [skalVise, setSkalVise] = useState(false);
@@ -39,10 +38,10 @@ function InnloggetSom() {
 
 	function change(veileder: Veileder) {
 		oppdaterVedtakUtkastMockFraSkjema(skjemaData);
-		setUtkast(vedtakUtkastMock);
+		setUtkast(hentUtkast());
 		updateInnloggetVeilederMock(veileder);
 		setInnloggetVeileder(veileder);
-		setVeilederTilgang(finnVeilederTilgang(veileder, vedtakUtkastMock));
+		setVeilederTilgang(finnVeilederTilgang(veileder, hentUtkast()));
 	}
 
 	return (
