@@ -67,7 +67,7 @@ function Begrunnelse() {
 				tittelId="begrunnelse-tittel"
 				tipsId="begrunnelse-tips"
 				tipsInnhold={<BegrunnelseTipsInnhold />}
-				tipsAriaLabel="Begrunnelse tips"
+				tipsAriaLabel="Tips for begrunnelse"
 			/>
 			<div className="begrunnelse">
 				<SkjemaGruppe feil={lagSkjemaelementFeilmelding(begrunnelseFeil)} className="begrunnelse__container">

@@ -75,7 +75,7 @@ function Kilder() {
 				tittel="Kilder"
 				tipsId="kilder-tips"
 				tipsInnhold={<KilderTipsInnhold />}
-				tipsAriaLabel="Kilder tips"
+				tipsAriaLabel="Tips for kilder"
 			/>
 
 			<div className="kilder">

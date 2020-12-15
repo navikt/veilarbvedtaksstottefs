@@ -17,6 +17,7 @@ import { OrNothing } from '../../../../utils/types/ornothing';
 import { InnsatsgruppeType } from '../../../../rest/data/vedtak';
 import { ModalType, useModalStore } from '../../../../stores/modal-store';
 import FeltHeader from '../felt-header/felt-header';
+import { InnsatsgruppeTipsInnhold } from './innsatsgruppe-tips-innhold';
 
 function Innsatsgruppe() {
 	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();
@@ -28,7 +29,13 @@ function Innsatsgruppe() {
 
 	return (
 		<div className="innsatsgruppe-felt" id="innsatsgruppe-scroll-to">
-			<FeltHeader tittel="Innsatsgruppe" tittelId="innsatsgruppe-tittel" />
+			<FeltHeader
+				tittel="Innsatsgruppe"
+				tittelId="innsatsgruppe-tittel"
+				tipsId="innsatsgruppe-tips"
+				tipsInnhold={<InnsatsgruppeTipsInnhold />}
+				tipsAriaLabel="Tips for innsatsgruppe"
+			/>
 			<Show if={!harSkrevetBegrunnelse(begrunnelse) && erStandardInnsatsValgt && erGjeldendeInnsatsVarig}>
 				<AlertStripe form="inline" type="advarsel" className="innsatsgruppe__alertstripe">
 					Begrunnelse må i dette tilfellet også fylles ut for standard innsats. Dette er fordi gjeldende
