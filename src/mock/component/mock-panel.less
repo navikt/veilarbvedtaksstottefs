@@ -1,35 +1,26 @@
 .veilarbvedtaksstottefs {
+
   .mock-panel {
     position: absolute;
     top: 0;
     z-index: 3;
     margin-top: 50px;
+    right: 0;
+  }
+
+  .mock-panel__apne-knapp {
+    cursor: pointer;
+    color: white;
+    padding: 0.6rem 1rem;
+    width: 100px;
+    background-color: #FF9800;
+
+    border-radius: 30px;
+    border: none;
+  }
+
+  .mock-panel__innhold {
     background-color: white;
-
-    .apne-lukk-knapp {
-      p {
-        cursor: pointer;
-        position: absolute;
-        right: 516px;
-        padding: 0.6rem 1rem;
-        width: 100px;
-        color: white;
-        background-color: #FF9800;
-        border-radius: 30px;
-      }
-    }
-
-    &--skjul {
-      right: -530px;
-    }
-
-    &--vis {
-      right: 0;
-
-      .apne-lukk-knapp {
-        display: none;
-      }
-    }
 
     legend {
       padding: 0.5rem 2rem;

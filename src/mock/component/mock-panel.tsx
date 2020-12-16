@@ -7,24 +7,34 @@ import { useTilgangStore } from '../../store/tilgang-store';
 import { finnVeilederTilgang } from '../../util/tilgang';
 import Lenke from 'nav-frontend-lenker';
 import { useSkjemaStore } from '../../store/skjema-store';
+import Show from '../../component/show';
 import './mock-panel.less';
 import { Veileder } from '../../api/veilarbveileder';
-import { veiledere } from '../data';
 import { hentUtkast, oppdaterVedtakUtkastMockFraSkjema, updateInnloggetVeilederMock } from '../api-data';
+import { veiledere } from '../data';
 
 export function MockPanel() {
-	const [skalVise, setSkalVise] = useState(false);
-	const visSkjul = skalVise ? 'vis' : 'skjul';
-	const toggle = () => setSkalVise(!skalVise);
+	const [visPanel, setVisPanel] = useState(false);
+
+	const toggle = () => setVisPanel(prevVisPanel => !prevVisPanel);
 
 	return (
-		<div className={`mock-panel mock-panel--${visSkjul}`}>
-			<button className="apne-lukk-knapp" onClick={toggle}>
-				<Normaltekst>Vis valg</Normaltekst>
-			</button>
-			<Lukknapp onClick={toggle} />
-			<InnloggetSom />
-			<BeslutteroversiktLenke />
+		<div className="mock-panel">
+			<Show if={!visPanel}>
+				<button className="mock-panel__apne-knapp" onClick={toggle}>
+					Vis valg
+				</button>
+			</Show>
+
+			<Show if={visPanel}>
+				<div className="mock-panel__innhold">
+					<Lukknapp onClick={toggle} />
+					<InnloggetSom />
+					<Lenke href={'https://navikt.github.io/beslutteroversikt/'} target="_blank">
+						Til beslutteroversikt
+					</Lenke>
+				</div>
+			</Show>
 		</div>
 	);
 }
@@ -36,7 +46,7 @@ function InnloggetSom() {
 
 	const skjemaData = { innsatsgruppe, hovedmal, begrunnelse, opplysninger: kilder };
 
-	function change(veileder: Veileder) {
+	function byttInnloggetVeileder(veileder: Veileder) {
 		oppdaterVedtakUtkastMockFraSkjema(skjemaData);
 		setUtkast(hentUtkast());
 		updateInnloggetVeilederMock(veileder);
@@ -49,28 +59,16 @@ function InnloggetSom() {
 			<legend>
 				<Normaltekst>Innlogget som</Normaltekst>
 			</legend>
-			{veiledere.map((veileder, idx) => (
+			{veiledere.map(veileder => (
 				<RadioPanel
-					onChange={() => {
-						change(veileder);
-					}}
-					key={idx}
+					onChange={() => byttInnloggetVeileder(veileder)}
+					key={veileder.ident}
 					name={veileder.navn}
 					label={veileder.navn}
 					value={veileder.navn}
 					checked={veileder.ident === innloggetVeileder.ident}
 				/>
 			))}
-		</fieldset>
-	);
-}
-
-function BeslutteroversiktLenke() {
-	return (
-		<fieldset>
-			<Lenke href={'https://navikt.github.io/beslutteroversikt/'} target="_blank">
-				Til beslutteroversikt
-			</Lenke>
 		</fieldset>
 	);
 }
