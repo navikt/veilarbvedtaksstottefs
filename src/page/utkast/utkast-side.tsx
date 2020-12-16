@@ -41,9 +41,7 @@ export function UtkastSide() {
 					<DialogSectionInnhold />
 				</div>
 			</div>
-			<div className="utkast-side__footer">
-				<UtkastFooter />
-			</div>
+			<UtkastFooter />
 		</div>
 	);
 }
