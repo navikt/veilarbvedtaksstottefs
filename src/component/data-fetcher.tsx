@@ -77,7 +77,6 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			fattedeVedtakFetcher,
 			oppfolgingFetcher,
 			malformFetcher,
-			utkastFetcher,
 			innloggetVeilederFetcher,
 			arenaVedtakFetcher
 		) ||
