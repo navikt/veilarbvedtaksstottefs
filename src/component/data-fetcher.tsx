@@ -33,22 +33,25 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	const arenaVedtakFetcher = useAxiosFetcher(hentArenaVedtak);
 
 	useEffect(() => {
-		fattedeVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setFattedeVedtak));
+		fattedeVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setFattedeVedtak)).catch();
 
-		oppfolgingFetcher.fetch(props.fnr).then(ifResponseHasData(setOppfolgingData));
+		oppfolgingFetcher.fetch(props.fnr).then(ifResponseHasData(setOppfolgingData)).catch();
 
-		malformFetcher.fetch(props.fnr).then(ifResponseHasData(setMalform));
+		malformFetcher.fetch(props.fnr).then(ifResponseHasData(setMalform)).catch();
 
-		utkastFetcher.fetch(props.fnr).then(
-			ifResponseHasData(utkast => {
-				setUtkast(utkast);
-				initSkjema(utkast);
-			})
-		);
+		utkastFetcher
+			.fetch(props.fnr)
+			.then(
+				ifResponseHasData(utkast => {
+					setUtkast(utkast);
+					initSkjema(utkast);
+				})
+			)
+			.catch();
 
-		innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder));
+		innloggetVeilederFetcher.fetch().then(ifResponseHasData(setInnloggetVeileder)).catch();
 
-		arenaVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setArenaVedtak));
+		arenaVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setArenaVedtak)).catch();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

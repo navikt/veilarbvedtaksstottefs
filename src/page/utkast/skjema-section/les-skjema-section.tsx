@@ -37,16 +37,18 @@ export function LesSkjemaSection() {
 		 */
 		if (utkast && !features[SKRU_AV_POLLING_UTKAST] && utkast.beslutterProsessStatus != null && erBeslutter) {
 			refreshUtkastIntervalRef.current = window.setInterval(() => {
-				fetchUtkast(fnr).then(response => {
-					if (response.data) {
-						if (erVedtakSkjemafeltEndret(utkast, response.data)) {
-							showVarsel(VarselType.UTKAST_OPPDATERT);
+				fetchUtkast(fnr)
+					.then(response => {
+						if (response.data) {
+							if (erVedtakSkjemafeltEndret(utkast, response.data)) {
+								showVarsel(VarselType.UTKAST_OPPDATERT);
+							}
+							varsleBeslutterProsessStatusEndring(response.data.beslutterProsessStatus);
+							setUtkast(response.data);
+							initSkjema(response.data);
 						}
-						varsleBeslutterProsessStatusEndring(response.data.beslutterProsessStatus);
-						setUtkast(response.data);
-						initSkjema(response.data);
-					}
-				});
+					})
+					.catch();
 			}, TEN_SECONDS);
 		}
 
@@ -81,12 +83,14 @@ export function LesSkjemaSection() {
 
 	// Utkast kan bli satt til null hvis man er beslutter og veileder fatter et vedtak
 	if (utkast == null) {
-		hentFattedeVedtak(fnr).then(response => {
-			if (response.data) {
-				setFattedeVedtak(response.data);
-			}
-			changeView(ViewType.HOVEDSIDE);
-		});
+		hentFattedeVedtak(fnr)
+			.then(response => {
+				if (response.data) {
+					setFattedeVedtak(response.data);
+				}
+				changeView(ViewType.HOVEDSIDE);
+			})
+			.catch();
 		return null;
 	}
 

@@ -52,12 +52,16 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 		}
 
 		setLaster(true);
-		sendDataTilBackend().then(() => changeView(ViewType.FORHANDSVISNING));
+		sendDataTilBackend()
+			.then(() => changeView(ViewType.FORHANDSVISNING))
+			.catch();
 	}
 
 	function handleOnTilbakeClicked() {
 		setLaster(true);
-		sendDataTilBackend().then(() => changeView(ViewType.HOVEDSIDE));
+		sendDataTilBackend()
+			.then(() => changeView(ViewType.HOVEDSIDE))
+			.catch();
 	}
 
 	return (

@@ -14,7 +14,7 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 	const { features, setFeatures } = useDataStore();
 
 	useEffect(() => {
-		featureFetcher.fetch().then(ifResponseHasData(setFeatures));
+		featureFetcher.fetch().then(ifResponseHasData(setFeatures)).catch();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
