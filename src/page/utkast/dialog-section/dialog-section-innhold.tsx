@@ -40,6 +40,7 @@ export function DialogSectionInnhold() {
 					setMeldinger(response.data);
 				}
 			})
+			.catch()
 			.finally(() => {
 				setHarLastetMeldinger(true);
 			});

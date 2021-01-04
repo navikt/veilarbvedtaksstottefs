@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren, useLayoutEffect } from 'react';
 import { Prelansering } from '../../page/prelansering/prelansering';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
@@ -13,9 +13,9 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 
 	const { features, setFeatures } = useDataStore();
 
-	useEffect(() => {
-		featureFetcher.fetch().then(ifResponseHasData(setFeatures));
-
+	// Siden loading = false før vi kaller fetch så vil children bli rendret et par ms med useEffect()
+	useLayoutEffect(() => {
+		featureFetcher.fetch().then(ifResponseHasData(setFeatures)).catch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
