@@ -3,7 +3,7 @@ import cls from 'classnames';
 import { Element, EtikettLiten } from 'nav-frontend-typografi';
 import './dialog-melding.less';
 import { formatDayMonthTime } from '../../../../../util/date-utils';
-import { purfiyUnsafeHtml, replaceTextUrlsWithTags } from '../../../../../util/html-utils';
+import { purfiyUnsafeHtml, replaceNewLineWithBr, replaceTextUrlsWithTags } from '../../../../../util/html-utils';
 import Show from '../../../../../component/show';
 
 interface DialogMeldingProps {
@@ -16,6 +16,15 @@ interface DialogMeldingProps {
 const DialogMeldingBar = (props: { className: string }) => {
 	return <div className={cls('dialog-melding-bar', props.className)} />;
 };
+
+function formatAndCleanMessage(message: string): string {
+	let formattedMessage = message;
+
+	formattedMessage = replaceTextUrlsWithTags(formattedMessage);
+	formattedMessage = replaceNewLineWithBr(formattedMessage);
+
+	return purfiyUnsafeHtml(formattedMessage);
+}
 
 export const DialogMelding = (props: DialogMeldingProps) => {
 	const { tekst, dato, skrevetAvNavn, skrevetAvMeg } = props;
@@ -42,7 +51,7 @@ export const DialogMelding = (props: DialogMeldingProps) => {
 				<DialogMeldingBar className={cls(meldingBarClasses)} />
 				<div
 					className="typo-normal dialog-melding__tekst"
-					dangerouslySetInnerHTML={{ __html: purfiyUnsafeHtml(replaceTextUrlsWithTags(tekst)) }}
+					dangerouslySetInnerHTML={{ __html: formatAndCleanMessage(tekst) }}
 				/>
 			</div>
 		</div>
