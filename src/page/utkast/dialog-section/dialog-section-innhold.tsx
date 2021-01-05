@@ -27,6 +27,9 @@ export function DialogSectionInnhold() {
 	const [senderMelding, setSenderMelding] = useState(false);
 	const skrivefeltRef = useRef<HTMLInputElement | null>(null);
 
+	// Hvis utkastet har beslutter så henter vi meldinger periodisk for å simulere real-time kommunikasjon
+	const skalPolleMeldinger = !!utkast?.beslutterIdent;
+
 	const kanSendeMelding = !senderMelding && melding.trim().length > 0;
 
 	const sorterteMeldinger = useMemo(() => {
@@ -53,17 +56,21 @@ export function DialogSectionInnhold() {
 		}
 	}
 
+	useEffect(refreshMeldinger, []);
+
 	useEffect(() => {
-		refreshMeldinger();
+		if (skalPolleMeldinger) {
+			refreshMeldinger();
 
-		// Start polling of new dialogs
-		if (!features[SKRU_AV_POLLING_DIALOG] && intervalRef.current === undefined) {
-			intervalRef.current = window.setInterval(refreshMeldinger, TEN_SECONDS);
+			// Start polling of new dialogs
+			if (!features[SKRU_AV_POLLING_DIALOG] && intervalRef.current === undefined) {
+				intervalRef.current = window.setInterval(refreshMeldinger, TEN_SECONDS);
+			}
+
+			return clearAutoRefresh;
 		}
-
-		return clearAutoRefresh;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [skalPolleMeldinger]);
 
 	function oppdaterMelding(tekst: string) {
 		setMelding(tekst);
