@@ -78,6 +78,7 @@ export function DialogSectionInnhold() {
 			.then(response => {
 				if (response.data) {
 					setMeldinger(response.data);
+					window.scrollTo(0, document.body.scrollHeight); // Scroll nederst til
 				}
 				oppdaterMelding('');
 				if (skrivefeltRef.current) {
@@ -98,7 +99,7 @@ export function DialogSectionInnhold() {
 
 	return (
 		<div className="dialog-section-innhold">
-			<div>
+			<div className="dialog-section-innhold__meldinger">
 				{harLastetMeldinger ? (
 					<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
 				) : (
@@ -120,6 +121,7 @@ export function DialogSectionInnhold() {
 						onClick={sendMelding}
 						spinner={senderMelding}
 						disabled={!kanSendeMelding || senderMelding}
+						className="dialog-section-innhold__send-knapp"
 					>
 						Send
 					</Hovedknapp>
