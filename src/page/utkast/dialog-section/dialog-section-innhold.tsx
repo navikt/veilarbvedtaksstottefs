@@ -115,7 +115,7 @@ export function DialogSectionInnhold() {
 					</div>
 				)}
 			</div>
-			<div className="blokk-s">
+			<div>
 				<Textarea
 					onChange={handleOnMeldingChanged}
 					value={melding}

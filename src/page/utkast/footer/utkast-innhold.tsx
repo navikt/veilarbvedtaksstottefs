@@ -68,7 +68,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 		<div className="utkast-footer__utkast-innhold">
 			<Tilbakeknapp htmlType="button" onClick={handleOnTilbakeClicked} disabled={laster} />
 
-			<div className="utkast-footer__knapper-hoyre utkast-footer--innhold-sidestilt">
+			<div className="utkast-footer--innhold-sidestilt">
 				<Show if={laster}>
 					<NavFrontendSpinner className="utkast-footer__spinner" type="XS" />
 				</Show>
