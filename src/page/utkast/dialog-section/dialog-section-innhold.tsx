@@ -108,7 +108,13 @@ export function DialogSectionInnhold() {
 				)}
 			</div>
 			<div className="blokk-s">
-				<Textarea onChange={handleOnMeldingChanged} value={melding} maxLength={MESSAGE_MAX_LENGTH} />
+				<Textarea
+					onChange={handleOnMeldingChanged}
+					value={melding}
+					maxLength={MESSAGE_MAX_LENGTH}
+					autoCorrect="on"
+					className="dialog-section-innhold__skrivefelt skjemaelement__input textarea--medMeta"
+				/>
 				<div className="dialog-section-innhold__send">
 					<Hovedknapp
 						onClick={sendMelding}

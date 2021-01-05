@@ -39,6 +39,11 @@
 		background-color: white;
 		flex-grow: 1;
 
+		// Fikser bug i <Textarea/> som gjør at høyden øker forbi max-height
+		.textarea__container {
+			position: unset;
+		}
+
 		&__send {
 			display: flex;
 			justify-content: flex-end;
@@ -47,6 +52,11 @@
 
 		&__spinner {
 			margin: auto auto;
+		}
+
+		&__skrivefelt {
+			max-height: 300px;
+			overflow-y: auto;
 		}
 	}
 
