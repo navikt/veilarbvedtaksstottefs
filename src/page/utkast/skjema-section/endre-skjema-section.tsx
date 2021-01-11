@@ -155,9 +155,9 @@ export function EndreSkjemaSection() {
 	return (
 		<form className="skjema-grid">
 			<Kilder />
+			<Begrunnelse />
 			<Innsatsgruppe />
 			<Hovedmal />
-			<Begrunnelse />
 		</form>
 	);
 }

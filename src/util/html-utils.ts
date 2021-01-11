@@ -6,7 +6,11 @@ const urlRegex = new RegExp(
 );
 
 export function purfiyUnsafeHtml(dirtyHtml: string): string {
-	return DOMPurify.sanitize(dirtyHtml, { ALLOWED_TAGS: ['a'], ALLOWED_ATTR: ['target', 'href'] });
+	return DOMPurify.sanitize(dirtyHtml, { ALLOWED_TAGS: ['a', 'br'], ALLOWED_ATTR: ['target', 'href'] });
+}
+
+export function replaceNewLineWithBr(tekst: string): string {
+	return tekst.replace(/\n/g, '</br>');
 }
 
 export function replaceTextUrlsWithTags(dialogTekst: string): string {

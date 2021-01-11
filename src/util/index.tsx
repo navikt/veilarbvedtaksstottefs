@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import { OrNothing } from './type/ornothing';
 import { BeslutterProsessStatus, Vedtak } from '../api/veilarbvedtaksstotte';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
+
+export const makeAbsoluteHeightStyle = (height: number): Partial<CSSProperties> => {
+	return { height: height + 'px', minHeight: height + 'px', maxHeight: height + 'px' };
+};
+
+export const scrollToBottom = (elem: Element | null) => {
+	if (elem) {
+		elem.scrollTop = elem.scrollHeight;
+	}
+};
 
 export const lagSkjemaelementFeilmelding = (muligFeil: string | undefined): React.ReactNode => {
 	return muligFeil ? <SkjemaelementFeilmelding>{muligFeil}</SkjemaelementFeilmelding> : null;

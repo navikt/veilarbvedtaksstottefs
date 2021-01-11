@@ -6,6 +6,7 @@ import { ModalStoreProvider } from './modal-store';
 import { SkjemaStoreProvider } from './skjema-store';
 import { TilgangStoreProvider } from './tilgang-store';
 import { VarselStoreProvider } from './varsel-store';
+import { DialogSectionHeightProvider } from './dialog-section-height-store';
 
 interface StoreProviderProps {
 	fnr: string;
@@ -21,7 +22,9 @@ const StoreProvider = (props: StoreProviderProps) => {
 					<ViewStoreProvider>
 						<ModalStoreProvider>
 							<VarselStoreProvider>
-								<SkjemaStoreProvider>{props.children}</SkjemaStoreProvider>
+								<DialogSectionHeightProvider>
+									<SkjemaStoreProvider>{props.children}</SkjemaStoreProvider>
+								</DialogSectionHeightProvider>
 							</VarselStoreProvider>
 						</ModalStoreProvider>
 					</ViewStoreProvider>

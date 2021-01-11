@@ -9,11 +9,38 @@ import './utkast-side.less';
 import { useDataStore } from '../../store/data-store';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { useSkjemaStore } from '../../store/skjema-store';
+import { useEventListener } from '../../util/hooks';
+import { useDialogSectionHeight } from '../../store/dialog-section-height-store';
+import { makeAbsoluteHeightStyle } from '../../util';
+
+const FOOTER_HEIGHT = 72;
+
+function calculateDialogSectionHeight(): number | undefined {
+	const elem = document.getElementsByClassName('utkast-side__dialog-section')[0];
+	if (elem) {
+		const top = elem.getBoundingClientRect().top;
+		const height = document.body.clientHeight;
+
+		return height - top - FOOTER_HEIGHT;
+	}
+
+	return undefined;
+}
 
 export function UtkastSide() {
 	const { utkast } = useDataStore();
 	const { sistOppdatert, lagringStatus, setHarForsoktAForhandsvise } = useSkjemaStore();
+	const { dialogSectionHeight, setDialogSectionHeight } = useDialogSectionHeight();
 	const { erAnsvarligVeileder } = useTilgangStore();
+
+	const dialogSectionStyle = dialogSectionHeight ? makeAbsoluteHeightStyle(dialogSectionHeight) : undefined;
+
+	useEventListener('scroll', () => setDialogSectionHeight(calculateDialogSectionHeight()), []);
+
+	useEffect(() => {
+		setDialogSectionHeight(calculateDialogSectionHeight());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		// Nullstill forsøk på forhåndsvisning hvis man har vært inne på utkastet og forhåndsvist før
@@ -36,14 +63,14 @@ export function UtkastSide() {
 					/>
 					{utkastSkjema}
 				</div>
-				<div className="utkast-side__dialog-section">
-					<DialogSectionHeader beslutterNavn={utkast?.beslutterNavn} />
-					<DialogSectionInnhold />
+				<div style={dialogSectionStyle} className="utkast-side__dialog-section">
+					<div className="utkast-side__dialog-section-innhold">
+						<DialogSectionHeader beslutterNavn={utkast?.beslutterNavn} />
+						<DialogSectionInnhold />
+					</div>
 				</div>
 			</div>
-			<div className="utkast-side__footer">
-				<UtkastFooter />
-			</div>
+			<UtkastFooter />
 		</div>
 	);
 }

@@ -1,15 +1,18 @@
 .veilarbvedtaksstottefs {
 
 	.melding-liste {
-		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		margin-top: auto;
 
 		> .melding, .melding-wrapper {
-			margin-bottom: 1rem;
+			margin-bottom: 1.25rem;
 		}
 	}
 
-	.melding-liste:first-child {
-		margin-top: auto;
+	.melding-liste > *:last-child {
+		margin-bottom: 0;
 	}
 
 	.melding-wrapper {
