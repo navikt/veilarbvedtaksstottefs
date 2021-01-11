@@ -12,15 +12,16 @@ function calculateScrollBarWidth(): number {
 	return document.body.offsetWidth - document.body.clientWidth;
 }
 
-function checkIsMaxWidthOrLess(): boolean {
-	return document.body.clientWidth <= 1920;
+function checkIsMaxWidthOrLess(isShowingDialog: boolean): boolean {
+	const maxWidth = isShowingDialog ? 1920 : 1200;
+	return document.body.clientWidth <= maxWidth;
 }
 
 export function UtkastFooter() {
 	const { showSection } = useDialogSection();
 	const { kilder, hovedmal, innsatsgruppe, begrunnelse } = useSkjemaStore();
 
-	const [isMaxWidthOrLess, setIsMaxWidthOrLess] = useState(checkIsMaxWidthOrLess);
+	const [isMaxWidthOrLess, setIsMaxWidthOrLess] = useState(checkIsMaxWidthOrLess(showSection));
 	const [scrollBarWidth, setScrollBarWidth] = useState(calculateScrollBarWidth());
 
 	const footerInnholdClassName = showSection ? 'utkast-footer__innhold--dialog' : 'utkast-footer__innhold--no-dialog';
@@ -29,8 +30,8 @@ export function UtkastFooter() {
 
 	const footerStyle = isMaxWidthOrLess ? { marginRight: `${scrollBarWidth}px` } : undefined;
 
-	useEventListener('scroll', () => setScrollBarWidth(calculateScrollBarWidth()));
-	useEventListener('resize', () => setIsMaxWidthOrLess(checkIsMaxWidthOrLess()));
+	useEventListener('scroll', () => setScrollBarWidth(calculateScrollBarWidth()), [showSection]);
+	useEventListener('resize', () => setIsMaxWidthOrLess(checkIsMaxWidthOrLess(showSection)), [showSection]);
 
 	return (
 		<Footer className="utkast-footer">
