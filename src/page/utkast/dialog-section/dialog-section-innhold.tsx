@@ -10,7 +10,7 @@ import { hentId, makeAbsoluteHeightStyle, scrollToBottom } from '../../../util';
 import { SKRU_AV_POLLING_DIALOG } from '../../../api/veilarbpersonflatefs';
 import { MeldingListe } from './melding-liste/melding-liste';
 import Spinner from '../../../component/spinner/spinner';
-import { useDialogSectionHeight } from '../../../store/dialog-section-height-store';
+import { useDialogSection } from '../../../store/dialog-section-store';
 
 let midlertidigMelding = '';
 
@@ -20,7 +20,7 @@ const DIALOG_SECTION_HEADER_HEIGHT = 64;
 export const MEDLINGER_ID = 'veilarbvedtaksstottefs-melding-liste';
 
 export function DialogSectionInnhold() {
-	const { dialogSectionHeight } = useDialogSectionHeight();
+	const { sectionHeight } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { meldinger, setMeldinger, innloggetVeileder, utkast, features } = useDataStore();
 
@@ -31,8 +31,8 @@ export function DialogSectionInnhold() {
 	const [senderMelding, setSenderMelding] = useState(false);
 	const skrivefeltRef = useRef<HTMLInputElement | null>(null);
 
-	const innholdStyle = dialogSectionHeight
-		? makeAbsoluteHeightStyle(dialogSectionHeight - DIALOG_SECTION_HEADER_HEIGHT)
+	const innholdStyle = sectionHeight
+		? makeAbsoluteHeightStyle(sectionHeight - DIALOG_SECTION_HEADER_HEIGHT)
 		: undefined;
 
 	// Hvis utkastet har beslutter så henter vi meldinger periodisk for å simulere real-time kommunikasjon

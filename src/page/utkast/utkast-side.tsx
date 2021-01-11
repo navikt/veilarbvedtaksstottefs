@@ -10,7 +10,7 @@ import { useDataStore } from '../../store/data-store';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { useSkjemaStore } from '../../store/skjema-store';
 import { useEventListener } from '../../util/hooks';
-import { useDialogSectionHeight } from '../../store/dialog-section-height-store';
+import { useDialogSection } from '../../store/dialog-section-store';
 import { makeAbsoluteHeightStyle } from '../../util';
 
 const FOOTER_HEIGHT = 72;
@@ -30,15 +30,15 @@ function calculateDialogSectionHeight(): number | undefined {
 export function UtkastSide() {
 	const { utkast } = useDataStore();
 	const { sistOppdatert, lagringStatus, setHarForsoktAForhandsvise } = useSkjemaStore();
-	const { dialogSectionHeight, setDialogSectionHeight } = useDialogSectionHeight();
+	const { sectionHeight, setSectionHeight } = useDialogSection();
 	const { erAnsvarligVeileder } = useTilgangStore();
 
-	const dialogSectionStyle = dialogSectionHeight ? makeAbsoluteHeightStyle(dialogSectionHeight) : undefined;
+	const dialogSectionStyle = sectionHeight ? makeAbsoluteHeightStyle(sectionHeight) : undefined;
 
-	useEventListener('scroll', () => setDialogSectionHeight(calculateDialogSectionHeight()), []);
+	useEventListener('scroll', () => setSectionHeight(calculateDialogSectionHeight()), []);
 
 	useEffect(() => {
-		setDialogSectionHeight(calculateDialogSectionHeight());
+		setSectionHeight(calculateDialogSectionHeight());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
