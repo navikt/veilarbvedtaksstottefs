@@ -6,17 +6,21 @@ import { hentMeldinger, sendDialog } from '../../../api/veilarbvedtaksstotte/mel
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { sortDatesAsc } from '../../../util/date-utils';
-import { hentId } from '../../../util';
+import { hentId, makeAbsoluteHeightStyle, scrollToBottom } from '../../../util';
 import { SKRU_AV_POLLING_DIALOG } from '../../../api/veilarbpersonflatefs';
 import { MeldingListe } from './melding-liste/melding-liste';
 import Spinner from '../../../component/spinner/spinner';
+import { useDialogSectionHeight } from '../../../store/dialog-section-height-store';
 
 let midlertidigMelding = '';
 
 const TEN_SECONDS = 10000;
 const MESSAGE_MAX_LENGTH = 1000;
+const DIALOG_SECTION_HEADER_HEIGHT = 64;
+export const MEDLINGER_ID = 'veilarbvedtaksstottefs-melding-liste';
 
 export function DialogSectionInnhold() {
+	const { dialogSectionHeight } = useDialogSectionHeight();
 	const { showModal } = useModalStore();
 	const { meldinger, setMeldinger, innloggetVeileder, utkast, features } = useDataStore();
 
@@ -26,6 +30,10 @@ export function DialogSectionInnhold() {
 	const [melding, setMelding] = useState(midlertidigMelding);
 	const [senderMelding, setSenderMelding] = useState(false);
 	const skrivefeltRef = useRef<HTMLInputElement | null>(null);
+
+	const innholdStyle = dialogSectionHeight
+		? makeAbsoluteHeightStyle(dialogSectionHeight - DIALOG_SECTION_HEADER_HEIGHT)
+		: undefined;
 
 	// Hvis utkastet har beslutter så henter vi meldinger periodisk for å simulere real-time kommunikasjon
 	const skalPolleMeldinger = !!utkast?.beslutterIdent;
@@ -56,6 +64,11 @@ export function DialogSectionInnhold() {
 		}
 	}
 
+	useEffect(() => {
+		const meldingListeElem = document.getElementById(MEDLINGER_ID);
+		scrollToBottom(meldingListeElem);
+	}, [meldinger]);
+
 	useEffect(refreshMeldinger, []);
 
 	useEffect(() => {
@@ -85,7 +98,9 @@ export function DialogSectionInnhold() {
 			.then(response => {
 				if (response.data) {
 					setMeldinger(response.data);
-					window.scrollTo(0, document.body.scrollHeight); // Scroll nederst til
+
+					const meldingListeElem = document.getElementById(MEDLINGER_ID);
+					scrollToBottom(meldingListeElem);
 				}
 				oppdaterMelding('');
 				if (skrivefeltRef.current) {
@@ -105,8 +120,8 @@ export function DialogSectionInnhold() {
 	}
 
 	return (
-		<div className="dialog-section-innhold">
-			<div className="dialog-section-innhold__meldinger">
+		<div style={innholdStyle} className="dialog-section-innhold">
+			<div className="dialog-section-innhold__meldinger" id={MEDLINGER_ID}>
 				{harLastetMeldinger ? (
 					<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
 				) : (

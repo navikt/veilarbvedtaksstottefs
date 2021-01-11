@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import cls from 'classnames';
 import { DialogMelding } from './dialog-melding/dialog-melding';
 import { SystemMelding } from './system-melding/system-melding';
@@ -12,7 +12,6 @@ import { MeldingType } from '../../../../util/type/melding-type';
 interface MeldingListeProps {
 	meldinger: (DialogMeldingData | SystemMeldingData)[];
 	innloggetVeilederIdent: string;
-	className?: string;
 }
 
 function mapTilDialogMeldingView(melding: DialogMeldingData, key: number, innloggetVeilederIdent: string) {
@@ -44,18 +43,10 @@ function mapTilSystemMeldingView(melding: SystemMeldingData, key: number) {
 }
 
 export const MeldingListe = (props: MeldingListeProps) => {
-	const { innloggetVeilederIdent, meldinger, className } = props;
-
-	useEffect(() => {
-		const meldingListeElem = document.querySelector('#veilarbvedtaksstottefs-melding-liste');
-
-		if (meldingListeElem) {
-			meldingListeElem.scrollTop = meldingListeElem.scrollHeight;
-		}
-	}, [meldinger]);
+	const { innloggetVeilederIdent, meldinger } = props;
 
 	return (
-		<div aria-live="polite" className={cls('melding-liste', className)} id="veilarbvedtaksstottefs-melding-liste">
+		<div aria-live="polite" className="melding-liste">
 			{meldinger.map((melding, idx) => {
 				return melding.type === MeldingType.DIALOG_MELDING
 					? mapTilDialogMeldingView(melding as DialogMeldingData, idx, innloggetVeilederIdent)
