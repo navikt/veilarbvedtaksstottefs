@@ -19,7 +19,7 @@ const MESSAGE_MAX_LENGTH = 1000;
 const DIALOG_SECTION_HEADER_HEIGHT = 64;
 export const MEDLINGER_ID = 'veilarbvedtaksstottefs-melding-liste';
 
-export function DialogSectionInnhold() {
+export function DialogSection() {
 	const { sectionHeight } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { meldinger, setMeldinger, innloggetVeileder, utkast, features } = useDataStore();

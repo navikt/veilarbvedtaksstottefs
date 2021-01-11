@@ -9,6 +9,7 @@ interface UtkastStatusMeldingProps {
 	utkast: Vedtak;
 	skjemaInnsatsgruppe: OrNothing<InnsatsgruppeType>;
 	veilederTilgang: VeilederTilgang;
+	minified?: boolean;
 }
 
 function utledStatusVerdier(props: UtkastStatusMeldingProps): { type: AlertStripeType; tekst: string } | null {
@@ -69,7 +70,7 @@ export function UtkastStatusMelding(props: UtkastStatusMeldingProps) {
 
 	return (
 		<AlertStripe type={alertStripeVerdier.type} form="inline">
-			{alertStripeVerdier.tekst}
+			{props.minified ? '' : alertStripeVerdier.tekst}
 		</AlertStripe>
 	);
 }

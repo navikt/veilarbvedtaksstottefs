@@ -24,6 +24,7 @@ import {
 } from '../../../api/veilarbvedtaksstotte/beslutter';
 import { VeilederTilgang } from '../../../util/tilgang';
 import Show from '../../../component/show';
+import { useDialogSection } from '../../../store/dialog-section-store';
 
 interface DialogFooterInnholdProps {
 	vedtakskjema: SkjemaData;
@@ -45,6 +46,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 		setUtkastBeslutter,
 		setBeslutterProsessStatus
 	} = useDataStore();
+	const { showSection } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe } = useSkjemaStore();
 	const { id: utkastId, beslutterNavn, beslutterProsessStatus } = utkast as Vedtak;
@@ -135,50 +137,58 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 					utkast={utkast!}
 					veilederTilgang={veilederTilgang}
 					skjemaInnsatsgruppe={innsatsgruppe}
+					minified={!showSection}
 				/>
 			</div>
 
-			<div className="utkast-footer--innhold-sidestilt">
-				<Show if={visStartBeslutterProsess}>
-					<Hovedknapp
-						disabled={laster}
-						mini={true}
-						htmlType="button"
-						onClick={handleOnStartBeslutterProsessClicked}
-					>
-						Start beslutterprosess
-					</Hovedknapp>
-				</Show>
+			<Show if={showSection}>
+				<div className="utkast-footer--innhold-sidestilt">
+					<Show if={visStartBeslutterProsess}>
+						<Hovedknapp
+							disabled={laster}
+							mini={true}
+							htmlType="button"
+							onClick={handleOnStartBeslutterProsessClicked}
+						>
+							Start beslutterprosess
+						</Hovedknapp>
+					</Show>
 
-				<Show if={visBliBeslutter}>
-					<Hovedknapp mini={true} htmlType="button" onClick={handleOnBliBeslutterClicked} disabled={laster}>
-						Bli beslutter
-					</Hovedknapp>
-				</Show>
+					<Show if={visBliBeslutter}>
+						<Hovedknapp
+							mini={true}
+							htmlType="button"
+							onClick={handleOnBliBeslutterClicked}
+							disabled={laster}
+						>
+							Bli beslutter
+						</Hovedknapp>
+					</Show>
 
-				<Show if={visSendTilVeileder}>
-					<Hovedknapp mini={true} htmlType="button" onClick={handleOnSendTilClicked} disabled={laster}>
-						Send til veileder
-					</Hovedknapp>
-				</Show>
+					<Show if={visSendTilVeileder}>
+						<Hovedknapp mini={true} htmlType="button" onClick={handleOnSendTilClicked} disabled={laster}>
+							Send til veileder
+						</Hovedknapp>
+					</Show>
 
-				<Show if={visSendTilBeslutter}>
-					<Hovedknapp mini={true} htmlType="button" onClick={handleOnSendTilClicked} disabled={laster}>
-						Send til beslutter
-					</Hovedknapp>
-				</Show>
+					<Show if={visSendTilBeslutter}>
+						<Hovedknapp mini={true} htmlType="button" onClick={handleOnSendTilClicked} disabled={laster}>
+							Send til beslutter
+						</Hovedknapp>
+					</Show>
 
-				<Show if={visGodkjennUtkast}>
-					<Flatknapp
-						className="utkast-footer__godkjenn-knapp"
-						mini={true}
-						htmlType="button"
-						onClick={handleOnGodkjennClicked}
-					>
-						Godkjenn
-					</Flatknapp>
-				</Show>
-			</div>
+					<Show if={visGodkjennUtkast}>
+						<Flatknapp
+							className="utkast-footer__godkjenn-knapp"
+							mini={true}
+							htmlType="button"
+							onClick={handleOnGodkjennClicked}
+						>
+							Godkjenn
+						</Flatknapp>
+					</Show>
+				</div>
+			</Show>
 		</div>
 	);
 }

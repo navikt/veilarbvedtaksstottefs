@@ -14,13 +14,21 @@
 
 	.utkast-footer__innhold {
 		display: grid;
+		margin: 0 auto;
+	}
+
+	.utkast-footer__innhold--dialog {
 		grid-template-columns: 6fr 4fr;
 		max-width: 1920px;
-		margin: 0 auto;
 
 		@media (min-width: @utkast-breakpoint) {
 			grid-template-columns: 7fr 3fr;
 		}
+	}
+
+	.utkast-footer__innhold--no-dialog {
+		grid-template-columns: 1fr 58px;
+		max-width: 1920px;
 	}
 
 	.utkast-footer__spinner {
