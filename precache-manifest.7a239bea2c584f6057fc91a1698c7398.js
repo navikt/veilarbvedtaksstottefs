@@ -1,14 +1,14 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "adbaec4584eaa9238ac4f492899acaf3",
+    "revision": "7d39766e123fd95f51cb9aaa451b764c",
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "def1d5ecbae4071aa6ea",
+    "revision": "b5f77a7c4afbeb2ae70f",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "def1d5ecbae4071aa6ea",
+    "revision": "b5f77a7c4afbeb2ae70f",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
@@ -120,8 +120,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/utkast-til-beslutter.9add9957.svg"
   },
   {
-    "revision": "65636a41867111d3c1a8c5f9ccdcaf7d",
-    "url": "/veilarbvedtaksstottefs/static/media/utkast.65636a41.svg"
+    "revision": "68918ecc0fd9b1200e56418305b77e10",
+    "url": "/veilarbvedtaksstottefs/static/media/utkast.68918ecc.svg"
   },
   {
     "revision": "febe532986c56e2c6487bff72651dedf",
