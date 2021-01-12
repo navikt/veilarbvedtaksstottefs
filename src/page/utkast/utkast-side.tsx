@@ -39,6 +39,7 @@ export function UtkastSide() {
 		sectionHeight,
 		setSectionHeight,
 		showSection,
+		setShowSection,
 		harLastetMeldinger,
 		setHarLastetMeldinger,
 		setHarNyeMeldinger
@@ -52,8 +53,7 @@ export function UtkastSide() {
 
 	const intervalRef = useRef<number>();
 
-	// Hvis utkastet har beslutter så henter vi meldinger periodisk for å simulere real-time kommunikasjon
-	const skalPolleMeldinger = !!utkast?.beslutterIdent;
+	const erBeslutterProsessStartet = !!utkast?.beslutterProsessStatus;
 
 	const sisteOppdatering = sistOppdatert || utkast!.sistOppdatert;
 
@@ -115,7 +115,8 @@ export function UtkastSide() {
 	}, [showSection]);
 
 	useEffect(() => {
-		if (skalPolleMeldinger) {
+		// Hvis utkastet har beslutter så henter vi meldinger periodisk for å simulere real-time kommunikasjon
+		if (erBeslutterProsessStartet) {
 			refreshMeldinger();
 
 			// Start polling of new dialogs
@@ -131,12 +132,14 @@ export function UtkastSide() {
 			};
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [skalPolleMeldinger]);
+	}, [erBeslutterProsessStartet]);
 
 	useEffect(() => {
 		// Nullstill forsøk på forhåndsvisning hvis man har vært inne på utkastet og forhåndsvist før
 		setHarForsoktAForhandsvise(false);
 		setHarLastetMeldinger(false);
+
+		setShowSection(erBeslutterProsessStartet);
 
 		// Hent meldinger når utkast vises
 		refreshMeldinger();
