@@ -4,11 +4,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "3466967ca759d16bc92d",
+    "revision": "ec65ba50c8ff0b10ff30",
     "url": "/veilarbvedtaksstottefs/static/css/main.css"
   },
   {
-    "revision": "3466967ca759d16bc92d",
+    "revision": "ec65ba50c8ff0b10ff30",
     "url": "/veilarbvedtaksstottefs/static/js/main.js"
   },
   {
@@ -20,12 +20,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/advarsel-sirkel.60c7de9e.svg"
   },
   {
+    "revision": "bb7ddc524f130d115ce1fe33238dc713",
+    "url": "/veilarbvedtaksstottefs/static/media/apne-dialog.bb7ddc52.svg"
+  },
+  {
     "revision": "7b1b80d906793cdf3c4710d0a3aa503e",
     "url": "/veilarbvedtaksstottefs/static/media/beslutterfunksjon.7b1b80d9.svg"
   },
   {
     "revision": "7e641224c473f655aaac89e9159d3ff7",
     "url": "/veilarbvedtaksstottefs/static/media/delete.7e641224.svg"
+  },
+  {
+    "revision": "85935e4d08c3d9992679c06813a2fc2f",
+    "url": "/veilarbvedtaksstottefs/static/media/dialog-msg.85935e4d.svg"
+  },
+  {
+    "revision": "e9fe9c521440c3e74c5c506beb673477",
+    "url": "/veilarbvedtaksstottefs/static/media/dialog-new-msg.e9fe9c52.svg"
   },
   {
     "revision": "6663e652df5420af74420d64a58434a4",
@@ -58,6 +70,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "7202ab3e09b56444e88e9b4351f282a0",
     "url": "/veilarbvedtaksstottefs/static/media/las-opp.7202ab3e.svg"
+  },
+  {
+    "revision": "4f573e426bcc8a51293e3cd92cd63949",
+    "url": "/veilarbvedtaksstottefs/static/media/lukk-dialog.4f573e42.svg"
   },
   {
     "revision": "d33f8f12e1e24be6c25543e3cc6a2425",
@@ -120,8 +136,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/media/utkast-til-beslutter.9add9957.svg"
   },
   {
-    "revision": "68918ecc0fd9b1200e56418305b77e10",
-    "url": "/veilarbvedtaksstottefs/static/media/utkast.68918ecc.svg"
+    "revision": "a66b802a34291ab6f9727145696e78c2",
+    "url": "/veilarbvedtaksstottefs/static/media/utkast.a66b802a.svg"
   },
   {
     "revision": "febe532986c56e2c6487bff72651dedf",
