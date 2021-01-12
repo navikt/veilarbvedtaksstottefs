@@ -13,17 +13,59 @@
 			"begrunnelse"
 			"innsatsgruppe"
 			"hovedmal";
+	}
 
-		@media (min-width: @utkast-breakpoint) {
-			grid-template-columns: 1fr @begrunnelse-bredde;
-			grid-template-rows: repeat(3, min-content);
-			grid-column-gap: 4rem;
-			grid-template-areas:
+	.utkast-side__hovedinnhold--dialog {
+		.skjema-grid {
+			@media (min-width: @utkast-breakpoint-dialog) {
+				grid-template-columns: 1fr @begrunnelse-bredde;
+				grid-template-rows: repeat(3, min-content);
+				grid-column-gap: 4rem;
+				grid-template-areas:
 			"kilder begrunnelse"
 			"innsatsgruppe begrunnelse"
 			"hovedmal begrunnelse";
+			}
 		}
 	}
+
+	.utkast-side__hovedinnhold--no-dialog {
+		.skjema-grid {
+			@media (min-width: @utkast-breakpoint-no-dialog) {
+				grid-template-columns: 1fr @begrunnelse-bredde;
+				grid-template-rows: repeat(3, min-content);
+				grid-column-gap: 4rem;
+				grid-template-areas:
+			"kilder begrunnelse"
+			"innsatsgruppe begrunnelse"
+			"hovedmal begrunnelse";
+			}
+		}
+	}
+
+	//.skjema-grid--dialog {
+	//	@media (min-width: @utkast-breakpoint-dialog) {
+	//		grid-template-columns: 1fr @begrunnelse-bredde;
+	//		grid-template-rows: repeat(3, min-content);
+	//		grid-column-gap: 4rem;
+	//		grid-template-areas:
+	//		"kilder begrunnelse"
+	//		"innsatsgruppe begrunnelse"
+	//		"hovedmal begrunnelse";
+	//	}
+	//}
+	//
+	//.skjema-grid--no-dialog {
+	//	@media (min-width: @utkast-breakpoint-no-dialog) {
+	//		grid-template-columns: 1fr @begrunnelse-bredde;
+	//		grid-template-rows: repeat(3, min-content);
+	//		grid-column-gap: 4rem;
+	//		grid-template-areas:
+	//		"kilder begrunnelse"
+	//		"innsatsgruppe begrunnelse"
+	//		"hovedmal begrunnelse";
+	//	}
+	//}
 
 	.les-utkast-skjema {
 		grid-row-gap: 4rem;

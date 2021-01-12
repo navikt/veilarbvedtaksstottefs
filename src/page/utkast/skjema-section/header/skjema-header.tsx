@@ -38,11 +38,11 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 	let bildeAlt;
 
 	if (showSection) {
-		bilde = apneDialogBilde;
-		bildeAlt = 'Åpne dialog seksjon';
-	} else {
 		bilde = lukkDialogBilde;
 		bildeAlt = 'Lukk dialog seksjon';
+	} else {
+		bilde = apneDialogBilde;
+		bildeAlt = 'Åpne dialog seksjon';
 	}
 
 	function onClickToggleDialogSection() {
