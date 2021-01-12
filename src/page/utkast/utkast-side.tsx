@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import cls from 'classnames';
 import { UtkastFooter } from './footer/utkast-footer';
 import SkjemaHeader from './skjema-section/header/skjema-header';
@@ -11,11 +11,14 @@ import { useDataStore } from '../../store/data-store';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { useSkjemaStore } from '../../store/skjema-store';
 import { useDialogSection } from '../../store/dialog-section-store';
-import { makeAbsoluteHeightStyle } from '../../util';
+import { hentId, makeAbsoluteHeightStyle } from '../../util';
 import Show from '../../component/show';
 import { DialogSectionMinified } from './dialog-section-minified/dialog-section-minified';
+import { hentMeldinger } from '../../api/veilarbvedtaksstotte/meldinger';
+import { SKRU_AV_POLLING_DIALOG } from '../../api/veilarbpersonflatefs';
 
 const FOOTER_HEIGHT = 72;
+const TEN_SECONDS = 10000;
 
 function calculateDialogSectionHeight(): number | undefined {
 	const elem = document.getElementsByClassName('utkast-side__dialog-section')[0];
@@ -30,16 +33,74 @@ function calculateDialogSectionHeight(): number | undefined {
 }
 
 export function UtkastSide() {
-	const { utkast } = useDataStore();
+	const { utkast, meldinger, setMeldinger, features } = useDataStore();
 	const { sistOppdatert, lagringStatus, setHarForsoktAForhandsvise } = useSkjemaStore();
-	const { sectionHeight, setSectionHeight, showSection } = useDialogSection();
+	const {
+		sectionHeight,
+		setSectionHeight,
+		showSection,
+		harLastetMeldinger,
+		setHarLastetMeldinger,
+		setHarNyeMeldinger
+	} = useDialogSection();
 	const { erAnsvarligVeileder } = useTilgangStore();
+
+	// Bruk refs for å hente oppdatert data i refreshMeldinger()
+	const showSectionRef = useRef(showSection);
+	const harLastetMeldingerRef = useRef(harLastetMeldinger);
+	const meldingerRef = useRef(meldinger);
+
+	const intervalRef = useRef<number>();
+
+	// Hvis utkastet har beslutter så henter vi meldinger periodisk for å simulere real-time kommunikasjon
+	const skalPolleMeldinger = !!utkast?.beslutterIdent;
+
+	const sisteOppdatering = sistOppdatert || utkast!.sistOppdatert;
+
+	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
 
 	const dialogSectionStyle = sectionHeight ? makeAbsoluteHeightStyle(sectionHeight) : undefined;
 
 	const hovedinnholdClassName = showSection
 		? 'utkast-side__hovedinnhold--dialog'
 		: 'utkast-side__hovedinnhold--no-dialog';
+
+	function refreshMeldinger() {
+		hentMeldinger(hentId(utkast))
+			.then(response => {
+				const nyeMeldinger = response.data;
+
+				if (nyeMeldinger) {
+					const harNyeMeldingerSomIkkeErLest =
+						!showSectionRef.current &&
+						harLastetMeldingerRef.current &&
+						nyeMeldinger.length > meldingerRef.current.length;
+
+					if (harNyeMeldingerSomIkkeErLest) {
+						setHarNyeMeldinger(true);
+					}
+
+					setMeldinger(nyeMeldinger);
+				}
+			})
+			.catch()
+			.finally(() => {
+				setHarLastetMeldinger(true);
+			});
+	}
+
+	useEffect(() => {
+		showSectionRef.current = showSection;
+		harLastetMeldingerRef.current = harLastetMeldinger;
+		meldingerRef.current = meldinger;
+	}, [showSection, harLastetMeldinger, meldinger]);
+
+	useEffect(() => {
+		if (showSection) {
+			setHarNyeMeldinger(false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [showSection]);
 
 	useEffect(() => {
 		const scrollListener = () => setSectionHeight(calculateDialogSectionHeight());
@@ -54,14 +115,33 @@ export function UtkastSide() {
 	}, [showSection]);
 
 	useEffect(() => {
+		if (skalPolleMeldinger) {
+			refreshMeldinger();
+
+			// Start polling of new dialogs
+			if (!features[SKRU_AV_POLLING_DIALOG] && intervalRef.current === undefined) {
+				intervalRef.current = window.setInterval(refreshMeldinger, TEN_SECONDS);
+			}
+
+			return () => {
+				if (intervalRef.current) {
+					clearInterval(intervalRef.current);
+					intervalRef.current = undefined;
+				}
+			};
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [skalPolleMeldinger]);
+
+	useEffect(() => {
 		// Nullstill forsøk på forhåndsvisning hvis man har vært inne på utkastet og forhåndsvist før
 		setHarForsoktAForhandsvise(false);
+		setHarLastetMeldinger(false);
+
+		// Hent meldinger når utkast vises
+		refreshMeldinger();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	const sisteOppdatering = sistOppdatert || utkast!.sistOppdatert;
-
-	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
 
 	return (
 		<div className="utkast-side">
