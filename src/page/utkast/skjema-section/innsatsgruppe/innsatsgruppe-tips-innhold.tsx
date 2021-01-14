@@ -10,8 +10,8 @@ export const InnsatsgruppeTipsInnhold = () => {
 				<li>gode muligheter - standardinnsats</li>
 				<li>trenger veiledning - situasjonsbestemt innsats</li>
 				<li>trenger veiledning, nedsatt arbeidsevne - spesielt tilpasset innsats</li>
-				<li>liten mulighet til å jobbe - varig tilpasset innsats</li>
 				<li>jobbe delvis - delvis, varig tilpasset innsats</li>
+				<li>liten mulighet til å jobbe - varig tilpasset innsats</li>
 			</ul>
 		</>
 	);
