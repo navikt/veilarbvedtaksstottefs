@@ -38,6 +38,10 @@
 		grid-template-columns: 6fr 4fr;
 		max-width: 1920px;
 
+		.utkast-side__skjema-section-innhold {
+			grid-template-columns: 1fr;
+		}
+
 		@media (min-width: @utkast-breakpoint-dialog) {
 			grid-template-columns: 7fr 3fr;
 		}
@@ -46,6 +50,10 @@
 	.utkast-side__hovedinnhold--no-dialog {
 		grid-template-columns: 1fr;
 		max-width: 1200px;
+
+		.utkast-side__skjema-section-innhold {
+			grid-template-columns: 1fr 58px;
+		}
 	}
 
 	.utkast-side__dialog-section {
@@ -56,7 +64,6 @@
 
 	.utkast-side__skjema-section-innhold {
 		display: grid;
-		grid-template-columns: 1fr 58px;
 		height: 100%;
 	}
 
