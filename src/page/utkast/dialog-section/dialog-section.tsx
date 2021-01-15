@@ -93,6 +93,7 @@ export function DialogSection() {
 					maxLength={MESSAGE_MAX_LENGTH}
 					autoCorrect="on"
 					className="dialog-section-innhold__skrivefelt skjemaelement__input textarea--medMeta"
+					aria-label="Skrivefelt for å sende melding til beslutter/ansvarlig veileder"
 				/>
 				<div className="dialog-section-innhold__send">
 					<Hovedknapp
