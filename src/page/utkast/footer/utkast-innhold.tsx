@@ -80,7 +80,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 						onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
 						disabled={laster}
 					>
-						<SlettIkon className="utkast_footer__knapp-ikon" />
+						<SlettIkon className="utkast_footer__knapp-ikon" focusable={false} />
 						Slett
 					</Flatknapp>
 				</Show>
@@ -92,7 +92,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 						onClick={() => showModal(ModalType.BEKREFT_TA_OVER_UTKAST)}
 						disabled={laster}
 					>
-						<TaOverIkon className="utkast_footer__knapp-ikon" />
+						<TaOverIkon className="utkast_footer__knapp-ikon" focusable={false} />
 						Ta over
 					</Flatknapp>
 				</Show>

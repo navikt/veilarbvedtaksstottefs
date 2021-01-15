@@ -7,6 +7,7 @@ import './vedtak-panel.less';
 export type OnVedtakClicked<T> = (vedtak: T, idx: number) => void;
 
 interface VedtakPanel<T> {
+	name: string;
 	vedtak: T;
 	posisjon: number;
 	onClick: OnVedtakClicked<T>;
@@ -16,8 +17,8 @@ interface VedtakPanel<T> {
 }
 
 export function VedtakPanel<T>(props: VedtakPanel<T>) {
-	const { vedtak, posisjon, dato, ikon, children, onClick } = props;
-	const elemId = 'vedtak-panel' + posisjon;
+	const { name, vedtak, posisjon, dato, ikon, children, onClick } = props;
+	const elemId = `vedtak-panel-${name}-${posisjon}`;
 
 	return (
 		<button aria-describedby={elemId} className="vedtak-panel" onClick={() => onClick(vedtak, posisjon)}>

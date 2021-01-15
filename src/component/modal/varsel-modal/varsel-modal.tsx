@@ -66,11 +66,15 @@ export function VarselModal({
 function VarselIkon(props: { type: VarselIkonType }) {
 	switch (props.type) {
 		case VarselIkonType.FEIL:
-			return <FeilSirkelIkon className="varsel-modal__ikon" />;
+			return <FeilSirkelIkon className="varsel-modal__ikon" role="img" focusable={false} aria-label="Feil" />;
 		case VarselIkonType.ADVARSEL:
-			return <AdvarselSirkelIkon className="varsel-modal__ikon" />;
+			return (
+				<AdvarselSirkelIkon className="varsel-modal__ikon" role="img" focusable={false} aria-label="Advarsel" />
+			);
 		case VarselIkonType.LAS_OPP:
-			return <LasOppIkon className="varsel-modal__ikon" />;
+			return (
+				<LasOppIkon className="varsel-modal__ikon" role="img" focusable={false} aria-label="Åpnet hengelås" />
+			);
 		default:
 			return null;
 	}

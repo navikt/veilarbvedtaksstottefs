@@ -14,6 +14,7 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(vedtak.innsatsgruppe as InnsatsgruppeType);
 	return (
 		<VedtakPanel<Vedtak>
+			name="tidligere-vedtak"
 			onClick={onClick}
 			vedtak={vedtak}
 			dato={vedtak.sistOppdatert}

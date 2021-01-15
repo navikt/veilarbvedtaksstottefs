@@ -12,6 +12,7 @@ import { ArenaVedtak } from '../../api/veilarbvedtaksstotte/vedtak';
 function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<ArenaVedtak>, posisjon: number) {
 	return (
 		<VedtakPanel<ArenaVedtak>
+			name="arena-vedtak"
 			onClick={onClick}
 			vedtak={vedtak}
 			dato={vedtak.dato}
