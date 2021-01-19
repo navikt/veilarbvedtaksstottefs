@@ -86,8 +86,10 @@ function Begrunnelse() {
 					</Normaltekst>
 					<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH}>
 						<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
-							Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv å korte
-							den ned.
+							<span aria-live="assertive">
+								Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv å
+								korte den ned.
+							</span>
 						</AlertStripeAdvarsel>
 					</Show>
 				</SkjemaGruppe>
