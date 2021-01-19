@@ -24,7 +24,9 @@ export function UtkastFooter() {
 	const [isMaxWidthOrLess, setIsMaxWidthOrLess] = useState(checkIsMaxWidthOrLess(showSection));
 	const [scrollBarWidth, setScrollBarWidth] = useState(calculateScrollBarWidth());
 
-	const footerInnholdClassName = showSection ? 'utkast-footer__innhold--dialog' : 'utkast-footer__innhold--no-dialog';
+	const footerInnholdClassName = showSection
+		? 'utkast-footer__innhold--dialog'
+		: 'utkast-footer__innhold--dialog-minified';
 
 	const vedtakskjema = { opplysninger: kilder, begrunnelse, innsatsgruppe, hovedmal };
 
