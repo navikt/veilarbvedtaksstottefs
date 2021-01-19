@@ -6,27 +6,26 @@ metadata:
   labels:
     team: pto
 spec:
-  image: docker.pkg.github.com/navikt/veilarbvedtaksstottefs/veilarbvedtaksstottefs:{{version}}
-  port: 80
+  image: docker.pkg.github.com/navikt/pto-frontend/pto-frontend:cbfbc7b28d7b3bda856b72f0daafe8609d7fe224
+  port: 8080
+  ingresses:
+    - https://veilarbvedtaksstottefs.dev.intern.nav.no
   liveness:
-    path: /isAlive
-    initialDelay: 15
+    path: /internal/isAlive
+    initialDelay: 10
   readiness:
-    path: /isReady
-    initialDelay: 15
+    path: /internal/isReady
+    initialDelay: 10
   replicas:
     min: 1
     max: 2
     cpuThresholdPercentage: 75
-  resources:
-    requests:
-      cpu: 500m
-      memory: 500Mi
-    limits:
-      cpu: "1"
-      memory: 1Gi
-  ingresses:
-    - https://veilarbvedtaksstottefs-q1.nais.preprod.local
-    - https://app.dev.adeo.no/veilarbvedtaksstottefs
-    - https://app-q1.dev.adeo.no/veilarbvedtaksstottefs
-    - https://app-q1.adeo.no/veilarbvedtaksstottefs
+  gcp:
+    buckets:
+      - name: veilarbvedtaksstottefs-dev
+        cascadingDelete: false
+  env:
+    - name: GCS_BUCKET_NAME
+      value: veilarbvedtaksstottefs-dev
+    - name: CORS_DOMAIN
+      value: "*"
