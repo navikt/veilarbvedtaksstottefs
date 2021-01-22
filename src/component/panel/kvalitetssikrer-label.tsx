@@ -6,10 +6,10 @@ interface BeslutterProps {
 	className?: string;
 }
 
-export function Beslutter({ beslutterNavn, className }: BeslutterProps) {
+export function KvalitetssikrerLabel({ beslutterNavn, className }: BeslutterProps) {
 	return (
 		<div className={className} style={{ display: 'flex' }}>
-			<Undertekst className="label">Beslutter: </Undertekst>
+			<Undertekst className="label">Kvalitetssikrer: </Undertekst>
 			<Undertekst>{beslutterNavn}</Undertekst>
 		</div>
 	);

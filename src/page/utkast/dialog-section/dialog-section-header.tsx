@@ -37,12 +37,12 @@ export function DialogSectionHeader(props: DialogPanelHeaderProps) {
 			</div>
 
 			<div className="dialog-section-header__innhold">
-				<Undertittel className="dialog-section-header__tittel">Kollegaveiledning</Undertittel>
+				<Undertittel className="dialog-section-header__tittel">Kvalitetssikring</Undertittel>
 				<TipsPopover
 					id="dialog-tips"
 					className="dialog-section-header__tips"
 					tipsInnhold={<DialogTipsInnhold />}
-					ariaLabel="Tips for kollegaveiledning"
+					ariaLabel="Tips for kvalitetssikring"
 					orientering={PopoverOrientering.UnderHoyre}
 				/>
 				<Show if={props.beslutterNavn}>

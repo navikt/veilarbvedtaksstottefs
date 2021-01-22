@@ -57,18 +57,18 @@ export const feilVedOvertakelseAvUtkastConfig: FeilModalConfig = {
 };
 
 export const feilVedStartBeslutterProsessConfig: FeilModalConfig = {
-	tittel: 'Klarte ikke å klargjøre utkastet for beslutter',
-	beskrivelse: 'En feil oppstod under klargjøring av utkastet for beslutter. Vennligst prøv igjen senere.'
+	tittel: 'Klarte ikke å klargjøre utkastet for kvalitetssikrer',
+	beskrivelse: 'En feil oppstod under klargjøring av utkastet for kvalitetssikrer. Vennligst prøv igjen senere.'
 };
 
 export const feilVedAvbrytBeslutterProsessConfig: FeilModalConfig = {
-	tittel: 'Klarte ikke å avbryte beslutterprosessen',
-	beskrivelse: 'En feil oppstod under avbryting av beslutterprosessen. Innsatsgruppe vil ikke bli endret.'
+	tittel: 'Klarte ikke å avbryte kvalitetssikrerprosessen',
+	beskrivelse: 'En feil oppstod under avbryting av kvalitetssikrerprosessen. Innsatsgruppe vil ikke bli endret.'
 };
 
 export const feilVedBliBeslutterConfig: FeilModalConfig = {
-	tittel: 'Klarte ikke å bli beslutter',
-	beskrivelse: 'En feil oppstod under overtakselse som beslutter. Vennligst prøv igjen senere.'
+	tittel: 'Klarte ikke å bli kvalitetssikrer',
+	beskrivelse: 'En feil oppstod under overtakselse som kvalitetssikrer. Vennligst prøv igjen senere.'
 };
 
 export const feilVedUtsendingAvDialogMelding: FeilModalConfig = {
