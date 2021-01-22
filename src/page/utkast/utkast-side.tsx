@@ -13,9 +13,10 @@ import { useSkjemaStore } from '../../store/skjema-store';
 import { useDialogSection } from '../../store/dialog-section-store';
 import { hentId, makeAbsoluteHeightStyle } from '../../util';
 import Show from '../../component/show';
-import { DialogSectionMinified } from './dialog-section-minified/dialog-section-minified';
 import { hentMeldinger } from '../../api/veilarbvedtaksstotte/meldinger';
 import { SKRU_AV_POLLING_DIALOG } from '../../api/veilarbpersonflatefs';
+import { DialogSectionMinified } from './dialog-section-minified/dialog-section-minified';
+import { DialogSectionHeaderMinified } from './dialog-section-minified/dialog-section-header-minified';
 
 const FOOTER_HEIGHT = 72;
 const TEN_SECONDS = 10000;
@@ -63,7 +64,7 @@ export function UtkastSide() {
 
 	const hovedinnholdClassName = showSection
 		? 'utkast-side__hovedinnhold--dialog'
-		: 'utkast-side__hovedinnhold--no-dialog';
+		: 'utkast-side__hovedinnhold--dialog-minified';
 
 	function refreshMeldinger() {
 		hentMeldinger(hentId(utkast))
@@ -155,20 +156,19 @@ export function UtkastSide() {
 						sistOppdatert={sisteOppdatering}
 						skjemaLagringStatus={lagringStatus}
 					/>
-					<div className="utkast-side__skjema-section-innhold">
-						{utkastSkjema}
-						<Show if={!showSection}>
-							<DialogSectionMinified />
-						</Show>
-					</div>
+					<div className="utkast-side__skjema-section-innhold">{utkastSkjema}</div>
 				</div>
-
-				<Show if={showSection}>
-					<div style={dialogSectionStyle} className="utkast-side__dialog-section">
+				<div style={dialogSectionStyle} className="utkast-side__dialog-section">
+					<Show if={showSection}>
 						<DialogSectionHeader beslutterNavn={utkast?.beslutterNavn} />
 						<DialogSection />
-					</div>
-				</Show>
+					</Show>
+
+					<Show if={!showSection}>
+						<DialogSectionHeaderMinified />
+						<DialogSectionMinified />
+					</Show>
+				</div>
 			</div>
 			<UtkastFooter />
 		</div>

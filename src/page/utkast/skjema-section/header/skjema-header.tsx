@@ -1,13 +1,10 @@
 import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 import utkastBilde from './utkast.svg';
-import apneDialogBilde from './apne-dialog.svg';
-import lukkDialogBilde from './lukk-dialog.svg';
-import './skjema-header.less';
 import { SkjemaLagringStatus } from '../../../../util/type/skjema-lagring-status';
 import { formatDateTime } from '../../../../util/date-utils';
 import { Label, LabelType } from '../../../../component/label/label';
-import { useDialogSection } from '../../../../store/dialog-section-store';
+import './skjema-header.less';
 
 interface SkjemaHeaderProps {
 	veilederNavn: string;
@@ -31,29 +28,13 @@ function utledLagreTekst(status: SkjemaLagringStatus, sistOppdatert: string): st
 }
 
 function SkjemaHeader(props: SkjemaHeaderProps) {
-	const { showSection, setShowSection } = useDialogSection();
 	const sistEndretTekst = utledLagreTekst(props.skjemaLagringStatus, props.sistOppdatert);
-
-	let bilde;
-	let bildeAlt;
-
-	if (showSection) {
-		bilde = lukkDialogBilde;
-		bildeAlt = 'Lukk dialog seksjon';
-	} else {
-		bilde = apneDialogBilde;
-		bildeAlt = 'Åpne dialog seksjon';
-	}
-
-	function onClickToggleDialogSection() {
-		setShowSection(prevShow => !prevShow);
-	}
 
 	return (
 		<header className="skjema-header">
 			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon" />
 			<div className="skjema-header__innhold">
-				<Systemtittel tag="h1" className="skjema-header__tittel blokk-xxxs">
+				<Systemtittel tag="h1" className="skjema-header__tittel">
 					Utkast
 				</Systemtittel>
 				<div className="skjema-header__info">
@@ -67,9 +48,6 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 					/>
 				</div>
 			</div>
-			<button onClick={onClickToggleDialogSection} className="skjema-header__dialog-toggle-btn">
-				<img src={bilde} alt={bildeAlt} />
-			</button>
 		</header>
 	);
 }

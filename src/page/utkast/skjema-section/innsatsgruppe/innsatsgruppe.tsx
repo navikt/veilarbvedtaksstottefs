@@ -17,6 +17,7 @@ import { ModalType, useModalStore } from '../../../../store/modal-store';
 import { useDataStore } from '../../../../store/data-store';
 import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekster } from '../../../../util/innsatsgruppe';
 import { useSkjemaStore } from '../../../../store/skjema-store';
+import './innsatsgruppe.less';
 
 function Innsatsgruppe() {
 	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();

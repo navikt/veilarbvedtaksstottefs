@@ -99,7 +99,6 @@ export function Forhandsvisning() {
 							disabled={pdfStatus !== PDFStatus.SUCCESS}
 							mini={true}
 							onClick={handleOnSendClicked}
-							className="forhandsvisning__knapp-sender"
 						>
 							Send til bruker
 						</Hovedknapp>

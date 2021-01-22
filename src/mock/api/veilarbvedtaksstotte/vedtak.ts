@@ -1,7 +1,7 @@
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { rest } from 'msw';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
-import { lagVedtakBrevMockUrl } from '../../utils';
+import { lagVedtakBrevMockUrl, mockUrlPrefix } from '../../utils';
 import { hentArenaVedtak, hentFattedeVedtak, hentOyeblikksbilder } from '../../api-data';
 
 export const vedtakHandlers: RequestHandlersList = [
@@ -30,9 +30,9 @@ export const vedtakHandlers: RequestHandlersList = [
 		return res(ctx.delay(500), ctx.body(brevBlob));
 	}),
 	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena/pdf`, async (req, res, ctx) => {
-		const brevBlob = await (ctx.fetch('/test-brev/arenabrev.pdf') as Promise<Response>).then(brevRes =>
-			brevRes.blob()
-		);
+		const brevBlob = await (ctx.fetch(
+			`${mockUrlPrefix()}/test-brev/arenabrev.pdf`
+		) as Promise<Response>).then(brevRes => brevRes.blob());
 
 		return res(ctx.delay(500), ctx.body(brevBlob));
 	})
