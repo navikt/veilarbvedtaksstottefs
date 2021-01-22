@@ -26,7 +26,6 @@
 
 	.utkast-side__hovedinnhold {
 		display: grid;
-		grid-template-columns: 6fr 4fr;
 
 		background-color: white;
 		width: 100%;
@@ -34,19 +33,25 @@
 
 		padding-bottom: @footer-height;
 		margin: 0 auto;
-
-		@media (min-width: @utkast-breakpoint-dialog) {
-			grid-template-columns: 7fr 3fr;
-		}
 	}
 
 	.utkast-side__hovedinnhold--dialog {
-		max-width: 1920px;
+		max-width: @utkast-side-max-width-two-col-small;
+		grid-template-columns: @utkast-one-col-min-width 1fr;
+
+		@media (min-width: @utkast-breakpoint-dialog-small) {
+			grid-template-columns: @utkast-one-col-max-width 1fr;
+		}
+
+		@media (min-width: @utkast-breakpoint-dialog) {
+			max-width: 1920px;
+			grid-template-columns: 6fr 4fr;
+		}
 	}
 
 	.utkast-side__hovedinnhold--dialog-minified {
 		max-width: 1200px;
-		grid-template-columns: 1fr 58px;
+		grid-template-columns: 1fr @dialog-section-minified-width;
 	}
 
 	.utkast-side__skjema-section {
@@ -59,7 +64,6 @@
 	}
 
 	.utkast-side__skjema-section-innhold {
-		display: grid;
 		height: 100%;
 	}
 

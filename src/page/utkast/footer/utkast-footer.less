@@ -19,16 +19,21 @@
 	}
 
 	.utkast-footer__innhold--dialog {
-		grid-template-columns: 6fr 4fr;
-		max-width: 1920px;
+		max-width: @utkast-side-max-width-two-col-small;
+		grid-template-columns: @utkast-one-col-min-width 1fr;
+
+		@media (min-width: @utkast-breakpoint-dialog-small) {
+			grid-template-columns: @utkast-one-col-max-width 1fr;
+		}
 
 		@media (min-width: @utkast-breakpoint-dialog) {
-			grid-template-columns: 7fr 3fr;
+			max-width: 1920px;
+			grid-template-columns: 6fr 4fr;
 		}
 	}
 
 	.utkast-footer__innhold--dialog-minified {
-		grid-template-columns: 1fr 58px;
+		grid-template-columns: 1fr @dialog-section-minified-width;
 		max-width: 1200px;
 	}
 

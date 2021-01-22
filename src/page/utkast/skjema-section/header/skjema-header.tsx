@@ -34,7 +34,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 		<header className="skjema-header">
 			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon" />
 			<div className="skjema-header__innhold">
-				<Systemtittel tag="h1" className="skjema-header__tittel blokk-xxxs">
+				<Systemtittel tag="h1" className="skjema-header__tittel">
 					Utkast
 				</Systemtittel>
 				<div className="skjema-header__info">

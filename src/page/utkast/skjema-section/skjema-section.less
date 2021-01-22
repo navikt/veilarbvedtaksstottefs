@@ -7,7 +7,7 @@
 		display: grid;
 		padding: 2rem 2rem 4.5rem;
 		grid-row-gap: 4rem;
-		grid-template-columns: @begrunnelse-bredde;
+		grid-template-columns: minmax(@utkast-first-col-min-width, @begrunnelse-max-width);
 		grid-template-areas:
 			"kilder"
 			"begrunnelse"
@@ -18,7 +18,7 @@
 	.utkast-side__hovedinnhold--dialog {
 		.skjema-grid {
 			@media (min-width: @utkast-breakpoint-dialog) {
-				grid-template-columns: 1fr @begrunnelse-bredde;
+				grid-template-columns: minmax(@utkast-first-col-min-width, 1fr) minmax(@begrunnelse-min-width, @begrunnelse-max-width);
 				grid-template-rows: repeat(3, min-content);
 				grid-column-gap: 4rem;
 				grid-template-areas:
@@ -32,7 +32,7 @@
 	.utkast-side__hovedinnhold--dialog-minified {
 		.skjema-grid {
 			@media (min-width: @utkast-breakpoint-dialog-minified) {
-				grid-template-columns: 1fr @begrunnelse-bredde;
+				grid-template-columns: minmax(@utkast-first-col-min-width, 1fr) minmax(@begrunnelse-min-width, @begrunnelse-max-width);
 				grid-template-rows: repeat(3, min-content);
 				grid-column-gap: 4rem;
 				grid-template-areas:
