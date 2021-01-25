@@ -45,7 +45,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 					<Label
 						titleTextClassName="label__title-text--gap-lg"
 						className="blokk-xxs"
-						titleText="Beslutter"
+						titleText="Kvalitetssikrer"
 						valueText={beslutterNavn}
 					/>
 				</Show>

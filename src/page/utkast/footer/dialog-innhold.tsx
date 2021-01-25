@@ -150,7 +150,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 							htmlType="button"
 							onClick={handleOnStartBeslutterProsessClicked}
 						>
-							Start beslutterprosess
+							Start kvalitetssikring
 						</Hovedknapp>
 					</Show>
 
@@ -161,7 +161,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 							onClick={handleOnBliBeslutterClicked}
 							disabled={laster}
 						>
-							Bli beslutter
+							Bli kvalitetssikrer
 						</Hovedknapp>
 					</Show>
 
@@ -173,7 +173,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 
 					<Show if={visSendTilBeslutter}>
 						<Hovedknapp mini={true} htmlType="button" onClick={handleOnSendTilClicked} disabled={laster}>
-							Send til beslutter
+							Send til kvalitetssikrer
 						</Hovedknapp>
 					</Show>
 

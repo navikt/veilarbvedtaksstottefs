@@ -6,7 +6,7 @@ import utkastIkon from './utkast.svg';
 import utkastTilBeslutterIkon from './utkast-til-beslutter.svg';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../store/view-store';
-import { Beslutter } from '../beslutter';
+import { KvalitetssikrerLabel } from '../kvalitetssikrer-label';
 import Show from '../../show';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import './utkast-panel.less';
@@ -60,7 +60,10 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 			tekstKomponent={
 				<>
 					<Show if={beslutterNavn}>
-						<Beslutter className="utkast-panel__beslutter" beslutterNavn={beslutterNavn as string} />
+						<KvalitetssikrerLabel
+							className="utkast-panel__beslutter"
+							beslutterNavn={beslutterNavn as string}
+						/>
 					</Show>
 					<DatoLabel
 						className="utkast-panel__dato"
