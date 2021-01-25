@@ -11,19 +11,19 @@ interface SystemMeldingProps {
 function lagSystemMelding(type: SystemMeldingType, utfortAvNavn: string) {
 	switch (type) {
 		case SystemMeldingType.BESLUTTER_PROSESS_STARTET:
-			return 'Beslutterprosess startet';
+			return 'Kvalitetssikring startet';
 		case SystemMeldingType.BESLUTTER_PROSESS_AVBRUTT:
-			return 'Beslutterprosess avbrutt';
+			return 'Kvalitetssikring avbrutt';
 		case SystemMeldingType.BLITT_BESLUTTER:
 			return (
 				<span>
-					<strong>{utfortAvNavn}</strong> er beslutter
+					<strong>{utfortAvNavn}</strong> er kvalitetssikrer
 				</span>
 			);
 		case SystemMeldingType.TATT_OVER_SOM_BESLUTTER:
 			return (
 				<span>
-					<strong>{utfortAvNavn}</strong> er ny beslutter
+					<strong>{utfortAvNavn}</strong> er ny kvalitetssikrer
 				</span>
 			);
 		case SystemMeldingType.TATT_OVER_SOM_VEILEDER:
@@ -47,7 +47,7 @@ function lagSystemMelding(type: SystemMeldingType, utfortAvNavn: string) {
 		case SystemMeldingType.SENDT_TIL_VEILEDER:
 			return 'Trenger respons fra veileder';
 		case SystemMeldingType.SENDT_TIL_BESLUTTER:
-			return 'Trenger tilbakemelding fra beslutter';
+			return 'Trenger tilbakemelding fra kvalitetssikrer';
 		default:
 			return null;
 	}

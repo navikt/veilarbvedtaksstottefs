@@ -36,12 +36,14 @@ function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
 	return (
 		<VarselModal
 			isOpen={props.isOpen}
-			contentLabel="Avbryt Beslutter Prosessen"
+			contentLabel="Avbryt kvalitetssikringprosessen"
 			onRequestClose={hideModal}
 			varselIkonType={VarselIkonType.ADVARSEL}
 		>
 			<Systemtittel className="blokk-xxxs">Endre innsatsgruppe</Systemtittel>
-			<Normaltekst>Beslutterprosessen vil avbrytes. Er du sikker på at du vil endre innsatsgruppe?</Normaltekst>
+			<Normaltekst>
+				Kvalitetssikringprosessen vil avbrytes. Er du sikker på at du vil endre innsatsgruppe?
+			</Normaltekst>
 			<div className="varsel-modal__knapper">
 				<Hovedknapp onClick={handleOnJaClicked}>Ja</Hovedknapp>
 				<Knapp onClick={hideModal}>Nei</Knapp>

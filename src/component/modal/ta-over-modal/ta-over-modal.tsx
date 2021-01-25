@@ -19,18 +19,18 @@ import { fetchTaOverUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
-	BESLUTTER = 'BESLUTTER'
+	KVALITETSSIKRER = 'KVALITETSSIKRER'
 }
 
 const taOverOptions = [
 	{ label: 'Veileder', value: TaOverFor.VEILEDER },
-	{ label: 'Beslutter', value: TaOverFor.BESLUTTER }
+	{ label: 'Kvalitetssikrer', value: TaOverFor.KVALITETSSIKRER }
 ];
 
 function mapTaOverForTilTekst(taOverFor: TaOverFor): string {
 	switch (taOverFor) {
-		case TaOverFor.BESLUTTER:
-			return 'beslutter';
+		case TaOverFor.KVALITETSSIKRER:
+			return 'kvalitetssikrer';
 		case TaOverFor.VEILEDER:
 			return 'veileder';
 		default:
@@ -57,7 +57,7 @@ function TaOverModal(props: ModalProps) {
 		setLaster(true);
 
 		const taOverResponse =
-			taOverFor === TaOverFor.BESLUTTER ? bliBeslutter(hentId(utkast)) : fetchTaOverUtkast(hentId(utkast));
+			taOverFor === TaOverFor.KVALITETSSIKRER ? bliBeslutter(hentId(utkast)) : fetchTaOverUtkast(hentId(utkast));
 
 		taOverResponse
 			.then(() => {
@@ -85,7 +85,9 @@ function TaOverModal(props: ModalProps) {
 
 	function visTattOverVarsel() {
 		const varselType =
-			taOverFor === TaOverFor.BESLUTTER ? VarselType.TATT_OVER_SOM_BESLUTTER : VarselType.TATT_OVER_SOM_VEILEDER;
+			taOverFor === TaOverFor.KVALITETSSIKRER
+				? VarselType.TATT_OVER_SOM_BESLUTTER
+				: VarselType.TATT_OVER_SOM_VEILEDER;
 
 		showVarsel(varselType);
 	}

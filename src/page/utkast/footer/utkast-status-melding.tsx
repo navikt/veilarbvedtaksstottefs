@@ -18,7 +18,7 @@ function utledStatusVerdier(props: UtkastStatusMeldingProps): { type: AlertStrip
 	if (!utkast.beslutterProsessStatus && trengerBeslutter(skjemaInnsatsgruppe)) {
 		const type = veilederTilgang === VeilederTilgang.ANSVARLIG_VEILEDER ? 'advarsel' : 'info';
 
-		return { type, tekst: 'Trenger beslutter' };
+		return { type, tekst: 'Trenger kvalitetssikring' };
 	}
 
 	if (utkast.beslutterProsessStatus && !utkast.beslutterIdent) {
@@ -26,10 +26,10 @@ function utledStatusVerdier(props: UtkastStatusMeldingProps): { type: AlertStrip
 			veilederTilgang === VeilederTilgang.ANSVARLIG_VEILEDER ||
 			veilederTilgang === VeilederTilgang.IKKE_ANSVARLIG_VEILEDER
 		) {
-			return { type: 'info', tekst: 'Venter på beslutter' };
+			return { type: 'info', tekst: 'Venter på tilbakemelding' };
 		}
 
-		return { type: 'advarsel', tekst: 'Trenger beslutter' };
+		return { type: 'advarsel', tekst: 'Trenger kvalitetssikring' };
 	}
 
 	if (utkast.beslutterProsessStatus === BeslutterProsessStatus.KLAR_TIL_BESLUTTER) {
@@ -37,7 +37,7 @@ function utledStatusVerdier(props: UtkastStatusMeldingProps): { type: AlertStrip
 			veilederTilgang === VeilederTilgang.ANSVARLIG_VEILEDER ||
 			veilederTilgang === VeilederTilgang.IKKE_ANSVARLIG_VEILEDER
 		) {
-			return { type: 'info', tekst: 'Venter på beslutter' };
+			return { type: 'info', tekst: 'Venter på tilbakemelding' };
 		}
 
 		return { type: 'advarsel', tekst: 'Gi tilbakemelding' };
