@@ -17,7 +17,7 @@ export const tattOverSomVeileder: VarselConfig = {
 
 export const tattOverSomBeslutter: VarselConfig = {
 	type: 'suksess',
-	tekst: 'Du har nå tatt over som beslutter.'
+	tekst: 'Du har nå tatt over som kvalitetssikrer.'
 };
 
 export const utkastOppdatert: VarselConfig = {

@@ -36,9 +36,9 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 		if (erGodkjentAvBeslutter(beslutterProsessStatus)) {
 			return 'Klar for utsendelse';
 		} else if (erBeslutterProsessStartet(beslutterProsessStatus) && isNothing(beslutterNavn)) {
-			return 'Utkast trenger beslutter';
+			return 'Utkast trenger kvalitetssikrer';
 		} else if (erKlarTilBeslutter(beslutterProsessStatus)) {
-			return 'Trenger tilbakemelding fra beslutter';
+			return 'Trenger tilbakemelding fra kvalitetssikrer';
 		} else if (erKlarTilVeileder(beslutterProsessStatus)) {
 			return 'Trenger respons fra veileder';
 		} else {

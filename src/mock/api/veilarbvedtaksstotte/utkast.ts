@@ -84,7 +84,7 @@ export const utkastHandlers: RequestHandlersList = [
 			gjeldendeVedtak.gjeldende = false;
 		}
 
-		if (!hentUtkast()) throw new Error('Fant ikke utkast til beslutter');
+		if (!hentUtkast()) throw new Error('Fant ikke utkast til kvalitetssikrer');
 
 		const fattetVedtak = { ...hentUtkast() } as Vedtak;
 
