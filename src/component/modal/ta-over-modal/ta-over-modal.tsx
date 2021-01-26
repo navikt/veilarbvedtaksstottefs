@@ -27,17 +27,6 @@ const taOverOptions = [
 	{ label: 'Kvalitetssikrer', value: TaOverFor.KVALITETSSIKRER }
 ];
 
-function mapTaOverForTilTekst(taOverFor: TaOverFor): string {
-	switch (taOverFor) {
-		case TaOverFor.KVALITETSSIKRER:
-			return 'kvalitetssikrer';
-		case TaOverFor.VEILEDER:
-			return 'veileder';
-		default:
-			return '';
-	}
-}
-
 function TaOverModal(props: ModalProps) {
 	const { hideModal, showModal } = useModalStore();
 	const { setVeilederTilgang } = useTilgangStore();
@@ -106,8 +95,8 @@ function TaOverModal(props: ModalProps) {
 				{`${utkast.veilederNavn}?`}
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Hovedknapp spinner={laster} disabled={laster} onClick={() => handleTaOverVedtak()}>
-					Ta over for veileder
+				<Hovedknapp spinner={laster} disabled={laster} onClick={handleTaOverVedtak}>
+					Ta over
 				</Hovedknapp>
 				<Knapp disabled={laster} onClick={hideModal}>
 					Avbryt
@@ -136,7 +125,7 @@ function TaOverModal(props: ModalProps) {
 							spinner={laster}
 							disabled={laster}
 						>
-							Ta over som {mapTaOverForTilTekst(taOverFor as TaOverFor)}
+							Ta over
 						</Hovedknapp>
 					</div>
 				</Show>
