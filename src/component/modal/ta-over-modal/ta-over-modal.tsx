@@ -29,7 +29,7 @@ const taOverOptions = [
 
 function TaOverModal(props: ModalProps) {
 	const { hideModal, showModal } = useModalStore();
-	const { setVeilederTilgang } = useTilgangStore();
+	const { setVeilederTilgang, erIkkeAnsvarligVeileder } = useTilgangStore();
 	const { utkast, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilSystemMelding } = useDataStore();
 	const { showVarsel } = useVarselStore();
 
@@ -40,7 +40,10 @@ function TaOverModal(props: ModalProps) {
 		return null;
 	}
 
-	const visValg = erBeslutterProsessStartet(utkast.beslutterProsessStatus) && utkast.beslutterNavn != null;
+	const visValg =
+		erIkkeAnsvarligVeileder &&
+		erBeslutterProsessStartet(utkast.beslutterProsessStatus) &&
+		utkast.beslutterNavn != null;
 
 	function handleTaOverVedtak() {
 		setLaster(true);
