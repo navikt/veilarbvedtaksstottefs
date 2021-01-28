@@ -4,7 +4,6 @@ import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { erBeslutterProsessStartet, hentId } from '../../../util';
 import { useDataStore } from '../../../store/data-store';
-import Show from '../../show';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -95,7 +94,7 @@ function TaOverModal(props: ModalProps) {
 			<Normaltekst className="varsel-modal__tekstinnehold">
 				Vil du overta ansvaret for vedtaket fra
 				<br />
-				{`${utkast.veilederNavn}?`}
+				veileder {`${utkast.veilederNavn}?`}
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
 				<Hovedknapp spinner={laster} disabled={laster} onClick={handleTaOverVedtak}>
@@ -111,27 +110,28 @@ function TaOverModal(props: ModalProps) {
 	const OvertaValgVisning = (
 		<>
 			<div className="ta-over-modal__radiopanel">
+				<Normaltekst className="varsel-modal__tekstinnehold blokk-s">Hvem ønsker du å ta over for?</Normaltekst>
 				<RadioPanelGruppe
 					name="taovervedtakfor"
-					legend="Hvem ønsker du å ta over for?"
+					legend={null}
 					radios={taOverOptions}
 					onChange={(e: any) => setTaOverFor(e.target.value)}
 					checked={taOverFor}
 				/>
 
-				<Show if={taOverFor}>
-					<div className="varsel-modal__knapper">
-						<Hovedknapp
-							mini={true}
-							htmlType="submit"
-							onClick={handleTaOverVedtak}
-							spinner={laster}
-							disabled={laster}
-						>
-							Ta over
-						</Hovedknapp>
-					</div>
-				</Show>
+				<div className="varsel-modal__knapper">
+					<Hovedknapp
+						htmlType="submit"
+						onClick={handleTaOverVedtak}
+						spinner={laster}
+						disabled={laster || !taOverFor}
+					>
+						Ta over
+					</Hovedknapp>
+					<Knapp disabled={laster} onClick={hideModal}>
+						Avbryt
+					</Knapp>
+				</div>
 			</div>
 		</>
 	);

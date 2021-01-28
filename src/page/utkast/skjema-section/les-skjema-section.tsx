@@ -94,7 +94,8 @@ export function LesSkjemaSection() {
 		return null;
 	}
 
-	const { opplysninger, begrunnelse, innsatsgruppe, hovedmal } = utkast;
+	const { opplysninger, innsatsgruppe, hovedmal } = utkast;
+	const begrunnelse = utkast.begrunnelse || '';
 
 	return (
 		<div className="skjema-grid les-utkast-skjema">
@@ -109,7 +110,8 @@ export function LesSkjemaSection() {
 
 			<div className="begrunnelse-felt">
 				<FeltHeader tittel="Begrunnelse" />
-				<Tekstomrade>{begrunnelse || ''}</Tekstomrade>
+				<Tekstomrade className="blokk-s">{begrunnelse}</Tekstomrade>
+				<Normaltekst className="begrunnelse-felt__antall-tegn">Antall tegn: {begrunnelse.length}</Normaltekst>
 			</div>
 
 			<div className="innsatsgruppe-felt">

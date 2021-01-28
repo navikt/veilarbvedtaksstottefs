@@ -31,9 +31,11 @@
 		&__innhold {
 			display: flex;
 			flex-direction: row;
+			justify-content: flex-start;
+			align-items: center;
 
+			margin-left: 1rem;
 			width: 100%;
-			margin: auto 0 auto 1rem;
 		}
 
 		&__info {
@@ -73,7 +75,17 @@
 			margin-bottom: auto;
 			background-color: @navGra60;
 		}
+	}
 
+	@media (max-width: 1200px) {
+		.utkast-side__hovedinnhold--dialog {
+			.skjema-header {
+				.label {
+					flex-direction: column;
+					align-items: flex-start;
+				}
+			}
+		}
 	}
 
 }

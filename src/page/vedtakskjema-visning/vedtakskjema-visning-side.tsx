@@ -8,6 +8,7 @@ import { useViewStore, ViewType } from '../../store/view-store';
 import { useDataStore } from '../../store/data-store';
 import './vedtakskjema-visning-side.less';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
+import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	const { fattedeVedtak } = useDataStore();
@@ -25,6 +26,8 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 			</Page>
 			<Footer>
 				<div className="vedtakskjema-visning__aksjoner">
+					<Tilbakeknapp htmlType="button" onClick={() => changeView(ViewType.HOVEDSIDE)} />
+
 					<Hovedknapp
 						mini={true}
 						onClick={() =>
@@ -37,9 +40,6 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 					>
 						Vis vedtaksbrev
 					</Hovedknapp>
-					<Knapp mini={true} onClick={() => changeView(ViewType.HOVEDSIDE)}>
-						Tilbake
-					</Knapp>
 				</div>
 			</Footer>
 		</>

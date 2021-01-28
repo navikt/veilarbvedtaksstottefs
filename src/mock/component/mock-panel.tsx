@@ -5,7 +5,6 @@ import Lukknapp from 'nav-frontend-lukknapp';
 import { useDataStore } from '../../store/data-store';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { finnVeilederTilgang } from '../../util/tilgang';
-import Lenke from 'nav-frontend-lenker';
 import { useSkjemaStore } from '../../store/skjema-store';
 import Show from '../../component/show';
 import './mock-panel.less';
@@ -30,9 +29,6 @@ export function MockPanel() {
 				<div className="mock-panel__innhold">
 					<Lukknapp onClick={toggle} />
 					<InnloggetSom />
-					<Lenke href={'https://navikt.github.io/beslutteroversikt/'} target="_blank">
-						Til beslutteroversikt
-					</Lenke>
 				</div>
 			</Show>
 		</div>
