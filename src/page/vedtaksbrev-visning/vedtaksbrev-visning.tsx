@@ -7,6 +7,7 @@ import { ModalType, useModalStore } from '../../store/modal-store';
 import './vedtaksbrev-visning.less';
 import { logMetrikk } from '../../util/logger';
 import { lagHentArenaVedtakPdfUrl, lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak';
+import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 
 interface VedtaksbrevVisningProps {
 	vedtakId: number;
@@ -69,9 +70,7 @@ function GenericVedtaksbrevVisning(props: GenericVedtaksbrevVisningProps) {
 			<PdfViewer url={props.vedtaksbrevUrl} title="Visning av vedtaksbrev" onStatusUpdate={setPdfStatus} />
 			<Footer>
 				<div className="vedtaksbrev-visning__aksjoner">
-					<Hovedknapp mini={true} onClick={props.handleOnTilbakeClicked}>
-						{props.tilbakeTekst}
-					</Hovedknapp>
+					<Tilbakeknapp htmlType="button" onClick={props.handleOnTilbakeClicked} />
 				</div>
 			</Footer>
 		</>

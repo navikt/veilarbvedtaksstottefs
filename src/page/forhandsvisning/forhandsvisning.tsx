@@ -19,6 +19,7 @@ import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/veilarbpersonflatefs';
 import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
+import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
@@ -94,6 +95,8 @@ export function Forhandsvisning() {
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
+					<Tilbakeknapp htmlType="button" onClick={tilbakeTilSkjema} />
+
 					<Show if={kanEndreUtkast && erUtkastKlartTilUtsending}>
 						<Hovedknapp
 							disabled={pdfStatus !== PDFStatus.SUCCESS}
@@ -103,9 +106,6 @@ export function Forhandsvisning() {
 							Send til bruker
 						</Hovedknapp>
 					</Show>
-					<Knapp mini={true} htmlType="button" onClick={tilbakeTilSkjema}>
-						Tilbake til utkast
-					</Knapp>
 				</div>
 			</Footer>
 		</>
