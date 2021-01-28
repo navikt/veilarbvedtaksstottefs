@@ -30,7 +30,7 @@ export function DialogSection() {
 		? makeAbsoluteHeightStyle(sectionHeight - DIALOG_SECTION_HEADER_HEIGHT)
 		: undefined;
 
-	const kanSendeMelding = !senderMelding && melding.trim().length > 0;
+	const kanSendeMelding = !senderMelding && melding.trim().length > 0 && melding.length <= MESSAGE_MAX_LENGTH;
 
 	const sorterteMeldinger = useMemo(() => {
 		return [...meldinger].sort((d1, d2) => sortDatesAsc(d1.opprettet, d2.opprettet));
@@ -70,7 +70,7 @@ export function DialogSection() {
 	}
 
 	function handleOnMeldingChanged(e: ChangeEvent<HTMLTextAreaElement>) {
-		if (!senderMelding && e.target.value.length <= MESSAGE_MAX_LENGTH) {
+		if (!senderMelding) {
 			oppdaterMelding(e.target.value);
 		}
 	}
