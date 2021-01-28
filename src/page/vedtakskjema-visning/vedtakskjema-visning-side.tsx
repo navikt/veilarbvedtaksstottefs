@@ -1,7 +1,7 @@
 import React from 'react';
 import Page from '../../component/page/page';
 import Footer from '../../component/footer/footer';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../component/skjema-visning/skjema-visning';
 import { useViewStore, ViewType } from '../../store/view-store';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
 import { trengerBeslutter } from '../../util/skjema-utils';

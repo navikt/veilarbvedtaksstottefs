@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import './vedtaksbrev-visning.less';
