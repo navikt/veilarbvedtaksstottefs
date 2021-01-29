@@ -7,11 +7,15 @@ export const axiosInstance = axios.create({
 });
 
 export function isAnyLoading(...fetchers: { loading: boolean }[]): boolean {
-	return fetchers.some(responseValue => responseValue.loading);
+	return fetchers.some(f => f.loading);
+}
+
+export function isAnyLoadingOrNotStarted(...fetchers: { data?: any; error?: any; loading: boolean }[]): boolean {
+	return fetchers.some(f => f.loading || (!f.error && !f.data));
 }
 
 export function hasAnyFailed(...fetchers: { error?: AxiosError }[]): boolean {
-	return fetchers.some(responseValue => responseValue.error);
+	return fetchers.some(f => f.error);
 }
 
 export function ifResponseHasData<T>(callback: (data: T) => void): (res: AxiosResponse<T>) => AxiosPromise<T> {
