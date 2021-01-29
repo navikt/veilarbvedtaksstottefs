@@ -6,7 +6,7 @@ import './dialog-section.less';
 import { OrNothing } from '../../../util/type/ornothing';
 import { TipsPopover } from '../../../component/tips-popover/tips-popover';
 import Show from '../../../component/show';
-import { Label } from '../../../component/label/label';
+import { Label, LabelType } from '../../../component/label/label';
 import { DialogToggleBtn } from '../dialog-section-minified/dialog-toggle-btn';
 import Lenke from 'nav-frontend-lenker';
 import tilOversiktBilde from './til-oversikt.svg';
@@ -46,7 +46,7 @@ export function DialogSectionHeader(props: DialogPanelHeaderProps) {
 					orientering={PopoverOrientering.UnderHoyre}
 				/>
 				<Show if={props.beslutterNavn}>
-					<Label titleText="Ansvarlig" valueText={props.beslutterNavn} />
+					<Label titleText="Ansvarlig" valueText={props.beslutterNavn} labelType={LabelType.SMALL} />
 				</Show>
 
 				<Show if={erBeslutter}>
