@@ -29,7 +29,7 @@ const taOverOptions = [
 function TaOverModal(props: ModalProps) {
 	const { hideModal, showModal } = useModalStore();
 	const { setVeilederTilgang, erIkkeAnsvarligVeileder } = useTilgangStore();
-	const { utkast, innloggetVeileder, setUtkastBeslutter, setUtkastVeileder, leggTilSystemMelding } = useDataStore();
+	const { utkast, setUtkast, innloggetVeileder, setUtkastBeslutter, leggTilSystemMelding } = useDataStore();
 	const { showVarsel } = useVarselStore();
 
 	const [taOverFor, setTaOverFor] = useState<TaOverFor>();
@@ -59,7 +59,15 @@ function TaOverModal(props: ModalProps) {
 					tattOverFor === TaOverFor.VEILEDER ? VeilederTilgang.ANSVARLIG_VEILEDER : VeilederTilgang.BESLUTTER;
 
 				if (tilgang === VeilederTilgang.ANSVARLIG_VEILEDER) {
-					setUtkastVeileder(ident, navn);
+					setUtkast(prevUtkast => {
+						// Hvis beslutter tar over ansvaret for vedtaket, så kan de ikke lenger ha rollen beslutter
+						const erAlleredeBeslutter = prevUtkast?.beslutterIdent === innloggetVeileder.ident;
+						const veileder = { veilederIdent: ident, veilederNavn: navn };
+						const beslutter = erAlleredeBeslutter ? { beslutterIdent: null, beslutterNavn: null } : {};
+
+						return Object.assign(prevUtkast, veileder, beslutter);
+					});
+
 					leggTilSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER);
 				} else {
 					setUtkastBeslutter(ident, navn);
