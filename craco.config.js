@@ -1,7 +1,7 @@
 const path = require('path');
 const CracoLessPlugin = require('craco-less');
+const isEqual = require("lodash.isequal");
 const BUILD_PATH = path.resolve(__dirname, './build');
-const { isEqual } = require("lodash");
 
 // pdfjs does some derpy stuff, which makes the build throw a lot of warnings which will stop the build in the CI pipeline
 const removeRulesPlugin = {

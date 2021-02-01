@@ -1,0 +1,34 @@
+.veilarbvedtaksstottefs {
+
+	.melding-liste {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		margin-top: auto;
+		width: 100%;
+
+		> .melding, .melding-wrapper {
+			margin-bottom: 1.25rem;
+		}
+	}
+
+	.melding-liste > *:last-child {
+		margin-bottom: 0;
+	}
+
+	.melding-wrapper {
+		display: flex;
+	}
+
+	.melding-wrapper--fra-meg {
+		justify-content: flex-end;
+	}
+
+	.melding-wrapper--til-meg {
+		justify-content: flex-start;
+	}
+
+	.melding-wrapper--system {
+		justify-content: center;
+	}
+}

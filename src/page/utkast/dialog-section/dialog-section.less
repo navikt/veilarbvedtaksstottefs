@@ -1,0 +1,106 @@
+@import "~nav-frontend-core/less/_variabler";
+
+.veilarbvedtaksstottefs {
+
+	.dialog-section {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		background-color: white;
+	}
+
+	.dialog-section-header {
+		display: flex;
+		flex-direction: row;
+
+		background-color: white;
+		height: 64px;
+		border-bottom: 1px solid @navGra40;
+
+		&__innhold {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+
+			width: 100%;
+
+			padding: 0 1rem;
+
+			@media (max-width: 1200px) {
+				.label {
+					flex-direction: column;
+					align-items: flex-start;
+				}
+			}
+		}
+
+		&__tittel {
+			margin-right: 1rem;
+		}
+
+		&__tips {
+			margin-right: 2rem;
+		}
+
+		&__toggle-btn-wrapper {
+			height: 100%;
+			border-right: 1px solid @navGra40;
+		}
+
+		&__oversikt-lenke {
+			height: 24px;
+			margin-left: auto;
+		}
+
+		&__oversikt-lenke:hover {
+			transform: scale(1.2);
+		}
+
+		&__oversikt-lenke:focus {
+			background-color: transparent;
+		}
+	}
+
+	.dialog-section-innhold {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+
+		padding: 1rem 1rem 2rem;
+		background-color: white;
+		flex-grow: 1;
+
+		// Fikser bug i <Textarea/> som gjør at høyden øker forbi max-height
+		.textarea__container {
+			position: unset;
+		}
+
+		&__meldinger {
+			display: flex;
+			flex-grow: 1;
+			overflow: auto;
+
+			margin-bottom: 1.25rem;
+		}
+
+		&__send {
+			display: flex;
+			justify-content: flex-end;
+			margin-top: 1rem;
+		}
+
+		&__send-knapp {
+			text-transform: none;
+		}
+
+		&__spinner {
+			margin: auto auto;
+		}
+
+		&__skrivefelt {
+			max-height: 300px;
+			overflow-y: auto;
+		}
+	}
+
+}

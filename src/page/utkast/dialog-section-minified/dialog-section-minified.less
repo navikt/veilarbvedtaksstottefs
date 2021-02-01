@@ -1,0 +1,36 @@
+@import "~nav-frontend-core/less/_variabler";
+@import "../../../variabler";
+
+.veilarbvedtaksstottefs {
+
+	.dialog-section-minified {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+
+		padding: 0.5rem;
+
+		&__dialog-img {
+			width: 24px;
+			height: 24px;
+
+			margin: 1rem auto 0 auto;
+		}
+	}
+
+	.dialog-section__toggle_btn {
+		padding: 1rem;
+		height: 64px;
+		width: @dialog-section-minified-width;
+
+		border: none;
+		cursor: pointer;
+		background-color: transparent;
+	}
+
+	.dialog-section-header-minified {
+		height: 64px;
+		border-bottom: 1px solid @navGra40;
+	}
+
+}

@@ -1,0 +1,62 @@
+@import "~nav-frontend-core/less/_variabler";
+@import "../../../variabler";
+
+.veilarbvedtaksstottefs {
+
+	.skjema-grid {
+		display: grid;
+		padding: 2rem 2rem 4.5rem;
+		grid-row-gap: 4rem;
+		grid-template-columns: minmax(@utkast-first-col-min-width, @begrunnelse-max-width);
+		grid-template-areas:
+			"kilder"
+			"begrunnelse"
+			"innsatsgruppe"
+			"hovedmal";
+	}
+
+	.utkast-side__hovedinnhold--dialog {
+		.skjema-grid {
+			@media (min-width: @utkast-breakpoint-dialog) {
+				grid-template-columns: minmax(@utkast-first-col-min-width, 1fr) minmax(@begrunnelse-min-width, @begrunnelse-max-width);
+				grid-template-rows: repeat(3, min-content);
+				grid-column-gap: 4rem;
+				grid-template-areas:
+					"kilder begrunnelse"
+					"innsatsgruppe begrunnelse"
+					"hovedmal begrunnelse";
+			}
+		}
+	}
+
+	.utkast-side__hovedinnhold--dialog-minified {
+		.skjema-grid {
+			@media (min-width: @utkast-breakpoint-dialog-minified) {
+				grid-template-columns: minmax(@utkast-first-col-min-width, 1fr) minmax(@begrunnelse-min-width, @begrunnelse-max-width);
+				grid-template-rows: repeat(3, min-content);
+				grid-column-gap: 4rem;
+				grid-template-areas:
+					"kilder begrunnelse"
+					"innsatsgruppe begrunnelse"
+					"hovedmal begrunnelse";
+			}
+		}
+	}
+
+	.les-utkast-skjema {
+		grid-row-gap: 4rem;
+
+		.kilder-felt__liste {
+			padding-left: 1rem;
+
+			li {
+				padding: 0.5rem 0;
+			}
+		}
+
+		.begrunnelse-felt__antall-tegn {
+			color: @navGra60;
+		}
+	}
+
+}

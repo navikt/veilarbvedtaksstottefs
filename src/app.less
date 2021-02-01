@@ -38,7 +38,6 @@
 	}
 
 	.btn--lenke {
-		font-family: Source Sans Pro, Arial, sans-serif;
 		font-size: 1rem;
 		background-color: white;
 		line-height: 1.375rem;
@@ -56,5 +55,12 @@
 	.inputPanel__field:checked:disabled + .inputPanel__label:before {
 		background-color: @navGra40;
 		border-color: @navGra40;
+	}
+
+	// Overskriv gammel styling som blir dratt inn fra andre apper
+	.alertstripe--inline {
+		background-color: unset !important;
+		border: none !important;
+		padding: 0 !important;
 	}
 }
