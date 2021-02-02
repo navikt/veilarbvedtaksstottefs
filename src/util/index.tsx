@@ -17,7 +17,7 @@ export const scrollToBottom = (elem: Element | null) => {
 };
 
 export const lagSkjemaelementFeilmelding = (muligFeil: string | undefined): React.ReactNode => {
-	return muligFeil ? <SkjemaelementFeilmelding>{muligFeil}</SkjemaelementFeilmelding> : null;
+	return muligFeil ? <SkjemaelementFeilmelding aria-live="assertive">{muligFeil}</SkjemaelementFeilmelding> : null;
 };
 
 export const finnGjeldendeVedtak = (vedtakListe: OrNothing<Vedtak[]>): Vedtak | undefined => {
