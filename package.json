@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env REACT_APP_DEV=true craco start",
-    "build": "cross-env PUBLIC_URL=/veilarbvedtaksstottefs craco build",
+    "build": "cross-env craco build",
     "build:mock": "cross-env PUBLIC_URL=/veilarbvedtaksstottefs REACT_APP_DEV=true craco build",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
