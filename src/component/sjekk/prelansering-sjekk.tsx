@@ -3,7 +3,7 @@ import { Prelansering } from '../../page/prelansering/prelansering';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useDataStore } from '../../store/data-store';
-import { fetchFeaturesToggles, PILOT_TOGGLE, PRELANSERING_TOGGLE } from '../../api/veilarbpersonflatefs';
+import { fetchFeaturesToggles, PILOT_TOGGLE } from '../../api/veilarbpersonflatefs';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { ifResponseHasData } from '../../api/utils';
 
@@ -30,5 +30,5 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 		);
 	}
 
-	return features[PRELANSERING_TOGGLE] && !features[PILOT_TOGGLE] ? <Prelansering /> : props.children;
+	return features[PILOT_TOGGLE] ? props.children : <Prelansering />;
 }
