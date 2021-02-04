@@ -18,6 +18,7 @@ import { SKRU_AV_POLLING_DIALOG } from '../../api/veilarbpersonflatefs';
 import { DialogSectionMinified } from './dialog-section-minified/dialog-section-minified';
 import { DialogSectionHeaderMinified } from './dialog-section-minified/dialog-section-header-minified';
 import { trengerBeslutter } from '../../util/skjema-utils';
+import { ScreenReaderSpeak } from '../../component/screen-reader-speak/screen-reader-speak';
 
 const FOOTER_HEIGHT = 72;
 const TEN_SECONDS = 10000;
@@ -164,11 +165,13 @@ export function UtkastSide() {
 					<Show if={showSection}>
 						<DialogSectionHeader beslutterNavn={utkast?.beslutterNavn} />
 						<DialogSection />
+						<ScreenReaderSpeak tekst="Dialog og kvalitetssikring seksjon åpen" />
 					</Show>
 
 					<Show if={!showSection}>
 						<DialogSectionHeaderMinified />
 						<DialogSectionMinified />
+						<ScreenReaderSpeak tekst="Dialog og kvalitetssikring seksjon lukket" />
 					</Show>
 				</div>
 			</div>
