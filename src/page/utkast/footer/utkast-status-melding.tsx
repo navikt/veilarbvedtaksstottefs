@@ -70,7 +70,7 @@ export function UtkastStatusMelding(props: UtkastStatusMeldingProps) {
 
 	const ariaLive = ['advarsel', 'feil'].includes(alertStripeVerdier.type) ? 'assertive' : 'polite';
 
-	const ariaLabel = props.minified ? undefined : alertStripeVerdier.tekst;
+	const ariaLabel = props.minified ? alertStripeVerdier.tekst : undefined;
 
 	return (
 		<AlertStripe type={alertStripeVerdier.type} aria-live={ariaLive} aria-label={ariaLabel} form="inline">

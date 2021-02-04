@@ -18,6 +18,7 @@ import { useDataStore } from '../../../../store/data-store';
 import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekster } from '../../../../util/innsatsgruppe';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import './innsatsgruppe.less';
+import { useDialogSection } from '../../../../store/dialog-section-store';
 
 function Innsatsgruppe() {
 	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();
@@ -63,6 +64,7 @@ interface InnsatsgruppeRadioProps {
 }
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
+	const { setShowSection } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { utkast } = useDataStore();
 
@@ -71,6 +73,14 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 			showModal(ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS, { innsatsgruppe });
 		} else {
 			props.handleInnsatsgruppeChanged(innsatsgruppe);
+		}
+
+		if (trengerBeslutter(innsatsgruppe)) {
+			setShowSection(true);
+		}
+
+		if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
+			props.setHovedmal(null);
 		}
 	}
 
@@ -85,13 +95,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 						value={innsatsgruppeTekst.value}
 						onKeyPress={swallowEnterKeyPress}
 						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
-						onChange={(e: any) => {
-							const innsatsgruppe = e.target.value;
-							handleInnsatsgruppeChanged(innsatsgruppe);
-							if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
-								props.setHovedmal(null);
-							}
-						}}
+						onChange={(e: any) => handleInnsatsgruppeChanged(e.target.value)}
 					/>
 				))}
 			</RadioGruppe>
