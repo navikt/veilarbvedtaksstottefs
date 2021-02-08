@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/veilarbvedtaksstottefs/static/css/main.5c11ca2d.chunk.css",
-    "main.js": "/veilarbvedtaksstottefs/static/js/main.c0eaa346.chunk.js",
-    "main.js.map": "/veilarbvedtaksstottefs/static/js/main.c0eaa346.chunk.js.map",
+    "main.css": "/veilarbvedtaksstottefs/static/css/main.3e882e32.chunk.css",
+    "main.js": "/veilarbvedtaksstottefs/static/js/main.7d2d2ef9.chunk.js",
+    "main.js.map": "/veilarbvedtaksstottefs/static/js/main.7d2d2ef9.chunk.js.map",
     "runtime-main.js": "/veilarbvedtaksstottefs/static/js/runtime-main.6e843c9b.js",
     "runtime-main.js.map": "/veilarbvedtaksstottefs/static/js/runtime-main.6e843c9b.js.map",
     "static/css/2.979d4c08.chunk.css": "/veilarbvedtaksstottefs/static/css/2.979d4c08.chunk.css",
     "static/js/2.7b59234b.chunk.js": "/veilarbvedtaksstottefs/static/js/2.7b59234b.chunk.js",
     "static/js/2.7b59234b.chunk.js.map": "/veilarbvedtaksstottefs/static/js/2.7b59234b.chunk.js.map",
     "index.html": "/veilarbvedtaksstottefs/index.html",
-    "precache-manifest.79eebfc938c29df34fb0a94e8109e95a.js": "/veilarbvedtaksstottefs/precache-manifest.79eebfc938c29df34fb0a94e8109e95a.js",
+    "precache-manifest.36374c49d22229cc865c6bc96f105f8b.js": "/veilarbvedtaksstottefs/precache-manifest.36374c49d22229cc865c6bc96f105f8b.js",
     "service-worker.js": "/veilarbvedtaksstottefs/service-worker.js",
     "static/css/2.979d4c08.chunk.css.map": "/veilarbvedtaksstottefs/static/css/2.979d4c08.chunk.css.map",
-    "static/css/main.5c11ca2d.chunk.css.map": "/veilarbvedtaksstottefs/static/css/main.5c11ca2d.chunk.css.map",
+    "static/css/main.3e882e32.chunk.css.map": "/veilarbvedtaksstottefs/static/css/main.3e882e32.chunk.css.map",
     "static/js/2.7b59234b.chunk.js.LICENSE.txt": "/veilarbvedtaksstottefs/static/js/2.7b59234b.chunk.js.LICENSE.txt",
     "static/media/advarsel-sirkel.60c7de9e.svg": "/veilarbvedtaksstottefs/static/media/advarsel-sirkel.60c7de9e.svg",
     "static/media/apne-dialog.svg": "/veilarbvedtaksstottefs/static/media/apne-dialog.bb7ddc52.svg",
@@ -50,7 +50,7 @@
     "static/js/runtime-main.6e843c9b.js",
     "static/css/2.979d4c08.chunk.css",
     "static/js/2.7b59234b.chunk.js",
-    "static/css/main.5c11ca2d.chunk.css",
-    "static/js/main.c0eaa346.chunk.js"
+    "static/css/main.3e882e32.chunk.css",
+    "static/js/main.7d2d2ef9.chunk.js"
   ]
 }
