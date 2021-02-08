@@ -3,7 +3,7 @@ import { Radio, RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import AlertStripe from 'nav-frontend-alertstriper';
 import FeltHeader from '../felt-header/felt-header';
 import { InnsatsgruppeTipsInnhold } from './innsatsgruppe-tips-innhold';
-import { harSkrevetBegrunnelse, trengerBeslutter } from '../../../../util/skjema-utils';
+import { harSkrevetBegrunnelse, trengerKvalitetssikrer } from '../../../../util/skjema-utils';
 import Show from '../../../../component/show';
 import {
 	erBeslutterProsessStartet,
@@ -69,13 +69,16 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	const { utkast } = useDataStore();
 
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
-		if (erBeslutterProsessStartet(utkast && utkast.beslutterProsessStatus) && !trengerBeslutter(innsatsgruppe)) {
+		if (
+			erBeslutterProsessStartet(utkast && utkast.beslutterProsessStatus) &&
+			!trengerKvalitetssikrer(innsatsgruppe)
+		) {
 			showModal(ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS, { innsatsgruppe });
 		} else {
 			props.handleInnsatsgruppeChanged(innsatsgruppe);
 		}
 
-		if (trengerBeslutter(innsatsgruppe)) {
+		if (trengerKvalitetssikrer(innsatsgruppe)) {
 			setShowSection(true);
 		}
 

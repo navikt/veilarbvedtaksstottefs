@@ -17,7 +17,7 @@ import { hentMeldinger } from '../../api/veilarbvedtaksstotte/meldinger';
 import { SKRU_AV_POLLING_DIALOG } from '../../api/veilarbpersonflatefs';
 import { DialogSectionMinified } from './dialog-section-minified/dialog-section-minified';
 import { DialogSectionHeaderMinified } from './dialog-section-minified/dialog-section-header-minified';
-import { trengerBeslutter } from '../../util/skjema-utils';
+import { trengerKvalitetssikrer } from '../../util/skjema-utils';
 import { ScreenReaderSpeak } from '../../component/screen-reader-speak/screen-reader-speak';
 
 const FOOTER_HEIGHT = 72;
@@ -143,7 +143,7 @@ export function UtkastSide() {
 		setHarLastetMeldinger(false);
 
 		// Vis dialog seksjon når man går inn på et utkast som trenger beslutter
-		setShowSection(trengerBeslutter(utkast?.innsatsgruppe));
+		setShowSection(trengerKvalitetssikrer(utkast?.innsatsgruppe));
 
 		// Hent meldinger når utkast vises
 		refreshMeldinger();

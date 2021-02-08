@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { UtkastStatusMelding } from './utkast-status-melding';
-import { hentMalformFraData, SkjemaData, trengerBeslutter } from '../../../util/skjema-utils';
+import { hentMalformFraData, SkjemaData, trengerKvalitetssikrer } from '../../../util/skjema-utils';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { useDataStore } from '../../../store/data-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
@@ -55,7 +55,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 
 	const visStartBeslutterProsess =
 		erAnsvarligVeileder &&
-		trengerBeslutter(innsatsgruppe) &&
+		trengerKvalitetssikrer(innsatsgruppe) &&
 		isNothing(beslutterNavn) &&
 		!erBeslutterProsessStartet(beslutterProsessStatus);
 
