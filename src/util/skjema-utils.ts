@@ -127,7 +127,7 @@ export function validerBegrunnelseMaxLength(begrunnelse: OrNothing<string>) {
 	return errors;
 }
 
-export function trengerBeslutter(innsatsgruppe: OrNothing<InnsatsgruppeType>) {
+export function trengerKvalitetssikrer(innsatsgruppe: OrNothing<InnsatsgruppeType>) {
 	return erVarigEllerGradertVarig(innsatsgruppe);
 }
 

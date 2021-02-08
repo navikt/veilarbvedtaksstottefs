@@ -3,7 +3,7 @@ import AlertStripe, { AlertStripeType } from 'nav-frontend-alertstriper';
 import { BeslutterProsessStatus, InnsatsgruppeType, Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../util/type/ornothing';
 import { VeilederTilgang } from '../../../util/tilgang';
-import { trengerBeslutter } from '../../../util/skjema-utils';
+import { trengerKvalitetssikrer } from '../../../util/skjema-utils';
 
 interface UtkastStatusMeldingProps {
 	utkast: Vedtak;
@@ -15,7 +15,7 @@ interface UtkastStatusMeldingProps {
 function utledStatusVerdier(props: UtkastStatusMeldingProps): { type: AlertStripeType; tekst: string } | null {
 	const { utkast, skjemaInnsatsgruppe, veilederTilgang } = props;
 
-	if (!utkast.beslutterProsessStatus && trengerBeslutter(skjemaInnsatsgruppe)) {
+	if (!utkast.beslutterProsessStatus && trengerKvalitetssikrer(skjemaInnsatsgruppe)) {
 		const type = veilederTilgang === VeilederTilgang.ANSVARLIG_VEILEDER ? 'advarsel' : 'info';
 
 		return { type, tekst: 'Trenger kvalitetssikring' };
