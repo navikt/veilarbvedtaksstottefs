@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cls from 'classnames';
 import { DialogMelding } from './dialog-melding/dialog-melding';
 import { SystemMelding } from './system-melding/system-melding';
@@ -8,14 +8,21 @@ import {
 	SystemMelding as SystemMeldingData
 } from '../../../../api/veilarbvedtaksstotte/meldinger';
 import { MeldingType } from '../../../../util/type/melding-type';
+import dayjs from 'dayjs';
 
 interface MeldingListeProps {
 	meldinger: (DialogMeldingData | SystemMeldingData)[];
 	innloggetVeilederIdent: string;
 }
 
-function mapTilDialogMeldingView(melding: DialogMeldingData, key: number, innloggetVeilederIdent: string) {
+function mapTilDialogMeldingView(
+	melding: DialogMeldingData,
+	key: number,
+	isNewAfter: Date,
+	innloggetVeilederIdent: string
+) {
 	const skrevetAvMeg = melding.opprettetAvIdent === innloggetVeilederIdent;
+	const ariaLive = dayjs(melding.opprettet).isAfter(isNewAfter) ? 'polite' : undefined;
 
 	const wrapperClasses = {
 		'melding-wrapper--til-meg': !skrevetAvMeg,
@@ -23,7 +30,7 @@ function mapTilDialogMeldingView(melding: DialogMeldingData, key: number, innlog
 	};
 
 	return (
-		<div className={cls('melding-wrapper', wrapperClasses)} key={key}>
+		<div aria-live={ariaLive} className={cls('melding-wrapper', wrapperClasses)} key={key}>
 			<DialogMelding
 				dato={melding.opprettet}
 				tekst={melding.melding}
@@ -34,23 +41,28 @@ function mapTilDialogMeldingView(melding: DialogMeldingData, key: number, innlog
 	);
 }
 
-function mapTilSystemMeldingView(melding: SystemMeldingData, key: number) {
+function mapTilSystemMeldingView(melding: SystemMeldingData, key: number, isNewAfter: Date) {
+	const ariaLive = dayjs(melding.opprettet).isAfter(isNewAfter) ? 'polite' : undefined;
+
 	return (
-		<div className="melding-wrapper melding-wrapper--system" key={key}>
+		<div aria-live={ariaLive} className="melding-wrapper melding-wrapper--system" key={key}>
 			<SystemMelding systemMeldingType={melding.systemMeldingType} utfortAvNavn={melding.utfortAvNavn} />
 		</div>
 	);
 }
 
 export const MeldingListe = (props: MeldingListeProps) => {
+	// Brukes for å legge på aria-live for opplesing av nye meldinger
+	const [mountTime] = useState(() => new Date());
+
 	const { innloggetVeilederIdent, meldinger } = props;
 
 	return (
-		<div aria-live="polite" className="melding-liste">
+		<div className="melding-liste">
 			{meldinger.map((melding, idx) => {
 				return melding.type === MeldingType.DIALOG_MELDING
-					? mapTilDialogMeldingView(melding as DialogMeldingData, idx, innloggetVeilederIdent)
-					: mapTilSystemMeldingView(melding as SystemMeldingData, idx);
+					? mapTilDialogMeldingView(melding as DialogMeldingData, idx, mountTime, innloggetVeilederIdent)
+					: mapTilSystemMeldingView(melding as SystemMeldingData, idx, mountTime);
 			})}
 		</div>
 	);

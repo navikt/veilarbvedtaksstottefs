@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
-import { trengerBeslutter } from '../../util/skjema-utils';
+import { trengerKvalitetssikrer } from '../../util/skjema-utils';
 import { useAppStore } from '../../store/app-store';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
@@ -20,6 +20,7 @@ import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/veilarbp
 import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
@@ -36,9 +37,11 @@ export function Forhandsvisning() {
 	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
 	const url = lagHentForhandsvisningUrl(utkastId);
 
-	const erUtkastKlartTilUtsending = trengerBeslutter(innsatsgruppe)
+	const erUtkastKlartTilUtsending = trengerKvalitetssikrer(innsatsgruppe)
 		? erGodkjentAvBeslutter(beslutterProsessStatus)
 		: true;
+
+	const visSendKnapp = kanEndreUtkast && erUtkastKlartTilUtsending;
 
 	const tilbakeTilSkjema = () => {
 		changeView(ViewType.UTKAST);
@@ -97,7 +100,7 @@ export function Forhandsvisning() {
 				<div className="forhandsvisning__aksjoner">
 					<Tilbakeknapp htmlType="button" onClick={tilbakeTilSkjema} />
 
-					<Show if={kanEndreUtkast && erUtkastKlartTilUtsending}>
+					<Show if={visSendKnapp}>
 						<Hovedknapp
 							disabled={pdfStatus !== PDFStatus.SUCCESS}
 							mini={true}
@@ -105,6 +108,11 @@ export function Forhandsvisning() {
 						>
 							Send til bruker
 						</Hovedknapp>
+					</Show>
+					<Show if={!visSendKnapp && trengerKvalitetssikrer(innsatsgruppe)}>
+						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
+							Kvalitetssikring må gjennomføres før brev kan sendes
+						</AlertStripe>
 					</Show>
 				</div>
 			</Footer>

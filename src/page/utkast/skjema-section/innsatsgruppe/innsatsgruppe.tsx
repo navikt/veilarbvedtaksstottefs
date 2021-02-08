@@ -3,7 +3,7 @@ import { Radio, RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
 import AlertStripe from 'nav-frontend-alertstriper';
 import FeltHeader from '../felt-header/felt-header';
 import { InnsatsgruppeTipsInnhold } from './innsatsgruppe-tips-innhold';
-import { harSkrevetBegrunnelse, trengerBeslutter } from '../../../../util/skjema-utils';
+import { harSkrevetBegrunnelse, trengerKvalitetssikrer } from '../../../../util/skjema-utils';
 import Show from '../../../../component/show';
 import {
 	erBeslutterProsessStartet,
@@ -18,6 +18,7 @@ import { useDataStore } from '../../../../store/data-store';
 import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekster } from '../../../../util/innsatsgruppe';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import './innsatsgruppe.less';
+import { useDialogSection } from '../../../../store/dialog-section-store';
 
 function Innsatsgruppe() {
 	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();
@@ -63,14 +64,26 @@ interface InnsatsgruppeRadioProps {
 }
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
+	const { setShowSection } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { utkast } = useDataStore();
 
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
-		if (erBeslutterProsessStartet(utkast && utkast.beslutterProsessStatus) && !trengerBeslutter(innsatsgruppe)) {
+		if (
+			erBeslutterProsessStartet(utkast && utkast.beslutterProsessStatus) &&
+			!trengerKvalitetssikrer(innsatsgruppe)
+		) {
 			showModal(ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS, { innsatsgruppe });
 		} else {
 			props.handleInnsatsgruppeChanged(innsatsgruppe);
+		}
+
+		if (trengerKvalitetssikrer(innsatsgruppe)) {
+			setShowSection(true);
+		}
+
+		if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
+			props.setHovedmal(null);
 		}
 	}
 
@@ -85,13 +98,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 						value={innsatsgruppeTekst.value}
 						onKeyPress={swallowEnterKeyPress}
 						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
-						onChange={(e: any) => {
-							const innsatsgruppe = e.target.value;
-							handleInnsatsgruppeChanged(innsatsgruppe);
-							if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
-								props.setHovedmal(null);
-							}
-						}}
+						onChange={(e: any) => handleInnsatsgruppeChanged(e.target.value)}
 					/>
 				))}
 			</RadioGruppe>
