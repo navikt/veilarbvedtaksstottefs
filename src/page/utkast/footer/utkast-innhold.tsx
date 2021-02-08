@@ -51,17 +51,25 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 			return;
 		}
 
-		setLaster(true);
-		sendDataTilBackend()
-			.then(() => changeView(ViewType.FORHANDSVISNING))
-			.catch();
+		if (erAnsvarligVeileder) {
+			setLaster(true);
+			sendDataTilBackend()
+				.then(() => changeView(ViewType.FORHANDSVISNING))
+				.catch();
+		} else {
+			changeView(ViewType.FORHANDSVISNING);
+		}
 	}
 
 	function handleOnTilbakeClicked() {
-		setLaster(true);
-		sendDataTilBackend()
-			.then(() => changeView(ViewType.HOVEDSIDE))
-			.catch();
+		if (erAnsvarligVeileder) {
+			setLaster(true);
+			sendDataTilBackend()
+				.then(() => changeView(ViewType.HOVEDSIDE))
+				.catch();
+		} else {
+			changeView(ViewType.HOVEDSIDE);
+		}
 	}
 
 	return (
