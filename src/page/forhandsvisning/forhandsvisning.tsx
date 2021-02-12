@@ -111,7 +111,7 @@ export function Forhandsvisning() {
 					</Show>
 					<Show if={!visSendKnapp && trengerKvalitetssikrer(innsatsgruppe)}>
 						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
-							Kvalitetssikring må gjennomføres før brev kan sendes
+							<span aria-live="polite">Kvalitetssikring må gjennomføres før brev kan sendes</span>
 						</AlertStripe>
 					</Show>
 				</div>
