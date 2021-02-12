@@ -43,6 +43,11 @@ export function Forhandsvisning() {
 
 	const visSendKnapp = kanEndreUtkast && erUtkastKlartTilUtsending;
 
+	const visKvalitetssikringInfo =
+		!visSendKnapp &&
+		trengerKvalitetssikrer(innsatsgruppe) &&
+		!erGodkjentAvBeslutter(utkast?.beslutterProsessStatus);
+
 	const tilbakeTilSkjema = () => {
 		changeView(ViewType.UTKAST);
 		logMetrikk('tilbake-fra-forhandsvisning');
@@ -109,7 +114,7 @@ export function Forhandsvisning() {
 							Send til bruker
 						</Hovedknapp>
 					</Show>
-					<Show if={!visSendKnapp && trengerKvalitetssikrer(innsatsgruppe)}>
+					<Show if={visKvalitetssikringInfo}>
 						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
 							<span aria-live="polite">Kvalitetssikring må gjennomføres før brev kan sendes</span>
 						</AlertStripe>
