@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import cls from 'classnames';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -79,7 +80,9 @@ function Begrunnelse() {
 						onChange={onBegrunnelseChanged}
 						aria-labelledby="begrunnelse-tittel"
 						autoCorrect="on"
-						className="begrunnelse__tekstomrade skjemaelement__input textarea--medMeta"
+						className={cls('begrunnelse__tekstomrade', 'skjemaelement__input textarea--medMeta', {
+							'begrunnelse__tekstomrade--feil': !!begrunnelseFeil
+						})}
 					/>
 					<Normaltekst className="begrunnelse__malform">
 						Brukers målform: {malformToTekst(malform)}

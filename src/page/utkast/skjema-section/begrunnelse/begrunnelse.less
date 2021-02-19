@@ -1,3 +1,5 @@
+@import "~nav-frontend-core/less/_variabler";
+
 .veilarbvedtaksstottefs {
 
 	.begrunnelse-felt {
@@ -12,12 +14,23 @@
 				left: unset;
 			}
 		}
+
+		.skjemaelement__input:focus {
+			// Bruk !important for å overskrive farge hvis tekstområde har rød border
+			border-color: @fokusFarge !important;
+			box-shadow: 0 0 0 3px @fokusFarge !important;
+		}
 	}
 
 	.begrunnelse__tekstomrade {
 		min-height: 670px;
 		max-height: 670px;
 		overflow-y: auto;
+	}
+
+	.begrunnelse__tekstomrade--feil {
+		border-color: @redError;
+		box-shadow: 0 0 0 1px @redError;
 	}
 
 	.begrunnelse-for-langt-varsel {
