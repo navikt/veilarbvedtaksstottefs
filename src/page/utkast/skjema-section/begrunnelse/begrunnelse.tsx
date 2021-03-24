@@ -7,14 +7,13 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import FeltHeader from '../felt-header/felt-header';
 import './begrunnelse.less';
 import { OrNothing } from '../../../../util/type/ornothing';
-import { MalformData, MalformDataV2, MalformType } from '../../../../api/veilarbperson';
+import { MalformData, MalformType } from '../../../../api/veilarbperson';
 import { useDataStore } from '../../../../store/data-store';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { lagSkjemaelementFeilmelding } from '../../../../util';
 import Show from '../../../../component/show';
-import { PERSONALIA_DATA_FRA_PDL } from '../../../../api/veilarbpersonflatefs';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
@@ -31,21 +30,9 @@ function malformToTekst(malform: OrNothing<MalformData>): string {
 
 	return malformType;
 }
-function malformToTekstV2(malform2: OrNothing<MalformDataV2>): string {
-	const malformTypeV2 = malform2 ? malform2.malformV2 : null;
-
-	if (malformTypeV2 === MalformType.NN || malformTypeV2 === MalformType.NB) {
-		return `Norsk (${malformTypeV2 === MalformType.NN ? 'Nynorsk' : 'Bokmål'})`;
-	} else if (!malformTypeV2) {
-		return 'Ukjent';
-	}
-
-	return malformTypeV2;
-}
 
 function Begrunnelse() {
 	const { malform } = useDataStore();
-	const { malformV2 } = useDataStore();
 	const { begrunnelse, setBegrunnelse, errors, innsatsgruppe } = useSkjemaStore();
 	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 
@@ -97,20 +84,9 @@ function Begrunnelse() {
 							'begrunnelse__tekstomrade--feil': !!begrunnelseFeil
 						})}
 					/>
-
-					<Show if={!PERSONALIA_DATA_FRA_PDL || false}>
-						<Normaltekst className="begrunnelse__malform">
-							Brukers målform:
-							{malformToTekst(malform)}
-						</Normaltekst>
-					</Show>
-					<Show if={PERSONALIA_DATA_FRA_PDL}>
-						<Normaltekst className="begrunnelse__malform">
-							Brukers målform:
-							{malformToTekstV2(malformV2)}
-						</Normaltekst>
-					</Show>
-
+					<Normaltekst className="begrunnelse__malform">
+						Brukers målform: {malformToTekst(malform)}
+					</Normaltekst>
 					<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH}>
 						<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
 							<span aria-live="assertive">

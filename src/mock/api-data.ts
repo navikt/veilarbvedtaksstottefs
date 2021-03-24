@@ -1,6 +1,6 @@
 import OppfolgingData from '../api/veilarboppfolging';
 import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
-import { MalformData, MalformDataV2, MalformType } from '../api/veilarbperson';
+import { MalformData, MalformType } from '../api/veilarbperson';
 import {
 	FeatureToggles,
 	PILOT_TOGGLE,
@@ -8,7 +8,7 @@ import {
 	SKRU_AV_POLLING_DIALOG,
 	SKRU_AV_POLLING_UTKAST,
 	STOPPE_VEDTAKSUTSENDING_TOGGLE,
-	PERSONALIA_DATA_FRA_PDL
+	HENT_MALFORM_FRA_PDL
 } from '../api/veilarbpersonflatefs';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder3 } from './data';
@@ -34,8 +34,8 @@ const malform: MalformData = {
 	malform: MalformType.NB
 };
 
-const malformV2: MalformDataV2 = {
-	malformV2: MalformType.NN
+const malformV2: MalformData = {
+	malform: MalformType.NN
 };
 
 const features: FeatureToggles = {
@@ -44,7 +44,7 @@ const features: FeatureToggles = {
 	[PILOT_TOGGLE]: true,
 	[SKRU_AV_POLLING_UTKAST]: false,
 	[SKRU_AV_POLLING_DIALOG]: false,
-	[PERSONALIA_DATA_FRA_PDL]: true
+	[HENT_MALFORM_FRA_PDL]: false
 };
 
 let innloggetVeileder: Veileder = {
@@ -243,7 +243,7 @@ export function hentMalform(): MalformData {
 	return malform;
 }
 
-export function hentMalformV2(): MalformDataV2 {
+export function hentMalformV2(): MalformData {
 	return malformV2;
 }
 

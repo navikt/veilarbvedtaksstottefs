@@ -3,7 +3,7 @@ import constate from 'constate';
 import { MeldingType, SystemMeldingType } from '../util/type/melding-type';
 import { OrNothing } from '../util/type/ornothing';
 import { Veileder } from '../api/veilarbveileder';
-import { MalformData, MalformDataV2 } from '../api/veilarbperson';
+import { MalformData } from '../api/veilarbperson';
 import Oppfolging from '../api/veilarboppfolging';
 import {
 	DialogMelding as DialogMeldingData,
@@ -19,7 +19,6 @@ const placeholder = {} as any;
 export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [oppfolgingData, setOppfolgingData] = useState<Oppfolging>(placeholder);
 	const [malform, setMalform] = useState<MalformData>(placeholder);
-	const [malformV2, setMalformV2] = useState<MalformDataV2>(placeholder);
 	const [features, setFeatures] = useState<FeatureToggles>(placeholder);
 	const [innloggetVeileder, setInnloggetVeileder] = useState<Veileder>(placeholder);
 	const [utkast, setUtkast] = useState<Vedtak | null>(null);
@@ -68,8 +67,6 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		setOppfolgingData,
 		malform,
 		setMalform,
-		malformV2,
-		setMalformV2,
 		features,
 		setFeatures,
 		innloggetVeileder,

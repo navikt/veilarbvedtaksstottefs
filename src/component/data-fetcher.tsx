@@ -8,10 +8,11 @@ import { useTilgangStore } from '../store/tilgang-store';
 import { useAxiosFetcher } from '../util/use-axios-fetcher';
 import { hentArenaVedtak, hentFattedeVedtak } from '../api/veilarbvedtaksstotte/vedtak';
 import { fetchOppfolging } from '../api/veilarboppfolging';
-import { fetchMalform, fetchMalformV2 } from '../api/veilarbperson';
+import { fetchMalform } from '../api/veilarbperson';
 import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../api/utils';
+import { HENT_MALFORM_FRA_PDL } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const { initSkjema } = useSkjemaStore();
@@ -22,7 +23,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		setUtkast,
 		setInnloggetVeileder,
 		setArenaVedtak,
-		setMalformV2
+		features
 	} = useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
 
@@ -32,16 +33,13 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	const utkastFetcher = useAxiosFetcher(fetchUtkast);
 	const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
 	const arenaVedtakFetcher = useAxiosFetcher(hentArenaVedtak);
-	const malformFetcherV2 = useAxiosFetcher(fetchMalformV2);
 
 	useEffect(() => {
 		fattedeVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setFattedeVedtak)).catch();
 
 		oppfolgingFetcher.fetch(props.fnr).then(ifResponseHasData(setOppfolgingData)).catch();
 
-		malformFetcher.fetch(props.fnr).then(ifResponseHasData(setMalform)).catch();
-
-		malformFetcherV2.fetch(props.fnr).then(ifResponseHasData(setMalformV2)).catch();
+		malformFetcher.fetch(props.fnr, features[HENT_MALFORM_FRA_PDL]).then(ifResponseHasData(setMalform)).catch();
 
 		utkastFetcher
 			.fetch(props.fnr)
@@ -73,7 +71,6 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			fattedeVedtakFetcher,
 			oppfolgingFetcher,
 			malformFetcher,
-			malformFetcherV2,
 			utkastFetcher,
 			innloggetVeilederFetcher,
 			arenaVedtakFetcher
@@ -85,7 +82,6 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			fattedeVedtakFetcher,
 			oppfolgingFetcher,
 			malformFetcher,
-			malformFetcherV2,
 			innloggetVeilederFetcher,
 			arenaVedtakFetcher
 		) ||
