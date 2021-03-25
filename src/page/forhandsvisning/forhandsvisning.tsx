@@ -16,7 +16,7 @@ import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../../component/varsel/varsel-type';
 import { logMetrikk } from '../../util/logger';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
-import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/veilarbpersonflatefs';
+import { STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/veilarbpersonflatefs';
 import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
@@ -34,7 +34,7 @@ export function Forhandsvisning() {
 
 	const { id: utkastId, beslutterProsessStatus } = utkast as Vedtak;
 
-	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
+	const stoppeUtsendingFeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE];
 	const url = lagHentForhandsvisningUrl(utkastId);
 
 	const erUtkastKlartTilUtsending = trengerKvalitetssikrer(innsatsgruppe)
@@ -90,7 +90,7 @@ export function Forhandsvisning() {
 	};
 
 	const handleOnSendClicked = () => {
-		if (stoppeUtsendingfeatureToggle) {
+		if (stoppeUtsendingFeatureToggle) {
 			showModal(ModalType.FEIL_UTSENDING_STOPPET);
 			return;
 		}
