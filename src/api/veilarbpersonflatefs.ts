@@ -5,12 +5,14 @@ export const PRELANSERING_INFO_OM_LOSNING_TOGGLE = 'veilarbvedtaksstottefs.prela
 export const STOPPE_VEDTAKSUTSENDING_TOGGLE = 'veilarbvedtaksstottefs.stoppevedtaksutsending';
 export const SKRU_AV_POLLING_UTKAST = 'veilarbvedtaksstottefs.skru_av_polling_utkast';
 export const SKRU_AV_POLLING_DIALOG = 'veilarbvedtaksstottefs.skru_av_polling_dialog';
+export const HENT_MALFORM_FRA_PDL = 'veilarbvedtaksstottefs.hent_malform_fra_pdl';
 
 export const ALL_TOGGLES = [
 	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
 	STOPPE_VEDTAKSUTSENDING_TOGGLE,
 	SKRU_AV_POLLING_UTKAST,
-	SKRU_AV_POLLING_DIALOG
+	SKRU_AV_POLLING_DIALOG,
+	HENT_MALFORM_FRA_PDL
 ];
 
 export interface FeatureToggles {
@@ -18,6 +20,7 @@ export interface FeatureToggles {
 	[STOPPE_VEDTAKSUTSENDING_TOGGLE]: boolean;
 	[SKRU_AV_POLLING_UTKAST]: boolean;
 	[SKRU_AV_POLLING_DIALOG]: boolean;
+	[HENT_MALFORM_FRA_PDL]: boolean;
 }
 
 export function fetchFeaturesToggles(): AxiosPromise<FeatureToggles> {

@@ -12,6 +12,7 @@ import { fetchMalform } from '../api/veilarbperson';
 import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../api/utils';
+import { HENT_MALFORM_FRA_PDL } from '../api/veilarbpersonflatefs';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const { initSkjema } = useSkjemaStore();
@@ -21,7 +22,8 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		setMalform,
 		setUtkast,
 		setInnloggetVeileder,
-		setArenaVedtak
+		setArenaVedtak,
+		features
 	} = useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
 
@@ -37,7 +39,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 
 		oppfolgingFetcher.fetch(props.fnr).then(ifResponseHasData(setOppfolgingData)).catch();
 
-		malformFetcher.fetch(props.fnr).then(ifResponseHasData(setMalform)).catch();
+		malformFetcher.fetch(props.fnr, features[HENT_MALFORM_FRA_PDL]).then(ifResponseHasData(setMalform)).catch();
 
 		utkastFetcher
 			.fetch(props.fnr)
