@@ -14,6 +14,6 @@ export function fetchMalform(fnr: string, hentMalformFraPdl: boolean): AxiosProm
 	if (hentMalformFraPdl) {
 		return axiosInstance.get(`/veilarbperson/api/v2/person/malform?fnr=${fnr}`);
 	} else {
-		return axiosInstance.get(`/veilarbperson/api/person/malform?fnr=${fnr}`);
+		return axiosInstance.get(`/veilarbperson/api/person/${fnr}/malform`);
 	}
 }
