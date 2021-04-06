@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio, RadioGruppe, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Radio, RadioGruppe } from 'nav-frontend-skjema';
 import AlertStripe from 'nav-frontend-alertstriper';
 import FeltHeader from '../felt-header/felt-header';
 import { InnsatsgruppeTipsInnhold } from './innsatsgruppe-tips-innhold';
@@ -21,7 +21,7 @@ import './innsatsgruppe.less';
 import { useDialogSection } from '../../../../store/dialog-section-store';
 
 function Innsatsgruppe() {
-	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal, errors } = useSkjemaStore();
+	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal } = useSkjemaStore();
 	const { fattedeVedtak } = useDataStore();
 
 	const erStandardInnsatsValgt = erStandard(innsatsgruppe);
@@ -44,13 +44,11 @@ function Innsatsgruppe() {
 					viktig å fremheve hva som er årsaken til endring i brukers situasjon.
 				</AlertStripe>
 			</Show>
-			<SkjemaGruppe feil={lagSkjemaelementFeilmelding(errors.innsatsgruppe)}>
-				<InnsatsgruppeRadioButtons
-					handleInnsatsgruppeChanged={setInnsatsgruppe}
-					innsatsgruppe={innsatsgruppe}
-					setHovedmal={setHovedmal}
-				/>
-			</SkjemaGruppe>
+			<InnsatsgruppeRadioButtons
+				handleInnsatsgruppeChanged={setInnsatsgruppe}
+				innsatsgruppe={innsatsgruppe}
+				setHovedmal={setHovedmal}
+			/>
 		</div>
 	);
 }
@@ -67,6 +65,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	const { setShowSection } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { utkast } = useDataStore();
+	const { errors } = useSkjemaStore();
 
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
 		if (
@@ -89,7 +88,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 
 	return (
 		<div className="innsatsgruppe">
-			<RadioGruppe legend={null}>
+			<RadioGruppe legend={null} feil={lagSkjemaelementFeilmelding(errors.innsatsgruppe)}>
 				{innsatsgruppeTekster.map(innsatsgruppeTekst => (
 					<Radio
 						key={innsatsgruppeTekst.value}

@@ -16,7 +16,7 @@ import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../../component/varsel/varsel-type';
 import { logMetrikk } from '../../util/logger';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
-import { PILOT_TOGGLE, STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/veilarbpersonflatefs';
+import { STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/veilarbpersonflatefs';
 import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
@@ -34,7 +34,7 @@ export function Forhandsvisning() {
 
 	const { id: utkastId, beslutterProsessStatus } = utkast as Vedtak;
 
-	const stoppeUtsendingfeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE] && !features[PILOT_TOGGLE];
+	const stoppeUtsendingFeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE];
 	const url = lagHentForhandsvisningUrl(utkastId);
 
 	const erUtkastKlartTilUtsending = trengerKvalitetssikrer(innsatsgruppe)
@@ -42,6 +42,11 @@ export function Forhandsvisning() {
 		: true;
 
 	const visSendKnapp = kanEndreUtkast && erUtkastKlartTilUtsending;
+
+	const visKvalitetssikringInfo =
+		!visSendKnapp &&
+		trengerKvalitetssikrer(innsatsgruppe) &&
+		!erGodkjentAvBeslutter(utkast?.beslutterProsessStatus);
 
 	const tilbakeTilSkjema = () => {
 		changeView(ViewType.UTKAST);
@@ -85,7 +90,7 @@ export function Forhandsvisning() {
 	};
 
 	const handleOnSendClicked = () => {
-		if (stoppeUtsendingfeatureToggle) {
+		if (stoppeUtsendingFeatureToggle) {
 			showModal(ModalType.FEIL_UTSENDING_STOPPET);
 			return;
 		}
@@ -109,9 +114,9 @@ export function Forhandsvisning() {
 							Send til bruker
 						</Hovedknapp>
 					</Show>
-					<Show if={!visSendKnapp && trengerKvalitetssikrer(innsatsgruppe)}>
+					<Show if={visKvalitetssikringInfo}>
 						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
-							Kvalitetssikring må gjennomføres før brev kan sendes
+							<span aria-live="polite">Kvalitetssikring må gjennomføres før brev kan sendes</span>
 						</AlertStripe>
 					</Show>
 				</div>

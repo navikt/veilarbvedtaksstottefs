@@ -3,11 +3,11 @@ import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { MalformData, MalformType } from '../api/veilarbperson';
 import {
 	FeatureToggles,
-	PILOT_TOGGLE,
 	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
 	SKRU_AV_POLLING_DIALOG,
 	SKRU_AV_POLLING_UTKAST,
-	STOPPE_VEDTAKSUTSENDING_TOGGLE
+	STOPPE_VEDTAKSUTSENDING_TOGGLE,
+	HENT_MALFORM_FRA_PDL
 } from '../api/veilarbpersonflatefs';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder3 } from './data';
@@ -33,12 +33,16 @@ const malform: MalformData = {
 	malform: MalformType.NB
 };
 
+const malformV2: MalformData = {
+	malform: MalformType.NN
+};
+
 const features: FeatureToggles = {
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
 	[STOPPE_VEDTAKSUTSENDING_TOGGLE]: false,
-	[PILOT_TOGGLE]: true,
 	[SKRU_AV_POLLING_UTKAST]: false,
-	[SKRU_AV_POLLING_DIALOG]: false
+	[SKRU_AV_POLLING_DIALOG]: false,
+	[HENT_MALFORM_FRA_PDL]: true
 };
 
 let innloggetVeileder: Veileder = {
@@ -235,6 +239,10 @@ export function hentOppfolgingData(): OppfolgingData {
 
 export function hentMalform(): MalformData {
 	return malform;
+}
+
+export function hentMalformV2(): MalformData {
+	return malformV2;
 }
 
 export function hentArenaVedtak(): ArenaVedtak[] {

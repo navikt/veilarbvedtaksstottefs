@@ -73,8 +73,10 @@ export function UtkastStatusMelding(props: UtkastStatusMeldingProps) {
 	const ariaLabel = props.minified ? alertStripeVerdier.tekst : undefined;
 
 	return (
-		<AlertStripe type={alertStripeVerdier.type} aria-live={ariaLive} aria-label={ariaLabel} form="inline">
-			{props.minified ? '' : alertStripeVerdier.tekst}
+		<AlertStripe type={alertStripeVerdier.type} form="inline">
+			<span aria-live={ariaLive} aria-label={ariaLabel}>
+				{props.minified ? '' : alertStripeVerdier.tekst}
+			</span>
 		</AlertStripe>
 	);
 }

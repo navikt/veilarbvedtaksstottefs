@@ -3,10 +3,12 @@ import { utkastHandlers } from './utkast';
 import { beslutterHandlers } from './beslutter';
 import { meldingerHandlers } from './meldinger';
 import { vedtakHandlers } from './vedtak';
+import { utrullingHandlers } from './utrulling';
 
 export const veilarbvedtaksstotteHandlers: RequestHandlersList = [
 	...beslutterHandlers,
 	...meldingerHandlers,
 	...utkastHandlers,
-	...vedtakHandlers
+	...vedtakHandlers,
+	...utrullingHandlers
 ];

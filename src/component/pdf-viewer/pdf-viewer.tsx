@@ -67,7 +67,7 @@ class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
 	render() {
 		return (
 			<div className="pdfvisning">
-				<div className="pdfvisning__header">
+				<div aria-live="polite" className="pdfvisning__header">
 					<Undertittel tag="h1">{this.props.title}</Undertittel>
 				</div>
 				<Document
