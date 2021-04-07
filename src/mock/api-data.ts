@@ -105,7 +105,8 @@ const pabegyntUtkast: Vedtak = {
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
 	innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
 	vedtakStatus: VedtakStatus.UTKAST,
-	sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
+	utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
+	vedtakFattet: null,
 	gjeldende: false,
 	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
 	veilederNavn: veileder1.navn,
@@ -126,7 +127,8 @@ const historisk: Vedtak[] = [
 		hovedmal: HovedmalType.BEHOLDE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
 		vedtakStatus: VedtakStatus.SENDT,
-		sistOppdatert: '2018-08-05T09:55:43.716393+02:00',
+		utkastSistOppdatert: '2018-08-05T09:55:43.716393+02:00',
+		vedtakFattet: '2018-08-05T09:55:43.716393+02:00',
 		begrunnelse:
 			'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
 			'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' +
@@ -163,7 +165,8 @@ const historisk: Vedtak[] = [
 			'Svarene dine fra da du registrerte deg',
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 		],
-		sistOppdatert: '2019-12-12T12:58:43.716393+02:00',
+		utkastSistOppdatert: '2019-12-12T12:58:43.716393+02:00',
+		vedtakFattet: '2019-12-12T12:58:43.716393+02:00',
 		begrunnelse:
 			'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
 			'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' +
@@ -175,7 +178,7 @@ const historisk: Vedtak[] = [
 			'- listepunkt 3\n' +
 			'- listepunkt 4\n' +
 			'- listepunkt 5',
-		gjeldende: false,
+		gjeldende: true,
 		veilederNavn: veileder1.navn,
 		veilederIdent: veileder1.ident,
 		oppfolgingsenhetId: enhetId,

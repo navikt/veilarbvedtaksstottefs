@@ -17,7 +17,7 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 			name="tidligere-vedtak"
 			onClick={onClick}
 			vedtak={vedtak}
-			dato={vedtak.sistOppdatert}
+			dato={vedtak.vedtakFattet as string}
 			posisjon={posisjon}
 			ikon={vedtakBilde}
 		>
@@ -33,7 +33,7 @@ export function TidligereVedtakListe({ vedtakListe }: { vedtakListe: Vedtak[] })
 	const { changeView } = useViewStore();
 
 	const tidligereVedtak = useMemo(() => {
-		return [...vedtakListe].sort((v1, v2) => sortDatesDesc(v1.sistOppdatert, v2.sistOppdatert));
+		return [...vedtakListe].sort((v1, v2) => sortDatesDesc(v1.vedtakFattet as string, v2.vedtakFattet as string));
 	}, [vedtakListe]);
 
 	function handleTidligereVedtakClicked(vedtakData: Vedtak, idx: number) {

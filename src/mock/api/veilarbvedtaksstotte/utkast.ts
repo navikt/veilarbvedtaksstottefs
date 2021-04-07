@@ -32,7 +32,8 @@ export const utkastHandlers: RequestHandlersList = [
 		const nyttUtkast = ({
 			id: nyId,
 			vedtakStatus: 'UTKAST',
-			sistOppdatert: '2019-05-07T10:22:32.98982+02:00',
+			utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
+			vedtakFattet: null,
 			gjeldende: false,
 			opplysninger: [],
 			veilederNavn: hentInnloggetVeileder().navn,

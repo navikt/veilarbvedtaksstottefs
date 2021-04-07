@@ -24,7 +24,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 		veilederNavn,
 		oppfolgingsenhetNavn,
 		oppfolgingsenhetId,
-		sistOppdatert
+		utkastSistOppdatert
 	} = props.fattetVedtak;
 
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
@@ -39,7 +39,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 					titleTextClassName="label__title-text--gap-lg"
 					className="blokk-xxs"
 					titleText="Dato"
-					valueText={formatDateStr(sistOppdatert)}
+					valueText={formatDateStr(utkastSistOppdatert)}
 				/>
 				<Show if={beslutterNavn}>
 					<Label
