@@ -12,7 +12,7 @@ import { InnsatsgruppeType, Vedtak } from '../../../api/veilarbvedtaksstotte';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
-	const { id, innsatsgruppe, veilederNavn, sistOppdatert } = props.gjeldendeVedtak;
+	const { id, innsatsgruppe, veilederNavn, vedtakFattet } = props.gjeldendeVedtak;
 	const innsatsgruppeData = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
 
 	const handleVisVedtakClicked = () => {
@@ -34,7 +34,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 					</p>
 					<DatoLabel
 						className="gjeldende-vedtak-panel__dato"
-						sistOppdatert={sistOppdatert}
+						sistOppdatert={vedtakFattet as string}
 						formatType="short"
 						text="Dato"
 					/>

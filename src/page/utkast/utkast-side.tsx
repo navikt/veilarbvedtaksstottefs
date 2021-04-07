@@ -58,7 +58,7 @@ export function UtkastSide() {
 
 	const erBeslutterProsessStartet = !!utkast?.beslutterProsessStatus;
 
-	const sisteOppdatering = sistOppdatert || utkast!.sistOppdatert;
+	const sisteOppdatering = sistOppdatert || utkast!.utkastSistOppdatert;
 
 	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
 
