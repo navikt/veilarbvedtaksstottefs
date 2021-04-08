@@ -31,7 +31,8 @@ export interface Vedtak {
 	hovedmal: OrNothing<HovedmalType>;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
 	vedtakStatus: VedtakStatus;
-	sistOppdatert: string;
+	utkastSistOppdatert: string;
+	vedtakFattet: OrNothing<string>;
 	begrunnelse: OrNothing<string>;
 	gjeldende: boolean;
 	veilederIdent: string;

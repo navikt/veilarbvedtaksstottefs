@@ -67,7 +67,7 @@ export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
 					</Show>
 					<DatoLabel
 						className="utkast-panel__dato"
-						sistOppdatert={sistOppdatert || props.utkast.sistOppdatert}
+						sistOppdatert={sistOppdatert || props.utkast.utkastSistOppdatert}
 						formatType="long"
 						text="Sist endret"
 					/>

@@ -37,7 +37,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 		setKilder(mappetKilder);
 		setInnsatsgruppe(utkast.innsatsgruppe);
 		setBegrunnelse(utkast.begrunnelse);
-		setSistOppdatert(utkast.sistOppdatert);
+		setSistOppdatert(utkast.utkastSistOppdatert);
 	};
 
 	const resetSkjema = () => {
