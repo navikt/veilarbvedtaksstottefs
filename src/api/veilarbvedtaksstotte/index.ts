@@ -2,11 +2,6 @@ import { OrNothing } from '../../util/type/ornothing';
 
 export const VEILARBVEDTAKSSTOTTE_API = '/veilarbvedtaksstotte/api';
 
-export enum VedtakStatus {
-	UTKAST = 'UTKAST',
-	SENDT = 'SENDT'
-}
-
 export enum InnsatsgruppeType {
 	STANDARD_INNSATS = 'STANDARD_INNSATS',
 	SITUASJONSBESTEMT_INNSATS = 'SITUASJONSBESTEMT_INNSATS',
@@ -26,15 +21,12 @@ export enum BeslutterProsessStatus {
 	GODKJENT_AV_BESLUTTER = 'GODKJENT_AV_BESLUTTER'
 }
 
-export interface Vedtak {
+export interface Utkast {
 	id: number;
 	hovedmal: OrNothing<HovedmalType>;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
-	vedtakStatus: VedtakStatus;
 	utkastSistOppdatert: string;
-	vedtakFattet: OrNothing<string>;
 	begrunnelse: OrNothing<string>;
-	gjeldende: boolean;
 	veilederIdent: string;
 	veilederNavn: string;
 	oppfolgingsenhetId: string;
@@ -42,7 +34,24 @@ export interface Vedtak {
 	beslutterIdent: OrNothing<string>;
 	beslutterNavn: OrNothing<string>;
 	opplysninger: string[]; // Har blitt renamet til "kilder" i etterkant
+	beslutterProsessStatus: OrNothing<BeslutterProsessStatus>;
+}
+
+export interface Vedtak {
+	id: number;
+	hovedmal: OrNothing<HovedmalType>;
+	innsatsgruppe: InnsatsgruppeType;
+	begrunnelse: OrNothing<string>;
+	veilederIdent: string;
+	veilederNavn: string;
+	oppfolgingsenhetId: string;
+	oppfolgingsenhetNavn: string;
+	beslutterIdent: OrNothing<string>;
+	beslutterNavn: OrNothing<string>;
+	opplysninger: string[]; // Har blitt renamet til "kilder" i etterkant
+
+	gjeldende: boolean;
+	vedtakFattet: string;
 	journalpostId: OrNothing<string>;
 	dokumentInfoId: OrNothing<string>;
-	beslutterProsessStatus: OrNothing<BeslutterProsessStatus>;
 }

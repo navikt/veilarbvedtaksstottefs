@@ -8,16 +8,16 @@ import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import './tidligere-vedtak-liste.less';
 import { logMetrikk } from '../../util/logger';
-import { InnsatsgruppeType, Vedtak } from '../../api/veilarbvedtaksstotte';
+import { Vedtak } from '../../api/veilarbvedtaksstotte';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
-	const innsatsgruppeTekst = getInnsatsgruppeTekst(vedtak.innsatsgruppe as InnsatsgruppeType);
+	const innsatsgruppeTekst = getInnsatsgruppeTekst(vedtak.innsatsgruppe);
 	return (
 		<VedtakPanel<Vedtak>
 			name="tidligere-vedtak"
 			onClick={onClick}
 			vedtak={vedtak}
-			dato={vedtak.vedtakFattet as string}
+			dato={vedtak.vedtakFattet}
 			posisjon={posisjon}
 			ikon={vedtakBilde}
 		>
@@ -33,7 +33,7 @@ export function TidligereVedtakListe({ vedtakListe }: { vedtakListe: Vedtak[] })
 	const { changeView } = useViewStore();
 
 	const tidligereVedtak = useMemo(() => {
-		return [...vedtakListe].sort((v1, v2) => sortDatesDesc(v1.vedtakFattet as string, v2.vedtakFattet as string));
+		return [...vedtakListe].sort((v1, v2) => sortDatesDesc(v1.vedtakFattet, v2.vedtakFattet));
 	}, [vedtakListe]);
 
 	function handleTidligereVedtakClicked(vedtakData: Vedtak, idx: number) {

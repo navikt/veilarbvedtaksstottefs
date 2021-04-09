@@ -1,12 +1,12 @@
 import React from 'react';
 import AlertStripe, { AlertStripeType } from 'nav-frontend-alertstriper';
-import { BeslutterProsessStatus, InnsatsgruppeType, Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { BeslutterProsessStatus, InnsatsgruppeType, Utkast } from '../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../util/type/ornothing';
 import { VeilederTilgang } from '../../../util/tilgang';
 import { trengerKvalitetssikrer } from '../../../util/skjema-utils';
 
 interface UtkastStatusMeldingProps {
-	utkast: Vedtak;
+	utkast: Utkast;
 	skjemaInnsatsgruppe: OrNothing<InnsatsgruppeType>;
 	veilederTilgang: VeilederTilgang;
 	minified?: boolean;
