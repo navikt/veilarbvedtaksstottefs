@@ -143,8 +143,6 @@ const historisk: Vedtak[] = [
 		veilederIdent: veileder1.ident,
 		oppfolgingsenhetId: enhetId,
 		oppfolgingsenhetNavn: enhetNavn,
-		dokumentInfoId: null,
-		journalpostId: '123456',
 		beslutterIdent: null,
 		beslutterNavn: null
 	},
@@ -173,8 +171,6 @@ const historisk: Vedtak[] = [
 		veilederIdent: veileder1.ident,
 		oppfolgingsenhetId: enhetId,
 		oppfolgingsenhetNavn: enhetNavn,
-		dokumentInfoId: '98765',
-		journalpostId: '5678',
 		beslutterIdent: veileder3.ident,
 		beslutterNavn: veileder3.navn
 	}

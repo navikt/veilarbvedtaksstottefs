@@ -85,8 +85,6 @@ export const utkastHandlers: RequestHandlersList = [
 		const fattetVedtak = { ...hentUtkast() } as Vedtak;
 
 		fattetVedtak.gjeldende = true;
-		fattetVedtak.dokumentInfoId = '123';
-		fattetVedtak.journalpostId = '456';
 
 		leggTilFattetVedtak(fattetVedtak);
 		byttUtUtkast(null);

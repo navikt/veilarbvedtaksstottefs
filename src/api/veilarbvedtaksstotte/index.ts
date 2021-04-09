@@ -52,6 +52,4 @@ export interface Vedtak {
 
 	gjeldende: boolean;
 	vedtakFattet: string;
-	journalpostId: OrNothing<string>;
-	dokumentInfoId: OrNothing<string>;
 }
