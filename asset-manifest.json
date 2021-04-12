@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/veilarbvedtaksstottefs/static/css/main.4ed52878.chunk.css",
-    "main.js": "/veilarbvedtaksstottefs/static/js/main.054c152d.chunk.js",
-    "main.js.map": "/veilarbvedtaksstottefs/static/js/main.054c152d.chunk.js.map",
+    "main.js": "/veilarbvedtaksstottefs/static/js/main.a9ec043a.chunk.js",
+    "main.js.map": "/veilarbvedtaksstottefs/static/js/main.a9ec043a.chunk.js.map",
     "runtime-main.js": "/veilarbvedtaksstottefs/static/js/runtime-main.6e843c9b.js",
     "runtime-main.js.map": "/veilarbvedtaksstottefs/static/js/runtime-main.6e843c9b.js.map",
     "static/css/2.82ae3d80.chunk.css": "/veilarbvedtaksstottefs/static/css/2.82ae3d80.chunk.css",
     "static/js/2.f72d9ffc.chunk.js": "/veilarbvedtaksstottefs/static/js/2.f72d9ffc.chunk.js",
     "static/js/2.f72d9ffc.chunk.js.map": "/veilarbvedtaksstottefs/static/js/2.f72d9ffc.chunk.js.map",
     "index.html": "/veilarbvedtaksstottefs/index.html",
-    "precache-manifest.facb5cc88f98844851b3b4d747e75098.js": "/veilarbvedtaksstottefs/precache-manifest.facb5cc88f98844851b3b4d747e75098.js",
+    "precache-manifest.ee0f86ef474055b31206f0a41be37993.js": "/veilarbvedtaksstottefs/precache-manifest.ee0f86ef474055b31206f0a41be37993.js",
     "service-worker.js": "/veilarbvedtaksstottefs/service-worker.js",
     "static/css/2.82ae3d80.chunk.css.map": "/veilarbvedtaksstottefs/static/css/2.82ae3d80.chunk.css.map",
     "static/css/main.4ed52878.chunk.css.map": "/veilarbvedtaksstottefs/static/css/main.4ed52878.chunk.css.map",
@@ -51,6 +51,6 @@
     "static/css/2.82ae3d80.chunk.css",
     "static/js/2.f72d9ffc.chunk.js",
     "static/css/main.4ed52878.chunk.css",
-    "static/js/main.054c152d.chunk.js"
+    "static/js/main.a9ec043a.chunk.js"
   ]
 }

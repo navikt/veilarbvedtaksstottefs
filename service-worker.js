@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/veilarbvedtaksstottefs/precache-manifest.facb5cc88f98844851b3b4d747e75098.js"
+  "/veilarbvedtaksstottefs/precache-manifest.ee0f86ef474055b31206f0a41be37993.js"
 );
 
 self.addEventListener('message', (event) => {
