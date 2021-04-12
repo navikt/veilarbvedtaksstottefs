@@ -9,7 +9,7 @@ import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
 import './skjema-visning.less';
 import { getHovedmalNavn } from '../../util/hovedmal';
 import Tekstomrade from 'nav-frontend-tekstomrade';
-import { InnsatsgruppeType, Vedtak } from '../../api/veilarbvedtaksstotte';
+import { Vedtak } from '../../api/veilarbvedtaksstotte';
 
 export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
@@ -24,10 +24,10 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 		veilederNavn,
 		oppfolgingsenhetNavn,
 		oppfolgingsenhetId,
-		utkastSistOppdatert
+		vedtakFattet
 	} = props.fattetVedtak;
 
-	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
+	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe);
 	const fattetAv = `${veilederNavn}, ${oppfolgingsenhetId} ${oppfolgingsenhetNavn}`;
 
 	return (
@@ -39,7 +39,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 					titleTextClassName="label__title-text--gap-lg"
 					className="blokk-xxs"
 					titleText="Dato"
-					valueText={formatDateStr(utkastSistOppdatert)}
+					valueText={formatDateStr(vedtakFattet)}
 				/>
 				<Show if={beslutterNavn}>
 					<Label

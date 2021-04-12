@@ -19,9 +19,9 @@ import {
 	isNothing
 } from '../../../util';
 import { Label, LabelType } from '../../label/label';
-import { Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { Utkast } from '../../../api/veilarbvedtaksstotte';
 
-export function UtkastPanel(props: { utkast: OrNothing<Vedtak> }) {
+export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { changeView } = useViewStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const { sistOppdatert } = useSkjemaStore();

@@ -9,7 +9,7 @@ import {
 	DialogMelding as DialogMeldingData,
 	SystemMelding as SystemMeldingData
 } from '../api/veilarbvedtaksstotte/meldinger';
-import { BeslutterProsessStatus, Vedtak } from '../api/veilarbvedtaksstotte';
+import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
 import { FeatureToggles } from '../api/veilarbpersonflatefs';
 
@@ -21,7 +21,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [malform, setMalform] = useState<MalformData>(placeholder);
 	const [features, setFeatures] = useState<FeatureToggles>(placeholder);
 	const [innloggetVeileder, setInnloggetVeileder] = useState<Veileder>(placeholder);
-	const [utkast, setUtkast] = useState<Vedtak | null>(null);
+	const [utkast, setUtkast] = useState<Utkast | null>(null);
 	const [fattedeVedtak, setFattedeVedtak] = useState<Vedtak[]>([]);
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
 	const [meldinger, setMeldinger] = useState<(DialogMeldingData | SystemMeldingData)[]>([]);

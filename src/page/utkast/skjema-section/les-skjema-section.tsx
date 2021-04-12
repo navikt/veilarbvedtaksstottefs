@@ -11,7 +11,7 @@ import { useSkjemaStore } from '../../../store/skjema-store';
 import { useVarselStore } from '../../../store/varsel-store';
 import { SKRU_AV_POLLING_UTKAST } from '../../../api/veilarbpersonflatefs';
 import { fetchUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
-import { BeslutterProsessStatus, Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../util/type/ornothing';
 import { hentFattedeVedtak } from '../../../api/veilarbvedtaksstotte/vedtak';
 import Tekstomrade from 'nav-frontend-tekstomrade';
@@ -61,7 +61,7 @@ export function LesSkjemaSection() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkast, erBeslutter]);
 
-	function erVedtakSkjemafeltEndret(v1: Vedtak, v2: Vedtak) {
+	function erVedtakSkjemafeltEndret(v1: Utkast, v2: Utkast) {
 		return (
 			v1.begrunnelse !== v2.begrunnelse ||
 			v1.hovedmal !== v2.hovedmal ||

@@ -1,6 +1,6 @@
 import { OrNothing } from './type/ornothing';
 import { Veileder } from '../api/veilarbveileder';
-import { Vedtak } from '../api/veilarbvedtaksstotte';
+import { Utkast } from '../api/veilarbvedtaksstotte';
 
 export enum VeilederTilgang {
 	BESLUTTER = 'BESLUTTER',
@@ -24,7 +24,7 @@ export function erBeslutter(tilgang: VeilederTilgang): boolean {
 	return tilgang === VeilederTilgang.BESLUTTER;
 }
 
-export function finnVeilederTilgang(innloggetVeileder: Veileder, vedtak: OrNothing<Vedtak>): VeilederTilgang {
+export function finnVeilederTilgang(innloggetVeileder: Veileder, vedtak: OrNothing<Utkast>): VeilederTilgang {
 	const innloggetIdent = innloggetVeileder.ident;
 
 	if (!vedtak) {

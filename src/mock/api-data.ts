@@ -13,7 +13,7 @@ import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
 import { MeldingType, SystemMeldingType } from '../util/type/melding-type';
-import { HovedmalType, InnsatsgruppeType, Vedtak, VedtakStatus } from '../api/veilarbvedtaksstotte';
+import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { SkjemaData } from '../util/skjema-utils';
 import env from '../util/environment';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
@@ -100,22 +100,17 @@ const systemMeldinger: SystemMelding[] = [
 	}
 ];
 
-const pabegyntUtkast: Vedtak = {
+const pabegyntUtkast: Utkast = {
 	id: 100,
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
 	innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
-	vedtakStatus: VedtakStatus.UTKAST,
 	utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
-	vedtakFattet: null,
-	gjeldende: false,
 	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
 	veilederNavn: veileder1.navn,
 	veilederIdent: veileder1.ident,
 	oppfolgingsenhetId: enhetId,
 	oppfolgingsenhetNavn: enhetNavn,
 	begrunnelse: 'Trenger ikke hjelp',
-	dokumentInfoId: null,
-	journalpostId: null,
 	beslutterIdent: null,
 	beslutterNavn: null,
 	beslutterProsessStatus: null
@@ -126,8 +121,6 @@ const historisk: Vedtak[] = [
 		id: 1234,
 		hovedmal: HovedmalType.BEHOLDE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
-		vedtakStatus: VedtakStatus.SENDT,
-		utkastSistOppdatert: '2018-08-05T09:55:43.716393+02:00',
 		vedtakFattet: '2018-08-05T09:55:43.716393+02:00',
 		begrunnelse:
 			'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
@@ -150,22 +143,17 @@ const historisk: Vedtak[] = [
 		veilederIdent: veileder1.ident,
 		oppfolgingsenhetId: enhetId,
 		oppfolgingsenhetNavn: enhetNavn,
-		dokumentInfoId: null,
-		journalpostId: '123456',
 		beslutterIdent: null,
-		beslutterNavn: null,
-		beslutterProsessStatus: null
+		beslutterNavn: null
 	},
 	{
 		id: 1235,
 		hovedmal: HovedmalType.SKAFFE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
-		vedtakStatus: VedtakStatus.SENDT,
 		opplysninger: [
 			'Svarene dine fra da du registrerte deg',
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 		],
-		utkastSistOppdatert: '2019-12-12T12:58:43.716393+02:00',
 		vedtakFattet: '2019-12-12T12:58:43.716393+02:00',
 		begrunnelse:
 			'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
@@ -183,11 +171,8 @@ const historisk: Vedtak[] = [
 		veilederIdent: veileder1.ident,
 		oppfolgingsenhetId: enhetId,
 		oppfolgingsenhetNavn: enhetNavn,
-		dokumentInfoId: '98765',
-		journalpostId: '5678',
 		beslutterIdent: veileder3.ident,
-		beslutterNavn: veileder3.navn,
-		beslutterProsessStatus: null
+		beslutterNavn: veileder3.navn
 	}
 ];
 
@@ -216,11 +201,11 @@ const oyblikksbilder: Oyblikksbilde[] = [
 
 let mockMeldinger = [...dialogMeldinger, ...systemMeldinger];
 
-let utkast: Vedtak | null = env.isRunningOnGhPages ? null : pabegyntUtkast;
+let utkast: Utkast | null = env.isRunningOnGhPages ? null : pabegyntUtkast;
 
 const fattedeVedtak = historisk;
 
-export function hentUtkast(): Vedtak | null {
+export function hentUtkast(): Utkast | null {
 	return utkast;
 }
 
@@ -264,7 +249,7 @@ export function hentInnloggetVeileder(): Veileder {
 	return innloggetVeileder;
 }
 
-export function oppdaterUtkast(delvisUtkast: Partial<Vedtak>) {
+export function oppdaterUtkast(delvisUtkast: Partial<Utkast>) {
 	if (utkast) {
 		utkast = Object.assign({}, utkast, delvisUtkast);
 	}
@@ -303,7 +288,7 @@ export function oppdaterVedtakUtkastMockFraSkjema(skjemaData: SkjemaData) {
 	}
 }
 
-export function byttUtUtkast(nyttUtkast: Vedtak | null) {
+export function byttUtUtkast(nyttUtkast: Utkast | null) {
 	utkast = nyttUtkast;
 }
 

@@ -10,7 +10,7 @@ import Show from '../../component/show';
 import { VedtakFraArenaListe } from '../../component/vedtak-fra-arena-liste/vedtak-fra-arena-liste';
 import './hovedside.less';
 import { useDataStore } from '../../store/data-store';
-import { Vedtak, VedtakStatus } from '../../api/veilarbvedtaksstotte';
+import { Vedtak } from '../../api/veilarbvedtaksstotte';
 
 export function Hovedside() {
 	const { fattedeVedtak, utkast, arenaVedtak, oppfolgingData } = useDataStore();
@@ -18,7 +18,7 @@ export function Hovedside() {
 	const underOppfolging = oppfolgingData.underOppfolging;
 	const vedtakFraArena = arenaVedtak || [];
 
-	const tidligereVedtak = fattedeVedtak.filter(v => !v.gjeldende && v.vedtakStatus === VedtakStatus.SENDT);
+	const tidligereVedtak = fattedeVedtak.filter(v => !v.gjeldende);
 	const gjeldendeVedtak = fattedeVedtak.find(v => v.gjeldende);
 
 	const harTidligereVedtak = vedtakFraArena.length > 0 || tidligereVedtak.length > 0;

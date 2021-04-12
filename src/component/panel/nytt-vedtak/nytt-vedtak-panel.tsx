@@ -14,10 +14,10 @@ import { logMetrikk } from '../../../util/logger';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
 import './nytt-vedtak-panel.less';
-import { Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { Utkast, Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { fetchUtkast, lagNyttUtkast, oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 
-export function NyttVedtakPanel(props: { utkast: OrNothing<Vedtak> }) {
+export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { fnr } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
 	const { oppfolgingData, fattedeVedtak, setMeldinger, setUtkast } = useDataStore();

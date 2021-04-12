@@ -2,7 +2,7 @@ import { MalformType } from '../veilarbperson';
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from '../utils';
 import { mapKilderFraBokmalTilBrukersMalform, SkjemaData } from '../../util/skjema-utils';
-import { VEILARBVEDTAKSSTOTTE_API, Vedtak, BeslutterProsessStatus } from './index';
+import { VEILARBVEDTAKSSTOTTE_API, BeslutterProsessStatus, Utkast } from './index';
 
 export interface BeslutterprosessStatusData {
 	status: BeslutterProsessStatus;
@@ -33,6 +33,6 @@ export function lagNyttUtkast(fnr: string): AxiosPromise {
 	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, { fnr });
 }
 
-export function fetchUtkast(fnr: string): AxiosPromise<Vedtak> {
+export function fetchUtkast(fnr: string): AxiosPromise<Utkast> {
 	return axiosInstance.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`);
 }

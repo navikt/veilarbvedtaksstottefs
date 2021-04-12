@@ -10,7 +10,7 @@ import { useSkjemaStore } from '../../../store/skjema-store';
 import { useViewStore, ViewType } from '../../../store/view-store';
 import { useDataStore } from '../../../store/data-store';
 import { ModalType, useModalStore } from '../../../store/modal-store';
-import { Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { Utkast } from '../../../api/veilarbvedtaksstotte';
 import { erKlarTilVeileder, finnGjeldendeVedtak } from '../../../util';
 import { oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 import Show from '../../../component/show';
@@ -25,7 +25,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
 	const { validerSkjema, setHarForsoktAForhandsvise } = useSkjemaStore();
-	const { id: utkastId, beslutterProsessStatus } = utkast as Vedtak;
+	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
 	const [laster, setLaster] = useState(false);
 
