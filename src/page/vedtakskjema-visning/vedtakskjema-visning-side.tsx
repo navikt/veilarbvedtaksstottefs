@@ -32,9 +32,7 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 						mini={true}
 						onClick={() =>
 							changeView(ViewType.VEDTAK_PDF, {
-								vedtakId: vistVedtak.id,
-								dokumentInfoId: vistVedtak.dokumentInfoId,
-								journalpostId: vistVedtak.journalpostId
+								vedtakId: vistVedtak.id
 							})
 						}
 					>

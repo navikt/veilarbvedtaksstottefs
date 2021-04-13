@@ -1,6 +1,6 @@
 import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { enhetId, enhetNavn } from '../../data';
-import { Vedtak, VedtakStatus, VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
+import { Utkast, Vedtak, VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { SkjemaData } from '../../../util/skjema-utils';
 import { rest } from 'msw';
@@ -31,21 +31,16 @@ export const utkastHandlers: RequestHandlersList = [
 
 		const nyttUtkast = ({
 			id: nyId,
-			vedtakStatus: 'UTKAST',
 			utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
-			vedtakFattet: null,
-			gjeldende: false,
 			opplysninger: [],
 			veilederNavn: hentInnloggetVeileder().navn,
 			veilederIdent: hentInnloggetVeileder().ident,
 			oppfolgingsenhetId: enhetId,
 			oppfolgingsenhetNavn: enhetNavn,
 			beslutterNavn: null,
-			dokumentInfoId: null,
-			journalpostId: null,
 			sendtTilBeslutter: false,
 			beslutterIdent: null
-		} as unknown) as Vedtak;
+		} as unknown) as Utkast;
 
 		byttUtUtkast(nyttUtkast);
 
@@ -89,10 +84,7 @@ export const utkastHandlers: RequestHandlersList = [
 
 		const fattetVedtak = { ...hentUtkast() } as Vedtak;
 
-		fattetVedtak.vedtakStatus = VedtakStatus.SENDT;
 		fattetVedtak.gjeldende = true;
-		fattetVedtak.dokumentInfoId = '123';
-		fattetVedtak.journalpostId = '456';
 
 		leggTilFattetVedtak(fattetVedtak);
 		byttUtUtkast(null);

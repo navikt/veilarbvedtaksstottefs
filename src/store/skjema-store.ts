@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import constate from 'constate';
 import { OrNothing } from '../util/type/ornothing';
-import { HovedmalType, InnsatsgruppeType, Vedtak } from '../api/veilarbvedtaksstotte';
+import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { SkjemaFeil } from '../util/type/skjema-feil';
 import { SkjemaLagringStatus } from '../util/type/skjema-lagring-status';
 import {
@@ -31,7 +31,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 		setErrors(Object.assign({}, errors, begrunnelseFeil));
 	};
 
-	const initSkjema = (utkast: Vedtak) => {
+	const initSkjema = (utkast: Utkast) => {
 		const mappetKilder = mapKilderFraForskjelligMalformTilBokmal(utkast.opplysninger);
 		setHovedmal(utkast.hovedmal);
 		setKilder(mappetKilder);

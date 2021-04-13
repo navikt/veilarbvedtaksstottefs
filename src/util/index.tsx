@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
 import { SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import { OrNothing } from './type/ornothing';
-import { BeslutterProsessStatus, Vedtak } from '../api/veilarbvedtaksstotte';
+import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
@@ -24,7 +24,7 @@ export const finnGjeldendeVedtak = (vedtakListe: OrNothing<Vedtak[]>): Vedtak | 
 	return vedtakListe ? vedtakListe.find(v => v.gjeldende) : undefined;
 };
 
-export const hentId = (utkast: Vedtak | null): number => {
+export const hentId = (utkast: Utkast | null): number => {
 	return utkast ? utkast.id : -1;
 };
 

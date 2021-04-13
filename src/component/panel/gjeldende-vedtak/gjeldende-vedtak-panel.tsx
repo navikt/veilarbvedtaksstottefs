@@ -8,12 +8,12 @@ import { getInnsatsgruppeTekst } from '../../../util/innsatsgruppe';
 import fullfortVedtakIcon from './fullfort.svg';
 import './gjeldende-vedtak-panel.less';
 import { logMetrikk } from '../../../util/logger';
-import { InnsatsgruppeType, Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { Vedtak } from '../../../api/veilarbvedtaksstotte';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
 	const { id, innsatsgruppe, veilederNavn, vedtakFattet } = props.gjeldendeVedtak;
-	const innsatsgruppeData = getInnsatsgruppeTekst(innsatsgruppe as InnsatsgruppeType);
+	const innsatsgruppeData = getInnsatsgruppeTekst(innsatsgruppe);
 
 	const handleVisVedtakClicked = () => {
 		changeView(ViewType.VEDTAK, { vedtakId: id });
@@ -34,7 +34,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 					</p>
 					<DatoLabel
 						className="gjeldende-vedtak-panel__dato"
-						sistOppdatert={vedtakFattet as string}
+						sistOppdatert={vedtakFattet}
 						formatType="short"
 						text="Dato"
 					/>

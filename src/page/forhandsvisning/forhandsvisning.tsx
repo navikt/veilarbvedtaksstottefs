@@ -15,7 +15,7 @@ import './forhandsvisning.less';
 import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../../component/varsel/varsel-type';
 import { logMetrikk } from '../../util/logger';
-import { Vedtak } from '../../api/veilarbvedtaksstotte';
+import { Utkast } from '../../api/veilarbvedtaksstotte';
 import { STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/veilarbpersonflatefs';
 import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
@@ -32,7 +32,7 @@ export function Forhandsvisning() {
 	const { kanEndreUtkast } = useTilgangStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 
-	const { id: utkastId, beslutterProsessStatus } = utkast as Vedtak;
+	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
 	const stoppeUtsendingFeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE];
 	const url = lagHentForhandsvisningUrl(utkastId);

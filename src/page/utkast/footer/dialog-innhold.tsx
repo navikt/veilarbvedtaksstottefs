@@ -6,7 +6,7 @@ import { useTilgangStore } from '../../../store/tilgang-store';
 import { useDataStore } from '../../../store/data-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import { ModalType, useModalStore } from '../../../store/modal-store';
-import { BeslutterProsessStatus, Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstotte';
 import {
 	erBeslutterProsessStartet,
 	erGodkjentAvBeslutter,
@@ -49,7 +49,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 	const { showSection } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { innsatsgruppe } = useSkjemaStore();
-	const { id: utkastId, beslutterNavn, beslutterProsessStatus } = utkast as Vedtak;
+	const { id: utkastId, beslutterNavn, beslutterProsessStatus } = utkast as Utkast;
 
 	const [laster, setLaster] = useState(false);
 
