@@ -42,8 +42,10 @@ export function mapKilderFraBokmalTilBrukersMalform(
 ): string[] {
 	if (!kildeListe) return [];
 
-	// Trenger ikke å mappe hvis vi ikke vet malform eller det allerede er på bokmål
-	if (!malformType || malformType === MalformType.NB) return kildeListe;
+	// Trenger ikke å mappe hvis vi ikke vet malform, ikke støtter oversettelse for malform, eller det allerede er på bokmål
+	if (!malformType || !Object.values(MalformType).includes(malformType) || malformType === MalformType.NB) {
+		return kildeListe;
+	}
 
 	return kildeListe.map(kilde => {
 		const translationPos = kildelisteBokmal.indexOf(kilde);
