@@ -28,10 +28,9 @@ export function Forhandsvisning() {
 	const { utkast, setUtkast, features, setFattedeVedtak } = useDataStore();
 	const { showModal, hideModal } = useModalStore();
 	const { showVarsel } = useVarselStore();
-	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
+	const { innsatsgruppe, resetSkjema, setHarForsoktAForhandsvise } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
-
 	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
 	const stoppeUtsendingFeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE];
@@ -51,6 +50,7 @@ export function Forhandsvisning() {
 	const tilbakeTilSkjema = () => {
 		changeView(ViewType.UTKAST);
 		logMetrikk('tilbake-fra-forhandsvisning');
+		setHarForsoktAForhandsvise(true);
 	};
 
 	useEffect(() => {
