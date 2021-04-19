@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "399b55a452166287dfd2f552c1ef129c",
+    "revision": "f0cbc7d6e8f5cf622e2d63f36b306c2d",
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/css/2.82ae3d80.chunk.css"
   },
   {
-    "revision": "ed3e86f2e5c71d5ebbb1",
+    "revision": "2fb60bb7f62ce3932ead",
     "url": "/veilarbvedtaksstottefs/static/css/main.4ed52878.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/veilarbvedtaksstottefs/static/js/2.039005f0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ed3e86f2e5c71d5ebbb1",
-    "url": "/veilarbvedtaksstottefs/static/js/main.659dc1ca.chunk.js"
+    "revision": "2fb60bb7f62ce3932ead",
+    "url": "/veilarbvedtaksstottefs/static/js/main.221ed2a0.chunk.js"
   },
   {
     "revision": "29d957dfb060d01871b8",
