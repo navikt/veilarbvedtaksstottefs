@@ -37,7 +37,7 @@ function calculateDialogSectionHeight(): number | undefined {
 
 export function UtkastSide() {
 	const { utkast, meldinger, setMeldinger, features } = useDataStore();
-	const { sistOppdatert, lagringStatus, harForsoktAForhandsvise, innsatsgruppe } = useSkjemaStore();
+	const { sistOppdatert, lagringStatus, setHarForsoktAForhandsvise, innsatsgruppe } = useSkjemaStore();
 	const {
 		sectionHeight,
 		setSectionHeight,
@@ -45,7 +45,9 @@ export function UtkastSide() {
 		setShowSection,
 		harLastetMeldinger,
 		setHarLastetMeldinger,
-		setHarNyeMeldinger
+		setHarNyeMeldinger,
+		harSjekketInnsatsgruppe,
+		setHarSjekketInnsatsgruppe
 	} = useDialogSection();
 	const { erAnsvarligVeileder } = useTilgangStore();
 
@@ -139,14 +141,13 @@ export function UtkastSide() {
 
 	useEffect(() => {
 		// Nullstill forsøk på forhåndsvisning hvis man har vært inne på utkastet og forhåndsvist før
-		// setHarForsoktAForhandsvise(false);
+		setHarForsoktAForhandsvise(false);
 		setHarLastetMeldinger(false);
 
 		// Vis dialog seksjon når man går inn på et utkast som trenger beslutter
-		// setShowSection(trengerKvalitetssikrer(utkast?.innsatsgruppe));
-
-		if (!harForsoktAForhandsvise) {
+		if (harSjekketInnsatsgruppe == null) {
 			setShowSection(trengerKvalitetssikrer(innsatsgruppe));
+			setHarSjekketInnsatsgruppe('true');
 		}
 
 		// Hent meldinger når utkast vises
