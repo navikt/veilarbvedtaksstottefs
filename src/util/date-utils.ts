@@ -21,8 +21,8 @@ export function formatTime(date: Date) {
 }
 
 export function daysFromToday(date: Date): number {
-	const today = dayjs();
-	return today.diff(dayjs(date), 'day');
+	const today = dayjs().startOf('day');
+	return today.diff(dayjs(date).startOf('day'), 'day');
 }
 
 // Oldest -> newest
