@@ -1,13 +1,11 @@
 import constate from 'constate';
 import { useState } from 'react';
-import { OrNothing } from '../util/type/ornothing';
 
 export const [DialogSectionProvider, useDialogSection] = constate(() => {
 	const [sectionHeight, setSectionHeight] = useState<number | undefined>();
-	const [showSection, setShowSection] = useState(false);
+	const [showSection, setShowSection] = useState<boolean | null>(null);
 	const [harLastetMeldinger, setHarLastetMeldinger] = useState(false);
 	const [harNyeMeldinger, setHarNyeMeldinger] = useState(false);
-	const [harSjekketInnsatsgruppe, setHarSjekketInnsatsgruppe] = useState<OrNothing<string>>(null);
 
 	return {
 		sectionHeight,
@@ -17,8 +15,6 @@ export const [DialogSectionProvider, useDialogSection] = constate(() => {
 		harLastetMeldinger,
 		setHarLastetMeldinger,
 		harNyeMeldinger,
-		setHarNyeMeldinger,
-		harSjekketInnsatsgruppe,
-		setHarSjekketInnsatsgruppe
+		setHarNyeMeldinger
 	};
 });

@@ -45,9 +45,7 @@ export function UtkastSide() {
 		setShowSection,
 		harLastetMeldinger,
 		setHarLastetMeldinger,
-		setHarNyeMeldinger,
-		harSjekketInnsatsgruppe,
-		setHarSjekketInnsatsgruppe
+		setHarNyeMeldinger
 	} = useDialogSection();
 	const { erAnsvarligVeileder } = useTilgangStore();
 
@@ -55,17 +53,11 @@ export function UtkastSide() {
 	const showSectionRef = useRef(showSection);
 	const harLastetMeldingerRef = useRef(harLastetMeldinger);
 	const meldingerRef = useRef(meldinger);
-
 	const intervalRef = useRef<number>();
-
 	const erBeslutterProsessStartet = !!utkast?.beslutterProsessStatus;
-
 	const sisteOppdatering = sistOppdatert || utkast!.utkastSistOppdatert;
-
 	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
-
 	const dialogSectionStyle = sectionHeight ? makeAbsoluteHeightStyle(sectionHeight) : undefined;
-
 	const hovedinnholdClassName = showSection
 		? 'utkast-side__hovedinnhold--dialog'
 		: 'utkast-side__hovedinnhold--dialog-minified';
@@ -95,7 +87,7 @@ export function UtkastSide() {
 	}
 
 	useEffect(() => {
-		// showSectionRef.current = showSection;
+		showSectionRef.current = showSection;
 		harLastetMeldingerRef.current = harLastetMeldinger;
 		meldingerRef.current = meldinger;
 	}, [showSection, harLastetMeldinger, meldinger]);
@@ -145,9 +137,9 @@ export function UtkastSide() {
 		setHarLastetMeldinger(false);
 
 		// Vis dialog seksjon når man går inn på et utkast som trenger beslutter
-		if (harSjekketInnsatsgruppe == null) {
+
+		if (showSection == null) {
 			setShowSection(trengerKvalitetssikrer(innsatsgruppe));
-			setHarSjekketInnsatsgruppe('true');
 		}
 
 		// Hent meldinger når utkast vises
