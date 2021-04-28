@@ -12,7 +12,7 @@ function calculateScrollBarWidth(): number {
 	return document.body.offsetWidth - document.body.clientWidth;
 }
 
-function checkIsMaxWidthOrLess(isShowingDialog: boolean): boolean {
+function checkIsMaxWidthOrLess(isShowingDialog: boolean | null): boolean {
 	// Super hacky, burde gjøre en refaktorering av utkast-siden så man slipper mest mulig styling med JS
 	const dialogMaxWidth = document.body.clientWidth <= 1620 ? 1300 : 1920;
 	const maxWidth = isShowingDialog ? dialogMaxWidth : 1200;

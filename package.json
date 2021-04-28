@@ -8,7 +8,7 @@
     "build:mock": "cross-env PUBLIC_URL=/veilarbvedtaksstottefs REACT_APP_DEV=true craco build",
     "lint": "tslint ./src/**/*.ts*",
     "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
-    "test": "echo \"Tests not yet implemented\"",
+    "test": "craco test",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\""
   },
   "eslintConfig": {

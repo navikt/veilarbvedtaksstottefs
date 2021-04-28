@@ -37,7 +37,7 @@ function calculateDialogSectionHeight(): number | undefined {
 
 export function UtkastSide() {
 	const { utkast, meldinger, setMeldinger, features } = useDataStore();
-	const { sistOppdatert, lagringStatus, setHarForsoktAForhandsvise } = useSkjemaStore();
+	const { sistOppdatert, lagringStatus, setHarForsoktAForhandsvise, innsatsgruppe } = useSkjemaStore();
 	const {
 		sectionHeight,
 		setSectionHeight,
@@ -53,17 +53,11 @@ export function UtkastSide() {
 	const showSectionRef = useRef(showSection);
 	const harLastetMeldingerRef = useRef(harLastetMeldinger);
 	const meldingerRef = useRef(meldinger);
-
 	const intervalRef = useRef<number>();
-
 	const erBeslutterProsessStartet = !!utkast?.beslutterProsessStatus;
-
 	const sisteOppdatering = sistOppdatert || utkast!.utkastSistOppdatert;
-
 	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
-
 	const dialogSectionStyle = sectionHeight ? makeAbsoluteHeightStyle(sectionHeight) : undefined;
-
 	const hovedinnholdClassName = showSection
 		? 'utkast-side__hovedinnhold--dialog'
 		: 'utkast-side__hovedinnhold--dialog-minified';
@@ -143,7 +137,10 @@ export function UtkastSide() {
 		setHarLastetMeldinger(false);
 
 		// Vis dialog seksjon når man går inn på et utkast som trenger beslutter
-		setShowSection(trengerKvalitetssikrer(utkast?.innsatsgruppe));
+
+		if (showSection == null) {
+			setShowSection(trengerKvalitetssikrer(innsatsgruppe));
+		}
 
 		// Hent meldinger når utkast vises
 		refreshMeldinger();

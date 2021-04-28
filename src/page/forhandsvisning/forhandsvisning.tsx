@@ -31,7 +31,6 @@ export function Forhandsvisning() {
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
-
 	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
 	const stoppeUtsendingFeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE];
