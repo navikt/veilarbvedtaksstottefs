@@ -79,7 +79,7 @@ function Begrunnelse() {
 						maxLength={BEGRUNNELSE_ANBEFALT_LENGTH}
 						onChange={onBegrunnelseChanged}
 						aria-labelledby="begrunnelse-tittel"
-						autoCorrect="on"
+						spellCheck="true"
 						className={cls('begrunnelse__tekstomrade', 'skjemaelement__input textarea--medMeta', {
 							'begrunnelse__tekstomrade--feil': !!begrunnelseFeil
 						})}
