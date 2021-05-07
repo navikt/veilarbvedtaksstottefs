@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4ccc4efb5dd9c1b0584675c84f4ba55b",
+    "revision": "060a510a9bcb9667cbfd565ca5f71b37",
     "url": "/veilarbvedtaksstottefs/index.html"
   },
   {
-    "revision": "11dd66c3c09f1e20faba",
-    "url": "/veilarbvedtaksstottefs/static/css/2.82ae3d80.chunk.css"
+    "revision": "8acaf5c5f868448fba2b",
+    "url": "/veilarbvedtaksstottefs/static/css/2.beb19d2c.chunk.css"
   },
   {
-    "revision": "0237eccef5b38d175dc5",
+    "revision": "a870bc6047d2f6916e27",
     "url": "/veilarbvedtaksstottefs/static/css/main.4ed52878.chunk.css"
   },
   {
-    "revision": "11dd66c3c09f1e20faba",
-    "url": "/veilarbvedtaksstottefs/static/js/2.039005f0.chunk.js"
+    "revision": "8acaf5c5f868448fba2b",
+    "url": "/veilarbvedtaksstottefs/static/js/2.bdb490c5.chunk.js"
   },
   {
     "revision": "93eea510e78d4b750d328bd991cee1b4",
-    "url": "/veilarbvedtaksstottefs/static/js/2.039005f0.chunk.js.LICENSE.txt"
+    "url": "/veilarbvedtaksstottefs/static/js/2.bdb490c5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0237eccef5b38d175dc5",
-    "url": "/veilarbvedtaksstottefs/static/js/main.f82ac2c8.chunk.js"
+    "revision": "a870bc6047d2f6916e27",
+    "url": "/veilarbvedtaksstottefs/static/js/main.f3b1f24a.chunk.js"
   },
   {
     "revision": "29d957dfb060d01871b8",
