@@ -54,3 +54,7 @@ export const swallowEnterKeyPress = (e: any) => {
 export const isNothing = (str: OrNothing<string>): boolean => {
 	return str == null || str.trim().length === 0;
 };
+
+export const hasHashParam = (parameterName: string): boolean => {
+	return window.location.hash.includes(parameterName);
+};
