@@ -3,17 +3,17 @@ import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { MalformData, MalformType } from '../api/veilarbperson';
 import {
 	FeatureToggles,
-	HENT_MALFORM_FRA_PDL,
 	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
 	SKRU_AV_POLLING_DIALOG,
 	SKRU_AV_POLLING_UTKAST,
-	STOPPE_VEDTAKSUTSENDING_TOGGLE
+	STOPPE_VEDTAKSUTSENDING_TOGGLE,
+	HENT_MALFORM_FRA_PDL
 } from '../api/veilarbpersonflatefs';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
 import { MeldingType, SystemMeldingType } from '../util/type/melding-type';
-import { BeslutterProsessStatus, HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
+import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { SkjemaData } from '../util/skjema-utils';
 import env from '../util/environment';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
@@ -46,9 +46,9 @@ const features: FeatureToggles = {
 };
 
 let innloggetVeileder: Veileder = {
-	navn: veileder3.navn,
-	ident: veileder3.ident,
-	fornavn: 'Per',
+	navn: veileder1.navn,
+	ident: veileder1.ident,
+	fornavn: 'Ola',
 	etternavn: 'Nordmann'
 };
 
@@ -111,16 +111,16 @@ const pabegyntUtkast: Utkast = {
 	oppfolgingsenhetId: enhetId,
 	oppfolgingsenhetNavn: enhetNavn,
 	begrunnelse: 'Trenger ikke hjelp',
-	beslutterIdent: veileder3.ident,
-	beslutterNavn: veileder3.navn,
-	beslutterProsessStatus: BeslutterProsessStatus.KLAR_TIL_BESLUTTER
+	beslutterIdent: null,
+	beslutterNavn: null,
+	beslutterProsessStatus: null
 };
 
 const historisk: Vedtak[] = [
 	{
 		id: 1234,
 		hovedmal: HovedmalType.BEHOLDE_ARBEID,
-		innsatsgruppe: InnsatsgruppeType.VARIG_TILPASSET_INNSATS,
+		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
 		vedtakFattet: '2018-08-05T09:55:43.716393+02:00',
 		begrunnelse:
 			'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
@@ -149,7 +149,7 @@ const historisk: Vedtak[] = [
 	{
 		id: 1235,
 		hovedmal: HovedmalType.SKAFFE_ARBEID,
-		innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
+		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
 		opplysninger: [
 			'Svarene dine fra da du registrerte deg',
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
