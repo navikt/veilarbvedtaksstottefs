@@ -56,7 +56,7 @@ export function GodkjennModal(props: ModalProps) {
 			isOpen={props.isOpen}
 			contentLabel="Bekreft at vedtaket blir godkjent"
 			onRequestClose={handleOnRequestCloseModal}
-			varselIkonType={VarselIkonType.INGEN}
+			varselIkonType={VarselIkonType.ADVARSEL}
 		>
 			{GodkjennVisning}
 		</VarselModal>
