@@ -34,11 +34,11 @@ export function GodkjennModal(props: ModalProps) {
 	}
 	const GodkjennVisning = (
 		<>
-			<Systemtittel className="godkjenn-modal__tekst">
-				Er du sikker på at vedtak er klart til godkjenning?
-			</Systemtittel>
-			<Normaltekst className="varsel-modal__tekstinnehold">
-				Ansvarlig veileder kan fortsatt endre utkastet
+			<Systemtittel className="blokk-xxxs">Godkjenn utkast</Systemtittel>
+			<Normaltekst>
+				<br />
+				Er du sikker på at utkast er klart til godkjenning? <br />
+				Ansvarlig veileder kan fortsatt endre utkastet.
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
 				<Hovedknapp spinner={laster} disabled={laster} onClick={handleGodkjennVedtak}>

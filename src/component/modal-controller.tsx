@@ -67,8 +67,6 @@ export function ModalController() {
 	const { modalType, modalProps } = useModalStore();
 	const feilModalConfig = finnFeilModalConfig(modalType);
 
-	// @ts-ignore
-	// @ts-ignore
 	return (
 		<>
 			<SpinnerModal isOpen={modalType === ModalType.LASTER} />
