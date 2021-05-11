@@ -3,17 +3,17 @@ import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { MalformData, MalformType } from '../api/veilarbperson';
 import {
 	FeatureToggles,
+	HENT_MALFORM_FRA_PDL,
 	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
 	SKRU_AV_POLLING_DIALOG,
 	SKRU_AV_POLLING_UTKAST,
-	STOPPE_VEDTAKSUTSENDING_TOGGLE,
-	HENT_MALFORM_FRA_PDL
+	STOPPE_VEDTAKSUTSENDING_TOGGLE
 } from '../api/veilarbpersonflatefs';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
 import { MeldingType, SystemMeldingType } from '../util/type/melding-type';
-import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
+import { BeslutterProsessStatus, HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { SkjemaData } from '../util/skjema-utils';
 import env from '../util/environment';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
@@ -46,9 +46,9 @@ const features: FeatureToggles = {
 };
 
 let innloggetVeileder: Veileder = {
-	navn: veileder1.navn,
-	ident: veileder1.ident,
-	fornavn: 'Ola',
+	navn: veileder3.navn,
+	ident: veileder3.ident,
+	fornavn: 'Per',
 	etternavn: 'Nordmann'
 };
 
@@ -111,9 +111,9 @@ const pabegyntUtkast: Utkast = {
 	oppfolgingsenhetId: enhetId,
 	oppfolgingsenhetNavn: enhetNavn,
 	begrunnelse: 'Trenger ikke hjelp',
-	beslutterIdent: null,
-	beslutterNavn: null,
-	beslutterProsessStatus: null
+	beslutterIdent: veileder3.ident,
+	beslutterNavn: veileder3.navn,
+	beslutterProsessStatus: BeslutterProsessStatus.KLAR_TIL_BESLUTTER
 };
 
 const historisk: Vedtak[] = [
