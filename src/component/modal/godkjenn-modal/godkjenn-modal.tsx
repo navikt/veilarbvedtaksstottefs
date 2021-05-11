@@ -4,7 +4,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ModalProps } from '../modal-props';
 import { ModalType, useModalStore } from '../../../store/modal-store';
-import './godkjenn-modal.less';
+
 import { godkjennVedtak } from '../../../api/veilarbvedtaksstotte/beslutter';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstotte';
@@ -34,11 +34,11 @@ export function GodkjennModal(props: ModalProps) {
 	}
 	const GodkjennVisning = (
 		<>
-			<Systemtittel className="godkjenn-modal__tekst">
-				Er du sikker på at vedtak er klart til godkjenning?
-			</Systemtittel>
-			<Normaltekst className="varsel-modal__tekstinnehold">
-				Ansvarlig veileder kan fortsatt endre utkastet
+			<Systemtittel className="blokk-xxxs">Godkjenn utkast</Systemtittel>
+			<Normaltekst>
+				<br />
+				Er du sikker på at utkast er klart til godkjenning? <br />
+				Ansvarlig veileder kan fortsatt endre utkastet.
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
 				<Hovedknapp spinner={laster} disabled={laster} onClick={handleGodkjennVedtak}>
