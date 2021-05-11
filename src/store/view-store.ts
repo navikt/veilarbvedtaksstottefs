@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import constate from 'constate';
+import { hasHashParam } from '../util';
 
 export enum ViewType {
 	HOVEDSIDE = 'HOVEDSIDE',
@@ -12,7 +13,10 @@ export enum ViewType {
 }
 
 export const [ViewStoreProvider, useViewStore] = constate(() => {
-	const [view, setView] = useState<ViewType>(ViewType.HOVEDSIDE);
+	const [view, setView] = useState<ViewType>(() => {
+		return hasHashParam('visUtkast') ? ViewType.UTKAST : ViewType.HOVEDSIDE;
+	});
+
 	const [viewProps, setViewProps] = useState<any>({});
 
 	const changeView = (type: ViewType, props?: {}) => {
