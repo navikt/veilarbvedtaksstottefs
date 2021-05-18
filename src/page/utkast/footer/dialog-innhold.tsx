@@ -19,7 +19,6 @@ import { SystemMeldingType } from '../../../util/type/melding-type';
 import {
 	bliBeslutter,
 	fetchStartBeslutterProsess,
-	godkjennVedtak,
 	oppdaterBeslutterProsessStatus
 } from '../../../api/veilarbvedtaksstotte/beslutter';
 import { VeilederTilgang } from '../../../util/tilgang';
@@ -119,17 +118,6 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 			.finally(() => setLaster(false));
 	}
 
-	function handleOnGodkjennClicked() {
-		setLaster(true);
-		godkjennVedtak(utkastId)
-			.then(() => {
-				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
-				setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);
-			})
-			.catch(() => showModal(ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER))
-			.finally(() => setLaster(false));
-	}
-
 	return (
 		<div className="utkast-footer__dialog-innhold">
 			<div>
@@ -182,7 +170,8 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 							className="utkast-footer__godkjenn-knapp"
 							mini={true}
 							htmlType="button"
-							onClick={handleOnGodkjennClicked}
+							onClick={() => showModal(ModalType.BEKREFT_SEND_TIL_GODKJENNING)}
+							disabled={laster}
 						>
 							Godkjenn
 						</Flatknapp>
