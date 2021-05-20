@@ -3,35 +3,22 @@ import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ModalProps } from '../modal-props';
-import { ModalType, useModalStore } from '../../../store/modal-store';
+import { useModalStore } from '../../../store/modal-store';
 
-import { godkjennVedtak } from '../../../api/veilarbvedtaksstotte/beslutter';
-import { SystemMeldingType } from '../../../util/type/melding-type';
-import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstotte';
-import { useDataStore } from '../../../store/data-store';
+interface GodkjennModalProps extends ModalProps {
+	onGodkjennUtkastBekreftet: () => void;
+}
 
-export function GodkjennModal(props: ModalProps) {
-	const { utkast, leggTilSystemMelding, setBeslutterProsessStatus } = useDataStore();
-	const { hideModal, showModal } = useModalStore();
-	const { id: utkastId } = utkast as Utkast;
-	const [laster, setLaster] = useState(false);
+export function GodkjennModal(props: GodkjennModalProps) {
+	const { hideModal } = useModalStore();
+	const [laster] = useState(false);
 
-	function handleGodkjennVedtak() {
-		setLaster(true);
-		godkjennVedtak(utkastId)
-			.then(() => {
-				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
-				setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);
-				hideModal();
-			})
-			.catch(() => showModal(ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER))
-			.finally(() => setLaster(false));
-	}
 	function handleOnRequestCloseModal() {
 		if (!laster) {
 			hideModal();
 		}
 	}
+
 	const GodkjennVisning = (
 		<>
 			<Systemtittel className="blokk-xxxs">Godkjenn utkast</Systemtittel>
@@ -41,7 +28,7 @@ export function GodkjennModal(props: ModalProps) {
 				Ansvarlig veileder kan fortsatt endre utkastet.
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Hovedknapp spinner={laster} disabled={laster} onClick={handleGodkjennVedtak}>
+				<Hovedknapp spinner={laster} disabled={laster} onClick={props.onGodkjennUtkastBekreftet}>
 					JA, GODKJENN
 				</Hovedknapp>
 				<Knapp disabled={laster} onClick={hideModal}>
