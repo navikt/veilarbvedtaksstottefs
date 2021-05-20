@@ -76,7 +76,10 @@ export function ModalController() {
 			/>
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
-			<GodkjennModal isOpen={modalType === ModalType.BEKREFT_SEND_TIL_GODKJENNING} />
+			<GodkjennModal
+				isOpen={modalType === ModalType.BEKREFT_SEND_TIL_GODKJENNING}
+				onGodkjennUtkastBekreftet={modalProps.onGodkjennVedtakBekreftet}
+			/>
 			<AvbrytBeslutterProsessModal
 				isOpen={modalType === ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS}
 				innsatsgruppe={modalProps.innsatsgruppe}
