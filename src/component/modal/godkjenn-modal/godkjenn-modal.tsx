@@ -24,12 +24,11 @@ export function GodkjennModal(props: GodkjennModalProps) {
 			<Systemtittel className="blokk-xxxs">Godkjenn utkast</Systemtittel>
 			<Normaltekst>
 				<br />
-				Er du sikker på at utkast er klart til godkjenning? <br />
-				Ansvarlig veileder kan fortsatt endre utkastet.
+				Er du sikker på at du vil godkjenne utkastet?
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
 				<Hovedknapp spinner={laster} disabled={laster} onClick={props.onGodkjennUtkastBekreftet}>
-					JA, GODKJENN
+					GODKJENN
 				</Hovedknapp>
 				<Knapp disabled={laster} onClick={hideModal}>
 					AVBRYT
