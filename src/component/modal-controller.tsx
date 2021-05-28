@@ -24,6 +24,7 @@ import { BekreftSendVedtakModal } from './modal/vedtak-sendt/bekreft-send-vedtak
 import SlettUtkastModal from './modal/slett-utkast-modal';
 import TaOverModal from './modal/ta-over-modal/ta-over-modal';
 import AvbrytBeslutterProsessModal from './modal/avbryt-beslutter-prosess-modal/avbryt-beslutterprosess-modal';
+import { GodkjennModal } from './modal/godkjenn-modal/godkjenn-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
@@ -75,6 +76,10 @@ export function ModalController() {
 			/>
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
+			<GodkjennModal
+				isOpen={modalType === ModalType.BEKREFT_SEND_TIL_GODKJENNING}
+				onGodkjennUtkastBekreftet={modalProps.onGodkjennVedtakBekreftet}
+			/>
 			<AvbrytBeslutterProsessModal
 				isOpen={modalType === ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS}
 				innsatsgruppe={modalProps.innsatsgruppe}
