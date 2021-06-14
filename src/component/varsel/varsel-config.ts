@@ -31,10 +31,10 @@ export const beslutterprosessTilVeileder: VarselConfig = {
 
 export const beslutterprosessTilBeslutter: VarselConfig = {
 	type: 'info',
-	tekst: 'Trenger tilbakemelding fra beslutter.'
+	tekst: 'Trenger tilbakemelding fra kvalitetssikrer.'
 };
 
 export const beslutterprosessGodkjent: VarselConfig = {
 	type: 'info',
-	tekst: 'Kvalitetsikret av beslutter.'
+	tekst: 'Utkastet er kvalitetsikret.'
 };
