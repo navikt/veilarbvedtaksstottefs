@@ -12,12 +12,12 @@ export const vedtakSendt: VarselConfig = {
 
 export const tattOverSomVeileder: VarselConfig = {
 	type: 'suksess',
-	tekst: 'Du har nå tatt over som veileder.'
+	tekst: 'Du har nå tatt over ansvaret for vedtaket.'
 };
 
 export const tattOverSomBeslutter: VarselConfig = {
 	type: 'suksess',
-	tekst: 'Du har nå tatt over som kvalitetssikrer.'
+	tekst: 'Du har nå tatt over som kvalitetssikrer for vedtaket.'
 };
 
 export const utkastOppdatert: VarselConfig = {
@@ -31,10 +31,10 @@ export const beslutterprosessTilVeileder: VarselConfig = {
 
 export const beslutterprosessTilBeslutter: VarselConfig = {
 	type: 'info',
-	tekst: 'Trenger tilbakemelding fra beslutter.'
+	tekst: 'Trenger tilbakemelding fra kvalitetssikrer.'
 };
 
 export const beslutterprosessGodkjent: VarselConfig = {
 	type: 'info',
-	tekst: 'Kvalitetsikret av beslutter.'
+	tekst: 'Vedtaket er kvalitetsikret.'
 };
