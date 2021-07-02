@@ -23,11 +23,13 @@ import {
 import { SKRU_AV_POLLING_UTKAST } from '../../../api/veilarbpersonflatefs';
 import { BeslutterProsessStatus } from '../../../api/veilarbvedtaksstotte';
 import { VarselType } from '../../../component/varsel/varsel-type';
+import { useAppStore } from '../../../store/app-store';
 
 const TEN_SECONDS = 10000;
 
 export function EndreSkjemaSection() {
-	const { fattedeVedtak, malform, utkast, features, setBeslutterProsessStatus } = useDataStore();
+	const { fattedeVedtak, malform, utkast, setBeslutterProsessStatus } = useDataStore();
+	const { features } = useAppStore();
 	const { showModal } = useModalStore();
 	const {
 		kilder,

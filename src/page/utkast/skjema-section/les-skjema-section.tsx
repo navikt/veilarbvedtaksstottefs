@@ -22,8 +22,8 @@ import { getHovedmalNavn } from '../../../util/hovedmal';
 const TEN_SECONDS = 10000;
 
 export function LesSkjemaSection() {
-	const { fnr } = useAppStore();
-	const { utkast, setUtkast, setFattedeVedtak, features } = useDataStore();
+	const { fnr, features } = useAppStore();
+	const { utkast, setUtkast, setFattedeVedtak } = useDataStore();
 	const { changeView } = useViewStore();
 	const { erBeslutter } = useTilgangStore();
 	const { initSkjema } = useSkjemaStore();

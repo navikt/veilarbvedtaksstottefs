@@ -29,12 +29,12 @@ const oppfolgingData: OppfolgingData = {
 	underOppfolging: true
 };
 
-const malform: MalformData = {
+const malformFraTps: MalformData = {
 	malform: MalformType.NB
 };
 
-const malformV2: MalformData = {
-	malform: MalformType.NN
+const malformFraPdl: MalformData = {
+	malform: MalformType.nn
 };
 
 const features: FeatureToggles = {
@@ -225,12 +225,12 @@ export function hentOppfolgingData(): OppfolgingData {
 	return oppfolgingData;
 }
 
-export function hentMalform(): MalformData {
-	return malform;
+export function hentMalformFraTps(): MalformData {
+	return malformFraTps;
 }
 
-export function hentMalformV2(): MalformData {
-	return malformV2;
+export function hentMalformFraPdl(): MalformData {
+	return malformFraPdl;
 }
 
 export function hentArenaVedtak(): ArenaVedtak[] {

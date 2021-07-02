@@ -25,7 +25,8 @@ import AlertStripe from 'nav-frontend-alertstriper';
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { utkast, setUtkast, features, setFattedeVedtak } = useDataStore();
+	const { utkast, setUtkast, setFattedeVedtak } = useDataStore();
+	const { features } = useAppStore();
 	const { showModal, hideModal } = useModalStore();
 	const { showVarsel } = useVarselStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();

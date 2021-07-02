@@ -13,6 +13,7 @@ import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../api/utils';
 import { HENT_MALFORM_FRA_PDL } from '../api/veilarbpersonflatefs';
+import { useAppStore } from '../store/app-store';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const { initSkjema } = useSkjemaStore();
@@ -22,9 +23,9 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		setMalform,
 		setUtkast,
 		setInnloggetVeileder,
-		setArenaVedtak,
-		features
+		setArenaVedtak
 	} = useDataStore();
+	const { features } = useAppStore();
 	const { setVeilederTilgang } = useTilgangStore();
 
 	const fattedeVedtakFetcher = useAxiosFetcher(hentFattedeVedtak);
