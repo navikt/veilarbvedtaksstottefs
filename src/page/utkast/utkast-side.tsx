@@ -19,7 +19,6 @@ import { DialogSectionMinified } from './dialog-section-minified/dialog-section-
 import { DialogSectionHeaderMinified } from './dialog-section-minified/dialog-section-header-minified';
 import { trengerKvalitetssikrer } from '../../util/skjema-utils';
 import { ScreenReaderSpeak } from '../../component/screen-reader-speak/screen-reader-speak';
-import { useAppStore } from '../../store/app-store';
 
 const FOOTER_HEIGHT = 72;
 const TEN_SECONDS = 10000;
@@ -37,8 +36,7 @@ function calculateDialogSectionHeight(): number | undefined {
 }
 
 export function UtkastSide() {
-	const { utkast, meldinger, setMeldinger } = useDataStore();
-	const { features } = useAppStore();
+	const { utkast, meldinger, setMeldinger, features } = useDataStore();
 	const { sistOppdatert, lagringStatus, setHarForsoktAForhandsvise, innsatsgruppe } = useSkjemaStore();
 	const {
 		sectionHeight,

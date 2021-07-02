@@ -11,6 +11,7 @@ import {
 } from '../api/veilarbvedtaksstotte/meldinger';
 import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
+import { FeatureToggles } from '../api/veilarbpersonflatefs';
 
 // Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
 const placeholder = {} as any;
@@ -18,6 +19,7 @@ const placeholder = {} as any;
 export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [oppfolgingData, setOppfolgingData] = useState<Oppfolging>(placeholder);
 	const [malform, setMalform] = useState<MalformData>(placeholder);
+	const [features, setFeatures] = useState<FeatureToggles>(placeholder);
 	const [innloggetVeileder, setInnloggetVeileder] = useState<Veileder>(placeholder);
 	const [utkast, setUtkast] = useState<Utkast | null>(null);
 	const [fattedeVedtak, setFattedeVedtak] = useState<Vedtak[]>([]);
@@ -65,6 +67,8 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		setOppfolgingData,
 		malform,
 		setMalform,
+		features,
+		setFeatures,
 		innloggetVeileder,
 		setInnloggetVeileder,
 		utkast,
