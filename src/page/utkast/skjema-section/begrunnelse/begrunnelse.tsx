@@ -22,8 +22,13 @@ const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
 function malformToTekst(malform: OrNothing<MalformData>): string {
 	const malformType = malform ? malform.malform : null;
 
-	if (malformType === MalformType.NN || malformType === MalformType.NB) {
-		return `Norsk (${malformType === MalformType.NN ? 'Nynorsk' : 'Bokmål'})`;
+	if (
+		malformType === MalformType.NN ||
+		malformType === MalformType.NB ||
+		malformType === MalformType.nn ||
+		malformType === MalformType.nb
+	) {
+		return `Norsk (${malformType === MalformType.NN || malformType === MalformType.nn ? 'Nynorsk' : 'Bokmål'})`;
 	} else if (!malformType) {
 		return 'Ukjent';
 	}

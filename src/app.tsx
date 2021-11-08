@@ -11,6 +11,7 @@ import Show from './component/show';
 import env from './util/environment';
 import { VarselController } from './component/varsel/varsel-controller';
 import { MockPanel } from './mock/component/mock-panel';
+import FeatureFetcher from './component/feature-fetcher';
 
 interface AppProps {
 	fnr: string;
@@ -21,19 +22,21 @@ function App(props: AppProps) {
 	return (
 		<main className="app veilarbvedtaksstottefs">
 			<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
-				<PrelanseringSjekk>
-					<NasjonalTilgangSjekk fnr={props.fnr}>
-						<DataFetcher fnr={props.fnr}>
-							<VarselController />
-							<ViewController />
-							<ModalController />
-							<TabClickedListener />
-							<Show if={!env.isProduction}>
-								<MockPanel />
-							</Show>
-						</DataFetcher>
-					</NasjonalTilgangSjekk>
-				</PrelanseringSjekk>
+				<FeatureFetcher>
+					<PrelanseringSjekk>
+						<NasjonalTilgangSjekk fnr={props.fnr}>
+							<DataFetcher fnr={props.fnr}>
+								<VarselController />
+								<ViewController />
+								<ModalController />
+								<TabClickedListener />
+								<Show if={!env.isProduction}>
+									<MockPanel />
+								</Show>
+							</DataFetcher>
+						</NasjonalTilgangSjekk>
+					</PrelanseringSjekk>
+				</FeatureFetcher>
 			</StoreProvider>
 		</main>
 	);
