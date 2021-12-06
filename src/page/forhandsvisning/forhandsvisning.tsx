@@ -25,7 +25,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { utkast, setUtkast, features, setFattedeVedtak } = useDataStore();
+	const { utkast, setUtkast, features, setFattedeVedtak, oppfolgingData } = useDataStore();
 	const { showModal, hideModal } = useModalStore();
 	const { showVarsel } = useVarselStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
@@ -40,7 +40,7 @@ export function Forhandsvisning() {
 		? erGodkjentAvBeslutter(beslutterProsessStatus)
 		: true;
 
-	const visSendKnapp = kanEndreUtkast && erUtkastKlartTilUtsending;
+	const visSendKnapp = kanEndreUtkast && erUtkastKlartTilUtsending && !oppfolgingData.inaktivIArena;
 
 	const visKvalitetssikringInfo =
 		!visSendKnapp &&
@@ -116,6 +116,11 @@ export function Forhandsvisning() {
 					<Show if={visKvalitetssikringInfo}>
 						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
 							<span aria-live="polite">Kvalitetssikring må gjennomføres før brev kan sendes</span>
+						</AlertStripe>
+					</Show>
+					<Show if={oppfolgingData.inaktivIArena}>
+						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
+							<span aria-live="polite">Bruker kan ikke være inaktiv i Arena</span>
 						</AlertStripe>
 					</Show>
 				</div>
