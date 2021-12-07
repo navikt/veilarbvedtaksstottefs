@@ -5,6 +5,7 @@ import { axiosInstance } from './utils';
 export default interface OppfolgingData {
 	reservasjonKRR: boolean;
 	underOppfolging: boolean;
+	inaktivIArena: boolean;
 }
 
 export function fetchOppfolging(fnr: string): AxiosPromise<OppfolgingData> {
