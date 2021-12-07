@@ -120,7 +120,7 @@ export function Forhandsvisning() {
 					</Show>
 					<Show if={oppfolgingData.inaktivIArena}>
 						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
-							<span aria-live="polite">Kan ikke fatte vedtak for bruker som er inaktiv i Arena</span>
+							<span aria-live="polite">Kan ikke fatte vedtak fordi brukeren er inaktiv i Arena</span>
 						</AlertStripe>
 					</Show>
 				</div>
