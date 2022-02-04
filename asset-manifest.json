@@ -6,14 +6,14 @@
     "runtime-main.js": "/veilarbvedtaksstottefs/static/js/runtime-main.6e843c9b.js",
     "runtime-main.js.map": "/veilarbvedtaksstottefs/static/js/runtime-main.6e843c9b.js.map",
     "static/css/2.beb19d2c.chunk.css": "/veilarbvedtaksstottefs/static/css/2.beb19d2c.chunk.css",
-    "static/js/2.d6f7d01a.chunk.js": "/veilarbvedtaksstottefs/static/js/2.d6f7d01a.chunk.js",
-    "static/js/2.d6f7d01a.chunk.js.map": "/veilarbvedtaksstottefs/static/js/2.d6f7d01a.chunk.js.map",
+    "static/js/2.0f59b600.chunk.js": "/veilarbvedtaksstottefs/static/js/2.0f59b600.chunk.js",
+    "static/js/2.0f59b600.chunk.js.map": "/veilarbvedtaksstottefs/static/js/2.0f59b600.chunk.js.map",
     "index.html": "/veilarbvedtaksstottefs/index.html",
-    "precache-manifest.82c087201daa7a3d59d520c30c2d2800.js": "/veilarbvedtaksstottefs/precache-manifest.82c087201daa7a3d59d520c30c2d2800.js",
+    "precache-manifest.ba32572f8afe1420d18198b1e24d195e.js": "/veilarbvedtaksstottefs/precache-manifest.ba32572f8afe1420d18198b1e24d195e.js",
     "service-worker.js": "/veilarbvedtaksstottefs/service-worker.js",
     "static/css/2.beb19d2c.chunk.css.map": "/veilarbvedtaksstottefs/static/css/2.beb19d2c.chunk.css.map",
     "static/css/main.4ed52878.chunk.css.map": "/veilarbvedtaksstottefs/static/css/main.4ed52878.chunk.css.map",
-    "static/js/2.d6f7d01a.chunk.js.LICENSE.txt": "/veilarbvedtaksstottefs/static/js/2.d6f7d01a.chunk.js.LICENSE.txt",
+    "static/js/2.0f59b600.chunk.js.LICENSE.txt": "/veilarbvedtaksstottefs/static/js/2.0f59b600.chunk.js.LICENSE.txt",
     "static/media/advarsel-sirkel.60c7de9e.svg": "/veilarbvedtaksstottefs/static/media/advarsel-sirkel.60c7de9e.svg",
     "static/media/apne-dialog.svg": "/veilarbvedtaksstottefs/static/media/apne-dialog.bb7ddc52.svg",
     "static/media/beslutterfunksjon.svg": "/veilarbvedtaksstottefs/static/media/beslutterfunksjon.7b1b80d9.svg",
@@ -49,7 +49,7 @@
   "entrypoints": [
     "static/js/runtime-main.6e843c9b.js",
     "static/css/2.beb19d2c.chunk.css",
-    "static/js/2.d6f7d01a.chunk.js",
+    "static/js/2.0f59b600.chunk.js",
     "static/css/main.4ed52878.chunk.css",
     "static/js/main.e77b4ee5.chunk.js"
   ]
