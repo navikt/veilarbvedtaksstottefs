@@ -6,8 +6,7 @@ import {
 	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
 	SKRU_AV_POLLING_DIALOG,
 	SKRU_AV_POLLING_UTKAST,
-	STOPPE_VEDTAKSUTSENDING_TOGGLE,
-	HENT_MALFORM_FRA_PDL
+	STOPPE_VEDTAKSUTSENDING_TOGGLE
 } from '../api/veilarbpersonflatefs';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder3 } from './data';
@@ -30,10 +29,6 @@ const oppfolgingData: OppfolgingData = {
 	inaktivIArena: true
 };
 
-const malformFraTps: MalformData = {
-	malform: MalformType.NB
-};
-
 const malformFraPdl: MalformData = {
 	malform: MalformType.nn
 };
@@ -42,8 +37,7 @@ const features: FeatureToggles = {
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
 	[STOPPE_VEDTAKSUTSENDING_TOGGLE]: false,
 	[SKRU_AV_POLLING_UTKAST]: false,
-	[SKRU_AV_POLLING_DIALOG]: false,
-	[HENT_MALFORM_FRA_PDL]: true
+	[SKRU_AV_POLLING_DIALOG]: false
 };
 
 let innloggetVeileder: Veileder = {
@@ -224,10 +218,6 @@ export function hentTilgangTilBrukersKontor(): TilgangTilBrukersKontor {
 
 export function hentOppfolgingData(): OppfolgingData {
 	return oppfolgingData;
-}
-
-export function hentMalformFraTps(): MalformData {
-	return malformFraTps;
 }
 
 export function hentMalformFraPdl(): MalformData {
