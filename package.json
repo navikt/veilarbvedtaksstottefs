@@ -43,7 +43,7 @@
     "constate": "^3.1.0",
     "craco-less": "^1.17.1",
     "dayjs": "^1.9.7",
-    "dompurify": "^2.2.3",
+    "dompurify": "^2.3.4",
     "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
     "lodash.throttle": "^4.1.1",
