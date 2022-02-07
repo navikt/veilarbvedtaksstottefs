@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/veilarbvedtaksstottefs/static/css/main.4ed52878.chunk.css",
-    "main.js": "/veilarbvedtaksstottefs/static/js/main.e77b4ee5.chunk.js",
-    "main.js.map": "/veilarbvedtaksstottefs/static/js/main.e77b4ee5.chunk.js.map",
+    "main.js": "/veilarbvedtaksstottefs/static/js/main.b13e0d8f.chunk.js",
+    "main.js.map": "/veilarbvedtaksstottefs/static/js/main.b13e0d8f.chunk.js.map",
     "runtime-main.js": "/veilarbvedtaksstottefs/static/js/runtime-main.6e843c9b.js",
     "runtime-main.js.map": "/veilarbvedtaksstottefs/static/js/runtime-main.6e843c9b.js.map",
     "static/css/2.beb19d2c.chunk.css": "/veilarbvedtaksstottefs/static/css/2.beb19d2c.chunk.css",
-    "static/js/2.8e37e95e.chunk.js": "/veilarbvedtaksstottefs/static/js/2.8e37e95e.chunk.js",
-    "static/js/2.8e37e95e.chunk.js.map": "/veilarbvedtaksstottefs/static/js/2.8e37e95e.chunk.js.map",
+    "static/js/2.1712082a.chunk.js": "/veilarbvedtaksstottefs/static/js/2.1712082a.chunk.js",
+    "static/js/2.1712082a.chunk.js.map": "/veilarbvedtaksstottefs/static/js/2.1712082a.chunk.js.map",
     "index.html": "/veilarbvedtaksstottefs/index.html",
-    "precache-manifest.4ca22e48003a43349425f07e3089f3fb.js": "/veilarbvedtaksstottefs/precache-manifest.4ca22e48003a43349425f07e3089f3fb.js",
+    "precache-manifest.9936cdb92027221009038bcdb6bdade3.js": "/veilarbvedtaksstottefs/precache-manifest.9936cdb92027221009038bcdb6bdade3.js",
     "service-worker.js": "/veilarbvedtaksstottefs/service-worker.js",
     "static/css/2.beb19d2c.chunk.css.map": "/veilarbvedtaksstottefs/static/css/2.beb19d2c.chunk.css.map",
     "static/css/main.4ed52878.chunk.css.map": "/veilarbvedtaksstottefs/static/css/main.4ed52878.chunk.css.map",
-    "static/js/2.8e37e95e.chunk.js.LICENSE.txt": "/veilarbvedtaksstottefs/static/js/2.8e37e95e.chunk.js.LICENSE.txt",
+    "static/js/2.1712082a.chunk.js.LICENSE.txt": "/veilarbvedtaksstottefs/static/js/2.1712082a.chunk.js.LICENSE.txt",
     "static/media/advarsel-sirkel.60c7de9e.svg": "/veilarbvedtaksstottefs/static/media/advarsel-sirkel.60c7de9e.svg",
     "static/media/apne-dialog.svg": "/veilarbvedtaksstottefs/static/media/apne-dialog.bb7ddc52.svg",
     "static/media/beslutterfunksjon.svg": "/veilarbvedtaksstottefs/static/media/beslutterfunksjon.7b1b80d9.svg",
@@ -49,8 +49,8 @@
   "entrypoints": [
     "static/js/runtime-main.6e843c9b.js",
     "static/css/2.beb19d2c.chunk.css",
-    "static/js/2.8e37e95e.chunk.js",
+    "static/js/2.1712082a.chunk.js",
     "static/css/main.4ed52878.chunk.css",
-    "static/js/main.e77b4ee5.chunk.js"
+    "static/js/main.b13e0d8f.chunk.js"
   ]
 }
