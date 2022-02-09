@@ -9,28 +9,18 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
-        with:
-            node-version: '16'
-            cache: 'npm'
-      - run: npm ci
-      - name: Run tests
-      - run: npm run test
-      - name: Build application
-      - run: npm run build
-        env:
-            PUBLIC_URL: https://veilarbvedtaksstottefs.dev.intern.nav.no
-            - name: Setup gcloud
-      - uses: google-github-actions/setup-gcloud@master
-        with:
-            service_account_key: ${{ secrets.GCS_SA_KEY_DEV }}
-            export_default_credentials: true
-      - name: Upload files to GCS
-        run: gsutil -m rsync -r build gs://veilarbvedtaksstottefs-dev
-            - name: Create release
-              uses: actions/create-release@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  tag_name: release/dev@${{ github.sha }}
-                  release_name: Release to dev
-                  prerelease: true
+                  node-version: '16'
+                  cache: 'npm'
+            - run: npm ci
+            - run: npm run test
+            - run: npm run build
+            env:
+                PUBLIC_URL: https://veilarbvedtaksstottefs.dev.intern.nav.no
+                - name: Setup gcloud
+            - uses: google-github-actions/setup-gcloud@master
+            with:
+                 service_account_key: ${{ secrets.GCS_SA_KEY_DEV }}
+                 export_default_credentials: true
+          - name: Upload files to GCS
+            run: gsutil -m rsync -r build gs://veilarbvedtaksstottefs-dev
