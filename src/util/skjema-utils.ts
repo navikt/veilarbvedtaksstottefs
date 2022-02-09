@@ -43,12 +43,7 @@ export function mapKilderFraBokmalTilBrukersMalform(
 	if (!kildeListe) return [];
 
 	// Trenger ikke å mappe hvis vi ikke vet malform, ikke støtter oversettelse for malform, eller det allerede er på bokmål
-	if (
-		!malformType ||
-		!Object.values(MalformType).includes(malformType) ||
-		malformType === MalformType.NB ||
-		malformType === MalformType.nb
-	) {
+	if (!malformType || !Object.values(MalformType).includes(malformType) || malformType === MalformType.nb) {
 		return kildeListe;
 	}
 
