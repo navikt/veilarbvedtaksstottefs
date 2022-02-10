@@ -18,8 +18,21 @@ import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getInnsatsgruppeTekst } from '../../../util/innsatsgruppe';
 import { getHovedmalNavn } from '../../../util/hovedmal';
+import { MalformData, MalformType } from '../../../api/veilarbperson';
 
 const TEN_SECONDS = 10000;
+
+function malformToTekst(malform: OrNothing<MalformData>): string {
+	const malformType = malform ? malform.malform : null;
+
+	if (malformType === MalformType.nn || malformType === MalformType.nb) {
+		return `Norsk (${malformType === MalformType.nn ? 'Nynorsk' : 'Bokmål'})`;
+	} else if (!malformType) {
+		return 'Ukjent';
+	}
+
+	return malformType;
+}
 
 export function LesSkjemaSection() {
 	const { fnr } = useAppStore();
@@ -29,6 +42,7 @@ export function LesSkjemaSection() {
 	const { initSkjema } = useSkjemaStore();
 	const { showVarsel } = useVarselStore();
 	const refreshUtkastIntervalRef = useRef<number>();
+	const { malform } = useDataStore();
 
 	useEffect(() => {
 		/*
@@ -111,7 +125,10 @@ export function LesSkjemaSection() {
 			<div className="begrunnelse-felt">
 				<FeltHeader tittel="Begrunnelse" />
 				<Tekstomrade className="blokk-s">{begrunnelse}</Tekstomrade>
-				<Normaltekst className="begrunnelse-felt__antall-tegn">Antall tegn: {begrunnelse.length}</Normaltekst>
+				<Normaltekst className="begrunnelse-felt__antall-tegn">
+					<span>{'Brukers målform: ' + malformToTekst(malform)}</span>
+					<span className="span-right"> {'Antall tegn: ' + begrunnelse.length}</span>
+				</Normaltekst>
 			</div>
 
 			<div className="innsatsgruppe-felt">
