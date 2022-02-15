@@ -9,7 +9,7 @@ import {
 	STOPPE_VEDTAKSUTSENDING_TOGGLE
 } from '../api/veilarbpersonflatefs';
 import { Veileder } from '../api/veilarbveileder';
-import { enhetId, enhetNavn, veileder1, veileder3 } from './data';
+import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
 import { MeldingType, SystemMeldingType } from '../util/type/melding-type';
 import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
@@ -101,11 +101,14 @@ const pabegyntUtkast: Utkast = {
 	innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
 	utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
-	veilederNavn: veileder1.navn,
-	veilederIdent: veileder1.ident,
+	veilederNavn: veileder2.navn,
+	veilederIdent: veileder2.ident,
 	oppfolgingsenhetId: enhetId,
 	oppfolgingsenhetNavn: enhetNavn,
-	begrunnelse: 'Trenger ikke hjelp',
+	begrunnelse:
+		'På grunn av Sterk Mygg sin unge alder er det viktig at hun får hjelp til å komme i arbeid så raskt som mulig. Det vil ' +
+		'sannsynligvis gi god effekt å finne en praksisplass i nærheten av hjemstedet slik at hun kan bo i nåværende bolig og lett komme seg ' +
+		'til og fra arbeidsplassen.',
 	beslutterIdent: null,
 	beslutterNavn: null,
 	beslutterProsessStatus: null
