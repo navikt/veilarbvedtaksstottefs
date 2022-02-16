@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from 'classnames';
-import { Element, EtikettLiten } from 'nav-frontend-typografi';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import './dialog-melding.less';
 import { formatDayMonthTime } from '../../../../../util/date-utils';
 import { purfiyUnsafeHtml, replaceNewLineWithBr, replaceTextUrlsWithTags } from '../../../../../util/html-utils';
@@ -45,7 +45,7 @@ export const DialogMelding = (props: DialogMeldingProps) => {
 				<Show if={!skrevetAvMeg}>
 					<Element className="dialog-melding__metadata-navn">{skrevetAvNavn}</Element>
 				</Show>
-				<EtikettLiten className="dialog-melding__metadata-dato">{`${formatDayMonthTime(dato)}`}</EtikettLiten>
+				<Undertekst className="dialog-melding__metadata-dato">{`${formatDayMonthTime(dato)}`}</Undertekst>
 			</div>
 			<div className="dialog-melding__tekst-wrapper">
 				<DialogMeldingBar className={cls(meldingBarClasses)} />
