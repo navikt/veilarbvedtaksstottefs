@@ -1,11 +1,10 @@
-import { rest } from 'msw';
-import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
+import { RequestHandler, rest } from 'msw';
 import { MeldingType } from '../../../util/type/melding-type';
 import { DialogMelding } from '../../../api/veilarbvedtaksstotte/meldinger';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { hentInnloggetVeileder, hentMeldinger, leggTilMelding } from '../../api-data';
 
-export const meldingerHandlers: RequestHandlersList = [
+export const meldingerHandlers: RequestHandler[] = [
 	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/meldinger`, (req, res, ctx) => {
 		return res(ctx.delay(500), ctx.json(hentMeldinger()));
 	}),

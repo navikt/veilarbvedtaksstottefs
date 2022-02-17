@@ -1,9 +1,8 @@
-import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
 import { enhetId, enhetNavn } from '../../data';
 import { Utkast, Vedtak, VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { SkjemaData } from '../../../util/skjema-utils';
-import { rest } from 'msw';
+import { RequestHandler, rest } from 'msw';
 import { lagVedtakBrevMockUrl } from '../../utils';
 import {
 	byttUtUtkast,
@@ -17,7 +16,7 @@ import {
 	oppdaterVedtakUtkastMockFraSkjema
 } from '../../api-data';
 
-export const utkastHandlers: RequestHandlersList = [
+export const utkastHandlers: RequestHandler[] = [
 	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, (req, res, ctx) => {
 		if (!hentUtkast()) {
 			return res(ctx.delay(500), ctx.status(404));
@@ -29,7 +28,7 @@ export const utkastHandlers: RequestHandlersList = [
 		const nyId =
 			hentFattedeVedtak().length > 0 ? hentFattedeVedtak().sort((fv1, fv2) => fv2.id - fv1.id)[0].id + 1 : 1;
 
-		const nyttUtkast = ({
+		const nyttUtkast = {
 			id: nyId,
 			utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 			opplysninger: [],
@@ -40,7 +39,7 @@ export const utkastHandlers: RequestHandlersList = [
 			beslutterNavn: null,
 			sendtTilBeslutter: false,
 			beslutterIdent: null
-		} as unknown) as Utkast;
+		} as unknown as Utkast;
 
 		byttUtUtkast(nyttUtkast);
 
