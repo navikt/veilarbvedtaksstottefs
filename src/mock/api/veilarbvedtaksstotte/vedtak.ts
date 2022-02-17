@@ -14,7 +14,7 @@ export const vedtakHandlers: RequestHandler[] = [
 		return res(ctx.delay(500), ctx.json(hentOyeblikksbilder()));
 	}),
 	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/pdf`, async (req, res, ctx) => {
-		const vedtakId = parseInt(req.params.vedtakId, 10);
+		const vedtakId = parseInt(req.params.vedtakId.toString(), 10);
 
 		const vedtak = hentFattedeVedtak().find(v => v.id === vedtakId);
 
