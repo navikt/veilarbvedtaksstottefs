@@ -14,7 +14,6 @@ import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { lagSkjemaelementFeilmelding } from '../../../../util';
 import Show from '../../../../component/show';
-import { ExternalLink } from '@navikt/ds-icons';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
@@ -70,14 +69,10 @@ function Begrunnelse() {
 				tipsId="begrunnelse-tips"
 				tipsInnhold={<BegrunnelseTipsInnhold />}
 				tipsAriaLabel="Tips for begrunnelse"
+				eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
 			/>
+
 			<div className="begrunnelse">
-				<a
-					href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
-					target="_blank"
-				>
-					Nye retningslinjer for NAV-loven § 14 a <ExternalLink fr={undefined} />
-				</a>
 				<SkjemaGruppe feil={lagSkjemaelementFeilmelding(begrunnelseFeil)} className="begrunnelse__container">
 					<Textarea
 						value={begrunnelse || ''}

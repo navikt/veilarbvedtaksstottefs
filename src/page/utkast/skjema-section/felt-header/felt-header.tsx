@@ -4,6 +4,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import './felt-header.less';
 import { TipsPopover } from '../../../../component/tips-popover/tips-popover';
 import Show from '../../../../component/show';
+import { ExternalLink } from '@navikt/ds-icons';
 
 interface FeltHeaderProps {
 	id?: string;
@@ -13,6 +14,7 @@ interface FeltHeaderProps {
 	tipsId?: string;
 	tipsInnhold?: React.ReactNode;
 	tipsAriaLabel?: string;
+	eksternLenke?: string;
 }
 
 function FeltHeader(props: FeltHeaderProps) {
@@ -23,6 +25,16 @@ function FeltHeader(props: FeltHeaderProps) {
 			</Undertittel>
 			<Show if={props.tipsInnhold}>
 				<TipsPopover id={props.tipsId} tipsInnhold={props.tipsInnhold} ariaLabel={props.tipsAriaLabel} />
+			</Show>
+			<Show if={props.eksternLenke}>
+				<a
+					className="felt-header__lenke"
+					href={props.eksternLenke}
+					target="_blank"
+					aria-label={props.eksternLenke}
+				>
+					Nye retningslinjer for NAV-loven § 14 a <ExternalLink fr={undefined} />
+				</a>
 			</Show>
 		</div>
 	);
