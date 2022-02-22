@@ -101,8 +101,8 @@ const pabegyntUtkast: Utkast = {
 	innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
 	utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
-	veilederNavn: veileder2.navn,
-	veilederIdent: veileder2.ident,
+	veilederNavn: veileder1.navn,
+	veilederIdent: veileder1.ident,
 	oppfolgingsenhetId: enhetId,
 	oppfolgingsenhetNavn: enhetNavn,
 	begrunnelse:
