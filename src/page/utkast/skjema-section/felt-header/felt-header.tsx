@@ -31,6 +31,7 @@ function FeltHeader(props: FeltHeaderProps) {
 					className="felt-header__lenke"
 					href={props.eksternLenke}
 					target="_blank"
+					rel="noopener noreferrer"
 					aria-label={props.eksternLenke}
 				>
 					Nye retningslinjer for NAV-loven § 14 a <ExternalLink fr={undefined} />
