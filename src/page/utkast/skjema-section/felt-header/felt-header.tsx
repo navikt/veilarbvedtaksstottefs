@@ -5,6 +5,7 @@ import './felt-header.less';
 import { TipsPopover } from '../../../../component/tips-popover/tips-popover';
 import Show from '../../../../component/show';
 import { ExternalLink } from '@navikt/ds-icons';
+import { logMetrikk } from '../../../../util/logger';
 
 interface FeltHeaderProps {
 	id?: string;
@@ -18,6 +19,9 @@ interface FeltHeaderProps {
 }
 
 function FeltHeader(props: FeltHeaderProps) {
+	const loggAapnet = () => {
+		logMetrikk('veileder-aapnet');
+	};
 	return (
 		<div id={props.id} className={cls('felt-header', props.className)}>
 			<Undertittel id={props.tittelId} className="felt-header__tittel">
@@ -33,6 +37,7 @@ function FeltHeader(props: FeltHeaderProps) {
 					target="_blank"
 					rel="noopener noreferrer"
 					aria-label={props.eksternLenke}
+					onClick={loggAapnet}
 				>
 					Nye retningslinjer for NAV-loven § 14 a <ExternalLink fr={undefined} />
 				</a>

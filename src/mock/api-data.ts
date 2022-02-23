@@ -9,7 +9,7 @@ import {
 	STOPPE_VEDTAKSUTSENDING_TOGGLE
 } from '../api/veilarbpersonflatefs';
 import { Veileder } from '../api/veilarbveileder';
-import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
+import { enhetId, enhetNavn, veileder1, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
 import { MeldingType, SystemMeldingType } from '../util/type/melding-type';
 import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
