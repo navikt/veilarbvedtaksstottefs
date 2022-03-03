@@ -123,7 +123,10 @@ export function LesSkjemaSection() {
 			</div>
 
 			<div className="begrunnelse-felt">
-				<FeltHeader tittel="Begrunnelse" />
+				<FeltHeader
+					tittel="Begrunnelse"
+					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
+				/>
 				<Tekstomrade className="blokk-s">{begrunnelse}</Tekstomrade>
 				<Normaltekst className="begrunnelse-felt__antall-tegn">
 					<span>{'Brukers målform: ' + malformToTekst(malform)}</span>
