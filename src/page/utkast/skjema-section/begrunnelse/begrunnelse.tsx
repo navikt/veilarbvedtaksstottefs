@@ -69,7 +69,9 @@ function Begrunnelse() {
 				tipsId="begrunnelse-tips"
 				tipsInnhold={<BegrunnelseTipsInnhold />}
 				tipsAriaLabel="Tips for begrunnelse"
+				eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
 			/>
+
 			<div className="begrunnelse">
 				<SkjemaGruppe feil={lagSkjemaelementFeilmelding(begrunnelseFeil)} className="begrunnelse__container">
 					<Textarea
