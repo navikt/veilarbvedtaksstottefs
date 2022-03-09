@@ -6,7 +6,7 @@ import './vedtak-panel.less';
 
 export type OnVedtakClicked<T> = (vedtak: T, idx: number) => void;
 
-interface VedtakPanel<T> {
+interface VedtakPanelProps<T> {
 	name: string;
 	vedtak: T;
 	posisjon: number;
@@ -16,7 +16,7 @@ interface VedtakPanel<T> {
 	children: any;
 }
 
-export function VedtakPanel<T>(props: VedtakPanel<T>) {
+export function VedtakPanel<T>(props: VedtakPanelProps<T>) {
 	const { name, vedtak, posisjon, dato, ikon, children, onClick } = props;
 	const elemId = `vedtak-panel-${name}-${posisjon}`;
 

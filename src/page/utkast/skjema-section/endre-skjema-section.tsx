@@ -46,6 +46,7 @@ export function EndreSkjemaSection() {
 	const pollBeslutterstatusIntervalRef = useRef<number>();
 	const isAfterFirstRender = useIsAfterFirstRender();
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const oppdaterUtkast = useCallback(
 		debounce((skjema: SkjemaData) => {
 			const malformType = hentMalformFraData(malform);

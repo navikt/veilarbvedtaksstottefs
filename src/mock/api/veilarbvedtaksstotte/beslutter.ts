@@ -1,10 +1,9 @@
 import { BeslutterProsessStatus, VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { SystemMeldingType } from '../../../util/type/melding-type';
-import { RequestHandlersList } from 'msw/lib/types/setupWorker/glossary';
-import { rest } from 'msw';
+import { RequestHandler, rest } from 'msw';
 import { leggTilMockSystemMelding, hentUtkast, oppdaterUtkast, hentInnloggetVeileder } from '../../api-data';
 
-export const beslutterHandlers: RequestHandlersList = [
+export const beslutterHandlers: RequestHandler[] = [
 	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/start`, (req, res, ctx) => {
 		if (!hentUtkast()) throw new Error('Fant ikke utkast å starte beslutterprosess på');
 

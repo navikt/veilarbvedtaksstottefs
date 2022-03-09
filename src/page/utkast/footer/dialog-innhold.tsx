@@ -31,21 +31,10 @@ interface DialogFooterInnholdProps {
 }
 
 export function DialogInnhold(props: DialogFooterInnholdProps) {
-	const {
-		erBeslutter,
-		erAnsvarligVeileder,
-		erIkkeAnsvarligVeileder,
-		veilederTilgang,
-		setVeilederTilgang
-	} = useTilgangStore();
-	const {
-		malform,
-		utkast,
-		leggTilSystemMelding,
-		innloggetVeileder,
-		setUtkastBeslutter,
-		setBeslutterProsessStatus
-	} = useDataStore();
+	const { erBeslutter, erAnsvarligVeileder, erIkkeAnsvarligVeileder, veilederTilgang, setVeilederTilgang } =
+		useTilgangStore();
+	const { malform, utkast, leggTilSystemMelding, innloggetVeileder, setUtkastBeslutter, setBeslutterProsessStatus } =
+		useDataStore();
 	const { showSection } = useDialogSection();
 	const { hideModal, showModal } = useModalStore();
 	const { innsatsgruppe } = useSkjemaStore();

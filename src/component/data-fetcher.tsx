@@ -15,14 +15,8 @@ import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../ap
 
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const { initSkjema } = useSkjemaStore();
-	const {
-		setFattedeVedtak,
-		setOppfolgingData,
-		setMalform,
-		setUtkast,
-		setInnloggetVeileder,
-		setArenaVedtak
-	} = useDataStore();
+	const { setFattedeVedtak, setOppfolgingData, setMalform, setUtkast, setInnloggetVeileder, setArenaVedtak } =
+		useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
 
 	const fattedeVedtakFetcher = useAxiosFetcher(hentFattedeVedtak);
