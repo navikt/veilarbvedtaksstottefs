@@ -13,6 +13,7 @@ export function useIsAfterFirstRender(): boolean {
 }
 
 export function useEventListener(name: string, listener: EventListener, deps?: DependencyList) {
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const callback: any = useCallback(listener, deps ? deps : []);
 	useEffect(() => {
 		window.addEventListener(name, callback);

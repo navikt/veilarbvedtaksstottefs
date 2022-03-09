@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Element, EtikettLiten } from 'nav-frontend-typografi';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';
 import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
@@ -22,9 +22,9 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 			ikon={vedtakBilde}
 		>
 			<Element className="tidligere-vedtak-panel__innsats--tittel">{innsatsgruppeTekst.tittel}</Element>
-			<EtikettLiten className="tidligere-vedtak-panel__innsats--undertekst">
+			<Undertekst className="tidligere-vedtak-panel__innsats--undertekst">
 				{innsatsgruppeTekst.undertekst}
-			</EtikettLiten>
+			</Undertekst>
 		</VedtakPanel>
 	);
 }
