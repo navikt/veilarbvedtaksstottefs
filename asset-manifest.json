@@ -1,17 +1,19 @@
 {
   "files": {
     "main.css": "/veilarbvedtaksstottefs/static/css/main.14e6e072.chunk.css",
-    "main.js": "/veilarbvedtaksstottefs/static/js/main.918542e8.chunk.js",
-    "main.js.map": "/veilarbvedtaksstottefs/static/js/main.918542e8.chunk.js.map",
+    "main.js": "/veilarbvedtaksstottefs/static/js/main.403793d7.chunk.js",
+    "main.js.map": "/veilarbvedtaksstottefs/static/js/main.403793d7.chunk.js.map",
     "runtime-main.js": "/veilarbvedtaksstottefs/static/js/runtime-main.79f5b539.js",
     "runtime-main.js.map": "/veilarbvedtaksstottefs/static/js/runtime-main.79f5b539.js.map",
     "static/css/2.bfc8bb4a.chunk.css": "/veilarbvedtaksstottefs/static/css/2.bfc8bb4a.chunk.css",
-    "static/js/2.b7cfe42a.chunk.js": "/veilarbvedtaksstottefs/static/js/2.b7cfe42a.chunk.js",
-    "static/js/2.b7cfe42a.chunk.js.map": "/veilarbvedtaksstottefs/static/js/2.b7cfe42a.chunk.js.map",
+    "static/js/2.638497db.chunk.js": "/veilarbvedtaksstottefs/static/js/2.638497db.chunk.js",
+    "static/js/2.638497db.chunk.js.map": "/veilarbvedtaksstottefs/static/js/2.638497db.chunk.js.map",
+    "e7e915313973ba1d49f9bb2a1998626e.js": "/veilarbvedtaksstottefs/e7e915313973ba1d49f9bb2a1998626e.js",
+    "e7e915313973ba1d49f9bb2a1998626e.js.LICENSE.txt": "/veilarbvedtaksstottefs/e7e915313973ba1d49f9bb2a1998626e.js.LICENSE.txt",
     "index.html": "/veilarbvedtaksstottefs/index.html",
     "static/css/2.bfc8bb4a.chunk.css.map": "/veilarbvedtaksstottefs/static/css/2.bfc8bb4a.chunk.css.map",
     "static/css/main.14e6e072.chunk.css.map": "/veilarbvedtaksstottefs/static/css/main.14e6e072.chunk.css.map",
-    "static/js/2.b7cfe42a.chunk.js.LICENSE.txt": "/veilarbvedtaksstottefs/static/js/2.b7cfe42a.chunk.js.LICENSE.txt",
+    "static/js/2.638497db.chunk.js.LICENSE.txt": "/veilarbvedtaksstottefs/static/js/2.638497db.chunk.js.LICENSE.txt",
     "static/media/advarsel-sirkel.c6052968.svg": "/veilarbvedtaksstottefs/static/media/advarsel-sirkel.c6052968.svg",
     "static/media/apne-dialog.4f1c7416.svg": "/veilarbvedtaksstottefs/static/media/apne-dialog.4f1c7416.svg",
     "static/media/beslutterfunksjon.6051ea8a.svg": "/veilarbvedtaksstottefs/static/media/beslutterfunksjon.6051ea8a.svg",
@@ -48,8 +50,8 @@
   "entrypoints": [
     "static/js/runtime-main.79f5b539.js",
     "static/css/2.bfc8bb4a.chunk.css",
-    "static/js/2.b7cfe42a.chunk.js",
+    "static/js/2.638497db.chunk.js",
     "static/css/main.14e6e072.chunk.css",
-    "static/js/main.918542e8.chunk.js"
+    "static/js/main.403793d7.chunk.js"
   ]
 }
