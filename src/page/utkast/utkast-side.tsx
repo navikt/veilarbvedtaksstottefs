@@ -62,6 +62,13 @@ export function UtkastSide() {
 		? 'utkast-side__hovedinnhold--dialog'
 		: 'utkast-side__hovedinnhold--dialog-minified';
 
+	function avbrytPolling() {
+		if (intervalRef.current) {
+			clearInterval(intervalRef.current);
+			intervalRef.current = undefined;
+		}
+	}
+
 	function refreshMeldinger() {
 		hentMeldinger(hentId(utkast))
 			.then(response => {
@@ -80,7 +87,10 @@ export function UtkastSide() {
 					setMeldinger(nyeMeldinger);
 				}
 			})
-			.catch()
+			.catch(() => {
+				// backend svarer med status 400 dersom man poller på meldinger for vedtak som er fattet
+				avbrytPolling();
+			})
 			.finally(() => {
 				setHarLastetMeldinger(true);
 			});
@@ -122,10 +132,7 @@ export function UtkastSide() {
 			}
 
 			return () => {
-				if (intervalRef.current) {
-					clearInterval(intervalRef.current);
-					intervalRef.current = undefined;
-				}
+				avbrytPolling()
 			};
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
