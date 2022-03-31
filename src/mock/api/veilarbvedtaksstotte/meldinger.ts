@@ -6,7 +6,7 @@ import { hentInnloggetVeileder, hentMeldinger, leggTilMelding } from '../../api-
 
 export const meldingerHandlers: RequestHandler[] = [
 	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/meldinger`, (req, res, ctx) => {
-		return res(ctx.delay(500), ctx.status(400));
+		return res(ctx.delay(500), ctx.json(hentMeldinger()));
 	}),
 	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/meldinger`, (req, res, ctx) => {
 		const sendDialogData = req.body as { melding: string };
