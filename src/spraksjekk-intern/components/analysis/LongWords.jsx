@@ -1,7 +1,7 @@
 import {Accordion, TextField, Table, Pagination} from "@navikt/ds-react";
 import {useState, useCallback, useEffect} from 'react'
 
-function LongWords(props: { content: any; }) {
+function LongWords(props) {
     const [page, setPage] = useState(1);
     const [pagesCount, setpagesCount] = useState(0);
     const [wordLength, setWordLength] = useState(7)
@@ -12,7 +12,7 @@ function LongWords(props: { content: any; }) {
     let rawcontent = props.content;
     rawcontent = rawcontent.replaceAll("Kopier lenke", "");
     rawcontent = rawcontent.split("\n")
-        .map((l: string) => l.length > 0 && ![".", ":", "!", "?", " "].includes(l.slice(-1))
+        .map((l) => l.length > 0 && ![".", ":", "!", "?", " "].includes(l.slice(-1))
             ? l + "."
             : l
         )
@@ -22,7 +22,7 @@ function LongWords(props: { content: any; }) {
     const words = content
         .toLowerCase()
         .split(/\s+/)
-        .map((s: string) => s.replace(/[.,:?()!"]+/g, ""));
+        .map((s) => s.replace(/[.,:?()!"]+/g, ""));
 
     // Find longest word
     let longestWord = 0;
@@ -58,7 +58,7 @@ function LongWords(props: { content: any; }) {
         .sort(function (a, b) {
             return b.length - a.length;
         })
-        .filter((item: string | any[]) => item.length > (wordLength - 1));
+        .filter((item) => item.length > (wordLength - 1));
 
     longWordCounter = longWords.length;
     let totalFreqWords = 0;
@@ -89,7 +89,10 @@ function LongWords(props: { content: any; }) {
         <>
             {longWordsHere == 1 && (
                 <Accordion.Item>
-                    <Accordion.Header>
+                    <Accordion.Header
+                    onClick={e => {
+                        e.preventDefault();
+                    }}>
                         {listLongWords.length == 1 ? (<>1 unikt langt</>) : (<>{longWordCounter} unike lange</>)} ord
                     </Accordion.Header>
                     <Accordion.Content>
@@ -115,7 +118,7 @@ function LongWords(props: { content: any; }) {
                                 </Table.Row>
                             </Table.Header>
                             <Table.Body>
-                                {allFreq.map((wordFreq: [string, string]) => {
+                                {allFreq.map((wordFreq) => {
                                     return (
                                         <Table.Row key={wordFreq[0]}>
                                             <Table.HeaderCell scope="row">

@@ -1,6 +1,6 @@
 // Analysis
 export { default as OrdTelling } from "./analysis/OrdTelling.tsx";
-export { default as LongWords } from "./analysis/LongWords.tsx";
+export { default as LongWords } from "./analysis/LongWords.jsx";
 export { default as LongSentences } from "./analysis/LongSentences.tsx";
 export { default as LongParagraphs } from "./analysis/LongParagraphs.tsx";
 export { default as DublicateWords } from "./analysis/DublicateWords.tsx";
