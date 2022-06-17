@@ -17,7 +17,6 @@ import { lagSkjemaelementFeilmelding } from '../../../../util';
 import Show from '../../../../component/show';
 import { Accordion, Switch } from '@navikt/ds-react';
 import {
-	Begrepskatalog,
 	DublicateWords,
 	GammelnavskCheck,
 	Lix,
