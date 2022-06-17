@@ -46,11 +46,7 @@ function Begrepsordbok(props: { content: any }) {
 		<>
 			{gammelnavskVisResultater != 0 && (
 				<Accordion.Item>
-					<Accordion.Header
-						onClick={e => {
-							e.preventDefault();
-						}}
-					>
+					<Accordion.Header type="button">
 						{gammelnavskResultater.length == 1 ? (
 							<>1 ord i Begrepskatalogen</>
 						) : (
@@ -71,12 +67,7 @@ function Begrepsordbok(props: { content: any }) {
 						<Accordion className="gammelnavskAccordion mt-4">
 							{gammelnavskResultater.map((gammelnavsk, i) => (
 								<Accordion.Item key="">
-									<Accordion.Header
-										onClick={e => {
-											e.preventDefault();
-										}}
-										className="gammelnavskAccordion"
-									>
+									<Accordion.Header type="button" className="gammelnavskAccordion">
 										<span className="firstLetter">{gammelnavsk._source.content.term}</span>
 									</Accordion.Header>
 									<Accordion.Content className="gammelnavskAccordionContent">

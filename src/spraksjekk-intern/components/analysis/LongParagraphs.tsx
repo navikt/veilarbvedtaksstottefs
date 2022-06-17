@@ -36,11 +36,7 @@ function LongParagraphs(props: { content: any }) {
 		<>
 			{longParagraphsCounter != 0 && (
 				<Accordion.Item>
-					<Accordion.Header
-						onClick={e => {
-							e.preventDefault();
-						}}
-					>
+					<Accordion.Header type="button">
 						{longParagraphsCounter} {longParagraphsCounter == 1 ? <>langt avsnitt</> : <>lange avsnitt</>}
 					</Accordion.Header>
 					<Accordion.Content>

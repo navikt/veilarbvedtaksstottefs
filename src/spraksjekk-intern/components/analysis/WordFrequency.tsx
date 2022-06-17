@@ -49,13 +49,7 @@ function WordFrequency(props: { content: string }) {
 		<>
 			{value.length >= 1 && (
 				<Accordion.Item>
-					<Accordion.Header
-						onClick={e => {
-							e.preventDefault();
-						}}
-					>
-						Frekvensordliste
-					</Accordion.Header>
+					<Accordion.Header type="button">Frekvensordliste</Accordion.Header>
 					<Accordion.Content className="overflow-x-auto gammelnavskAccordionContent">
 						<Table zebraStripes size="small">
 							<Table.Header>

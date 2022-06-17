@@ -24,11 +24,7 @@ function GammelnavskCheck(props: { content: any }) {
 		<>
 			{gammelnavskVisResultater != 0 && (
 				<Accordion.Item>
-					<Accordion.Header
-						onClick={e => {
-							e.preventDefault();
-						}}
-					>
+					<Accordion.Header type="button">
 						{gammelnavskResultater.length == 1 ? (
 							<>1 mulig støtende ord</>
 						) : (
@@ -40,12 +36,7 @@ function GammelnavskCheck(props: { content: any }) {
 						<Accordion className="gammelnavskAccordion mt-4">
 							{gammelnavskResultater.map((gammelnavsk, i) => (
 								<Accordion.Item key={gammelnavsk.id}>
-									<Accordion.Header
-										onClick={e => {
-											e.preventDefault();
-										}}
-										className="gammelnavskAccordion"
-									>
+									<Accordion.Header type="button" className="gammelnavskAccordion">
 										<span className="firstLetter">{gammelnavsk.ord}</span>
 									</Accordion.Header>
 									<Accordion.Content className="gammelnavskAccordionContent">

@@ -18,11 +18,7 @@ function DublicateWords(props: { content: string }) {
 		<>
 			{dublicateWordsCount != 0 && (
 				<Accordion.Item>
-					<Accordion.Header
-						onClick={e => {
-							e.preventDefault();
-						}}
-					>
+					<Accordion.Header type="button">
 						{dublicateWordsCount == 1 ? (
 							<>1 gjentakelse av like ord</>
 						) : (

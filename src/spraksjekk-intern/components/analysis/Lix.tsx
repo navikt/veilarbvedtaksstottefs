@@ -50,11 +50,7 @@ function Lix(props: { content: any }) {
 		<>
 			{lix >= 34 && lix < 100 && dotCounter > 1 && (
 				<Accordion.Item>
-					<Accordion.Header
-						onClick={e => {
-							e.preventDefault();
-						}}
-					>
+					<Accordion.Header type="button">
 						Liks {lix}: <LixMelding lix={lix} />
 					</Accordion.Header>
 					<Accordion.Content className="gammelnavskAccordionContent removeAccordionPaddingBottom">

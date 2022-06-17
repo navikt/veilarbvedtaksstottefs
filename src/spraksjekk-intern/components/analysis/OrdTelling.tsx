@@ -71,13 +71,7 @@ function OrdTelling(props: { content: any }) {
 
 	return (
 		<Accordion.Item>
-			<Accordion.Header
-				onClick={e => {
-					e.preventDefault();
-				}}
-			>
-				Ordtelling
-			</Accordion.Header>
+			<Accordion.Header type="button">Ordtelling</Accordion.Header>
 			<Accordion.Content>
 				<ul className="wordcountlist list-disc list-inside">
 					<li>Ord: {totalwords}</li>

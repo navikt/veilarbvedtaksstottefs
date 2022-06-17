@@ -89,10 +89,7 @@ function LongWords(props) {
         <>
             {longWordsHere == 1 && (
                 <Accordion.Item>
-                    <Accordion.Header
-                    onClick={e => {
-                        e.preventDefault();
-                    }}>
+                    <Accordion.Header type="button">
                         {listLongWords.length == 1 ? (<>1 unikt langt</>) : (<>{longWordCounter} unike lange</>)} ord
                     </Accordion.Header>
                     <Accordion.Content>
@@ -133,6 +130,7 @@ function LongWords(props) {
                         {longWordCounter > 10 &&
                             <div className="pagination-container">
                                 <Pagination
+                                    onClick={(e) => {e.preventDefault()}}
                                     className="spacing-30 pagination"
                                     page={page}
                                     onPageChange={setPage}

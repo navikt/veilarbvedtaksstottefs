@@ -37,12 +37,8 @@ function LongSentences(props: { content: any }) {
 		<>
 			{longSentencesCounter != 0 && (
 				<Accordion.Item>
-					<Accordion.Header
-						onClick={e => {
-							e.preventDefault();
-						}}
-					>
-						{longSentencesCounter} {longSentencesCounter == 1 ? <>lang setning</> : <>lange setninger</>}
+					<Accordion.Header type="button">
+						{longSentencesCounter} {longSentencesCounter == 1 ? 'lang setning' : 'lange setninger'}
 					</Accordion.Header>
 					<Accordion.Content className="removeAccordionPaddingBottom">
 						Setninger med over 20 ord:
