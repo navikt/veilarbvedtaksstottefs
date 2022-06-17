@@ -76,64 +76,68 @@ function Begrunnelse() {
 	}, [errors.begrunnelse]);
 
 	return (
-		<div className="begrunnelse-felt" id="begrunnelse-scroll-to">
-			<FeltHeader
-				tittel="Begrunnelse"
-				tittelId="begrunnelse-tittel"
-				tipsId="begrunnelse-tips"
-				tipsInnhold={<BegrunnelseTipsInnhold />}
-				tipsAriaLabel="Tips for begrunnelse"
-				eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
-			/>
+		<>
+			<div className="begrunnelse-felt" id="begrunnelse-scroll-to">
+				<FeltHeader
+					tittel="Begrunnelse"
+					tittelId="begrunnelse-tittel"
+					tipsId="begrunnelse-tips"
+					tipsInnhold={<BegrunnelseTipsInnhold />}
+					tipsAriaLabel="Tips for begrunnelse"
+					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
+				/>
 
-			<div className="begrunnelse">
-				<SkjemaGruppe feil={lagSkjemaelementFeilmelding(begrunnelseFeil)} className="begrunnelse__container">
-					<Textarea
-						value={begrunnelse || ''}
-						label=""
-						placeholder="Skriv inn din begrunnelse/arbeidsevnevurdering her"
-						maxLength={BEGRUNNELSE_ANBEFALT_LENGTH}
-						onChange={onBegrunnelseChanged}
-						aria-labelledby="begrunnelse-tittel"
-						spellCheck="true"
-						className={cls('begrunnelse__tekstomrade', 'skjemaelement__input textarea--medMeta', {
-							'begrunnelse__tekstomrade--feil': !!begrunnelseFeil
-						})}
-					/>
-					<Normaltekst className="begrunnelse__malform">
-						Brukers målform: {malformToTekst(malform)}
-					</Normaltekst>
-					<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH}>
-						<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
-							<span aria-live="assertive">
-								Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv å
-								korte den ned.
-							</span>
-						</AlertStripeAdvarsel>
-					</Show>
-				</SkjemaGruppe>
-				<Switch
-					size="small"
-					position="left"
-					onChange={() => setVisSprakhjelp(!visSprakhjelp)}
-					checked={visSprakhjelp}
-				>
-					Vis språkhjelp
-				</Switch>
-				<Show if={visSprakhjelp && begrunnelse && begrunnelse.length > 0}>
-					<Accordion>
-						<LongParagraphs content={begrunnelse} />
-						<LongSentences content={begrunnelse} />
-						<LongWords content={begrunnelse} />
-						<DublicateWords content={begrunnelse} />
-						<GammelnavskCheck content={begrunnelse} />
-						<Nrkordliste content={begrunnelse} />
-						<Lix content={begrunnelse} />
-						<OrdTelling content={begrunnelse} />
-					</Accordion>
-				</Show>
+				<div className="begrunnelse">
+					<SkjemaGruppe feil={lagSkjemaelementFeilmelding(begrunnelseFeil)} className="begrunnelse__container">
+						<Textarea
+							value={begrunnelse || ''}
+							label=""
+							placeholder="Skriv inn din begrunnelse/arbeidsevnevurdering her"
+							maxLength={BEGRUNNELSE_ANBEFALT_LENGTH}
+							onChange={onBegrunnelseChanged}
+							aria-labelledby="begrunnelse-tittel"
+							spellCheck="true"
+							className={cls('begrunnelse__tekstomrade', 'skjemaelement__input textarea--medMeta', {
+								'begrunnelse__tekstomrade--feil': !!begrunnelseFeil
+							})}
+						/>
+						<Normaltekst className="begrunnelse__malform">
+							Brukers målform: {malformToTekst(malform)}
+						</Normaltekst>
+						<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH}>
+							<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
+								<span aria-live="assertive">
+									Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv å
+									korte den ned.
+								</span>
+							</AlertStripeAdvarsel>
+						</Show>
+					</SkjemaGruppe>
+				</div>
 			</div>
-		</div>
+			<div className="spraksjekk-felt">
+					<Switch
+						size="small"
+						position="left"
+						onChange={() => setVisSprakhjelp(!visSprakhjelp)}
+						checked={visSprakhjelp}
+					>
+						Språkhjelp
+					</Switch>
+					<Show if={visSprakhjelp && begrunnelse && begrunnelse.length > 0}>
+						<Accordion>
+							<LongParagraphs content={begrunnelse} />
+							<LongSentences content={begrunnelse} />
+							<LongWords content={begrunnelse} />
+							<DublicateWords content={begrunnelse} />
+							<GammelnavskCheck content={begrunnelse} />
+							<Nrkordliste content={begrunnelse} />
+							<Lix content={begrunnelse} />
+							<OrdTelling content={begrunnelse} />
+						</Accordion>
+					</Show>
+			</div>
+			</>
 	);
 }
 
