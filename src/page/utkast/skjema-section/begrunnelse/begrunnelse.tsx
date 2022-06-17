@@ -6,6 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import FeltHeader from '../felt-header/felt-header';
 import './begrunnelse.less';
+import '@navikt/ds-css';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { MalformData, MalformType } from '../../../../api/veilarbperson';
 import { useDataStore } from '../../../../store/data-store';
@@ -14,6 +15,18 @@ import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { lagSkjemaelementFeilmelding } from '../../../../util';
 import Show from '../../../../component/show';
+import { Accordion } from '@navikt/ds-react';
+import {
+	Begrepskatalog,
+	DublicateWords,
+	GammelnavskCheck,
+	Lix,
+	LongParagraphs,
+	LongSentences,
+	LongWords,
+	Nrkordliste,
+	OrdTelling
+} from '../../../../spraksjekk-intern/components';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
@@ -98,6 +111,16 @@ function Begrunnelse() {
 						</AlertStripeAdvarsel>
 					</Show>
 				</SkjemaGruppe>
+				<Accordion>
+					<LongParagraphs content={begrunnelse} />
+					<LongSentences content={begrunnelse} />
+					<LongWords content={begrunnelse} />
+					<DublicateWords content={begrunnelse} />
+					<GammelnavskCheck content={begrunnelse} />
+					<Nrkordliste content={begrunnelse} />
+					<Lix content={begrunnelse} />
+					<OrdTelling content={begrunnelse} />
+				</Accordion>
 			</div>
 		</div>
 	);
