@@ -15,7 +15,7 @@ import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { lagSkjemaelementFeilmelding } from '../../../../util';
 import Show from '../../../../component/show';
-import { Accordion } from '@navikt/ds-react';
+import { Accordion, Switch } from '@navikt/ds-react';
 import {
 	Begrepskatalog,
 	DublicateWords,
@@ -48,6 +48,7 @@ function Begrunnelse() {
 	const { malform } = useDataStore();
 	const { begrunnelse, setBegrunnelse, errors, innsatsgruppe } = useSkjemaStore();
 	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
+	const [visSprakhjelp, setVisSprakhjelp] = useState(false);
 
 	function onBegrunnelseChanged(e: any) {
 		const newText = e.target.value;
@@ -111,16 +112,26 @@ function Begrunnelse() {
 						</AlertStripeAdvarsel>
 					</Show>
 				</SkjemaGruppe>
-				<Accordion>
-					<LongParagraphs content={begrunnelse} />
-					<LongSentences content={begrunnelse} />
-					<LongWords content={begrunnelse} />
-					<DublicateWords content={begrunnelse} />
-					<GammelnavskCheck content={begrunnelse} />
-					<Nrkordliste content={begrunnelse} />
-					<Lix content={begrunnelse} />
-					<OrdTelling content={begrunnelse} />
-				</Accordion>
+				<Switch
+					size="small"
+					position="left"
+					onChange={() => setVisSprakhjelp(!visSprakhjelp)}
+					checked={visSprakhjelp}
+				>
+					Vis språkhjelp
+				</Switch>
+				<Show if={visSprakhjelp && begrunnelse && begrunnelse.length > 0}>
+					<Accordion>
+						<LongParagraphs content={begrunnelse} />
+						<LongSentences content={begrunnelse} />
+						<LongWords content={begrunnelse} />
+						<DublicateWords content={begrunnelse} />
+						<GammelnavskCheck content={begrunnelse} />
+						<Nrkordliste content={begrunnelse} />
+						<Lix content={begrunnelse} />
+						<OrdTelling content={begrunnelse} />
+					</Accordion>
+				</Show>
 			</div>
 		</div>
 	);
