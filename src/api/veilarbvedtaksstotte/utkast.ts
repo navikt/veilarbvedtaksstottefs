@@ -3,6 +3,7 @@ import { AxiosPromise } from 'axios';
 import { axiosInstance } from '../utils';
 import { mapKilderFraBokmalTilBrukersMalform, SkjemaData } from '../../util/skjema-utils';
 import { VEILARBVEDTAKSSTOTTE_API, BeslutterProsessStatus, Utkast } from './index';
+import { FrontendEvent } from '../../util/logger';
 
 export interface BeslutterprosessStatusData {
 	status: BeslutterProsessStatus;
@@ -35,4 +36,8 @@ export function lagNyttUtkast(fnr: string): AxiosPromise {
 
 export function fetchUtkast(fnr: string): AxiosPromise<Utkast> {
 	return axiosInstance.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`);
+}
+
+export function sendEventTilVeilarbvedtaksstotte(event: FrontendEvent) {
+	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/logger/event`, event);
 }
