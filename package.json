@@ -34,7 +34,7 @@
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@navikt/ds-icons": "0.8.11",
-    "@navikt/ds-react": "0.17.25",
+    "@navikt/ds-react": "0.19.14",
     "@navikt/fnrvalidator": "1.2.0",
     "@navikt/frontendlogger": "2.0.0",
     "@navikt/navspa": "5.0.1",
