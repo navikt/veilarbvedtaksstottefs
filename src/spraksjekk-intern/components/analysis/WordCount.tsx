@@ -1,9 +1,9 @@
-import { LixMelding, WordFrequency, Lix } from '../index.js';
+import { LixResultMessage, WordFrequency, Lix } from '../index.js';
 import { Accordion, Link } from '@navikt/ds-react';
 import { useState } from 'react';
 import { ExternalLink } from '@navikt/ds-icons';
 
-function OrdTelling(props: { content: any }) {
+function WordCount(props: { content: any }) {
 	const [wordLength] = useState(6);
 	const content = props.content;
 	const value = props.content;
@@ -71,7 +71,7 @@ function OrdTelling(props: { content: any }) {
 
 	return (
 		<Accordion.Item>
-			<Accordion.Header type="button">Ordtelling</Accordion.Header>
+			<Accordion.Header type="button">Ordtelling {/*  ({totalwords} ord) */}</Accordion.Header>
 			<Accordion.Content>
 				<ul className="wordcountlist list-disc list-inside">
 					<li>Ord: {totalwords}</li>
@@ -84,13 +84,14 @@ function OrdTelling(props: { content: any }) {
 					{lix >= 0 && lix < 100 && (
 						<li>
 							<Link target="_blank" href="https://no.wikipedia.org/wiki/Lesbarhetsindeks">
-								Liks {lix}: <LixMelding lix={lix} />
+								Liks: {lix}. <LixResultMessage lix={lix} />
 								<ExternalLink />
 							</Link>
 						</li>
 					)}
 				</ul>
 				<Accordion className="mt-6 gammelnavskAccordion">
+					{/* <Lix content={value} /> */}
 					<WordFrequency content={value} />
 				</Accordion>
 			</Accordion.Content>
@@ -98,4 +99,4 @@ function OrdTelling(props: { content: any }) {
 	);
 }
 
-export default OrdTelling;
+export default WordCount;

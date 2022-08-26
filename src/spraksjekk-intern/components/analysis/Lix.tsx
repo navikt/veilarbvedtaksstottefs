@@ -1,5 +1,5 @@
-import { LixMelding } from '../index.js';
-import { Accordion, BodyShort, Link } from '@navikt/ds-react';
+import LixResultMessage from './LixResultMessage';
+import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import { ExternalLink } from '@navikt/ds-icons';
 import { useState } from 'react';
 
@@ -51,11 +51,15 @@ function Lix(props: { content: any }) {
 			{lix >= 34 && lix < 100 && dotCounter > 1 && (
 				<Accordion.Item>
 					<Accordion.Header type="button">
-						Liks {lix}: <LixMelding lix={lix} />
+						Liks: {lix}. <LixResultMessage lix={lix} />
 					</Accordion.Header>
 					<Accordion.Content className="gammelnavskAccordionContent removeAccordionPaddingBottom">
-						<BodyShort className="pb-2">
-							Liks {lix}: Teksten er <LixMelding lix={lix} /> ifølge{' '}
+						<BodyShort style={{ textTransform: 'initial' }} className="pb-2">
+							Liks: {lix}. Teksten kan anses{' '}
+							<span style={{ textTransform: 'lowercase' }}>
+								<LixResultMessage lix={lix} />
+							</span>{' '}
+							ifølge{' '}
 							<Link target="_blank" href="https://no.wikipedia.org/wiki/Lesbarhetsindeks">
 								lesbarhetsindeksen Liks
 								<ExternalLink />
@@ -63,7 +67,9 @@ function Lix(props: { content: any }) {
 							.
 						</BodyShort>
 						<BodyShort className="mt-6">
-							<b>Skriveråd</b>:
+							<Heading spacing level="3" size="xsmall">
+								Skriveråd
+							</Heading>
 							<ul className="pb-5 list-disc list-inside">
 								<li>Skriv korte og enkle setninger</li>
 								<li>Velg korte og enkle ord</li>

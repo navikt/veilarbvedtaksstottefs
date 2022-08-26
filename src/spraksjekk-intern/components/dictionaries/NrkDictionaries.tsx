@@ -2,42 +2,49 @@ import { Accordion, Heading, Link } from '@navikt/ds-react';
 import { ExternalLink } from '@navikt/ds-icons';
 import { Nrkordliste } from '../../data';
 
-function GammelnavskCheck(props: { content: any }) {
+interface NrkInterface {
+	id: string;
+	ord: string;
+	bruk: string;
+	bokmål: string;
+	kilde: string;
+	lenke: string;
+}
+
+function NrkDictionaries(props: { content: string }) {
 	const value = props.content;
 	let gammelnavsk = Nrkordliste;
-	let gammelnavskResultater: any[] = [];
+	let gammelnavskResultater: NrkInterface[] = [];
 
 	const keyword = value;
 	if (keyword !== '') {
 		const results = gammelnavsk.nrkordliste.filter(gammelnavsk => {
-			return keyword.toLowerCase().match(gammelnavsk.ord.toLowerCase());
+			return keyword.toLowerCase().match('\\b' + gammelnavsk.ord.toLowerCase() + '\\b');
 		});
 		gammelnavskResultater = results;
 	}
 
-	let gammelnavskVisResultater = 0;
-	if (gammelnavskResultater.length != 0) {
-		gammelnavskVisResultater = 1;
-	}
-
 	return (
 		<>
-			{gammelnavskVisResultater != 0 && (
+			{gammelnavskResultater?.length > 0 && (
 				<Accordion.Item>
 					<Accordion.Header type="button">
 						{gammelnavskResultater.length == 1 ? (
 							<>1 mulig støtende ord</>
 						) : (
-							<>{gammelnavskResultater.length} mulig støtende ord</>
+							<>{gammelnavskResultater.length} mulige støtende ord</>
 						)}
 					</Accordion.Header>
 					<Accordion.Content>
-						Ord som kan være støtende, eller som bør brukes med varsomhet:
+						<Heading spacing level="3" size="xsmall">
+							Vær varsom
+						</Heading>
+						Ord i teksten som kan være støtende, eller som bør brukes med varsomhet:
 						<Accordion className="gammelnavskAccordion mt-4">
 							{gammelnavskResultater.map((gammelnavsk, i) => (
 								<Accordion.Item key={gammelnavsk.id}>
-									<Accordion.Header type="button" className="gammelnavskAccordion">
-										<span className="firstLetter">{gammelnavsk.ord}</span>
+									<Accordion.Header className="gammelnavskAccordion">
+										<span className="firstLetter">"{gammelnavsk.ord}"</span>
 									</Accordion.Header>
 									<Accordion.Content className="gammelnavskAccordionContent">
 										<Heading spacing level="4" size="xsmall">
@@ -69,4 +76,4 @@ function GammelnavskCheck(props: { content: any }) {
 	);
 }
 
-export default GammelnavskCheck;
+export default NrkDictionaries;

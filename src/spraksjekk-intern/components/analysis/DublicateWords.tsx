@@ -1,18 +1,22 @@
 import { Accordion } from '@navikt/ds-react';
 
-function DublicateWords(props: { content: string }) {
+function DublicateWords(props: { content: any }) {
 	let value = props.content;
 	value = value.replaceAll('Kontakt', '');
 	value = value.replaceAll(/\d+(?: \d+)/g, '');
 	value = value.toLowerCase();
 
 	// Find dublicate words
-	let dublicateWordsList: JSX.Element[] = [];
-	let dublicateWordsCount: number = 0;
-	const match = value.match(/\b(\w+)\s+\1\b/g);
-	if (match !== null) {
-		dublicateWordsCount = match.length;
-		dublicateWordsList = match.map((duplicatedword, index) => <li key={index}>{duplicatedword}</li>);
+	let dublicateWordsList: string | number | boolean | JSX.Element[] | null | undefined = [];
+	let dublicateWordsCount = 0;
+	if (value.match(/\b(\w{2,5})\s+\1\b/g)) {
+		dublicateWordsCount = value.match(/\b(\w{2,5})\s+\1\b/g).length;
+		// @ts-ignore
+		dublicateWordsList = value.match(/\b(\w{2,5})\s+\1\b/g).map((duplicatedword, index) => (
+			<li className="pb-2" key={index}>
+				{duplicatedword}
+			</li>
+		));
 	}
 	return (
 		<>
@@ -25,7 +29,7 @@ function DublicateWords(props: { content: string }) {
 							<>{dublicateWordsCount} gjentakelser av like ord</>
 						)}
 					</Accordion.Header>
-					<Accordion.Content>
+					<Accordion.Content className="removeAccordionPaddingBottom">
 						Gjentakelse av like ord etter hverandre:
 						<ul className="list-disc pt-5 list-inside">{dublicateWordsList}</ul>
 					</Accordion.Content>

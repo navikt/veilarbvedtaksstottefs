@@ -17,14 +17,17 @@ import { lagSkjemaelementFeilmelding } from '../../../../util';
 import Show from '../../../../component/show';
 import { Accordion, Switch } from '@navikt/ds-react';
 import {
-	DublicateWords,
-	GammelnavskCheck,
 	Lix,
-	LongParagraphs,
-	LongSentences,
+	WordCount,
 	LongWords,
-	Nrkordliste,
-	OrdTelling
+	LongSentences,
+	LongParagraphs,
+	DublicateWords,
+	Begrepskatalog,
+	GammelnavskDictionary,
+	NrkDictionaries,
+	AvløserordDictionary,
+	PersonalData
 } from '../../../../spraksjekk-intern/components';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
@@ -87,7 +90,10 @@ function Begrunnelse() {
 				/>
 
 				<div className="begrunnelse">
-					<SkjemaGruppe feil={lagSkjemaelementFeilmelding(begrunnelseFeil)} className="begrunnelse__container">
+					<SkjemaGruppe
+						feil={lagSkjemaelementFeilmelding(begrunnelseFeil)}
+						className="begrunnelse__container"
+					>
 						<Textarea
 							value={begrunnelse || ''}
 							label=""
@@ -106,8 +112,8 @@ function Begrunnelse() {
 						<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH}>
 							<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
 								<span aria-live="assertive">
-									Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv å
-									korte den ned.
+									Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv
+									å korte den ned.
 								</span>
 							</AlertStripeAdvarsel>
 						</Show>
@@ -115,28 +121,31 @@ function Begrunnelse() {
 				</div>
 			</div>
 			<div className="spraksjekk-felt">
-					<Switch
-						size="small"
-						position="left"
-						onChange={() => setVisSprakhjelp(!visSprakhjelp)}
-						checked={visSprakhjelp}
-					>
-						Språkhjelp
-					</Switch>
-					<Show if={visSprakhjelp && begrunnelse && begrunnelse.length > 0}>
-						<Accordion>
-							<LongParagraphs content={begrunnelse} />
-							<LongSentences content={begrunnelse} />
-							<LongWords content={begrunnelse} />
-							<DublicateWords content={begrunnelse} />
-							<GammelnavskCheck content={begrunnelse} />
-							<Nrkordliste content={begrunnelse} />
-							<Lix content={begrunnelse} />
-							<OrdTelling content={begrunnelse} />
-						</Accordion>
-					</Show>
+				<Switch
+					size="small"
+					position="left"
+					onChange={() => setVisSprakhjelp(!visSprakhjelp)}
+					checked={visSprakhjelp}
+				>
+					Språkhjelp
+				</Switch>
+				<Show if={visSprakhjelp && begrunnelse && begrunnelse.length > 0}>
+					<Accordion>
+						<LongParagraphs content={begrunnelse} />
+						<LongSentences content={begrunnelse} />
+						<LongWords content={begrunnelse} />
+						<DublicateWords content={begrunnelse} />
+						<GammelnavskDictionary content={begrunnelse} />
+						<NrkDictionaries content={begrunnelse} />
+						<AvløserordDictionary content={begrunnelse} />
+						<Begrepskatalog content={begrunnelse} />
+						{/* <PersonalData content={begrunnelse} /> */}
+						<Lix content={begrunnelse} />
+						<WordCount content={begrunnelse} />
+					</Accordion>
+				</Show>
 			</div>
-			</>
+		</>
 	);
 }
 

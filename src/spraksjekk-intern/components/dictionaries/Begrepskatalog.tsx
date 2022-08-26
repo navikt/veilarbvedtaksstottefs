@@ -4,8 +4,8 @@ import { ExternalLink } from '@navikt/ds-icons';
 
 function Begrepsordbok(props: { content: any }) {
 	const value = props.content;
-	let gammelnavskResultater = [];
-	const [begreper, setBegreper] = useState<any[]>([]);
+	let gammelnavskResultater;
+	const [begreper, setBegreper] = useState([]);
 
 	useEffect(
 		hentBegrep, // <- function that will run on every dependency update
@@ -32,13 +32,13 @@ function Begrepsordbok(props: { content: any }) {
 	const keyword = value;
 	if (keyword !== '' && begreper) {
 		const results = begreper.filter(begreper => {
-			return keyword.toLowerCase().match(begreper._source.content.lowercase_term.toLowerCase());
+			return keyword.toLowerCase().match('\\b' + begreper._source.content.lowercase_term.toLowerCase() + '\\b');
 		});
 		gammelnavskResultater = results;
 	}
 
 	let gammelnavskVisResultater = 0;
-	if (gammelnavskResultater.length != 0) {
+	if (gammelnavskResultater != 0) {
 		gammelnavskVisResultater = 1;
 	}
 
@@ -67,8 +67,8 @@ function Begrepsordbok(props: { content: any }) {
 						<Accordion className="gammelnavskAccordion mt-4">
 							{gammelnavskResultater.map((gammelnavsk, i) => (
 								<Accordion.Item key="">
-									<Accordion.Header type="button" className="gammelnavskAccordion">
-										<span className="firstLetter">{gammelnavsk._source.content.term}</span>
+									<Accordion.Header className="gammelnavskAccordion">
+										<span className="firstLetter">"{gammelnavsk._source.content.term}"</span>
 									</Accordion.Header>
 									<Accordion.Content className="gammelnavskAccordionContent">
 										{gammelnavsk._source.content.clean_definisjon && (
