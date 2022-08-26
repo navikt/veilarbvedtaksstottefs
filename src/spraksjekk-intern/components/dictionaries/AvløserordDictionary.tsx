@@ -52,7 +52,7 @@ function GammelnavskCheck(props: { content: string }) {
 							<Accordion className="gammelnavskAccordion mt-4">
 								{gammelnavskResultater.map((gammelnavsk, i) => (
 									<Accordion.Item key="">
-										<Accordion.Header className="gammelnavskAccordion">
+										<Accordion.Header className="gammelnavskAccordion" type="button">
 											<span className="firstLetter">"{gammelnavsk.importord}"</span>
 										</Accordion.Header>
 										<Accordion.Content className="gammelnavskAccordionContent">
@@ -81,7 +81,7 @@ function GammelnavskCheck(props: { content: string }) {
 							<Accordion className="gammelnavskAccordion">
 								{datatermerResultater.map((gammelnavsk, i) => (
 									<Accordion.Item key="">
-										<Accordion.Header className="gammelnavskAccordion">
+										<Accordion.Header className="gammelnavskAccordion" type="button">
 											<span className="firstLetter">{gammelnavsk.ord}</span>
 										</Accordion.Header>
 										<Accordion.Content className="gammelnavskAccordionContent">

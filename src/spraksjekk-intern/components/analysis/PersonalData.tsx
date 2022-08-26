@@ -45,7 +45,7 @@ function PersonalData(props: { content: string }) {
 		<>
 			{/* {emailCount + phoneCount >= 1 && (
 				<Accordion.Item>
-					<Accordion.Header>
+					<Accordion.Header type="button">
 						{emailCount + phoneCount}{' '}
 						{emailCount + phoneCount == 1 ? <> mulig personopplysning</> : <>mulige personopplysninger</>}
 					</Accordion.Header>

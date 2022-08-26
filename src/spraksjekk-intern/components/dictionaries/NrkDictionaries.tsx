@@ -43,7 +43,7 @@ function NrkDictionaries(props: { content: string }) {
 						<Accordion className="gammelnavskAccordion mt-4">
 							{gammelnavskResultater.map((gammelnavsk, i) => (
 								<Accordion.Item key={gammelnavsk.id}>
-									<Accordion.Header className="gammelnavskAccordion">
+									<Accordion.Header className="gammelnavskAccordion" type="button">
 										<span className="firstLetter">"{gammelnavsk.ord}"</span>
 									</Accordion.Header>
 									<Accordion.Content className="gammelnavskAccordionContent">

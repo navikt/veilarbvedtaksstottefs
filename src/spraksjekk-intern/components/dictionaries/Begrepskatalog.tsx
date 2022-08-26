@@ -3,48 +3,48 @@ import { Accordion, Heading, Link } from '@navikt/ds-react';
 import { ExternalLink } from '@navikt/ds-icons';
 
 function Begrepsordbok(props: { content: any }) {
-	const value = props.content;
-	let gammelnavskResultater;
-	const [begreper, setBegreper] = useState([]);
+	// const value = props.content;
+	// let gammelnavskResultater;
+	// const [begreper, setBegreper] = useState([]);
 
-	useEffect(
-		hentBegrep, // <- function that will run on every dependency update
-		[] // <-- empty dependency array
-	);
+	// useEffect(
+	// 	hentBegrep, // <- function that will run on every dependency update
+	// 	[] // <-- empty dependency array
+	// );
 
-	function hentBegrep() {
-		let url = 'https://data.nav.no/api/dcat';
-		let data = '{ "size": 1000, "query": {"match": {"type": "godkjent_begrep"}}}';
+	// function hentBegrep() {
+	// 	let url = 'https://data.nav.no/api/dcat';
+	// 	let data = '{ "size": 1000, "query": {"match": {"type": "godkjent_begrep"}}}';
 
-		// make the API call
-		fetch(url, {
-			method: 'POST',
-			body: data
-		})
-			.then(function (res) {
-				return res.json();
-			})
-			.then(function (data) {
-				setBegreper(data.hits.hits);
-			});
-	}
+	// 	// make the API call
+	// 	fetch(url, {
+	// 		method: 'POST',
+	// 		body: data
+	// 	})
+	// 		.then(function (res) {
+	// 			return res.json();
+	// 		})
+	// 		.then(function (data) {
+	// 			setBegreper(data.hits.hits);
+	// 		});
+	// }
 
-	const keyword = value;
-	if (keyword !== '' && begreper) {
-		const results = begreper.filter(begreper => {
-			return keyword.toLowerCase().match('\\b' + begreper._source.content.lowercase_term.toLowerCase() + '\\b');
-		});
-		gammelnavskResultater = results;
-	}
+	// const keyword = value;
+	// if (keyword !== '' && begreper) {
+	// 	const results = begreper.filter(begreper => {
+	// 		return keyword.toLowerCase().match('\\b' + begreper._source.content.lowercase_term.toLowerCase() + '\\b');
+	// 	});
+	// 	gammelnavskResultater = results;
+	// }
 
-	let gammelnavskVisResultater = 0;
-	if (gammelnavskResultater != 0) {
-		gammelnavskVisResultater = 1;
-	}
+	// let gammelnavskVisResultater = 0;
+	// if (gammelnavskResultater != 0) {
+	// 	gammelnavskVisResultater = 1;
+	// }
 
 	return (
 		<>
-			{gammelnavskVisResultater != 0 && (
+			{/* {gammelnavskVisResultater != 0 && (
 				<Accordion.Item>
 					<Accordion.Header type="button">
 						{gammelnavskResultater.length == 1 ? (
@@ -67,7 +67,7 @@ function Begrepsordbok(props: { content: any }) {
 						<Accordion className="gammelnavskAccordion mt-4">
 							{gammelnavskResultater.map((gammelnavsk, i) => (
 								<Accordion.Item key="">
-									<Accordion.Header className="gammelnavskAccordion">
+									<Accordion.Header className="gammelnavskAccordion" type="button">
 										<span className="firstLetter">"{gammelnavsk._source.content.term}"</span>
 									</Accordion.Header>
 									<Accordion.Content className="gammelnavskAccordionContent">
@@ -95,7 +95,7 @@ function Begrepsordbok(props: { content: any }) {
 						</Accordion>
 					</Accordion.Content>
 				</Accordion.Item>
-			)}
+			)} */}
 		</>
 	);
 }

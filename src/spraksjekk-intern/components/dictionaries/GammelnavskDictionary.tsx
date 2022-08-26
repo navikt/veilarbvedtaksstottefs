@@ -72,7 +72,7 @@ function GammelnavskDictionary(props: { content: any }) {
 									{kansellistenResultater.map((gammelnavsk, i) => (
 										<>
 											<Accordion.Item key={gammelnavsk.kanselliord}>
-												<Accordion.Header className="gammelnavskAccordion">
+												<Accordion.Header className="gammelnavskAccordion" type="button">
 													<span className="firstLetter">"{gammelnavsk.kanselliord}"</span>
 												</Accordion.Header>
 												<Accordion.Content className="gammelnavskAccordionContent">
@@ -111,7 +111,7 @@ function GammelnavskDictionary(props: { content: any }) {
 									{gammelnavskResultater.map((gammelnavsk, i) => (
 										<>
 											<Accordion.Item key={gammelnavsk.id}>
-												<Accordion.Header className="gammelnavskAccordion">
+												<Accordion.Header className="gammelnavskAccordion" type="button">
 													<span className="firstLetter">"{gammelnavsk.ord}"</span>
 												</Accordion.Header>
 												<Accordion.Content className="gammelnavskAccordionContent">
