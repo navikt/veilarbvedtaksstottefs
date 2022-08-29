@@ -1,13 +1,6 @@
 // Content Analysis
-export { default as WordCount } from "./analysis/WordCount.tsx";
-export { default as LongWords } from "./analysis/LongWords.tsx";
-export { default as LongSentences } from "./analysis/LongSentences.tsx";
-export { default as LongParagraphs } from "./analysis/LongParagraphs.tsx";
-export { default as DuplicateWords } from "./analysis/DuplicateWords.tsx";
-export { default as WordFrequency } from "./analysis/WordFrequency.tsx";
 export { default as Lix } from "./analysis/Lix.tsx";
 export { default as LixResultMessage } from "./analysis/LixResultMessage.tsx";
-export { default as PersonalData } from "./analysis/PersonalData.tsx";
 
 // Dictionaries
 export { default as GammelnavskDictionary } from "./dictionaries/GammelnavskDictionary.tsx";
