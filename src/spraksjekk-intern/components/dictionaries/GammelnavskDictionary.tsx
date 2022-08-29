@@ -16,19 +16,17 @@ interface KansellistenType {
 	alternativ_2: string;
 }
 
-function GammelnavskDictionary(props: { content: any }) {
-	let kansellisten = Kansellisten;
-	let gammelnavsk = GammelnavskOrdliste;
+function GammelnavskDictionary(props: { content: string }) {
 	let gammelnavskResultater: GammelnavskType[] = [];
 	let kansellistenResultater: KansellistenType[] = [];
 
 	if (props.content !== '') {
-		gammelnavskResultater = gammelnavsk.gammelnavsk_ordliste.filter(gammelnavsk => {
+		gammelnavskResultater = GammelnavskOrdliste.gammelnavsk_ordliste.filter(gammelnavsk => {
 			return props.content.toLowerCase().match('\\b' + gammelnavsk.ord.toLowerCase() + '\\b');
 		});
 	}
 	if (props.content !== '') {
-		kansellistenResultater = kansellisten.kansellisten.filter(gammelnavsk => {
+		kansellistenResultater = Kansellisten.kansellisten.filter(gammelnavsk => {
 			return props.content.toLowerCase().match('\\b' + gammelnavsk.kanselliord.toLowerCase() + '\\b');
 		});
 	}
