@@ -3,8 +3,8 @@ import { useState, useEffect, useCallback } from 'react';
 
 function WordFrequency(props: { content: string }) {
 	let value = props.content;
-	value = value.replaceAll(/\<\/(.?)\>/g, '');
-	value = value.replaceAll(/\<(.?)\>/g, '');
+	value = value.replaceAll(/\/(.?)/g, '');
+	value = value.replaceAll(/(.?)/g, '');
 	const [page, setPage] = useState(1);
 	const [pagesCount, setpagesCount] = useState(0);
 	const [freqMap, setFreqMap] = useState<Record<string, number>>({});

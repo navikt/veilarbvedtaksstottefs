@@ -29,7 +29,7 @@ function NrkDictionaries(props: { content: string }) {
 			{gammelnavskResultater?.length > 0 && (
 				<Accordion.Item>
 					<Accordion.Header type="button">
-						{gammelnavskResultater.length == 1 ? (
+						{gammelnavskResultater.length === 1 ? (
 							<>1 mulig støtende ord</>
 						) : (
 							<>{gammelnavskResultater.length} mulige støtende ord</>

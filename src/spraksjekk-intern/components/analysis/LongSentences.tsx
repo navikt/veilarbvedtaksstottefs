@@ -1,4 +1,4 @@
-import { Accordion, Heading, Link, TextField } from '@navikt/ds-react';
+import { Accordion, Heading, Link } from '@navikt/ds-react';
 import { useState } from 'react';
 import { ExternalLink } from '@navikt/ds-icons';
 
@@ -15,7 +15,7 @@ function LongSentences(props: { content: any }) {
 	let content = rawcontent;
 
 	const sentences = content
-		.replace(/([.?!"“:*\/r\/n])\s*(?=[A-Z*])/g, '$1|')
+		.replace(/([.?!"“:*\/rn])\s*(?=[A-Z*])/g, '$1|')
 		.split('|')
 		.sort(function (a: string, b: string) {
 			return b.split(/\s+/).length - a.split(/\s+/).length;
@@ -53,10 +53,10 @@ function LongSentences(props: { content: any }) {
 
 	return (
 		<>
-			{longSentenceHere != 0 && (
+			{longSentenceHere !== 0 && (
 				<Accordion.Item>
 					<Accordion.Header type="button">
-						{longSentencesCounter} {longSentencesCounter == 1 ? <>lang setning</> : <>lange setninger</>}
+						{longSentencesCounter} {longSentencesCounter === 1 ? <>lang setning</> : <>lange setninger</>}
 					</Accordion.Header>
 					<Accordion.Content className="removeAccordionPaddingBottom">
 						{/*Setninger med over 20 ord:*/}

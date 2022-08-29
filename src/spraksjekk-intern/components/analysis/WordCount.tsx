@@ -1,4 +1,4 @@
-import { LixResultMessage, WordFrequency, Lix } from '../index.js';
+import { LixResultMessage, WordFrequency } from '../index.js';
 import { Accordion, Link } from '@navikt/ds-react';
 import { useState } from 'react';
 import { ExternalLink } from '@navikt/ds-icons';
@@ -9,12 +9,12 @@ function WordCount(props: { content: any }) {
 	const value = props.content;
 	const totalchars = value.length;
 	const words = content.split(/\s+/);
-	let lix = 0;
-	let wordCounter = 0;
+	let lix;
+	let wordCounter;
 	let longWordCounter = 0;
-	let dotCounter = 0;
-	let mellomrom = 0;
-	let lengeUtenMellomrom = 0;
+	let dotCounter;
+	let mellomrom;
+	let lengeUtenMellomrom;
 
 	// Get total number of words in text
 	wordCounter = words.length;

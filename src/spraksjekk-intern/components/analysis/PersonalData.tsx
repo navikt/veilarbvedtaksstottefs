@@ -1,5 +1,3 @@
-import { Accordion, Heading } from '@navikt/ds-react';
-
 function PersonalData(props: { content: string }) {
 	// let rawcontent = props.content;
 	// let personinfoHere = 1;

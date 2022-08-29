@@ -40,7 +40,7 @@ function GammelnavskCheck(props: { content: string }) {
 			{(gammelnavskResultater.length > 0 || datatermerResultater.length > 0) && (
 				<Accordion.Item>
 					<Accordion.Header type="button">
-						{gammelnavskResultater.length + datatermerResultater.length == 1 ? (
+						{gammelnavskResultater.length + datatermerResultater.length === 1 ? (
 							<>1 mulig avløserord</>
 						) : (
 							<>{gammelnavskResultater.length + datatermerResultater.length} mulige avløserord</>

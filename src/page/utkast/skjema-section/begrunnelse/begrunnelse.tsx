@@ -18,16 +18,7 @@ import Show from '../../../../component/show';
 import { Accordion, Switch } from '@navikt/ds-react';
 import {
 	Lix,
-	WordCount,
-	LongWords,
-	LongSentences,
-	LongParagraphs,
-	DuplicateWords,
-	Begrepskatalog,
 	GammelnavskDictionary,
-	NrkDictionaries,
-	AvløserordDictionary,
-	PersonalData
 } from '../../../../spraksjekk-intern/components';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;

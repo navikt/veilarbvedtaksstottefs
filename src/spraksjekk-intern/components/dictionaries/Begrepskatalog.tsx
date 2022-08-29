@@ -1,7 +1,3 @@
-import { useState, useEffect } from 'react';
-import { Accordion, Heading, Link } from '@navikt/ds-react';
-import { ExternalLink } from '@navikt/ds-icons';
-
 function Begrepsordbok(props: { content: any }) {
 	// const value = props.content;
 	// let gammelnavskResultater;

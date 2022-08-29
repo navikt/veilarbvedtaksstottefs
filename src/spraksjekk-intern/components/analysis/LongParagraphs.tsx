@@ -1,4 +1,4 @@
-import { Accordion, Heading, Link, TextField } from '@navikt/ds-react';
+import { Accordion, Heading, Link } from '@navikt/ds-react';
 import { useState } from 'react';
 import { ExternalLink } from '@navikt/ds-icons';
 
@@ -53,10 +53,10 @@ function LongParagraphs(props: { content: any }) {
 
 	return (
 		<>
-			{longParagraphHere != 0 && (
+			{longParagraphHere !== 0 && (
 				<Accordion.Item>
 					<Accordion.Header type="button">
-						{longParagraphsCounter} {longParagraphsCounter == 1 ? <>langt avsnitt</> : <>lange avsnitt</>}
+						{longParagraphsCounter} {longParagraphsCounter === 1 ? <>langt avsnitt</> : <>lange avsnitt</>}
 					</Accordion.Header>
 					<Accordion.Content>
 						{/*Avsnitt med over 3 setninger:*/}

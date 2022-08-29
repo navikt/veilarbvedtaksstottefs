@@ -1,4 +1,4 @@
-import { Accordion, TextField, Table, Pagination, Heading, Link } from '@navikt/ds-react';
+import { Accordion, Table, Pagination, Heading, Link } from '@navikt/ds-react';
 import { useState, useCallback, useEffect } from 'react';
 import { ExternalLink } from '@navikt/ds-icons';
 
@@ -41,7 +41,6 @@ function LongWords(props: { content: any }) {
 	}
 
 	let longWordsHere = 0;
-	let fileterWords = removeDuplicates(words);
 	// Loop through the entire array of words
 	for (let i in words) {
 		if (words[i].length > 6) {
