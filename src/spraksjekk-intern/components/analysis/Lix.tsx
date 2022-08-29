@@ -30,13 +30,10 @@ function Lix(props: { content: any }) {
 	};
 	dotCounter = countPunctuation(value);
 
-	let longWordsHere = 0;
+
 	// Loop through the entire array of words
 	for (let i in words) {
-		if (words[i].length > 6) {
-			// +1 for every long word in document
-			longWordsHere = 1;
-		}
+
 		if (words[i].length > wordLength) {
 			// +1 for every long word in document
 			longWordCounter++;
@@ -66,7 +63,7 @@ function Lix(props: { content: any }) {
 							</Link>
 							.
 						</BodyShort>
-						<BodyShort className="mt-6">
+						<BodyShort as="div" className="mt-6">
 							<Heading spacing level="3" size="xsmall">
 								Skriveråd
 							</Heading>
