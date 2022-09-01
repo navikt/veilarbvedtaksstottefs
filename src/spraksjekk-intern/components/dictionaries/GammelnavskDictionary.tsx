@@ -57,7 +57,9 @@ function GammelnavskDictionary(props: { content: string }) {
 											<Heading level="4" size="xsmall">
 												Gammelnavsk
 											</Heading>
-											<BodyShort>{gammelnavsk.gammelnavsk}</BodyShort>
+											<BodyShort>
+												<em>{gammelnavsk.gammelnavsk}</em>
+											</BodyShort>
 											<Heading className="mt-4" level="4" size="xsmall">
 												Klart språk
 											</Heading>
@@ -67,7 +69,7 @@ function GammelnavskDictionary(props: { content: string }) {
 											</Heading>
 											<Link
 												target="_blank"
-												href="https://github.com/navikt/ordlister/blob/main/gammelnavsk/gammelnavsk_ordliste_2utgave.pdf"
+												href="https://navno.sharepoint.com/:b:/r/sites/intranett-kommunikasjon/Delte%20dokumenter/Spr%C3%A5k/gammelnavsk_ordliste_2utgave.pdf?csf=1&web=1&e=2LfhY8"
 											>
 												Gammelnavsk ordliste
 												<ExternalLink />
