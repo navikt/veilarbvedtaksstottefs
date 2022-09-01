@@ -25,10 +25,7 @@ jobs:
             - name: Upload files to GCS
               run: gsutil -m rsync -r build gs://veilarbvedtaksstottefs-dev
             - name: Create release
-              uses: actions/create-release@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              uses: softprops/action-gh-release@v1
               with:
+                  name: Release to dev
                   tag_name: release/dev@${{ github.sha }}
-                  release_name: Release to dev
-                  prerelease: false
