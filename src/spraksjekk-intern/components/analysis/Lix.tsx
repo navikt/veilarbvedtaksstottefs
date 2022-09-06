@@ -1,73 +1,72 @@
-import LixResultMessage from './LixResultMessage';
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import { ExternalLink } from '@navikt/ds-icons';
-import { useState } from 'react';
 
-function Lix(props: { content: any }) {
-	const [wordLength] = useState(6);
-	const value = props.content;
-	const content = props.content;
-	let lix = 0;
-	let wordCounter = 0;
-	let longWordCounter = 0;
-	let dotCounter = 0;
+function lixResultMessage(lix: number): string {
+	// LIX begrunnelse (hvor kommer grenseverdiene fra?)
+	if (lix < 0) {
+		return '';
+	} else if (lix < 24) {
+		return 'Veldig enkel å lese';
+	} else if (lix < 34) {
+		return 'Enkel å lese';
+	} else if (lix < 44) {
+		return 'Middels vanskelig å lese';
+	} else if (lix < 54) {
+		return 'Vanskelig å lese';
+	}
+	return 'Veldig vanskelig å lese';
+}
+
+function Lix(props: { content: string }) {
+	const LETTER_LIMIT = 6;
 
 	// Get total number of words in text
-	const words = content.split(/\s+/);
-	wordCounter = words.length;
+	const words = props.content.split(/\s+/);
+	const wordCount = words.length;
 
 	// Count sentences
-	const countPunctuation = (value: string | any[]) => {
-		const punct = '!;.*?';
-		let count = 0;
-		for (let i = 0; i < value.length; i++) {
-			if (!punct.includes(value[i])) {
-				continue;
-			}
-			count++;
+	const punct = '!;.*?';
+	let punctuationCount = 0;
+	for (const char of props.content) {
+		if (punct.includes(char)) {
+			punctuationCount++;
 		}
-		return count;
-	};
-	dotCounter = countPunctuation(value);
-
+	}
 
 	// Loop through the entire array of words
+	let longWordCount = 0;
 	for (let i in words) {
-
-		if (words[i].length > wordLength) {
-			// +1 for every long word in document
-			longWordCounter++;
+		if (words[i].length > LETTER_LIMIT) {
+			longWordCount++;
 		}
 	}
 
 	// Calculate LIX
-	lix = Math.round(wordCounter / dotCounter + (longWordCounter * 100) / wordCounter);
+	const lix = Math.round(wordCount / punctuationCount + (longWordCount * 100) / wordCount);
+	console.log(lix);
 
 	return (
 		<>
-			{lix >= 34 && lix < 100 && dotCounter > 1 && (
+			{lix >= 34 && lix < 100 && punctuationCount > 1 && (
 				<Accordion.Item>
 					<Accordion.Header type="button">
-						Liks: {lix}. <LixResultMessage lix={lix} />
+						Liks: {lix} - {lixResultMessage(lix)}
 					</Accordion.Header>
-					<Accordion.Content className="gammelnavskAccordionContent removeAccordionPaddingBottom">
-						<BodyShort style={{ textTransform: 'initial' }} className="pb-2">
+					<Accordion.Content>
+						<BodyShort>
 							Liks: {lix}. Teksten kan anses{' '}
-							<span style={{ textTransform: 'lowercase' }}>
-								<LixResultMessage lix={lix} />
-							</span>{' '}
-							ifølge{' '}
+							<span style={{ textTransform: 'lowercase' }}>{lixResultMessage(lix)}</span> ifølge{' '}
 							<Link target="_blank" href="https://no.wikipedia.org/wiki/Lesbarhetsindeks">
 								lesbarhetsindeksen Liks
 								<ExternalLink />
 							</Link>
 							.
 						</BodyShort>
-						<BodyShort as="div" className="mt-6">
-							<Heading spacing level="3" size="xsmall">
+						<BodyShort className="mt-4">
+							<Heading level="4" size="xsmall">
 								Skriveråd
 							</Heading>
-							<ul className="pb-5 list-disc list-inside">
+							<ul id="skriverad-liste">
 								<li>Skriv korte og enkle setninger</li>
 								<li>Velg korte og enkle ord</li>
 								<li>Skriv det viktigste først</li>
