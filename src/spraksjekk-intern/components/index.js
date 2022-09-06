@@ -1,6 +1,5 @@
 // Content Analysis
 export { default as Lix } from "./analysis/Lix.tsx";
-export { default as LixResultMessage } from "./analysis/LixResultMessage.tsx";
 
 // Dictionaries
 export { default as GammelnavskDictionary } from "./dictionaries/GammelnavskDictionary.tsx";
