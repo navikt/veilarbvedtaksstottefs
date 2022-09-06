@@ -16,10 +16,7 @@ import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { lagSkjemaelementFeilmelding } from '../../../../util';
 import Show from '../../../../component/show';
 import { Accordion, Switch } from '@navikt/ds-react';
-import {
-	Lix,
-	GammelnavskDictionary,
-} from '../../../../spraksjekk-intern/components';
+import { Lix, GammelnavskDictionary } from '../../../../spraksjekk-intern/components';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
