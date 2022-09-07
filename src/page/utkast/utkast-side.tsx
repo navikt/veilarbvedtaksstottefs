@@ -132,7 +132,7 @@ export function UtkastSide() {
 			}
 
 			return () => {
-				avbrytPolling()
+				avbrytPolling();
 			};
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

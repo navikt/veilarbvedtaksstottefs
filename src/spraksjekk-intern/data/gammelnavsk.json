@@ -254,7 +254,7 @@
 		},
 		{
 			"id": "5139188",
-			"ord": "underette",
+			"ord": "underrette",
 			"gammelnavsk": "Behandlingen må være fullført, og spesifisert faktura mottatt innen 6 måneder fra vedtaksdato. Tannlegen er underrettet om vedtaket, og oppgjøret blir sendt direkte til tannlegen.",
 			"klart_språk": "Behandlingen må være fullført, og vi må få en detaljert faktura innen 6 måneder fra datoen vedtaket ble gjort. Tannlegen er informert om vedtaket. Betalingen blir sendt direkte til tannlegen."
 		},
@@ -423,12 +423,6 @@
 		{
 			"id": "2269112",
 			"ord": "forutsette",
-			"gammelnavsk": "Planen kan endres etter avtale mellom deltaker og tiltakskonsulent. Deltakelse i programmet forutsetter fulltidsdeltakelse i programmet slik dette er avtalt. Vesentlig fravær kan medføre stans av deltakelse i programmet.",
-			"klart_språk": "Planen kan endres etter avtale mellom deltaker og NAV. Du må være med i programmet på fulltid. Høyt fravær kan føre til at du ikke lenger får delta i programmet."
-		},
-		{
-			"id": "4784376",
-			"ord": "vesentlig",
 			"gammelnavsk": "Planen kan endres etter avtale mellom deltaker og tiltakskonsulent. Deltakelse i programmet forutsetter fulltidsdeltakelse i programmet slik dette er avtalt. Vesentlig fravær kan medføre stans av deltakelse i programmet.",
 			"klart_språk": "Planen kan endres etter avtale mellom deltaker og NAV. Du må være med i programmet på fulltid. Høyt fravær kan føre til at du ikke lenger får delta i programmet."
 		},

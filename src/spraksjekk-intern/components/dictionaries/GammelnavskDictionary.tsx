@@ -43,67 +43,74 @@ function GammelnavskDictionary(props: { content: string }) {
 							Velg enkle ord
 						</Heading>
 						<BodyShort className="mb-4">
-							Ord og utrykk som sier noe på en vanskeligere måte enn nødvendig:
+							Her vises ord og uttrykk som mulig sier noe på en vanskeligere måte enn nødvendig. Disse er
+							hentet fra gammelnavsk ordliste og Språkrådets kansellisten.
 						</BodyShort>
 
 						{gammelnavskResultater.length >= 1 && (
 							<>
 								{gammelnavskResultater.map((gammelnavsk, i) => (
 									<Accordion.Item key={'gammelnavsk' + i}>
-										<Accordion.Header className="gammelnavskAccordion" type="button">
+										<Accordion.Header type="button">
 											<span className="firstLetter">"{gammelnavsk.ord}"</span>
 										</Accordion.Header>
-										<Accordion.Content className="gammelnavskAccordionContent">
+										<Accordion.Content>
 											<Heading level="4" size="xsmall">
 												Gammelnavsk
 											</Heading>
-											<BodyShort>{gammelnavsk.gammelnavsk}</BodyShort>
+											<BodyShort>
+												<em>{gammelnavsk.gammelnavsk}</em>
+											</BodyShort>
 											<Heading className="mt-4" level="4" size="xsmall">
 												Klart språk
 											</Heading>
 											{gammelnavsk.klart_språk}
-											<Heading className="mt-4" level="4" size="xsmall">
-												Kilde
-											</Heading>
-											<Link
-												target="_blank"
-												href="https://github.com/navikt/ordlister/blob/main/gammelnavsk/gammelnavsk_ordliste_2utgave.pdf"
-											>
-												Gammelnavsk ordliste
-												<ExternalLink />
-											</Link>
 										</Accordion.Content>
 									</Accordion.Item>
 								))}
+								<Accordion.Content className="gammelnavsk-kilde">
+									<Heading className="mt-4" level="4" size="xsmall">
+										Kilde
+									</Heading>
+									<Link
+										target="_blank"
+										href="https://navno.sharepoint.com/:b:/r/sites/intranett-kommunikasjon/Delte%20dokumenter/Spr%C3%A5k/gammelnavsk_ordliste_2utgave.pdf?csf=1&web=1&e=2LfhY8"
+									>
+										Gammelnavsk ordliste
+										<ExternalLink />
+									</Link>
+								</Accordion.Content>
 							</>
 						)}
 
 						{kansellistenResultater.length >= 1 && (
-							<Accordion className="gammelnavskAccordion">
+							<>
 								{kansellistenResultater.map((kanselli, i) => (
 									<Accordion.Item key={'kanselli' + i}>
-										<Accordion.Header className="gammelnavskAccordion" type="button">
+										<Accordion.Header type="button">
 											<span className="firstLetter">"{kanselli.kanselliord}"</span>
 										</Accordion.Header>
-										<Accordion.Content className="gammelnavskAccordionContent">
+										<Accordion.Content>
 											<Heading level="4" size="xsmall">
 												Forslag
 											</Heading>
 											Skriv heller: {kanselli.alternativ_1}
-											<Heading className="mt-4" level="4" size="xsmall">
-												Kilde
-											</Heading>
-											<Link
-												target="_blank"
-												href="https://www.sprakradet.no/klarsprak/om-skriving/kansellisten/"
-											>
-												Kansellisten
-												<ExternalLink />
-											</Link>
 										</Accordion.Content>
 									</Accordion.Item>
 								))}
-							</Accordion>
+								<Accordion.Content className="gammelnavsk-kilde">
+									<Heading className="mt-4" level="4" size="xsmall">
+										Kilde
+									</Heading>
+									<Link
+										target="_blank"
+										href="https://www.sprakradet.no/klarsprak/om-skriving/kansellisten/"
+									>
+										Kansellisten
+										<ExternalLink />
+									</Link>
+								</Accordion.Content>
+							</>
 						)}
 					</Accordion.Content>
 				</Accordion.Item>
