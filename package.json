@@ -37,7 +37,6 @@
     "@navikt/ds-icons": "0.8.20",
     "@navikt/ds-react": "0.19.27",
     "@navikt/fnrvalidator": "1.2.0",
-    "@navikt/frontendlogger": "2.0.0",
     "@navikt/navspa": "5.0.1",
     "axios": "0.26.1",
     "babel-polyfill": "^6.26.0",
