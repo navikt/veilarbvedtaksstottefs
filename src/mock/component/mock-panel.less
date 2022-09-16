@@ -1,41 +1,40 @@
-@import "~nav-frontend-core/less/_variabler";
+@import '~nav-frontend-core/less/_variabler';
 
 .veilarbvedtaksstottefs {
+	.mock-panel {
+		position: absolute;
+		top: 0;
+		z-index: 500;
+		margin-top: 50px;
+		right: 0;
+	}
 
-  .mock-panel {
-    position: absolute;
-    top: 0;
-    z-index: 500;
-    margin-top: 50px;
-    right: 0;
-  }
+	.mock-panel__apne-knapp {
+		cursor: pointer;
+		color: white;
+		padding: 0.6rem 1rem;
+		width: 100px;
+		background-color: @navBla;
 
-  .mock-panel__apne-knapp {
-    cursor: pointer;
-    color: white;
-    padding: 0.6rem 1rem;
-    width: 100px;
-    background-color: @navBla;
+		font-size: 1rem;
+		border-radius: 30px;
+		border: none;
+	}
 
-    font-size: 1rem;
-    border-radius: 30px;
-    border: none;
-  }
+	.mock-panel__innhold {
+		background-color: white;
 
-  .mock-panel__innhold {
-    background-color: white;
+		legend {
+			padding: 0.5rem 2rem;
+		}
 
-    legend {
-      padding: 0.5rem 2rem;
-    }
+		fieldset {
+			border: 10px solid cadetblue;
+			background-color: white;
+		}
 
-    fieldset {
-      border: 10px solid cadetblue;
-      background-color: white;
-    }
-
-    label {
-      margin-bottom: 0.5rem;
-    }
-  }
+		label {
+			margin-bottom: 0.5rem;
+		}
+	}
 }
