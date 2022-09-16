@@ -6,13 +6,10 @@
     "start": "cross-env REACT_APP_DEV=true craco start",
     "build": "cross-env craco build",
     "build:mock": "cross-env PUBLIC_URL=/veilarbvedtaksstottefs REACT_APP_DEV=true craco build",
-    "lint": "tslint ./src/**/*.ts*",
-    "lint:fix": "tslint ./src/**/**/**/**/*.ts* --fix",
     "test": "craco test",
-    "prettier": "prettier --write \"src/**/*.{ts,tsx}\""
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged --verbose"
   },
   "husky": {
     "hooks": {
@@ -20,9 +17,12 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
+    "src/**/*.{json,less,css,md}": [
+      "prettier --write"
+    ],
+    "src/**/*.{js,jsx,ts,tsx}": [
       "prettier --write",
-      "tslint --fix"
+      "eslint --config .eslintrc.lintstaged.json"
     ]
   },
   "browserslist": [
@@ -103,13 +103,10 @@
     "@types/react-modal": "^3.13.1",
     "@types/react-pdf": "^5.0.9",
     "cross-env": "^7.0.3",
-    "husky": "^7.0.4",
-    "lint-staged": "12.3.7",
+    "husky": "8.0.1",
+    "lint-staged": "13.0.3",
     "msw": "0.39.2",
-    "prettier": "2.6.2",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-react": "^5.0.0"
+    "prettier": "2.6.2"
   },
   "msw": {
     "workerDirectory": "public"

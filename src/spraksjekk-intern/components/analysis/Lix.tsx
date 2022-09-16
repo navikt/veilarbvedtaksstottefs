@@ -43,7 +43,6 @@ function Lix(props: { content: string }) {
 
 	// Calculate LIX
 	const lix = Math.round(wordCount / punctuationCount + (longWordCount * 100) / wordCount);
-	console.log(lix);
 
 	return (
 		<>
