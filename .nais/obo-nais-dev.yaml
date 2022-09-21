@@ -9,16 +9,16 @@ spec:
   image: ghcr.io/navikt/pto-frontend/pto-frontend:2021.06.22_08.34-3e18671c9b52
   port: 8080
   ingresses:
-    - https://veilarbvedtaksstottefs.intern.nav.no
+    - https://veilarbvedtaksstottefs.dev.intern.nav.no
   liveness:
-    path: /internal/isAlive
+    path: /internal/alive
     initialDelay: 10
   readiness:
-    path: /internal/isReady
+    path: /internal/ready
     initialDelay: 10
   replicas:
-    min: 2
-    max: 4
+    min: 1
+    max: 2
     cpuThresholdPercentage: 75
   resources:
     limits:
@@ -29,10 +29,10 @@ spec:
       memory: 256Mi
   gcp:
     buckets:
-      - name: veilarbvedtaksstottefs-prod
+      - name: veilarbvedtaksstottefs-dev
         cascadingDelete: false
   env:
     - name: GCS_BUCKET_NAME
-      value: veilarbvedtaksstottefs-prod
+      value: veilarbvedtaksstottefs-dev
     - name: CORS_DOMAIN
       value: "*"
