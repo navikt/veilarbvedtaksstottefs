@@ -9,7 +9,7 @@ export function SpinnerModal(props: ModalProps) {
 		<ModalWrapper
 			isOpen={props.isOpen}
 			contentLabel="Spinner"
-			onRequestClose={() => {}} // tslint:disable-line:no-empty
+			onRequestClose={() => {}}
 			closeButton={false}
 			portalClassName="veilarbvedtaksstottefs-spinner-modal"
 		>
