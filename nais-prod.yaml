@@ -6,15 +6,15 @@ metadata:
   labels:
     team: pto
 spec:
-  image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.01.13_08.09-36c09678654f
+  image: ghcr.io/navikt/pto-frontend/pto-frontend:2023.01.13_08.11-4fff74d23073
   port: 8080
   ingresses:
     - https://veilarbvedtaksstottefs.intern.nav.no
   liveness:
-    path: /internal/alive
+    path: /internal/isAlive
     initialDelay: 10
   readiness:
-    path: /internal/ready
+    path: /internal/isReady
     initialDelay: 10
   replicas:
     min: 2
