@@ -21,7 +21,7 @@ function utledOversiktUrl(): string {
 	if (env.isRunningOnGhPages || env.isDevelopment) {
 		return 'https://navikt.github.io/beslutteroversikt';
 	} else if (env.erITestMiljo) {
-		return 'https://app-q1.adeo.no/beslutteroversikt';
+		return 'https://beslutteroversikt.intern.dev.nav.no';
 	} else {
 		return 'https://app.adeo.no/beslutteroversikt';
 	}
