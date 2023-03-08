@@ -23,7 +23,7 @@ function utledOversiktUrl(): string {
 	} else if (env.erITestMiljo) {
 		return 'https://beslutteroversikt.intern.dev.nav.no';
 	} else {
-		return 'https://app.adeo.no/beslutteroversikt';
+		return 'https://beslutteroversikt.intern.nav.no';
 	}
 }
 
