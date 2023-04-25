@@ -22,7 +22,6 @@ export const KilderTipsInnhold = () => {
 					<br />
 					1. september 20xx
 				</li>
-				<li>Legeerklæringen 1. november 20xx</li>
 			</ul>
 		</>
 	);
