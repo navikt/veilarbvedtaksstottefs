@@ -9,7 +9,6 @@ import { useDataStore } from '../../../store/data-store';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import { useVarselStore } from '../../../store/varsel-store';
-import { SKRU_AV_POLLING_UTKAST } from '../../../api/veilarbpersonflatefs';
 import { fetchUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../util/type/ornothing';
@@ -36,7 +35,7 @@ function malformToTekst(malform: OrNothing<MalformData>): string {
 
 export function LesSkjemaSection() {
 	const { fnr } = useAppStore();
-	const { utkast, setUtkast, setFattedeVedtak, features } = useDataStore();
+	const { utkast, setUtkast, setFattedeVedtak } = useDataStore();
 	const { changeView } = useViewStore();
 	const { erBeslutter } = useTilgangStore();
 	const { initSkjema } = useSkjemaStore();
@@ -49,7 +48,7 @@ export function LesSkjemaSection() {
 			Hvis beslutterprosessen har startet og innlogget bruker er beslutter så skal vi periodisk hente
 			det nyeste utkastet slik at man ikke må refreshe manuelt når ansvarlig veileder gjør en endring
 		 */
-		if (utkast && !features[SKRU_AV_POLLING_UTKAST] && utkast.beslutterProsessStatus != null && erBeslutter) {
+		if (utkast && utkast.beslutterProsessStatus != null && erBeslutter) {
 			refreshUtkastIntervalRef.current = window.setInterval(() => {
 				fetchUtkast(fnr)
 					.then(response => {
