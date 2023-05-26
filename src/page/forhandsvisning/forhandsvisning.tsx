@@ -16,7 +16,6 @@ import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../../component/varsel/varsel-type';
 import { logMetrikk } from '../../util/logger';
 import { Utkast } from '../../api/veilarbvedtaksstotte';
-import { STOPPE_VEDTAKSUTSENDING_TOGGLE } from '../../api/veilarbpersonflatefs';
 import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
@@ -25,7 +24,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
-	const { utkast, setUtkast, features, setFattedeVedtak, oppfolgingData } = useDataStore();
+	const { utkast, setUtkast, setFattedeVedtak, oppfolgingData } = useDataStore();
 	const { showModal, hideModal } = useModalStore();
 	const { showVarsel } = useVarselStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
@@ -33,7 +32,6 @@ export function Forhandsvisning() {
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
 	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
-	const stoppeUtsendingFeatureToggle = features[STOPPE_VEDTAKSUTSENDING_TOGGLE];
 	const url = lagHentForhandsvisningUrl(utkastId);
 
 	const erUtkastKlartTilUtsending = trengerKvalitetssikrer(innsatsgruppe)
@@ -89,11 +87,6 @@ export function Forhandsvisning() {
 	};
 
 	const handleOnSendClicked = () => {
-		if (stoppeUtsendingFeatureToggle) {
-			showModal(ModalType.FEIL_UTSENDING_STOPPET);
-			return;
-		}
-
 		showModal(ModalType.BEKREFT_SEND_VEDTAK, { onSendVedtakBekreftet: sendVedtak });
 	};
 

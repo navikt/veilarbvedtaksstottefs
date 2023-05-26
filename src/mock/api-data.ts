@@ -1,11 +1,7 @@
 import OppfolgingData from '../api/veilarboppfolging';
 import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { MalformData, MalformType } from '../api/veilarbperson';
-import {
-	FeatureToggles,
-	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
-	STOPPE_VEDTAKSUTSENDING_TOGGLE
-} from '../api/veilarbpersonflatefs';
+import { FeatureToggles, PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../api/veilarbpersonflatefs';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
@@ -32,8 +28,7 @@ const malformFraPdl: MalformData = {
 };
 
 const features: FeatureToggles = {
-	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
-	[STOPPE_VEDTAKSUTSENDING_TOGGLE]: false
+	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true
 };
 
 let innloggetVeileder: Veileder = {
