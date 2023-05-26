@@ -4,7 +4,6 @@ import { MalformData, MalformType } from '../api/veilarbperson';
 import {
 	FeatureToggles,
 	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
-	SKRU_AV_POLLING_DIALOG,
 	SKRU_AV_POLLING_UTKAST,
 	STOPPE_VEDTAKSUTSENDING_TOGGLE
 } from '../api/veilarbpersonflatefs';
@@ -36,8 +35,7 @@ const malformFraPdl: MalformData = {
 const features: FeatureToggles = {
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
 	[STOPPE_VEDTAKSUTSENDING_TOGGLE]: false,
-	[SKRU_AV_POLLING_UTKAST]: false,
-	[SKRU_AV_POLLING_DIALOG]: false
+	[SKRU_AV_POLLING_UTKAST]: false
 };
 
 let innloggetVeileder: Veileder = {

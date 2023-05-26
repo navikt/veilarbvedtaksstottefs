@@ -14,7 +14,6 @@ import { useDialogSection } from '../../store/dialog-section-store';
 import { hentId, makeAbsoluteHeightStyle } from '../../util';
 import Show from '../../component/show';
 import { hentMeldinger } from '../../api/veilarbvedtaksstotte/meldinger';
-import { SKRU_AV_POLLING_DIALOG } from '../../api/veilarbpersonflatefs';
 import { DialogSectionMinified } from './dialog-section-minified/dialog-section-minified';
 import { DialogSectionHeaderMinified } from './dialog-section-minified/dialog-section-header-minified';
 import { trengerKvalitetssikrer } from '../../util/skjema-utils';
@@ -36,7 +35,7 @@ function calculateDialogSectionHeight(): number | undefined {
 }
 
 export function UtkastSide() {
-	const { utkast, meldinger, setMeldinger, features } = useDataStore();
+	const { utkast, meldinger, setMeldinger } = useDataStore();
 	const { sistOppdatert, lagringStatus, setHarForsoktAForhandsvise, innsatsgruppe } = useSkjemaStore();
 	const {
 		sectionHeight,
@@ -127,7 +126,7 @@ export function UtkastSide() {
 			refreshMeldinger();
 
 			// Start polling of new dialogs
-			if (!features[SKRU_AV_POLLING_DIALOG] && intervalRef.current === undefined) {
+			if (intervalRef.current === undefined) {
 				intervalRef.current = window.setInterval(refreshMeldinger, TEN_SECONDS);
 			}
 
