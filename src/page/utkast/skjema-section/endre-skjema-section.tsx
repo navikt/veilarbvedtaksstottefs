@@ -20,14 +20,13 @@ import {
 	finnGjeldendeVedtak,
 	hentId
 } from '../../../util';
-import { SKRU_AV_POLLING_UTKAST } from '../../../api/veilarbpersonflatefs';
 import { BeslutterProsessStatus } from '../../../api/veilarbvedtaksstotte';
 import { VarselType } from '../../../component/varsel/varsel-type';
 
 const TEN_SECONDS = 10000;
 
 export function EndreSkjemaSection() {
-	const { fattedeVedtak, malform, utkast, features, setBeslutterProsessStatus } = useDataStore();
+	const { fattedeVedtak, malform, utkast, setBeslutterProsessStatus } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
 		kilder,
@@ -91,7 +90,7 @@ export function EndreSkjemaSection() {
 	}, [kilder, begrunnelse, innsatsgruppe, hovedmal]);
 
 	useEffect(() => {
-		if (!utkast || features[SKRU_AV_POLLING_UTKAST]) {
+		if (!utkast) {
 			return;
 		}
 
