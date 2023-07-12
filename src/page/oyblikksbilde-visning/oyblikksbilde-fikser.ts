@@ -86,7 +86,7 @@ function formatDates(obj: any): void {
 
 function cleanEgenvurderingSporsmal(obj: any) {
 	deepForEach(obj, (parent, key) => {
-		if (key === 'spmId' || key === 'besvarelseId' || key === 'dato') {
+		if (key === 'spmId' || key === 'besvarelseId' || key === 'dato' || key === 'oppfolging' || key === 'dialogId') {
 			delete parent[key];
 		} else if (key === 'spm') {
 			parent.sporsmal = parent[key];
