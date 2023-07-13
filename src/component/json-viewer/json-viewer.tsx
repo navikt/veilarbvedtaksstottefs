@@ -1,5 +1,6 @@
 import React from 'react';
 import './json-viewer.less';
+import Lenke from 'nav-frontend-lenker';
 
 interface JsonViewerProps {
 	json: string | object | null;
@@ -21,7 +22,10 @@ function objToReact(obj: {} | null) {
 		<>
 			{Object.entries(obj).map(([key, value], idx) => {
 				if (isType(value, 'string', 'boolean', 'number')) {
-					return (
+					const element = isType(value, 'string') && checkIfLink(value as string, key, idx);
+					return element ? (
+						element
+					) : (
 						<div key={idx} className="json-key-wrapper">
 							<span className="json-key">{prettifyKey(key)}: </span>
 							<span>{scalarToString(value as any)}</span>
@@ -54,6 +58,21 @@ function objToReact(obj: {} | null) {
 				return null;
 			})}
 		</>
+	);
+}
+
+function checkIfLink(value: string, key: string, idx: number) {
+	if (!key.includes('lenke')) {
+		return;
+	}
+
+	return (
+		<div key={idx} className="json-key-wrapper">
+			<span className="json-key">{prettifyKey(key)}: </span>
+			<Lenke href={value} target="_blank" rel="noopener noreferrer">
+				{value}
+			</Lenke>
+		</div>
 	);
 }
 
