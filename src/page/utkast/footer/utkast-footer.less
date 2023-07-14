@@ -9,8 +9,7 @@
 
 	.utkast-footer--innhold-sidestilt {
 		display: flex;
-		flex-direction: row;
-		align-items: center;
+		gap: 2rem;
 	}
 
 	.utkast-footer__innhold {
@@ -41,25 +40,11 @@
 		margin-right: 2rem;
 	}
 
-	.utkast-footer__godkjenn-knapp {
-		margin-left: 1rem;
-	}
-
-	.utkast-footer__forhandsvis-knapp {
-		margin-left: 2.5rem;
-	}
-
-	.utkast_footer__knapp-ikon {
-		margin-bottom: 1px;
-		margin-right: 5px;
-	}
-
 	.utkast-footer__utkast-innhold {
 		display: flex;
-		align-items: center;
 		justify-content: space-between;
 
-		padding: 1rem 2rem 1rem 1rem;
+		padding: 0.75rem 2rem 0.75rem 1rem;
 		border-right: 1px solid @navGra40;
 	}
 
@@ -68,7 +53,7 @@
 		align-items: center;
 		justify-content: space-between;
 
-		padding: 1rem;
+		padding: 0.75rem 2rem 0.75rem 1rem;
 	}
 
 	.utkast-innhold {
@@ -78,15 +63,6 @@
 		max-width: 1200px;
 		margin: 0 1rem;
 
-		&__dialog-knapp {
-			margin-left: 2rem;
-		}
-
-		&__dialog-knapp-ikon {
-			width: 36px;
-			height: 36px;
-		}
-
 		&__lagring-tekst {
 			display: flex;
 			flex-direction: column;
@@ -95,18 +71,6 @@
 
 			min-width: 150px;
 			margin: 0 1rem;
-		}
-
-		&__knapper-venstre {
-			display: flex;
-			align-items: center;
-		}
-
-		&__knapper-midten {
-			margin: auto;
-			:not(:first-child) {
-				margin-left: 1rem;
-			}
 		}
 
 		&__ikon {

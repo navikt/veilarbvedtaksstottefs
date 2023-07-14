@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import { useState } from 'react';
 import { UtkastStatusMelding } from './utkast-status-melding';
 import { hentMalformFraData, SkjemaData, trengerKvalitetssikrer } from '../../../util/skjema-utils';
 import { useTilgangStore } from '../../../store/tilgang-store';
@@ -25,6 +24,7 @@ import {
 import { VeilederTilgang } from '../../../util/tilgang';
 import Show from '../../../component/show';
 import { useDialogSection } from '../../../store/dialog-section-store';
+import { Button } from '@navikt/ds-react';
 
 interface DialogFooterInnholdProps {
 	vedtakskjema: SkjemaData;
@@ -134,44 +134,32 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 			<Show if={showSection}>
 				<div className="utkast-footer--innhold-sidestilt">
 					<Show if={visStartBeslutterProsess}>
-						<Hovedknapp
-							disabled={laster}
-							mini={true}
-							htmlType="button"
-							onClick={handleOnStartBeslutterProsessClicked}
-						>
+						<Button onClick={handleOnStartBeslutterProsessClicked} disabled={laster}>
 							Start kvalitetssikring
-						</Hovedknapp>
+						</Button>
 					</Show>
 
 					<Show if={visBliBeslutter}>
-						<Hovedknapp
-							mini={true}
-							htmlType="button"
-							onClick={handleOnBliBeslutterClicked}
-							disabled={laster}
-						>
+						<Button onClick={handleOnBliBeslutterClicked} disabled={laster}>
 							Bli kvalitetssikrer
-						</Hovedknapp>
+						</Button>
 					</Show>
 
 					<Show if={visSendTilVeileder}>
-						<Hovedknapp mini={true} htmlType="button" onClick={handleOnSendTilClicked} disabled={laster}>
+						<Button onClick={handleOnSendTilClicked} disabled={laster}>
 							Send til veileder
-						</Hovedknapp>
+						</Button>
 					</Show>
 
 					<Show if={visSendTilBeslutter}>
-						<Hovedknapp mini={true} htmlType="button" onClick={handleOnSendTilClicked} disabled={laster}>
+						<Button onClick={handleOnSendTilClicked} disabled={laster}>
 							Send til kvalitetssikrer
-						</Hovedknapp>
+						</Button>
 					</Show>
 
 					<Show if={visGodkjennUtkast}>
-						<Flatknapp
-							className="utkast-footer__godkjenn-knapp"
-							mini={true}
-							htmlType="button"
+						<Button
+							variant="tertiary"
 							onClick={() =>
 								showModal(ModalType.BEKREFT_SEND_TIL_GODKJENNING, {
 									onGodkjennVedtakBekreftet: handleGodkjennVedtak
@@ -180,7 +168,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 							disabled={laster}
 						>
 							Godkjenn
-						</Flatknapp>
+						</Button>
 					</Show>
 				</div>
 			</Show>

@@ -1,7 +1,5 @@
-import React, { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { Textarea } from 'nav-frontend-skjema';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import './dialog-section.less';
 import { hentMeldinger, sendDialog } from '../../../api/veilarbvedtaksstotte/meldinger';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
@@ -10,6 +8,8 @@ import { hentId, makeAbsoluteHeightStyle, scrollToBottom } from '../../../util';
 import { MeldingListe } from './melding-liste/melding-liste';
 import Spinner from '../../../component/spinner/spinner';
 import { useDialogSection } from '../../../store/dialog-section-store';
+import { Button } from '@navikt/ds-react';
+import './dialog-section.less';
 
 let midlertidigMelding = '';
 
@@ -95,16 +95,14 @@ export function DialogSection() {
 					className="dialog-section-innhold__skrivefelt skjemaelement__input textarea--medMeta"
 					aria-label="Skrivefelt for å sende melding til beslutter/ansvarlig veileder"
 				/>
-				<div className="dialog-section-innhold__send">
-					<Hovedknapp
-						onClick={sendMelding}
-						spinner={senderMelding}
-						disabled={!kanSendeMelding || senderMelding}
-						className="dialog-section-innhold__send-knapp"
-					>
-						Send
-					</Hovedknapp>
-				</div>
+				<Button
+					loading={senderMelding}
+					className="dialog-section-innhold__send-knapp"
+					onClick={sendMelding}
+					disabled={!kanSendeMelding || senderMelding}
+				>
+					Send
+				</Button>
 			</div>
 		</div>
 	);

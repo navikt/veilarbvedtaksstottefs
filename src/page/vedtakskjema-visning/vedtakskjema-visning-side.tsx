@@ -1,14 +1,13 @@
-import React from 'react';
 import Page from '../../component/page/page';
 import Footer from '../../component/footer/footer';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../component/skjema-visning/skjema-visning';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { useDataStore } from '../../store/data-store';
-import './vedtakskjema-visning-side.less';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
-import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
+import { Button } from '@navikt/ds-react';
+import { ChevronLeftIcon } from '@navikt/aksel-icons';
+import './vedtakskjema-visning-side.less';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	const { fattedeVedtak } = useDataStore();
@@ -24,21 +23,19 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 			<Page className="vedtakskjema-visning page--white">
 				<SkjemaVisning fattetVedtak={vistVedtak} />
 			</Page>
-			<Footer>
-				<div className="vedtakskjema-visning__aksjoner">
-					<Tilbakeknapp htmlType="button" onClick={() => changeView(ViewType.HOVEDSIDE)} />
-
-					<Hovedknapp
-						mini={true}
-						onClick={() =>
-							changeView(ViewType.VEDTAK_PDF, {
-								vedtakId: vistVedtak.id
-							})
-						}
-					>
-						Vis vedtaksbrev
-					</Hovedknapp>
-				</div>
+			<Footer className="vedtakskjema-visning__aksjoner">
+				<Button variant="tertiary" icon={<ChevronLeftIcon />} onClick={() => changeView(ViewType.HOVEDSIDE)}>
+					Tilbake
+				</Button>
+				<Button
+					onClick={() =>
+						changeView(ViewType.VEDTAK_PDF, {
+							vedtakId: vistVedtak.id
+						})
+					}
+				>
+					Vis vedtaksbrev
+				</Button>
 			</Footer>
 		</>
 	);

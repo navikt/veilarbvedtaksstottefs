@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
@@ -11,15 +11,16 @@ import { erGodkjentAvBeslutter } from '../../util';
 import Show from '../../component/show';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { useDataStore } from '../../store/data-store';
-import './forhandsvisning.less';
 import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../../component/varsel/varsel-type';
 import { logMetrikk } from '../../util/logger';
 import { Utkast } from '../../api/veilarbvedtaksstotte';
 import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
-import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import AlertStripe from 'nav-frontend-alertstriper';
+import { Button } from '@navikt/ds-react';
+import { ChevronLeftIcon } from '@navikt/aksel-icons';
+import './forhandsvisning.less';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
@@ -95,7 +96,9 @@ export function Forhandsvisning() {
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
-					<Tilbakeknapp htmlType="button" onClick={tilbakeTilSkjema} />
+					<Button variant="tertiary" icon={<ChevronLeftIcon />} onClick={tilbakeTilSkjema}>
+						Tilbake
+					</Button>
 
 					<Show if={visSendKnapp}>
 						<Hovedknapp

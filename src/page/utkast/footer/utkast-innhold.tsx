@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
-import { Flatknapp, Knapp } from 'nav-frontend-knapper';
-import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
-import { ReactComponent as SlettIkon } from './delete.svg';
+import { useState } from 'react';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { ReactComponent as TaOverIkon } from './taover.svg';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil, SkjemaData } from '../../../util/skjema-utils';
 import { useSkjemaStore } from '../../../store/skjema-store';
@@ -14,6 +10,8 @@ import { Utkast } from '../../../api/veilarbvedtaksstotte';
 import { erKlarTilVeileder, finnGjeldendeVedtak } from '../../../util';
 import { oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 import Show from '../../../component/show';
+import { Button } from '@navikt/ds-react';
+import { ChevronLeftIcon, PersonPencilIcon, TrashIcon } from '@navikt/aksel-icons';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -74,7 +72,9 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 
 	return (
 		<div className="utkast-footer__utkast-innhold">
-			<Tilbakeknapp htmlType="button" onClick={handleOnTilbakeClicked} disabled={laster} />
+			<Button variant="tertiary" icon={<ChevronLeftIcon />} onClick={handleOnTilbakeClicked}>
+				Tilbake
+			</Button>
 
 			<div className="utkast-footer--innhold-sidestilt">
 				<Show if={laster}>
@@ -82,39 +82,34 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 				</Show>
 
 				<Show if={erAnsvarligVeileder}>
-					<Flatknapp
-						mini={true}
-						htmlType="button"
+					<Button
+						variant="tertiary"
+						icon={<TrashIcon />}
 						onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
 						disabled={laster}
 					>
-						<SlettIkon className="utkast_footer__knapp-ikon" focusable={false} />
 						Slett
-					</Flatknapp>
+					</Button>
 				</Show>
 
 				<Show if={!erAnsvarligVeileder}>
-					<Flatknapp
-						mini={true}
-						htmlType="button"
+					<Button
+						variant="tertiary"
+						icon={<PersonPencilIcon />}
 						onClick={() => showModal(ModalType.BEKREFT_TA_OVER_UTKAST)}
 						disabled={laster}
 					>
-						<TaOverIkon className="utkast_footer__knapp-ikon" focusable={false} />
 						Ta over
-					</Flatknapp>
+					</Button>
 				</Show>
 
-				<Knapp
-					className="utkast-footer__forhandsvis-knapp"
-					type={erForhandsvisHovedknapp ? 'hoved' : 'standard'}
-					disabled={laster}
-					mini={true}
-					htmlType="button"
+				<Button
+					variant={erForhandsvisHovedknapp ? 'primary' : 'secondary'}
 					onClick={handleOnForhandsvisClicked}
+					disabled={laster}
 				>
 					Forhåndsvis
-				</Knapp>
+				</Button>
 			</div>
 		</div>
 	);

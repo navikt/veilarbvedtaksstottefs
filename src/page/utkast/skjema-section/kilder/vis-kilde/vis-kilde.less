@@ -3,7 +3,6 @@
 .veilarbvedtaksstottefs {
 	.vis-kilde {
 		display: flex;
-		flex-direction: row;
 		justify-content: space-between;
 
 		.skjemaelement__label:before {
@@ -21,28 +20,7 @@
 		}
 
 		&__rediger-ikon {
-			width: 20px;
-			height: 20px;
-			background: url('rediger.svg') no-repeat;
-		}
-
-		&__rediger-knapp {
-			width: 2.75rem;
-			border: none;
-			background-color: transparent;
-			cursor: pointer;
-		}
-
-		&__rediger-knapp:focus {
-			box-shadow: 0 0 0 3px @navBlaDarken60;
-			outline-color: @navBlaDarken60;
-			color: transparent;
-		}
-
-		&__rediger-knapp:hover {
-			.vis-kilde__rediger-ikon {
-				background: url('rediger-fylt.svg') no-repeat;
-			}
+			padding: 0.5rem;
 		}
 	}
 }

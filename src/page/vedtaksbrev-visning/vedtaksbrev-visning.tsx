@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
-import './vedtaksbrev-visning.less';
 import { logMetrikk } from '../../util/logger';
 import { lagHentArenaVedtakPdfUrl, lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak';
-import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
+import { Button } from '@navikt/ds-react';
+import { ChevronLeftIcon } from '@navikt/aksel-icons';
+import './vedtaksbrev-visning.less';
 
 interface VedtaksbrevVisningProps {
 	vedtakId: number;
@@ -69,7 +70,9 @@ function GenericVedtaksbrevVisning(props: GenericVedtaksbrevVisningProps) {
 			<PdfViewer url={props.vedtaksbrevUrl} title="Visning av vedtaksbrev" onStatusUpdate={setPdfStatus} />
 			<Footer>
 				<div className="vedtaksbrev-visning__aksjoner">
-					<Tilbakeknapp htmlType="button" onClick={props.handleOnTilbakeClicked} />
+					<Button variant="tertiary" icon={<ChevronLeftIcon />} onClick={props.handleOnTilbakeClicked}>
+						Tilbake
+					</Button>
 				</div>
 			</Footer>
 		</>
