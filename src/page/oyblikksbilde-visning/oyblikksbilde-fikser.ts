@@ -39,7 +39,7 @@ export function fiksCvOgJobbprofil(json: string | null): object | null {
 	return cvOgJobbprofil;
 }
 
-export function fiksEgenvurderingJson(json: string | null): object | null {
+export function fiksEgenvurderingJson(json: string | null, fnr?: string, enhetId?: string): object | null {
 	if (json == null) {
 		return null;
 	}
@@ -47,7 +47,7 @@ export function fiksEgenvurderingJson(json: string | null): object | null {
 	const egenvurdering = JSON.parse(json);
 
 	removeNullValues(egenvurdering);
-	cleanEgenvurderingSporsmal(egenvurdering);
+	cleanEgenvurderingSporsmal(egenvurdering, fnr, enhetId);
 	formatDates(egenvurdering);
 	translateKeysToNorwegian(egenvurdering);
 	sorterSporsmalOgSvar(egenvurdering);
@@ -58,8 +58,9 @@ export function fiksEgenvurderingJson(json: string | null): object | null {
 function sorterSporsmalOgSvar(obj: any): void {
 	deepForEach(obj, (parent, key, value) => {
 		if (typeof value === 'object' && value.svar != null && value.spørsmål != null) {
-			// Dette fjerner også alle verdier bortsett fra 'spørsmål' og 'svar'
-			parent[key] = { spørsmål: value.spørsmål, svar: value.svar };
+			// Dette fjerner også alle verdier bortsett fra 'spørsmål', 'svar' og eventuelt dialoglenke
+			const { spørsmål, svar, dialoglenke } = value;
+			parent[key] = dialoglenke ? { spørsmål, svar, dialoglenke } : { spørsmål, svar };
 		}
 	});
 }
@@ -84,12 +85,17 @@ function formatDates(obj: any): void {
 	});
 }
 
-function cleanEgenvurderingSporsmal(obj: any) {
+function cleanEgenvurderingSporsmal(obj: any, fnr?: string, enhetId?: string) {
 	deepForEach(obj, (parent, key) => {
-		if (key === 'spmId' || key === 'besvarelseId' || key === 'dato') {
+		if (key === 'spmId' || key === 'besvarelseId' || key === 'dato' || key === 'oppfolging') {
 			delete parent[key];
 		} else if (key === 'spm') {
 			parent.sporsmal = parent[key];
+			delete parent[key];
+		} else if (key === 'dialogId') {
+			if (fnr && enhetId) {
+				parent.dialoglenke = `${window.location.origin}/${fnr}/${parent[key]}#visDialog?enhet=${enhetId}`;
+			}
 			delete parent[key];
 		}
 	});

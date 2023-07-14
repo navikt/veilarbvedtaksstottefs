@@ -16,6 +16,7 @@ import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } 
 import { logMetrikk } from '../../util/logger';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
+import { useAppStore } from '../../store/app-store';
 
 function finnOyblikksbilde(
 	oyblikksbildeType: OyblikksbildeType,
@@ -46,6 +47,7 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 
 function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyblikksbilde[]> }) {
 	const { changeView } = useViewStore();
+	const { fnr, enhetId } = useAppStore();
 
 	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
 		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, props.oyeblikksbilde)
@@ -56,7 +58,9 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 	);
 
 	const egenvurderingJson = fiksEgenvurderingJson(
-		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, props.oyeblikksbilde)
+		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, props.oyeblikksbilde),
+		fnr,
+		enhetId
 	);
 
 	return (
