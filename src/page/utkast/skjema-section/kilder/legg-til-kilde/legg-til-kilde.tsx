@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
-import './legg-til-kilde.less';
+import { Button } from '@navikt/ds-react';
+import { PlusIcon } from '@navikt/aksel-icons';
 
 interface LeggTilKildeProps {
 	leggTilKilde: () => void;
@@ -8,11 +7,8 @@ interface LeggTilKildeProps {
 
 export function LeggTilKilde(props: LeggTilKildeProps) {
 	return (
-		<button className="legg-til-kilde" onClick={props.leggTilKilde} aria-describedby="legg-til-kilde-tekst">
-			<div className="legg-til-kilde__ikon" />
-			<Normaltekst id="legg-til-kilde-tekst" tag="span" className="legg-til-kilde__tekst">
-				Legg til andre kilder
-			</Normaltekst>
-		</button>
+		<Button size="small" variant="tertiary-neutral" icon={<PlusIcon />} onClick={props.leggTilKilde}>
+			Legg til andre kilder
+		</Button>
 	);
 }
