@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ModalProps } from '../modal-props';
 import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { erBeslutterProsessStartet, hentId } from '../../../util';
 import { useDataStore } from '../../../store/data-store';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { VeilederTilgang } from '../../../util/tilgang';
-import './ta-over-modal.less';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { useVarselStore } from '../../../store/varsel-store';
 import { VarselType } from '../../varsel/varsel-type';
 import { bliBeslutter } from '../../../api/veilarbvedtaksstotte/beslutter';
 import { fetchTaOverUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
+import { Button } from '@navikt/ds-react';
+import './ta-over-modal.less';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
@@ -100,17 +100,15 @@ function TaOverModal(props: ModalProps) {
 	const OvertaForVeilederVisning = (
 		<>
 			<Normaltekst className="varsel-modal__tekstinnehold">
-				Vil du overta ansvaret for vedtaket fra
-				<br />
-				veileder {`${utkast.veilederNavn}?`}
+				Vil du overta ansvaret for vedtaket fra veileder {`${utkast.veilederNavn}?`}
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Hovedknapp spinner={laster} disabled={laster} onClick={handleTaOverVedtak}>
+				<Button loading={laster} onClick={handleTaOverVedtak}>
 					Ta over
-				</Hovedknapp>
-				<Knapp disabled={laster} onClick={hideModal}>
+				</Button>
+				<Button variant="secondary" loading={laster} onClick={hideModal}>
 					Avbryt
-				</Knapp>
+				</Button>
 			</div>
 		</>
 	);
@@ -128,17 +126,12 @@ function TaOverModal(props: ModalProps) {
 				/>
 
 				<div className="varsel-modal__knapper">
-					<Hovedknapp
-						htmlType="submit"
-						onClick={handleTaOverVedtak}
-						spinner={laster}
-						disabled={laster || !taOverFor}
-					>
+					<Button loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>
 						Ta over
-					</Hovedknapp>
-					<Knapp disabled={laster} onClick={hideModal}>
+					</Button>
+					<Button variant="secondary" loading={laster} onClick={hideModal}>
 						Avbryt
-					</Knapp>
+					</Button>
 				</div>
 			</div>
 		</>

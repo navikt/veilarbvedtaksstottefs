@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
 import Footer from '../../component/footer/footer';
 import { trengerKvalitetssikrer } from '../../util/skjema-utils';
@@ -100,15 +99,11 @@ export function Forhandsvisning() {
 						Tilbake
 					</Button>
 
-					<Show if={visSendKnapp}>
-						<Hovedknapp
-							disabled={pdfStatus !== PDFStatus.SUCCESS}
-							mini={true}
-							onClick={handleOnSendClicked}
-						>
+					{visSendKnapp && (
+						<Button onClick={handleOnSendClicked} disabled={pdfStatus !== PDFStatus.SUCCESS}>
 							Send til bruker
-						</Hovedknapp>
-					</Show>
+						</Button>
+					)}
 					<Show if={visKvalitetssikringInfo}>
 						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
 							<span aria-live="polite">Kvalitetssikring må gjennomføres før brev kan sendes</span>

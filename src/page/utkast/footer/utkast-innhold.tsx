@@ -84,9 +84,9 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 				<Show if={erAnsvarligVeileder}>
 					<Button
 						variant="tertiary"
+						loading={laster}
 						icon={<TrashIcon />}
 						onClick={() => showModal(ModalType.BEKREFT_SLETT_UTKAST)}
-						disabled={laster}
 					>
 						Slett
 					</Button>
@@ -95,9 +95,9 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 				<Show if={!erAnsvarligVeileder}>
 					<Button
 						variant="tertiary"
+						loading={laster}
 						icon={<PersonPencilIcon />}
 						onClick={() => showModal(ModalType.BEKREFT_TA_OVER_UTKAST)}
-						disabled={laster}
 					>
 						Ta over
 					</Button>
@@ -105,8 +105,8 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 
 				<Button
 					variant={erForhandsvisHovedknapp ? 'primary' : 'secondary'}
+					loading={laster}
 					onClick={handleOnForhandsvisClicked}
-					disabled={laster}
 				>
 					Forhåndsvis
 				</Button>

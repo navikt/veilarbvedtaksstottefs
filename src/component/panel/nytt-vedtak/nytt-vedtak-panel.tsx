@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../util/type/ornothing';
 import nyttVedtakBilde from './nytt-vedtak.svg';
@@ -11,11 +11,11 @@ import { useSkjemaStore } from '../../../store/skjema-store';
 import { VeilederTilgang } from '../../../util/tilgang';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { logMetrikk } from '../../../util/logger';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
-import './nytt-vedtak-panel.less';
 import { Utkast, Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { fetchUtkast, lagNyttUtkast, oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
+import { Button } from '@navikt/ds-react';
+import './nytt-vedtak-panel.less';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { fnr } = useAppStore();
@@ -91,7 +91,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 						checked={kopierSisteVedtak}
 						onChange={e => setKopierSisteVedtak(e.target.checked)}
 					/>
-					<Hovedknapp onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>Opprett vedtak</Hovedknapp>
+					<Button onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>Opprett vedtak</Button>
 				</div>
 			</div>
 		</HovedsidePanel>

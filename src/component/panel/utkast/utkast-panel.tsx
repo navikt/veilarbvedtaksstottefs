@@ -1,7 +1,5 @@
-import React from 'react';
 import { OrNothing } from '../../../util/type/ornothing';
 import { DatoLabel } from '../dato-label';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import utkastIkon from './utkast.svg';
 import utkastTilBeslutterIkon from './utkast-til-beslutter.svg';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
@@ -9,7 +7,6 @@ import { useViewStore, ViewType } from '../../../store/view-store';
 import { KvalitetssikrerLabel } from '../kvalitetssikrer-label';
 import Show from '../../show';
 import { useTilgangStore } from '../../../store/tilgang-store';
-import './utkast-panel.less';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import {
 	erBeslutterProsessStartet,
@@ -20,6 +17,8 @@ import {
 } from '../../../util';
 import { Label, LabelType } from '../../label/label';
 import { Utkast } from '../../../api/veilarbvedtaksstotte';
+import { Button } from '@navikt/ds-react';
+import './utkast-panel.less';
 
 export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { changeView } = useViewStore();
@@ -53,9 +52,7 @@ export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
 			panelKlasse="utkast-panel"
 			knappKomponent={
-				<Hovedknapp onClick={() => changeView(ViewType.UTKAST)}>
-					{kanEndreUtkast ? 'Fortsett' : 'Åpne'}
-				</Hovedknapp>
+				<Button onClick={() => changeView(ViewType.UTKAST)}>{kanEndreUtkast ? 'Fortsett' : 'Åpne'}</Button>
 			}
 			tekstKomponent={
 				<>

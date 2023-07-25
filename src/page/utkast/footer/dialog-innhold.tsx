@@ -134,25 +134,25 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 			<Show if={showSection}>
 				<div className="utkast-footer--innhold-sidestilt">
 					<Show if={visStartBeslutterProsess}>
-						<Button onClick={handleOnStartBeslutterProsessClicked} disabled={laster}>
+						<Button loading={laster} onClick={handleOnStartBeslutterProsessClicked}>
 							Start kvalitetssikring
 						</Button>
 					</Show>
 
 					<Show if={visBliBeslutter}>
-						<Button onClick={handleOnBliBeslutterClicked} disabled={laster}>
+						<Button loading={laster} onClick={handleOnBliBeslutterClicked}>
 							Bli kvalitetssikrer
 						</Button>
 					</Show>
 
 					<Show if={visSendTilVeileder}>
-						<Button onClick={handleOnSendTilClicked} disabled={laster}>
+						<Button loading={laster} onClick={handleOnSendTilClicked}>
 							Send til veileder
 						</Button>
 					</Show>
 
 					<Show if={visSendTilBeslutter}>
-						<Button onClick={handleOnSendTilClicked} disabled={laster}>
+						<Button loading={laster} onClick={handleOnSendTilClicked}>
 							Send til kvalitetssikrer
 						</Button>
 					</Show>
@@ -160,12 +160,12 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 					<Show if={visGodkjennUtkast}>
 						<Button
 							variant="tertiary"
+							loading={laster}
 							onClick={() =>
 								showModal(ModalType.BEKREFT_SEND_TIL_GODKJENNING, {
 									onGodkjennVedtakBekreftet: handleGodkjennVedtak
 								})
 							}
-							disabled={laster}
 						>
 							Godkjenn
 						</Button>

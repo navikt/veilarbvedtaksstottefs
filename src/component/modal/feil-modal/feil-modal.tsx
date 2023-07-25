@@ -1,13 +1,11 @@
-import React from 'react';
 import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
-import { Knapp } from 'nav-frontend-knapper';
 import { ModalProps } from '../modal-props';
 import { useModalStore } from '../../../store/modal-store';
 import { useViewStore } from '../../../store/view-store';
-import Show from '../../show';
 import { FeilModalConfig } from './feil-modal-config';
+import { Button } from '@navikt/ds-react';
 
 interface FeilmodalProps extends ModalProps {
 	config: FeilModalConfig;
@@ -39,9 +37,11 @@ export function FeilModal(props: FeilmodalProps) {
 		>
 			<Systemtittel className="blokk-xxs">{tittel}</Systemtittel>
 			<Normaltekst className="blokk-s">{beskrivelse}</Normaltekst>
-			<Show if={knappeTekst}>
-				<Knapp onClick={handleRequestClose}>{knappeTekst}</Knapp>
-			</Show>
+			{knappeTekst && (
+				<Button variant="secondary" onClick={handleRequestClose}>
+					{knappeTekst}
+				</Button>
+			)}
 		</VarselModal>
 	);
 }

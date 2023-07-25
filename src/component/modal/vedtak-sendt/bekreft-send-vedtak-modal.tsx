@@ -1,9 +1,8 @@
-import React from 'react';
 import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ModalProps } from '../modal-props';
 import { useModalStore } from '../../../store/modal-store';
+import { Button } from '@navikt/ds-react';
 import './vedtak-sendt-modal.less';
 
 interface VedtakSendtModalProps extends ModalProps {
@@ -24,8 +23,10 @@ export function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 				Er du sikker på at du vil sende vedtaksbrev til bruker?
 			</Systemtittel>
 			<div className="varsel-modal__knapper">
-				<Hovedknapp onClick={props.onSendVedtakBekreftet}>JA, SEND NÅ</Hovedknapp>
-				<Knapp onClick={hideModal}>AVBRYT</Knapp>
+				<Button onClick={props.onSendVedtakBekreftet}>JA, SEND NÅ</Button>
+				<Button variant="secondary" onClick={hideModal}>
+					AVBRYT
+				</Button>
 			</div>
 		</VarselModal>
 	);

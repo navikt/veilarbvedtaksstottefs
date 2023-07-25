@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../component/json-viewer/json-viewer';
 import { Oyblikksbilde } from '../../util/type/oyblikksbilde';
@@ -8,15 +8,15 @@ import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
 import Page from '../../component/page/page';
 import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
 import Footer from '../../component/footer/footer';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { useViewStore, ViewType } from '../../store/view-store';
 import Spinner from '../../component/spinner/spinner';
-import './oyblikksbilde-visning.less';
 import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } from './oyblikksbilde-fikser';
 import { logMetrikk } from '../../util/logger';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { useAppStore } from '../../store/app-store';
+import { Button } from '@navikt/ds-react';
+import './oyblikksbilde-visning.less';
 
 function finnOyblikksbilde(
 	oyblikksbildeType: OyblikksbildeType,
@@ -74,11 +74,9 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 				</section>
 			</Page>
 			<Footer className="oyblikksbilde-visning__footer">
-				<div className="oyblikksbilde-visning__aksjoner">
-					<Hovedknapp mini={true} onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}>
-						Tilbake til vedtak
-					</Hovedknapp>
-				</div>
+				<Button onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}>
+					Tilbake til vedtak
+				</Button>
 			</Footer>
 		</>
 	);

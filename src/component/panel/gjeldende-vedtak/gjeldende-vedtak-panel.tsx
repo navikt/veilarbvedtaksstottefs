@@ -1,14 +1,13 @@
-import React from 'react';
 import { DatoLabel } from '../dato-label';
-import { Knapp } from 'nav-frontend-knapper';
 import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../store/view-store';
 import { getInnsatsgruppeTekst } from '../../../util/innsatsgruppe';
 import fullfortVedtakIcon from './fullfort.svg';
-import './gjeldende-vedtak-panel.less';
 import { logMetrikk } from '../../../util/logger';
 import { Vedtak } from '../../../api/veilarbvedtaksstotte';
+import { Button } from '@navikt/ds-react';
+import './gjeldende-vedtak-panel.less';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
@@ -41,7 +40,11 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 					<Veileder text="Fattet av" veilederNavn={veilederNavn} />
 				</>
 			}
-			knappKomponent={<Knapp onClick={handleVisVedtakClicked}>Vis vedtak</Knapp>}
+			knappKomponent={
+				<Button variant="secondary" onClick={handleVisVedtakClicked}>
+					Vis vedtak
+				</Button>
+			}
 		/>
 	);
 }
