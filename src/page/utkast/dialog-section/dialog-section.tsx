@@ -6,9 +6,8 @@ import { useDataStore } from '../../../store/data-store';
 import { sortDatesAsc } from '../../../util/date-utils';
 import { hentId, makeAbsoluteHeightStyle, scrollToBottom } from '../../../util';
 import { MeldingListe } from './melding-liste/melding-liste';
-import Spinner from '../../../component/spinner/spinner';
 import { useDialogSection } from '../../../store/dialog-section-store';
-import { Button } from '@navikt/ds-react';
+import { Button, Loader } from '@navikt/ds-react';
 import './dialog-section.less';
 
 let midlertidigMelding = '';
@@ -81,9 +80,7 @@ export function DialogSection() {
 				{harLastetMeldinger ? (
 					<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
 				) : (
-					<div className="dialog-section-innhold__spinner">
-						<Spinner />
-					</div>
+					<Loader size="2xlarge" className="dialog-section-innhold__spinner" />
 				)}
 			</div>
 			<div>
