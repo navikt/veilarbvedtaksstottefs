@@ -1,11 +1,10 @@
 import React from 'react';
 import cls from 'classnames';
 import { Undertittel } from 'nav-frontend-typografi';
-import './felt-header.less';
 import { TipsPopover } from '../../../../component/tips-popover/tips-popover';
-import Show from '../../../../component/show';
 import { ExternalLink } from '@navikt/ds-icons';
 import { logMetrikk } from '../../../../util/logger';
+import './felt-header.less';
 
 interface FeltHeaderProps {
 	id?: string;
@@ -27,10 +26,15 @@ function FeltHeader(props: FeltHeaderProps) {
 			<Undertittel id={props.tittelId} className="felt-header__tittel">
 				{props.tittel}
 			</Undertittel>
-			<Show if={props.tipsInnhold}>
-				<TipsPopover id={props.tipsId} tipsInnhold={props.tipsInnhold} ariaLabel={props.tipsAriaLabel} />
-			</Show>
-			<Show if={props.eksternLenke}>
+			{props.tipsInnhold && (
+				<TipsPopover
+					id={props.tipsId}
+					tipsInnhold={props.tipsInnhold}
+					ariaLabel={props.tipsAriaLabel}
+					placement="right"
+				/>
+			)}
+			{props.eksternLenke && (
 				<a
 					className="felt-header__lenke"
 					href={props.eksternLenke}
@@ -41,7 +45,7 @@ function FeltHeader(props: FeltHeaderProps) {
 				>
 					Nye retningslinjer for NAV-loven § 14 a <ExternalLink fr={undefined} />
 				</a>
-			</Show>
+			)}
 		</div>
 	);
 }

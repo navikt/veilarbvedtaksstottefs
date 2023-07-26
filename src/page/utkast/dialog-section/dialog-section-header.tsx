@@ -1,8 +1,5 @@
-import React from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import { DialogTipsInnhold } from './dialog-tips-innhold';
-import { PopoverOrientering } from 'nav-frontend-popover';
-import './dialog-section.less';
 import { OrNothing } from '../../../util/type/ornothing';
 import { TipsPopover } from '../../../component/tips-popover/tips-popover';
 import Show from '../../../component/show';
@@ -12,6 +9,7 @@ import Lenke from 'nav-frontend-lenker';
 import tilOversiktBilde from './til-oversikt.svg';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import env from '../../../util/environment';
+import './dialog-section.less';
 
 interface DialogPanelHeaderProps {
 	beslutterNavn?: OrNothing<string>;
@@ -43,7 +41,7 @@ export function DialogSectionHeader(props: DialogPanelHeaderProps) {
 					className="dialog-section-header__tips"
 					tipsInnhold={<DialogTipsInnhold />}
 					ariaLabel="Tips for kvalitetssikring"
-					orientering={PopoverOrientering.UnderHoyre}
+					placement="bottom"
 				/>
 				<Show if={props.beslutterNavn}>
 					<Label titleText="Ansvarlig" valueText={props.beslutterNavn} labelType={LabelType.SMALL} />
