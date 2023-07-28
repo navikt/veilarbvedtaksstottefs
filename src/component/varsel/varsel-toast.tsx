@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useCallback, useEffect, useState } from 'react';
+import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import AlertStripe, { AlertStripeType } from 'nav-frontend-alertstriper';
 import './varsel-toast.less';
 import { delay } from '../../util/promise-utils';

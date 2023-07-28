@@ -1,4 +1,3 @@
-import React from 'react';
 import Card from '../../component/card/card';
 import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import prelanseringBilde from './prelansering.png';

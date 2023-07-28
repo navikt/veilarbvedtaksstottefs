@@ -1,4 +1,3 @@
-import React from 'react';
 import ModalWrapper from 'nav-frontend-modal';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { ModalProps } from '../modal-props';

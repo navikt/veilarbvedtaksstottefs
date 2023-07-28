@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Spinner from './spinner/spinner';
 import { useDataStore } from '../store/data-store';

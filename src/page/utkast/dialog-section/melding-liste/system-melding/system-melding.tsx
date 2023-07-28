@@ -1,4 +1,3 @@
-import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { SystemMeldingType } from '../../../../../util/type/melding-type';
 import './system-melding.less';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Innholdstittel } from 'nav-frontend-typografi';
 import TilbakemeldingEkspanderbartpanel from '../tilbakemelding-ekspanderbartpanel/tilbakemelding-ekspanderbartpanel';
 import beslutterFunksjonBilde from './beslutterfunksjon.svg';

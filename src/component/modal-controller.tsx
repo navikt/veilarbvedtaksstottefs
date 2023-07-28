@@ -1,4 +1,3 @@
-import React from 'react';
 import { ModalType, useModalStore } from '../store/modal-store';
 import { FeilModal } from './modal/feil-modal/feil-modal';
 import {

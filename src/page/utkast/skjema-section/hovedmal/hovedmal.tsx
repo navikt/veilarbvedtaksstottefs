@@ -1,4 +1,3 @@
-import React from 'react';
 import { Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import FeltHeader from '../felt-header/felt-header';
 import './hovedmal.less';

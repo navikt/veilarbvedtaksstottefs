@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Spinner from '../spinner/spinner';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';

@@ -1,4 +1,3 @@
-import React from 'react';
 import cls from 'classnames';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import './vedtak-liste.less';

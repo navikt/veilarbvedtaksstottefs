@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { VarselType } from '../../../component/varsel/varsel-type';
 import isEqual from 'lodash.isequal';
 import FeltHeader from './felt-header/felt-header';

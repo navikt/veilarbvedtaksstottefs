@@ -1,4 +1,3 @@
-import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 import gjeldendeVedtakBilde from './gjeldende-vedtak.svg';
 import tidligereVedtakBilde from './tidligere-vedtak.svg';

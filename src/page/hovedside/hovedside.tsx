@@ -1,4 +1,3 @@
-import React from 'react';
 import { TidligereVedtakListe } from '../../component/tidligere-vedtak-liste/tidligere-vedtak-liste';
 import { UtkastPanel } from '../../component/panel/utkast/utkast-panel';
 import { GjeldendeVedtakPanel } from '../../component/panel/gjeldende-vedtak/gjeldende-vedtak-panel';
