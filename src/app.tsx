@@ -1,4 +1,3 @@
-import React from 'react';
 import { ViewController } from './component/view-controller';
 import { DataFetcher } from './component/data-fetcher';
 import { PrelanseringSjekk } from './component/sjekk/prelansering-sjekk';

@@ -23,7 +23,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 	const { validerSkjema, setHarForsoktAForhandsvise } = useSkjemaStore();
 	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
-	const [laster, setLaster] = useState(false);
+	const [laster, setLaster] = useState(true);
 
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 
@@ -75,8 +75,6 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 			</Button>
 
 			<div className="utkast-footer--innhold-sidestilt">
-				{laster && <Loader size="small" />}
-
 				{erAnsvarligVeileder && (
 					<Button
 						variant="tertiary"

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 export const DialogTipsInnhold = () => {

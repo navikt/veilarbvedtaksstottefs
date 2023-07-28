@@ -1,4 +1,3 @@
-import React from 'react';
 import cls from 'classnames';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { OrNothing } from '../../util/type/ornothing';

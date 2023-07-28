@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { VisKilde } from './vis-kilde/vis-kilde';
 import { RedigerKilde } from './rediger-kilde/rediger-kilde';
 import { LeggTilKilde } from './legg-til-kilde/legg-til-kilde';

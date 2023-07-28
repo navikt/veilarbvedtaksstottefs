@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';

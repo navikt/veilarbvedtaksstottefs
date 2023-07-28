@@ -1,4 +1,3 @@
-import React from 'react';
 import cls from 'classnames';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import './dialog-melding.less';

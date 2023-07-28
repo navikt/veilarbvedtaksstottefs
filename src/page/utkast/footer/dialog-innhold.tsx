@@ -22,7 +22,6 @@ import {
 	oppdaterBeslutterProsessStatus
 } from '../../../api/veilarbvedtaksstotte/beslutter';
 import { VeilederTilgang } from '../../../util/tilgang';
-import Show from '../../../component/show';
 import { useDialogSection } from '../../../store/dialog-section-store';
 import { Button } from '@navikt/ds-react';
 
@@ -131,33 +130,33 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 				/>
 			</div>
 
-			<Show if={showSection}>
+			{showSection ?? (
 				<div className="utkast-footer--innhold-sidestilt">
-					<Show if={visStartBeslutterProsess}>
+					{visStartBeslutterProsess && (
 						<Button loading={laster} onClick={handleOnStartBeslutterProsessClicked}>
 							Start kvalitetssikring
 						</Button>
-					</Show>
+					)}
 
-					<Show if={visBliBeslutter}>
+					{visBliBeslutter && (
 						<Button loading={laster} onClick={handleOnBliBeslutterClicked}>
 							Bli kvalitetssikrer
 						</Button>
-					</Show>
+					)}
 
-					<Show if={visSendTilVeileder}>
+					{visSendTilVeileder && (
 						<Button loading={laster} onClick={handleOnSendTilClicked}>
 							Send til veileder
 						</Button>
-					</Show>
+					)}
 
-					<Show if={visSendTilBeslutter}>
+					{visSendTilBeslutter && (
 						<Button loading={laster} onClick={handleOnSendTilClicked}>
 							Send til kvalitetssikrer
 						</Button>
-					</Show>
+					)}
 
-					<Show if={visGodkjennUtkast}>
+					{visGodkjennUtkast && (
 						<Button
 							variant="tertiary"
 							loading={laster}
@@ -169,9 +168,9 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 						>
 							Godkjenn
 						</Button>
-					</Show>
+					)}
 				</div>
-			</Show>
+			)}
 		</div>
 	);
 }

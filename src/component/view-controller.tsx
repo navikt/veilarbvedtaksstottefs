@@ -1,4 +1,3 @@
-import React from 'react';
 import { Hovedside } from '../page/hovedside/hovedside';
 import { VedtakskjemaVisningSide } from '../page/vedtakskjema-visning/vedtakskjema-visning-side';
 import { Forhandsvisning } from '../page/forhandsvisning/forhandsvisning';

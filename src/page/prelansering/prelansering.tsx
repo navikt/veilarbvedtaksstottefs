@@ -1,4 +1,3 @@
-import React from 'react';
 import Page from '../../component/page/page';
 import PrelanseringInfo from './prelansering-info';
 import { LosningInfo } from './losning-info/losning-info';

@@ -53,7 +53,7 @@ function GammelnavskDictionary(props: { content: OrNothing<string> }) {
 								{gammelnavskResultater.map((gammelnavsk, i) => (
 									<Accordion.Item key={'gammelnavsk' + i}>
 										<Accordion.Header type="button">
-											<span className="firstLetter">"{gammelnavsk.ord}"</span>
+											<span className="firstLetter">&quot;{gammelnavsk.ord}&quot;</span>
 										</Accordion.Header>
 										<Accordion.Content>
 											<Heading level="4" size="xsmall">
@@ -89,7 +89,7 @@ function GammelnavskDictionary(props: { content: OrNothing<string> }) {
 								{kansellistenResultater.map((kanselli, i) => (
 									<Accordion.Item key={'kanselli' + i}>
 										<Accordion.Header type="button">
-											<span className="firstLetter">"{kanselli.kanselliord}"</span>
+											<span className="firstLetter">&quot;{kanselli.kanselliord}&quot;</span>
 										</Accordion.Header>
 										<Accordion.Content>
 											<Heading level="4" size="xsmall">
