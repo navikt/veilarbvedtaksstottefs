@@ -1,4 +1,3 @@
-import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
 import ingenGjeldendeVedtakBilde from './ingen_gjeldende_vedtak.svg';

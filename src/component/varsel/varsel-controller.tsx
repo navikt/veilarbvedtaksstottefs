@@ -1,4 +1,3 @@
-import React from 'react';
 import { useVarselStore } from '../../store/varsel-store';
 import { VarselToast } from './varsel-toast';
 import {

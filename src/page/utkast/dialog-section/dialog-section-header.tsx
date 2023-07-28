@@ -1,4 +1,3 @@
-import React from 'react';
 import { Undertittel } from 'nav-frontend-typografi';
 import { DialogTipsInnhold } from './dialog-tips-innhold';
 import { PopoverOrientering } from 'nav-frontend-popover';

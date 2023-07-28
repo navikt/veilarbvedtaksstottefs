@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import cls from 'classnames';
 import { DialogMelding } from './dialog-melding/dialog-melding';
 import { SystemMelding } from './system-melding/system-melding';

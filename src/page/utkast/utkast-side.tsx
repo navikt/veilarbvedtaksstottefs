@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import cls from 'classnames';
 import { UtkastFooter } from './footer/utkast-footer';
 import SkjemaHeader from './skjema-section/header/skjema-header';

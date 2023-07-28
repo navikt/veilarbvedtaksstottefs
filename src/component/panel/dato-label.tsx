@@ -1,4 +1,3 @@
-import React from 'react';
 import { formatDateStr, formatDateTime } from '../../util/date-utils';
 import { Label, LabelType } from '../label/label';
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import debounce from 'lodash.debounce';
 import Kilder from './kilder/kilder';
 import Begrunnelse from './begrunnelse/begrunnelse';

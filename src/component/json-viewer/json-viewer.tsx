@@ -1,4 +1,3 @@
-import React from 'react';
 import './json-viewer.less';
 import Lenke from 'nav-frontend-lenker';
 

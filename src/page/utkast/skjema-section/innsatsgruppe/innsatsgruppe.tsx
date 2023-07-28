@@ -1,4 +1,3 @@
-import React from 'react';
 import { Radio, RadioGruppe } from 'nav-frontend-skjema';
 import AlertStripe from 'nav-frontend-alertstriper';
 import FeltHeader from '../felt-header/felt-header';

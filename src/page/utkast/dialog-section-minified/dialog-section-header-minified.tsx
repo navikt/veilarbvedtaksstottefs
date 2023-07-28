@@ -1,4 +1,3 @@
-import React from 'react';
 import { DialogToggleBtn } from './dialog-toggle-btn';
 
 export function DialogSectionHeaderMinified() {

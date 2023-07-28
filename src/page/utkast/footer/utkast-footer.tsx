@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import cls from 'classnames';
 import UtkastInnhold from './utkast-innhold';
 import { DialogInnhold } from './dialog-innhold';
