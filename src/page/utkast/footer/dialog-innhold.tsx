@@ -130,33 +130,33 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 				/>
 			</div>
 
-			{showSection ? (
+			{showSection ?? (
 				<div className="utkast-footer--innhold-sidestilt">
-					{!!visStartBeslutterProsess && (
+					{visStartBeslutterProsess && (
 						<Button loading={laster} onClick={handleOnStartBeslutterProsessClicked}>
 							Start kvalitetssikring
 						</Button>
 					)}
 
-					{!!visBliBeslutter && (
+					{visBliBeslutter && (
 						<Button loading={laster} onClick={handleOnBliBeslutterClicked}>
 							Bli kvalitetssikrer
 						</Button>
 					)}
 
-					{!!visSendTilVeileder && (
+					{visSendTilVeileder && (
 						<Button loading={laster} onClick={handleOnSendTilClicked}>
 							Send til veileder
 						</Button>
 					)}
 
-					{!!visSendTilBeslutter && (
+					{visSendTilBeslutter && (
 						<Button loading={laster} onClick={handleOnSendTilClicked}>
 							Send til kvalitetssikrer
 						</Button>
 					)}
 
-					{!!visGodkjennUtkast && (
+					{visGodkjennUtkast && (
 						<Button
 							variant="tertiary"
 							loading={laster}
@@ -170,7 +170,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 						</Button>
 					)}
 				</div>
-			) : null}
+			)}
 		</div>
 	);
 }

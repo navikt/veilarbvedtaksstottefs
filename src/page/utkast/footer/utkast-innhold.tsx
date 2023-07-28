@@ -75,7 +75,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 			</Button>
 
 			<div className="utkast-footer--innhold-sidestilt">
-				{!!erAnsvarligVeileder && (
+				{erAnsvarligVeileder && (
 					<Button
 						variant="tertiary"
 						loading={laster}

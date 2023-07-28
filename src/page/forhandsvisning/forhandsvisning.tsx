@@ -99,7 +99,7 @@ export function Forhandsvisning() {
 						Tilbake
 					</Button>
 
-					{!!visSendKnapp && (
+					{visSendKnapp && (
 						<Button onClick={handleOnSendClicked} disabled={pdfStatus !== PDFStatus.SUCCESS}>
 							Send til bruker
 						</Button>
