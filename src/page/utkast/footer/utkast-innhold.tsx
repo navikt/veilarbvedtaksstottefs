@@ -8,7 +8,7 @@ import { ModalType, useModalStore } from '../../../store/modal-store';
 import { Utkast } from '../../../api/veilarbvedtaksstotte';
 import { erKlarTilVeileder, finnGjeldendeVedtak } from '../../../util';
 import { oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
-import { Button, Loader } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import { ChevronLeftIcon, PersonPencilIcon, TrashIcon } from '@navikt/aksel-icons';
 
 interface UtkastAksjonerProps {
