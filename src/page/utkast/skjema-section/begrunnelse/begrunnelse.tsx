@@ -3,9 +3,7 @@ import cls from 'classnames';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import FeltHeader from '../felt-header/felt-header';
-import './begrunnelse.less';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { MalformData, MalformType } from '../../../../api/veilarbperson';
 import { useDataStore } from '../../../../store/data-store';
@@ -13,9 +11,9 @@ import { useSkjemaStore } from '../../../../store/skjema-store';
 import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { lagSkjemaelementFeilmelding } from '../../../../util';
-import Show from '../../../../component/show';
-import { Accordion, Switch } from '@navikt/ds-react';
 import { Lix, GammelnavskDictionary } from '../../../../spraksjekk-intern/components';
+import { Accordion, Alert, Switch } from '@navikt/ds-react';
+import './begrunnelse.less';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
@@ -96,14 +94,17 @@ function Begrunnelse() {
 						<Normaltekst className="begrunnelse__malform">
 							Brukers målform: {malformToTekst(malform)}
 						</Normaltekst>
-						<Show if={begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH}>
-							<AlertStripeAdvarsel className="begrunnelse-for-langt-varsel">
-								<span aria-live="assertive">
-									Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv
-									å korte den ned.
-								</span>
-							</AlertStripeAdvarsel>
-						</Show>
+						{begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH && (
+							<Alert
+								size="small"
+								variant="warning"
+								aria-live="polite"
+								className="begrunnelse-for-langt-varsel"
+							>
+								Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv å
+								korte den ned.
+							</Alert>
+						)}
 					</SkjemaGruppe>
 				</div>
 			</div>
@@ -116,7 +117,7 @@ function Begrunnelse() {
 				>
 					Språkhjelp
 				</Switch>
-				<Show if={visSprakhjelp && begrunnelse && begrunnelse.length > 0}>
+				{visSprakhjelp && begrunnelse && begrunnelse.length > 0 && (
 					<Accordion>
 						{/* <LongParagraphs content={begrunnelse} /> */}
 						{/* <LongSentences content={begrunnelse} /> */}
@@ -130,7 +131,7 @@ function Begrunnelse() {
 						<Lix content={begrunnelse} />
 						{/* <WordCount content={begrunnelse} /> */}
 					</Accordion>
-				</Show>
+				)}
 			</div>
 		</>
 	);

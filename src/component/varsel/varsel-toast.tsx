@@ -1,10 +1,10 @@
 import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
-import AlertStripe, { AlertStripeType } from 'nav-frontend-alertstriper';
-import './varsel-toast.less';
 import { delay } from '../../util/promise-utils';
+import { Alert, AlertProps } from '@navikt/ds-react';
+import './varsel-toast.less';
 
 interface VarselToastProps {
-	type: AlertStripeType;
+	type: AlertProps['variant'];
 	durationMs: number;
 	onHide?: () => void;
 }
@@ -46,9 +46,9 @@ export function VarselToast(props: PropsWithChildren<VarselToastProps>) {
 
 	return (
 		<div className={'toast'} role={'alert'}>
-			<AlertStripe type={props.type} className={fadeClass}>
+			<Alert size="small" variant={props.type} className={fadeClass} role="alert">
 				{props.children}
-			</AlertStripe>
+			</Alert>
 		</div>
 	);
 }

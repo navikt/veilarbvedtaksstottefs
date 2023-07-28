@@ -121,16 +121,14 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 
 	return (
 		<div className="utkast-footer__dialog-innhold">
-			<div>
-				<UtkastStatusMelding
-					utkast={utkast!}
-					veilederTilgang={veilederTilgang}
-					skjemaInnsatsgruppe={innsatsgruppe}
-					minified={!showSection}
-				/>
-			</div>
+			<UtkastStatusMelding
+				utkast={utkast!}
+				veilederTilgang={veilederTilgang}
+				skjemaInnsatsgruppe={innsatsgruppe}
+				minified={!showSection}
+			/>
 
-			{showSection ?? (
+			{showSection && (
 				<div className="utkast-footer--innhold-sidestilt">
 					{visStartBeslutterProsess && (
 						<Button loading={laster} onClick={handleOnStartBeslutterProsessClicked}>

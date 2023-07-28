@@ -1,11 +1,10 @@
 import Page from '../../component/page/page';
 import Footer from '../../component/footer/footer';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { SkjemaVisning } from '../../component/skjema-visning/skjema-visning';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { useDataStore } from '../../store/data-store';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
-import { Button } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import './vedtakskjema-visning-side.less';
 
@@ -15,7 +14,7 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
 	if (!vistVedtak) {
-		return <AlertStripeFeil>Fant ikke vedtak å fremvise</AlertStripeFeil>;
+		return <Alert variant="error">Fant ikke vedtak å fremvise</Alert>;
 	}
 
 	return (

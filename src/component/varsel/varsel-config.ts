@@ -1,22 +1,22 @@
-import { AlertStripeType } from 'nav-frontend-alertstriper';
+import { AlertProps } from '@navikt/ds-react';
 
 export interface VarselConfig {
-	type: AlertStripeType;
+	type: AlertProps['variant'];
 	tekst: string;
 }
 
 export const vedtakSendt: VarselConfig = {
-	type: 'suksess',
+	type: 'success',
 	tekst: 'Oppfølgingsvedtaket er sendt til bruker.'
 };
 
 export const tattOverSomVeileder: VarselConfig = {
-	type: 'suksess',
+	type: 'success',
 	tekst: 'Du har nå tatt over ansvaret for vedtaket.'
 };
 
 export const tattOverSomBeslutter: VarselConfig = {
-	type: 'suksess',
+	type: 'success',
 	tekst: 'Du har nå tatt over som kvalitetssikrer for vedtaket.'
 };
 

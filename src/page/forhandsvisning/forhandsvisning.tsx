@@ -7,7 +7,6 @@ import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { useSkjemaStore } from '../../store/skjema-store';
 import { erGodkjentAvBeslutter } from '../../util';
-import Show from '../../component/show';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { useDataStore } from '../../store/data-store';
 import { useVarselStore } from '../../store/varsel-store';
@@ -16,8 +15,7 @@ import { logMetrikk } from '../../util/logger';
 import { Utkast } from '../../api/veilarbvedtaksstotte';
 import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Button } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import './forhandsvisning.less';
 
@@ -104,16 +102,29 @@ export function Forhandsvisning() {
 							Send til bruker
 						</Button>
 					)}
-					<Show if={visKvalitetssikringInfo}>
-						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
-							<span aria-live="polite">Kvalitetssikring må gjennomføres før brev kan sendes</span>
-						</AlertStripe>
-					</Show>
-					<Show if={oppfolgingData.inaktivIArena}>
-						<AlertStripe className="forhandsvisning__utsending-varsel" type="info" form="inline">
-							<span aria-live="polite">Kan ikke fatte vedtak fordi brukeren er inaktiv i Arena</span>
-						</AlertStripe>
-					</Show>
+					{visKvalitetssikringInfo && (
+						<Alert
+							size="small"
+							variant="info"
+							inline
+							className="forhandsvisning__utsending-varsel"
+							aria-live="polite"
+						>
+							Kvalitetssikring må gjennomføres før brev kan sendes
+						</Alert>
+					)}
+
+					{oppfolgingData.inaktivIArena && (
+						<Alert
+							size="small"
+							variant="info"
+							inline
+							className="forhandsvisning__utsending-varsel"
+							aria-live="polite"
+						>
+							Kan ikke fatte vedtak fordi brukeren er inaktiv i Arena
+						</Alert>
+					)}
 				</div>
 			</Footer>
 		</>

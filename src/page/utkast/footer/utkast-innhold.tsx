@@ -23,7 +23,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 	const { validerSkjema, setHarForsoktAForhandsvise } = useSkjemaStore();
 	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
-	const [laster, setLaster] = useState(true);
+	const [laster, setLaster] = useState(false);
 
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 
