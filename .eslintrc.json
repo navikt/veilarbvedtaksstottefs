@@ -1,9 +1,8 @@
 {
-  "extends": [
-    "react-app"
-  ],
-  "rules": {
-    "no-debugger": "warn",
-    "no-console": "warn"
-  }
+	"extends": ["react-app", "plugin:react/recommended", "plugin:react/jsx-runtime"],
+	"rules": {
+		"no-debugger": "warn",
+		"no-console": "warn",
+		"react/jsx-no-leaked-render": "warn"
+	}
 }
