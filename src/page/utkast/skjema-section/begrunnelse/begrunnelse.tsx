@@ -6,7 +6,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import FeltHeader from '../felt-header/felt-header';
 import './begrunnelse.less';
-import '@navikt/ds-css';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { MalformData, MalformType } from '../../../../api/veilarbperson';
 import { useDataStore } from '../../../../store/data-store';
