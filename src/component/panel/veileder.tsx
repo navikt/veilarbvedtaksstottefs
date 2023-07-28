@@ -1,4 +1,3 @@
-import React from 'react';
 import { Undertekst } from 'nav-frontend-typografi';
 
 interface VeilederProps {

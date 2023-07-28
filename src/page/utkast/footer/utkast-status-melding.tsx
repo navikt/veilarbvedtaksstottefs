@@ -1,4 +1,3 @@
-import React from 'react';
 import AlertStripe, { AlertStripeType } from 'nav-frontend-alertstriper';
 import { BeslutterProsessStatus, InnsatsgruppeType, Utkast } from '../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../util/type/ornothing';

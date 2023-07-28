@@ -1,4 +1,3 @@
-import React from 'react';
 import dialogMsgBilde from './dialog-msg.svg';
 import dialogNewMsgBilde from './dialog-new-msg.svg';
 import './dialog-section-minified.less';

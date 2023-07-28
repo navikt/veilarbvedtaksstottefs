@@ -1,4 +1,3 @@
-import React from 'react';
 import { Systemtittel } from 'nav-frontend-typografi';
 import utkastBilde from './utkast.svg';
 import { SkjemaLagringStatus } from '../../../../util/type/skjema-lagring-status';

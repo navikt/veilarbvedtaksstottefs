@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { Undertittel } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
@@ -41,7 +41,7 @@ function Pages(props: { numPages: number }) {
 	);
 }
 
-class PdfViewer extends React.Component<PdfViewerProps, PdfViewerState> {
+class PdfViewer extends Component<PdfViewerProps, PdfViewerState> {
 	// Create this.file once to prevent rerender bug in react-pdf when object is created each render
 	private readonly file: { url: string };
 

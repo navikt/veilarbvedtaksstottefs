@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useLayoutEffect } from 'react';
+import { PropsWithChildren, useLayoutEffect } from 'react';
 import { Prelansering } from '../../page/prelansering/prelansering';
 import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';

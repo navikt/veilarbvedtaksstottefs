@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cls from 'classnames';
 import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
