@@ -1,8 +1,6 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import { ExternalLink } from '@navikt/ds-icons';
 import { OrNothing } from '../../../util/type/ornothing';
-import AccordionItem from '@navikt/ds-react/esm/accordion/AccordionItem';
-import AccordionHeader from '@navikt/ds-react/esm/accordion/AccordionHeader';
 
 function lixResultMessage(lix: number): string {
 	// LIX begrunnelse (hvor kommer grenseverdiene fra?)
@@ -24,9 +22,9 @@ function Lix(props: { content: OrNothing<string> }) {
 	const LETTER_LIMIT = 6;
 	if (!props.content) {
 		return (
-			<AccordionItem>
-				<AccordionHeader>Klarte ikke regne ut liks-verdi</AccordionHeader>
-			</AccordionItem>
+			<Accordion.Item>
+				<Accordion.Header>Klarte ikke regne ut liks-verdi</Accordion.Header>
+			</Accordion.Item>
 		);
 	}
 
