@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Textarea } from 'nav-frontend-skjema';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Kilde } from '../kilder';
+import { Button } from '@navikt/ds-react';
 import './rediger-kilde.less';
 
 interface RedigerKildeProps {
@@ -38,12 +38,12 @@ export function RedigerKilde(props: RedigerKildeProps) {
 				autoFocus={true}
 			/>
 			<div className="rediger-kilde__aksjoner">
-				<Hovedknapp mini={true} htmlType="button" onClick={onSubmit}>
+				<Button size="small" onClick={onSubmit}>
 					Lagre
-				</Hovedknapp>
-				<Knapp mini={true} htmlType="button" onClick={onTekstDeleteOrCancel}>
+				</Button>
+				<Button size="small" variant="secondary" onClick={onTekstDeleteOrCancel}>
 					{negativeBtn === 'CANCEL' ? 'Avbryt' : 'Slett'}
-				</Knapp>
+				</Button>
 			</div>
 		</div>
 	);

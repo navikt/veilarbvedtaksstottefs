@@ -1,4 +1,3 @@
-import React from 'react';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { SkjemaVisningHeader } from './header/skjema-visning-header';
 import { Label } from '../label/label';
@@ -6,10 +5,11 @@ import { formatDateStr } from '../../util/date-utils';
 import Show from '../show';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
-import './skjema-visning.less';
 import { getHovedmalNavn } from '../../util/hovedmal';
 import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
+import { Button } from '@navikt/ds-react';
+import './skjema-visning.less';
 
 export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
@@ -78,12 +78,9 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 				))}
 			</ul>
 
-			<button
-				className="skjema-visning__oyblikksbilde-lenke"
-				onClick={() => changeView(ViewType.OYBLIKKSBILDE_VISNING, { vedtakId: id })}
-			>
+			<Button variant="tertiary" onClick={() => changeView(ViewType.OYBLIKKSBILDE_VISNING, { vedtakId: id })}>
 				Brukerinformasjon på vedtakstidspunktet
-			</button>
+			</Button>
 		</div>
 	);
 }

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { ModalProps } from '../modal-props';
 import { useModalStore } from '../../../store/modal-store';
+import { Button } from '@navikt/ds-react';
 
 interface GodkjennModalProps extends ModalProps {
 	onGodkjennUtkastBekreftet: () => void;
@@ -27,12 +27,12 @@ export function GodkjennModal(props: GodkjennModalProps) {
 				Er du sikker på at du vil godkjenne utkastet?
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Hovedknapp spinner={laster} disabled={laster} onClick={props.onGodkjennUtkastBekreftet}>
+				<Button loading={laster} onClick={props.onGodkjennUtkastBekreftet}>
 					GODKJENN
-				</Hovedknapp>
-				<Knapp disabled={laster} onClick={hideModal}>
+				</Button>
+				<Button variant="secondary" loading={laster} onClick={hideModal}>
 					AVBRYT
-				</Knapp>
+				</Button>
 			</div>
 		</>
 	);

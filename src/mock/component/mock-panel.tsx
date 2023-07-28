@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { RadioPanel } from 'nav-frontend-skjema';
-import Lukknapp from 'nav-frontend-lukknapp';
 import { useDataStore } from '../../store/data-store';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { finnVeilederTilgang } from '../../util/tilgang';
 import { useSkjemaStore } from '../../store/skjema-store';
-import Show from '../../component/show';
-import './mock-panel.less';
 import { Veileder } from '../../api/veilarbveileder';
 import { hentUtkast, oppdaterVedtakUtkastMockFraSkjema, updateInnloggetVeilederMock } from '../api-data';
 import { veiledere } from '../data';
+import { Button } from '@navikt/ds-react';
+import { XMarkIcon } from '@navikt/aksel-icons';
+import './mock-panel.less';
 
 export function MockPanel() {
 	const [visPanel, setVisPanel] = useState(false);
@@ -19,18 +19,18 @@ export function MockPanel() {
 
 	return (
 		<div className="mock-panel">
-			<Show if={!visPanel}>
-				<button className="mock-panel__apne-knapp" onClick={toggle}>
+			{!visPanel && (
+				<Button size="small" className="mock-panel__apne-knapp" onClick={toggle}>
 					Vis valg
-				</button>
-			</Show>
+				</Button>
+			)}
 
-			<Show if={visPanel}>
+			{visPanel && (
 				<div className="mock-panel__innhold">
-					<Lukknapp onClick={toggle} />
+					<Button size="small" variant="secondary" icon={<XMarkIcon aria-hidden />} onClick={toggle} />
 					<InnloggetSom />
 				</div>
-			</Show>
+			)}
 		</div>
 	);
 }

@@ -1,9 +1,10 @@
-import React from 'react';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Kilde } from '../kilder';
-import './vis-kilde.less';
 import { erDefaultKilde } from '../../../../../util/skjema-utils';
 import { swallowEnterKeyPress } from '../../../../../util';
+import { Button } from '@navikt/ds-react';
+import { PencilIcon } from '@navikt/aksel-icons';
+import './vis-kilde.less';
 
 interface VisKildeProps {
 	kilde: Kilde;
@@ -26,17 +27,17 @@ export function VisKilde(props: VisKildeProps) {
 				onChange={(e: any) => props.onChange({ navn, erValgt: e.target.checked })}
 			/>
 			{kanRedigeres && (
-				<button
-					aria-label={'Rediger ' + navn}
-					className="vis-kilde__rediger-knapp"
+				<Button
+					variant="tertiary"
+					icon={<PencilIcon />}
+					className="vis-kilde__rediger-ikon"
 					onClick={e => {
 						if (document.activeElement === e.currentTarget) {
 							props.handleKilde();
 						}
 					}}
-				>
-					<div className="vis-kilde__rediger-ikon" />
-				</button>
+					aria-label={'Rediger ' + navn}
+				/>
 			)}
 		</div>
 	);

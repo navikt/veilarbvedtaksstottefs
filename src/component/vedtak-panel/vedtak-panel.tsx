@@ -1,7 +1,6 @@
-import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { HoyreChevron } from 'nav-frontend-chevron';
 import { lagVedtakDatoTekst } from '../../util/date-utils';
+import { ChevronRightIcon } from '@navikt/aksel-icons';
 import './vedtak-panel.less';
 
 export type OnVedtakClicked<T> = (vedtak: T, idx: number) => void;
@@ -29,7 +28,7 @@ export function VedtakPanel<T>(props: VedtakPanelProps<T>) {
 				</div>
 				<Normaltekst className="vedtak-panel__dato">{lagVedtakDatoTekst(dato)}</Normaltekst>
 			</div>
-			<HoyreChevron className="vedtak-panel__chevron" />
+			<ChevronRightIcon className="vedtak-panel__chevron" />
 		</button>
 	);
 }

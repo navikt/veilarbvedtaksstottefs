@@ -1,5 +1,6 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import { ExternalLink } from '@navikt/ds-icons';
+import { OrNothing } from '../../../util/type/ornothing';
 import { GammelnavskOrdliste } from '../../data';
 import { Kansellisten } from '../../data';
 
@@ -16,18 +17,18 @@ interface KansellistenType {
 	alternativ_2: string;
 }
 
-function GammelnavskDictionary(props: { content: string }) {
+function GammelnavskDictionary(props: { content: OrNothing<string> }) {
 	let gammelnavskResultater: GammelnavskType[] = [];
 	let kansellistenResultater: KansellistenType[] = [];
 
 	if (props.content !== '') {
 		gammelnavskResultater = GammelnavskOrdliste.gammelnavsk_ordliste.filter(gammelnavsk => {
-			return props.content.toLowerCase().match('\\b' + gammelnavsk.ord.toLowerCase() + '\\b');
+			return props.content?.toLowerCase().match('\\b' + gammelnavsk.ord.toLowerCase() + '\\b');
 		});
 	}
 	if (props.content !== '') {
 		kansellistenResultater = Kansellisten.kansellisten.filter(gammelnavsk => {
-			return props.content.toLowerCase().match('\\b' + gammelnavsk.kanselliord.toLowerCase() + '\\b');
+			return props.content?.toLowerCase().match('\\b' + gammelnavsk.kanselliord.toLowerCase() + '\\b');
 		});
 	}
 
@@ -52,7 +53,7 @@ function GammelnavskDictionary(props: { content: string }) {
 								{gammelnavskResultater.map((gammelnavsk, i) => (
 									<Accordion.Item key={'gammelnavsk' + i}>
 										<Accordion.Header type="button">
-											<span className="firstLetter">"{gammelnavsk.ord}"</span>
+											<span className="firstLetter">&quot;{gammelnavsk.ord}&quot;</span>
 										</Accordion.Header>
 										<Accordion.Content>
 											<Heading level="4" size="xsmall">
@@ -88,7 +89,7 @@ function GammelnavskDictionary(props: { content: string }) {
 								{kansellistenResultater.map((kanselli, i) => (
 									<Accordion.Item key={'kanselli' + i}>
 										<Accordion.Header type="button">
-											<span className="firstLetter">"{kanselli.kanselliord}"</span>
+											<span className="firstLetter">&quot;{kanselli.kanselliord}&quot;</span>
 										</Accordion.Header>
 										<Accordion.Content>
 											<Heading level="4" size="xsmall">

@@ -18,13 +18,14 @@
 	}
 
 	.dialog-section__toggle_btn {
-		padding: 1rem;
-		height: 64px;
-		width: @dialog-section-minified-width;
+		height: 100%;
+		width: 100%;
+		border-radius: 0;
 
-		border: none;
-		cursor: pointer;
-		background-color: transparent;
+		svg {
+			width: var(--a-spacing-10);
+			height: var(--a-spacing-10);
+		}
 	}
 
 	.dialog-section-header-minified {

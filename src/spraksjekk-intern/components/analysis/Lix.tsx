@@ -1,5 +1,6 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import { ExternalLink } from '@navikt/ds-icons';
+import { OrNothing } from '../../../util/type/ornothing';
 
 function lixResultMessage(lix: number): string {
 	// LIX begrunnelse (hvor kommer grenseverdiene fra?)
@@ -17,12 +18,19 @@ function lixResultMessage(lix: number): string {
 	return 'Veldig vanskelig å lese';
 }
 
-function Lix(props: { content: string }) {
+function Lix(props: { content: OrNothing<string> }) {
 	const LETTER_LIMIT = 6;
+	if (!props.content) {
+		return (
+			<Accordion.Item>
+				<Accordion.Header>Klarte ikke regne ut liks-verdi</Accordion.Header>
+			</Accordion.Item>
+		);
+	}
 
 	// Get total number of words in text
 	const words = props.content.split(/\s+/);
-	const wordCount = words.length;
+	const wordCount = words ? words.length : 1;
 
 	// Count sentences
 	const punct = '!;.*?';
