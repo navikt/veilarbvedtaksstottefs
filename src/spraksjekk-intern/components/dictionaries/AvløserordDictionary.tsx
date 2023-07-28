@@ -48,12 +48,12 @@ function GammelnavskCheck(props: { content: string }) {
 					</Accordion.Header>
 					<Accordion.Content>
 						Norske ord som kan brukes i stedet for de tilsvarende engelske:
-						{gammelnavskResultater && (
+						{gammelnavskResultater.length > 0 && (
 							<Accordion className="gammelnavskAccordion mt-4">
 								{gammelnavskResultater.map((gammelnavsk, i) => (
 									<Accordion.Item key="">
 										<Accordion.Header className="gammelnavskAccordion" type="button">
-											<span className="firstLetter">"{gammelnavsk.importord}"</span>
+											<span className="firstLetter">&quot;{gammelnavsk.importord}&quot;</span>
 										</Accordion.Header>
 										<Accordion.Content className="gammelnavskAccordionContent">
 											<Heading spacing level="4" size="xsmall">
@@ -77,7 +77,7 @@ function GammelnavskCheck(props: { content: string }) {
 								))}
 							</Accordion>
 						)}
-						{datatermerResultater && (
+						{datatermerResultater.length > 0 && (
 							<Accordion className="gammelnavskAccordion">
 								{datatermerResultater.map((gammelnavsk, i) => (
 									<Accordion.Item key="">
