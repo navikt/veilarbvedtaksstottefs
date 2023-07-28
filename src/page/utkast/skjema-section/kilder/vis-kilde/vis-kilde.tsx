@@ -26,7 +26,7 @@ export function VisKilde(props: VisKildeProps) {
 				onKeyPress={swallowEnterKeyPress}
 				onChange={(e: any) => props.onChange({ navn, erValgt: e.target.checked })}
 			/>
-			{kanRedigeres && (
+			{!!kanRedigeres && (
 				<Button
 					variant="tertiary"
 					icon={<PencilIcon />}

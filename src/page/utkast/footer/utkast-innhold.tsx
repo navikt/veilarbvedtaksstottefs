@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil, SkjemaData } from '../../../util/skjema-utils';
 import { useSkjemaStore } from '../../../store/skjema-store';
@@ -9,7 +8,6 @@ import { ModalType, useModalStore } from '../../../store/modal-store';
 import { Utkast } from '../../../api/veilarbvedtaksstotte';
 import { erKlarTilVeileder, finnGjeldendeVedtak } from '../../../util';
 import { oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
-import Show from '../../../component/show';
 import { Button } from '@navikt/ds-react';
 import { ChevronLeftIcon, PersonPencilIcon, TrashIcon } from '@navikt/aksel-icons';
 
@@ -25,7 +23,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 	const { validerSkjema, setHarForsoktAForhandsvise } = useSkjemaStore();
 	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
-	const [laster, setLaster] = useState(false);
+	const [laster, setLaster] = useState(true);
 
 	const gjeldendeVedtak = finnGjeldendeVedtak(fattedeVedtak);
 
@@ -77,11 +75,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 			</Button>
 
 			<div className="utkast-footer--innhold-sidestilt">
-				<Show if={laster}>
-					<NavFrontendSpinner className="utkast-footer__spinner" type="XS" />
-				</Show>
-
-				<Show if={erAnsvarligVeileder}>
+				{!!erAnsvarligVeileder && (
 					<Button
 						variant="tertiary"
 						loading={laster}
@@ -90,9 +84,9 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 					>
 						Slett
 					</Button>
-				</Show>
+				)}
 
-				<Show if={!erAnsvarligVeileder}>
+				{!erAnsvarligVeileder && (
 					<Button
 						variant="tertiary"
 						loading={laster}
@@ -101,7 +95,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 					>
 						Ta over
 					</Button>
-				</Show>
+				)}
 
 				<Button
 					variant={erForhandsvisHovedknapp ? 'primary' : 'secondary'}

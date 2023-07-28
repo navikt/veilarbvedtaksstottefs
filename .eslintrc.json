@@ -3,6 +3,6 @@
 	"rules": {
 		"no-debugger": "warn",
 		"no-console": "warn",
-		"react/jsx-no-leaked-render": "warn"
+		"react/jsx-no-leaked-render": ["warn", { "validStrategies": ["coerce", "ternary"] }]
 	}
 }
