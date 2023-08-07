@@ -130,7 +130,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 				/>
 			</div>
 
-			{showSection ?? (
+			{showSection && (
 				<div className="utkast-footer--innhold-sidestilt">
 					{visStartBeslutterProsess && (
 						<Button loading={laster} onClick={handleOnStartBeslutterProsessClicked}>
