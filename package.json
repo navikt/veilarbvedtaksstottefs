@@ -47,8 +47,6 @@
     "dompurify": "2.4.7",
     "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
-    "nav-frontend-alertstriper": "4.0.2",
-    "nav-frontend-alertstriper-style": "3.0.2",
     "nav-frontend-core": "^6.0.1",
     "nav-frontend-ekspanderbartpanel": "4.0.4",
     "nav-frontend-ekspanderbartpanel-style": "2.0.2",
