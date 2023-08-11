@@ -131,31 +131,32 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 			{showSection && (
 				<div className="utkast-footer--innhold-sidestilt">
 					{visStartBeslutterProsess && (
-						<Button loading={laster} onClick={handleOnStartBeslutterProsessClicked}>
+						<Button size="small" loading={laster} onClick={handleOnStartBeslutterProsessClicked}>
 							Start kvalitetssikring
 						</Button>
 					)}
 
 					{visBliBeslutter && (
-						<Button loading={laster} onClick={handleOnBliBeslutterClicked}>
+						<Button size="small" loading={laster} onClick={handleOnBliBeslutterClicked}>
 							Bli kvalitetssikrer
 						</Button>
 					)}
 
 					{visSendTilVeileder && (
-						<Button loading={laster} onClick={handleOnSendTilClicked}>
+						<Button size="small" loading={laster} onClick={handleOnSendTilClicked}>
 							Send til veileder
 						</Button>
 					)}
 
 					{visSendTilBeslutter && (
-						<Button loading={laster} onClick={handleOnSendTilClicked}>
+						<Button size="small" loading={laster} onClick={handleOnSendTilClicked}>
 							Send til kvalitetssikrer
 						</Button>
 					)}
 
 					{visGodkjennUtkast && (
 						<Button
+							size="small"
 							variant="tertiary"
 							loading={laster}
 							onClick={() =>
