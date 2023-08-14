@@ -1,10 +1,10 @@
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Loader } from '@navikt/ds-react';
 import './spinner.less';
 
 function Spinner() {
 	return (
 		<div className="vedtaksstotte-spinner">
-			<NavFrontendSpinner type="XL" />
+			<Loader size="2xlarge" />
 		</div>
 	);
 }

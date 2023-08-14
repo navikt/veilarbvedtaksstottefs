@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { Undertittel } from 'nav-frontend-typografi';
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Loader } from '@navikt/ds-react';
 import './pdf-viewer.less';
 
 interface PdfViewerProps {
@@ -24,8 +24,8 @@ export enum PDFStatus {
 const PdfError = () => <div className="pdfvisning__feedback-container" />;
 
 const PdfSpinner = () => (
-	<div className="pdfvisning__feedback-container pdfvisning__spinner">
-		<NavFrontendSpinner type="XL" />
+	<div className="pdfvisning__feedback-container">
+		<Loader size="2xlarge" variant="inverted" className="pdfvisning__spinner" />
 	</div>
 );
 

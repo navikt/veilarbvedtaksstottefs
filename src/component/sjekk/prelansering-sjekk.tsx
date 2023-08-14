@@ -1,10 +1,10 @@
 import { PropsWithChildren, useLayoutEffect } from 'react';
 import { Prelansering } from '../../page/prelansering/prelansering';
-import Spinner from '../spinner/spinner';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { fetchTilhorerBrukerUtrulletEnhet } from '../../api/veilarbvedtaksstotte/utrulling';
 import { useAppStore } from '../../store/app-store';
+import Spinner from '../spinner/spinner';
 
 // NB! Henting av features og populering i data store hook må flyttes til data-fetcher.tsx når denne komponenten skal fjernes
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {

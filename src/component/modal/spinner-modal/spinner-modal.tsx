@@ -1,6 +1,6 @@
 import ModalWrapper from 'nav-frontend-modal';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { ModalProps } from '../modal-props';
+import { Loader } from '@navikt/ds-react';
 import './spinner-modal.less';
 
 export function SpinnerModal(props: ModalProps) {
@@ -12,7 +12,7 @@ export function SpinnerModal(props: ModalProps) {
 			closeButton={false}
 			portalClassName="veilarbvedtaksstottefs-spinner-modal"
 		>
-			<NavFrontendSpinner type="XXL" />
+			<Loader size="3xlarge" variant="inverted" />
 		</ModalWrapper>
 	);
 }
