@@ -1,9 +1,7 @@
 import { Radio, RadioGruppe } from 'nav-frontend-skjema';
-import AlertStripe from 'nav-frontend-alertstriper';
 import FeltHeader from '../felt-header/felt-header';
 import { InnsatsgruppeTipsInnhold } from './innsatsgruppe-tips-innhold';
 import { harSkrevetBegrunnelse, trengerKvalitetssikrer } from '../../../../util/skjema-utils';
-import Show from '../../../../component/show';
 import {
 	erBeslutterProsessStartet,
 	finnGjeldendeVedtak,
@@ -16,8 +14,9 @@ import { ModalType, useModalStore } from '../../../../store/modal-store';
 import { useDataStore } from '../../../../store/data-store';
 import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekster } from '../../../../util/innsatsgruppe';
 import { useSkjemaStore } from '../../../../store/skjema-store';
-import './innsatsgruppe.less';
 import { useDialogSection } from '../../../../store/dialog-section-store';
+import { Alert } from '@navikt/ds-react';
+import './innsatsgruppe.less';
 
 function Innsatsgruppe() {
 	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal } = useSkjemaStore();
@@ -36,13 +35,13 @@ function Innsatsgruppe() {
 				tipsInnhold={<InnsatsgruppeTipsInnhold />}
 				tipsAriaLabel="Tips for innsatsgruppe"
 			/>
-			<Show if={!harSkrevetBegrunnelse(begrunnelse) && erStandardInnsatsValgt && erGjeldendeInnsatsVarig}>
-				<AlertStripe form="inline" type="advarsel" className="innsatsgruppe__alertstripe">
+			{!harSkrevetBegrunnelse(begrunnelse) && erStandardInnsatsValgt && erGjeldendeInnsatsVarig && (
+				<Alert size="small" variant="warning" inline className="innsatsgruppe__alertstripe">
 					Begrunnelse må i dette tilfellet også fylles ut for standard innsats. Dette er fordi gjeldende
 					vedtak viser varig eller delvis varig tilpasset innsats. Når det gjøres en ny vurdering er det
 					viktig å fremheve hva som er årsaken til endring i brukers situasjon.
-				</AlertStripe>
-			</Show>
+				</Alert>
+			)}
 			<InnsatsgruppeRadioButtons
 				handleInnsatsgruppeChanged={setInnsatsgruppe}
 				innsatsgruppe={innsatsgruppe}

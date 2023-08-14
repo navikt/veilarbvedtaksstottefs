@@ -1,10 +1,10 @@
 import { PropsWithChildren, useLayoutEffect } from 'react';
 import { Prelansering } from '../../page/prelansering/prelansering';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { fetchTilhorerBrukerUtrulletEnhet } from '../../api/veilarbvedtaksstotte/utrulling';
 import { useAppStore } from '../../store/app-store';
 import Spinner from '../spinner/spinner';
+import { Alert } from '@navikt/ds-react';
 
 // NB! Henting av features og populering i data store hook må flyttes til data-fetcher.tsx når denne komponenten skal fjernes
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
@@ -21,10 +21,10 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 		return <Spinner />;
 	} else if (tilhorerBrukerUtrulletEnhetFetcher.error) {
 		return (
-			<AlertStripeFeil className="vedtaksstotte-alert">
+			<Alert variant="error" className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
 				senere.
-			</AlertStripeFeil>
+			</Alert>
 		);
 	}
 

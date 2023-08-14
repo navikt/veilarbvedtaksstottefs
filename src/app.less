@@ -2,6 +2,7 @@
 @import '~nav-frontend-core/less/_mixins';
 @import '~nav-frontend-core/less/utilities';
 @import '~nav-frontend-core/less/hide-text';
+@import '@navikt/ds-css';
 
 .veilarbvedtaksstottefs {
 	// Veilarbpersonflatefs setter display: flex på elementet ovenfor slik at vi kan bruke den resterende høyden
@@ -20,8 +21,8 @@
 	}
 
 	.vedtaksstotte-alert {
-		width: 600px;
-		margin: 3rem auto 0 auto;
+		width: 40rem;
+		margin: var(--a-spacing-12) auto;
 	}
 
 	.btn--ml3 {
@@ -50,12 +51,5 @@
 	.inputPanel__field:checked:disabled + .inputPanel__label:before {
 		background-color: @navGra40;
 		border-color: @navGra40;
-	}
-
-	// Overskriv gammel styling som blir dratt inn fra andre apper
-	.alertstripe--inline {
-		background-color: unset !important;
-		border: none !important;
-		padding: 0 !important;
 	}
 }

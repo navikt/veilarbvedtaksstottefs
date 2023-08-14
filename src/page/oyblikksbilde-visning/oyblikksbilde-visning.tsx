@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import JsonViewer from '../../component/json-viewer/json-viewer';
 import { Oyblikksbilde } from '../../util/type/oyblikksbilde';
 import Card from '../../component/card/card';
@@ -15,7 +14,7 @@ import { logMetrikk } from '../../util/logger';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { useAppStore } from '../../store/app-store';
-import { Button } from '@navikt/ds-react';
+import { Alert, Button } from '@navikt/ds-react';
 import './oyblikksbilde-visning.less';
 
 function finnOyblikksbilde(
@@ -39,7 +38,11 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 	if (oyeblikksbildeFetcher.loading) {
 		return <Spinner />;
 	} else if (oyeblikksbildeFetcher.error) {
-		return <AlertStripeFeil className="vedtaksstotte-alert">Noe gikk galt, prøv igjen</AlertStripeFeil>;
+		return (
+			<Alert variant="error" className="vedtaksstotte-alert">
+				Noe gikk galt, prøv igjen
+			</Alert>
+		);
 	}
 
 	return <Oyeblikksbilde vedtakId={props.vedtakId} oyeblikksbilde={oyeblikksbildeFetcher.data} />;

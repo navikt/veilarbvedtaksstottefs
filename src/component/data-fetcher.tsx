@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import Spinner from './spinner/spinner';
 import { useDataStore } from '../store/data-store';
 import { useSkjemaStore } from '../store/skjema-store';
@@ -12,6 +11,7 @@ import { fetchMalform } from '../api/veilarbperson';
 import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../api/utils';
+import { Alert } from '@navikt/ds-react';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const { initSkjema } = useSkjemaStore();
@@ -80,10 +80,10 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		(utkastFetcher.error && utkastFetcher.error.response?.status !== 404) // API gir 404 dersom utkast ikke eksisterer
 	) {
 		return (
-			<AlertStripeFeil className="vedtaksstotte-alert">
+			<Alert variant="error" className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
 				senere.
-			</AlertStripeFeil>
+			</Alert>
 		);
 	}
 
