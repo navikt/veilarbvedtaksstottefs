@@ -40,8 +40,10 @@ function SlettUtkastModal(props: ModalProps) {
 			<Systemtittel className="blokk-xxxs">Slett utkast</Systemtittel>
 			<Normaltekst>Er du sikker på at du vil slette utkastet?</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Button onClick={handleOnDeleteClicked}>Slett</Button>
-				<Button variant="secondary" onClick={hideModal}>
+				<Button size="small" onClick={handleOnDeleteClicked}>
+					Slett
+				</Button>
+				<Button size="small" variant="secondary" onClick={hideModal}>
 					Avbryt
 				</Button>
 			</div>

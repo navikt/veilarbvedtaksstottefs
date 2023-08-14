@@ -27,10 +27,10 @@ export function GodkjennModal(props: GodkjennModalProps) {
 				Er du sikker på at du vil godkjenne utkastet?
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Button loading={laster} onClick={props.onGodkjennUtkastBekreftet}>
+				<Button size="small" loading={laster} onClick={props.onGodkjennUtkastBekreftet}>
 					GODKJENN
 				</Button>
-				<Button variant="secondary" loading={laster} onClick={hideModal}>
+				<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
 					AVBRYT
 				</Button>
 			</div>
