@@ -1,45 +1,31 @@
 .veilarbvedtaksstottefs {
-	.tips-popover {
-		&__trigger {
-			display: flex;
-			border: none;
-			background-color: transparent;
-			padding: 0.125rem;
-			cursor: pointer;
-		}
-
-		&__trigger-img {
-			width: 24px;
-			height: 24px;
-		}
-
-		.popover__content-inner {
-			width: 400px;
-		}
-
-		.popover__pil {
-			background: #ecf0f4;
-		}
+	.tips-popover__button {
+		border-radius: var(--a-border-radius-full);
+		margin-right: var(--a-spacing-8);
 	}
 
 	.tips {
-		padding: 1.5rem 1rem 1rem 1rem;
-		background-color: #ecf0f4;
+		background-color: var(--a-gray-100);
+		width: 25rem;
+
+		+ .navds-popover__arrow {
+			background-color: var(--a-gray-100);
+		}
 
 		&__liste {
-			padding-left: 1.5rem;
+			padding-left: var(--a-spacing-6);
 
 			> li {
-				margin-bottom: 1rem;
+				margin-bottom: var(--a-spacing-4);
 			}
 		}
 
 		&__sub-liste {
-			margin-top: 0.5rem;
-			padding-left: 1.25rem;
+			margin-top: var(--a-spacing-2);
+			padding-left: var(--a-spacing-5);
 
 			> li {
-				margin-bottom: 1rem;
+				margin-bottom: var(--a-spacing-3);
 			}
 		}
 	}

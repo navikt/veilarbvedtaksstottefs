@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import cls from 'classnames';
-import tipsBilde from './tips.svg';
-import Popover, { PopoverOrientering } from 'nav-frontend-popover';
-import './tips-popover.less';
+import React, { useRef, useState } from 'react';
 import { logMetrikk } from '../../util/logger';
+import { Button, Popover, PopoverProps } from '@navikt/ds-react';
+import { InformationIcon } from '@navikt/aksel-icons';
+import './tips-popover.less';
 
 interface TipsPopoverProps {
 	id?: string;
 	tipsInnhold: React.ReactNode;
 	ariaLabel?: string;
-	orientering?: PopoverOrientering;
+	placement?: PopoverProps['placement'];
 	className?: string;
 }
 
@@ -19,11 +18,12 @@ Dette gjør at popover innholdet ikke følger med når man scroller.
 I test/prod skal ikke dette være et problem.
 */
 
-export const TipsPopover = (props: TipsPopoverProps) => {
+export const TipsPopover = ({ id, placement, ariaLabel, tipsInnhold }: TipsPopoverProps) => {
 	const [popoverTrigger, setPopoverTrigger] = useState<HTMLButtonElement>();
+	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	function logToggleMetrikk(apnet: boolean) {
-		logMetrikk('tips-togglet', { id: props.id, apnet });
+		logMetrikk('tips-togglet', { id, apnet });
 	}
 
 	function togglePopoverOpen(e: React.MouseEvent<HTMLButtonElement>) {
@@ -38,28 +38,27 @@ export const TipsPopover = (props: TipsPopoverProps) => {
 	}
 
 	return (
-		<div className={cls('tips-popover', props.className)}>
-			<button
-				className="tips-popover__trigger"
+		<>
+			<Button
+				size="xsmall"
+				icon={<InformationIcon title={ariaLabel} />}
+				className="tips-popover__button"
 				onClick={togglePopoverOpen}
+				ref={buttonRef}
 				type="button"
+				aria-controls={id}
 				aria-expanded={popoverTrigger !== undefined}
-				aria-controls={props.id}
-				aria-label={props.ariaLabel}
 				aria-haspopup="dialog"
-			>
-				<img src={tipsBilde} className="tips-popover__trigger-img" alt="Info-ikon" />
-			</button>
+			/>
 			<Popover
-				id={props.id}
-				autoFokus={false}
-				avstandTilAnker={16}
-				ankerEl={popoverTrigger}
-				orientering={props.orientering || PopoverOrientering.UnderVenstre}
-				onRequestClose={handleOnRequestClose}
+				open={!!popoverTrigger}
+				onClose={handleOnRequestClose}
+				anchorEl={buttonRef.current}
+				placement={placement}
+				id={id}
 			>
-				<div className="tips">{props.tipsInnhold}</div>
+				<Popover.Content className="tips">{tipsInnhold}</Popover.Content>
 			</Popover>
-		</div>
+		</>
 	);
 };
