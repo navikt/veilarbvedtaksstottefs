@@ -44,8 +44,10 @@ function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
 				Kvalitetssikringprosessen vil avbrytes. Er du sikker på at du vil endre innsatsgruppe?
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Button onClick={handleOnJaClicked}>Ja</Button>
-				<Button variant="secondary" onClick={hideModal}>
+				<Button size="small" onClick={handleOnJaClicked}>
+					Ja
+				</Button>
+				<Button size="small" variant="secondary" onClick={hideModal}>
 					Nei
 				</Button>
 			</div>
