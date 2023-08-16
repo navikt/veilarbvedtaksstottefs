@@ -71,6 +71,7 @@ function Begrunnelse() {
 					tipsId="begrunnelse-tips"
 					tipsInnhold={<BegrunnelseTipsInnhold />}
 					tipsAriaLabel="Tips for begrunnelse"
+					eksternLenketekst="Nye retningslinjer for NAV-loven § 14 a"
 					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
 				/>
 
