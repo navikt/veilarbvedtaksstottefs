@@ -1,4 +1,4 @@
-import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
+import { VarselModal } from '../varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { ModalProps } from '../modal-props';
@@ -29,11 +29,10 @@ export function FeilModal(props: FeilmodalProps) {
 	return (
 		<VarselModal
 			isOpen={isOpen}
-			contentLabel="En feil har oppstått"
 			onRequestClose={handleRequestClose}
-			varselIkonType={VarselIkonType.FEIL}
-			shouldCloseOnOverlayClick={false}
+			contentLabel="En feil har oppstått"
 			closeButton={knappeTekst == null}
+			shouldCloseOnOverlayClick={false}
 		>
 			<Systemtittel className="blokk-xxs">{tittel}</Systemtittel>
 			<Normaltekst className="blokk-s">{beskrivelse}</Normaltekst>

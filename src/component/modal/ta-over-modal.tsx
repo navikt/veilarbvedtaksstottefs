@@ -1,20 +1,18 @@
 import { useState } from 'react';
-import { ModalProps } from '../modal-props';
-import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
-import { ModalType, useModalStore } from '../../../store/modal-store';
-import { erBeslutterProsessStartet, hentId } from '../../../util';
-import { useDataStore } from '../../../store/data-store';
+import { ModalProps } from './modal-props';
+import { VarselModal } from './varsel-modal/varsel-modal';
+import { ModalType, useModalStore } from '../../store/modal-store';
+import { erBeslutterProsessStartet, hentId } from '../../util';
+import { useDataStore } from '../../store/data-store';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { useTilgangStore } from '../../../store/tilgang-store';
-import { VeilederTilgang } from '../../../util/tilgang';
-import { SystemMeldingType } from '../../../util/type/melding-type';
-import { useVarselStore } from '../../../store/varsel-store';
-import { VarselType } from '../../varsel/varsel-type';
-import { bliBeslutter } from '../../../api/veilarbvedtaksstotte/beslutter';
-import { fetchTaOverUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
-import { Button } from '@navikt/ds-react';
-import './ta-over-modal.less';
+import { useTilgangStore } from '../../store/tilgang-store';
+import { VeilederTilgang } from '../../util/tilgang';
+import { SystemMeldingType } from '../../util/type/melding-type';
+import { useVarselStore } from '../../store/varsel-store';
+import { VarselType } from '../varsel/varsel-type';
+import { bliBeslutter } from '../../api/veilarbvedtaksstotte/beslutter';
+import { fetchTaOverUtkast } from '../../api/veilarbvedtaksstotte/utkast';
+import { Button, Heading } from '@navikt/ds-react';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
@@ -99,15 +97,15 @@ function TaOverModal(props: ModalProps) {
 
 	const OvertaForVeilederVisning = (
 		<>
-			<Normaltekst className="varsel-modal__tekstinnehold">
+			<Heading level="1" size="medium" className="varsel-modal__tittel">
 				Vil du overta ansvaret for vedtaket fra veileder {`${utkast.veilederNavn}?`}
-			</Normaltekst>
+			</Heading>
 			<div className="varsel-modal__knapper">
-				<Button size="small" loading={laster} onClick={handleTaOverVedtak}>
-					Ta over
-				</Button>
 				<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
 					Avbryt
+				</Button>
+				<Button size="small" loading={laster} onClick={handleTaOverVedtak}>
+					Ta over
 				</Button>
 			</div>
 		</>
@@ -115,24 +113,24 @@ function TaOverModal(props: ModalProps) {
 
 	const OvertaValgVisning = (
 		<>
-			<div className="ta-over-modal__radiopanel">
-				<Normaltekst className="varsel-modal__tekstinnehold blokk-s">Hvem ønsker du å ta over for?</Normaltekst>
-				<RadioPanelGruppe
-					name="taovervedtakfor"
-					legend={null}
-					radios={taOverOptions}
-					onChange={(e: any) => setTaOverFor(e.target.value)}
-					checked={taOverFor}
-				/>
-
-				<div className="varsel-modal__knapper">
-					<Button size="small" loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>
-						Ta over
-					</Button>
-					<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
-						Avbryt
-					</Button>
-				</div>
+			<Heading level="1" size="medium" className="varsel-modal__tittel">
+				Hvem ønsker du å ta over for?
+			</Heading>
+			<RadioPanelGruppe
+				name="taovervedtakfor"
+				legend={null}
+				radios={taOverOptions}
+				onChange={(e: any) => setTaOverFor(e.target.value)}
+				checked={taOverFor}
+				className="varsel-modal__tekstinnhold"
+			/>
+			<div className="varsel-modal__knapper">
+				<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
+					Avbryt
+				</Button>
+				<Button size="small" loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>
+					Ta over
+				</Button>
 			</div>
 		</>
 	);
@@ -140,13 +138,7 @@ function TaOverModal(props: ModalProps) {
 	const Innhold = visValg ? OvertaValgVisning : OvertaForVeilederVisning;
 
 	return (
-		<VarselModal
-			isOpen={props.isOpen}
-			contentLabel="Ta over utkast"
-			onRequestClose={handleOnRequestCloseModal}
-			varselIkonType={VarselIkonType.INGEN}
-			portalClassName="ta-over-modal"
-		>
+		<VarselModal isOpen={props.isOpen} onRequestClose={handleOnRequestCloseModal} contentLabel="Ta over utkast">
 			{Innhold}
 		</VarselModal>
 	);

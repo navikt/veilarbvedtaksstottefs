@@ -1,9 +1,8 @@
-import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
+import { VarselModal } from './varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { ModalProps } from '../modal-props';
-import { useModalStore } from '../../../store/modal-store';
+import { ModalProps } from './modal-props';
+import { useModalStore } from '../../store/modal-store';
 import { Button } from '@navikt/ds-react';
-import './vedtak-sendt-modal.less';
 
 interface VedtakSendtModalProps extends ModalProps {
 	onSendVedtakBekreftet: () => void;
@@ -15,19 +14,18 @@ export function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 	return (
 		<VarselModal
 			isOpen={props.isOpen}
-			contentLabel="Bekreft vedtaket blir sendt til bruker"
 			onRequestClose={hideModal}
-			varselIkonType={VarselIkonType.INGEN}
+			contentLabel="Bekreft vedtaket blir sendt til bruker"
 		>
-			<Systemtittel className="vedtak-sendt-modal__tekst">
+			<Systemtittel className="varsel-modal__tittel">
 				Er du sikker på at du vil sende vedtaksbrev til bruker?
 			</Systemtittel>
 			<div className="varsel-modal__knapper">
-				<Button size="small" onClick={props.onSendVedtakBekreftet}>
-					JA, SEND NÅ
-				</Button>
 				<Button size="small" variant="secondary" onClick={hideModal}>
-					AVBRYT
+					Avbryt
+				</Button>
+				<Button size="small" onClick={props.onSendVedtakBekreftet}>
+					Ja, send nå
 				</Button>
 			</div>
 		</VarselModal>

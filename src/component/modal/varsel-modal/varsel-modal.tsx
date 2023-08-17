@@ -1,11 +1,6 @@
 import React from 'react';
-import cls from 'classnames';
-import ModalWrapper from 'nav-frontend-modal';
-import { ReactComponent as FeilSirkelIkon } from './feil-sirkel.svg';
-import { ReactComponent as AdvarselSirkelIkon } from './advarsel-sirkel.svg';
-import { ReactComponent as LasOppIkon } from './las-opp.svg';
+import { Modal } from '@navikt/ds-react';
 import './varsel-modal.less';
-import Show from '../../show';
 
 export enum VarselIkonType {
 	FEIL = 'FEIL',
@@ -15,15 +10,11 @@ export enum VarselIkonType {
 }
 
 interface VarselModalProps {
-	contentLabel: string;
 	isOpen: boolean;
 	onRequestClose: () => void;
-	varselIkonType: VarselIkonType;
-	closeTimeoutMS?: number;
+	contentLabel: string;
 	closeButton?: boolean;
 	shouldCloseOnOverlayClick?: boolean;
-	className?: string;
-	portalClassName?: string;
 }
 
 export function VarselModal({
@@ -31,51 +22,19 @@ export function VarselModal({
 	isOpen,
 	onRequestClose,
 	children,
-	varselIkonType,
-	closeTimeoutMS,
 	closeButton,
-	shouldCloseOnOverlayClick,
-	className,
-	portalClassName
+	shouldCloseOnOverlayClick
 }: React.PropsWithChildren<VarselModalProps>) {
-	const visVarselIkon = varselIkonType !== VarselIkonType.INGEN;
-	const innholdClassName = cls(
-		'varsel-modal__innehold',
-		{ 'varsel-modal__innehold--ingen-ikon': !visVarselIkon },
-		className
-	);
-
 	return (
-		<ModalWrapper
-			isOpen={isOpen}
-			contentLabel={contentLabel}
-			onRequestClose={onRequestClose}
-			closeTimeoutMS={closeTimeoutMS}
+		<Modal
+			open={isOpen}
+			onClose={onRequestClose}
 			closeButton={closeButton}
-			portalClassName={cls('veilarbvedtaksstottefs-varsel-modal', portalClassName)}
 			shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
+			className="veilarbvedtaksstottefs-varsel-modal"
+			aria-label={contentLabel}
 		>
-			<Show if={visVarselIkon}>
-				<VarselIkon type={varselIkonType} />
-			</Show>
-			<div className={innholdClassName}>{children}</div>
-		</ModalWrapper>
+			<Modal.Content className="varsel-modal__innhold">{children}</Modal.Content>
+		</Modal>
 	);
-}
-
-function VarselIkon(props: { type: VarselIkonType }) {
-	switch (props.type) {
-		case VarselIkonType.FEIL:
-			return <FeilSirkelIkon className="varsel-modal__ikon" role="img" focusable={false} aria-label="Feil" />;
-		case VarselIkonType.ADVARSEL:
-			return (
-				<AdvarselSirkelIkon className="varsel-modal__ikon" role="img" focusable={false} aria-label="Advarsel" />
-			);
-		case VarselIkonType.LAS_OPP:
-			return (
-				<LasOppIkon className="varsel-modal__ikon" role="img" focusable={false} aria-label="Åpnet hengelås" />
-			);
-		default:
-			return null;
-	}
 }

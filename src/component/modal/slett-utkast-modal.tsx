@@ -1,4 +1,4 @@
-import { VarselIkonType, VarselModal } from './varsel-modal/varsel-modal';
+import { VarselModal } from './varsel-modal/varsel-modal';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { ModalProps } from './modal-props';
@@ -31,20 +31,15 @@ function SlettUtkastModal(props: ModalProps) {
 	}
 
 	return (
-		<VarselModal
-			isOpen={props.isOpen}
-			contentLabel="Bekreft slett utkast"
-			onRequestClose={hideModal}
-			varselIkonType={VarselIkonType.ADVARSEL}
-		>
-			<Systemtittel className="blokk-xxxs">Slett utkast</Systemtittel>
-			<Normaltekst>Er du sikker på at du vil slette utkastet?</Normaltekst>
+		<VarselModal isOpen={props.isOpen} onRequestClose={hideModal} contentLabel="Bekreft slett utkast">
+			<Systemtittel className="varsel-modal__tittel">Slett utkast</Systemtittel>
+			<Normaltekst className="varsel-modal__tekstinnhold">Er du sikker på at du vil slette utkastet?</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Button size="small" onClick={handleOnDeleteClicked}>
-					Slett
-				</Button>
 				<Button size="small" variant="secondary" onClick={hideModal}>
 					Avbryt
+				</Button>
+				<Button size="small" onClick={handleOnDeleteClicked}>
+					Slett
 				</Button>
 			</div>
 		</VarselModal>

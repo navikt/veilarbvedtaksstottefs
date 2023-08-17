@@ -1,18 +1,19 @@
-import ModalWrapper from 'nav-frontend-modal';
 import { ModalProps } from '../modal-props';
-import { Loader } from '@navikt/ds-react';
+import { Loader, Modal } from '@navikt/ds-react';
 import './spinner-modal.less';
 
 export function SpinnerModal(props: ModalProps) {
 	return (
-		<ModalWrapper
-			isOpen={props.isOpen}
-			contentLabel="Spinner"
-			onRequestClose={() => {}}
+		<Modal
+			open={props.isOpen}
+			onClose={() => {}}
+			overlayClassName="veilarbvedtaksstottefs-spinner-modal"
 			closeButton={false}
-			portalClassName="veilarbvedtaksstottefs-spinner-modal"
+			aria-label="Spinner"
 		>
-			<Loader size="3xlarge" variant="inverted" />
-		</ModalWrapper>
+			<Modal.Content>
+				<Loader size="3xlarge" variant="inverted" title="laster..." />
+			</Modal.Content>
+		</Modal>
 	);
 }

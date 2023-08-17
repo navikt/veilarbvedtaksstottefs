@@ -19,11 +19,11 @@ import {
 	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
 import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
-import { BekreftSendVedtakModal } from './modal/vedtak-sendt/bekreft-send-vedtak-modal';
+import { BekreftSendVedtakModal } from './modal/bekreft-send-vedtak-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
-import TaOverModal from './modal/ta-over-modal/ta-over-modal';
-import AvbrytBeslutterProsessModal from './modal/avbryt-beslutter-prosess-modal/avbryt-beslutterprosess-modal';
-import { GodkjennModal } from './modal/godkjenn-modal/godkjenn-modal';
+import TaOverModal from './modal/ta-over-modal';
+import AvbrytBeslutterProsessModal from './modal/avbryt-beslutterprosess-modal';
+import { GodkjennModal } from './modal/godkjenn-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
