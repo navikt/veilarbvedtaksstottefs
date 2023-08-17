@@ -93,12 +93,12 @@ export function Forhandsvisning() {
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
-					<Button variant="tertiary" icon={<ChevronLeftIcon />} onClick={tilbakeTilSkjema}>
+					<Button size="small" variant="tertiary" icon={<ChevronLeftIcon />} onClick={tilbakeTilSkjema}>
 						Tilbake
 					</Button>
 
 					{visSendKnapp && (
-						<Button onClick={handleOnSendClicked} disabled={pdfStatus !== PDFStatus.SUCCESS}>
+						<Button size="small" onClick={handleOnSendClicked} disabled={pdfStatus !== PDFStatus.SUCCESS}>
 							Send til bruker
 						</Button>
 					)}

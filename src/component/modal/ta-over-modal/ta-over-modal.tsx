@@ -103,10 +103,10 @@ function TaOverModal(props: ModalProps) {
 				Vil du overta ansvaret for vedtaket fra veileder {`${utkast.veilederNavn}?`}
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Button loading={laster} onClick={handleTaOverVedtak}>
+				<Button size="small" loading={laster} onClick={handleTaOverVedtak}>
 					Ta over
 				</Button>
-				<Button variant="secondary" loading={laster} onClick={hideModal}>
+				<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
 					Avbryt
 				</Button>
 			</div>
@@ -126,10 +126,10 @@ function TaOverModal(props: ModalProps) {
 				/>
 
 				<div className="varsel-modal__knapper">
-					<Button loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>
+					<Button size="small" loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>
 						Ta over
 					</Button>
-					<Button variant="secondary" loading={laster} onClick={hideModal}>
+					<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
 						Avbryt
 					</Button>
 				</div>

@@ -23,8 +23,10 @@ export function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 				Er du sikker på at du vil sende vedtaksbrev til bruker?
 			</Systemtittel>
 			<div className="varsel-modal__knapper">
-				<Button onClick={props.onSendVedtakBekreftet}>JA, SEND NÅ</Button>
-				<Button variant="secondary" onClick={hideModal}>
+				<Button size="small" onClick={props.onSendVedtakBekreftet}>
+					JA, SEND NÅ
+				</Button>
+				<Button size="small" variant="secondary" onClick={hideModal}>
 					AVBRYT
 				</Button>
 			</div>

@@ -93,6 +93,7 @@ export function DialogSection() {
 					aria-label="Skrivefelt for å sende melding til beslutter/ansvarlig veileder"
 				/>
 				<Button
+					size="small"
 					loading={senderMelding}
 					className="dialog-section-innhold__send-knapp"
 					onClick={sendMelding}

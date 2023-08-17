@@ -70,13 +70,14 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 
 	return (
 		<div className="utkast-footer__utkast-innhold">
-			<Button variant="tertiary" icon={<ChevronLeftIcon />} onClick={handleOnTilbakeClicked}>
+			<Button size="small" variant="tertiary" icon={<ChevronLeftIcon />} onClick={handleOnTilbakeClicked}>
 				Tilbake
 			</Button>
 
 			<div className="utkast-footer--innhold-sidestilt">
 				{erAnsvarligVeileder && (
 					<Button
+						size="small"
 						variant="tertiary"
 						loading={laster}
 						icon={<TrashIcon />}
@@ -88,6 +89,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 
 				{!erAnsvarligVeileder && (
 					<Button
+						size="small"
 						variant="tertiary"
 						loading={laster}
 						icon={<PersonPencilIcon />}
@@ -98,6 +100,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 				)}
 
 				<Button
+					size="small"
 					variant={erForhandsvisHovedknapp ? 'primary' : 'secondary'}
 					loading={laster}
 					onClick={handleOnForhandsvisClicked}

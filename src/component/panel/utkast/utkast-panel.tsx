@@ -52,7 +52,9 @@ export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
 			panelKlasse="utkast-panel"
 			knappKomponent={
-				<Button onClick={() => changeView(ViewType.UTKAST)}>{kanEndreUtkast ? 'Fortsett' : 'Åpne'}</Button>
+				<Button size="small" onClick={() => changeView(ViewType.UTKAST)}>
+					{kanEndreUtkast ? 'Fortsett' : 'Åpne'}
+				</Button>
 			}
 			tekstKomponent={
 				<>

@@ -91,7 +91,9 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 						checked={kopierSisteVedtak}
 						onChange={e => setKopierSisteVedtak(e.target.checked)}
 					/>
-					<Button onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>Opprett vedtak</Button>
+					<Button size="small" onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>
+						Opprett vedtak
+					</Button>
 				</div>
 			</div>
 		</HovedsidePanel>

@@ -41,7 +41,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 				</>
 			}
 			knappKomponent={
-				<Button variant="secondary" onClick={handleVisVedtakClicked}>
+				<Button size="small" variant="secondary" onClick={handleVisVedtakClicked}>
 					Vis vedtak
 				</Button>
 			}
