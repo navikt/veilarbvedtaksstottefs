@@ -2,13 +2,12 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { DialogTipsInnhold } from './dialog-tips-innhold';
 import { OrNothing } from '../../../util/type/ornothing';
 import { TipsPopover } from '../../../component/tips-popover/tips-popover';
-import Show from '../../../component/show';
 import { Label, LabelType } from '../../../component/label/label';
 import { DialogToggleBtn } from '../dialog-section-minified/dialog-toggle-btn';
-import Lenke from 'nav-frontend-lenker';
-import tilOversiktBilde from './til-oversikt.svg';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import env from '../../../util/environment';
+import { Button } from '@navikt/ds-react';
+import { TasklistIcon } from '@navikt/aksel-icons';
 import './dialog-section.less';
 
 interface DialogPanelHeaderProps {
@@ -30,9 +29,7 @@ export function DialogSectionHeader(props: DialogPanelHeaderProps) {
 
 	return (
 		<header className="dialog-section-header">
-			<div className="dialog-section-header__toggle-btn-wrapper">
-				<DialogToggleBtn />
-			</div>
+			<DialogToggleBtn />
 
 			<div className="dialog-section-header__innhold">
 				<Undertittel className="dialog-section-header__tittel">Kvalitetssikring</Undertittel>
@@ -43,19 +40,22 @@ export function DialogSectionHeader(props: DialogPanelHeaderProps) {
 					ariaLabel="Tips for kvalitetssikring"
 					placement="bottom"
 				/>
-				<Show if={props.beslutterNavn}>
-					<Label titleText="Ansvarlig" valueText={props.beslutterNavn} labelType={LabelType.SMALL} />
-				</Show>
 
-				<Show if={erBeslutter}>
-					<Lenke
-						title="Til kvalitetssikring oversikt for 14a"
+				{props.beslutterNavn && (
+					<Label titleText="Ansvarlig" valueText={props.beslutterNavn} labelType={LabelType.SMALL} />
+				)}
+
+				{erBeslutter && (
+					<Button
+						as="a"
+						size="small"
+						variant="tertiary"
+						icon={<TasklistIcon />}
 						href={utledOversiktUrl()}
+						title="Oversikt § 14 a kvalitetssikring"
 						className="dialog-section-header__oversikt-lenke"
-					>
-						<img src={tilOversiktBilde} alt="Til kvalitetssikring oversikt for 14a" />
-					</Lenke>
-				</Show>
+					/>
+				)}
 			</div>
 		</header>
 	);

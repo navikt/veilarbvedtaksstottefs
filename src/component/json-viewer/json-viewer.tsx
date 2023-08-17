@@ -1,5 +1,5 @@
+import { Link } from '@navikt/ds-react';
 import './json-viewer.less';
-import Lenke from 'nav-frontend-lenker';
 
 interface JsonViewerProps {
 	json: string | object | null;
@@ -68,9 +68,9 @@ function checkIfLink(value: string, key: string, idx: number) {
 	return (
 		<div key={idx} className="json-key-wrapper">
 			<span className="json-key">{prettifyKey(key)}: </span>
-			<Lenke href={value} target="_blank" rel="noopener noreferrer">
+			<Link href={value} target="_blank" rel="noopener noreferrer">
 				{value}
-			</Lenke>
+			</Link>
 		</div>
 	);
 }
