@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Undertittel } from 'nav-frontend-typografi';
-import svaertBraBilde from './svaert_bra.svg';
-import svaertDarligBilde from './svaert_darlig.svg';
-import ImageButton from '../../../component/image-button/image-button';
-import './tilbakemelding-ekspanderbartpanel.less';
 import { logMetrikk } from '../../../util/logger';
+import { Button, ExpansionCard, HStack } from '@navikt/ds-react';
+import { FaceFrownFillIcon, FaceSmileFillIcon } from '@navikt/aksel-icons';
+import './tilbakemelding-ekspanderbartpanel.less';
 
 interface TilbakemeldingEkspanderbartpanelProps {
 	tittel: string;
@@ -32,38 +30,36 @@ function TilbakemeldingEkspanderbartpanel(props: TilbakemeldingEkspanderbartpane
 		});
 	};
 
-	const Heading = () => (
-		<div className="tilbakemelding-ekspanderbartpanel__heading">
-			<img src={props.bilde} alt="Illustrasjon" className="tilbakemelding-ekspanderbartpanel__bilde" />
-			<Undertittel className="ekspanderbartPanel__heading">{props.tittel}</Undertittel>
-		</div>
-	);
-
 	return (
-		<Ekspanderbartpanel tittel={<Heading />} border={true}>
-			<div className="tilbakemelding-ekspanderbartpanel__innhold">
+		<ExpansionCard aria-label={props.tittel}>
+			<ExpansionCard.Header className="tilbakemelding-ekspanderbartpanel__heading">
+				<img src={props.bilde} alt="Illustrasjon" className="tilbakemelding-ekspanderbartpanel__bilde" />
+				<ExpansionCard.Title>{props.tittel}</ExpansionCard.Title>
+			</ExpansionCard.Header>
+
+			<ExpansionCard.Content>
 				{props.children}
 				{visTilbakemelding && (
-					<div className="tilbakemelding-ekspanderbartpanel__tilbakemelding">
+					<HStack gap="4" align="center" className="tilbakemelding-ekspanderbartpanel__tilbakemelding">
 						<Undertittel tag="h3">Var dette nyttig?</Undertittel>
-						<div className="tilbakemelding-ekspanderbartpanel__tilbakemelding--valg-wrapper">
-							<ImageButton
-								src={svaertBraBilde}
-								alt="Ja"
-								onClick={() => handleTilbakemeldingValgClicked('JA')}
-								imgClassName="tilbakemelding-ekspanderbartpanel__tilbakemelding--valg"
-							/>
-							<ImageButton
-								src={svaertDarligBilde}
-								alt="Nei"
-								onClick={() => handleTilbakemeldingValgClicked('NEI')}
-								imgClassName="tilbakemelding-ekspanderbartpanel__tilbakemelding--valg"
-							/>
-						</div>
-					</div>
+						<Button
+							size="small"
+							variant="tertiary"
+							icon={<FaceSmileFillIcon />}
+							onClick={() => handleTilbakemeldingValgClicked('JA')}
+							className="tilbakemelding-ekspanderbartpanel__tilbakemelding--valg-ja"
+						/>
+						<Button
+							size="small"
+							variant="tertiary"
+							icon={<FaceFrownFillIcon />}
+							onClick={() => handleTilbakemeldingValgClicked('NEI')}
+							className="tilbakemelding-ekspanderbartpanel__tilbakemelding--valg-nei"
+						/>
+					</HStack>
 				)}
-			</div>
-		</Ekspanderbartpanel>
+			</ExpansionCard.Content>
+		</ExpansionCard>
 	);
 }
 
