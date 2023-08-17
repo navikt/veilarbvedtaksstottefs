@@ -1,49 +1,36 @@
 .veilarbvedtaksstottefs {
 	.tilbakemelding-ekspanderbartpanel__heading {
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
-		margin-left: 2rem;
-
-		.ekspanderbartPanel__heading {
-			margin: 0.75rem 0 0.75rem 3rem;
+		.navds-expansioncard__header-content {
+			display: flex;
+			gap: var(--a-spacing-8);
 		}
 	}
 
 	.tilbakemelding-ekspanderbartpanel__bilde {
-		width: 40px;
-		height: 40px;
-	}
-
-	.tilbakemelding-ekspanderbartpanel__innhold {
-		margin: 0 7.5rem 1rem 7.5rem;
-		font-family: Source Sans Pro, Arial, sans-serif;
+		width: var(--a-spacing-10);
+		height: var(--a-spacing-10);
+		align-self: center;
 	}
 
 	.tilbakemelding-ekspanderbartpanel__tilbakemelding {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		margin-top: 2rem;
+		margin-top: var(--a-spacing-6);
 
-		&--valg-wrapper {
-			display: flex;
-			margin-left: 1.5rem;
+		&--valg-ja {
+			color: var(--a-green-600);
 
-			:last-child {
-				margin-left: 0.5rem;
+			svg {
+				height: var(--a-spacing-8);
+				width: var(--a-spacing-8);
 			}
 		}
 
-		&--valg {
-			width: 30px;
-			height: 30px;
-			cursor: pointer;
-		}
+		&--valg-nei {
+			color: var(--a-red-600);
 
-		&--valg:hover {
-			transform: scale(1.4);
-			opacity: 1;
+			svg {
+				height: var(--a-spacing-8);
+				width: var(--a-spacing-8);
+			}
 		}
 	}
 }
