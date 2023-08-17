@@ -77,7 +77,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 				</section>
 			</Page>
 			<Footer className="oyblikksbilde-visning__footer">
-				<Button onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}>
+				<Button size="small" onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}>
 					Tilbake til vedtak
 				</Button>
 			</Footer>

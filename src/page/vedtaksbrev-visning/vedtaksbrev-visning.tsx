@@ -70,7 +70,12 @@ function GenericVedtaksbrevVisning(props: GenericVedtaksbrevVisningProps) {
 			<PdfViewer url={props.vedtaksbrevUrl} title="Visning av vedtaksbrev" onStatusUpdate={setPdfStatus} />
 			<Footer>
 				<div className="vedtaksbrev-visning__aksjoner">
-					<Button variant="tertiary" icon={<ChevronLeftIcon />} onClick={props.handleOnTilbakeClicked}>
+					<Button
+						size="small"
+						variant="tertiary"
+						icon={<ChevronLeftIcon />}
+						onClick={props.handleOnTilbakeClicked}
+					>
 						Tilbake
 					</Button>
 				</div>

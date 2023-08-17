@@ -38,7 +38,7 @@ export function FeilModal(props: FeilmodalProps) {
 			<Systemtittel className="blokk-xxs">{tittel}</Systemtittel>
 			<Normaltekst className="blokk-s">{beskrivelse}</Normaltekst>
 			{knappeTekst && (
-				<Button variant="secondary" onClick={handleRequestClose}>
+				<Button size="small" variant="secondary" onClick={handleRequestClose}>
 					{knappeTekst}
 				</Button>
 			)}

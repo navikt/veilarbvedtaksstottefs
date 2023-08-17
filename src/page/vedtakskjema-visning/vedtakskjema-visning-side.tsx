@@ -23,10 +23,16 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 				<SkjemaVisning fattetVedtak={vistVedtak} />
 			</Page>
 			<Footer className="vedtakskjema-visning__aksjoner">
-				<Button variant="tertiary" icon={<ChevronLeftIcon />} onClick={() => changeView(ViewType.HOVEDSIDE)}>
+				<Button
+					size="small"
+					variant="tertiary"
+					icon={<ChevronLeftIcon />}
+					onClick={() => changeView(ViewType.HOVEDSIDE)}
+				>
 					Tilbake
 				</Button>
 				<Button
+					size="small"
 					onClick={() =>
 						changeView(ViewType.VEDTAK_PDF, {
 							vedtakId: vistVedtak.id
