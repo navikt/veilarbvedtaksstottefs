@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/veilarbvedtaksstottefs/static/css/main.4a760293.css",
-    "main.js": "/veilarbvedtaksstottefs/static/js/main.2d2d4f5e.js",
+    "main.css": "/veilarbvedtaksstottefs/static/css/main.9e2cb8de.css",
+    "main.js": "/veilarbvedtaksstottefs/static/js/main.8e3474b7.js",
     "pdf.worker.js": "/veilarbvedtaksstottefs/e7e915313973ba1d49f9bb2a1998626e.js",
     "static/media/prelansering.png": "/veilarbvedtaksstottefs/static/media/prelansering.6b99c24ea4c6e713c84b.png",
     "static/media/klagebehandling.svg": "/veilarbvedtaksstottefs/static/media/klagebehandling.d3ebf7211c671bd3cab04672fd187535.svg",
@@ -15,33 +15,18 @@
     "static/media/mellomlagre.svg": "/veilarbvedtaksstottefs/static/media/mellomlagre.638bda9b63030dcaba4df16a8b3e6e03.svg",
     "static/media/hjelpesporsmal.svg": "/veilarbvedtaksstottefs/static/media/hjelpesporsmal.491a643f8baa0599ef0b7f3277eebf0e.svg",
     "static/media/tidligere-vedtak.svg": "/veilarbvedtaksstottefs/static/media/tidligere-vedtak.e35785a1dc9ba4f5cef9642bec3a015d.svg",
-    "static/media/til-oversikt.svg": "/veilarbvedtaksstottefs/static/media/til-oversikt.8e853e4bf593d88415aa2e7c44fc3cec.svg",
-    "static/media/taover.svg": "/veilarbvedtaksstottefs/static/media/taover.b7d17c45bf62c34fbe7dc0398cd29f8e.svg",
     "static/media/ingen_gjeldende_vedtak.svg": "/veilarbvedtaksstottefs/static/media/ingen_gjeldende_vedtak.69f7655f41e9caab75ba50b0d099c92c.svg",
     "static/media/vedtak.svg": "/veilarbvedtaksstottefs/static/media/vedtak.4af3759ac45c3ddf30f747677fbc40ed.svg",
-    "static/media/rediger-fylt.svg": "/veilarbvedtaksstottefs/static/media/rediger-fylt.c74f97f33b798a6faffd.svg",
-    "static/media/las-opp.svg": "/veilarbvedtaksstottefs/static/media/las-opp.8b975dd639522f9a8a22dde24b34dcb3.svg",
     "static/media/nytt-vedtak.svg": "/veilarbvedtaksstottefs/static/media/nytt-vedtak.5d5ce8d732e50c1db66083b77f0e0f3d.svg",
     "index.html": "/veilarbvedtaksstottefs/index.html",
-    "static/media/svaert_bra.svg": "/veilarbvedtaksstottefs/static/media/svaert_bra.d721b94ce75efbaa5d47ab060841c833.svg",
-    "static/media/svaert_darlig.svg": "/veilarbvedtaksstottefs/static/media/svaert_darlig.23639b9f1014e3584af44b76fc202f79.svg",
     "static/media/pdf.svg": "/veilarbvedtaksstottefs/static/media/pdf.49362d2c0f442850ad99e7d5c1be2bd5.svg",
-    "static/media/rediger.svg": "/veilarbvedtaksstottefs/static/media/rediger.2916e1d1a8322ec381f7.svg",
-    "static/media/advarsel-sirkel.svg": "/veilarbvedtaksstottefs/static/media/advarsel-sirkel.c6052968a67b4cf19eee69551f040094.svg",
     "static/media/dialog-new-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-new-msg.e5d323644d8ef5b7e1031f1bf33e1dfc.svg",
-    "static/media/feil-sirkel.svg": "/veilarbvedtaksstottefs/static/media/feil-sirkel.f82e600d7f425897157b6dd7228903c4.svg",
-    "static/media/tips.svg": "/veilarbvedtaksstottefs/static/media/tips.dd2e2fcec0992cb07b33b42a36b63342.svg",
     "static/media/dialog-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-msg.a4d77157a8e6d7a43005885ea3e8802a.svg",
-    "static/media/delete.svg": "/veilarbvedtaksstottefs/static/media/delete.0a6896a8165d775b8195c9c1469a2775.svg",
-    "static/media/apne-dialog.svg": "/veilarbvedtaksstottefs/static/media/apne-dialog.4f1c7416c612c1264c99c7084e1a001a.svg",
-    "static/media/lukk-dialog.svg": "/veilarbvedtaksstottefs/static/media/lukk-dialog.2208a972715a625f42954eb36bc0ebde.svg",
-    "static/media/pluss-gray.svg": "/veilarbvedtaksstottefs/static/media/pluss-gray.c9b40b6c481ecc9b66db.svg",
-    "static/media/pluss.svg": "/veilarbvedtaksstottefs/static/media/pluss.6af24ffe04b356aa7422.svg",
-    "main.4a760293.css.map": "/veilarbvedtaksstottefs/static/css/main.4a760293.css.map",
-    "main.2d2d4f5e.js.map": "/veilarbvedtaksstottefs/static/js/main.2d2d4f5e.js.map"
+    "main.9e2cb8de.css.map": "/veilarbvedtaksstottefs/static/css/main.9e2cb8de.css.map",
+    "main.8e3474b7.js.map": "/veilarbvedtaksstottefs/static/js/main.8e3474b7.js.map"
   },
   "entrypoints": [
-    "static/css/main.4a760293.css",
-    "static/js/main.2d2d4f5e.js"
+    "static/css/main.9e2cb8de.css",
+    "static/js/main.8e3474b7.js"
   ]
 }
