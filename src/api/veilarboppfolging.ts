@@ -1,6 +1,6 @@
 import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { AxiosPromise } from 'axios';
-import { axiosInstance } from './utils';
+import { axiosInstance, axiosInstanceWithFnrInHeader } from './utils';
 
 export default interface OppfolgingData {
 	reservasjonKRR: boolean;
@@ -9,7 +9,7 @@ export default interface OppfolgingData {
 }
 
 export function fetchOppfolging(fnr: string): AxiosPromise<OppfolgingData> {
-	return axiosInstance.post(`/veilarboppfolging/api/v2/oppfolging/v3`, { fnr });
+	return axiosInstanceWithFnrInHeader(fnr).get(`/veilarboppfolging/api/v2/oppfolging/v3`);
 }
 
 export function fetchTilgangTilBrukersKontor(fnr: string): AxiosPromise<TilgangTilBrukersKontor> {
