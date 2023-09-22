@@ -5,11 +5,6 @@ export const axiosInstance = axios.create({
 	withCredentials: true,
 	headers: { 'Nav-Consumer-Id': APP_NAME }
 });
-export const axiosInstanceWithFnrInData = () =>
-	axios.create({
-		withCredentials: true,
-		headers: { 'Nav-Consumer-Id': APP_NAME }
-	});
 
 export function isAnyLoading(...fetchers: { loading: boolean }[]): boolean {
 	return fetchers.some(f => f.loading);
