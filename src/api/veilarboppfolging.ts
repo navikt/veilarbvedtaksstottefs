@@ -9,7 +9,7 @@ export default interface OppfolgingData {
 }
 
 export function fetchOppfolging(fnr: string): AxiosPromise<OppfolgingData> {
-	return axiosInstanceWithFnrInData(fnr).post(`/veilarboppfolging/api/v2/oppfolging/v3`);
+	return axiosInstanceWithFnrInData().post(`/veilarboppfolging/api/v2/oppfolging/v3`, { ident: fnr });
 }
 
 export function fetchTilgangTilBrukersKontor(fnr: string): AxiosPromise<TilgangTilBrukersKontor> {
