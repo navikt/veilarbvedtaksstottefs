@@ -10,6 +10,8 @@ env:
 
 jobs:
     deploy-prod:
+      permissions:
+        contents: write
         name: Deploy application to prod
         runs-on: ubuntu-latest
         steps:
