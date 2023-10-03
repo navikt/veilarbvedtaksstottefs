@@ -7,11 +7,11 @@ on:
 env:
     CI: true
     TZ: Europe/Amsterdam
-
+permissions:
+  contents: write
+  pages: write
 jobs:
     deploy-prod:
-      permissions:
-        contents: write
         name: Deploy application to prod
         runs-on: ubuntu-latest
         steps:
