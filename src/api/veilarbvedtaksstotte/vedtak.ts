@@ -10,11 +10,11 @@ export interface ArenaVedtak {
 }
 
 export function hentFattedeVedtak(fnr: string): AxiosPromise<Vedtak[]> {
-	return axiosInstance.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet?fnr=${fnr}`);
+	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/vedtak/hent-fattet`, { fnr });
 }
 
 export function hentArenaVedtak(fnr: string): AxiosPromise<ArenaVedtak[]> {
-	return axiosInstance.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena?fnr=${fnr}`);
+	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/vedtak/hent-arena`, { fnr });
 }
 
 export function hentOyblikksbilde(vedtakId: number): AxiosPromise<Oyblikksbilde[]> {

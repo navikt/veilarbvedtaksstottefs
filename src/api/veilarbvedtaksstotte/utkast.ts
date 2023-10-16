@@ -35,7 +35,7 @@ export function lagNyttUtkast(fnr: string): AxiosPromise {
 }
 
 export function fetchUtkast(fnr: string): AxiosPromise<Utkast> {
-	return axiosInstance.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast?fnr=${fnr}`);
+	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/hent-utkast`, { fnr });
 }
 
 export function sendEventTilVeilarbvedtaksstotte(event: FrontendEvent) {
