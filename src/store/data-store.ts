@@ -11,7 +11,7 @@ import {
 } from '../api/veilarbvedtaksstotte/meldinger';
 import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
-import { FeatureToggles } from '../api/veilarbpersonflatefs';
+import { FeatureToggles } from '../api/obo-unleash';
 
 // Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
 const placeholder = {} as any;
