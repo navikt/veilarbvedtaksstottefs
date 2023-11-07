@@ -17,7 +17,7 @@ import {
 } from '../../api-data';
 
 export const utkastHandlers: RequestHandler[] = [
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, (req, res, ctx) => {
+	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/hent-utkast`, (req, res, ctx) => {
 		if (!hentUtkast()) {
 			return res(ctx.delay(500), ctx.status(404));
 		}

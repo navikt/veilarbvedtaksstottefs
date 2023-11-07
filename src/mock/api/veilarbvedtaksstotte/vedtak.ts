@@ -4,10 +4,10 @@ import { lagVedtakBrevMockUrl, mockUrlPrefix } from '../../utils';
 import { hentArenaVedtak, hentFattedeVedtak, hentOyeblikksbilder } from '../../api-data';
 
 export const vedtakHandlers: RequestHandler[] = [
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet`, (req, res, ctx) => {
+	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/vedtak/hent-fattet`, (req, res, ctx) => {
 		return res(ctx.delay(500), ctx.json(hentFattedeVedtak()));
 	}),
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena`, (req, res, ctx) => {
+	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/vedtak/hent-arena`, (req, res, ctx) => {
 		return res(ctx.delay(500), ctx.json(hentArenaVedtak()));
 	}),
 	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde`, (req, res, ctx) => {
