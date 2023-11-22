@@ -1,12 +1,15 @@
-import { RequestHandler, rest } from 'msw';
+import { delay, http, HttpResponse, RequestHandler } from 'msw';
 
 import { hentOppfolgingData, hentTilgangTilBrukersKontor } from '../api-data';
+import { DEFAULT_DELAY_MILLISECONDS } from '../index';
 
 export const veilarboppfolgingHandlers: RequestHandler[] = [
-	rest.post('/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang', (req, res, ctx) => {
-		return res(ctx.delay(500), ctx.json(hentTilgangTilBrukersKontor()));
+	http.post('/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang', async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentTilgangTilBrukersKontor());
 	}),
-	rest.post('/veilarboppfolging/api/v3/oppfolging/hent-status', (req, res, ctx) => {
-		return res(ctx.delay(500), ctx.json(hentOppfolgingData()));
+	http.post('/veilarboppfolging/api/v3/oppfolging/hent-status', async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentOppfolgingData());
 	})
 ];

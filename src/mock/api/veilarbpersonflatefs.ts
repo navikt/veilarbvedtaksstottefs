@@ -1,8 +1,10 @@
-import { RequestHandler, rest } from 'msw';
+import { delay, http, HttpResponse, RequestHandler } from 'msw';
 import { hentFeatures } from '../api-data';
+import { DEFAULT_DELAY_MILLISECONDS } from '../index';
 
 export const veilarbpersonflatefsHandlers: RequestHandler[] = [
-	rest.get('/obo-unleash/api/feature', (req, res, ctx) => {
-		return res(ctx.delay(500), ctx.json(hentFeatures()));
+	http.get('/obo-unleash/api/feature', async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentFeatures());
 	})
 ];

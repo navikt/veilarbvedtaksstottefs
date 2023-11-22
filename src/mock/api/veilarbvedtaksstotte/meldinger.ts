@@ -1,15 +1,17 @@
-import { RequestHandler, rest } from 'msw';
+import { delay, http, HttpResponse, RequestHandler } from 'msw';
 import { MeldingType } from '../../../util/type/melding-type';
 import { DialogMelding } from '../../../api/veilarbvedtaksstotte/meldinger';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { hentInnloggetVeileder, hentMeldinger, leggTilMelding } from '../../api-data';
+import { DEFAULT_DELAY_MILLISECONDS } from '../../index';
 
 export const meldingerHandlers: RequestHandler[] = [
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/meldinger`, (req, res, ctx) => {
-		return res(ctx.delay(500), ctx.json(hentMeldinger()));
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/meldinger`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentMeldinger());
 	}),
-	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/meldinger`, (req, res, ctx) => {
-		const sendDialogData = req.body as { melding: string };
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/meldinger`, async ({ request }) => {
+		const sendDialogData = (await request.json()) as { melding: string };
 
 		const nyMelding: DialogMelding = {
 			opprettet: new Date().toISOString(),
@@ -21,6 +23,6 @@ export const meldingerHandlers: RequestHandler[] = [
 
 		leggTilMelding(nyMelding);
 
-		return res(ctx.delay(500), ctx.json(hentMeldinger()));
+		return HttpResponse.json(hentMeldinger());
 	})
 ];

@@ -2,7 +2,7 @@ import { enhetId, enhetNavn } from '../../data';
 import { Utkast, Vedtak, VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { SkjemaData } from '../../../util/skjema-utils';
-import { RequestHandler, rest } from 'msw';
+import { bypass, delay, http, HttpResponse, RequestHandler } from 'msw';
 import { lagVedtakBrevMockUrl } from '../../utils';
 import {
 	byttUtUtkast,
@@ -15,16 +15,19 @@ import {
 	oppdaterUtkast,
 	oppdaterVedtakUtkastMockFraSkjema
 } from '../../api-data';
+import { DEFAULT_DELAY_MILLISECONDS } from '../../index';
 
 export const utkastHandlers: RequestHandler[] = [
-	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/hent-utkast`, (req, res, ctx) => {
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/hent-utkast`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+
 		if (!hentUtkast()) {
-			return res(ctx.delay(500), ctx.status(404));
+			return new HttpResponse(null, { status: 404 });
 		}
 
-		return res(ctx.delay(500), ctx.json(hentUtkast()));
+		return HttpResponse.json(hentUtkast());
 	}),
-	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, (req, res, ctx) => {
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast`, async () => {
 		const nyId =
 			hentFattedeVedtak().length > 0 ? hentFattedeVedtak().sort((fv1, fv2) => fv2.id - fv1.id)[0].id + 1 : 1;
 
@@ -47,18 +50,22 @@ export const utkastHandlers: RequestHandler[] = [
 
 		leggTilMockSystemMelding(SystemMeldingType.UTKAST_OPPRETTET);
 
-		return res(ctx.delay(500), ctx.status(204));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	}),
-	rest.put(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`, (req, res, ctx) => {
-		const skjemaData = req.body as SkjemaData;
+	http.put(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`, async ({ request }) => {
+		const skjemaData = (await request.json()) as SkjemaData;
 		oppdaterVedtakUtkastMockFraSkjema(skjemaData);
-		return res(ctx.delay(500), ctx.status(204));
+
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	}),
-	rest.delete(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`, (req, res, ctx) => {
+	http.delete(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId`, async () => {
 		byttUtUtkast(null);
-		return res(ctx.delay(500), ctx.status(204));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	}),
-	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/overta`, (req, res, ctx) => {
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/overta`, async () => {
 		oppdaterUtkast({
 			veilederIdent: hentInnloggetVeileder().ident,
 			veilederNavn: hentInnloggetVeileder().navn
@@ -66,13 +73,16 @@ export const utkastHandlers: RequestHandler[] = [
 
 		leggTilMockSystemMelding(SystemMeldingType.TATT_OVER_SOM_VEILEDER);
 
-		return res(ctx.delay(500), ctx.status(204));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	}),
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/beslutterprosessStatus`, (req, res, ctx) => {
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/beslutterprosessStatus`, async () => {
 		const data = { status: hentUtkast()?.beslutterProsessStatus || null };
-		return res(ctx.delay(500), ctx.json(data));
+
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(data);
 	}),
-	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/fattVedtak`, (req, res, ctx) => {
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/fattVedtak`, async () => {
 		const gjeldendeVedtak = hentFattedeVedtak().find(v => v.gjeldende);
 
 		if (gjeldendeVedtak) {
@@ -88,17 +98,18 @@ export const utkastHandlers: RequestHandler[] = [
 		leggTilFattetVedtak(fattetVedtak);
 		byttUtUtkast(null);
 
-		return res(ctx.delay(500), ctx.status(204));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	}),
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/pdf`, async (req, res, ctx) => {
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/utkast/:vedtakId/pdf`, async () => {
 		if (!hentUtkast()?.innsatsgruppe) {
 			throw new Error('Mangler innsatsgruppe for brev mock');
 		}
 
 		const brevMockUrl = lagVedtakBrevMockUrl(hentUtkast()!.innsatsgruppe!, hentUtkast()?.hovedmal);
+		const brevBlob = await fetch(bypass(brevMockUrl)).then(brevRes => brevRes.blob());
 
-		const brevBlob = await (ctx.fetch(brevMockUrl) as Promise<Response>).then(brevRes => brevRes.blob());
-
-		return res(ctx.delay(500), ctx.body(brevBlob));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(brevBlob, { status: 200 });
 	})
 ];
