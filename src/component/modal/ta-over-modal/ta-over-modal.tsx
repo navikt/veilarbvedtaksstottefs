@@ -60,6 +60,15 @@ function TaOverModal(props: ModalProps) {
 
 				if (tilgang === VeilederTilgang.ANSVARLIG_VEILEDER) {
 					setUtkast(prevUtkast => {
+						// For å gjøre TypeScript versjon >= 4.7.x glad
+						//
+						// Det gjøres en conditional render lenger oppe i denne komponenten
+						// der vi returnerer null dersom utkast er null - sjekken under
+						// her skal med andre ord ikke kunne inntreffe
+						if (!prevUtkast) {
+							return null;
+						}
+
 						// Hvis beslutter tar over ansvaret for vedtaket, så kan de ikke lenger ha rollen beslutter
 						const erAlleredeBeslutter = prevUtkast?.beslutterIdent === innloggetVeileder.ident;
 						const veileder = { veilederIdent: ident, veilederNavn: navn };
