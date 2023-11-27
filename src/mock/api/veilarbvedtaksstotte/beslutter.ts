@@ -1,10 +1,11 @@
 import { BeslutterProsessStatus, VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { SystemMeldingType } from '../../../util/type/melding-type';
-import { RequestHandler, rest } from 'msw';
-import { leggTilMockSystemMelding, hentUtkast, oppdaterUtkast, hentInnloggetVeileder } from '../../api-data';
+import { hentInnloggetVeileder, hentUtkast, leggTilMockSystemMelding, oppdaterUtkast } from '../../api-data';
+import { delay, http, HttpResponse, RequestHandler } from 'msw';
+import { DEFAULT_DELAY_MILLISECONDS } from '../../index';
 
 export const beslutterHandlers: RequestHandler[] = [
-	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/start`, (req, res, ctx) => {
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/start`, async () => {
 		if (!hentUtkast()) throw new Error('Fant ikke utkast å starte beslutterprosess på');
 
 		oppdaterUtkast({
@@ -13,9 +14,10 @@ export const beslutterHandlers: RequestHandler[] = [
 
 		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_STARTET);
 
-		return res(ctx.delay(500), ctx.status(204));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	}),
-	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/avbryt`, (req, res, ctx) => {
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/avbryt`, async () => {
 		if (!hentUtkast()) throw new Error('Fant ikke utkast å avbrute beslutterprosess på');
 
 		oppdaterUtkast({
@@ -26,9 +28,10 @@ export const beslutterHandlers: RequestHandler[] = [
 
 		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_AVBRUTT);
 
-		return res(ctx.delay(500), ctx.status(204));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	}),
-	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/bliBeslutter`, (req, res, ctx) => {
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/bliBeslutter`, async () => {
 		if (!hentUtkast()) throw new Error('Fant ikke utkast å bli beslutter for');
 
 		oppdaterUtkast({
@@ -38,9 +41,10 @@ export const beslutterHandlers: RequestHandler[] = [
 
 		leggTilMockSystemMelding(SystemMeldingType.BLITT_BESLUTTER);
 
-		return res(ctx.delay(500), ctx.status(204));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	}),
-	rest.post(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/godkjenn`, (req, res, ctx) => {
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/godkjenn`, async () => {
 		if (!hentUtkast()) throw new Error('Fant ikke utkast å godkjenne');
 
 		oppdaterUtkast({
@@ -49,9 +53,10 @@ export const beslutterHandlers: RequestHandler[] = [
 
 		leggTilMockSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
 
-		return res(ctx.delay(500), ctx.status(204));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	}),
-	rest.put(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/status`, (req, res, ctx) => {
+	http.put(`${VEILARBVEDTAKSSTOTTE_API}/beslutter/status`, async () => {
 		if (!hentUtkast()) throw new Error('Fant ikke utkast å oppdatere status på');
 
 		const erBeslutter = hentUtkast()?.beslutterIdent === hentInnloggetVeileder().ident;
@@ -66,6 +71,7 @@ export const beslutterHandlers: RequestHandler[] = [
 			erBeslutter ? SystemMeldingType.SENDT_TIL_VEILEDER : SystemMeldingType.SENDT_TIL_BESLUTTER
 		);
 
-		return res(ctx.delay(500), ctx.status(204));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 204 });
 	})
 ];
