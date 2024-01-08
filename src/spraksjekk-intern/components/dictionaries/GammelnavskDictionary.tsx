@@ -1,5 +1,5 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
-import { ExternalLink } from '@navikt/ds-icons';
+import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { OrNothing } from '../../../util/type/ornothing';
 import { GammelnavskOrdliste } from '../../data';
 import { Kansellisten } from '../../data';
@@ -78,7 +78,7 @@ function GammelnavskDictionary(props: { content: OrNothing<string> }) {
 										href="https://navno.sharepoint.com/:b:/r/sites/intranett-kommunikasjon/Delte%20dokumenter/Spr%C3%A5k/gammelnavsk_ordliste_2utgave.pdf?csf=1&web=1&e=2LfhY8"
 									>
 										Gammelnavsk ordliste
-										<ExternalLink />
+										<ExternalLinkIcon />
 									</Link>
 								</Accordion.Content>
 							</>
@@ -108,7 +108,7 @@ function GammelnavskDictionary(props: { content: OrNothing<string> }) {
 										href="https://www.sprakradet.no/klarsprak/om-skriving/kansellisten/"
 									>
 										Kansellisten
-										<ExternalLink />
+										<ExternalLinkIcon />
 									</Link>
 								</Accordion.Content>
 							</>

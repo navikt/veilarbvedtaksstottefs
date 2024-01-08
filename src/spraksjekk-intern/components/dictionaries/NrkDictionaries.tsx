@@ -1,5 +1,5 @@
 import { Accordion, Heading, Link } from '@navikt/ds-react';
-import { ExternalLink } from '@navikt/ds-icons';
+import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { Nrkordliste } from '../../data';
 
 interface NrkInterface {
@@ -62,7 +62,7 @@ function NrkDictionaries(props: { content: string }) {
 										{
 											<Link target="_blank" href={gammelnavsk.lenke}>
 												{gammelnavsk.kilde}
-												<ExternalLink />
+												<ExternalLinkIcon />
 											</Link>
 										}
 									</Accordion.Content>

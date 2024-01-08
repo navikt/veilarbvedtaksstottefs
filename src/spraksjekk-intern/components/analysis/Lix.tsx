@@ -1,5 +1,5 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
-import { ExternalLink } from '@navikt/ds-icons';
+import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { OrNothing } from '../../../util/type/ornothing';
 
 function lixResultMessage(lix: number): string {
@@ -65,7 +65,7 @@ function Lix(props: { content: OrNothing<string> }) {
 							<span style={{ textTransform: 'lowercase' }}>{lixResultMessage(lix)}</span> ifølge{' '}
 							<Link target="_blank" href="https://no.wikipedia.org/wiki/Lesbarhetsindeks">
 								lesbarhetsindeksen Liks
-								<ExternalLink />
+								<ExternalLinkIcon />
 							</Link>
 							.
 						</BodyShort>

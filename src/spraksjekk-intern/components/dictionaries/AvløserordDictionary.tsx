@@ -1,5 +1,5 @@
 import { Accordion, Heading, Link } from '@navikt/ds-react';
-import { ExternalLink } from '@navikt/ds-icons';
+import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { Avløserord, Datatermer } from '../../data';
 
 interface AvløserordInterface {
@@ -69,7 +69,7 @@ function GammelnavskCheck(props: { content: string }) {
 													href="https://www.sprakradet.no/sprakhjelp/Skriverad/Avloeysarord/"
 												>
 													På godt norsk – avløserord
-													<ExternalLink />
+													<ExternalLinkIcon />
 												</Link>
 											}
 										</Accordion.Content>
@@ -101,7 +101,7 @@ function GammelnavskCheck(props: { content: string }) {
 													target="_blank"
 													href="https://www.sprakradet.no/sprakhjelp/Skriverad/Ordlister/Datatermar/"
 												>
-													Språkrådets datatermer <ExternalLink />
+													Språkrådets datatermer <ExternalLinkIcon />
 												</Link>
 											}
 										</Accordion.Content>
