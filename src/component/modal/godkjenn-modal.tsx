@@ -10,12 +10,12 @@ interface GodkjennModalProps extends ModalProps {
 }
 
 export function GodkjennModal(props: GodkjennModalProps) {
-	const { hideModal } = useModalStore();
+	const { resetModalType } = useModalStore();
 	const [laster] = useState(false);
 
 	function handleOnRequestCloseModal() {
 		if (!laster) {
-			hideModal();
+			resetModalType();
 		}
 	}
 
@@ -30,7 +30,7 @@ export function GodkjennModal(props: GodkjennModalProps) {
 				Er du sikker på at du vil godkjenne utkastet?
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
+				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
 					Avbryt
 				</Button>
 				<Button size="small" loading={laster} onClick={props.onGodkjennUtkastBekreftet}>

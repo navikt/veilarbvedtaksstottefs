@@ -23,7 +23,7 @@ export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
 	const { utkast, setUtkast, setFattedeVedtak, oppfolgingData } = useDataStore();
-	const { showModal, hideModal } = useModalStore();
+	const { showModal, resetModalType } = useModalStore();
 	const { showVarsel } = useVarselStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
@@ -75,7 +75,7 @@ export function Forhandsvisning() {
 						// Feiler ikke selv om fattede vedtak ikke oppdateres
 						.finally(() => {
 							resetSkjema();
-							hideModal();
+							resetModalType();
 							changeView(ViewType.HOVEDSIDE);
 							showVarsel(VarselType.VEDTAK_SENT_SUKSESS);
 							setUtkast(null);

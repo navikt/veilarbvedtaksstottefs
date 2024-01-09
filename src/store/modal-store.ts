@@ -35,9 +35,9 @@ export const [ModalStoreProvider, useModalStore] = constate(() => {
 		setModalType(type);
 	};
 
-	const hideModal = () => {
+	const resetModalType = () => {
 		setModalType(ModalType.INGEN);
 	};
 
-	return { modalType, modalProps, showModal, hideModal };
+	return { modalType, modalProps, showModal, resetModalType };
 });

@@ -11,7 +11,7 @@ import { slettUtkast } from '../../api/veilarbvedtaksstotte/utkast';
 import { Button } from '@navikt/ds-react';
 
 function SlettUtkastModal(props: ModalProps) {
-	const { hideModal, showModal } = useModalStore();
+	const { resetModalType, showModal } = useModalStore();
 	const { utkast, setUtkast } = useDataStore();
 	const { changeView } = useViewStore();
 	const { resetSkjema } = useSkjemaStore();
@@ -21,7 +21,7 @@ function SlettUtkastModal(props: ModalProps) {
 		slettUtkast(hentId(utkast))
 			.then(() => {
 				resetSkjema();
-				hideModal();
+				resetModalType();
 				changeView(ViewType.HOVEDSIDE);
 				setUtkast(null);
 			})
@@ -31,11 +31,11 @@ function SlettUtkastModal(props: ModalProps) {
 	}
 
 	return (
-		<VarselModal isOpen={props.isOpen} onRequestClose={hideModal} contentLabel="Bekreft slett utkast">
+		<VarselModal isOpen={props.isOpen} onRequestClose={resetModalType} contentLabel="Bekreft slett utkast">
 			<Systemtittel className="varsel-modal__tittel">Slett utkast</Systemtittel>
 			<Normaltekst className="varsel-modal__tekstinnhold">Er du sikker på at du vil slette utkastet?</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" onClick={hideModal}>
+				<Button size="small" variant="secondary" onClick={resetModalType}>
 					Avbryt
 				</Button>
 				<Button size="small" onClick={handleOnDeleteClicked}>

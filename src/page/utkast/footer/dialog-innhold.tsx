@@ -35,7 +35,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 	const { malform, utkast, leggTilSystemMelding, innloggetVeileder, setUtkastBeslutter, setBeslutterProsessStatus } =
 		useDataStore();
 	const { showSection } = useDialogSection();
-	const { hideModal, showModal } = useModalStore();
+	const { resetModalType, showModal } = useModalStore();
 	const { innsatsgruppe } = useSkjemaStore();
 	const { id: utkastId, beslutterNavn, beslutterProsessStatus } = utkast as Utkast;
 
@@ -74,7 +74,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 			.then(() => {
 				leggTilSystemMelding(SystemMeldingType.BESLUTTER_HAR_GODKJENT);
 				setBeslutterProsessStatus(BeslutterProsessStatus.GODKJENT_AV_BESLUTTER);
-				hideModal();
+				resetModalType();
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER))
 			.finally(() => setLaster(false));

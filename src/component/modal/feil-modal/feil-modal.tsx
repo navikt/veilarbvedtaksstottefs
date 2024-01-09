@@ -16,14 +16,14 @@ export function FeilModal(props: FeilmodalProps) {
 		isOpen,
 		config: { tittel, beskrivelse, viewAction, knappeTekst }
 	} = props;
-	const { hideModal } = useModalStore();
+	const { resetModalType } = useModalStore();
 	const { changeView } = useViewStore();
 
 	function handleRequestClose() {
 		if (viewAction) {
 			changeView(viewAction);
 		}
-		hideModal();
+		resetModalType();
 	}
 
 	return (
@@ -32,7 +32,6 @@ export function FeilModal(props: FeilmodalProps) {
 			onRequestClose={handleRequestClose}
 			contentLabel="En feil har oppstått"
 			closeButton={knappeTekst == null}
-			shouldCloseOnOverlayClick={false}
 		>
 			<Systemtittel className="blokk-xxs">{tittel}</Systemtittel>
 			<Normaltekst className="blokk-s">{beskrivelse}</Normaltekst>

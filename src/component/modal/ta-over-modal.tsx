@@ -25,7 +25,7 @@ const taOverOptions = [
 ];
 
 function TaOverModal(props: ModalProps) {
-	const { hideModal, showModal } = useModalStore();
+	const { resetModalType, showModal } = useModalStore();
 	const { setVeilederTilgang, erIkkeAnsvarligVeileder } = useTilgangStore();
 	const { utkast, setUtkast, innloggetVeileder, setUtkastBeslutter, leggTilSystemMelding } = useDataStore();
 	const { showVarsel } = useVarselStore();
@@ -73,7 +73,7 @@ function TaOverModal(props: ModalProps) {
 				}
 
 				setVeilederTilgang(tilgang);
-				hideModal();
+				resetModalType();
 				visTattOverVarsel();
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_OVERTAKELSE))
@@ -91,7 +91,7 @@ function TaOverModal(props: ModalProps) {
 
 	function handleOnRequestCloseModal() {
 		if (!laster) {
-			hideModal();
+			resetModalType();
 		}
 	}
 
@@ -101,7 +101,7 @@ function TaOverModal(props: ModalProps) {
 				Vil du overta ansvaret for vedtaket fra veileder {`${utkast.veilederNavn}?`}
 			</Heading>
 			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
+				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
 					Avbryt
 				</Button>
 				<Button size="small" loading={laster} onClick={handleTaOverVedtak}>
@@ -125,7 +125,7 @@ function TaOverModal(props: ModalProps) {
 				className="varsel-modal__tekstinnhold"
 			/>
 			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
+				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
 					Avbryt
 				</Button>
 				<Button size="small" loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>

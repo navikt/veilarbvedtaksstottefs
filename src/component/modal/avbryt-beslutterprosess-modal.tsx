@@ -17,14 +17,14 @@ interface AvbrytBeslutterProsessModalProps extends ModalProps {
 }
 
 function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
-	const { hideModal, showModal } = useModalStore();
+	const { resetModalType, showModal } = useModalStore();
 	const { utkast, leggTilSystemMelding, nullStillBeslutterProsess } = useDataStore();
 	const { setInnsatsgruppe } = useSkjemaStore();
 
 	function handleOnJaClicked() {
 		avbrytBeslutterProsess(hentId(utkast))
 			.then(() => {
-				hideModal();
+				resetModalType();
 				setInnsatsgruppe(props.innsatsgruppe);
 				nullStillBeslutterProsess();
 				leggTilSystemMelding(SystemMeldingType.BESLUTTER_PROSESS_AVBRUTT);
@@ -33,13 +33,17 @@ function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
 	}
 
 	return (
-		<VarselModal isOpen={props.isOpen} onRequestClose={hideModal} contentLabel="Avbryt kvalitetssikringsprosessen">
+		<VarselModal
+			isOpen={props.isOpen}
+			onRequestClose={resetModalType}
+			contentLabel="Avbryt kvalitetssikringsprosessen"
+		>
 			<Systemtittel className="varsel-modal__tittel">Endre innsatsgruppe</Systemtittel>
 			<Normaltekst className="varsel-modal__tekstinnhold">
 				Kvalitetssikringprosessen vil avbrytes. Er du sikker på at du vil endre innsatsgruppe?
 			</Normaltekst>
 			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" onClick={hideModal}>
+				<Button size="small" variant="secondary" onClick={resetModalType}>
 					Nei
 				</Button>
 				<Button size="small" onClick={handleOnJaClicked}>
