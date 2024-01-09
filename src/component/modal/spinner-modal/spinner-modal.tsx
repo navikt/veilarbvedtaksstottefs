@@ -4,16 +4,10 @@ import './spinner-modal.less';
 
 export function SpinnerModal(props: ModalProps) {
 	return (
-		<Modal
-			open={props.isOpen}
-			onClose={() => {}}
-			overlayClassName="veilarbvedtaksstottefs-spinner-modal"
-			closeButton={false}
-			aria-label="Spinner"
-		>
-			<Modal.Content>
+		<Modal open={props.isOpen} onClose={() => {}} id="veilarbvedtaksstottefs-spinner-modal" aria-label="Spinner">
+			<Modal.Body>
 				<Loader size="3xlarge" variant="inverted" title="laster..." />
-			</Modal.Content>
+			</Modal.Body>
 		</Modal>
 	);
 }
