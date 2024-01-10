@@ -11,6 +11,14 @@ dayjs.locale('nb');
 NAVSPA.eksporter('veilarbvedtaksstottefs', App);
 
 if (env.isDevelopment) {
-	require('./mock');
-	ReactDOM.render(<App fnr={fnr} enhet={enhetId} />, document.getElementById('veilarbvedtaksstottefs-root'));
+	const { worker } = require('./mock');
+	worker
+		.start({ serviceWorker: { url: process.env.PUBLIC_URL + '/mockServiceWorker.js' } })
+		.then(() => {
+			ReactDOM.render(<App fnr={fnr} enhet={enhetId} />, document.getElementById('veilarbvedtaksstottefs-root'));
+		})
+		.catch((e: Error) => {
+			// eslint-disable-next-line no-console
+			console.error('Unable to setup mocked API endpoints', e);
+		});
 }

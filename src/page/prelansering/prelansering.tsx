@@ -3,7 +3,7 @@ import PrelanseringInfo from './prelansering-info';
 import { LosningInfo } from './losning-info/losning-info';
 import { useDataStore } from '../../store/data-store';
 import './prelansering.less';
-import { PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../../api/veilarbpersonflatefs';
+import { PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../../api/obo-unleash';
 
 export function Prelansering() {
 	const { features } = useDataStore();

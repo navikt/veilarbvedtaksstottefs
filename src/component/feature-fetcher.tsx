@@ -1,5 +1,5 @@
 import { useAxiosFetcher } from '../util/use-axios-fetcher';
-import { fetchFeaturesToggles } from '../api/veilarbpersonflatefs';
+import { fetchFeaturesToggles } from '../api/obo-unleash';
 import { PropsWithChildren, useLayoutEffect } from 'react';
 import { ifResponseHasData } from '../api/utils';
 import Spinner from './spinner/spinner';

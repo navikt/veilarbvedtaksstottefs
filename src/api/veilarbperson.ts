@@ -11,5 +11,5 @@ export interface MalformData {
 }
 
 export function fetchMalform(fnr: string): AxiosPromise<MalformData> {
-	return axiosInstance.get(`/veilarbperson/api/v2/person/malform?fnr=${fnr}`);
+	return axiosInstance.post(`/veilarbperson/api/v3/person/hent-malform`, { fnr });
 }

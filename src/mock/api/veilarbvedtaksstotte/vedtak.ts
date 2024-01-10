@@ -1,20 +1,32 @@
-import { RequestHandler, rest } from 'msw';
+import { bypass, delay, http, HttpResponse, RequestHandler } from 'msw';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { lagVedtakBrevMockUrl, mockUrlPrefix } from '../../utils';
 import { hentArenaVedtak, hentFattedeVedtak, hentOyeblikksbilder } from '../../api-data';
+import { DEFAULT_DELAY_MILLISECONDS } from '../../index';
 
 export const vedtakHandlers: RequestHandler[] = [
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/fattet`, (req, res, ctx) => {
-		return res(ctx.delay(500), ctx.json(hentFattedeVedtak()));
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/vedtak/hent-fattet`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentFattedeVedtak());
 	}),
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena`, (req, res, ctx) => {
-		return res(ctx.delay(500), ctx.json(hentArenaVedtak()));
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/vedtak/hent-arena`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentArenaVedtak());
 	}),
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde`, (req, res, ctx) => {
-		return res(ctx.delay(500), ctx.json(hentOyeblikksbilder()));
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentOyeblikksbilder());
 	}),
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/pdf`, async (req, res, ctx) => {
-		const vedtakId = parseInt(req.params.vedtakId.toString(), 10);
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena/pdf`, async () => {
+		const arenaVedtakBrevMockUrl = `${mockUrlPrefix()}/test-brev/arenabrev.pdf`;
+		const arenaVedtakBrevRespons = await fetch(arenaVedtakBrevMockUrl);
+		const arenaVedtakBrevBlob = await arenaVedtakBrevRespons.blob();
+
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(arenaVedtakBrevBlob);
+	}),
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/pdf`, async ({ params }) => {
+		const vedtakId = parseInt(params.vedtakId.toString(), 10);
 
 		const vedtak = hentFattedeVedtak().find(v => v.id === vedtakId);
 
@@ -22,17 +34,11 @@ export const vedtakHandlers: RequestHandler[] = [
 			throw new Error('Mangler innsatsgruppe for brev mock');
 		}
 
-		const brevBlob = await (
-			ctx.fetch(lagVedtakBrevMockUrl(vedtak.innsatsgruppe, vedtak.hovedmal)) as Promise<Response>
-		).then(brevRes => brevRes.blob());
+		const vedtakBrevMockUrl = lagVedtakBrevMockUrl(vedtak.innsatsgruppe, vedtak.hovedmal);
+		const vedtakBrevResponse = await fetch(bypass(vedtakBrevMockUrl));
+		const vedtakBrevBlob = await vedtakBrevResponse.blob();
 
-		return res(ctx.delay(500), ctx.body(brevBlob));
-	}),
-	rest.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena/pdf`, async (req, res, ctx) => {
-		const brevBlob = await (ctx.fetch(`${mockUrlPrefix()}/test-brev/arenabrev.pdf`) as Promise<Response>).then(
-			brevRes => brevRes.blob()
-		);
-
-		return res(ctx.delay(500), ctx.body(brevBlob));
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(vedtakBrevBlob);
 	})
 ];
