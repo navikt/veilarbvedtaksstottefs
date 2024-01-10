@@ -1,11 +1,9 @@
 import { VarselModal } from '../varsel-modal/varsel-modal';
-import { Systemtittel } from 'nav-frontend-typografi';
-import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { ModalProps } from '../modal-props';
 import { useModalStore } from '../../../store/modal-store';
 import { useViewStore } from '../../../store/view-store';
 import { FeilModalConfig } from './feil-modal-config';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 interface FeilmodalProps extends ModalProps {
 	config: FeilModalConfig;
@@ -27,19 +25,20 @@ export function FeilModal(props: FeilmodalProps) {
 	}
 
 	return (
-		<VarselModal
-			isOpen={isOpen}
-			onRequestClose={handleRequestClose}
-			contentLabel="En feil har oppstått"
-			closeButton={knappeTekst == null}
-		>
-			<Systemtittel className="blokk-xxs">{tittel}</Systemtittel>
-			<Normaltekst className="blokk-s">{beskrivelse}</Normaltekst>
-			{knappeTekst && (
-				<Button size="small" variant="secondary" onClick={handleRequestClose}>
-					{knappeTekst}
-				</Button>
-			)}
+		<VarselModal isOpen={isOpen} onRequestClose={handleRequestClose} contentLabel="En feil har oppstått">
+			<Modal.Header closeButton={knappeTekst == null}>
+				<Heading level="1" size="medium">
+					{tittel}
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>{beskrivelse}</Modal.Body>
+			<Modal.Footer>
+				{knappeTekst && (
+					<Button size="small" variant="secondary" onClick={handleRequestClose}>
+						{knappeTekst}
+					</Button>
+				)}
+			</Modal.Footer>
 		</VarselModal>
 	);
 }

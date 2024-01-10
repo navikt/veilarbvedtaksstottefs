@@ -12,7 +12,7 @@ import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../varsel/varsel-type';
 import { bliBeslutter } from '../../api/veilarbvedtaksstotte/beslutter';
 import { fetchTaOverUtkast } from '../../api/veilarbvedtaksstotte/utkast';
-import { Button, Heading } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
@@ -58,6 +58,9 @@ function TaOverModal(props: ModalProps) {
 
 				if (tilgang === VeilederTilgang.ANSVARLIG_VEILEDER) {
 					setUtkast(prevUtkast => {
+						if (!prevUtkast) {
+							return null;
+						}
 						// Hvis beslutter tar over ansvaret for vedtaket, så kan de ikke lenger ha rollen beslutter
 						const erAlleredeBeslutter = prevUtkast?.beslutterIdent === innloggetVeileder.ident;
 						const veileder = { veilederIdent: ident, veilederNavn: navn };
@@ -97,41 +100,48 @@ function TaOverModal(props: ModalProps) {
 
 	const OvertaForVeilederVisning = (
 		<>
-			<Heading level="1" size="medium" className="varsel-modal__tittel">
-				Vil du overta ansvaret for vedtaket fra veileder {`${utkast.veilederNavn}?`}
-			</Heading>
-			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
-					Avbryt
-				</Button>
+			<Modal.Header>
+				<Heading level="1" size="medium">
+					Overta ansvar for vedtaket
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>Vil du overta ansvaret for vedtaket fra veileder {`${utkast.veilederNavn}?`}</Modal.Body>
+			<Modal.Footer>
 				<Button size="small" loading={laster} onClick={handleTaOverVedtak}>
 					Ta over
 				</Button>
-			</div>
+				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
+					Avbryt
+				</Button>
+			</Modal.Footer>
 		</>
 	);
 
 	const OvertaValgVisning = (
 		<>
-			<Heading level="1" size="medium" className="varsel-modal__tittel">
-				Hvem ønsker du å ta over for?
-			</Heading>
-			<RadioPanelGruppe
-				name="taovervedtakfor"
-				legend={null}
-				radios={taOverOptions}
-				onChange={(e: any) => setTaOverFor(e.target.value)}
-				checked={taOverFor}
-				className="varsel-modal__tekstinnhold"
-			/>
-			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
-					Avbryt
-				</Button>
+			<Modal.Header>
+				<Heading level="1" size="medium">
+					Hvem ønsker du å ta over for?
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>
+				<RadioPanelGruppe
+					name="taovervedtakfor"
+					legend={null}
+					radios={taOverOptions}
+					onChange={(e: any) => setTaOverFor(e.target.value)}
+					checked={taOverFor}
+					className="varsel-modal__tekstinnhold"
+				/>
+			</Modal.Body>
+			<Modal.Footer>
 				<Button size="small" loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>
 					Ta over
 				</Button>
-			</div>
+				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
+					Avbryt
+				</Button>
+			</Modal.Footer>
 		</>
 	);
 

@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { VarselModal } from './varsel-modal/varsel-modal';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { ModalProps } from './modal-props';
 import { useModalStore } from '../../store/modal-store';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 interface GodkjennModalProps extends ModalProps {
 	onGodkjennUtkastBekreftet: () => void;
@@ -11,12 +9,9 @@ interface GodkjennModalProps extends ModalProps {
 
 export function GodkjennModal(props: GodkjennModalProps) {
 	const { resetModalType } = useModalStore();
-	const [laster] = useState(false);
 
 	function handleOnRequestCloseModal() {
-		if (!laster) {
-			resetModalType();
-		}
+		resetModalType();
 	}
 
 	return (
@@ -25,18 +20,20 @@ export function GodkjennModal(props: GodkjennModalProps) {
 			onRequestClose={handleOnRequestCloseModal}
 			contentLabel="Bekreft at vedtaket blir godkjent"
 		>
-			<Systemtittel className="varsel-modal__tittel">Godkjenn utkast</Systemtittel>
-			<Normaltekst className="varsel-modal__tekstinnhold">
-				Er du sikker på at du vil godkjenne utkastet?
-			</Normaltekst>
-			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
-					Avbryt
-				</Button>
-				<Button size="small" loading={laster} onClick={props.onGodkjennUtkastBekreftet}>
+			<Modal.Header>
+				<Heading level="1" size="medium">
+					Godkjenn utkast
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>Er du sikker på at du vil godkjenne utkastet?</Modal.Body>
+			<Modal.Footer>
+				<Button size="small" onClick={props.onGodkjennUtkastBekreftet}>
 					Godkjenn
 				</Button>
-			</div>
+				<Button size="small" variant="secondary" onClick={resetModalType}>
+					Avbryt
+				</Button>
+			</Modal.Footer>
 		</VarselModal>
 	);
 }

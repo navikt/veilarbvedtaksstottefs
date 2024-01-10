@@ -1,6 +1,4 @@
 import { VarselModal } from './varsel-modal/varsel-modal';
-import { Systemtittel } from 'nav-frontend-typografi';
-import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { ModalProps } from './modal-props';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { useSkjemaStore } from '../../store/skjema-store';
@@ -10,7 +8,7 @@ import { hentId } from '../../util';
 import { OrNothing } from '../../util/type/ornothing';
 import { InnsatsgruppeType } from '../../api/veilarbvedtaksstotte';
 import { avbrytBeslutterProsess } from '../../api/veilarbvedtaksstotte/beslutter';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 interface AvbrytBeslutterProsessModalProps extends ModalProps {
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
@@ -38,18 +36,22 @@ function AvbrytBeslutterProsessModal(props: AvbrytBeslutterProsessModalProps) {
 			onRequestClose={resetModalType}
 			contentLabel="Avbryt kvalitetssikringsprosessen"
 		>
-			<Systemtittel className="varsel-modal__tittel">Endre innsatsgruppe</Systemtittel>
-			<Normaltekst className="varsel-modal__tekstinnhold">
+			<Modal.Header>
+				<Heading level="1" size="medium">
+					Endre innsatsgruppe
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>
 				Kvalitetssikringprosessen vil avbrytes. Er du sikker på at du vil endre innsatsgruppe?
-			</Normaltekst>
-			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" onClick={resetModalType}>
-					Nei
-				</Button>
+			</Modal.Body>
+			<Modal.Footer>
 				<Button size="small" onClick={handleOnJaClicked}>
-					Ja
+					Endre
 				</Button>
-			</div>
+				<Button size="small" variant="secondary" onClick={resetModalType}>
+					Avbryt
+				</Button>
+			</Modal.Footer>
 		</VarselModal>
 	);
 }

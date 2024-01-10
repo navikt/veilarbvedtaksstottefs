@@ -60,7 +60,7 @@ function Lix(props: { content: OrNothing<string> }) {
 						Liks: {lix} - {lixResultMessage(lix)}
 					</Accordion.Header>
 					<Accordion.Content>
-						<BodyShort>
+						<BodyShort size="small">
 							Liks: {lix}. Teksten kan anses{' '}
 							<span style={{ textTransform: 'lowercase' }}>{lixResultMessage(lix)}</span> ifølge{' '}
 							<Link target="_blank" href="https://no.wikipedia.org/wiki/Lesbarhetsindeks">
@@ -69,7 +69,7 @@ function Lix(props: { content: OrNothing<string> }) {
 							</Link>
 							.
 						</BodyShort>
-						<BodyShort className="mt-4">
+						<BodyShort size="small" className="mt-4">
 							<Heading level="4" size="xsmall">
 								Skriveråd
 							</Heading>

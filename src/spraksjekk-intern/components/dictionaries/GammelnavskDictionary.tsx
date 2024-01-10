@@ -43,7 +43,7 @@ function GammelnavskDictionary(props: { content: OrNothing<string> }) {
 						<Heading level="3" size="xsmall">
 							Velg enkle ord
 						</Heading>
-						<BodyShort className="mb-4">
+						<BodyShort size="small" className="mb-4">
 							Her vises ord og uttrykk som mulig sier noe på en vanskeligere måte enn nødvendig. Disse er
 							hentet fra gammelnavsk ordliste og Språkrådets kansellisten.
 						</BodyShort>
@@ -59,7 +59,7 @@ function GammelnavskDictionary(props: { content: OrNothing<string> }) {
 											<Heading level="4" size="xsmall">
 												Gammelnavsk
 											</Heading>
-											<BodyShort>
+											<BodyShort size="small">
 												<em>{gammelnavsk.gammelnavsk}</em>
 											</BodyShort>
 											<Heading className="mt-4" level="4" size="xsmall">

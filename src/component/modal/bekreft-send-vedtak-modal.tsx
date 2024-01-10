@@ -1,33 +1,35 @@
 import { VarselModal } from './varsel-modal/varsel-modal';
-import { Systemtittel } from 'nav-frontend-typografi';
 import { ModalProps } from './modal-props';
 import { useModalStore } from '../../store/modal-store';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 interface VedtakSendtModalProps extends ModalProps {
 	onSendVedtakBekreftet: () => void;
 }
 
-export function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
-	const { hideModal } = useModalStore();
+export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
+	const { resetModalType } = useModalStore();
 
 	return (
 		<VarselModal
 			isOpen={props.isOpen}
-			onRequestClose={hideModal}
+			onRequestClose={resetModalType}
 			contentLabel="Bekreft vedtaket blir sendt til bruker"
 		>
-			<Systemtittel className="varsel-modal__tittel">
-				Er du sikker på at du vil sende vedtaksbrev til bruker?
-			</Systemtittel>
-			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" onClick={hideModal}>
+			<Modal.Header>
+				<Heading level="1" size="medium">
+					Send vedtaksbrev
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>Er du sikker på at du vil sende vedtaksbrev til bruker?</Modal.Body>
+			<Modal.Footer>
+				<Button size="small" onClick={props.onSendVedtakBekreftet}>
+					Send
+				</Button>
+				<Button size="small" variant="secondary" onClick={resetModalType}>
 					Avbryt
 				</Button>
-				<Button size="small" onClick={props.onSendVedtakBekreftet}>
-					Ja, send nå
-				</Button>
-			</div>
+			</Modal.Footer>
 		</VarselModal>
 	);
 }

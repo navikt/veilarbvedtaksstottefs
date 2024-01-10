@@ -1,6 +1,4 @@
 import { VarselModal } from './varsel-modal/varsel-modal';
-import { Systemtittel } from 'nav-frontend-typografi';
-import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
 import { ModalProps } from './modal-props';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { useViewStore, ViewType } from '../../store/view-store';
@@ -8,7 +6,7 @@ import { useSkjemaStore } from '../../store/skjema-store';
 import { useDataStore } from '../../store/data-store';
 import { hentId } from '../../util';
 import { slettUtkast } from '../../api/veilarbvedtaksstotte/utkast';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 function SlettUtkastModal(props: ModalProps) {
 	const { resetModalType, showModal } = useModalStore();
@@ -32,16 +30,20 @@ function SlettUtkastModal(props: ModalProps) {
 
 	return (
 		<VarselModal isOpen={props.isOpen} onRequestClose={resetModalType} contentLabel="Bekreft slett utkast">
-			<Systemtittel className="varsel-modal__tittel">Slett utkast</Systemtittel>
-			<Normaltekst className="varsel-modal__tekstinnhold">Er du sikker på at du vil slette utkastet?</Normaltekst>
-			<div className="varsel-modal__knapper">
-				<Button size="small" variant="secondary" onClick={resetModalType}>
-					Avbryt
-				</Button>
+			<Modal.Header>
+				<Heading level="1" size="medium">
+					Slett utkast
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>Er du sikker på at du vil slette utkastet?</Modal.Body>
+			<Modal.Footer>
 				<Button size="small" onClick={handleOnDeleteClicked}>
 					Slett
 				</Button>
-			</div>
+				<Button size="small" variant="secondary" onClick={resetModalType}>
+					Avbryt
+				</Button>
+			</Modal.Footer>
 		</VarselModal>
 	);
 }
