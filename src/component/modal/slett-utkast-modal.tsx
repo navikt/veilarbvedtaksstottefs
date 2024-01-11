@@ -1,6 +1,4 @@
-import { VarselIkonType, VarselModal } from './varsel-modal/varsel-modal';
-import { Systemtittel } from 'nav-frontend-typografi';
-import Normaltekst from 'nav-frontend-typografi/lib/normaltekst';
+import { VarselModal } from './varsel-modal/varsel-modal';
 import { ModalProps } from './modal-props';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { useViewStore, ViewType } from '../../store/view-store';
@@ -8,10 +6,10 @@ import { useSkjemaStore } from '../../store/skjema-store';
 import { useDataStore } from '../../store/data-store';
 import { hentId } from '../../util';
 import { slettUtkast } from '../../api/veilarbvedtaksstotte/utkast';
-import { Button } from '@navikt/ds-react';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 function SlettUtkastModal(props: ModalProps) {
-	const { hideModal, showModal } = useModalStore();
+	const { resetModalType, showModal } = useModalStore();
 	const { utkast, setUtkast } = useDataStore();
 	const { changeView } = useViewStore();
 	const { resetSkjema } = useSkjemaStore();
@@ -21,7 +19,7 @@ function SlettUtkastModal(props: ModalProps) {
 		slettUtkast(hentId(utkast))
 			.then(() => {
 				resetSkjema();
-				hideModal();
+				resetModalType();
 				changeView(ViewType.HOVEDSIDE);
 				setUtkast(null);
 			})
@@ -31,22 +29,21 @@ function SlettUtkastModal(props: ModalProps) {
 	}
 
 	return (
-		<VarselModal
-			isOpen={props.isOpen}
-			contentLabel="Bekreft slett utkast"
-			onRequestClose={hideModal}
-			varselIkonType={VarselIkonType.ADVARSEL}
-		>
-			<Systemtittel className="blokk-xxxs">Slett utkast</Systemtittel>
-			<Normaltekst>Er du sikker på at du vil slette utkastet?</Normaltekst>
-			<div className="varsel-modal__knapper">
+		<VarselModal isOpen={props.isOpen} onRequestClose={resetModalType} contentLabel="Bekreft slett utkast">
+			<Modal.Header>
+				<Heading level="1" size="medium">
+					Slett utkast
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>Er du sikker på at du vil slette utkastet?</Modal.Body>
+			<Modal.Footer>
 				<Button size="small" onClick={handleOnDeleteClicked}>
 					Slett
 				</Button>
-				<Button size="small" variant="secondary" onClick={hideModal}>
+				<Button size="small" variant="secondary" onClick={resetModalType}>
 					Avbryt
 				</Button>
-			</div>
+			</Modal.Footer>
 		</VarselModal>
 	);
 }

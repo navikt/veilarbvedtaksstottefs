@@ -5,32 +5,32 @@ import {
 	feilVedAvbrytBeslutterProsessConfig,
 	feilVedBliBeslutterConfig,
 	feilVedForhandsvisnigConfig,
-	feilVedGodkjenningAvBeslutter,
+	feilVedGodkjenningAvBeslutterConfig,
 	feilVedLagringConfig,
-	feilVedOppdaterBeslutterProsessStatus,
-	feilVedOpprettingAvUtkast,
+	feilVedOppdaterBeslutterProsessStatusConfig,
+	feilVedOpprettingAvUtkastConfig,
 	feilVedOvertakelseAvUtkastConfig,
-	feilVedSendningConfig,
+	feilVedSendingConfig,
 	feilVedSlettingAvUtkastConfig,
 	feilVedStartBeslutterProsessConfig,
-	feilVedUtsendingAvDialogMelding,
-	feilVedValideringAvUtkast,
+	feilVedUtsendingAvDialogMeldingConfig,
+	feilVedValideringAvUtkastConfig,
 	feilVedVisningConfig,
 	stoppeUtsendingFeatureToggleConfig
 } from './modal/feil-modal/feil-modal-config';
-import { SpinnerModal } from './modal/spinner-modal/spinner-modal';
-import { BekreftSendVedtakModal } from './modal/vedtak-sendt/bekreft-send-vedtak-modal';
+import SpinnerModal from './modal/spinner-modal/spinner-modal';
+import BekreftSendVedtakModal from './modal/bekreft-send-vedtak-modal';
 import SlettUtkastModal from './modal/slett-utkast-modal';
-import TaOverModal from './modal/ta-over-modal/ta-over-modal';
-import AvbrytBeslutterProsessModal from './modal/avbryt-beslutter-prosess-modal/avbryt-beslutterprosess-modal';
-import { GodkjennModal } from './modal/godkjenn-modal/godkjenn-modal';
+import TaOverModal from './modal/ta-over-modal';
+import AvbrytBeslutterProsessModal from './modal/avbryt-beslutterprosess-modal';
+import GodkjennModal from './modal/godkjenn-modal';
 
 function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 	switch (modalType) {
 		case ModalType.FEIL_VED_OPPRETTING_AV_UTKAST:
-			return feilVedOpprettingAvUtkast;
+			return feilVedOpprettingAvUtkastConfig;
 		case ModalType.FEIL_VED_SENDING:
-			return feilVedSendningConfig;
+			return feilVedSendingConfig;
 		case ModalType.FEIL_UTSENDING_STOPPET:
 			return stoppeUtsendingFeatureToggleConfig;
 		case ModalType.FEIL_VED_FORHANDSVISNING:
@@ -50,13 +50,13 @@ function finnFeilModalConfig(modalType: ModalType): FeilModalConfig | null {
 		case ModalType.FEIL_VED_BLI_BESLUTTER:
 			return feilVedBliBeslutterConfig;
 		case ModalType.FEIL_VED_UTSENDING_AV_DIALOG_MELDING:
-			return feilVedUtsendingAvDialogMelding;
+			return feilVedUtsendingAvDialogMeldingConfig;
 		case ModalType.FEIL_VED_OPPDATER_BESLUTTER_PROSESS_STATUS:
-			return feilVedOppdaterBeslutterProsessStatus;
+			return feilVedOppdaterBeslutterProsessStatusConfig;
 		case ModalType.FEIL_VED_GODKJENT_AV_BESLUTTER:
-			return feilVedGodkjenningAvBeslutter;
+			return feilVedGodkjenningAvBeslutterConfig;
 		case ModalType.FEIL_VED_VALIDERING_AV_UTKAST:
-			return feilVedValideringAvUtkast;
+			return feilVedValideringAvUtkastConfig;
 		default:
 			return null;
 	}

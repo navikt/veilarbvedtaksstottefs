@@ -1,20 +1,18 @@
 import { useState } from 'react';
-import { ModalProps } from '../modal-props';
-import { VarselIkonType, VarselModal } from '../varsel-modal/varsel-modal';
-import { ModalType, useModalStore } from '../../../store/modal-store';
-import { erBeslutterProsessStartet, hentId } from '../../../util';
-import { useDataStore } from '../../../store/data-store';
+import { ModalProps } from './modal-props';
+import { VarselModal } from './varsel-modal/varsel-modal';
+import { ModalType, useModalStore } from '../../store/modal-store';
+import { erBeslutterProsessStartet, hentId } from '../../util';
+import { useDataStore } from '../../store/data-store';
 import { RadioPanelGruppe } from 'nav-frontend-skjema';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { useTilgangStore } from '../../../store/tilgang-store';
-import { VeilederTilgang } from '../../../util/tilgang';
-import { SystemMeldingType } from '../../../util/type/melding-type';
-import { useVarselStore } from '../../../store/varsel-store';
-import { VarselType } from '../../varsel/varsel-type';
-import { bliBeslutter } from '../../../api/veilarbvedtaksstotte/beslutter';
-import { fetchTaOverUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
-import { Button } from '@navikt/ds-react';
-import './ta-over-modal.less';
+import { useTilgangStore } from '../../store/tilgang-store';
+import { VeilederTilgang } from '../../util/tilgang';
+import { SystemMeldingType } from '../../util/type/melding-type';
+import { useVarselStore } from '../../store/varsel-store';
+import { VarselType } from '../varsel/varsel-type';
+import { bliBeslutter } from '../../api/veilarbvedtaksstotte/beslutter';
+import { fetchTaOverUtkast } from '../../api/veilarbvedtaksstotte/utkast';
+import { Button, Heading, Modal } from '@navikt/ds-react';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
@@ -27,7 +25,7 @@ const taOverOptions = [
 ];
 
 function TaOverModal(props: ModalProps) {
-	const { hideModal, showModal } = useModalStore();
+	const { resetModalType, showModal } = useModalStore();
 	const { setVeilederTilgang, erIkkeAnsvarligVeileder } = useTilgangStore();
 	const { utkast, setUtkast, innloggetVeileder, setUtkastBeslutter, leggTilSystemMelding } = useDataStore();
 	const { showVarsel } = useVarselStore();
@@ -60,15 +58,9 @@ function TaOverModal(props: ModalProps) {
 
 				if (tilgang === VeilederTilgang.ANSVARLIG_VEILEDER) {
 					setUtkast(prevUtkast => {
-						// For å gjøre TypeScript versjon >= 4.7.x glad
-						//
-						// Det gjøres en conditional render lenger oppe i denne komponenten
-						// der vi returnerer null dersom utkast er null - sjekken under
-						// her skal med andre ord ikke kunne inntreffe
 						if (!prevUtkast) {
 							return null;
 						}
-
 						// Hvis beslutter tar over ansvaret for vedtaket, så kan de ikke lenger ha rollen beslutter
 						const erAlleredeBeslutter = prevUtkast?.beslutterIdent === innloggetVeileder.ident;
 						const veileder = { veilederIdent: ident, veilederNavn: navn };
@@ -84,7 +76,7 @@ function TaOverModal(props: ModalProps) {
 				}
 
 				setVeilederTilgang(tilgang);
-				hideModal();
+				resetModalType();
 				visTattOverVarsel();
 			})
 			.catch(() => showModal(ModalType.FEIL_VED_OVERTAKELSE))
@@ -102,60 +94,61 @@ function TaOverModal(props: ModalProps) {
 
 	function handleOnRequestCloseModal() {
 		if (!laster) {
-			hideModal();
+			resetModalType();
 		}
 	}
 
 	const OvertaForVeilederVisning = (
 		<>
-			<Normaltekst className="varsel-modal__tekstinnehold">
-				Vil du overta ansvaret for vedtaket fra veileder {`${utkast.veilederNavn}?`}
-			</Normaltekst>
-			<div className="varsel-modal__knapper">
+			<Modal.Header>
+				<Heading level="1" size="medium">
+					Overta ansvar for vedtaket
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>Vil du overta ansvaret for vedtaket fra veileder {`${utkast.veilederNavn}?`}</Modal.Body>
+			<Modal.Footer>
 				<Button size="small" loading={laster} onClick={handleTaOverVedtak}>
 					Ta over
 				</Button>
-				<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
+				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
 					Avbryt
 				</Button>
-			</div>
+			</Modal.Footer>
 		</>
 	);
 
 	const OvertaValgVisning = (
 		<>
-			<div className="ta-over-modal__radiopanel">
-				<Normaltekst className="varsel-modal__tekstinnehold blokk-s">Hvem ønsker du å ta over for?</Normaltekst>
+			<Modal.Header>
+				<Heading level="1" size="medium">
+					Hvem ønsker du å ta over for?
+				</Heading>
+			</Modal.Header>
+			<Modal.Body>
 				<RadioPanelGruppe
 					name="taovervedtakfor"
 					legend={null}
 					radios={taOverOptions}
 					onChange={(e: any) => setTaOverFor(e.target.value)}
 					checked={taOverFor}
+					className="varsel-modal__tekstinnhold"
 				/>
-
-				<div className="varsel-modal__knapper">
-					<Button size="small" loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>
-						Ta over
-					</Button>
-					<Button size="small" variant="secondary" loading={laster} onClick={hideModal}>
-						Avbryt
-					</Button>
-				</div>
-			</div>
+			</Modal.Body>
+			<Modal.Footer>
+				<Button size="small" loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>
+					Ta over
+				</Button>
+				<Button size="small" variant="secondary" loading={laster} onClick={resetModalType}>
+					Avbryt
+				</Button>
+			</Modal.Footer>
 		</>
 	);
 
 	const Innhold = visValg ? OvertaValgVisning : OvertaForVeilederVisning;
 
 	return (
-		<VarselModal
-			isOpen={props.isOpen}
-			contentLabel="Ta over utkast"
-			onRequestClose={handleOnRequestCloseModal}
-			varselIkonType={VarselIkonType.INGEN}
-			portalClassName="ta-over-modal"
-		>
+		<VarselModal isOpen={props.isOpen} onRequestClose={handleOnRequestCloseModal} contentLabel="Ta over utkast">
 			{Innhold}
 		</VarselModal>
 	);

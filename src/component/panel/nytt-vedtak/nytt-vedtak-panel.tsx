@@ -19,7 +19,7 @@ import './nytt-vedtak-panel.less';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { fnr } = useAppStore();
-	const { showModal, hideModal } = useModalStore();
+	const { showModal, resetModalType } = useModalStore();
 	const { oppfolgingData, fattedeVedtak, setMeldinger, setUtkast } = useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
 	const { changeView } = useViewStore();
@@ -62,7 +62,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 				setVeilederTilgang(VeilederTilgang.ANSVARLIG_VEILEDER);
 				setMeldinger([]); // Rydd opp hvis det ligger gamle meldinger mellomlagret
 
-				hideModal();
+				resetModalType();
 				changeView(ViewType.UTKAST);
 
 				logMetrikk('lag-nytt-vedtak', { kopierteFraSisteVedtak: kopierSisteVedtak });

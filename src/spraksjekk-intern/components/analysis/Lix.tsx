@@ -1,5 +1,5 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
-import { ExternalLink } from '@navikt/ds-icons';
+import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { OrNothing } from '../../../util/type/ornothing';
 
 function lixResultMessage(lix: number): string {
@@ -60,16 +60,16 @@ function Lix(props: { content: OrNothing<string> }) {
 						Liks: {lix} - {lixResultMessage(lix)}
 					</Accordion.Header>
 					<Accordion.Content>
-						<BodyShort>
+						<BodyShort size="small">
 							Liks: {lix}. Teksten kan anses{' '}
 							<span style={{ textTransform: 'lowercase' }}>{lixResultMessage(lix)}</span> ifølge{' '}
 							<Link target="_blank" href="https://no.wikipedia.org/wiki/Lesbarhetsindeks">
 								lesbarhetsindeksen Liks
-								<ExternalLink />
+								<ExternalLinkIcon />
 							</Link>
 							.
 						</BodyShort>
-						<BodyShort className="mt-4">
+						<BodyShort size="small" className="mt-4">
 							<Heading level="4" size="xsmall">
 								Skriveråd
 							</Heading>
