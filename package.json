@@ -43,7 +43,7 @@
     "constate": "3.3.2",
     "craco-less": "3.0.1",
     "dayjs": "1.11.10",
-    "dompurify": "3.0.5",
+    "dompurify": "3.0.8",
     "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
     "nav-frontend-core": "^6.0.1",
@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@types/classnames": "2.3.1",
-    "@types/dompurify": "3.0.2",
+    "@types/dompurify": "3.0.5",
     "@types/jest": "29.5.11",
     "@types/lodash.debounce": "4.0.9",
     "@types/lodash.isequal": "4.5.8",
