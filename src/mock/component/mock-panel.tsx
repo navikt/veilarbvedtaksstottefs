@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { RadioPanel } from 'nav-frontend-skjema';
 import { useDataStore } from '../../store/data-store';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { finnVeilederTilgang } from '../../util/tilgang';
@@ -8,9 +6,9 @@ import { useSkjemaStore } from '../../store/skjema-store';
 import { Veileder } from '../../api/veilarbveileder';
 import { hentUtkast, oppdaterVedtakUtkastMockFraSkjema, updateInnloggetVeilederMock } from '../api-data';
 import { veiledere } from '../data';
-import { Button } from '@navikt/ds-react';
+import { Box, Button, Radio, RadioGroup } from '@navikt/ds-react';
 import { XMarkIcon } from '@navikt/aksel-icons';
-import './mock-panel.less';
+import './mock-panel.css';
 
 export function MockPanel() {
 	const [visPanel, setVisPanel] = useState(false);
@@ -26,10 +24,17 @@ export function MockPanel() {
 			)}
 
 			{visPanel && (
-				<div className="mock-panel__innhold">
+				<Box
+					background="bg-default"
+					paddingBlock="2"
+					paddingInline="4"
+					borderWidth="5"
+					borderColor="border-alt-3"
+					className="mock-panel__innhold"
+				>
 					<Button size="small" variant="secondary" icon={<XMarkIcon aria-hidden />} onClick={toggle} />
 					<InnloggetSom />
-				</div>
+				</Box>
 			)}
 		</div>
 	);
@@ -40,9 +45,9 @@ function InnloggetSom() {
 	const { setVeilederTilgang } = useTilgangStore();
 	const { innsatsgruppe, hovedmal, begrunnelse, kilder } = useSkjemaStore();
 
-	const skjemaData = { innsatsgruppe, hovedmal, begrunnelse, opplysninger: kilder };
+	function byttInnloggetVeileder(veilederident: string) {
+		const veileder = veiledere.find(v => v.ident === veilederident) as Veileder;
 
-	function byttInnloggetVeileder(veileder: Veileder) {
 		oppdaterVedtakUtkastMockFraSkjema(skjemaData);
 		setUtkast(hentUtkast());
 		updateInnloggetVeilederMock(veileder);
@@ -51,20 +56,12 @@ function InnloggetSom() {
 	}
 
 	return (
-		<fieldset>
-			<legend>
-				<Normaltekst>Innlogget som</Normaltekst>
-			</legend>
+		<RadioGroup legend="Innlogget som:" onChange={byttInnloggetVeileder} value={innloggetVeileder.ident}>
 			{veiledere.map(veileder => (
-				<RadioPanel
-					onChange={() => byttInnloggetVeileder(veileder)}
-					key={veileder.ident}
-					name={veileder.navn}
-					label={veileder.navn}
-					value={veileder.navn}
-					checked={veileder.ident === innloggetVeileder.ident}
-				/>
+				<Radio key={veileder.ident} value={veileder.ident}>
+					{veileder.navn}
+				</Radio>
 			))}
-		</fieldset>
+		</RadioGroup>
 	);
 }
