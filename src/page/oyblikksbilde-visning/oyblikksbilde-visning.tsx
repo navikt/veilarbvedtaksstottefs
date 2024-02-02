@@ -9,7 +9,7 @@ import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
 import Footer from '../../component/footer/footer';
 import { useViewStore, ViewType } from '../../store/view-store';
 import Spinner from '../../component/spinner/spinner';
-import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } from './oyblikksbilde-fikser';
+import { fiksCvOgJobbonsker, fiksEgenvurderingJson, fiksRegistreringsinfoJson } from './oyblikksbilde-fikser';
 import { logMetrikk } from '../../util/logger';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
@@ -52,7 +52,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 	const { changeView } = useViewStore();
 	const { fnr, enhetId } = useAppStore();
 
-	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
+	const cvOgJobbonskerJson = fiksCvOgJobbonsker(
 		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, props.oyeblikksbilde)
 	);
 
@@ -71,7 +71,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 			<Page className="oyblikksbilde-visning page--grey">
 				<section className="vedlegg">
 					<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
-					<VedleggCard tittel="CV og Jobbprofil" json={cvOgJobbprofileJson} />
+					<VedleggCard tittel="CV og Jobbønsker" json={cvOgJobbonskerJson} />
 					<VedleggCard tittel="Registrering" json={registreringsinfoJson} />
 					<VedleggCard tittel="Egenvurdering" json={egenvurderingJson} />
 				</section>

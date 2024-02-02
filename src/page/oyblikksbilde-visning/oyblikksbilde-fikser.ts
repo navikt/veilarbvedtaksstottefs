@@ -25,18 +25,18 @@ export function fiksRegistreringsinfoJson(json: string | null): object | null {
 	return regInfo;
 }
 
-export function fiksCvOgJobbprofil(json: string | null): object | null {
+export function fiksCvOgJobbonsker(json: string | null): object | null {
 	if (json == null) {
 		return null;
 	}
 
-	const cvOgJobbprofil = JSON.parse(json);
+	const cvOgJobbonsker = JSON.parse(json);
 
-	removeNullValues(cvOgJobbprofil);
-	formatDates(cvOgJobbprofil);
-	translateKeysToNorwegian(cvOgJobbprofil);
+	removeNullValues(cvOgJobbonsker);
+	formatDates(cvOgJobbonsker);
+	translateKeysToNorwegian(cvOgJobbonsker);
 
-	return cvOgJobbprofil;
+	return cvOgJobbonsker;
 }
 
 export function fiksEgenvurderingJson(json: string | null, fnr?: string, enhetId?: string): object | null {

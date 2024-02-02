@@ -124,7 +124,7 @@ const historisk: Vedtak[] = [
 			'- listepunkt 5',
 		opplysninger: [
 			'Svarene dine fra da du registrerte deg',
-			'CV-en/jobbprofilen din på nav.no',
+			'CV-en/jobbønskene dine på nav.no',
 			'Svarene dine om behov for veiledning'
 		],
 		gjeldende: false,
