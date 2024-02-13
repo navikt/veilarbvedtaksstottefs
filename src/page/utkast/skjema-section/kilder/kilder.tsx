@@ -17,8 +17,8 @@ export interface Kilde {
 }
 
 function Kilder() {
-	const { kilder: skjemaKilder, setKilder: setSkjemaKilder, errors } = useSkjemaStore();
-	const [kilder, setKilder] = useState<Kilde[]>(mergeMedDefaultKilder(skjemaKilder));
+	const { valgteKilder: valgteKilderfraStore, setValgteKilder, errors } = useSkjemaStore();
+	const [kilder, setKilder] = useState<Kilde[]>(mergeMedDefaultKilder(valgteKilderfraStore));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
 	const [visLeggTilNyKilde, setVisLeggTilNyKilde] = useState<boolean>(true);
 	const [sistEndretIndeks, setSistEndretIndeks] = useState<number>(-1);
@@ -63,7 +63,7 @@ function Kilder() {
 		if (isAfterFirstRender) {
 			const valgteKilder = kilder.filter(kilde => kilde.erValgt).map(kilde => kilde.navn);
 
-			setSkjemaKilder(valgteKilder);
+			setValgteKilder(valgteKilder);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [kilder]);

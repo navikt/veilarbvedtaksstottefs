@@ -11,7 +11,7 @@ import {
 } from '../util/skjema-utils';
 
 export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
-	const [kilder, setKilder] = useState<string[]>([]);
+	const [valgteKilder, setValgteKilder] = useState<string[]>([]);
 	const [hovedmal, setHovedmal] = useState<OrNothing<HovedmalType>>();
 	const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>();
 	const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
@@ -21,7 +21,10 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	const [harForsoktAForhandsvise, setHarForsoktAForhandsvise] = useState<boolean>(false);
 
 	const valider = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
-		const feil = validerSkjema({ opplysninger: kilder, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
+		const feil = validerSkjema(
+			{ opplysninger: valgteKilder, hovedmal, innsatsgruppe, begrunnelse },
+			gjeldendeVedtak
+		);
 		setErrors(feil);
 		return feil;
 	};
@@ -34,7 +37,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	const initSkjema = (utkast: Utkast) => {
 		const mappetKilder = mapKilderFraForskjelligMalformTilBokmal(utkast.opplysninger);
 		setHovedmal(utkast.hovedmal);
-		setKilder(mappetKilder);
+		setValgteKilder(mappetKilder);
 		setInnsatsgruppe(utkast.innsatsgruppe);
 		setBegrunnelse(utkast.begrunnelse);
 		setSistOppdatert(utkast.utkastSistOppdatert);
@@ -42,7 +45,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 
 	const resetSkjema = () => {
 		setHovedmal(undefined);
-		setKilder([]);
+		setValgteKilder([]);
 		setInnsatsgruppe(undefined);
 		setBegrunnelse(undefined);
 		setSistOppdatert('');
@@ -50,8 +53,8 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	};
 
 	return {
-		kilder,
-		setKilder,
+		valgteKilder,
+		setValgteKilder,
 		hovedmal,
 		setHovedmal,
 		innsatsgruppe,

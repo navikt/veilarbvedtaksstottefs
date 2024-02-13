@@ -43,7 +43,9 @@ export function MockPanel() {
 function InnloggetSom() {
 	const { innloggetVeileder, setInnloggetVeileder, setUtkast } = useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
-	const { innsatsgruppe, hovedmal, begrunnelse, kilder } = useSkjemaStore();
+	const { innsatsgruppe, hovedmal, begrunnelse, valgteKilder } = useSkjemaStore();
+
+	const skjemaData = { innsatsgruppe, hovedmal, begrunnelse, opplysninger: valgteKilder };
 
 	function byttInnloggetVeileder(veilederident: string) {
 		const veileder = veiledere.find(v => v.ident === veilederident) as Veileder;

@@ -53,13 +53,13 @@ export function mapKilderFraBokmalTilBrukersMalform(
 	});
 }
 
-export function mergeMedDefaultKilder(kildeListe: string[]): Kilde[] {
+export function mergeMedDefaultKilder(valgteKilderListe: string[]): Kilde[] {
 	const kilder = kildelisteBokmal.map(kildeTekst => ({
 		navn: kildeTekst,
-		erValgt: kildeListe.includes(kildeTekst)
+		erValgt: valgteKilderListe.includes(kildeTekst)
 	}));
 
-	kildeListe
+	valgteKilderListe
 		.filter(kildeTekst => !kildelisteBokmal.includes(kildeTekst))
 		.forEach(kildeTekst => kilder.push({ navn: kildeTekst, erValgt: true }));
 
@@ -97,7 +97,7 @@ export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
 
 export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil {
 	const errors: SkjemaFeil = {};
-	const { innsatsgruppe, opplysninger, begrunnelse, hovedmal } = skjema;
+	const { innsatsgruppe, opplysninger: valgteKilder, begrunnelse, hovedmal } = skjema;
 
 	if (!innsatsgruppe) {
 		errors.innsatsgruppe = 'Mangler innsatsgruppe';
@@ -114,7 +114,7 @@ export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Ved
 	const begrunnelsefeil = validerBegrunnelseMaxLength(begrunnelse);
 	Object.assign(errors, begrunnelsefeil);
 
-	if (!opplysninger || opplysninger.length < 1) {
+	if (!valgteKilder || valgteKilder.length < 1) {
 		errors.kilder = 'Mangler kilder';
 	}
 
