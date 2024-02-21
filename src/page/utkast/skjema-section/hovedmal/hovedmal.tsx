@@ -45,7 +45,7 @@ function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
 					value={mal.value}
 					onChange={(e: any) => props.handleHovedmalChanged(e.target.value)}
 					checked={props.hovedmal === mal.value}
-					onKeyPress={swallowEnterKeyPress}
+					onKeyDown={swallowEnterKeyPress}
 				/>
 			))}
 		</div>

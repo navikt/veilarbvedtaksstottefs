@@ -93,7 +93,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 						label={innsatsgruppeTekst.tittel}
 						name="innsatsgruppe"
 						value={innsatsgruppeTekst.value}
-						onKeyPress={swallowEnterKeyPress}
+						onKeyDown={swallowEnterKeyPress}
 						checked={props.innsatsgruppe === innsatsgruppeTekst.value}
 						onChange={(e: any) => handleInnsatsgruppeChanged(e.target.value)}
 					/>
