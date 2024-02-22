@@ -29,7 +29,7 @@ spec:
       memory: 256Mi
   gcp:
     buckets:
-      - name: veilarbvedtaksstottefs-dev
+      - name: obo-veilarbvedtaksstottefs-dev
         cascadingDelete: false
   env:
     - name: JSON_CONFIG
@@ -39,6 +39,6 @@ spec:
             "origin": "https://veilarbpersonflate.intern.dev.nav.no"
           },
           "gcs": {
-            "bucketName": "veilarbvedtaksstottefs-dev"
+            "bucketName": "obo-veilarbvedtaksstottefs-dev"
           }
         }
