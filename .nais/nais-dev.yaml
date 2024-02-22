@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: veilarbvedtaksstottefs
-  namespace: pto
+  namespace: obo
   labels:
     team: obo
 spec:
