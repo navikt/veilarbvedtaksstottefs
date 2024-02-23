@@ -14,7 +14,7 @@ export function VisKilde({ kildenavn, handleKilde }: VisKildeProps) {
 
 	return (
 		<div className="vis-kilde">
-			<Checkbox size="small" value={kildenavn} onKeyDown={swallowEnterKeyPress}>
+			<Checkbox value={kildenavn} onKeyDown={swallowEnterKeyPress}>
 				{kildenavn}
 			</Checkbox>
 			{kanRedigeres && (
