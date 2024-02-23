@@ -52,7 +52,7 @@ function Kilder() {
 			<CheckboxGroup
 				id="kilder__checkboxgroup"
 				size="small"
-				legend="Kildevalg"
+				legend="Valg av kilder"
 				hideLegend
 				onChange={nyeValgteKilder => setValgteKilder(nyeValgteKilder)}
 				value={valgteKilder}
