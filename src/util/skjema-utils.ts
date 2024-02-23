@@ -2,7 +2,6 @@ import { erStandard, erVarigEllerGradertVarig } from './innsatsgruppe';
 import { OrNothing } from './type/ornothing';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../api/veilarbvedtaksstotte';
 import { MalformData, MalformType } from '../api/veilarbperson';
-import { Kilde } from '../page/utkast/skjema-section/kilder/kilder';
 import { SkjemaFeil } from './type/skjema-feil';
 import { BEGRUNNELSE_MAX_LENGTH } from '../page/utkast/skjema-section/begrunnelse/begrunnelse';
 
@@ -53,17 +52,9 @@ export function mapKilderFraBokmalTilBrukersMalform(
 	});
 }
 
-export function mergeMedDefaultKilder(valgteKilderListe: string[]): Kilde[] {
-	const kilder = kildelisteBokmal.map(kildeTekst => ({
-		navn: kildeTekst,
-		erValgt: valgteKilderListe.includes(kildeTekst)
-	}));
-
-	valgteKilderListe
-		.filter(kildeTekst => !kildelisteBokmal.includes(kildeTekst))
-		.forEach(kildeTekst => kilder.push({ navn: kildeTekst, erValgt: true }));
-
-	return kilder;
+export function mergeMedDefaultKilder(valgteKilderListe: string[]): string[] {
+	// Slår sammen listene og fjerner duplikater
+	return Array.from(new Set([...kildelisteBokmal, ...valgteKilderListe]));
 }
 
 export function erDefaultKilde(kilde: string) {

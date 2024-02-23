@@ -1,5 +1,4 @@
 import React, { CSSProperties } from 'react';
-import { SkjemaelementFeilmelding } from 'nav-frontend-skjema';
 import { OrNothing } from './type/ornothing';
 import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 
@@ -17,7 +16,7 @@ export const scrollToBottom = (elem: Element | null) => {
 };
 
 export const lagSkjemaelementFeilmelding = (muligFeil: string | undefined): React.ReactNode => {
-	return muligFeil ? <SkjemaelementFeilmelding aria-live="assertive">{muligFeil}</SkjemaelementFeilmelding> : null;
+	return muligFeil ? muligFeil : null;
 };
 
 export const finnGjeldendeVedtak = (vedtakListe: OrNothing<Vedtak[]>): Vedtak | undefined => {

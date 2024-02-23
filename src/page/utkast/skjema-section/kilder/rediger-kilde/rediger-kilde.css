@@ -1,0 +1,9 @@
+.veilarbvedtaksstottefs .rediger-kilde {
+	margin: 0.5rem 0 1rem 0;
+}
+
+.veilarbvedtaksstottefs .rediger-kilde__handlinger {
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--a-spacing-2);
+}

@@ -1,0 +1,5 @@
+.veilarbvedtaksstottefs .vis-kilde {
+	display: flex;
+	justify-content: space-between;
+	word-break: break-word;
+}
