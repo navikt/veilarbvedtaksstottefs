@@ -5,10 +5,11 @@ import { useViewStore, ViewType } from '../store/view-store';
 import { OyblikksbildeVisning } from '../page/oyblikksbilde-visning/oyblikksbilde-visning';
 import { ArenaVedtaksbrevVisning, VedtaksbrevVisning } from '../page/vedtaksbrev-visning/vedtaksbrev-visning';
 import { UtkastSide } from '../page/utkast/utkast-side';
+import { OyeblikksbildeVisningPDF } from '../page/oyblikksbilde-visning/oyeblikksbilde-visning-pdf';
 
 export function ViewController() {
 	const { view, viewProps } = useViewStore();
-	const { vedtakId, dokumentInfoId, journalpostId } = viewProps;
+	const { vedtakId, dokumentInfoId, journalpostId, oyeblikksbildeType } = viewProps;
 
 	switch (view) {
 		case ViewType.HOVEDSIDE:
@@ -23,6 +24,8 @@ export function ViewController() {
 			return <OyblikksbildeVisning vedtakId={vedtakId} />;
 		case ViewType.VEDTAK_PDF:
 			return <VedtaksbrevVisning vedtakId={vedtakId} />;
+		case ViewType.VEDTAK_OYEBLIKKSBILDE_PDF:
+			return <OyeblikksbildeVisningPDF vedtakId={vedtakId} oyeblikksbildeType={oyeblikksbildeType} />;
 		case ViewType.ARENA_VEDTAK_PDF:
 			return <ArenaVedtaksbrevVisning dokumentInfoId={dokumentInfoId} journalpostId={journalpostId} />;
 		default:
