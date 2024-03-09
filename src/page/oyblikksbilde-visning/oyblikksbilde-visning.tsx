@@ -13,6 +13,8 @@ import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } 
 import { logMetrikk } from '../../util/logger';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
+import { ReactComponent as FilePdfIkon } from './icons/filepdficon.svg';
+import { BodyShort, Link } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
 import { Alert, Button } from '@navikt/ds-react';
 import './oyblikksbilde-visning.less';
@@ -23,6 +25,14 @@ function finnOyblikksbilde(
 ): string | null {
 	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.oyeblikksbildeType === oyblikksbildeType) : null;
 	return oyblikksbilde ? oyblikksbilde.json : null;
+}
+
+function harJournalfortOyblikksbilde(
+	oyblikksbildeType: OyblikksbildeType,
+	oyblikksbilder: OrNothing<Oyblikksbilde[]>
+): boolean {
+	const oyblikksbilde = oyblikksbilder ? oyblikksbilder.find(o => o.oyeblikksbildeType === oyblikksbildeType) : null;
+	return oyblikksbilde ? oyblikksbilde.journalfort : false;
 }
 
 export function OyblikksbildeVisning(props: { vedtakId: number }) {
@@ -55,25 +65,59 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
 		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, props.oyeblikksbilde)
 	);
-
 	const registreringsinfoJson = fiksRegistreringsinfoJson(
 		finnOyblikksbilde(OyblikksbildeType.REGISTRERINGSINFO, props.oyeblikksbilde)
 	);
-
 	const egenvurderingJson = fiksEgenvurderingJson(
 		finnOyblikksbilde(OyblikksbildeType.EGENVURDERING, props.oyeblikksbilde),
 		fnr,
 		enhetId
 	);
 
+	const harJournalfortCVOyeblikksbilde = harJournalfortOyblikksbilde(
+		OyblikksbildeType.CV_OG_JOBBPROFIL,
+		props.oyeblikksbilde
+	);
+	const harJournalfortRegistreringOyeblikksbilde = harJournalfortOyblikksbilde(
+		OyblikksbildeType.REGISTRERINGSINFO,
+		props.oyeblikksbilde
+	);
+	const harJournalfortEgenvurderingOyeblikksbilde = harJournalfortOyblikksbilde(
+		OyblikksbildeType.EGENVURDERING,
+		props.oyeblikksbilde
+	);
+
 	return (
 		<>
 			<Page className="oyblikksbilde-visning page--grey">
 				<section className="vedlegg">
-					<Innholdstittel className="vedlegg__tittel">Brukerinformasjon på vedtakstidspunktet</Innholdstittel>
-					<VedleggCard tittel="CV og Jobbprofil" json={cvOgJobbprofileJson} />
-					<VedleggCard tittel="Registrering" json={registreringsinfoJson} />
-					<VedleggCard tittel="Egenvurdering" json={egenvurderingJson} />
+					<Innholdstittel className="vedlegg__tittel">
+						Journalført brukerinformasjon på vedtakstidspunktet
+					</Innholdstittel>
+					<VedleggCard
+						tittel="Svarene dine fra da du registrerte deg"
+						json={registreringsinfoJson}
+						journalfortDokumentTitel="Svarene_dine_fra_da_du_registrerte_deg.pdf"
+						vedtakId={props.vedtakId}
+						oyeblikksbildeType={OyblikksbildeType.REGISTRERINGSINFO}
+						harJournalfortOyeblikksbilde={harJournalfortRegistreringOyeblikksbilde}
+					/>
+					<VedleggCard
+						tittel="CV-en/jobbprofilen din på nav.no"
+						json={cvOgJobbprofileJson}
+						journalfortDokumentTitel="CV.pdf"
+						vedtakId={props.vedtakId}
+						oyeblikksbildeType={OyblikksbildeType.CV_OG_JOBBPROFIL}
+						harJournalfortOyeblikksbilde={harJournalfortCVOyeblikksbilde}
+					/>
+					<VedleggCard
+						tittel="Svarene dine om behov for veiledning"
+						json={egenvurderingJson}
+						journalfortDokumentTitel="Svarene_dine_om_behov_for_veiledning.pdf"
+						vedtakId={props.vedtakId}
+						oyeblikksbildeType={OyblikksbildeType.EGENVURDERING}
+						harJournalfortOyeblikksbilde={harJournalfortEgenvurderingOyeblikksbilde}
+					/>
 				</section>
 			</Page>
 			<Footer className="oyblikksbilde-visning__footer">
@@ -85,13 +129,45 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 	);
 }
 
-function VedleggCard({ tittel, json }: { tittel: string; json: string | object | null }) {
+function VedleggCard({
+	tittel,
+	json,
+	journalfortDokumentTitel,
+	vedtakId,
+	oyeblikksbildeType,
+	harJournalfortOyeblikksbilde
+}: {
+	tittel: string;
+	json: string | object | null;
+	journalfortDokumentTitel: string;
+	vedtakId: number;
+	oyeblikksbildeType: string;
+	harJournalfortOyeblikksbilde: boolean;
+}) {
+	const { changeView } = useViewStore();
+	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
+		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
+		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
+	};
+
 	return (
 		<Card className="vedlegg-card">
 			<Systemtittel tag="h2" className="vedlegg-card__header">
 				{tittel}
 			</Systemtittel>
 			<JsonViewer json={json} className="oyblikksbilde-visning__json-visning" />
+			{harJournalfortOyeblikksbilde && (
+				<div className="oyeblikk-pdf">
+					<Link onClick={() => visOyeblikkbildePdf(vedtakId, oyeblikksbildeType)}>
+						<div className="oyblikksbilde-visning-pdf-ikon">
+							<FilePdfIkon title="a11y-title" height="1em" width="1em" fontSize="1.75rem" />
+						</div>
+						<BodyShort size="small" className="file_tittel">
+							{journalfortDokumentTitel}
+						</BodyShort>
+					</Link>
+				</div>
+			)}
 		</Card>
 	);
 }
