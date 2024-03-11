@@ -37,7 +37,7 @@ jobs:
             - name: Set up Cloud SDK
               uses: google-github-actions/setup-gcloud@v2
             - name: Upload files to GCS
-              run: gsutil -m rsync -r build gs://obo-veilarbvedtaksstottefs-prod
+              run: gsutil -m rsync -r build gs://veilarbvedtaksstottefs-prod
             - name: Create release
               uses: softprops/action-gh-release@v1
               with:
