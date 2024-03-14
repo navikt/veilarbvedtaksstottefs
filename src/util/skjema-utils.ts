@@ -15,13 +15,13 @@ export interface SkjemaData {
 
 export const kildelisteBokmal = [
 	'Svarene dine fra da du registrerte deg',
-	'CV-en/jobbprofilen din på nav.no',
+	'CV-en/jobbønskene dine på nav.no',
 	'Svarene dine om behov for veiledning'
 ];
 
 export const kildelisteNynorsk = [
 	'Svara dine frå då du registrerte deg',
-	'CV-en/jobbprofilen din på nav.no',
+	'CV-en/jobbønska dine på nav.no',
 	'Svara dine om behov for rettleiing'
 ];
 

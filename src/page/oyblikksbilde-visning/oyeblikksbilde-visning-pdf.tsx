@@ -45,7 +45,11 @@ function GenericVedtaksbrevVisning(props: GenericVedtaksbrevVisningProps) {
 
 	return (
 		<>
-			<PdfViewer url={props.oyeblikksbildeUrl} title="Visning av oyeblikksbilde" onStatusUpdate={setPdfStatus} />
+			<PdfViewer
+				url={props.oyeblikksbildeUrl}
+				title="Journalført brukerinformasjon på vedtakstidspunktet"
+				onStatusUpdate={setPdfStatus}
+			/>
 			<Footer>
 				<div className="vedtaksbrev-visning__aksjoner">
 					<Button
