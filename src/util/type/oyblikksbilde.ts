@@ -4,4 +4,5 @@ export interface Oyblikksbilde {
 	oyeblikksbildeType: OyblikksbildeType;
 	json: string;
 	journalfort: boolean;
+	htmlView: string;
 }
