@@ -50,7 +50,7 @@ function capitalizeFirstLetter(input: string) {
 	return input;
 }
 
-export function fiksCvOgJobbprofil(json: string): object | null {
+export function fiksCvOgJobbprofil(json: string | null): object | null {
 	if (json == null) {
 		return null;
 	}
