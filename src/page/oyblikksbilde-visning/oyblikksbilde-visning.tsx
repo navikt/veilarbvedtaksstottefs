@@ -13,11 +13,12 @@ import { fiksCvOgJobbprofil, fiksEgenvurderingJson, fiksRegistreringsinfoJson } 
 import { logMetrikk } from '../../util/logger';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
-import { ReactComponent as FilePdfIkon } from './icons/filepdficon.svg';
-import { BodyShort, Link } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
 import { Alert, Button } from '@navikt/ds-react';
 import './oyblikksbilde-visning.less';
+import { FilePdfIcon } from '@navikt/aksel-icons';
+import { useDataStore } from '../../store/data-store';
+import { Vedtak } from '../../api/veilarbvedtaksstotte';
 
 function finnOyblikksbilde(
 	oyblikksbildeType: OyblikksbildeType,
@@ -61,6 +62,17 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyblikksbilde[]> }) {
 	const { changeView } = useViewStore();
 	const { fnr, enhetId } = useAppStore();
+	const { fattedeVedtak } = useDataStore();
+	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
+
+	const visCvVedleggCard =
+		vistVedtak !== undefined && vistVedtak.opplysninger.filter(kilde => kilde.includes('CV-en')).length > 0;
+	const visRegistreringVedleggCard =
+		vistVedtak !== undefined &&
+		vistVedtak.opplysninger.filter(kilde => kilde.includes('registrerte deg')).length > 0;
+	const visEgenvurderingVedleggCard =
+		vistVedtak !== undefined &&
+		vistVedtak.opplysninger.filter(kilde => kilde.includes('behov for veiledning')).length > 0;
 
 	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
 		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, props.oyeblikksbilde)
@@ -94,30 +106,37 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 					<Innholdstittel className="vedlegg__tittel">
 						Journalført brukerinformasjon på vedtakstidspunktet
 					</Innholdstittel>
-					<VedleggCard
-						tittel="Svarene dine fra da du registrerte deg"
-						json={registreringsinfoJson}
-						journalfortDokumentTitel="Svarene_dine_fra_da_du_registrerte_deg.pdf"
-						vedtakId={props.vedtakId}
-						oyeblikksbildeType={OyblikksbildeType.REGISTRERINGSINFO}
-						harJournalfortOyeblikksbilde={harJournalfortRegistreringOyeblikksbilde}
-					/>
-					<VedleggCard
-						tittel="CV-en/jobbprofilen din på nav.no"
-						json={cvOgJobbprofileJson}
-						journalfortDokumentTitel="CV.pdf"
-						vedtakId={props.vedtakId}
-						oyeblikksbildeType={OyblikksbildeType.CV_OG_JOBBPROFIL}
-						harJournalfortOyeblikksbilde={harJournalfortCVOyeblikksbilde}
-					/>
-					<VedleggCard
-						tittel="Svarene dine om behov for veiledning"
-						json={egenvurderingJson}
-						journalfortDokumentTitel="Svarene_dine_om_behov_for_veiledning.pdf"
-						vedtakId={props.vedtakId}
-						oyeblikksbildeType={OyblikksbildeType.EGENVURDERING}
-						harJournalfortOyeblikksbilde={harJournalfortEgenvurderingOyeblikksbilde}
-					/>
+
+					{visRegistreringVedleggCard && (
+						<VedleggCard
+							tittel="Svarene dine fra da du registrerte deg"
+							json={registreringsinfoJson}
+							journalfortDokumentTitel="Svarene_dine_fra_da_du_registrerte_deg.pdf"
+							vedtakId={props.vedtakId}
+							oyeblikksbildeType={OyblikksbildeType.REGISTRERINGSINFO}
+							harJournalfortOyeblikksbilde={harJournalfortRegistreringOyeblikksbilde}
+						/>
+					)}
+					{visCvVedleggCard && (
+						<VedleggCard
+							tittel="CV-en/jobbprofilen din på nav.no"
+							json={cvOgJobbprofileJson}
+							journalfortDokumentTitel="CV.pdf"
+							vedtakId={props.vedtakId}
+							oyeblikksbildeType={OyblikksbildeType.CV_OG_JOBBPROFIL}
+							harJournalfortOyeblikksbilde={harJournalfortCVOyeblikksbilde}
+						/>
+					)}
+					{visEgenvurderingVedleggCard && (
+						<VedleggCard
+							tittel="Svarene dine om behov for veiledning"
+							json={egenvurderingJson}
+							journalfortDokumentTitel="Svarene_dine_om_behov_for_veiledning.pdf"
+							vedtakId={props.vedtakId}
+							oyeblikksbildeType={OyblikksbildeType.EGENVURDERING}
+							harJournalfortOyeblikksbilde={harJournalfortEgenvurderingOyeblikksbilde}
+						/>
+					)}
 				</section>
 			</Page>
 			<Footer className="oyblikksbilde-visning__footer">
@@ -155,18 +174,18 @@ function VedleggCard({
 			<Systemtittel tag="h2" className="vedlegg-card__header">
 				{tittel}
 			</Systemtittel>
+
 			<JsonViewer json={json} className="oyblikksbilde-visning__json-visning" />
+
 			{harJournalfortOyeblikksbilde && (
-				<div className="oyeblikk-pdf">
-					<Link onClick={() => visOyeblikkbildePdf(vedtakId, oyeblikksbildeType)}>
-						<div className="oyblikksbilde-visning-pdf-ikon">
-							<FilePdfIkon title="a11y-title" height="1em" width="1em" fontSize="1.75rem" />
-						</div>
-						<BodyShort size="small" className="file_tittel">
-							{journalfortDokumentTitel}
-						</BodyShort>
-					</Link>
-				</div>
+				<Button
+					size="small"
+					variant="tertiary"
+					onClick={() => visOyeblikkbildePdf(vedtakId, oyeblikksbildeType)}
+					icon={<FilePdfIcon />}
+				>
+					{journalfortDokumentTitel}
+				</Button>
 			)}
 		</Card>
 	);

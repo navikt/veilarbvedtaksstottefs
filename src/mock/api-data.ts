@@ -141,7 +141,8 @@ const historisk: Vedtak[] = [
 		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
 		opplysninger: [
 			'Svarene dine fra da du registrerte deg',
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+			'CV-en/jobbprofilen din på nav.no'
 		],
 		vedtakFattet: '2019-12-12T12:58:43.716393+02:00',
 		begrunnelse:
