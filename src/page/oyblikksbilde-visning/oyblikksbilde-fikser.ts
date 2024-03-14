@@ -17,6 +17,8 @@ export function fiksRegistreringsinfoJson(json: string | null): object | null {
 		};
 	}
 
+	removeUnecessaryKeys(regInfo);
+	formatConstValues(regInfo);
 	removeNullValues(regInfo);
 	formatDates(regInfo);
 	translateKeysToNorwegian(regInfo);
@@ -25,7 +27,30 @@ export function fiksRegistreringsinfoJson(json: string | null): object | null {
 	return regInfo;
 }
 
-export function fiksCvOgJobbprofil(json: string | null): object | null {
+export function removeUnecessaryKeys(obj: any): void {
+	deepForEach(obj, (parent, key, value) => {
+		if (key === 'id') {
+			delete parent[key];
+		}
+	});
+}
+
+export function formatConstValues(obj: any): void {
+	deepForEach(obj, (parent, key, value) => {
+		if (typeof value === 'string' && value.indexOf('_')) {
+			parent[key] = capitalizeFirstLetter(value.replace('_', ' ').toLowerCase());
+		}
+	});
+}
+
+function capitalizeFirstLetter(input: string) {
+	if (input != null && input.length > 1) {
+		return input.charAt(0).toUpperCase() + input.slice(1);
+	}
+	return input;
+}
+
+export function fiksCvOgJobbprofil(json: string): object | null {
 	if (json == null) {
 		return null;
 	}
