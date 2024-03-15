@@ -25,6 +25,10 @@ export function lagHentVedtakPdfUrl(vedtakId: number): string {
 	return `${VEILARBVEDTAKSSTOTTE_API}/vedtak/${vedtakId}/pdf`;
 }
 
+export function lagHentOyeblikksbildePdfUrl(vedtakId: number, oyeblikksbildeType: string): string {
+	return `${VEILARBVEDTAKSSTOTTE_API}/vedtak/${vedtakId}/${oyeblikksbildeType}/pdf`;
+}
+
 export function lagHentArenaVedtakPdfUrl(dokumentInfoId: string, journalpostId: string): string {
 	return `${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena/pdf?dokumentInfoId=${dokumentInfoId}&journalpostId=${journalpostId}`;
 }
