@@ -124,7 +124,7 @@ const historisk: Vedtak[] = [
 			'- listepunkt 5',
 		opplysninger: [
 			'Svarene dine fra da du registrerte deg',
-			'CV-en/jobbprofilen din på nav.no',
+			'CV-en/jobbønskene dine på nav.no',
 			'Svarene dine om behov for veiledning'
 		],
 		gjeldende: false,
@@ -142,7 +142,7 @@ const historisk: Vedtak[] = [
 		opplysninger: [
 			'Svarene dine fra da du registrerte deg',
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-			'CV-en/jobbprofilen din på nav.no'
+			'CV-en/jobbønskene dine på nav.no'
 		],
 		vedtakFattet: '2019-12-12T12:58:43.716393+02:00',
 		begrunnelse:

@@ -107,7 +107,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 					)}
 					{visCvVedleggCard && (
 						<VedleggCard
-							tittel="CV-en/jobbprofilen din på nav.no"
+							tittel="CV-en/jobbønskene dine på nav.no"
 							htmlView={cvOgJobbprofileHtmlView}
 							journalfortDokumentTitel="CV_og_jobbonsker.pdf"
 							vedtakId={props.vedtakId}
