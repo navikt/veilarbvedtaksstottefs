@@ -23,7 +23,7 @@ jobs:
                   node-version: 20
                   cache: npm
             - name: Install dependencies
-              run: npm ci --legacy-peer-deps
+              run: npm ci
             - name: Run tests
               run: npm run test
             - name: Build application
@@ -39,7 +39,7 @@ jobs:
             - name: Upload files to GCS
               run: gsutil -m rsync -r build gs://veilarbvedtaksstottefs-prod
             - name: Create release
-              uses: softprops/action-gh-release@v1
+              uses: softprops/action-gh-release@v2
               with:
                   name: Release to prod
                   target_commitish: master
