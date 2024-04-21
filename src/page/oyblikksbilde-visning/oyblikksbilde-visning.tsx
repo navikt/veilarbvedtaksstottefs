@@ -103,9 +103,9 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 						harJournalfortOyeblikksbilde={harJournalfortRegistreringOyeblikksbilde}
 					/>
 					<VedleggCard
-						tittel="CV-en/jobbprofilen din på nav.no"
+						tittel="CV-en/jobbønskene dine på nav.no"
 						json={cvOgJobbprofileJson}
-						journalfortDokumentTitel="CV.pdf"
+						journalfortDokumentTitel="CV_og_jobbonsker.pdf"
 						vedtakId={props.vedtakId}
 						oyeblikksbildeType={OyblikksbildeType.CV_OG_JOBBPROFIL}
 						harJournalfortOyeblikksbilde={harJournalfortCVOyeblikksbilde}
