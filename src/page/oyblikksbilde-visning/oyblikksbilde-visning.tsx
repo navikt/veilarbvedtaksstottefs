@@ -101,7 +101,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 						vedtakId={props.vedtakId}
 						oyeblikksbildeType={OyblikksbildeType.REGISTRERINGSINFO}
 						harJournalfortOyeblikksbilde={harJournalfortRegistreringOyeblikksbilde}
-						ingenDataInfo="<b>Ingen registrerte data:</b> Personen har ikke registrert noen svar."
+						ingenDataInfo="Personen har ikke registrert noen svar."
 					/>
 					<VedleggCard
 						tittel="CV-en/jobbønskene dine på nav.no"
@@ -110,7 +110,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 						vedtakId={props.vedtakId}
 						oyeblikksbildeType={OyblikksbildeType.CV_OG_JOBBPROFIL}
 						harJournalfortOyeblikksbilde={harJournalfortCVOyeblikksbilde}
-						ingenDataInfo="<b>Ingen registrerte data:</b> Personen har ikke registrert CV/jobbønsker."
+						ingenDataInfo="Personen har ikke registrert CV/jobbønsker."
 					/>
 					<VedleggCard
 						tittel="Svarene dine om behov for veiledning"
@@ -119,7 +119,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 						vedtakId={props.vedtakId}
 						oyeblikksbildeType={OyblikksbildeType.EGENVURDERING}
 						harJournalfortOyeblikksbilde={harJournalfortEgenvurderingOyeblikksbilde}
-						ingenDataInfo="<b>Ingen registrerte data:</b> Personen har ikke registrert svar om behov for veiledning."
+						ingenDataInfo="Personen har ikke registrert svar om behov for veiledning."
 					/>
 				</section>
 			</Page>
@@ -164,7 +164,11 @@ function VedleggCard({
 			<Systemtittel tag="h2" className="vedlegg-card__header">
 				{tittel}
 			</Systemtittel>
-			{harIngenData && ingenDataInfo}
+			{harIngenData && (
+				<div>
+					<b>Ingen registrerte data:</b> {ingenDataInfo}{' '}
+				</div>
+			)}
 			{!harIngenData && <JsonViewer json={json} className="oyblikksbilde-visning__json-visning" />}
 			{harJournalfortOyeblikksbilde && (
 				<div className="oyeblikk-pdf">
