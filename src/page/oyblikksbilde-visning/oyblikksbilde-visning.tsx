@@ -152,8 +152,8 @@ function VedleggCard({
 	const { changeView } = useViewStore();
 	const harIngenData =
 		json === null ||
-		(typeof json === 'string' && json.indexOf('ingenData') > 0) ||
-		(typeof json === 'object' && json.hasOwnProperty('ingenData'));
+		(typeof json === 'string' && json.indexOf('ingenData') >= 0) ||
+		(typeof json === 'object' && json['ingenData'] != null);
 	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
 		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
