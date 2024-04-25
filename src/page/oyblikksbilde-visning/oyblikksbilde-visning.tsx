@@ -189,12 +189,14 @@ function VedleggCard({
 			<Systemtittel tag="h2" className="vedlegg-card__header">
 				{tittel}
 			</Systemtittel>
-			{harIngenData && (
-				<div>
-					<b>Ingen registrerte data:</b> {ingenDataInfo}{' '}
-				</div>
-			)}
-			{!harIngenData && <JsonViewer json={json} className="oyblikksbilde-visning__json-visning" />}
+			<div className="innhold">
+				{harIngenData && (
+					<div>
+						<b>Ingen registrerte data:</b> {ingenDataInfo}
+					</div>
+				)}
+				{!harIngenData && <JsonViewer json={json} className="oyblikksbilde-visning__json-visning" />}
+			</div>
 			{harJournalfortOyeblikksbilde && (
 				<div className="oyeblikk-pdf">
 					<Link onClick={() => visOyeblikkbildePdf(vedtakId, oyeblikksbildeType)}>
