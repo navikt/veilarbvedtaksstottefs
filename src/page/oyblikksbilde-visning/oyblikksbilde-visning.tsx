@@ -153,7 +153,7 @@ function VedleggCard({
 	const harIngenData =
 		json === null ||
 		(typeof json === 'string' && json.indexOf('ingenData') >= 0) ||
-		(typeof json === 'object' && json['ingenData'] != null);
+		(typeof json === 'object' && json.hasOwnProperty('ingenData'));
 	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
 		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
