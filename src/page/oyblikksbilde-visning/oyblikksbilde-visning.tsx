@@ -101,6 +101,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 						vedtakId={props.vedtakId}
 						oyeblikksbildeType={OyblikksbildeType.REGISTRERINGSINFO}
 						harJournalfortOyeblikksbilde={harJournalfortRegistreringOyeblikksbilde}
+						ingenDataInfo="<b>Ingen registrerte data:</b> Personen har ikke registrert noen svar."
 					/>
 					<VedleggCard
 						tittel="CV-en/jobbønskene dine på nav.no"
@@ -109,6 +110,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 						vedtakId={props.vedtakId}
 						oyeblikksbildeType={OyblikksbildeType.CV_OG_JOBBPROFIL}
 						harJournalfortOyeblikksbilde={harJournalfortCVOyeblikksbilde}
+						ingenDataInfo="<b>Ingen registrerte data:</b> Personen har ikke registrert CV/jobbønsker."
 					/>
 					<VedleggCard
 						tittel="Svarene dine om behov for veiledning"
@@ -117,6 +119,7 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 						vedtakId={props.vedtakId}
 						oyeblikksbildeType={OyblikksbildeType.EGENVURDERING}
 						harJournalfortOyeblikksbilde={harJournalfortEgenvurderingOyeblikksbilde}
+						ingenDataInfo="<b>Ingen registrerte data:</b> Personen har ikke registrert svar om behov for veiledning."
 					/>
 				</section>
 			</Page>
@@ -135,7 +138,8 @@ function VedleggCard({
 	journalfortDokumentTitel,
 	vedtakId,
 	oyeblikksbildeType,
-	harJournalfortOyeblikksbilde
+	harJournalfortOyeblikksbilde,
+	ingenDataInfo
 }: {
 	tittel: string;
 	json: string | object | null;
@@ -143,8 +147,13 @@ function VedleggCard({
 	vedtakId: number;
 	oyeblikksbildeType: string;
 	harJournalfortOyeblikksbilde: boolean;
+	ingenDataInfo: string;
 }) {
 	const { changeView } = useViewStore();
+	const harIngenData =
+		json === null ||
+		(typeof json === 'string' && json.indexOf('ingenData') > 0) ||
+		(typeof json === 'object' && json.hasOwnProperty('ingenData'));
 	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
 		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
@@ -155,7 +164,8 @@ function VedleggCard({
 			<Systemtittel tag="h2" className="vedlegg-card__header">
 				{tittel}
 			</Systemtittel>
-			<JsonViewer json={json} className="oyblikksbilde-visning__json-visning" />
+			{harIngenData && ingenDataInfo}
+			{!harIngenData && <JsonViewer json={json} className="oyblikksbilde-visning__json-visning" />}
 			{harJournalfortOyeblikksbilde && (
 				<div className="oyeblikk-pdf">
 					<Link onClick={() => visOyeblikkbildePdf(vedtakId, oyeblikksbildeType)}>
