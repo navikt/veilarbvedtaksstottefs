@@ -18,6 +18,8 @@ import { BodyShort, Link } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
 import { Alert, Button } from '@navikt/ds-react';
 import './oyblikksbilde-visning.less';
+import { useDataStore } from '../../store/data-store';
+import { Vedtak } from '../../api/veilarbvedtaksstotte';
 
 function finnOyblikksbilde(
 	oyblikksbildeType: OyblikksbildeType,
@@ -61,6 +63,8 @@ export function OyblikksbildeVisning(props: { vedtakId: number }) {
 function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyblikksbilde[]> }) {
 	const { changeView } = useViewStore();
 	const { fnr, enhetId } = useAppStore();
+	const { fattedeVedtak } = useDataStore();
+	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
 	const cvOgJobbprofileJson = fiksCvOgJobbprofil(
 		finnOyblikksbilde(OyblikksbildeType.CV_OG_JOBBPROFIL, props.oyeblikksbilde)
@@ -73,6 +77,18 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 		fnr,
 		enhetId
 	);
+
+	const visCvVedleggCard =
+		vistVedtak !== undefined &&
+		vistVedtak.opplysninger.filter(kilde => kilde.includes('CV-en/jobbønskene dine på nav.no')).length > 0;
+
+	const visRegistreringVedleggCard =
+		vistVedtak !== undefined &&
+		vistVedtak.opplysninger.filter(kilde => kilde.includes('Svarene dine fra da du registrerte deg')).length > 0;
+
+	const visEgenvurderingVedleggCard =
+		vistVedtak !== undefined &&
+		vistVedtak.opplysninger.filter(kilde => kilde.includes('Svarene dine om behov for veiledning')).length > 0;
 
 	const harJournalfortCVOyeblikksbilde = harJournalfortOyblikksbilde(
 		OyblikksbildeType.CV_OG_JOBBPROFIL,
@@ -94,33 +110,42 @@ function Oyeblikksbilde(props: { vedtakId: number; oyeblikksbilde: OrNothing<Oyb
 					<Innholdstittel className="vedlegg__tittel">
 						Journalført brukerinformasjon på vedtakstidspunktet
 					</Innholdstittel>
-					<VedleggCard
-						tittel="Svarene dine fra da du registrerte deg"
-						json={registreringsinfoJson}
-						journalfortDokumentTitel="Svarene_dine_fra_da_du_registrerte_deg.pdf"
-						vedtakId={props.vedtakId}
-						oyeblikksbildeType={OyblikksbildeType.REGISTRERINGSINFO}
-						harJournalfortOyeblikksbilde={harJournalfortRegistreringOyeblikksbilde}
-						ingenDataInfo="Personen har ikke registrert noen svar."
-					/>
-					<VedleggCard
-						tittel="CV-en/jobbønskene dine på nav.no"
-						json={cvOgJobbprofileJson}
-						journalfortDokumentTitel="CV_og_jobbonsker.pdf"
-						vedtakId={props.vedtakId}
-						oyeblikksbildeType={OyblikksbildeType.CV_OG_JOBBPROFIL}
-						harJournalfortOyeblikksbilde={harJournalfortCVOyeblikksbilde}
-						ingenDataInfo="Personen har ikke registrert CV/jobbønsker."
-					/>
-					<VedleggCard
-						tittel="Svarene dine om behov for veiledning"
-						json={egenvurderingJson}
-						journalfortDokumentTitel="Svarene_dine_om_behov_for_veiledning.pdf"
-						vedtakId={props.vedtakId}
-						oyeblikksbildeType={OyblikksbildeType.EGENVURDERING}
-						harJournalfortOyeblikksbilde={harJournalfortEgenvurderingOyeblikksbilde}
-						ingenDataInfo="Personen har ikke registrert svar om behov for veiledning."
-					/>
+
+					{visRegistreringVedleggCard && (
+						<VedleggCard
+							tittel="Svarene dine fra da du registrerte deg"
+							json={registreringsinfoJson}
+							journalfortDokumentTitel="Svarene_dine_fra_da_du_registrerte_deg.pdf"
+							vedtakId={props.vedtakId}
+							oyeblikksbildeType={OyblikksbildeType.REGISTRERINGSINFO}
+							harJournalfortOyeblikksbilde={harJournalfortRegistreringOyeblikksbilde}
+							ingenDataInfo="Personen har ikke registrert noen svar."
+						/>
+					)}
+
+					{visCvVedleggCard && (
+						<VedleggCard
+							tittel="CV-en/jobbønskene dine på nav.no"
+							json={cvOgJobbprofileJson}
+							journalfortDokumentTitel="CV_og_jobbonsker.pdf"
+							vedtakId={props.vedtakId}
+							oyeblikksbildeType={OyblikksbildeType.CV_OG_JOBBPROFIL}
+							harJournalfortOyeblikksbilde={harJournalfortCVOyeblikksbilde}
+							ingenDataInfo="Personen har ikke registrert CV/jobbønsker."
+						/>
+					)}
+
+					{visEgenvurderingVedleggCard && (
+						<VedleggCard
+							tittel="Svarene dine om behov for veiledning"
+							json={egenvurderingJson}
+							journalfortDokumentTitel="Svarene_dine_om_behov_for_veiledning.pdf"
+							vedtakId={props.vedtakId}
+							oyeblikksbildeType={OyblikksbildeType.EGENVURDERING}
+							harJournalfortOyeblikksbilde={harJournalfortEgenvurderingOyeblikksbilde}
+							ingenDataInfo="Personen har ikke registrert svar om behov for veiledning."
+						/>
+					)}
 				</section>
 			</Page>
 			<Footer className="oyblikksbilde-visning__footer">
