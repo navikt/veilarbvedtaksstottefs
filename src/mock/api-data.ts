@@ -20,7 +20,7 @@ const tilgangTilBrukersKontor: TilgangTilBrukersKontor = {
 const oppfolgingData: OppfolgingData = {
 	reservasjonKRR: false,
 	underOppfolging: true,
-	inaktivIArena: true
+	inaktivIArena: false
 };
 
 const malformFraPdl: MalformData = {
