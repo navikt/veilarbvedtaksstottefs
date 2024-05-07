@@ -16,16 +16,13 @@ export function Oyeblikksbilde(props: { vedtakId: number }) {
 	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
 	const visCvVedleggCard =
-		vistVedtak !== undefined &&
-		vistVedtak.opplysninger.filter(kilde => kilde.includes('CV-en/jobbønskene dine på nav.no')).length > 0;
+		vistVedtak !== undefined && vistVedtak.opplysninger.includes('CV-en/jobbønskene dine på nav.no');
 
 	const visRegistreringVedleggCard =
-		vistVedtak !== undefined &&
-		vistVedtak.opplysninger.filter(kilde => kilde.includes('Svarene dine fra da du registrerte deg')).length > 0;
+		vistVedtak !== undefined && vistVedtak.opplysninger.includes('Svarene dine fra da du registrerte deg');
 
 	const visEgenvurderingVedleggCard =
-		vistVedtak !== undefined &&
-		vistVedtak.opplysninger.filter(kilde => kilde.includes('Svarene dine om behov for veiledning')).length > 0;
+		vistVedtak !== undefined && vistVedtak.opplysninger.includes('Svarene dine om behov for veiledning');
 
 	return (
 		<>

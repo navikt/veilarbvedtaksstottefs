@@ -28,7 +28,7 @@ interface Stilling {
 
 interface Profilering {
 	innsatsgruppe: ProfilertInnsatsgruppe | null;
-	alder: number | null;
+	alder: string | null;
 	jobbetSammenhengendeSeksAvTolvSisteManeder: boolean | null;
 }
 
@@ -49,8 +49,8 @@ interface Veileder {
 }
 
 enum BrukerRegistreringType {
-	ORDINAER,
-	SYKMELDT
+	ORDINAER = 'ORDINAER',
+	SYKMELDT = 'SYKMELDT'
 }
 
 interface BesvarelseSvar {

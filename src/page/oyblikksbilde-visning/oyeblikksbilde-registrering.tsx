@@ -1,8 +1,7 @@
 import { Systemtittel } from 'nav-frontend-typografi';
-import { Alert, BodyShort, Link } from '@navikt/ds-react';
+import { Alert, Link } from '@navikt/ds-react';
 import Card from '../../component/card/card';
 import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
-import { ReactComponent as FilePdfIkon } from './icons/filepdficon.svg';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentRegistreringOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { useEffect } from 'react';
@@ -22,8 +21,9 @@ import {
 	utdanningGodkjentSvarLabel,
 	utdanningSvarLabel
 } from './oyblikksbilde-fikser';
-import './css/json-viewer.less';
 import { RegistreringDto } from './dto/RegistreringDto';
+import { FilePdfIcon } from '@navikt/aksel-icons';
+import { visEnkelVerdi } from './oyeblikksbilde-cv';
 
 export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Element {
 	const oyeblikksbildeFetcher = useAxiosFetcher(hentRegistreringOyblikksbilde);
@@ -44,13 +44,21 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 			</Alert>
 		);
 	} else if (oyeblikksbildeFetcher.data) {
-		return (
-			<OyeblikksdataRegistreringInnhold
-				data={oyeblikksbildeFetcher.data.data}
-				erJournalfort={oyeblikksbildeFetcher.data.journalfort}
-				vedtakId={props.vedtakId}
-			/>
-		);
+		try {
+			return (
+				<OyeblikksdataRegistreringInnhold
+					data={oyeblikksbildeFetcher.data.data}
+					erJournalfort={oyeblikksbildeFetcher.data.journalfort}
+					vedtakId={props.vedtakId}
+				/>
+			);
+		} catch (error) {
+			return (
+				<Alert variant="error" className="vedtaksstotte-alert">
+					{error}
+				</Alert>
+			);
+		}
 	} else {
 		return <></>;
 	}
@@ -67,7 +75,6 @@ function OyeblikksdataRegistreringInnhold(props: {
 		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
 	};
-
 	const data = props.data?.registrering;
 
 	return (
@@ -91,128 +98,82 @@ function OyeblikksdataRegistreringInnhold(props: {
 					<>
 						<h3 className="json-key">Besvarelse</h3>
 						<div className="json-obj">
-							{data?.besvarelse.utdanning && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">Hva er din høyeste fullførte utdanning? </span>
-										<span>{utdanningSvarLabel(data?.besvarelse.utdanning)}</span>
-									</div>
-								</>
-							)}
+							{data?.besvarelse.utdanning &&
+								visEnkelVerdi(
+									'Hva er din høyeste fullførte utdanning?',
+									utdanningSvarLabel(data?.besvarelse.utdanning)
+								)}
 
-							{data?.besvarelse.utdanningBestatt && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">Er utdanningen din bestått? </span>
-										<span>{utdanningBestattSvarLabel(data?.besvarelse.utdanningBestatt)}</span>
-									</div>
-								</>
-							)}
+							{data?.besvarelse.utdanningBestatt &&
+								visEnkelVerdi(
+									'Er utdanningen din bestått?',
+									utdanningBestattSvarLabel(data?.besvarelse.utdanningBestatt)
+								)}
 
-							{data?.besvarelse.utdanningGodkjent && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">Er utdanningen din godkjent i Norge? </span>
-										<span>{utdanningGodkjentSvarLabel(data?.besvarelse.utdanningGodkjent)}</span>
-									</div>
-								</>
-							)}
+							{data?.besvarelse.utdanningGodkjent &&
+								visEnkelVerdi(
+									'Er utdanningen din godkjent i Norge?',
+									utdanningGodkjentSvarLabel(data?.besvarelse.utdanningGodkjent)
+								)}
 
-							{data?.besvarelse.helseHinder && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">
-											Har du helseproblemer som hindrer deg i å søke eller være i jobb?{' '}
-										</span>
-										<span>{helseHinderLabel(data?.besvarelse.helseHinder)}</span>
-									</div>
-								</>
-							)}
+							{data?.besvarelse.helseHinder &&
+								visEnkelVerdi(
+									'Har du helseproblemer som hindrer deg i å søke eller være i jobb?',
+									helseHinderLabel(data?.besvarelse.helseHinder)
+								)}
 
-							{data?.besvarelse.andreForhold && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">
-											Har du andre problemer med å søke eller være i jobb?{' '}
-										</span>
-										<span>{andreForholdLabel(data?.besvarelse.andreForhold)}</span>
-									</div>
-								</>
-							)}
+							{data?.besvarelse.andreForhold &&
+								visEnkelVerdi(
+									'Har du andre problemer med å søke eller være i jobb?',
+									andreForholdLabel(data?.besvarelse.andreForhold)
+								)}
 
-							{data?.besvarelse.sisteStilling && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">Hva er din siste jobb? </span>
-										<span>{sisteStillingLabel(data?.besvarelse.sisteStilling)}</span>
-									</div>
-								</>
-							)}
+							{data?.besvarelse.sisteStilling &&
+								visEnkelVerdi(
+									'Hva er din siste jobb?',
+									sisteStillingLabel(data?.besvarelse.sisteStilling)
+								)}
 
-							{data?.besvarelse.dinSituasjon && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">Hvilken jobbsituasjon passer best? </span>
-										<span>{dinSituasjonLabel(data?.besvarelse.dinSituasjon)}</span>
-									</div>
-								</>
-							)}
+							{data?.besvarelse.dinSituasjon &&
+								visEnkelVerdi(
+									'Hvilken jobbsituasjon passer best?',
+									dinSituasjonLabel(data?.besvarelse.dinSituasjon)
+								)}
 
-							{data?.besvarelse.fremtidigSituasjon && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">Hva tenker du om din fremtidige situasjon? </span>
-										<span>{fremtidigSituasjonLabel(data?.besvarelse.fremtidigSituasjon)}</span>
-									</div>
-								</>
-							)}
+							{data?.besvarelse.fremtidigSituasjon &&
+								visEnkelVerdi(
+									'Hva tenker du om din fremtidige situasjon?',
+									fremtidigSituasjonLabel(data?.besvarelse.fremtidigSituasjon)
+								)}
 
-							{data?.besvarelse.tilbakeIArbeid && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">
-											Tror du at du kommer tilbake i jobb før du har vært sykmeldt i 52 uker?{' '}
-										</span>
-										<span>{tilbakeIArbeidLabel(data?.besvarelse.tilbakeIArbeid)}</span>
-									</div>
-								</>
-							)}
+							{data?.besvarelse.tilbakeIArbeid &&
+								visEnkelVerdi(
+									'Tror du at du kommer tilbake i jobb før du har vært sykmeldt i 52 uker?',
+									tilbakeIArbeidLabel(data?.besvarelse.tilbakeIArbeid)
+								)}
 						</div>
 					</>
 				)}
 
-				{data?.teksterForBesvarelse && (
-					<>
-						<div className="json-array-wrapper">
-							<h3 className="json-key">Tekster for besvarelse</h3>
-							<ul className="json-array">
-								{data.teksterForBesvarelse.map((besvarelse, i) => (
-									<>
-										<li key={i}>
-											<div className="json-key-wrapper">
-												<span className="json-key">Spørsmål: </span>
-												<span>{besvarelse.sporsmal}</span>
-											</div>
-											<div className="json-key-wrapper">
-												<span className="json-key">Svar: </span>
-												<span>{besvarelse.svar}</span>
-											</div>
-										</li>
-									</>
-								))}
-							</ul>
-						</div>
-					</>
+				{data?.teksterForBesvarelse && data?.teksterForBesvarelse.length > 0 && (
+					<div className="json-array-wrapper">
+						<h3 className="json-key">Tekster for besvarelse</h3>
+						<ul className="json-array">
+							{data.teksterForBesvarelse.map((besvarelse, i) => (
+								<li key={'teksterForBesvarelse-' + i}>
+									{besvarelse.sporsmal && visEnkelVerdi('Spørsmål', besvarelse.sporsmal)}
+									{besvarelse.sporsmal && visEnkelVerdi('Svar', besvarelse.svar)}
+								</li>
+							))}
+						</ul>
+					</div>
 				)}
 
 				{data?.sisteStilling && (
 					<>
 						<h3 className="json-key">Siste stilling</h3>
 						<div className="json-obj">
-							<div className="json-key-wrapper">
-								<span className="json-key">Stilling: </span>
-								<span>{data.sisteStilling.label}</span>
-							</div>
+							{data.sisteStilling.label && visEnkelVerdi('Stilling', data.sisteStilling.label)}
 						</div>
 					</>
 				)}
@@ -221,62 +182,38 @@ function OyeblikksdataRegistreringInnhold(props: {
 					<>
 						<h3 className="json-key">Profilering</h3>
 						<div className="json-obj">
-							{data.profilering.innsatsgruppe && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">Innsatsgruppe: </span>
-										<span>{innsatsgruppeLabel(data.profilering.innsatsgruppe)}</span>
-									</div>
-								</>
-							)}
+							{data.profilering.innsatsgruppe &&
+								visEnkelVerdi('Innsatsgruppe', innsatsgruppeLabel(data.profilering.innsatsgruppe))}
 
-							{data.profilering.alder && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">Alder: </span>
-										<span>{data.profilering.alder}</span>
-									</div>
-								</>
-							)}
+							{data.profilering.alder && visEnkelVerdi('Alder', data.profilering.alder)}
 
-							{data.profilering.jobbetSammenhengendeSeksAvTolvSisteManeder && (
-								<>
-									<div className="json-key-wrapper">
-										<span className="json-key">
-											Jobbet sammenhengende seks av tolv siste måneder:{' '}
-										</span>
-										<span>{data.profilering.jobbetSammenhengendeSeksAvTolvSisteManeder}</span>
-									</div>
-								</>
-							)}
+							{data.profilering.jobbetSammenhengendeSeksAvTolvSisteManeder !== null &&
+								visEnkelVerdi(
+									'Jobbet sammenhengende seks av tolv siste måneder',
+									data.profilering.jobbetSammenhengendeSeksAvTolvSisteManeder ? 'Ja' : 'Nei'
+								)}
 						</div>
 					</>
 				)}
 
 				{data?.manueltRegistrertAv && (
-					<>
-						<div className="json-obj">
-							<div className="json-key-wrapper">
-								<span className="json-key">Registrert av ident: </span>
-								<span>{data.manueltRegistrertAv.ident}</span>
-							</div>
-							<div className="json-key-wrapper">
-								<span className="json-key">Enhet: </span>
-								<span>{data.manueltRegistrertAv.enhet}</span>
-							</div>
-						</div>
-					</>
+					<div className="json-obj">
+						{data.manueltRegistrertAv.ident &&
+							visEnkelVerdi('Registrert av ident', data.manueltRegistrertAv.ident)}
+
+						{data.manueltRegistrertAv.enhet && visEnkelVerdi('Enhet', data.manueltRegistrertAv.enhet?.navn)}
+					</div>
 				)}
 			</div>
 			{props.erJournalfort && (
 				<div className="oyeblikk-pdf">
-					<Link onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.REGISTRERINGSINFO)}>
-						<div className="oyblikksbilde-visning-pdf-ikon">
-							<FilePdfIkon title="a11y-title" height="1em" width="1em" fontSize="1.75rem" />
-						</div>
-						<BodyShort size="small" className="file_tittel">
-							Svarene_dine_fra_da_du_registrerte_deg.pdf
-						</BodyShort>
+					<Link
+						href="#"
+						onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.REGISTRERINGSINFO)}
+						className="oyeblikksbilde-visning__pdf-lenke"
+					>
+						<FilePdfIcon className="oyeblikksbilde-visning__pdf-ikon" aria-hidden />
+						Svarene_dine_fra_da_du_registrerte_deg.pdf
 					</Link>
 				</div>
 			)}

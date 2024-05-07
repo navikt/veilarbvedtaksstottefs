@@ -1,8 +1,7 @@
 import { Systemtittel } from 'nav-frontend-typografi';
-import { Alert, BodyShort, Link } from '@navikt/ds-react';
+import { Alert, Link } from '@navikt/ds-react';
 import Card from '../../component/card/card';
 import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
-import { ReactComponent as FilePdfIkon } from './icons/filepdficon.svg';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentCvOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { useEffect } from 'react';
@@ -11,7 +10,7 @@ import Spinner from '../../component/spinner/spinner';
 import { logMetrikk } from '../../util/logger';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { fagdokumentTypeLabel, formatDates, formatVarighet, spraakNivoLabel } from './oyblikksbilde-fikser';
-import './css/json-viewer.less';
+import { FilePdfIcon } from '@navikt/aksel-icons';
 
 export function OyeblikksbildeCv(props: { vedtakId: number }): JSX.Element {
 	const oyeblikksbildeFetcher = useAxiosFetcher(hentCvOyblikksbilde);
@@ -43,6 +42,15 @@ export function OyeblikksbildeCv(props: { vedtakId: number }): JSX.Element {
 		return <></>;
 	}
 }
+
+export const visEnkelVerdi = (tittel: string, verdi: string | undefined) => {
+	return (
+		<div className="json-key-wrapper">
+			<span className="json-key">{tittel}: </span>
+			<span>{verdi}</span>
+		</div>
+	);
+};
 
 function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: boolean; vedtakId: number }) {
 	const { changeView } = useViewStore();
@@ -78,357 +86,298 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 						{data.sammendrag}
 					</>
 				)}
-				{data?.utdanning && (
+				{data?.utdanning && data.utdanning.length > 0 && (
 					<>
 						<h3 className="json-key">Utdanning</h3>
 						<ul className="json-array">
 							{data.utdanning.map((utdanning, i) => (
-								<li key={i}>
-									{utdanning.tittel && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Tittel: </span>
-											<span>{utdanning.tittel}</span>
-										</div>
-									)}
+								<li key={'utdanning-' + i}>
+									{utdanning.tittel && visEnkelVerdi('Tittel', utdanning.tittel)}
 
-									{utdanning.studiested && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Sted: </span>
-											<span>{utdanning.studiested}</span>
-										</div>
-									)}
+									{utdanning.studiested && visEnkelVerdi('Sted', utdanning.studiested)}
 
-									{utdanning.utdanningsnivaa && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Utdanningsnivå: </span>
-											<span>{utdanning.utdanningsnivaa}</span>
-										</div>
-									)}
+									{utdanning.utdanningsnivaa &&
+										visEnkelVerdi('Utdanningsnivå', utdanning.utdanningsnivaa)}
 
-									{utdanning.fraDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Fra dato: </span>
-											<span>{formatDates(utdanning.fraDato)}</span>
-										</div>
-									)}
+									{utdanning.fraDato && visEnkelVerdi('Fra dato', formatDates(utdanning.fraDato))}
 
-									{utdanning.tilDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Til dato: </span>
-											<span>{formatDates(utdanning.tilDato)}</span>
-										</div>
-									)}
+									{utdanning.tilDato && visEnkelVerdi('Til dato', formatDates(utdanning.tilDato))}
 
-									{utdanning.beskrivelse && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Beskrivelse: </span>
-											<span>{utdanning.beskrivelse}</span>
-										</div>
-									)}
+									{utdanning.beskrivelse && visEnkelVerdi('Beskrivelse', utdanning.beskrivelse)}
 								</li>
 							))}
 						</ul>
 					</>
 				)}
-				{data?.arbeidserfaring && (
+				{data?.arbeidserfaring && data?.arbeidserfaring.length > 0 && (
 					<>
 						<h3 className="json-key">Arbeidserfaring</h3>
 						<ul className="json-array">
 							{data.arbeidserfaring.map((arbeidserfaring, i) => (
-								<li key={i}>
-									{arbeidserfaring.tittel && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Tittel: </span>
-											<span>{arbeidserfaring.tittel}</span>
-										</div>
-									)}
+								<li key={'arbeidserfaring-' + i}>
+									{arbeidserfaring.tittel && visEnkelVerdi('Tittel', arbeidserfaring.tittel)}
 
-									{arbeidserfaring.arbeidsgiver && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Arbeidsgiver: </span>
-											<span>{arbeidserfaring.arbeidsgiver}</span>
-										</div>
-									)}
+									{arbeidserfaring.arbeidsgiver &&
+										visEnkelVerdi('Arbeidsgiver', arbeidserfaring.arbeidsgiver)}
 
-									{arbeidserfaring.sted && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Sted: </span>
-											<span>{arbeidserfaring.sted}</span>
-										</div>
-									)}
+									{arbeidserfaring.sted && visEnkelVerdi('Sted', arbeidserfaring.sted)}
 
-									{arbeidserfaring.fraDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Fra dato: </span>
-											<span>{formatDates(arbeidserfaring.fraDato)}</span>
-										</div>
-									)}
+									{arbeidserfaring.fraDato &&
+										visEnkelVerdi('Fra dato', formatDates(arbeidserfaring.fraDato))}
 
-									{arbeidserfaring.tilDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Til dato: </span>
-											<span>{formatDates(arbeidserfaring.tilDato)}</span>
-										</div>
-									)}
+									{arbeidserfaring.tilDato &&
+										visEnkelVerdi('Til dato', formatDates(arbeidserfaring.tilDato))}
 
-									{arbeidserfaring.beskrivelse && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Beskrivelse: </span>
-											<span>{arbeidserfaring.beskrivelse}</span>
-										</div>
-									)}
+									{arbeidserfaring.beskrivelse &&
+										visEnkelVerdi('Beskrivelse', arbeidserfaring.beskrivelse)}
 								</li>
 							))}
 						</ul>
 					</>
 				)}
 
-				{data?.fagdokumentasjoner && (
+				{data?.fagdokumentasjoner && data?.fagdokumentasjoner.length > 0 && (
 					<>
 						<h3 className="json-key">Fagdokumentasjoner</h3>
 						<ul className="json-array">
 							{data.fagdokumentasjoner.map((fagdokumentasjon, i) => (
-								<li key={i}>
-									{fagdokumentasjon.tittel && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Tittel: </span>
-											<span>{fagdokumentasjon.tittel}</span>
-										</div>
-									)}
+								<li key={'fagdokumentasjoner-' + i}>
+									{fagdokumentasjon.tittel && visEnkelVerdi('Tittel', fagdokumentasjon.tittel)}
 
-									{fagdokumentasjon.type && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Type: </span>
-											<span>{fagdokumentTypeLabel(fagdokumentasjon.type)}</span>
-										</div>
-									)}
+									{fagdokumentasjon.type &&
+										visEnkelVerdi('Type', fagdokumentTypeLabel(fagdokumentasjon.type))}
 								</li>
 							))}
 						</ul>
 					</>
 				)}
 
-				{data?.jobbprofil?.kompetanse && (
+				{data?.jobbprofil?.kompetanse && data?.jobbprofil?.kompetanse.length > 0 && (
 					<>
 						<h3 className="json-key">Kompetanse</h3>
 						<ul className="json-array">
-							{data.jobbprofil.kompetanse.map((kompetanse, i) => (
-								<li key={i}>
-									{kompetanse.tittel && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Tittel: </span>
-											<span>{kompetanse.tittel}</span>
-										</div>
-									)}
-								</li>
-							))}
+							<li key={'kompetanse-1'}>
+								{visEnkelVerdi('Tittel', data?.jobbprofil?.kompetanse.map(x => x.tittel).join(', '))}
+							</li>
 						</ul>
 					</>
 				)}
 
-				{data?.sprak && (
+				{data?.jobbprofil?.onsketYrke && data?.jobbprofil?.onsketYrke.length > 0 && (
+					<>
+						<h3 className="json-key">Ønsket yrke</h3>
+						<ul className="json-array">
+							<li key={'onsketYrke-1'}>
+								{visEnkelVerdi('Tittel', data?.jobbprofil?.onsketYrke.map(x => x.tittel).join(', '))}
+							</li>
+						</ul>
+					</>
+				)}
+
+				{data?.jobbprofil?.onsketArbeidssted && data?.jobbprofil?.onsketArbeidssted.length > 0 && (
+					<>
+						<h3 className="json-key">Ønsket arbeidssted</h3>
+						<ul className="json-array">
+							<li key={'onsketArbeidssted-1'}>
+								{visEnkelVerdi(
+									'Stedsnavn',
+									data?.jobbprofil?.onsketArbeidssted.map(x => x.stedsnavn).join(', ')
+								)}
+							</li>
+						</ul>
+					</>
+				)}
+
+				{data?.jobbprofil?.onsketAnsettelsesform && data?.jobbprofil?.onsketAnsettelsesform.length > 0 && (
+					<>
+						<h3 className="json-key">Ønsket ansettelsesform</h3>
+						<ul className="json-array">
+							<li key={'onsketAnsettelsesform-1'}>
+								{visEnkelVerdi(
+									'Tittel',
+									data?.jobbprofil?.onsketAnsettelsesform.map(x => x.tittel).join(', ')
+								)}
+							</li>
+						</ul>
+					</>
+				)}
+
+				{data?.jobbprofil?.onsketArbeidstidsordning &&
+					data?.jobbprofil?.onsketArbeidstidsordning.length > 0 && (
+						<>
+							<h3 className="json-key">Ønsket arbeidstidsordning</h3>
+							<ul className="json-array">
+								<li key={'onsketArbeidstidsordning-1'}>
+									{visEnkelVerdi(
+										'Tittel',
+										data?.jobbprofil?.onsketArbeidstidsordning.map(x => x.tittel).join(', ')
+									)}
+								</li>
+							</ul>
+						</>
+					)}
+
+				{data?.jobbprofil?.onsketArbeidsdagordning && data?.jobbprofil?.onsketArbeidsdagordning.length > 0 && (
+					<>
+						<h3 className="json-key">Ønsket arbeidsdagordning</h3>
+						<ul className="json-array">
+							<li key={'onsketArbeidsdagordning-1'}>
+								{visEnkelVerdi(
+									'Tittel',
+									data?.jobbprofil?.onsketArbeidsdagordning.map(x => x.tittel).join(', ')
+								)}
+							</li>
+						</ul>
+					</>
+				)}
+
+				{data?.jobbprofil?.onsketArbeidsskiftordning &&
+					data?.jobbprofil?.onsketArbeidsskiftordning.length > 0 && (
+						<>
+							<h3 className="json-key">Ønsket arbeidsskiftordning</h3>
+							<ul className="json-array">
+								<li key={'onsketArbeidsskiftordning-1'}>
+									{visEnkelVerdi(
+										'Tittel',
+										data?.jobbprofil?.onsketArbeidsskiftordning.map(x => x.tittel).join(', ')
+									)}
+								</li>
+							</ul>
+						</>
+					)}
+
+				{data?.jobbprofil?.heltidDeltid && (
+					<>
+						<h3 className="json-key">Heltid eller deltid</h3>
+						<ul className="json-array">
+							<li key={'heltidDeltid-1'}>
+								{data?.jobbprofil?.heltidDeltid.heltid && visEnkelVerdi('Heltid', 'Ja')}
+								{data?.jobbprofil?.heltidDeltid.deltid && visEnkelVerdi('Deltid', 'Ja')}
+							</li>
+						</ul>
+					</>
+				)}
+
+				{data?.jobbprofil?.oppstart && (
+					<>
+						<h3 className="json-key">Oppstart</h3>
+						<ul className="json-array">
+							<li key={'oppstart-1'}>{visEnkelVerdi('Oppstart', data.jobbprofil.oppstart)}</li>
+						</ul>
+					</>
+				)}
+
+				{data?.sprak && data?.sprak.length > 0 && (
 					<>
 						<h3 className="json-key">Språk</h3>
 						<ul className="json-array">
 							{data.sprak.map((sprak, i) => (
-								<li key={i}>
-									{sprak.sprak && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Språk: </span>
-											<span>{sprak.sprak}</span>
-										</div>
-									)}
+								<li key={'sprak-' + i}>
+									{sprak.sprak && visEnkelVerdi('Språk', sprak.sprak)}
 
-									{sprak.muntligNiva && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Muntlig: </span>
-											<span>{spraakNivoLabel(sprak.muntligNiva)}</span>
-										</div>
-									)}
+									{sprak.muntligNiva && visEnkelVerdi('Muntlig', spraakNivoLabel(sprak.muntligNiva))}
 
-									{sprak.skriftligNiva && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Skriftlig: </span>
-											<span>{spraakNivoLabel(sprak.skriftligNiva)}</span>
-										</div>
-									)}
+									{sprak.skriftligNiva &&
+										visEnkelVerdi('Skriftlig', spraakNivoLabel(sprak.skriftligNiva))}
 								</li>
 							))}
 						</ul>
 					</>
 				)}
 
-				{data?.kurs && (
+				{data?.kurs && data?.kurs.length > 0 && (
 					<>
 						<h3 className="json-key">Kurs</h3>
 						<ul className="json-array">
 							{data.kurs.map((kurs, i) => (
-								<li key={i}>
-									{kurs.tittel && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Tittel: </span>
-											<span>{kurs.tittel}</span>
-										</div>
-									)}
+								<li key={'kurs-' + i}>
+									{kurs.tittel && visEnkelVerdi('Tittel', kurs.tittel)}
 
-									{kurs.arrangor && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Arrangør: </span>
-											<span>{kurs.arrangor}</span>
-										</div>
-									)}
+									{kurs.arrangor && visEnkelVerdi('Arrangør', kurs.arrangor)}
 
-									{kurs.tidspunkt && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Fullført: </span>
-											<span>{formatDates(kurs.tidspunkt)}</span>
-										</div>
-									)}
+									{kurs.tidspunkt && visEnkelVerdi('Fullført', formatDates(kurs.tidspunkt))}
 
-									{kurs.varighet && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Kurslengde: </span>
-											<span>
-												{kurs.varighet.varighet}
-												{formatVarighet(kurs.varighet.varighet, kurs.varighet.tidsenhet)}
-											</span>
-										</div>
-									)}
+									{kurs.varighet &&
+										visEnkelVerdi(
+											'Kurslengde',
+											kurs.varighet.varighet +
+												' ' +
+												formatVarighet(kurs.varighet.varighet, kurs.varighet.tidsenhet)
+										)}
 								</li>
 							))}
 						</ul>
 					</>
 				)}
 
-				{data?.forerkort && (
+				{data?.forerkort && data?.forerkort.length > 0 && (
 					<>
 						<h3 className="json-key">Førerkort</h3>
 						<ul className="json-array">
 							{data.forerkort.map((forerkort, i) => (
-								<li key={i}>
-									{forerkort.klasse && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Klasse: </span>
-											<span>{forerkort.klasse}</span>
-										</div>
-									)}
+								<li key={'forerkort-' + i}>
+									{forerkort.klasse && visEnkelVerdi('Klasse', forerkort.klasse)}
 								</li>
 							))}
 						</ul>
 					</>
 				)}
 
-				{data?.annenErfaring && (
+				{data?.annenErfaring && data?.annenErfaring.length > 0 && (
 					<>
 						<h3 className="json-key">Annen Erfaring</h3>
 						<ul className="json-array">
 							{data.annenErfaring.map((erfaring, i) => (
-								<li key={i}>
-									{erfaring.rolle && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Rolle: </span>
-											<span>{erfaring.rolle}</span>
-										</div>
-									)}
+								<li key={'annenErfaring-' + i}>
+									{erfaring.rolle && visEnkelVerdi('Rolle', erfaring.rolle)}
 
-									{erfaring.beskrivelse && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Beskrivelse: </span>
-											<span>{erfaring.beskrivelse}</span>
-										</div>
-									)}
+									{erfaring.beskrivelse && visEnkelVerdi('Beskrivelse', erfaring.beskrivelse)}
 
-									{erfaring.fraDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Startdato: </span>
-											<span>{formatDates(erfaring.fraDato)}</span>
-										</div>
-									)}
+									{erfaring.fraDato && visEnkelVerdi('Startdato', formatDates(erfaring.fraDato))}
 
-									{erfaring.tilDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Sluttdato: </span>
-											<span>{formatDates(erfaring.tilDato)}</span>
-										</div>
-									)}
+									{erfaring.tilDato && visEnkelVerdi('Sluttdato', formatDates(erfaring.tilDato))}
 								</li>
 							))}
 						</ul>
 					</>
 				)}
 
-				{data?.godkjenninger && (
+				{data?.godkjenninger && data?.godkjenninger.length > 0 && (
 					<>
 						<h3 className="json-key">Godkjenninger</h3>
 						<ul className="json-array">
 							{data.godkjenninger.map((godkjenning, i) => (
-								<li key={i}>
-									{godkjenning.tittel && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Tittel: </span>
-											<span>{godkjenning.tittel}</span>
-										</div>
-									)}
+								<li key={'godkjenninger-' + i}>
+									{godkjenning.tittel && visEnkelVerdi('Tittel', godkjenning.tittel)}
 
-									{godkjenning.utsteder && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Utsteder: </span>
-											<span>{godkjenning.utsteder}</span>
-										</div>
-									)}
+									{godkjenning.utsteder && visEnkelVerdi('Utsteder', godkjenning.utsteder)}
 
-									{godkjenning.gjennomfortDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Fullført: </span>
-											<span>{formatDates(godkjenning.gjennomfortDato)}</span>
-										</div>
-									)}
+									{godkjenning.gjennomfortDato &&
+										visEnkelVerdi('Fullført', formatDates(godkjenning.gjennomfortDato))}
 
-									{godkjenning.utloperDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Utløper: </span>
-											<span>{formatDates(godkjenning.utloperDato)}</span>
-										</div>
-									)}
+									{godkjenning.utloperDato &&
+										visEnkelVerdi('Utløper', formatDates(godkjenning.utloperDato))}
 								</li>
 							))}
 						</ul>
 					</>
 				)}
 
-				{data?.andreGodkjenninger && (
+				{data?.andreGodkjenninger && data?.andreGodkjenninger.length > 0 && (
 					<>
 						<h3 className="json-key">Andre Godkjenninger</h3>
 						<ul className="json-array">
 							{data.andreGodkjenninger.map((godkjenning, i) => (
-								<li key={i}>
-									{godkjenning.tittel && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Tittel: </span>
-											<span>{godkjenning.tittel}</span>
-										</div>
-									)}
+								<li key={'andreGodkjenninger-' + i}>
+									{godkjenning.tittel && visEnkelVerdi('Tittel', godkjenning.tittel)}
 
-									{godkjenning.utsteder && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Utsteder: </span>
-											<span>{godkjenning.utsteder}</span>
-										</div>
-									)}
+									{godkjenning.utsteder && visEnkelVerdi('Utsteder', godkjenning.utsteder)}
 
-									{godkjenning.gjennomfortDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Fullført: </span>
-											<span>{formatDates(godkjenning.gjennomfortDato)}</span>
-										</div>
-									)}
+									{godkjenning.gjennomfortDato &&
+										visEnkelVerdi('Fullført', formatDates(godkjenning.gjennomfortDato))}
 
-									{godkjenning.utloperDato && (
-										<div className="json-key-wrapper">
-											<span className="json-key">Utløper: </span>
-											<span>{formatDates(godkjenning.utloperDato)}</span>
-										</div>
-									)}
+									{godkjenning.utloperDato &&
+										visEnkelVerdi('Utløper', formatDates(godkjenning.utloperDato))}
 								</li>
 							))}
 						</ul>
@@ -437,13 +386,13 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 			</div>
 			{props.erJournalfort && (
 				<div className="oyeblikk-pdf">
-					<Link onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.CV_OG_JOBBPROFIL)}>
-						<div className="oyblikksbilde-visning-pdf-ikon">
-							<FilePdfIkon title="a11y-title" height="1em" width="1em" fontSize="1.75rem" />
-						</div>
-						<BodyShort size="small" className="file_tittel">
-							CV_og_jobbønsker.pdf
-						</BodyShort>
+					<Link
+						href="#"
+						onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.CV_OG_JOBBPROFIL)}
+						className="oyeblikksbilde-visning__pdf-lenke"
+					>
+						<FilePdfIcon className="oyeblikksbilde-visning__pdf-ikon" aria-hidden />
+						CV_og_jobbønsker.pdf
 					</Link>
 				</div>
 			)}

@@ -1,8 +1,7 @@
 import { Systemtittel } from 'nav-frontend-typografi';
-import { Alert, BodyShort, Link } from '@navikt/ds-react';
+import { Alert, Link } from '@navikt/ds-react';
 import Card from '../../component/card/card';
 import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
-import { ReactComponent as FilePdfIkon } from './icons/filepdficon.svg';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentEgenvurderingOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { useEffect } from 'react';
@@ -10,15 +9,16 @@ import Spinner from '../../component/spinner/spinner';
 import { logMetrikk } from '../../util/logger';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { formatDates } from './oyblikksbilde-fikser';
-import './css/json-viewer.less';
 import { EgenvurderingDto } from './dto/EgenvurderingDto';
+import { FilePdfIcon } from '@navikt/aksel-icons';
+import { visEnkelVerdi } from './oyeblikksbilde-cv';
 
 export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.Element {
 	const oyeblikksbildeFetcher = useAxiosFetcher(hentEgenvurderingOyblikksbilde);
 
 	useEffect(() => {
 		oyeblikksbildeFetcher.fetch(props.vedtakId);
-		logMetrikk('vis-oyblikksbilde-registering');
+		logMetrikk('vis-oyblikksbilde-egenvurdering');
 		// eslint-disable-next-line
 	}, [props.vedtakId]);
 
@@ -64,7 +64,7 @@ function OyeblikksdataEgenvurderingInnhold(props: {
 				Svarene dine om behov for veiledning
 			</Systemtittel>
 			<div className="innhold">
-				{data == null && (
+				{(data == null || data.sistOppdatert == null) && (
 					<>
 						<b>Ingen registrerte data:</b> Personen har ikke registrert svar om behov for veiledning.
 					</>
@@ -75,47 +75,30 @@ function OyeblikksdataEgenvurderingInnhold(props: {
 						{formatDates(data.sistOppdatert)}
 					</>
 				)}
-				{data?.svar && (
-					<>
-						<div className="json-array-wrapper">
-							<h3 className="json-key">Svar</h3>
-							<ul className="json-array">
-								{data.svar.map((svar, i) => (
-									<li key={i}>
-										{svar.spm && (
-											<div className="json-key-wrapper">
-												<span className="json-key">Spørsmål: </span>
-												<span>{svar.spm}</span>
-											</div>
-										)}
-										{svar.svar && (
-											<div className="json-key-wrapper">
-												<span className="json-key">Svar: </span>
-												<span>{svar.svar}</span>
-											</div>
-										)}
-										{svar.dialogId && (
-											<div className="json-key-wrapper">
-												<span className="json-key">DialogId: </span>
-												<span>{svar.dialogId}</span>
-											</div>
-										)}
-									</li>
-								))}
-							</ul>
-						</div>
-					</>
+				{data?.svar && data?.svar.length > 0 && (
+					<div className="json-array-wrapper">
+						<h3 className="json-key">Svar</h3>
+						<ul className="json-array">
+							{data.svar.map((svar, i) => (
+								<li key={'svar-' + i}>
+									{svar.spm && visEnkelVerdi('Spørsmål', svar.spm)}
+									{svar.svar && visEnkelVerdi('Svar', svar.svar)}
+									{svar.dialogId && visEnkelVerdi('DialogId', svar.dialogId)}
+								</li>
+							))}
+						</ul>
+					</div>
 				)}
 			</div>
 			{props.erJournalfort && (
 				<div className="oyeblikk-pdf">
-					<Link onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.EGENVURDERING)}>
-						<div className="oyblikksbilde-visning-pdf-ikon">
-							<FilePdfIkon title="a11y-title" height="1em" width="1em" fontSize="1.75rem" />
-						</div>
-						<BodyShort size="small" className="file_tittel">
-							Svarene_dine_om_behov_for_veiledning.pdf
-						</BodyShort>
+					<Link
+						href="#"
+						onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.EGENVURDERING)}
+						className="oyeblikksbilde-visning__pdf-lenke"
+					>
+						<FilePdfIcon className="oyeblikksbilde-visning__pdf-ikon" aria-hidden />
+						Svarene_dine_om_behov_for_veiledning.pdf
 					</Link>
 				</div>
 			)}

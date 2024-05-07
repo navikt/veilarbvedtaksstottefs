@@ -4,8 +4,8 @@ export interface EgenvurderingDto {
 }
 
 interface Svar {
-	spm: String | null;
-	svar: String | null;
-	oppfolging: String | null;
-	dialogId: String | null;
+	spm: string | null;
+	svar: string | null;
+	oppfolging: string | null;
+	dialogId: string | null;
 }

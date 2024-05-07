@@ -10,7 +10,6 @@ export interface CvDto {
 	annenErfaring: AnnenErfaringDtoV2[] | null;
 	forerkort: ForerkortDtoV2[] | null;
 	kurs: KursDtoV2[] | null;
-	sertifikater: SertifikatDtoV2[] | null;
 	andreGodkjenninger: SertifikatDtoV2[] | null;
 	sprak: SprakDtoV2[] | null;
 	jobbprofil: FOJobbprofilDtoV2 | null;
@@ -47,7 +46,7 @@ export enum KursVarighetEnhetDtoV2 {
 	DAG = 'DAG',
 	UKE = 'UKE',
 	MND = 'MND',
-	UKJENT = 'UKJENTS'
+	UKJENT = 'UKJENT'
 }
 
 export interface ForerkortDtoV2 {
