@@ -14,7 +14,7 @@ export interface SkjemaData {
 }
 
 export const kildelisteBokmal = [
-	'Svarene dine fra da du registrerte deg',
+	'Svarene dine fra da du registrerte deg og informasjonen du har gitt om endringer i jobbsituasjonen din',
 	'CV-en/jobbprofilen din på nav.no',
 	'Svarene dine om behov for veiledning'
 ];

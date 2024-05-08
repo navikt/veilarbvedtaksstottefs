@@ -123,7 +123,7 @@ const historisk: Vedtak[] = [
 			'- listepunkt 4\n' +
 			'- listepunkt 5',
 		opplysninger: [
-			'Svarene dine fra da du registrerte deg',
+			'Svarene dine fra da du registrerte deg og informasjonen du har gitt om endringer i jobbsituasjonen din',
 			'CV-en/jobbprofilen din på nav.no',
 			'Svarene dine om behov for veiledning'
 		],
@@ -140,7 +140,7 @@ const historisk: Vedtak[] = [
 		hovedmal: HovedmalType.SKAFFE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
 		opplysninger: [
-			'Svarene dine fra da du registrerte deg',
+			'Svarene dine fra da du registrerte deg og informasjonen du har gitt om endringer i jobbsituasjonen din',
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 		],
 		vedtakFattet: '2019-12-12T12:58:43.716393+02:00',
