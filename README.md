@@ -17,3 +17,7 @@ ignore-fil med riktig navn i det gitte git prosjektet du står i. Se forøvrig g
 ### Resette git blame dersom man har konfigurert regelen globalt ved et uhell
 
 `git config --global --unset blame.ignoreRevsFile`
+
+## Kode generert av GitHub Copilot
+
+Dette repoet bruker GitHub Copilot til å generere kode.
