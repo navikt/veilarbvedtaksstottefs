@@ -15,8 +15,7 @@ export function Oyeblikksbilde(props: { vedtakId: number }) {
 	const { fattedeVedtak } = useDataStore();
 	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
-	const visCvVedleggCard =
-		vistVedtak !== undefined && vistVedtak.opplysninger.includes('CV-en/jobbønskene dine på nav.no');
+	const visCvVedleggCard = vistVedtak !== undefined && vistVedtak.opplysninger.includes('CV');
 
 	const visRegistreringVedleggCard =
 		vistVedtak !== undefined && vistVedtak.opplysninger.includes('Svarene dine fra da du registrerte deg');
