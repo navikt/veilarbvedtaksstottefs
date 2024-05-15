@@ -10,6 +10,7 @@ spec:
   port: 8080
   ingresses:
     - https://veilarbvedtaksstottefs.intern.dev.nav.no
+    - https://veilarbvedtaksstottefs.ansatt.dev.nav.no
   liveness:
     path: /internal/alive
     initialDelay: 10
@@ -36,7 +37,10 @@ spec:
       value: >
         {
           "cors": {
-            "origin": "https://veilarbpersonflate.intern.dev.nav.no"
+            "origin": [
+              "https://veilarbpersonflate.intern.dev.nav.no",
+              "https://veilarbpersonflate.ansatt.dev.nav.no"
+            ]
           },
           "gcs": {
             "bucketName": "obo-veilarbvedtaksstottefs-dev"
