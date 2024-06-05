@@ -53,10 +53,6 @@ interface HovedmalRadioButtonsProps {
 }
 
 function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
-	const tilgjengeligeHovedmal = alleHovedmal.filter(mal =>
-		!props.arbeidssokerperiode && mal.value === HovedmalType.SKAFFE_ARBEID ? false : true
-	);
-
 	return (
 		<div className="hovedmal">
 			{!props.arbeidssokerperiode && (
@@ -64,7 +60,7 @@ function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
 					Hovedmål <i>skaffe arbeid</i> kan ikke velges fordi personen ikke er registrert som arbeidssøker.
 				</Alert>
 			)}
-			{tilgjengeligeHovedmal.map((mal, idx) => (
+			{alleHovedmal.map((mal, idx) => (
 				<Radio
 					name="hovedmal"
 					key={idx}
@@ -73,6 +69,8 @@ function HovedmalRadioButtons(props: HovedmalRadioButtonsProps) {
 					onChange={(e: any) => props.handleHovedmalChanged(e.target.value)}
 					checked={props.hovedmal === mal.value}
 					onKeyPress={swallowEnterKeyPress}
+					// Hvis brukeren ikke har en aktiv arbeidssøkerperiode, skal ikke hovedmål "Skaffe arbeid" kunne velges
+					disabled={!props.arbeidssokerperiode && mal.value === HovedmalType.SKAFFE_ARBEID}
 				/>
 			))}
 		</div>
