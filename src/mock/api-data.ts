@@ -11,6 +11,7 @@ import { SkjemaData } from '../util/skjema-utils';
 import env from '../util/environment';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
 import { OyblikksbildeCv, OyblikksbildeEgenvurdering, OyblikksbildeRegistrering } from '../util/type/oyblikksbilde';
+import { ArbeidssokerPeriode } from '@navikt/arbeidssokerregisteret-utils';
 
 const tilgangTilBrukersKontor: TilgangTilBrukersKontor = {
 	tilgangTilBrukersKontor: true
@@ -25,6 +26,19 @@ const oppfolgingData: OppfolgingData = {
 const malformFraPdl: MalformData = {
 	malform: MalformType.nn
 };
+
+const arbeidssokerperiode = {
+	periodeId: 'periode-id-123',
+	startet: {
+		tidspunkt: '2020-01-01T12:00:00.000Z',
+		utfoertAv: {
+			type: 'SLUTTBRUKER'
+		},
+		kilde: '',
+		aarsak: ''
+	},
+	avsluttet: null
+} as unknown as ArbeidssokerPeriode;
 
 const features: FeatureToggles = {
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true
@@ -222,6 +236,10 @@ export function hentOppfolgingData(): OppfolgingData {
 
 export function hentMalformFraPdl(): MalformData {
 	return malformFraPdl;
+}
+
+export function hentAktivArbeidssokerperiode(): ArbeidssokerPeriode {
+	return arbeidssokerperiode;
 }
 
 export function hentArenaVedtak(): ArenaVedtak[] {
