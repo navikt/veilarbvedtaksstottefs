@@ -356,7 +356,7 @@ function OyeblikksdataArbeidssokkerInnhold(props: {
 				<div className="oyeblikk-pdf">
 					<Link
 						href="#"
-						onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.ARBEIDSSOKKERREGISTRET)}
+						onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.ARBEIDSSOKERREGISTRET)}
 						className="oyeblikksbilde-visning__pdf-lenke"
 					>
 						<FilePdfIcon className="oyeblikksbilde-visning__pdf-ikon" aria-hidden />
