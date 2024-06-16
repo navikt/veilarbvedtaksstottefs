@@ -10,7 +10,19 @@ import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbv
 import { SkjemaData } from '../util/skjema-utils';
 import env from '../util/environment';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
-import { OyblikksbildeCv, OyblikksbildeEgenvurdering, OyblikksbildeRegistrering } from '../util/type/oyblikksbilde';
+import {
+	OyblikksbildeArbeidssokerRegistret,
+	OyblikksbildeCv,
+	OyblikksbildeEgenvurdering,
+	OyblikksbildeRegistrering
+} from '../util/type/oyblikksbilde';
+import {
+	JaEllerNei,
+	OpplysningerOmArbeidssoker,
+	Profilering,
+	ProfilertTil,
+	UtdanningGodkjentValg
+} from '@navikt/arbeidssokerregisteret-utils';
 
 const tilgangTilBrukersKontor: TilgangTilBrukersKontor = {
 	tilgangTilBrukersKontor: true
@@ -173,24 +185,91 @@ const vedtakFraArena: ArenaVedtak[] = [
 	}
 ];
 
-const oyblikksbildeCV: OyblikksbildeCv = {
+const oyeblikksbildeCV: OyblikksbildeCv = {
 	data: JSON.parse(
 		`{"sistEndret":"2024-04-03T14:44:25.425298+02:00","synligForArbeidsgiver":false,"sistEndretAvNav":true,"sammendrag":"Trivelig person med kjærlighet for sau, som har tonnevis med allsidig kompetanse og fantastiske personlige egenskaper.","arbeidserfaring":[{"tittel":"Sauepasser","arbeidsgiver":"Dolly gård","sted":"Sauda","beskrivelse":"Passe på at sauene har det bra.","fraDato":"2016-01-01","tilDato":"2019-12-31"},{"tittel":"Sauepasser","arbeidsgiver":"Dolly gård","sted":"Sauda  ","beskrivelse":"Passe på at sauene har det bra.","fraDato":"2016-01-01","tilDato":"2019-12-31"}],"utdanning":[{"tittel":"Bachelor i sauefag","utdanningsnivaa":"Høyere utdanning, 1-4 år","studiested":"Dolly Universitet","beskrivelse":"Studier innen sau og syntetiske data.","fraDato":"2012-08-10","tilDato":"2015-05-10"}],"fagdokumentasjoner":[{"tittel":"Svennebrev frisør","type":"SVENNEBREV_FAGBREV"},{"tittel":"Mesterbrev baker","type":"MESTERBREV"}],"godkjenninger":[{"tittel":"Godkjenning som profesjonell pyrotekniker","utsteder":"Dolly Pyroakademi","gjennomfortDato":"2017-12-31","utloperDato":"2027-12-31"}],"annenErfaring":[{"rolle":"Sauetrener","beskrivelse":"Mange års erfaring med trening av sau til utstillinger.","fraDato":"2010-05-01","tilDato":null}],"forerkort":[{"klasse":"C - Lastebil"}],"kurs":[{"tittel":"Kurs i saueklipping","arrangor":"Dolly Opplæringssenter","tidspunkt":"2022-07-30","varighet":{"varighet":2,"tidsenhet":"UKE"}},{"tittel":"Kurs i tennis","arrangor":"Dolly Opplæringssenter","tidspunkt":"2022-07-30","varighet":{"varighet":2,"tidsenhet":"UKE"}}],"sertifikater":[{"tittel":"Ballongførerbevis","utsteder":"Dolly Luftfart","gjennomfortDato":"2022-02-02","utloperDato":"2027-02-02"}],"andreGodkjenninger":[{"tittel":"Ballongførerbevis","utsteder":"Dolly Luftfart","gjennomfortDato":"2022-02-02","utloperDato":"2027-02-02"}],"sprak":[{"sprak":"Norsk","muntligNiva":"FOERSTESPRAAK","skriftligNiva":"FOERSTESPRAAK"},{"sprak":"Engelsk","muntligNiva":"GODT","skriftligNiva":"NYBEGYNNER"}],"jobbprofil":{"sistEndret":"2024-04-03T14:44:25.843844+02:00","onsketYrke":[{"tittel":"Frisør"},{"tittel":"Sauegjeter"},{"tittel":"Saueklipper"},{"tittel":"Ullklassifisør"}],"onsketArbeidssted":[{"stedsnavn":"Hamar"},{"stedsnavn":"Råde"},{"stedsnavn":"Vestby"}],"onsketAnsettelsesform":[{"tittel":"FAST"},{"tittel":"PROSJEKT"},{"tittel":"FERIEJOBB"}],"onsketArbeidstidsordning":[{"tittel":"DAGTID"},{"tittel":"KVELD"}],"onsketArbeidsdagordning":[{"tittel":"UKEDAGER"}],"onsketArbeidsskiftordning":[],"heltidDeltid":{"heltid":true,"deltid":false},"kompetanse":[{"tittel":"Fange dyr i feller"},{"tittel":"God fysikk"}],"oppstart":"LEDIG_NAA"}}`
 	),
 	journalfort: true
 };
 
-const oyblikksbildeRegistrering: OyblikksbildeRegistrering = {
+const oyeblikksbildeRegistrering: OyblikksbildeRegistrering = {
 	data: JSON.parse(
 		`{"type":"ORDINAER","registrering":{"manueltRegistrertAv":{"ident":"O11111111","enhet":{"id":"1234","navn":"NAV Enhet"}},"id":884,"opprettetDato":"2020-01-16T12:59:46.883561+01:00","besvarelse":{"utdanning":"VIDEREGAENDE_GRUNNUTDANNING","utdanningBestatt":"JA","utdanningGodkjent":"JA","helseHinder":"NEI","andreForhold":"NEI","sisteStilling":"INGEN_SVAR","dinSituasjon":"DELTIDSJOBB_VIL_MER","fremtidigSituasjon":null,"tilbakeIArbeid":null},"teksterForBesvarelse":[{"sporsmalId":"sisteStilling","sporsmal":"Hva er din siste jobb?","svar":"Salgsmedarbeider i supermarked"},{"sporsmalId":"utdanning","sporsmal":"Hva er din høyeste fullførte utdanning?","svar":"Videregående grunnutdanning (1 til 2 år)"},{"sporsmalId":"utdanningBestatt","sporsmal":"Er utdanningen din bestått?","svar":"Ja"},{"sporsmalId":"utdanningGodkjent","sporsmal":"Er utdanningen din godkjent i Norge?","svar":"Ja"},{"sporsmalId":"dinSituasjon","sporsmal":"Velg den situasjonen som passer deg best","svar":"Har deltidsjobb, men vil jobbe mer"},{"sporsmalId":"helseHinder","sporsmal":"Har du helseproblemer som hindrer deg i å søke eller være i jobb?","svar":"Nei"},{"sporsmalId":"andreForhold","sporsmal":"Har du andre problemer med å søke eller være i jobb?","svar":"Nei"}],"sisteStilling":{"label":"Salgsmedarbeider i supermarked","konseptId":45518,"styrk08":"5223"},"profilering":{"jobbetSammenhengendeSeksAvTolvSisteManeder":true,"alder":30,"innsatsgruppe":"STANDARD_INNSATS"}}}`
 	),
 	journalfort: true
 };
 
-const oyblikksbildeEgenvurdering: OyblikksbildeEgenvurdering = {
+const oyeblikksbildeEgenvurdering: OyblikksbildeEgenvurdering = {
 	data: JSON.parse(
 		`{"sistOppdatert":"2024-03-21T11:06:57.637Z","svar":[{"spm":"Hva slags veiledning ønsker du?","svar":"Jeg ønsker å klare meg selv","oppfolging":"STANDARD_INNSATS","dialogId":null}]}`
 	),
+	journalfort: true
+};
+
+const opplysninerOmArbeidssoeker: OpplysningerOmArbeidssoker = {
+	opplysningerOmArbeidssoekerId: '3fa85f64-5717-4562-b3fc-2c963f66afa7',
+	periodeId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+	sendtInnAv: {
+		tidspunkt: '2024-09-29T11:22:33.444Z',
+		utfoertAv: {
+			type: 'VEILEDER',
+			id: 'Z1234567'
+		},
+		kilde: 'string',
+		aarsak: 'string'
+	},
+	utdanning: {
+		nus: '7',
+		bestaatt: JaEllerNei.JA,
+		godkjent: UtdanningGodkjentValg.NEI
+	},
+	helse: {
+		helsetilstandHindrerArbeid: JaEllerNei.JA
+	},
+	annet: {
+		andreForholdHindrerArbeid: JaEllerNei.JA
+	},
+	jobbsituasjon: [
+		{
+			beskrivelse: 'HAR_SAGT_OPP',
+			detaljer: {
+				prosent: '25'
+			}
+		},
+		{
+			beskrivelse: 'ER_PERMITTERT',
+			detaljer: {
+				prosent: '95'
+			}
+		}
+	]
+};
+
+const profilering: Profilering = {
+	profileringId: '3fa85f64-5717-4562-b3fc-2c963f66afa8',
+	periodeId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+	opplysningerOmArbeidssoekerId: '3fa85f64-5717-4562-b3fc-2c963f66afa7',
+	sendtInnAv: {
+		tidspunkt: '2021-09-29T11:22:33.444Z',
+		utfoertAv: {
+			type: 'VEIELEDER'
+		},
+		kilde: 'string',
+		aarsak: 'string'
+	},
+	profilertTil: ProfilertTil.ANTATT_BEHOV_FOR_VEILEDNING,
+	jobbetSammenhengendeSeksAvTolvSisteManeder: true,
+	alder: 0
+};
+
+const opplysningerMedProfilering = {
+	arbeidssoekerperiodeStartet: '2024-04-23T13:04:40.739Z',
+	opplysningerOmArbeidssoeker: opplysninerOmArbeidssoeker,
+	profilering: profilering
+};
+
+const oyeblikksbildeArbeidssokerRegistret: OyblikksbildeArbeidssokerRegistret = {
+	data: opplysningerMedProfilering,
 	journalfort: true
 };
 
@@ -229,15 +308,19 @@ export function hentArenaVedtak(): ArenaVedtak[] {
 }
 
 export function hentCvOyeblikksbilde(): OyblikksbildeCv {
-	return oyblikksbildeCV;
+	return oyeblikksbildeCV;
 }
 
 export function hentRegistreringOyeblikksbilde(): OyblikksbildeRegistrering {
-	return oyblikksbildeRegistrering;
+	return oyeblikksbildeRegistrering;
+}
+
+export function hentArbeidssokerRegistretOyblikksbilde(): OyblikksbildeArbeidssokerRegistret {
+	return oyeblikksbildeArbeidssokerRegistret;
 }
 
 export function hentEgenvurderingOyeblikksbilde(): OyblikksbildeEgenvurdering {
-	return oyblikksbildeEgenvurdering;
+	return oyeblikksbildeEgenvurdering;
 }
 
 export function hentFeatures(): FeatureToggles {

@@ -1,6 +1,11 @@
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from '../utils';
-import { OyblikksbildeCv, OyblikksbildeEgenvurdering, OyblikksbildeRegistrering } from '../../util/type/oyblikksbilde';
+import {
+	OyblikksbildeArbeidssokerRegistret,
+	OyblikksbildeCv,
+	OyblikksbildeEgenvurdering,
+	OyblikksbildeRegistrering
+} from '../../util/type/oyblikksbilde';
 import { Vedtak, VEILARBVEDTAKSSTOTTE_API } from './index';
 
 export interface ArenaVedtak {
@@ -23,6 +28,12 @@ export function hentCvOyblikksbilde(vedtakId: number): AxiosPromise<Oyblikksbild
 
 export function hentRegistreringOyblikksbilde(vedtakId: number): AxiosPromise<OyblikksbildeRegistrering> {
 	return axiosInstance.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/${vedtakId}/oyeblikksbilde-registrering`);
+}
+
+export function hentArbeidssokerRegistretOyblikksbilde(
+	vedtakId: number
+): AxiosPromise<OyblikksbildeArbeidssokerRegistret> {
+	return axiosInstance.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/${vedtakId}/oyeblikksbilde-arbeidssokerRegistret`);
 }
 
 export function hentEgenvurderingOyblikksbilde(vedtakId: number): AxiosPromise<OyblikksbildeEgenvurdering> {

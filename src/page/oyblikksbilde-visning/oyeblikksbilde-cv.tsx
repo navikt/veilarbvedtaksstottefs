@@ -11,6 +11,7 @@ import { logMetrikk } from '../../util/logger';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { fagdokumentTypeLabel, formatDates, formatVarighet, spraakNivoLabel } from './oyblikksbilde-fikser';
 import { FilePdfIcon } from '@navikt/aksel-icons';
+import { EMDASH } from '../../util';
 
 export function OyeblikksbildeCv(props: { vedtakId: number }): JSX.Element {
 	const oyeblikksbildeFetcher = useAxiosFetcher(hentCvOyblikksbilde);
@@ -48,6 +49,19 @@ export const visEnkelVerdi = (tittel: string, verdi: string | undefined) => {
 		<div className="json-key-wrapper">
 			<span className="json-key">{tittel}: </span>
 			<span>{verdi}</span>
+		</div>
+	);
+};
+
+export const visFlereVerdi = (tittel: string, verdi: string[] | undefined) => {
+	return (
+		<div className="json-key-wrapper">
+			<span className="json-key">{tittel}: </span>
+			{verdi !== undefined && verdi.length > 0 ? (
+				verdi.map((key, index) => <span key={key}>{key ?? EMDASH}</span>)
+			) : (
+				<span>{EMDASH}</span>
+			)}
 		</div>
 	);
 };

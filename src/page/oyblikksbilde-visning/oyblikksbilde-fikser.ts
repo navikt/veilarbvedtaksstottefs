@@ -12,6 +12,7 @@ import {
 	UtdanningGodkjentSvar,
 	UtdanningSvar
 } from './dto/RegistreringDto';
+import { ProfilertTil } from '@navikt/arbeidssokerregisteret-utils';
 
 export function fagdokumentTypeLabel(type: Fagdokument) {
 	let mapping = new Map<Fagdokument, string>([
@@ -148,6 +149,19 @@ export function innsatsgruppeLabel(svar: ProfilertInnsatsgruppe) {
 		[ProfilertInnsatsgruppe.BEHOV_FOR_ARBEIDSEVNEVURDERING, 'Behov for arbeidsevnevurdering']
 	]);
 	return mapping.get(svar);
+}
+
+export function profilertTilBeskrivelse(profilertTil: ProfilertTil) {
+	switch (profilertTil) {
+		case ProfilertTil.ANTATT_GODE_MULIGHETER:
+			return 'Antatt rask overgang til arbeid: Vurder om brukeren har gode muligheter til å beholde eller komme i jobb på egenhånd.';
+		case ProfilertTil.ANTATT_BEHOV_FOR_VEILEDNING:
+			return 'Antatt behov for veiledning: Vurder brukerens jobbmuligheter og behov for veiledning.';
+		case ProfilertTil.OPPGITT_HINDRINGER:
+			return 'Brukeren har oppgitt hindringer: Vurder brukerens jobbmuligheter og behov for veiledning.';
+		default:
+			return '';
+	}
 }
 
 export function formatVarighet(varighet: number | null, varighetEnhet: KursVarighetEnhetDtoV2 | null) {
