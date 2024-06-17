@@ -266,7 +266,7 @@ function OyeblikksdataArbeidssokkerInnhold(props: {
 				Svarene dine fra da du registrerte deg
 			</Systemtittel>
 			<div className="innhold">
-				{data == null && (
+				{(data == null || (data.opplysningerOmArbeidssoeker == null && data.profilering == null)) && (
 					<>
 						<b>Ingen registrerte data:</b> Brukeren har ikke registrert seg via den nye
 						registreringsløsningen.
