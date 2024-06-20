@@ -17,14 +17,13 @@ import {
 	OyblikksbildeRegistrering
 } from '../util/type/oyblikksbilde';
 import {
+	ArbeidssokerPeriode,
 	JaEllerNei,
 	OpplysningerOmArbeidssoker,
 	Profilering,
 	ProfilertTil,
 	UtdanningGodkjentValg
 } from '@navikt/arbeidssokerregisteret-utils';
-import { OyblikksbildeCv, OyblikksbildeEgenvurdering, OyblikksbildeRegistrering } from '../util/type/oyblikksbilde';
-import { ArbeidssokerPeriode } from '@navikt/arbeidssokerregisteret-utils';
 
 const tilgangTilBrukersKontor: TilgangTilBrukersKontor = {
 	tilgangTilBrukersKontor: true
