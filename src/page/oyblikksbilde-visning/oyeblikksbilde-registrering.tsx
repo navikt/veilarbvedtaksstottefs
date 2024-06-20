@@ -54,7 +54,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 	} else if (arbeidssokerRegistretOyeblikksbildeFetcher.data?.data) {
 		try {
 			return (
-				<OyeblikksdataArbeidssokkerInnhold
+				<OyeblikksdataArbeidssokerInnhold
 					data={arbeidssokerRegistretOyeblikksbildeFetcher.data.data}
 					erJournalfort={arbeidssokerRegistretOyeblikksbildeFetcher.data.journalfort}
 					vedtakId={props.vedtakId}
@@ -245,7 +245,7 @@ function OyeblikksdataRegistreringInnhold(props: {
 	);
 }
 
-function OyeblikksdataArbeidssokkerInnhold(props: {
+function OyeblikksdataArbeidssokerInnhold(props: {
 	data: OpplysningerOmArbeidssokerMedProfilering | null;
 	erJournalfort: boolean;
 	vedtakId: number;
