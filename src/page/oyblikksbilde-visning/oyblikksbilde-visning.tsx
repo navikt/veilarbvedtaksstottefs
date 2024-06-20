@@ -15,7 +15,7 @@ export function Oyeblikksbilde(props: { vedtakId: number }) {
 	const { fattedeVedtak } = useDataStore();
 	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
-	const visCvVedleggCard = vistVedtak !== undefined && vistVedtak.opplysninger.find(x => x.includes('CV'));
+	const visCvVedleggCard = vistVedtak !== undefined && vistVedtak.opplysninger.find(x => x.indexOf('CV') >= 0);
 
 	const visRegistreringVedleggCard =
 		vistVedtak !== undefined && vistVedtak.opplysninger.includes('Svarene dine fra da du registrerte deg');
