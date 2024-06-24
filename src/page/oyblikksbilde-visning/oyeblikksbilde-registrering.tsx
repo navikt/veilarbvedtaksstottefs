@@ -24,7 +24,7 @@ import {
 	utdanningBestattSvarLabel,
 	utdanningGodkjentSvarLabel,
 	utdanningSvarLabel
-} from './oyblikksbilde-fikser';
+} from './oyeblikksbilde-fikser';
 import { RegistreringDto } from './dto/RegistreringDto';
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import { visEnkelVerdi, visFlereVerdi } from './oyeblikksbilde-cv';

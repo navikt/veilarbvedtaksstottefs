@@ -36,6 +36,75 @@ export function spraakNivoLabel(nivo: SprakferdighetDtoV2) {
 	return mapping.get(nivo);
 }
 
+export function ansettelsestypeLabel(ansettelsestype: string | null) {
+	let mapping = new Map<string, string>([
+		['FAST', 'Fast'],
+		['VIKARIAT', 'Vikariat'],
+		['ENGASJEMENT', 'Engasjement'],
+		['PROSJEKT', 'Prosjekt'],
+		['SESONG', 'Sesong'],
+		['TRAINEE', 'Trainee'],
+		['LAERLING', 'Lærling'],
+		['SELVSTENDIG_NAERINGSDRIVENDE', 'Selvstendig næringsdrivende'],
+		['FERIEJOBB', 'Feriejobb'],
+		['ANNET', 'Annet']
+	]);
+
+	if (ansettelsestype && mapping.has(ansettelsestype)) {
+		return mapping.get(ansettelsestype);
+	}
+
+	return ansettelsestype;
+}
+
+export function onsketArbeidstidsordningLabel(onsketArbeidstidsordning: string | null) {
+	let mapping = new Map<string, string>([
+		['DAGTID', 'Dagtid'],
+		['KVELD', 'Kveld'],
+		['NATT', 'Natt'],
+		['UKEDAGER', 'Ukedager'],
+		['LOERDAG', 'Lørdag'],
+		['SOENDAG', 'Søndag'],
+		['SKIFT', 'Skift'],
+		['VAKT', 'Vakt'],
+		['TURNUS', 'Turnus']
+	]);
+
+	if (onsketArbeidstidsordning && mapping.has(onsketArbeidstidsordning)) {
+		return mapping.get(onsketArbeidstidsordning);
+	}
+	return onsketArbeidstidsordning;
+}
+
+export function onsketArbeidsskiftordningLabel(onsketArbeidsskiftordning: string | null) {
+	let mapping = new Map<string, string>([
+		['DAGTID', 'Dagtid'],
+		['KVELD', 'Kveld'],
+		['NATT', 'Natt'],
+		['UKEDAGER', 'Ukedager'],
+		['LOERDAG', 'Lørdag'],
+		['SOENDAG', 'Søndag'],
+		['SKIFT', 'Skift'],
+		['VAKT', 'Vakt'],
+		['TURNUS', 'Turnus']
+	]);
+
+	if (onsketArbeidsskiftordning && mapping.has(onsketArbeidsskiftordning)) {
+		return mapping.get(onsketArbeidsskiftordning);
+	}
+	return onsketArbeidsskiftordning;
+}
+
+export function oppstartLabel(oppstart: String) {
+	let mapping = new Map<String, string>([
+		['LEDIG_NAA', 'Kan begynne nå'],
+		['ETTER_TRE_MND', 'Har 3 måneders oppsigelse'],
+		['ETTER_AVTALE', 'Kan begynne etter nærmere avtale']
+	]);
+
+	return mapping.get(oppstart);
+}
+
 export function utdanningSvarLabel(svar: UtdanningSvar) {
 	let mapping = new Map<UtdanningSvar, string>([
 		[UtdanningSvar.INGEN_UTDANNING, 'Ingen utdanning'],
@@ -160,7 +229,7 @@ export function profilertTilBeskrivelse(profilertTil: ProfilertTil) {
 		case ProfilertTil.OPPGITT_HINDRINGER:
 			return 'Brukeren har oppgitt hindringer: Vurder brukerens jobbmuligheter og behov for veiledning.';
 		default:
-			return '';
+			return profilertTil;
 	}
 }
 

@@ -3,7 +3,7 @@ import Page from '../../component/page/page';
 import Footer from '../../component/footer/footer';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { Button } from '@navikt/ds-react';
-import './oyblikksbilde-visning.less';
+import './oyeblikksbilde-visning.less';
 import { useDataStore } from '../../store/data-store';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { OyeblikksbildeCv } from './oyeblikksbilde-cv';

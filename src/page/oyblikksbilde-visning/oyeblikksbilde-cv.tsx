@@ -9,7 +9,16 @@ import { CvDto } from './dto/CvDto';
 import Spinner from '../../component/spinner/spinner';
 import { logMetrikk } from '../../util/logger';
 import { useViewStore, ViewType } from '../../store/view-store';
-import { fagdokumentTypeLabel, formatDates, formatVarighet, spraakNivoLabel } from './oyblikksbilde-fikser';
+import {
+	ansettelsestypeLabel,
+	fagdokumentTypeLabel,
+	formatDates,
+	formatVarighet,
+	onsketArbeidsskiftordningLabel,
+	onsketArbeidstidsordningLabel,
+	oppstartLabel,
+	spraakNivoLabel
+} from './oyeblikksbilde-fikser';
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import { EMDASH } from '../../util';
 
@@ -209,7 +218,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 							<li key={'onsketAnsettelsesform-1'}>
 								{visEnkelVerdi(
 									'Tittel',
-									data?.jobbprofil?.onsketAnsettelsesform.map(x => x.tittel).join(', ')
+									data?.jobbprofil?.onsketAnsettelsesform
+										.map(x => ansettelsestypeLabel(x.tittel))
+										.join(', ')
 								)}
 							</li>
 						</ul>
@@ -224,7 +235,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 								<li key={'onsketArbeidstidsordning-1'}>
 									{visEnkelVerdi(
 										'Tittel',
-										data?.jobbprofil?.onsketArbeidstidsordning.map(x => x.tittel).join(', ')
+										data?.jobbprofil?.onsketArbeidstidsordning
+											.map(x => onsketArbeidstidsordningLabel(x.tittel))
+											.join(', ')
 									)}
 								</li>
 							</ul>
@@ -238,7 +251,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 							<li key={'onsketArbeidsdagordning-1'}>
 								{visEnkelVerdi(
 									'Tittel',
-									data?.jobbprofil?.onsketArbeidsdagordning.map(x => x.tittel).join(', ')
+									data?.jobbprofil?.onsketArbeidsdagordning
+										.map(x => onsketArbeidstidsordningLabel(x.tittel))
+										.join(', ')
 								)}
 							</li>
 						</ul>
@@ -253,7 +268,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 								<li key={'onsketArbeidsskiftordning-1'}>
 									{visEnkelVerdi(
 										'Tittel',
-										data?.jobbprofil?.onsketArbeidsskiftordning.map(x => x.tittel).join(', ')
+										data?.jobbprofil?.onsketArbeidsskiftordning
+											.map(x => onsketArbeidsskiftordningLabel(x.tittel))
+											.join(', ')
 									)}
 								</li>
 							</ul>
@@ -276,7 +293,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 					<>
 						<h3 className="json-key">Oppstart</h3>
 						<ul className="json-array">
-							<li key={'oppstart-1'}>{visEnkelVerdi('Oppstart', data.jobbprofil.oppstart)}</li>
+							<li key={'oppstart-1'}>
+								{visEnkelVerdi('Oppstart', oppstartLabel(data.jobbprofil.oppstart))}
+							</li>
 						</ul>
 					</>
 				)}

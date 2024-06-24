@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import Spinner from '../../component/spinner/spinner';
 import { logMetrikk } from '../../util/logger';
 import { useViewStore, ViewType } from '../../store/view-store';
-import { formatDates } from './oyblikksbilde-fikser';
+import { formatDates } from './oyeblikksbilde-fikser';
 import { EgenvurderingDto } from './dto/EgenvurderingDto';
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import { visEnkelVerdi } from './oyeblikksbilde-cv';
