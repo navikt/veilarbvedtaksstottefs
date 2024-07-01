@@ -27,6 +27,18 @@ ignore-fil med riktig navn i det gitte git prosjektet du står i. Se forøvrig g
 
 `git config --global --unset blame.ignoreRevsFile`
 
+# Komme i gang
+**Installere pakker**
+
+For å kunne hente ned @navikt/arbeidssokerregisteret-utils må du legge til en `.npmrc` fil i homemappen med følgende innhold:
+
+```shell
+//npm.pkg.github.com/:_authToken=TOKEN
+@navikt:registry=https://npm.pkg.github.com
+```
+[Se navikt/frontend](https://github.com/navikt/frontend?tab=readme-ov-file#installere-pakker-lokalt) for å se hvordan du kan generere et token på github.
+
 ## Kode generert av GitHub Copilot
 
 Dette repoet bruker GitHub Copilot til å generere kode.
+

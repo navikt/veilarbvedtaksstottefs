@@ -2,6 +2,7 @@ import { bypass, delay, http, HttpResponse, RequestHandler } from 'msw';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { lagVedtakBrevMockUrl, mockUrlPrefix } from '../../utils';
 import {
+	hentArbeidssokerRegistretOyblikksbilde,
 	hentArenaVedtak,
 	hentCvOyeblikksbilde,
 	hentEgenvurderingOyeblikksbilde,
@@ -27,6 +28,12 @@ export const vedtakHandlers: RequestHandler[] = [
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 		return HttpResponse.json(hentRegistreringOyeblikksbilde());
 	}),
+
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde-arbeidssokerRegistret`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentArbeidssokerRegistretOyblikksbilde());
+	}),
+
 	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde-egenvurdering`, async () => {
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 		return HttpResponse.json(hentEgenvurderingOyeblikksbilde());

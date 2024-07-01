@@ -3,7 +3,7 @@ import Page from '../../component/page/page';
 import Footer from '../../component/footer/footer';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { Button } from '@navikt/ds-react';
-import './oyblikksbilde-visning.less';
+import './oyeblikksbilde-visning.less';
 import { useDataStore } from '../../store/data-store';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { OyeblikksbildeCv } from './oyeblikksbilde-cv';
@@ -15,7 +15,7 @@ export function Oyeblikksbilde(props: { vedtakId: number }) {
 	const { fattedeVedtak } = useDataStore();
 	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
-	const visCvVedleggCard = vistVedtak !== undefined && vistVedtak.opplysninger.includes('CV');
+	const visCvVedleggCard = vistVedtak !== undefined && vistVedtak.opplysninger.find(x => x.indexOf('CV') >= 0);
 
 	const visRegistreringVedleggCard =
 		vistVedtak !== undefined && vistVedtak.opplysninger.includes('Svarene dine fra da du registrerte deg');

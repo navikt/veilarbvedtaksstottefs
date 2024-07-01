@@ -5,7 +5,7 @@ import { useViewStore, ViewType } from '../store/view-store';
 import { ArenaVedtaksbrevVisning, VedtaksbrevVisning } from '../page/vedtaksbrev-visning/vedtaksbrev-visning';
 import { UtkastSide } from '../page/utkast/utkast-side';
 import { OyeblikksbildeVisningPDF } from '../page/oyblikksbilde-visning/oyeblikksbilde-visning-pdf';
-import { Oyeblikksbilde } from '../page/oyblikksbilde-visning/oyblikksbilde-visning';
+import { Oyeblikksbilde } from '../page/oyblikksbilde-visning/oyeblikksbilde-visning';
 
 export function ViewController() {
 	const { view, viewProps } = useViewStore();

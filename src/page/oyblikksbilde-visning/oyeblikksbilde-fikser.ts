@@ -12,6 +12,7 @@ import {
 	UtdanningGodkjentSvar,
 	UtdanningSvar
 } from './dto/RegistreringDto';
+import { ProfilertTil } from '@navikt/arbeidssokerregisteret-utils';
 
 export function fagdokumentTypeLabel(type: Fagdokument) {
 	let mapping = new Map<Fagdokument, string>([
@@ -33,6 +34,75 @@ export function spraakNivoLabel(nivo: SprakferdighetDtoV2) {
 	]);
 
 	return mapping.get(nivo);
+}
+
+export function ansettelsestypeLabel(ansettelsestype: string | null) {
+	let mapping = new Map<string, string>([
+		['FAST', 'Fast'],
+		['VIKARIAT', 'Vikariat'],
+		['ENGASJEMENT', 'Engasjement'],
+		['PROSJEKT', 'Prosjekt'],
+		['SESONG', 'Sesong'],
+		['TRAINEE', 'Trainee'],
+		['LAERLING', 'Lærling'],
+		['SELVSTENDIG_NAERINGSDRIVENDE', 'Selvstendig næringsdrivende'],
+		['FERIEJOBB', 'Feriejobb'],
+		['ANNET', 'Annet']
+	]);
+
+	if (ansettelsestype && mapping.has(ansettelsestype)) {
+		return mapping.get(ansettelsestype);
+	}
+
+	return ansettelsestype;
+}
+
+export function onsketArbeidstidsordningLabel(onsketArbeidstidsordning: string | null) {
+	let mapping = new Map<string, string>([
+		['DAGTID', 'Dagtid'],
+		['KVELD', 'Kveld'],
+		['NATT', 'Natt'],
+		['UKEDAGER', 'Ukedager'],
+		['LOERDAG', 'Lørdag'],
+		['SOENDAG', 'Søndag'],
+		['SKIFT', 'Skift'],
+		['VAKT', 'Vakt'],
+		['TURNUS', 'Turnus']
+	]);
+
+	if (onsketArbeidstidsordning && mapping.has(onsketArbeidstidsordning)) {
+		return mapping.get(onsketArbeidstidsordning);
+	}
+	return onsketArbeidstidsordning;
+}
+
+export function onsketArbeidsskiftordningLabel(onsketArbeidsskiftordning: string | null) {
+	let mapping = new Map<string, string>([
+		['DAGTID', 'Dagtid'],
+		['KVELD', 'Kveld'],
+		['NATT', 'Natt'],
+		['UKEDAGER', 'Ukedager'],
+		['LOERDAG', 'Lørdag'],
+		['SOENDAG', 'Søndag'],
+		['SKIFT', 'Skift'],
+		['VAKT', 'Vakt'],
+		['TURNUS', 'Turnus']
+	]);
+
+	if (onsketArbeidsskiftordning && mapping.has(onsketArbeidsskiftordning)) {
+		return mapping.get(onsketArbeidsskiftordning);
+	}
+	return onsketArbeidsskiftordning;
+}
+
+export function oppstartLabel(oppstart: String) {
+	let mapping = new Map<String, string>([
+		['LEDIG_NAA', 'Kan begynne nå'],
+		['ETTER_TRE_MND', 'Har 3 måneders oppsigelse'],
+		['ETTER_AVTALE', 'Kan begynne etter nærmere avtale']
+	]);
+
+	return mapping.get(oppstart);
 }
 
 export function utdanningSvarLabel(svar: UtdanningSvar) {
@@ -148,6 +218,19 @@ export function innsatsgruppeLabel(svar: ProfilertInnsatsgruppe) {
 		[ProfilertInnsatsgruppe.BEHOV_FOR_ARBEIDSEVNEVURDERING, 'Behov for arbeidsevnevurdering']
 	]);
 	return mapping.get(svar);
+}
+
+export function profilertTilBeskrivelse(profilertTil: ProfilertTil) {
+	switch (profilertTil) {
+		case ProfilertTil.ANTATT_GODE_MULIGHETER:
+			return 'Antatt rask overgang til arbeid: Vurder om brukeren har gode muligheter til å beholde eller komme i jobb på egenhånd.';
+		case ProfilertTil.ANTATT_BEHOV_FOR_VEILEDNING:
+			return 'Antatt behov for veiledning: Vurder brukerens jobbmuligheter og behov for veiledning.';
+		case ProfilertTil.OPPGITT_HINDRINGER:
+			return 'Brukeren har oppgitt hindringer: Vurder brukerens jobbmuligheter og behov for veiledning.';
+		default:
+			return profilertTil;
+	}
 }
 
 export function formatVarighet(varighet: number | null, varighetEnhet: KursVarighetEnhetDtoV2 | null) {

@@ -3,7 +3,10 @@ import { Alert, Link } from '@navikt/ds-react';
 import Card from '../../component/card/card';
 import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
-import { hentRegistreringOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
+import {
+	hentArbeidssokerRegistretOyblikksbilde,
+	hentRegistreringOyblikksbilde
+} from '../../api/veilarbvedtaksstotte/vedtak';
 import { useEffect } from 'react';
 import Spinner from '../../component/spinner/spinner';
 import { logMetrikk } from '../../util/logger';
@@ -15,40 +18,61 @@ import {
 	fremtidigSituasjonLabel,
 	helseHinderLabel,
 	innsatsgruppeLabel,
+	profilertTilBeskrivelse,
 	sisteStillingLabel,
 	tilbakeIArbeidLabel,
 	utdanningBestattSvarLabel,
 	utdanningGodkjentSvarLabel,
 	utdanningSvarLabel
-} from './oyblikksbilde-fikser';
+} from './oyeblikksbilde-fikser';
 import { RegistreringDto } from './dto/RegistreringDto';
 import { FilePdfIcon } from '@navikt/aksel-icons';
-import { visEnkelVerdi } from './oyeblikksbilde-cv';
+import { visEnkelVerdi, visFlereVerdi } from './oyeblikksbilde-cv';
+import { OpplysningerOmArbeidssokerMedProfilering } from './dto/OpplysningerOmArbeidssoekerMedProfilering';
+import { lagHentTekstForSprak, SPORSMAL_TEKSTER, SporsmalId } from '@navikt/arbeidssokerregisteret-utils';
 
 export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Element {
-	const oyeblikksbildeFetcher = useAxiosFetcher(hentRegistreringOyblikksbilde);
+	const registreringOyeblikksbildeFetcher = useAxiosFetcher(hentRegistreringOyblikksbilde);
+	const arbeidssokerRegistretOyeblikksbildeFetcher = useAxiosFetcher(hentArbeidssokerRegistretOyblikksbilde);
 
 	useEffect(() => {
-		oyeblikksbildeFetcher.fetch(props.vedtakId);
+		registreringOyeblikksbildeFetcher.fetch(props.vedtakId);
+		arbeidssokerRegistretOyeblikksbildeFetcher.fetch(props.vedtakId);
 		logMetrikk('vis-oyblikksbilde-registering');
 		// eslint-disable-next-line
 	}, [props.vedtakId]);
 
-	if (oyeblikksbildeFetcher.loading) {
+	if (registreringOyeblikksbildeFetcher.loading || arbeidssokerRegistretOyeblikksbildeFetcher.loading) {
 		return <Spinner />;
-	} else if (oyeblikksbildeFetcher.error) {
+	} else if (registreringOyeblikksbildeFetcher.error || arbeidssokerRegistretOyeblikksbildeFetcher.error) {
 		return (
 			<Alert variant="error" className="vedtaksstotte-alert">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
 				senere.
 			</Alert>
 		);
-	} else if (oyeblikksbildeFetcher.data) {
+	} else if (arbeidssokerRegistretOyeblikksbildeFetcher.data?.data) {
+		try {
+			return (
+				<OyeblikksdataArbeidssokerInnhold
+					data={arbeidssokerRegistretOyeblikksbildeFetcher.data.data}
+					erJournalfort={arbeidssokerRegistretOyeblikksbildeFetcher.data.journalfort}
+					vedtakId={props.vedtakId}
+				/>
+			);
+		} catch (error) {
+			return (
+				<Alert variant="error" className="vedtaksstotte-alert">
+					{error}
+				</Alert>
+			);
+		}
+	} else if (registreringOyeblikksbildeFetcher.data?.data) {
 		try {
 			return (
 				<OyeblikksdataRegistreringInnhold
-					data={oyeblikksbildeFetcher.data.data}
-					erJournalfort={oyeblikksbildeFetcher.data.journalfort}
+					data={registreringOyeblikksbildeFetcher.data.data}
+					erJournalfort={registreringOyeblikksbildeFetcher.data.journalfort}
 					vedtakId={props.vedtakId}
 				/>
 			);
@@ -210,6 +234,122 @@ function OyeblikksdataRegistreringInnhold(props: {
 					<Link
 						href="#"
 						onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.REGISTRERINGSINFO)}
+						className="oyeblikksbilde-visning__pdf-lenke"
+					>
+						<FilePdfIcon className="oyeblikksbilde-visning__pdf-ikon" aria-hidden />
+						Svarene_dine_fra_da_du_registrerte_deg.pdf
+					</Link>
+				</div>
+			)}
+		</Card>
+	);
+}
+
+function OyeblikksdataArbeidssokerInnhold(props: {
+	data: OpplysningerOmArbeidssokerMedProfilering | null;
+	erJournalfort: boolean;
+	vedtakId: number;
+}) {
+	const { changeView } = useViewStore();
+
+	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
+		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
+		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
+	};
+
+	const data = props.data;
+	const tekst = lagHentTekstForSprak(SPORSMAL_TEKSTER, 'nb');
+
+	return (
+		<Card className="vedlegg-card">
+			<Systemtittel tag="h2" className="vedlegg-card__header">
+				Svarene dine fra da du registrerte deg
+			</Systemtittel>
+			<div className="innhold">
+				{(data == null || (data.opplysningerOmArbeidssoeker == null && data.profilering == null)) && (
+					<>
+						<b>Ingen registrerte data:</b> Brukeren har ikke registrert seg via den nye
+						registreringsløsningen.
+					</>
+				)}
+				{data?.arbeidssoekerperiodeStartet &&
+					visEnkelVerdi('Registrert', formatDates(data.arbeidssoekerperiodeStartet))}
+
+				{data?.opplysningerOmArbeidssoeker?.sendtInnAv &&
+					visEnkelVerdi('Sist oppdatert', formatDates(data.opplysningerOmArbeidssoeker.sendtInnAv.tidspunkt))}
+
+				{data?.opplysningerOmArbeidssoeker?.sendtInnAv.utfoertAv.type === 'VEILEDER' &&
+					data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id &&
+					visEnkelVerdi('Sist oppdatert av', data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id)}
+				{data?.opplysningerOmArbeidssoeker && (
+					<>
+						<h3 className="json-key">Besvarelse</h3>
+						<div className="json-obj">
+							{data?.opplysningerOmArbeidssoeker.utdanning.nus &&
+								visEnkelVerdi(
+									tekst(SporsmalId.utdanning),
+									tekst(data.opplysningerOmArbeidssoeker.utdanning.nus)
+								)}
+
+							{data?.opplysningerOmArbeidssoeker.utdanning.bestaatt &&
+								visEnkelVerdi(
+									tekst(SporsmalId.utdanningBestatt),
+									tekst(data.opplysningerOmArbeidssoeker.utdanning.bestaatt)
+								)}
+
+							{data?.opplysningerOmArbeidssoeker.utdanning.godkjent &&
+								visEnkelVerdi(
+									tekst(SporsmalId.utdanningGodkjent),
+									tekst(data.opplysningerOmArbeidssoeker.utdanning.godkjent)
+								)}
+
+							{data?.opplysningerOmArbeidssoeker.jobbsituasjon &&
+								visFlereVerdi(
+									tekst(SporsmalId.dinSituasjon),
+									data.opplysningerOmArbeidssoeker.jobbsituasjon.map(situasjon =>
+										tekst(situasjon.beskrivelse)
+									)
+								)}
+
+							{data?.opplysningerOmArbeidssoeker.annet.andreForholdHindrerArbeid &&
+								visEnkelVerdi(
+									tekst(SporsmalId.andreForhold),
+									tekst(data.opplysningerOmArbeidssoeker.annet.andreForholdHindrerArbeid)
+								)}
+
+							{data?.opplysningerOmArbeidssoeker.helse.helsetilstandHindrerArbeid &&
+								visEnkelVerdi(
+									tekst(SporsmalId.helseHinder),
+									tekst(data.opplysningerOmArbeidssoeker.helse.helsetilstandHindrerArbeid)
+								)}
+						</div>
+					</>
+				)}
+
+				{data?.profilering && (
+					<>
+						<h3 className="json-key">Profilering</h3>
+						<div className="json-obj">
+							{data.profilering.profilertTil &&
+								visEnkelVerdi(
+									'Forslag om brukers muligheter og behov (resultat fra profilering)',
+									profilertTilBeskrivelse(data.profilering.profilertTil)
+								)}
+
+							{data.profilering.jobbetSammenhengendeSeksAvTolvSisteManeder !== null &&
+								visEnkelVerdi(
+									'Brukeren har vært sammenhengende i jobb minst 6 av de siste 12 måneder',
+									data.profilering.jobbetSammenhengendeSeksAvTolvSisteManeder ? 'Ja' : 'Nei'
+								)}
+						</div>
+					</>
+				)}
+			</div>
+			{props.erJournalfort && (
+				<div className="oyeblikk-pdf">
+					<Link
+						href="#"
+						onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.ARBEIDSSOKERREGISTRET)}
 						className="oyeblikksbilde-visning__pdf-lenke"
 					>
 						<FilePdfIcon className="oyeblikksbilde-visning__pdf-ikon" aria-hidden />
