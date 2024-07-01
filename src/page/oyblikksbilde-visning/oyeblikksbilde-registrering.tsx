@@ -274,9 +274,24 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 				)}
 				{data?.arbeidssoekerperiodeStartet && (
 					<>
-						<span className="json-key">Opprettet dato: </span>
+						<span className="json-key">Registrert: </span>
 						{formatDates(data.arbeidssoekerperiodeStartet)}
 					</>
+				)}
+				{data?.opplysningerOmArbeidssoeker?.sendtInnAv && (
+					<>
+						<span className="json-key">Sist oppdatert: </span>
+						{formatDates(data.opplysningerOmArbeidssoeker.sendtInnAv.tidspunkt)}
+					</>
+				)}
+				{data?.opplysningerOmArbeidssoeker?.sendtInnAv.utfoertAv.type === 'VEILEDER' && (
+					<div className="json-obj">
+						{data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id &&
+							visEnkelVerdi(
+								'Sist oppdatert av',
+								data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id
+							)}
+					</div>
 				)}
 				{data?.opplysningerOmArbeidssoeker && (
 					<>
@@ -340,16 +355,6 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 								)}
 						</div>
 					</>
-				)}
-
-				{data?.opplysningerOmArbeidssoeker?.sendtInnAv.utfoertAv.type === 'VEILEDER' && (
-					<div className="json-obj">
-						{data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id &&
-							visEnkelVerdi(
-								'Registrert av ident',
-								data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id
-							)}
-					</div>
 				)}
 			</div>
 			{props.erJournalfort && (
