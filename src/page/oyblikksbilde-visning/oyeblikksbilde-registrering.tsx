@@ -272,27 +272,15 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 						registreringsløsningen.
 					</>
 				)}
-				{data?.arbeidssoekerperiodeStartet && (
-					<>
-						<span className="json-key">Registrert: </span>
-						{formatDates(data.arbeidssoekerperiodeStartet)}
-					</>
-				)}
-				{data?.opplysningerOmArbeidssoeker?.sendtInnAv && (
-					<>
-						<span className="json-key">Sist oppdatert: </span>
-						{formatDates(data.opplysningerOmArbeidssoeker.sendtInnAv.tidspunkt)}
-					</>
-				)}
-				{data?.opplysningerOmArbeidssoeker?.sendtInnAv.utfoertAv.type === 'VEILEDER' && (
-					<div className="json-obj">
-						{data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id &&
-							visEnkelVerdi(
-								'Sist oppdatert av',
-								data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id
-							)}
-					</div>
-				)}
+				{data?.arbeidssoekerperiodeStartet &&
+					visEnkelVerdi('Registrert', formatDates(data.arbeidssoekerperiodeStartet))}
+
+				{data?.opplysningerOmArbeidssoeker?.sendtInnAv &&
+					visEnkelVerdi('Sist oppdatert', formatDates(data.opplysningerOmArbeidssoeker.sendtInnAv.tidspunkt))}
+
+				{data?.opplysningerOmArbeidssoeker?.sendtInnAv.utfoertAv.type === 'VEILEDER' &&
+					data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id &&
+					visEnkelVerdi('Sist oppdatert av', data?.opplysningerOmArbeidssoeker.sendtInnAv.utfoertAv.id)}
 				{data?.opplysningerOmArbeidssoeker && (
 					<>
 						<h3 className="json-key">Besvarelse</h3>
