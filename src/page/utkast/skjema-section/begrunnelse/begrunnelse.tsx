@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import cls from 'classnames';
-import { SkjemaGruppe, Textarea } from 'nav-frontend-skjema';
 import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
 import { Normaltekst } from 'nav-frontend-typografi';
 import FeltHeader from '../felt-header/felt-header';
@@ -10,9 +8,8 @@ import { useDataStore } from '../../../../store/data-store';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
-import { lagSkjemaelementFeilmelding } from '../../../../util';
 import { Lix, GammelnavskDictionary } from '../../../../spraksjekk-intern/components';
-import { Accordion, Alert, Switch } from '@navikt/ds-react';
+import { Accordion, Alert, Switch, Textarea } from '@navikt/ds-react';
 import './begrunnelse.less';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
@@ -58,10 +55,6 @@ function Begrunnelse() {
 		setBegrunnelseFeil(feil.begrunnelse);
 	}, [begrunnelse]);
 
-	useEffect(() => {
-		setBegrunnelseFeil(errors.begrunnelse);
-	}, [errors.begrunnelse]);
-
 	return (
 		<>
 			<div className="begrunnelse-felt" id="begrunnelse-scroll-to">
@@ -76,37 +69,36 @@ function Begrunnelse() {
 				/>
 
 				<div className="begrunnelse">
-					<SkjemaGruppe
-						feil={lagSkjemaelementFeilmelding(begrunnelseFeil)}
-						className="begrunnelse__container"
-					>
-						<Textarea
-							value={begrunnelse || ''}
-							label=""
-							placeholder="Skriv inn din begrunnelse/arbeidsevnevurdering her"
-							maxLength={BEGRUNNELSE_ANBEFALT_LENGTH}
-							onChange={onBegrunnelseChanged}
-							aria-labelledby="begrunnelse-tittel"
-							spellCheck="true"
-							className={cls('begrunnelse__tekstomrade', 'skjemaelement__input textarea--medMeta', {
-								'begrunnelse__tekstomrade--feil': !!begrunnelseFeil
-							})}
-						/>
-						<Normaltekst className="begrunnelse__malform">
-							Brukers målform: {malformToTekst(malform)}
-						</Normaltekst>
-						{begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH && (
-							<Alert
-								size="small"
-								variant="warning"
-								aria-live="polite"
-								className="begrunnelse-for-langt-varsel"
-							>
-								Begrunnelsen du har skrevet er veldig lang, og derfor tung å lese for mottaker. Prøv å
-								korte den ned.
-							</Alert>
-						)}
-					</SkjemaGruppe>
+					<Textarea
+						size="small"
+						label="Skriv inn din begrunnelse/arbeidsevnevurdering her"
+						placeholder="Skriv inn din begrunnelse/arbeidsevnevurdering her"
+						value={begrunnelse || ''}
+						minRows={30}
+						maxRows={30}
+						maxLength={BEGRUNNELSE_ANBEFALT_LENGTH}
+						i18n={{
+							counterLeft: 'tegn igjen av anbefalt maksimum',
+							counterTooMuch: 'tegn over anbefalt lengde'
+						}}
+						onChange={onBegrunnelseChanged}
+						error={begrunnelseFeil}
+						hideLabel
+					/>
+					<Normaltekst className="begrunnelse__malform">
+						Brukers målform: {malformToTekst(malform)}
+					</Normaltekst>
+					{begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH && (
+						<Alert
+							size="small"
+							variant="warning"
+							aria-live="polite"
+							className="begrunnelse-for-langt-varsel"
+						>
+							Begrunnelsen du har skrevet er veldig lang og kan derfor være tung å lese for mottaker. Prøv
+							å korte den ned.
+						</Alert>
+					)}
 				</div>
 			</div>
 			<div className="spraksjekk-felt">

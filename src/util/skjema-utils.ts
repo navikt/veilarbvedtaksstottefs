@@ -114,8 +114,8 @@ export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Ved
 
 export function validerBegrunnelseMaxLength(begrunnelse: OrNothing<string>) {
 	const errors: SkjemaFeil = {};
-	if (begrunnelse && begrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
-		errors.begrunnelse = `Du kan maksimalt skrive ${BEGRUNNELSE_MAX_LENGTH} tegn`;
+	if (begrunnelse && begrunnelse.length >= BEGRUNNELSE_MAX_LENGTH) {
+		errors.begrunnelse = `Du kan maksimalt skrive ${BEGRUNNELSE_MAX_LENGTH - 1} tegn`;
 	}
 	return errors;
 }
