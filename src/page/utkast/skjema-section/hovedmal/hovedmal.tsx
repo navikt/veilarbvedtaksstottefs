@@ -2,7 +2,7 @@ import FeltHeader from '../felt-header/felt-header';
 import { alleHovedmal } from '../../../../util/hovedmal';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { InnsatsgruppeType } from '../../../../api/veilarbvedtaksstotte';
-import { lagSkjemaelementFeilmelding, swallowEnterKeyPress } from '../../../../util';
+import { swallowEnterKeyPress } from '../../../../util';
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import './hovedmal.css';
 
@@ -19,7 +19,7 @@ function Hovedmal() {
 				hideLegend
 				onChange={nyttHovedmal => setHovedmal(nyttHovedmal)}
 				value={valgtHovedmal}
-				error={lagSkjemaelementFeilmelding(errors.hovedmal)}
+				error={errors.hovedmal}
 			>
 				{erVarigTilpassetInnsats ? (
 					<span className="hovedmal__empty-tekst">

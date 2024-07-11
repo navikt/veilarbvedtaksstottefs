@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import { OrNothing } from './type/ornothing';
 import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 
@@ -13,10 +13,6 @@ export const scrollToBottom = (elem: Element | null) => {
 	if (elem) {
 		elem.scrollTop = elem.scrollHeight;
 	}
-};
-
-export const lagSkjemaelementFeilmelding = (muligFeil: string | undefined): React.ReactNode => {
-	return muligFeil ? muligFeil : null;
 };
 
 export const finnGjeldendeVedtak = (vedtakListe: OrNothing<Vedtak[]>): Vedtak | undefined => {

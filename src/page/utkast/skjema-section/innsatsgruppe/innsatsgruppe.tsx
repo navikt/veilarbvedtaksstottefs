@@ -1,12 +1,7 @@
 import FeltHeader from '../felt-header/felt-header';
 import { InnsatsgruppeTipsInnhold } from './innsatsgruppe-tips-innhold';
 import { harSkrevetBegrunnelse, trengerKvalitetssikrer } from '../../../../util/skjema-utils';
-import {
-	erBeslutterProsessStartet,
-	finnGjeldendeVedtak,
-	lagSkjemaelementFeilmelding,
-	swallowEnterKeyPress
-} from '../../../../util';
+import { erBeslutterProsessStartet, finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../../util';
 import { InnsatsgruppeType } from '../../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { ModalType, useModalStore } from '../../../../store/modal-store';
@@ -90,7 +85,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 			hideLegend
 			onChange={nyInnsatsgruppe => handleInnsatsgruppeChanged(nyInnsatsgruppe)}
 			value={props.innsatsgruppe}
-			error={lagSkjemaelementFeilmelding(errors.innsatsgruppe)}
+			error={errors.innsatsgruppe}
 		>
 			{innsatsgruppeTekster.map(innsatsgruppetekst => (
 				<Radio key={innsatsgruppetekst.value} value={innsatsgruppetekst.value} onKeyDown={swallowEnterKeyPress}>

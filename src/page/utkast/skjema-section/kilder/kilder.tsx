@@ -6,7 +6,6 @@ import { KilderTipsInnhold } from './kilder-tips-innhold';
 import FeltHeader from '../felt-header/felt-header';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { mergeMedDefaultKilder } from '../../../../util/skjema-utils';
-import { lagSkjemaelementFeilmelding } from '../../../../util';
 import { CheckboxGroup } from '@navikt/ds-react';
 import './kilder.css';
 
@@ -56,7 +55,7 @@ function Kilder() {
 				hideLegend
 				onChange={nyeValgteKilder => setValgteKilder(nyeValgteKilder)}
 				value={valgteKilder}
-				error={lagSkjemaelementFeilmelding(errors.kilder)}
+				error={errors.kilder}
 			>
 				{kilder.map((kilde, index) =>
 					redigeringModusIndeks !== index ? (
