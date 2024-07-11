@@ -55,6 +55,10 @@ function Begrunnelse() {
 		setBegrunnelseFeil(feil.begrunnelse);
 	}, [begrunnelse]);
 
+	useEffect(() => {
+		setBegrunnelseFeil(errors.begrunnelse);
+	}, [errors.begrunnelse]);
+
 	return (
 		<>
 			<div className="begrunnelse-felt" id="begrunnelse-scroll-to">
