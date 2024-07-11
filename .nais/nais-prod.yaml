@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: veilarbvedtaksstottefs
-  namespace: pto
+  namespace: obo
   labels:
-    team: pto
+    team: obo
 spec:
   image: ghcr.io/navikt/poao-frontend/poao-frontend:2023.01.13_08.09-36c09678654f
   port: 8080
@@ -29,7 +29,7 @@ spec:
       memory: 256Mi
   gcp:
     buckets:
-      - name: veilarbvedtaksstottefs-prod
+      - name: obo-veilarbvedtaksstottefs-prod
         cascadingDelete: false
   env:
     - name: JSON_CONFIG
@@ -39,6 +39,6 @@ spec:
             "origin": "https://veilarbpersonflate.intern.nav.no"
           },
           "gcs": {
-            "bucketName": "veilarbvedtaksstottefs-prod"
+            "bucketName": "obo-veilarbvedtaksstottefs-prod"
           }
         }

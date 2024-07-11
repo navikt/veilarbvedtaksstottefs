@@ -1,7 +1,14 @@
 import { bypass, delay, http, HttpResponse, RequestHandler } from 'msw';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { lagVedtakBrevMockUrl, mockUrlPrefix } from '../../utils';
-import { hentArenaVedtak, hentFattedeVedtak, hentOyeblikksbilder } from '../../api-data';
+import {
+	hentArbeidssokerRegistretOyblikksbilde,
+	hentArenaVedtak,
+	hentCvOyeblikksbilde,
+	hentEgenvurderingOyeblikksbilde,
+	hentFattedeVedtak,
+	hentRegistreringOyeblikksbilde
+} from '../../api-data';
 import { DEFAULT_DELAY_MILLISECONDS } from '../../index';
 
 export const vedtakHandlers: RequestHandler[] = [
@@ -13,9 +20,23 @@ export const vedtakHandlers: RequestHandler[] = [
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 		return HttpResponse.json(hentArenaVedtak());
 	}),
-	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde`, async () => {
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde-cv`, async () => {
 		await delay(DEFAULT_DELAY_MILLISECONDS);
-		return HttpResponse.json(hentOyeblikksbilder());
+		return HttpResponse.json(hentCvOyeblikksbilde());
+	}),
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde-registrering`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentRegistreringOyeblikksbilde());
+	}),
+
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde-arbeidssokerRegistret`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentArbeidssokerRegistretOyblikksbilde());
+	}),
+
+	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/oyeblikksbilde-egenvurdering`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentEgenvurderingOyeblikksbilde());
 	}),
 	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/arena/pdf`, async () => {
 		const arenaVedtakBrevMockUrl = `${mockUrlPrefix()}/test-brev/arenabrev.pdf`;

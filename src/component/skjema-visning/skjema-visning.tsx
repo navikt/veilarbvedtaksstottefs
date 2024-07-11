@@ -79,7 +79,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 			</ul>
 
 			<Button variant="tertiary" onClick={() => changeView(ViewType.OYBLIKKSBILDE_VISNING, { vedtakId: id })}>
-				Brukerinformasjon på vedtakstidspunktet
+				Journalført brukerinformasjon på vedtakstidspunktet
 			</Button>
 		</div>
 	);
