@@ -54,11 +54,6 @@
 		background-color: white;
 		flex-grow: 1;
 
-		// Fikser bug i <Textarea/> som gjør at høyden øker forbi max-height
-		.textarea__container {
-			position: unset;
-		}
-
 		&__meldinger {
 			display: flex;
 			flex-grow: 1;
@@ -68,17 +63,12 @@
 		}
 
 		&__send-knapp {
-			margin-top: var(--a-spacing-4);
-			float: right;
+			margin-top: -1.125rem;
+			align-self: flex-end;
 		}
 
 		&__spinner {
 			margin: auto auto;
-		}
-
-		&__skrivefelt {
-			max-height: 300px;
-			overflow-y: auto;
 		}
 	}
 }
