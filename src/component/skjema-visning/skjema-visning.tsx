@@ -6,9 +6,8 @@ import Show from '../show';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { getHovedmalNavn } from '../../util/hovedmal';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
-import { Button } from '@navikt/ds-react';
+import { BodyLong, Button } from '@navikt/ds-react';
 import './skjema-visning.less';
 
 export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
@@ -67,7 +66,9 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 			<Element tag="span" className="skjema-visning__label blokk-xxs">
 				Begrunnelse
 			</Element>
-			<Tekstomrade className="skjema-visning__begrunnelse">{begrunnelse ? begrunnelse : ''}</Tekstomrade>
+			<BodyLong size="small" style={{ whiteSpace: 'pre-wrap' }} spacing>
+				{begrunnelse ?? ''}
+			</BodyLong>
 
 			<Element tag="span" className="skjema-visning__label blokk-xxs">
 				Kilder

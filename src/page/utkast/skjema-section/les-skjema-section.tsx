@@ -13,11 +13,11 @@ import { fetchUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../util/type/ornothing';
 import { hentFattedeVedtak } from '../../../api/veilarbvedtaksstotte/vedtak';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { getInnsatsgruppeTekst } from '../../../util/innsatsgruppe';
 import { getHovedmalNavn } from '../../../util/hovedmal';
 import { MalformData, MalformType } from '../../../api/veilarbperson';
+import { BodyLong } from '@navikt/ds-react';
 
 const TEN_SECONDS = 10000;
 
@@ -127,10 +127,13 @@ export function LesSkjemaSection() {
 					eksternLenketekst="Nye retningslinjer for NAV-loven § 14 a"
 					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
 				/>
-				<Tekstomrade className="blokk-s">{begrunnelse}</Tekstomrade>
+
+				<BodyLong size="small" style={{ whiteSpace: 'pre-wrap' }} spacing>
+					{begrunnelse}
+				</BodyLong>
 				<Normaltekst className="begrunnelse-felt__antall-tegn">
-					<span>{'Brukers målform: ' + malformToTekst(malform)}</span>
 					<span className="span-right"> {'Antall tegn: ' + begrunnelse.length}</span>
+					<span>{'Brukers målform: ' + malformToTekst(malform)}</span>
 				</Normaltekst>
 			</div>
 
