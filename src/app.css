@@ -5,3 +5,8 @@
 	flex-grow: 1;
 	background-color: var(--a-bg-subtle);
 }
+
+/* Må fjernes/justeres når vi oppdaterer til navds@v6 */
+.veilarbvedtaksstottefs .navds-textarea__counter {
+	margin-top: var(--a-spacing-05);
+}
