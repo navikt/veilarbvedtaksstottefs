@@ -1,0 +1,10 @@
+.veilarbvedtaksstottefs .nytt-vedtak-panel {
+	border: 2px dashed var(--a-gray-600);
+}
+
+.veilarbvedtaksstottefs .nytt-vedtak-panel .vedtakstottepanel__buttons {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: flex-start;
+}

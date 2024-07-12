@@ -11,11 +11,10 @@ import { useSkjemaStore } from '../../../store/skjema-store';
 import { VeilederTilgang } from '../../../util/tilgang';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { logMetrikk } from '../../../util/logger';
-import { Checkbox } from 'nav-frontend-skjema';
 import { Utkast, Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { fetchUtkast, lagNyttUtkast, oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
-import { Button } from '@navikt/ds-react';
-import './nytt-vedtak-panel.less';
+import { Button, Checkbox } from '@navikt/ds-react';
+import './nytt-vedtak-panel.css';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { fnr } = useAppStore();
@@ -83,14 +82,15 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 			</div>
 			<div className="vedtakstottepanel__content">
 				<img src={nyttVedtakBilde} className="vedtakstottepanel__ikon" alt="" />
-				<div>
+				<div className="vedtakstottepanel__buttons">
 					<Checkbox
-						disabled={!sisteVedtak}
-						className="blokk-m"
-						label="Kopier kilder og begrunnelse fra siste vedtak"
+						size="small"
 						checked={kopierSisteVedtak}
 						onChange={e => setKopierSisteVedtak(e.target.checked)}
-					/>
+						disabled={!sisteVedtak}
+					>
+						Kopier kilder og begrunnelse fra siste vedtak
+					</Checkbox>
 					<Button size="small" onClick={lagNyttVedtakUtkastOgRedirectTilUtkast}>
 						Opprett vedtak
 					</Button>

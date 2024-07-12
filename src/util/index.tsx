@@ -1,5 +1,4 @@
-import React, { CSSProperties } from 'react';
-import { SkjemaelementFeilmelding } from 'nav-frontend-skjema';
+import { CSSProperties } from 'react';
 import { OrNothing } from './type/ornothing';
 import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 
@@ -14,10 +13,6 @@ export const scrollToBottom = (elem: Element | null) => {
 	if (elem) {
 		elem.scrollTop = elem.scrollHeight;
 	}
-};
-
-export const lagSkjemaelementFeilmelding = (muligFeil: string | undefined): React.ReactNode => {
-	return muligFeil ? <SkjemaelementFeilmelding aria-live="assertive">{muligFeil}</SkjemaelementFeilmelding> : null;
 };
 
 export const finnGjeldendeVedtak = (vedtakListe: OrNothing<Vedtak[]>): Vedtak | undefined => {
@@ -46,7 +41,7 @@ export const erGodkjentAvBeslutter = (beslutterProsessStatus: OrNothing<Beslutte
 
 // If the checkboxes/radios does not swallow enter, then it will propagate to the first button and trigger onClick
 export const swallowEnterKeyPress = (e: any) => {
-	if (e.charCode === 13) {
+	if (e.keyCode === 13) {
 		e.preventDefault();
 	}
 };

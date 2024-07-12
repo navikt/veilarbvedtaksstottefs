@@ -2,7 +2,6 @@ import { erStandard, erVarigEllerGradertVarig } from './innsatsgruppe';
 import { OrNothing } from './type/ornothing';
 import { HovedmalType, InnsatsgruppeType, Vedtak } from '../api/veilarbvedtaksstotte';
 import { MalformData, MalformType } from '../api/veilarbperson';
-import { Kilde } from '../page/utkast/skjema-section/kilder/kilder';
 import { SkjemaFeil } from './type/skjema-feil';
 import { BEGRUNNELSE_MAX_LENGTH } from '../page/utkast/skjema-section/begrunnelse/begrunnelse';
 
@@ -15,13 +14,13 @@ export interface SkjemaData {
 
 export const kildelisteBokmal = [
 	'Svarene dine fra da du registrerte deg',
-	'CV-en/jobbønskene dine på nav.no',
+	'CV-en/jobbønskene din(e) på nav.no',
 	'Svarene dine om behov for veiledning'
 ];
 
 export const kildelisteNynorsk = [
 	'Svara dine frå då du registrerte deg',
-	'CV-en/jobbønska dine på nav.no',
+	'CV-en/jobbønska din(e) på nav.no',
 	'Svara dine om behov for rettleiing'
 ];
 
@@ -53,17 +52,9 @@ export function mapKilderFraBokmalTilBrukersMalform(
 	});
 }
 
-export function mergeMedDefaultKilder(kildeListe: string[]): Kilde[] {
-	const kilder = kildelisteBokmal.map(kildeTekst => ({
-		navn: kildeTekst,
-		erValgt: kildeListe.includes(kildeTekst)
-	}));
-
-	kildeListe
-		.filter(kildeTekst => !kildelisteBokmal.includes(kildeTekst))
-		.forEach(kildeTekst => kilder.push({ navn: kildeTekst, erValgt: true }));
-
-	return kilder;
+export function mergeMedDefaultKilder(valgteKilderListe: string[]): string[] {
+	// Slår sammen listene og fjerner duplikater
+	return Array.from(new Set([...kildelisteBokmal, ...valgteKilderListe]));
 }
 
 export function erDefaultKilde(kilde: string) {
@@ -97,7 +88,7 @@ export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
 
 export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil {
 	const errors: SkjemaFeil = {};
-	const { innsatsgruppe, opplysninger, begrunnelse, hovedmal } = skjema;
+	const { innsatsgruppe, opplysninger: valgteKilder, begrunnelse, hovedmal } = skjema;
 
 	if (!innsatsgruppe) {
 		errors.innsatsgruppe = 'Mangler innsatsgruppe';
@@ -114,7 +105,7 @@ export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Ved
 	const begrunnelsefeil = validerBegrunnelseMaxLength(begrunnelse);
 	Object.assign(errors, begrunnelsefeil);
 
-	if (!opplysninger || opplysninger.length < 1) {
+	if (!valgteKilder || valgteKilder.length < 1) {
 		errors.kilder = 'Mangler kilder';
 	}
 
@@ -123,8 +114,8 @@ export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Ved
 
 export function validerBegrunnelseMaxLength(begrunnelse: OrNothing<string>) {
 	const errors: SkjemaFeil = {};
-	if (begrunnelse && begrunnelse.length > BEGRUNNELSE_MAX_LENGTH) {
-		errors.begrunnelse = `Du kan maksimalt skrive ${BEGRUNNELSE_MAX_LENGTH} tegn`;
+	if (begrunnelse && begrunnelse.length >= BEGRUNNELSE_MAX_LENGTH) {
+		errors.begrunnelse = `Du kan maksimalt skrive ${BEGRUNNELSE_MAX_LENGTH - 1} tegn`;
 	}
 	return errors;
 }

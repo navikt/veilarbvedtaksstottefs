@@ -1,33 +1,30 @@
 import { useState } from 'react';
-import { Textarea } from 'nav-frontend-skjema';
-import { Kilde } from '../kilder';
-import { Button } from '@navikt/ds-react';
-import './rediger-kilde.less';
+import { Button, Textarea } from '@navikt/ds-react';
+import './rediger-kilde.css';
 
 interface RedigerKildeProps {
-	kilde: Kilde;
+	kildenavn: string;
 	negativeBtn: 'CANCEL' | 'DELETE';
-	onTekstSubmit: (kilde: Kilde) => void;
+	onTekstSubmit: (kilde: string) => void;
 	onTekstDeleteOrCancel: () => void;
 }
 
 const KILDE_MAX_LENGTH = 150;
 
-export function RedigerKilde(props: RedigerKildeProps) {
-	const { kilde, negativeBtn, onTekstSubmit, onTekstDeleteOrCancel } = props;
-	const [tekst, setTekst] = useState(kilde.navn);
-
-	function onSubmit() {
-		onTekstSubmit({ navn: tekst, erValgt: true });
-	}
+export function RedigerKilde({
+	kildenavn,
+	negativeBtn,
+	onTekstSubmit,
+	onTekstDeleteOrCancel
+}: Readonly<RedigerKildeProps>) {
+	const [tekst, setTekst] = useState(kildenavn);
 
 	return (
 		<div className="rediger-kilde">
 			<Textarea
-				label=""
+				size="small"
+				label="Legg til kilde og dato"
 				value={tekst}
-				placeholder="Legg til kilde og dato"
-				maxLength={KILDE_MAX_LENGTH}
 				onChange={(e: any) => {
 					let nyKilde = e.target.value;
 					if (nyKilde.length > KILDE_MAX_LENGTH) {
@@ -35,14 +32,15 @@ export function RedigerKilde(props: RedigerKildeProps) {
 					}
 					setTekst(nyKilde);
 				}}
-				autoFocus={true}
+				maxLength={KILDE_MAX_LENGTH}
+				autoFocus
 			/>
-			<div className="rediger-kilde__aksjoner">
-				<Button size="small" onClick={onSubmit}>
-					Lagre
-				</Button>
+			<div className="rediger-kilde__handlinger">
 				<Button size="small" variant="secondary" onClick={onTekstDeleteOrCancel}>
 					{negativeBtn === 'CANCEL' ? 'Avbryt' : 'Slett'}
+				</Button>
+				<Button size="small" onClick={() => onTekstSubmit(tekst)}>
+					Lagre
 				</Button>
 			</div>
 		</div>

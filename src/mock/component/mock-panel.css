@@ -1,0 +1,17 @@
+.veilarbvedtaksstottefs .mock-panel {
+	position: absolute;
+	top: var(--a-spacing-12);
+	right: var(--a-spacing-1);
+	z-index: 500;
+}
+
+.veilarbvedtaksstottefs .mock-panel__apne-knapp {
+	padding: var(--a-spacing-2) var(--a-spacing-4);
+	border-radius: var(--a-border-radius-full);
+}
+
+.veilarbvedtaksstottefs .mock-panel__innhold {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}

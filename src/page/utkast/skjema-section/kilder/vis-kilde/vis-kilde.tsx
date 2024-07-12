@@ -1,42 +1,29 @@
-import { Checkbox } from 'nav-frontend-skjema';
-import { Kilde } from '../kilder';
 import { erDefaultKilde } from '../../../../../util/skjema-utils';
 import { swallowEnterKeyPress } from '../../../../../util';
-import { Button } from '@navikt/ds-react';
+import { Button, Checkbox } from '@navikt/ds-react';
 import { PencilIcon } from '@navikt/aksel-icons';
-import './vis-kilde.less';
+import './vis-kilde.css';
 
 interface VisKildeProps {
-	kilde: Kilde;
+	kildenavn: string;
 	handleKilde: () => void;
-	onChange: (opplysning: Kilde) => void;
-	erSistEndretIndeks: boolean;
 }
 
-export function VisKilde(props: VisKildeProps) {
-	const { navn, erValgt } = props.kilde;
-	const kanRedigeres = !erDefaultKilde(navn);
+export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {
+	const kanRedigeres = !erDefaultKilde(kildenavn);
 
 	return (
 		<div className="vis-kilde">
-			<Checkbox
-				checked={erValgt}
-				label={navn}
-				value={navn}
-				onKeyPress={swallowEnterKeyPress}
-				onChange={(e: any) => props.onChange({ navn, erValgt: e.target.checked })}
-			/>
+			<Checkbox value={kildenavn} onKeyDown={swallowEnterKeyPress}>
+				{kildenavn}
+			</Checkbox>
 			{kanRedigeres && (
 				<Button
+					size="small"
 					variant="tertiary"
 					icon={<PencilIcon />}
-					className="vis-kilde__rediger-ikon"
-					onClick={e => {
-						if (document.activeElement === e.currentTarget) {
-							props.handleKilde();
-						}
-					}}
-					aria-label={'Rediger ' + navn}
+					onClick={handleKilde}
+					aria-label={'Rediger ' + kildenavn}
 				/>
 			)}
 		</div>

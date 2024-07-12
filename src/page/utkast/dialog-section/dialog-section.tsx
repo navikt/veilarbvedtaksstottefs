@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
-import { Textarea } from 'nav-frontend-skjema';
 import { hentMeldinger, sendDialog } from '../../../api/veilarbvedtaksstotte/meldinger';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
@@ -7,10 +6,8 @@ import { sortDatesAsc } from '../../../util/date-utils';
 import { hentId, makeAbsoluteHeightStyle, scrollToBottom } from '../../../util';
 import { MeldingListe } from './melding-liste/melding-liste';
 import { useDialogSection } from '../../../store/dialog-section-store';
-import { Button, Loader } from '@navikt/ds-react';
+import { Button, Loader, Textarea } from '@navikt/ds-react';
 import './dialog-section.less';
-
-let midlertidigMelding = '';
 
 const MESSAGE_MAX_LENGTH = 1000;
 const DIALOG_SECTION_HEADER_HEIGHT = 64;
@@ -21,9 +18,9 @@ export function DialogSection() {
 	const { showModal } = useModalStore();
 	const { meldinger, setMeldinger, innloggetVeileder, utkast } = useDataStore();
 
-	const [melding, setMelding] = useState(midlertidigMelding);
+	const [melding, setMelding] = useState<string>('');
 	const [senderMelding, setSenderMelding] = useState(false);
-	const skrivefeltRef = useRef<HTMLInputElement | null>(null);
+	const skrivefeltRef = useRef<HTMLTextAreaElement | null>(null);
 
 	const innholdStyle = sectionHeight
 		? makeAbsoluteHeightStyle(sectionHeight - DIALOG_SECTION_HEADER_HEIGHT)
@@ -40,11 +37,6 @@ export function DialogSection() {
 		scrollToBottom(meldingListeElem);
 	}, [meldinger]);
 
-	function oppdaterMelding(tekst: string) {
-		setMelding(tekst);
-		midlertidigMelding = tekst;
-	}
-
 	function sendMelding() {
 		setSenderMelding(true);
 
@@ -57,7 +49,7 @@ export function DialogSection() {
 					const meldingListeElem = document.getElementById(MEDLINGER_ID);
 					scrollToBottom(meldingListeElem);
 				}
-				oppdaterMelding('');
+				setMelding('');
 				if (skrivefeltRef.current) {
 					skrivefeltRef.current.focus();
 				}
@@ -70,7 +62,7 @@ export function DialogSection() {
 
 	function handleOnMeldingChanged(e: ChangeEvent<HTMLTextAreaElement>) {
 		if (!senderMelding) {
-			oppdaterMelding(e.target.value);
+			setMelding(e.target.value);
 		}
 	}
 
@@ -83,25 +75,26 @@ export function DialogSection() {
 					<Loader size="2xlarge" className="dialog-section-innhold__spinner" />
 				)}
 			</div>
-			<div>
-				<Textarea
-					onChange={handleOnMeldingChanged}
-					value={melding}
-					maxLength={MESSAGE_MAX_LENGTH}
-					autoCorrect="on"
-					className="dialog-section-innhold__skrivefelt skjemaelement__input textarea--medMeta"
-					aria-label="Skrivefelt for å sende melding til beslutter/ansvarlig veileder"
-				/>
-				<Button
-					size="small"
-					loading={senderMelding}
-					className="dialog-section-innhold__send-knapp"
-					onClick={sendMelding}
-					disabled={!kanSendeMelding || senderMelding}
-				>
-					Send
-				</Button>
-			</div>
+			<Textarea
+				size="small"
+				label="Skrivefelt for å sende melding til beslutter/ansvarlig veileder"
+				value={melding}
+				minRows={2}
+				maxRows={12}
+				maxLength={MESSAGE_MAX_LENGTH}
+				onChange={handleOnMeldingChanged}
+				hideLabel
+				ref={skrivefeltRef}
+			/>
+			<Button
+				size="small"
+				loading={senderMelding}
+				className="dialog-section-innhold__send-knapp"
+				onClick={sendMelding}
+				disabled={!kanSendeMelding || senderMelding}
+			>
+				Send
+			</Button>
 		</div>
 	);
 }

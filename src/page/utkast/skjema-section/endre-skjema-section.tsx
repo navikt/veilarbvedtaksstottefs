@@ -29,7 +29,7 @@ export function EndreSkjemaSection() {
 	const { fattedeVedtak, malform, utkast, setBeslutterProsessStatus } = useDataStore();
 	const { showModal } = useModalStore();
 	const {
-		kilder,
+		valgteKilder,
 		hovedmal,
 		innsatsgruppe,
 		begrunnelse,
@@ -64,7 +64,7 @@ export function EndreSkjemaSection() {
 		[]
 	);
 
-	const vedtakskjema = { opplysninger: kilder, begrunnelse, innsatsgruppe, hovedmal };
+	const vedtakskjema = { opplysninger: valgteKilder, begrunnelse, innsatsgruppe, hovedmal };
 
 	useEffect(() => {
 		// Initialiser når utkastet åpnes
@@ -87,7 +87,7 @@ export function EndreSkjemaSection() {
 			oppdaterUtkast(vedtakskjema);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [kilder, begrunnelse, innsatsgruppe, hovedmal]);
+	}, [valgteKilder, begrunnelse, innsatsgruppe, hovedmal]);
 
 	useEffect(() => {
 		if (!utkast) {

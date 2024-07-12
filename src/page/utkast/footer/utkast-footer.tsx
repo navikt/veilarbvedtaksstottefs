@@ -21,7 +21,7 @@ function checkIsMaxWidthOrLess(isShowingDialog: boolean | null): boolean {
 
 export function UtkastFooter() {
 	const { showSection } = useDialogSection();
-	const { kilder, hovedmal, innsatsgruppe, begrunnelse } = useSkjemaStore();
+	const { valgteKilder, hovedmal, innsatsgruppe, begrunnelse } = useSkjemaStore();
 
 	const [isMaxWidthOrLess, setIsMaxWidthOrLess] = useState(checkIsMaxWidthOrLess(showSection));
 	const [scrollBarWidth, setScrollBarWidth] = useState(calculateScrollBarWidth());
@@ -30,7 +30,7 @@ export function UtkastFooter() {
 		? 'utkast-footer__innhold--dialog'
 		: 'utkast-footer__innhold--dialog-minified';
 
-	const vedtakskjema = { opplysninger: kilder, begrunnelse, innsatsgruppe, hovedmal };
+	const vedtakskjema = { opplysninger: valgteKilder, begrunnelse, innsatsgruppe, hovedmal };
 
 	const footerStyle = isMaxWidthOrLess ? { marginRight: `${scrollBarWidth}px` } : undefined;
 

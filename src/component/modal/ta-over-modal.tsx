@@ -4,7 +4,6 @@ import { VarselModal } from './varsel-modal/varsel-modal';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { erBeslutterProsessStartet, hentId } from '../../util';
 import { useDataStore } from '../../store/data-store';
-import { RadioPanelGruppe } from 'nav-frontend-skjema';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { VeilederTilgang } from '../../util/tilgang';
 import { SystemMeldingType } from '../../util/type/melding-type';
@@ -12,17 +11,12 @@ import { useVarselStore } from '../../store/varsel-store';
 import { VarselType } from '../varsel/varsel-type';
 import { bliBeslutter } from '../../api/veilarbvedtaksstotte/beslutter';
 import { fetchTaOverUtkast } from '../../api/veilarbvedtaksstotte/utkast';
-import { Button, Heading, Modal } from '@navikt/ds-react';
+import { Button, Heading, Modal, Radio, RadioGroup } from '@navikt/ds-react';
 
 enum TaOverFor {
 	VEILEDER = 'VEILEDER',
 	KVALITETSSIKRER = 'KVALITETSSIKRER'
 }
-
-const taOverOptions = [
-	{ label: 'Veileder', value: TaOverFor.VEILEDER },
-	{ label: 'Kvalitetssikrer', value: TaOverFor.KVALITETSSIKRER }
-];
 
 function TaOverModal(props: ModalProps) {
 	const { resetModalType, showModal } = useModalStore();
@@ -121,18 +115,18 @@ function TaOverModal(props: ModalProps) {
 		<>
 			<Modal.Header>
 				<Heading level="1" size="medium">
-					Hvem ønsker du å ta over for?
+					Ta over rolle
 				</Heading>
 			</Modal.Header>
-			<Modal.Body>
-				<RadioPanelGruppe
-					name="taovervedtakfor"
-					legend={null}
-					radios={taOverOptions}
-					onChange={(e: any) => setTaOverFor(e.target.value)}
-					checked={taOverFor}
-					className="varsel-modal__tekstinnhold"
-				/>
+			<Modal.Body style={{ minWidth: '20rem' }}>
+				<RadioGroup
+					size="small"
+					legend="Hvem ønsker du å ta over for?"
+					onChange={(e: TaOverFor) => setTaOverFor(e)}
+				>
+					<Radio value={TaOverFor.VEILEDER}>Veileder</Radio>
+					<Radio value={TaOverFor.KVALITETSSIKRER}>Kvalitetssikrer</Radio>
+				</RadioGroup>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button size="small" loading={laster} onClick={handleTaOverVedtak} disabled={!taOverFor}>
