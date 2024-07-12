@@ -11,7 +11,12 @@ interface RedigerKildeProps {
 
 const KILDE_MAX_LENGTH = 150;
 
-export function RedigerKilde({ kildenavn, negativeBtn, onTekstSubmit, onTekstDeleteOrCancel }: RedigerKildeProps) {
+export function RedigerKilde({
+	kildenavn,
+	negativeBtn,
+	onTekstSubmit,
+	onTekstDeleteOrCancel
+}: Readonly<RedigerKildeProps>) {
 	const [tekst, setTekst] = useState(kildenavn);
 
 	return (

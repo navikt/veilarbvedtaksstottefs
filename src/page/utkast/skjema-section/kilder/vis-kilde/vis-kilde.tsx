@@ -9,7 +9,7 @@ interface VisKildeProps {
 	handleKilde: () => void;
 }
 
-export function VisKilde({ kildenavn, handleKilde }: VisKildeProps) {
+export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {
 	const kanRedigeres = !erDefaultKilde(kildenavn);
 
 	return (
