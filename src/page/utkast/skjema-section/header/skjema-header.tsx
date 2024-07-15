@@ -2,7 +2,7 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import utkastBilde from './utkast.svg';
 import { SkjemaLagringStatus } from '../../../../util/type/skjema-lagring-status';
 import { formatDateTime } from '../../../../util/date-utils';
-import { Label, LabelType } from '../../../../component/label/label';
+import { Detail } from '@navikt/ds-react';
 import './skjema-header.less';
 
 interface SkjemaHeaderProps {
@@ -37,14 +37,13 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 					Utkast
 				</Systemtittel>
 				<div className="skjema-header__info">
-					<Label titleText="Ansvarlig" valueText={props.veilederNavn} labelType={LabelType.SMALL} />
+					<Detail>
+						<b>Ansvarlig:</b> {props.veilederNavn}
+					</Detail>
 					<div className="separator" />
-					<Label
-						className="skjema-header__dato"
-						valueText={sistEndretTekst}
-						titleText="Sist endret"
-						labelType={LabelType.SMALL}
-					/>
+					<Detail>
+						<b>Sist endret:</b> {sistEndretTekst}
+					</Detail>
 				</div>
 			</div>
 		</header>

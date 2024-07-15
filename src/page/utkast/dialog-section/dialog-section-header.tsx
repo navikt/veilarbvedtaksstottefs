@@ -2,11 +2,10 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { DialogTipsInnhold } from './dialog-tips-innhold';
 import { OrNothing } from '../../../util/type/ornothing';
 import { TipsPopover } from '../../../component/tips-popover/tips-popover';
-import { Label, LabelType } from '../../../component/label/label';
 import { DialogToggleBtn } from '../dialog-section-minified/dialog-toggle-btn';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import env from '../../../util/environment';
-import { Button } from '@navikt/ds-react';
+import { Button, Detail } from '@navikt/ds-react';
 import { TasklistIcon } from '@navikt/aksel-icons';
 import './dialog-section.less';
 
@@ -42,7 +41,9 @@ export function DialogSectionHeader(props: DialogPanelHeaderProps) {
 				/>
 
 				{props.beslutterNavn && (
-					<Label titleText="Ansvarlig" valueText={props.beslutterNavn} labelType={LabelType.SMALL} />
+					<Detail>
+						<b>Ansvarlig:</b> {props.beslutterNavn}
+					</Detail>
 				)}
 
 				{erBeslutter && (

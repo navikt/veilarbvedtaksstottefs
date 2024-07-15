@@ -1,13 +1,11 @@
 import { useViewStore, ViewType } from '../../store/view-store';
 import { SkjemaVisningHeader } from './header/skjema-visning-header';
-import { Label } from '../label/label';
 import { formatDateStr } from '../../util/date-utils';
-import Show from '../show';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { getHovedmalNavn } from '../../util/hovedmal';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
-import { BodyLong, Button } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, VStack } from '@navikt/ds-react';
 import './skjema-visning.less';
 
 export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
@@ -33,23 +31,19 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 		<div className="skjema-visning">
 			<SkjemaVisningHeader erGjeldende={gjeldende} />
 
-			<div className="skjema-visning__info">
-				<Label
-					titleTextClassName="label__title-text--gap-lg"
-					className="blokk-xxs"
-					titleText="Dato"
-					valueText={formatDateStr(vedtakFattet)}
-				/>
-				<Show if={beslutterNavn}>
-					<Label
-						titleTextClassName="label__title-text--gap-lg"
-						className="blokk-xxs"
-						titleText="Kvalitetssikrer"
-						valueText={beslutterNavn}
-					/>
-				</Show>
-				<Label titleTextClassName="label__title-text--gap-lg" titleText="Fattet av" valueText={fattetAv} />
-			</div>
+			<VStack gap="2" className="skjema-visning__info">
+				<BodyShort size="small">
+					<b>Dato:</b> {formatDateStr(vedtakFattet)}
+				</BodyShort>
+				{beslutterNavn && (
+					<BodyShort size="small">
+						<b>Kvalitetssikrer:</b> {beslutterNavn}
+					</BodyShort>
+				)}
+				<BodyShort size="small">
+					<b>Fattet av:</b> {fattetAv}
+				</BodyShort>
+			</VStack>
 
 			<div className="skjema-visning__felter">
 				<div className="blokk-m">

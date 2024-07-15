@@ -1,11 +1,3 @@
 .veilarbvedtaksstottefs .vedtakstottepanel.utkast-panel {
 	border: 4px solid var(--a-blue-600);
 }
-
-.veilarbvedtaksstottefs .utkast-panel__dato {
-	margin-bottom: 0.25rem;
-}
-
-.veilarbvedtaksstottefs .utkast-panel__beslutter {
-	margin-bottom: 0.25rem;
-}

@@ -1,12 +1,11 @@
-import { DatoLabel } from '../dato-label';
-import { Veileder } from '../veileder';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../store/view-store';
 import { getInnsatsgruppeTekst } from '../../../util/innsatsgruppe';
 import fullfortVedtakIcon from './fullfort.svg';
 import { logMetrikk } from '../../../util/logger';
 import { Vedtak } from '../../../api/veilarbvedtaksstotte';
-import { Button } from '@navikt/ds-react';
+import { formatDateStr } from '../../../util/date-utils';
+import { Button, Detail } from '@navikt/ds-react';
 import './gjeldende-vedtak-panel.css';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
@@ -31,13 +30,12 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 					<p className="typo-undertekst gjeldende-vedtak-panel__innsatsgruppe">
 						{innsatsgruppeData.undertekst}
 					</p>
-					<DatoLabel
-						className="gjeldende-vedtak-panel__dato"
-						sistOppdatert={vedtakFattet}
-						formatType="short"
-						text="Dato"
-					/>
-					<Veileder text="Fattet av" veilederNavn={veilederNavn} />
+					<Detail>
+						<b>Dato:</b> {formatDateStr(vedtakFattet)}
+					</Detail>
+					<Detail>
+						<b>Fattet av:</b> {veilederNavn}
+					</Detail>
 				</>
 			}
 			knappKomponent={

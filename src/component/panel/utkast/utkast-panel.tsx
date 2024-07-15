@@ -1,11 +1,8 @@
 import { OrNothing } from '../../../util/type/ornothing';
-import { DatoLabel } from '../dato-label';
 import utkastIkon from './utkast.svg';
 import utkastTilBeslutterIkon from './utkast-til-beslutter.svg';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useViewStore, ViewType } from '../../../store/view-store';
-import { KvalitetssikrerLabel } from '../kvalitetssikrer-label';
-import Show from '../../show';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import {
@@ -15,9 +12,9 @@ import {
 	erKlarTilVeileder,
 	isNothing
 } from '../../../util';
-import { Label, LabelType } from '../../label/label';
 import { Utkast } from '../../../api/veilarbvedtaksstotte';
-import { Button } from '@navikt/ds-react';
+import { formatDateTime } from '../../../util/date-utils';
+import { Button, Detail } from '@navikt/ds-react';
 import './utkast-panel.css';
 
 export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
@@ -58,19 +55,17 @@ export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 			}
 			tekstKomponent={
 				<>
-					<Show if={beslutterNavn}>
-						<KvalitetssikrerLabel
-							className="utkast-panel__beslutter"
-							beslutterNavn={beslutterNavn as string}
-						/>
-					</Show>
-					<DatoLabel
-						className="utkast-panel__dato"
-						sistOppdatert={sistOppdatert || props.utkast.utkastSistOppdatert}
-						formatType="long"
-						text="Sist endret"
-					/>
-					<Label titleText="Ansvarlig" valueText={veilederNavn} labelType={LabelType.SMALL} />
+					{beslutterNavn && (
+						<Detail>
+							<b>Kvalitetssikrer:</b> {beslutterNavn}
+						</Detail>
+					)}
+					<Detail>
+						<b>Sist endret:</b> {formatDateTime(sistOppdatert || props.utkast.utkastSistOppdatert)}
+					</Detail>
+					<Detail>
+						<b>Ansvarlig:</b> {veilederNavn}
+					</Detail>
 				</>
 			}
 		/>
