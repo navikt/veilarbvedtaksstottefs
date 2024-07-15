@@ -124,8 +124,8 @@ function TaOverModal(props: ModalProps) {
 					legend="Hvem ønsker du å ta over for?"
 					onChange={(e: TaOverFor) => setTaOverFor(e)}
 				>
-					<Radio value={TaOverFor.VEILEDER}>Veileder</Radio>
-					<Radio value={TaOverFor.KVALITETSSIKRER}>Kvalitetssikrer</Radio>
+					<Radio value={TaOverFor.VEILEDER}>Veileder, {utkast.veilederNavn}</Radio>
+					<Radio value={TaOverFor.KVALITETSSIKRER}>Kvalitetssikrer, {utkast.beslutterNavn}</Radio>
 				</RadioGroup>
 			</Modal.Body>
 			<Modal.Footer>
