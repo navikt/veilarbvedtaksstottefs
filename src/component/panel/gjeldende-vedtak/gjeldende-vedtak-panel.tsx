@@ -7,7 +7,7 @@ import fullfortVedtakIcon from './fullfort.svg';
 import { logMetrikk } from '../../../util/logger';
 import { Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { Button } from '@navikt/ds-react';
-import './gjeldende-vedtak-panel.less';
+import './gjeldende-vedtak-panel.css';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();

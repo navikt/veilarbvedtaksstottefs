@@ -1,5 +1,5 @@
 .veilarbvedtaksstottefs .nytt-vedtak-panel {
-	border: 2px dashed var(--a-gray-600);
+	border: 2px dashed var(--a-border-default);
 }
 
 .veilarbvedtaksstottefs .nytt-vedtak-panel .vedtakstottepanel__buttons {

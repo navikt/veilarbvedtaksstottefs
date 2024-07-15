@@ -1,6 +1,6 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import { SystemMeldingType } from '../../../../../util/type/melding-type';
-import './system-melding.less';
+import './system-melding.css';
 
 interface SystemMeldingProps {
 	systemMeldingType: SystemMeldingType;
@@ -56,11 +56,11 @@ export const SystemMelding = (props: SystemMeldingProps) => {
 	const { systemMeldingType, utfortAvNavn } = props;
 	return (
 		<div className="system-melding">
-			<span className="system-melding__seperator" />
+			<span className="system-melding__separator" />
 			<Normaltekst className="system-melding__tekst">
 				{lagSystemMelding(systemMeldingType, utfortAvNavn)}
 			</Normaltekst>
-			<span className="system-melding__seperator" />
+			<span className="system-melding__separator" />
 		</div>
 	);
 };

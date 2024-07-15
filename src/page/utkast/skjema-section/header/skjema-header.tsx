@@ -38,7 +38,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 				</Systemtittel>
 				<div className="skjema-header__info">
 					<Label titleText="Ansvarlig" valueText={props.veilederNavn} labelType={LabelType.SMALL} />
-					<div className="seperator" />
+					<div className="separator" />
 					<Label
 						className="skjema-header__dato"
 						valueText={sistEndretTekst}

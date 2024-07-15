@@ -1,0 +1,19 @@
+.veilarbvedtaksstottefs .ingen-gjeldende-vedtak-panel {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	border: 2px solid var(--a-border-subtle);
+	border-radius: 8px;
+}
+
+.veilarbvedtaksstottefs .ingen-gjeldende-vedtak-panel__bilde {
+	width: 130px;
+	height: 90px;
+	margin-bottom: 1rem;
+}
+
+.veilarbvedtaksstottefs .ingen-gjeldende-vedtak-panel__tittel {
+	margin-bottom: 0.5rem;
+}

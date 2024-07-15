@@ -1,7 +1,7 @@
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
 import ingenGjeldendeVedtakBilde from './ingen_gjeldende_vedtak.svg';
-import './ingen-gjeldende-vedtak-panel.less';
+import './ingen-gjeldende-vedtak-panel.css';
 
 export function IngenGjeldendeVedtakPanel() {
 	return (

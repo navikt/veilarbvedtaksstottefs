@@ -1,0 +1,19 @@
+.veilarbvedtaksstottefs .system-melding {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.veilarbvedtaksstottefs .system-melding__tekst {
+	color: var(--a-text-subtle);
+	flex-grow: 1;
+	flex-basis: auto;
+	font-size: 0.875rem;
+}
+
+.veilarbvedtaksstottefs .system-melding__separator {
+	height: 1px;
+	background-color: var(--a-border-subtle);
+	margin: auto 0.5rem;
+}

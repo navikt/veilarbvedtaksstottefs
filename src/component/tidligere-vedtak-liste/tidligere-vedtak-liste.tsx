@@ -6,9 +6,9 @@ import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
 import vedtakBilde from './vedtak.svg';
 import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
-import './tidligere-vedtak-liste.less';
 import { logMetrikk } from '../../util/logger';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
+import './tidligere-vedtak-liste.css';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(vedtak.innsatsgruppe);

@@ -18,7 +18,7 @@ import {
 import { Label, LabelType } from '../../label/label';
 import { Utkast } from '../../../api/veilarbvedtaksstotte';
 import { Button } from '@navikt/ds-react';
-import './utkast-panel.less';
+import './utkast-panel.css';
 
 export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { changeView } = useViewStore();
