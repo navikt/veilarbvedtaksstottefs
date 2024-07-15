@@ -2,7 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 4.5rem;
 }
 
 .veilarbvedtaksstottefs .skjema-visning-header__vedtak {
@@ -21,7 +20,6 @@
 .veilarbvedtaksstottefs .skjema-visning-header__separator {
 	background-color: var(--a-border-strong);
 	height: 1px;
-	flex-basis: 200px;
 	flex-grow: 1;
 }
 
