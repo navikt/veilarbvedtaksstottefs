@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Element } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';
-import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
+import { OnVedtakClicked, VedtaklistePanel } from '../vedtak-panel/vedtak-panel';
 import vedtakBilde from './pdf.svg';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import './vedtak-fra-arena-liste.less';
@@ -11,7 +11,7 @@ import { ArenaVedtak } from '../../api/veilarbvedtaksstotte/vedtak';
 
 function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<ArenaVedtak>, posisjon: number) {
 	return (
-		<VedtakPanel<ArenaVedtak>
+		<VedtaklistePanel<ArenaVedtak>
 			name="arena-vedtak"
 			onClick={onClick}
 			vedtak={vedtak}
@@ -20,7 +20,7 @@ function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<Ar
 			ikon={vedtakBilde}
 		>
 			<Element className="arena-vedtak-panel__tittel">Vedtaksbrev - 14a</Element>
-		</VedtakPanel>
+		</VedtaklistePanel>
 	);
 }
 

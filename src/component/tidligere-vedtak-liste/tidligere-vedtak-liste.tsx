@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';
-import { OnVedtakClicked, VedtakPanel } from '../vedtak-panel/vedtak-panel';
+import { OnVedtakClicked, VedtaklistePanel } from '../vedtak-panel/vedtak-panel';
 import vedtakBilde from './vedtak.svg';
 import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
@@ -13,7 +13,7 @@ import './tidligere-vedtak-liste.css';
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(vedtak.innsatsgruppe);
 	return (
-		<VedtakPanel<Vedtak>
+		<VedtaklistePanel<Vedtak>
 			name="tidligere-vedtak"
 			onClick={onClick}
 			vedtak={vedtak}
@@ -25,7 +25,7 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 			<Undertekst className="tidligere-vedtak-panel__innsats--undertekst">
 				{innsatsgruppeTekst.undertekst}
 			</Undertekst>
-		</VedtakPanel>
+		</VedtaklistePanel>
 	);
 }
 
