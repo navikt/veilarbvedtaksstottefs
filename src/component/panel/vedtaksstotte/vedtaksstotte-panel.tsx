@@ -1,35 +1,38 @@
 import React from 'react';
 import cls from 'classnames';
 import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
-import { Undertittel } from 'nav-frontend-typografi';
-import './vedtaksstotte-panel.less';
+import { Detail, Heading, VStack } from '@navikt/ds-react';
+import './vedtaksstotte-panel.css';
 
 interface VedtaksstottePanelProps {
 	tittel: string;
 	undertittel: string;
+	innsatsgruppe?: string;
 	imgSrc: string;
 	tekstKomponent: React.ReactNode;
 	knappKomponent?: React.ReactNode;
 	panelKlasse?: string;
-	undertittelClassName?: string;
 }
 
 export function VedtaksstottePanel(props: VedtaksstottePanelProps) {
-	const { tittel, undertittel, imgSrc, tekstKomponent, knappKomponent, panelKlasse, undertittelClassName } = props;
+	const { tittel, undertittel, imgSrc, tekstKomponent, knappKomponent, panelKlasse, innsatsgruppe } = props;
 	return (
 		<HovedsidePanel className={cls('vedtakstottepanel', panelKlasse)}>
-			<div className="vedtakstottepanel__tittel">
-				<Undertittel tag="h1">{tittel}</Undertittel>
-			</div>
+			<Heading size="small" level="2" className="vedtakstottepanel__tittel">
+				{tittel}
+			</Heading>
 			<div className="vedtakstottepanel__content">
 				<img src={imgSrc} className="vedtakstottepanel__ikon" alt="" />
-				<div>
-					<Undertittel className={cls('vedtakstottepanel__undertittel', undertittelClassName)}>
-						{undertittel}
-					</Undertittel>
-					<div className="vedtakstottepanel__tekst">{tekstKomponent}</div>
+				<VStack gap="2" align="start">
+					<hgroup>
+						<Heading size="small" level="3">
+							{undertittel}
+						</Heading>
+						{innsatsgruppe && <Detail textColor="subtle">{innsatsgruppe}</Detail>}
+					</hgroup>
+					<div>{tekstKomponent}</div>
 					{knappKomponent}
-				</div>
+				</VStack>
 			</div>
 		</HovedsidePanel>
 	);

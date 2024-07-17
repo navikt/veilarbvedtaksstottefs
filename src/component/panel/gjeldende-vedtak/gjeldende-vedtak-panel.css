@@ -1,12 +1,3 @@
 .veilarbvedtaksstottefs .vedtakstottepanel.gjeldende-vedtak-panel {
 	border: 4px solid var(--a-green-500);
 }
-
-.veilarbvedtaksstottefs .gjeldende-vedtak-panel__undertittel {
-	margin-bottom: 0;
-}
-
-.veilarbvedtaksstottefs .gjeldende-vedtak-panel__innsatsgruppe {
-	color: var(--a-text-subtle);
-	margin-bottom: 0.5rem;
-}

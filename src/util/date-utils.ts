@@ -43,6 +43,8 @@ export function lagVedtakDatoTekst(dateStr: string): string {
 
 	if (days <= 0) {
 		return 'i dag';
+	} else if (days === 1) {
+		return `1 dag siden`;
 	} else if (days < 30) {
 		return `${days} dager siden`;
 	}

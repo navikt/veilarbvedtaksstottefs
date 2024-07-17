@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
 import { OrNothing } from '../../../util/type/ornothing';
 import nyttVedtakBilde from './nytt-vedtak.svg';
 import { useViewStore, ViewType } from '../../../store/view-store';
@@ -13,7 +12,7 @@ import { useTilgangStore } from '../../../store/tilgang-store';
 import { logMetrikk } from '../../../util/logger';
 import { Utkast, Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { fetchUtkast, lagNyttUtkast, oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
-import { Button, Checkbox } from '@navikt/ds-react';
+import { Button, Checkbox, Heading } from '@navikt/ds-react';
 import './nytt-vedtak-panel.css';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
@@ -78,7 +77,9 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 	return (
 		<HovedsidePanel className="vedtakstottepanel nytt-vedtak-panel">
 			<div className="vedtakstottepanel__tittel">
-				<Undertittel tag="h1">Opprett nytt oppfølgingsvedtak</Undertittel>
+				<Heading size="small" level="2">
+					Opprett nytt oppfølgingsvedtak
+				</Heading>
 			</div>
 			<div className="vedtakstottepanel__content">
 				<img src={nyttVedtakBilde} className="vedtakstottepanel__ikon" alt="" />

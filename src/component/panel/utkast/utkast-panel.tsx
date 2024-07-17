@@ -46,13 +46,8 @@ export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 		<VedtaksstottePanel
 			tittel="Utkast til oppfølgingsvedtak"
 			undertittel={lagUtkastUnderTittle()}
-			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
 			panelKlasse="utkast-panel"
-			knappKomponent={
-				<Button size="small" onClick={() => changeView(ViewType.UTKAST)}>
-					{kanEndreUtkast ? 'Fortsett' : 'Åpne'}
-				</Button>
-			}
+			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
 			tekstKomponent={
 				<>
 					{beslutterNavn && (
@@ -67,6 +62,11 @@ export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 						<b>Ansvarlig:</b> {veilederNavn}
 					</Detail>
 				</>
+			}
+			knappKomponent={
+				<Button size="small" onClick={() => changeView(ViewType.UTKAST)}>
+					{kanEndreUtkast ? 'Fortsett' : 'Åpne'}
+				</Button>
 			}
 		/>
 	);

@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
-import { Element, Undertekst } from 'nav-frontend-typografi';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';
 import { OnVedtakClicked, VedtaklistePanel } from '../vedtak-panel/vedtak-panel';
-import vedtakBilde from './vedtak.svg';
 import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
-import { logMetrikk } from '../../util/logger';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
+import { logMetrikk } from '../../util/logger';
+import vedtakBilde from './vedtak.svg';
+import { BodyShort, Detail } from '@navikt/ds-react';
 import './tidligere-vedtak-liste.css';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
@@ -21,10 +21,10 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 			posisjon={posisjon}
 			ikon={vedtakBilde}
 		>
-			<Element className="tidligere-vedtak-panel__innsats--tittel">{innsatsgruppeTekst.tittel}</Element>
-			<Undertekst className="tidligere-vedtak-panel__innsats--undertekst">
-				{innsatsgruppeTekst.undertekst}
-			</Undertekst>
+			<BodyShort size="small" weight="semibold" className="tidligere-vedtak-panel__innsats--tittel">
+				{innsatsgruppeTekst.tittel}
+			</BodyShort>
+			<Detail textColor="subtle">{innsatsgruppeTekst.undertekst}</Detail>
 		</VedtaklistePanel>
 	);
 }

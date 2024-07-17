@@ -22,14 +22,11 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 		<VedtaksstottePanel
 			tittel="Gjeldende oppfølgingsvedtak"
 			undertittel={innsatsgruppeData.tittel}
-			imgSrc={fullfortVedtakIcon}
+			innsatsgruppe={innsatsgruppeData.undertekst}
 			panelKlasse="gjeldende-vedtak-panel"
-			undertittelClassName="gjeldende-vedtak-panel__undertittel"
+			imgSrc={fullfortVedtakIcon}
 			tekstKomponent={
 				<>
-					<p className="typo-undertekst gjeldende-vedtak-panel__innsatsgruppe">
-						{innsatsgruppeData.undertekst}
-					</p>
 					<Detail>
 						<b>Dato:</b> {formatDateStr(vedtakFattet)}
 					</Detail>

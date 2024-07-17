@@ -1,9 +1,3 @@
 .veilarbvedtaksstottefs .tidligere-vedtak-panel__innsats--tittel {
 	text-align: start;
 }
-
-.veilarbvedtaksstottefs .tidligere-vedtak-panel__innsats--undertekst {
-	text-align: start;
-	color: var(--a-text-subtle);
-	line-height: 1rem;
-}

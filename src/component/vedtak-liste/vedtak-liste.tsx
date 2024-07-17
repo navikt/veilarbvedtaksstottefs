@@ -1,38 +1,33 @@
-import cls from 'classnames';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import './vedtak-liste.less';
-import Show from '../show';
+import { BodyShort, Heading } from '@navikt/ds-react';
+import './vedtak-liste.css';
 
 interface VedtakListeProps<T> {
 	tittel: string;
 	ingenVedtakTekst: string;
 	vedtak: T[];
 	vedtakMapper: (vedtak: T, posisjon: number) => any;
-	className?: string;
 }
 
 export function VedtakListe<T>(props: VedtakListeProps<T>) {
-	const { tittel, ingenVedtakTekst, vedtak, vedtakMapper, className } = props;
+	const { tittel, ingenVedtakTekst, vedtak, vedtakMapper } = props;
 	const harVedtak = vedtak.length > 0;
 	return (
-		<div className={cls('vedtak-liste', className)}>
-			<Undertittel className="vedtak-liste__tittel" tag="h1">
+		<>
+			<Heading size="small" level="2" spacing>
 				{tittel}
-			</Undertittel>
-			<Show if={!harVedtak}>
-				<Normaltekst>{ingenVedtakTekst}</Normaltekst>
-			</Show>
-			<Show if={harVedtak}>
+			</Heading>
+			{!harVedtak && (
+				<BodyShort size="small" className="vedtak-liste__ingen-vedtak">
+					{ingenVedtakTekst}
+				</BodyShort>
+			)}
+			{harVedtak && (
 				<ul className="vedtak-liste__liste">
 					{vedtak.map((v, idx) => {
-						return (
-							<li className="vedtak-liste__liste-item" key={idx}>
-								{vedtakMapper(v, idx)}
-							</li>
-						);
+						return <li key={idx}>{vedtakMapper(v, idx)}</li>;
 					})}
 				</ul>
-			</Show>
-		</div>
+			)}
+		</>
 	);
 }
