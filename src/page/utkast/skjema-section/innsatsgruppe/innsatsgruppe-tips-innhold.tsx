@@ -1,17 +1,13 @@
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { List } from '@navikt/ds-react';
 
 export const InnsatsgruppeTipsInnhold = () => {
 	return (
-		<>
-			<Undertittel className="blokk-xs">Innsatsgruppe</Undertittel>
-			<Normaltekst>Innsatsbegrepene er nye - her ser du de gamle:</Normaltekst>
-			<ul className="tips__liste">
-				<li>gode muligheter - standardinnsats</li>
-				<li>trenger veiledning - situasjonsbestemt innsats</li>
-				<li>trenger veiledning, nedsatt arbeidsevne - spesielt tilpasset innsats</li>
-				<li>jobbe delvis - delvis, varig tilpasset innsats</li>
-				<li>liten mulighet til å jobbe - varig tilpasset innsats</li>
-			</ul>
-		</>
+		<List size="small" title="Innsatsgruppe" description="Innsatsbegrepene er nye. Her ser du de gamle:">
+			<List.Item>gode muligheter = standardinnsats</List.Item>
+			<List.Item>trenger veiledning = situasjonsbestemt innsats</List.Item>
+			<List.Item>trenger veiledning, nedsatt arbeidsevne = spesielt tilpasset innsats</List.Item>
+			<List.Item>jobbe delvis = delvis, varig tilpasset innsats</List.Item>
+			<List.Item>liten mulighet til å jobbe = varig tilpasset innsats</List.Item>
+		</List>
 	);
 };

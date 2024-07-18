@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
-import { Normaltekst } from 'nav-frontend-typografi';
 import FeltHeader from '../felt-header/felt-header';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { MalformData, MalformType } from '../../../../api/veilarbperson';
@@ -9,8 +8,8 @@ import { useSkjemaStore } from '../../../../store/skjema-store';
 import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { Lix, GammelnavskDictionary } from '../../../../spraksjekk-intern/components';
-import { Accordion, Alert, Switch, Textarea } from '@navikt/ds-react';
-import './begrunnelse.less';
+import { Accordion, Alert, BodyShort, Switch, Textarea } from '@navikt/ds-react';
+import './begrunnelse.css';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
@@ -89,9 +88,9 @@ function Begrunnelse() {
 						error={begrunnelseFeil}
 						hideLabel
 					/>
-					<Normaltekst className="begrunnelse__malform">
+					<BodyShort size="small" className="begrunnelse__malform">
 						Brukers målform: {malformToTekst(malform)}
-					</Normaltekst>
+					</BodyShort>
 					{begrunnelse && begrunnelse.length > BEGRUNNELSE_ANBEFALT_LENGTH && (
 						<Alert
 							size="small"

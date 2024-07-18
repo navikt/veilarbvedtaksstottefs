@@ -1,5 +1,5 @@
-import { Normaltekst } from 'nav-frontend-typografi';
 import { SystemMeldingType } from '../../../../../util/type/melding-type';
+import { Detail } from '@navikt/ds-react';
 import './system-melding.css';
 
 interface SystemMeldingProps {
@@ -57,9 +57,7 @@ export const SystemMelding = (props: SystemMeldingProps) => {
 	return (
 		<div className="system-melding">
 			<span className="system-melding__separator" />
-			<Normaltekst className="system-melding__tekst">
-				{lagSystemMelding(systemMeldingType, utfortAvNavn)}
-			</Normaltekst>
+			<Detail textColor="subtle">{lagSystemMelding(systemMeldingType, utfortAvNavn)}</Detail>
 			<span className="system-melding__separator" />
 		</div>
 	);

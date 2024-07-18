@@ -1,12 +1,11 @@
-import { Undertittel } from 'nav-frontend-typografi';
 import { DialogTipsInnhold } from './dialog-tips-innhold';
 import { OrNothing } from '../../../util/type/ornothing';
 import { TipsPopover } from '../../../component/tips-popover/tips-popover';
 import { DialogToggleBtn } from '../dialog-section-minified/dialog-toggle-btn';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import env from '../../../util/environment';
-import { Button, Detail } from '@navikt/ds-react';
 import { TasklistIcon } from '@navikt/aksel-icons';
+import { Button, Detail, Heading } from '@navikt/ds-react';
 import './dialog-section.less';
 
 interface DialogPanelHeaderProps {
@@ -31,7 +30,9 @@ export function DialogSectionHeader(props: DialogPanelHeaderProps) {
 			<DialogToggleBtn />
 
 			<div className="dialog-section-header__innhold">
-				<Undertittel className="dialog-section-header__tittel">Kvalitetssikring</Undertittel>
+				<Heading size="small" level="2" className="dialog-section-header__tittel">
+					Kvalitetssikring
+				</Heading>
 				<TipsPopover
 					id="dialog-tips"
 					className="dialog-section-header__tips"

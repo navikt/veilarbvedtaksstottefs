@@ -1,9 +1,8 @@
 import cls from 'classnames';
-import { Element, Undertekst } from 'nav-frontend-typografi';
-import './dialog-melding.less';
 import { formatDayMonthTime } from '../../../../../util/date-utils';
 import { purfiyUnsafeHtml, replaceNewLineWithBr, replaceTextUrlsWithTags } from '../../../../../util/html-utils';
-import Show from '../../../../../component/show';
+import { BodyShort, Detail } from '@navikt/ds-react';
+import './dialog-melding.less';
 
 interface DialogMeldingProps {
 	tekst: string;
@@ -41,10 +40,14 @@ export const DialogMelding = (props: DialogMeldingProps) => {
 	return (
 		<div className={cls('dialog-melding', meldingClasses)}>
 			<div className="dialog-melding__metadata">
-				<Show if={!skrevetAvMeg}>
-					<Element className="dialog-melding__metadata-navn">{skrevetAvNavn}</Element>
-				</Show>
-				<Undertekst className="dialog-melding__metadata-dato">{`${formatDayMonthTime(dato)}`}</Undertekst>
+				{!skrevetAvMeg && (
+					<BodyShort size="small" weight="semibold" className="dialog-melding__metadata-navn">
+						{skrevetAvNavn}
+					</BodyShort>
+				)}
+				<Detail>
+					<i>{formatDayMonthTime(dato)}</i>
+				</Detail>
 			</div>
 			<div className="dialog-melding__tekst-wrapper">
 				<DialogMeldingBar className={cls(meldingBarClasses)} />

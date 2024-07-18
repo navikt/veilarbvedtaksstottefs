@@ -1,9 +1,8 @@
-import { Systemtittel } from 'nav-frontend-typografi';
 import utkastBilde from './utkast.svg';
 import { SkjemaLagringStatus } from '../../../../util/type/skjema-lagring-status';
 import { formatDateTime } from '../../../../util/date-utils';
-import { Detail } from '@navikt/ds-react';
-import './skjema-header.less';
+import { Detail, Heading } from '@navikt/ds-react';
+import './skjema-header.css';
 
 interface SkjemaHeaderProps {
 	veilederNavn: string;
@@ -33,9 +32,9 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 		<header className="skjema-header">
 			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon" />
 			<div className="skjema-header__innhold">
-				<Systemtittel tag="h1" className="skjema-header__tittel">
+				<Heading size="medium" level="1">
 					Utkast
-				</Systemtittel>
+				</Heading>
 				<div className="skjema-header__info">
 					<Detail>
 						<b>Ansvarlig:</b> {props.veilederNavn}

@@ -1,11 +1,10 @@
 import React from 'react';
 import cls from 'classnames';
-import { Undertittel } from 'nav-frontend-typografi';
 import { TipsPopover } from '../../../../component/tips-popover/tips-popover';
 import { logMetrikk } from '../../../../util/logger';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
-import { Link } from '@navikt/ds-react';
-import './felt-header.less';
+import { Heading, Link } from '@navikt/ds-react';
+import './felt-header.css';
 
 interface FeltHeaderProps {
 	id?: string;
@@ -25,9 +24,9 @@ function FeltHeader(props: FeltHeaderProps) {
 	};
 	return (
 		<div id={props.id} className={cls('felt-header', props.className)}>
-			<Undertittel id={props.tittelId} className="felt-header__tittel">
+			<Heading size="small" level="2" className="felt-header__tittel">
 				{props.tittel}
-			</Undertittel>
+			</Heading>
 			{props.tipsInnhold && (
 				<TipsPopover
 					id={props.tipsId}
@@ -45,7 +44,7 @@ function FeltHeader(props: FeltHeaderProps) {
 					rel="noopener noreferrer"
 				>
 					{props.eksternLenketekst}
-					<ExternalLinkIcon title="Åpnes i en ny fane" />
+					<ExternalLinkIcon title="Åpnes i en ny fane" fontSize="1.125rem" />
 				</Link>
 			)}
 		</div>

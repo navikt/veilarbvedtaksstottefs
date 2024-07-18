@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { logMetrikk } from '../../util/logger';
 import { Button, Popover, PopoverProps } from '@navikt/ds-react';
 import { InformationIcon } from '@navikt/aksel-icons';
-import './tips-popover.less';
+import './tips-popover.css';
 
 interface TipsPopoverProps {
 	id?: string;

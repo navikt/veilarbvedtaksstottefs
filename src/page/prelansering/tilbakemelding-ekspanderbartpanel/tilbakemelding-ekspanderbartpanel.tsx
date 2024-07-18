@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Undertittel } from 'nav-frontend-typografi';
 import { logMetrikk } from '../../../util/logger';
-import { Button, ExpansionCard, HStack } from '@navikt/ds-react';
+import { Button, ExpansionCard, Heading, HStack } from '@navikt/ds-react';
 import { FaceFrownFillIcon, FaceSmileFillIcon } from '@navikt/aksel-icons';
 import './tilbakemelding-ekspanderbartpanel.less';
 
@@ -41,7 +40,9 @@ function TilbakemeldingEkspanderbartpanel(props: TilbakemeldingEkspanderbartpane
 				{props.children}
 				{visTilbakemelding && (
 					<HStack gap="4" align="center" className="tilbakemelding-ekspanderbartpanel__tilbakemelding">
-						<Undertittel tag="h3">Var dette nyttig?</Undertittel>
+						<Heading size="small" level="3">
+							Var dette nyttig?
+						</Heading>
 						<Button
 							size="small"
 							variant="tertiary"
