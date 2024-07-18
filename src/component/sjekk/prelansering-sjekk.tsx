@@ -28,5 +28,5 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 		);
 	}
 
-	return <Prelansering />;
+	return tilhorerBrukerUtrulletEnhetFetcher.data ? props.children : <Prelansering />;
 }

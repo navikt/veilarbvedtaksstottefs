@@ -24,7 +24,7 @@ export function VedtakListe<T>(props: VedtakListeProps<T>) {
 			{harVedtak && (
 				<ul className="vedtak-liste__liste">
 					{vedtak.map((v, idx) => {
-						return <li key={idx}>{vedtakMapper(v, idx)}</li>;
+						return <li key={'vedtak-' + idx}>{vedtakMapper(v, idx)}</li>;
 					})}
 				</ul>
 			)}

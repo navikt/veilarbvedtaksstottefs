@@ -113,8 +113,8 @@ export function LesSkjemaSection() {
 			<div className="kilder-felt">
 				<FeltHeader tittel="Kilder" />
 				<List size="small">
-					{opplysninger.map((kilde, idx) => {
-						return <List.Item key={idx}>{kilde}</List.Item>;
+					{opplysninger.map(kilde => {
+						return <List.Item key={kilde}>{kilde}</List.Item>;
 					})}
 				</List>
 			</div>
