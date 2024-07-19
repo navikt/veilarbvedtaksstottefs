@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/veilarbvedtaksstottefs/static/css/main.674c8f93.css",
-    "main.js": "/veilarbvedtaksstottefs/static/js/main.043d8b7d.js",
+    "main.css": "/veilarbvedtaksstottefs/static/css/main.96978508.css",
+    "main.js": "/veilarbvedtaksstottefs/static/js/main.9edd6d2d.js",
     "pdf.worker.js": "/veilarbvedtaksstottefs/d6247b7eac59574c837f8a9ff1ba1917.js",
     "static/media/prelansering.png": "/veilarbvedtaksstottefs/static/media/prelansering.6b99c24ea4c6e713c84b.png",
     "static/media/klagebehandling.svg": "/veilarbvedtaksstottefs/static/media/klagebehandling.d3ebf7211c671bd3cab04672fd187535.svg",
@@ -22,11 +22,11 @@
     "static/media/pdf.svg": "/veilarbvedtaksstottefs/static/media/pdf.49362d2c0f442850ad99e7d5c1be2bd5.svg",
     "static/media/dialog-new-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-new-msg.e5d323644d8ef5b7e1031f1bf33e1dfc.svg",
     "static/media/dialog-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-msg.a4d77157a8e6d7a43005885ea3e8802a.svg",
-    "main.674c8f93.css.map": "/veilarbvedtaksstottefs/static/css/main.674c8f93.css.map",
-    "main.043d8b7d.js.map": "/veilarbvedtaksstottefs/static/js/main.043d8b7d.js.map"
+    "main.96978508.css.map": "/veilarbvedtaksstottefs/static/css/main.96978508.css.map",
+    "main.9edd6d2d.js.map": "/veilarbvedtaksstottefs/static/js/main.9edd6d2d.js.map"
   },
   "entrypoints": [
-    "static/css/main.674c8f93.css",
-    "static/js/main.043d8b7d.js"
+    "static/css/main.96978508.css",
+    "static/js/main.9edd6d2d.js"
   ]
 }
