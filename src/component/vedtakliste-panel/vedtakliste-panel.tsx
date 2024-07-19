@@ -1,7 +1,7 @@
 import { lagVedtakDatoTekst } from '../../util/date-utils';
 import { ChevronRightIcon } from '@navikt/aksel-icons';
 import { Detail } from '@navikt/ds-react';
-import './vedtak-panel.css';
+import './vedtakliste-panel.css';
 
 export type OnVedtakClicked<T> = (vedtak: T, idx: number) => void;
 

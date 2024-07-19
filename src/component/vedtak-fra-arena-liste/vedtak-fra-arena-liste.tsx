@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';
-import { OnVedtakClicked, VedtaklistePanel } from '../vedtak-panel/vedtak-panel';
+import { OnVedtakClicked, VedtaklistePanel } from '../vedtakliste-panel/vedtakliste-panel';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import { ArenaVedtak } from '../../api/veilarbvedtaksstotte/vedtak';
 import vedtakBilde from './pdf.svg';

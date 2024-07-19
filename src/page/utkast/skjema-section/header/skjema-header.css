@@ -9,10 +9,6 @@
 	background-color: var(--a-blue-100);
 	border-bottom: 3px solid var(--a-blue-500);
 	height: 64px;
-	box-shadow:
-		0 -4px 4px -4px var(--a-gray-300),
-		4px 0 4px -4px var(--a-gray-300),
-		-4px 0 4px -4px var(--a-gray-300);
 }
 
 .veilarbvedtaksstottefs .skjema-header__ikon {
