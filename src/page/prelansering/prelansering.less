@@ -1,73 +1,18 @@
-@import '~nav-frontend-core/less/_variabler';
-
 .veilarbvedtaksstottefs {
 	.prelansering {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 
-		background-color: @navBla;
-		border-radius: 8px;
+		background-color: var(--a-blue-500);
+		border-radius: var(--a-border-radius-large);
 		color: white;
 		padding: 4rem 0 2rem 6rem;
-
-		&__tittel {
-			margin-bottom: 1.5rem;
-		}
-
-		&__tekst1 {
-			font-size: 1.125rem; // 18px
-			margin-bottom: 1rem;
-			width: 28rem;
-		}
-
-		&__tekst2 {
-			font-size: 1.125rem; // 18px
-			width: 28rem;
-		}
 
 		&__bilde {
 			margin-top: -1.5rem;
 			margin-right: -7rem;
 			height: 360px;
-		}
-	}
-
-	.innspill {
-		margin-top: 3rem;
-		padding-top: 5rem;
-		padding-bottom: 5rem;
-
-		border: @navOransje 2px solid;
-		border-radius: 8px;
-		background-color: white;
-
-		&__tittel {
-			text-align: center;
-		}
-
-		&__navn {
-			margin: 3.5rem auto 4rem auto;
-			width: 60%;
-		}
-
-		&__navn--valg {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-gap: 1rem;
-		}
-
-		&__navn--ingress {
-			margin-bottom: 0.5rem;
-		}
-
-		&__besvarelse {
-			margin: 0 auto;
-			width: 60%;
-		}
-
-		&__fritekst {
-			height: 10rem !important;
 		}
 	}
 
@@ -84,43 +29,6 @@
 			> * {
 				margin-top: 1rem;
 			}
-		}
-	}
-
-	.takk-melding {
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
-
-		background-color: white;
-		padding: 3rem;
-		border: @navGra20 2px solid;
-		border-radius: 8px;
-		width: 60%;
-		margin: 3rem auto 0 auto;
-		animation: 1s linear takk-fade-in;
-
-		&__ikon {
-			width: 100px;
-			height: 100px;
-			margin-right: 4rem;
-		}
-
-		&__tekst {
-			width: 60%;
-		}
-
-		&__tittel {
-			margin-bottom: 1rem;
-		}
-	}
-
-	@keyframes takk-fade-in {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
 		}
 	}
 }

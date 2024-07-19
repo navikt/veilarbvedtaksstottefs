@@ -1,15 +1,11 @@
 import { useViewStore, ViewType } from '../../store/view-store';
 import { SkjemaVisningHeader } from './header/skjema-visning-header';
-import { Label } from '../label/label';
 import { formatDateStr } from '../../util/date-utils';
-import Show from '../show';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { getHovedmalNavn } from '../../util/hovedmal';
-import Tekstomrade from 'nav-frontend-tekstomrade';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
-import { Button } from '@navikt/ds-react';
-import './skjema-visning.less';
+import { BodyLong, BodyShort, Button, Heading, Label, List, VStack } from '@navikt/ds-react';
+import './skjema-visning.css';
 
 export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 	const { changeView } = useViewStore();
@@ -31,56 +27,59 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 	const fattetAv = `${veilederNavn}, ${oppfolgingsenhetId} ${oppfolgingsenhetNavn}`;
 
 	return (
-		<div className="skjema-visning">
+		<VStack gap="8" className="skjema-visning">
 			<SkjemaVisningHeader erGjeldende={gjeldende} />
 
-			<div className="skjema-visning__info">
-				<Label
-					titleTextClassName="label__title-text--gap-lg"
-					className="blokk-xxs"
-					titleText="Dato"
-					valueText={formatDateStr(vedtakFattet)}
-				/>
-				<Show if={beslutterNavn}>
-					<Label
-						titleTextClassName="label__title-text--gap-lg"
-						className="blokk-xxs"
-						titleText="Kvalitetssikrer"
-						valueText={beslutterNavn}
-					/>
-				</Show>
-				<Label titleTextClassName="label__title-text--gap-lg" titleText="Fattet av" valueText={fattetAv} />
+			<div>
+				<BodyShort size="small" spacing>
+					<b>Dato:</b> {formatDateStr(vedtakFattet)}
+				</BodyShort>
+				{beslutterNavn && (
+					<BodyShort size="small" spacing>
+						<b>Kvalitetssikrer:</b> {beslutterNavn}
+					</BodyShort>
+				)}
+				<BodyShort size="small">
+					<b>Fattet av:</b> {fattetAv}
+				</BodyShort>
 			</div>
 
-			<div className="skjema-visning__felter">
-				<div className="blokk-m">
-					<Element>{innsatsgruppeTekst.tittel}</Element>
-					<Normaltekst className="text--grey">{innsatsgruppeTekst.undertekst}</Normaltekst>
-				</div>
+			<div>
+				<Label size="small" as="p">
+					{innsatsgruppeTekst.tittel}
+				</Label>
+				<BodyShort size="small" spacing>
+					{innsatsgruppeTekst.undertekst}
+				</BodyShort>
 
-				<div>
-					<Element>Hovedmål</Element>
-					<Normaltekst className="text--grey">{getHovedmalNavn(hovedmal)}</Normaltekst>
-				</div>
+				<Label size="small" as="p">
+					Hovedmål
+				</Label>
+				<BodyShort size="small">{getHovedmalNavn(hovedmal)}</BodyShort>
 			</div>
 
-			<Element tag="span" className="skjema-visning__label blokk-xxs">
-				Begrunnelse
-			</Element>
-			<Tekstomrade className="skjema-visning__begrunnelse">{begrunnelse ? begrunnelse : ''}</Tekstomrade>
+			<div>
+				<Heading size="xsmall" level="2" spacing>
+					Begrunnelse
+				</Heading>
+				<BodyLong size="small" style={{ whiteSpace: 'pre-wrap' }}>
+					{begrunnelse ?? ''}
+				</BodyLong>
+			</div>
 
-			<Element tag="span" className="skjema-visning__label blokk-xxs">
-				Kilder
-			</Element>
-			<ul className="skjema-visning__kilder">
-				{opplysninger.map((o, idx) => (
-					<li key={idx}>{o}</li>
+			<List size="small" title="Kilder">
+				{opplysninger.map(opplysning => (
+					<List.Item key={opplysning}>{opplysning}</List.Item>
 				))}
-			</ul>
+			</List>
 
-			<Button variant="tertiary" onClick={() => changeView(ViewType.OYBLIKKSBILDE_VISNING, { vedtakId: id })}>
+			<Button
+				variant="tertiary"
+				onClick={() => changeView(ViewType.OYBLIKKSBILDE_VISNING, { vedtakId: id })}
+				id="journalfort-info-knapp"
+			>
 				Journalført brukerinformasjon på vedtakstidspunktet
 			</Button>
-		</div>
+		</VStack>
 	);
 }

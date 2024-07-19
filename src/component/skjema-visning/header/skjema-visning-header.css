@@ -1,0 +1,28 @@
+.veilarbvedtaksstottefs .skjema-visning-header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.veilarbvedtaksstottefs .skjema-visning-header__vedtak {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+}
+
+.veilarbvedtaksstottefs .skjema-visning-header__bilde {
+	width: 5rem;
+	height: 5rem;
+	margin-bottom: 1rem;
+}
+
+.veilarbvedtaksstottefs .skjema-visning-header__separator {
+	background-color: var(--a-border-strong);
+	height: 1px;
+	flex-grow: 1;
+}
+
+.veilarbvedtaksstottefs .skjema-visning-header__tittel {
+	margin: 0 1rem;
+}

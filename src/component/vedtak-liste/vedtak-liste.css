@@ -1,0 +1,13 @@
+.veilarbvedtaksstottefs .vedtak-liste__ingen-vedtak {
+	margin-bottom: 2rem;
+}
+
+.veilarbvedtaksstottefs .vedtak-liste__liste {
+	display: flex;
+	flex-direction: column;
+	gap: var(--a-spacing-2);
+
+	margin: 0 0 2rem;
+	padding: 0;
+	list-style: none;
+}

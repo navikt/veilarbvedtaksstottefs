@@ -1,8 +1,7 @@
 import { Component } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
-import { Undertittel } from 'nav-frontend-typografi';
-import { Loader } from '@navikt/ds-react';
-import './pdf-viewer.less';
+import { Heading, Loader } from '@navikt/ds-react';
+import './pdf-viewer.css';
 
 interface PdfViewerProps {
 	url: string;
@@ -63,7 +62,9 @@ class PdfViewer extends Component<PdfViewerProps, PdfViewerState> {
 		return (
 			<div className="pdfvisning">
 				<div aria-live="polite" className="pdfvisning__header">
-					<Undertittel tag="h1">{this.props.title}</Undertittel>
+					<Heading size="small" level="1">
+						{this.props.title}
+					</Heading>
 				</div>
 				<Document
 					className="pdfvisning__document"

@@ -1,0 +1,41 @@
+.veilarbvedtaksstottefs .vedtak-panel {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	text-align: start;
+	gap: var(--a-spacing-4);
+	padding: 0.75rem 1rem;
+	background-color: var(--a-surface-default);
+	border: 1px solid var(--a-border-default);
+	border-radius: var(--a-border-radius-large);
+}
+
+.veilarbvedtaksstottefs .vedtak-panel:hover {
+	cursor: pointer;
+	border: 1px solid var(--a-surface-action-hover);
+	box-shadow: var(--a-shadow-small);
+}
+
+.veilarbvedtaksstottefs .vedtak-panel:focus {
+	box-shadow: var(--a-shadow-focus);
+}
+
+.veilarbvedtaksstottefs .vedtak-panel__bilde {
+	width: 26px;
+	height: 36px;
+}
+
+.veilarbvedtaksstottefs .vedtak-panel__dato {
+	margin-left: auto;
+}
+
+.veilarbvedtaksstottefs .vedtak-panel__chevron {
+	height: 1.5rem;
+	width: 1.5rem;
+}
+
+@media (min-width: 600px) {
+	.veilarbvedtaksstottefs .vedtak-panel {
+		width: 576px;
+	}
+}

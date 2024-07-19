@@ -1,0 +1,35 @@
+.veilarbvedtaksstottefs .pdfvisning {
+	background-color: var(--a-surface-inverted);
+}
+
+.veilarbvedtaksstottefs .pdfvisning__spinner {
+	margin: 0 auto;
+	display: block;
+}
+
+.veilarbvedtaksstottefs .pdfvisning__feedback-container {
+	padding-top: var(--a-spacing-20);
+	width: 800px;
+	height: 2264px;
+}
+
+.veilarbvedtaksstottefs .pdfvisning__header {
+	display: flex;
+	justify-content: center;
+	background-color: #1d1d1d;
+	color: white;
+	padding: 0.5rem 0;
+	position: sticky;
+	top: 0;
+	z-index: 300;
+}
+
+.veilarbvedtaksstottefs .pdfvisning__document {
+	width: 800px;
+	margin: 2rem auto 0 auto;
+	padding-bottom: 6rem;
+}
+
+.veilarbvedtaksstottefs .pdfvisning__document > *:not(:last-child) {
+	margin-bottom: 0.5rem;
+}

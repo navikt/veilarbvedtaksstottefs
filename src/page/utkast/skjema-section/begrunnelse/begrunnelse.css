@@ -1,0 +1,20 @@
+.veilarbvedtaksstottefs .begrunnelse__malform {
+	text-align: end;
+	margin-top: -1.25rem;
+}
+
+.veilarbvedtaksstottefs .begrunnelse-for-langt-varsel {
+	margin: var(--a-spacing-2) 0 0;
+}
+
+.veilarbvedtaksstottefs .spraksjekk-felt #skriverad-liste {
+	margin: 0;
+}
+
+.veilarbvedtaksstottefs .spraksjekk-felt .mt-4 {
+	margin-top: 1rem;
+}
+
+.veilarbvedtaksstottefs .spraksjekk-felt .mb-4 {
+	margin-bottom: 1rem;
+}

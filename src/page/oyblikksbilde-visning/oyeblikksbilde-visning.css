@@ -1,0 +1,41 @@
+.veilarbvedtaksstottefs .oyblikksbilde-visning__footer {
+	display: flex;
+	justify-content: center;
+	padding: var(--a-spacing-2) 0;
+}
+
+.veilarbvedtaksstottefs .oyblikksbilde-visning .vedlegg-card {
+	width: 98%;
+}
+
+@media (min-width: 1200px) {
+	.veilarbvedtaksstottefs .oyblikksbilde-visning .vedlegg-card {
+		width: 80%;
+	}
+}
+
+.veilarbvedtaksstottefs .oyblikksbilde-visning .json-key-wrapper {
+	margin: 0.25rem 0;
+}
+
+.veilarbvedtaksstottefs .oyblikksbilde-visning .json-key {
+	font-weight: 600;
+	margin-bottom: 0;
+	margin-right: 0.5rem;
+}
+
+.veilarbvedtaksstottefs .oyblikksbilde-visning h3 {
+	margin: 1.25rem 0;
+}
+
+.veilarbvedtaksstottefs .oyblikksbilde-visning .json-obj {
+	margin: 1rem 0 1rem 2rem;
+}
+
+.veilarbvedtaksstottefs .oyblikksbilde-visning .json-array {
+	margin: 1rem 0 1rem 2rem;
+}
+
+.veilarbvedtaksstottefs .oyblikksbilde-visning .json-array-wrapper {
+	margin: 1rem 0;
+}

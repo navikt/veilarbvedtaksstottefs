@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import { VarselType } from '../../../component/varsel/varsel-type';
 import isEqual from 'lodash.isequal';
 import FeltHeader from './felt-header/felt-header';
-import './skjema-section.less';
 import { useAppStore } from '../../../store/app-store';
 import { useViewStore, ViewType } from '../../../store/view-store';
 import { useDataStore } from '../../../store/data-store';
@@ -13,11 +12,11 @@ import { fetchUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../util/type/ornothing';
 import { hentFattedeVedtak } from '../../../api/veilarbvedtaksstotte/vedtak';
-import Tekstomrade from 'nav-frontend-tekstomrade';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { getInnsatsgruppeTekst } from '../../../util/innsatsgruppe';
 import { getHovedmalNavn } from '../../../util/hovedmal';
 import { MalformData, MalformType } from '../../../api/veilarbperson';
+import { BodyLong, BodyShort, List } from '@navikt/ds-react';
+import './skjema-section.less';
 
 const TEN_SECONDS = 10000;
 
@@ -109,16 +108,15 @@ export function LesSkjemaSection() {
 
 	const { opplysninger, innsatsgruppe, hovedmal } = utkast;
 	const begrunnelse = utkast.begrunnelse || '';
-
 	return (
 		<div className="skjema-grid les-utkast-skjema">
 			<div className="kilder-felt">
 				<FeltHeader tittel="Kilder" />
-				<ul className="kilder-felt__liste">
-					{opplysninger.map((opplysning, idx) => {
-						return <li key={idx}>{opplysning}</li>;
+				<List size="small">
+					{opplysninger.map(kilde => {
+						return <List.Item key={kilde}>{kilde}</List.Item>;
 					})}
-				</ul>
+				</List>
 			</div>
 
 			<div className="begrunnelse-felt">
@@ -127,23 +125,24 @@ export function LesSkjemaSection() {
 					eksternLenketekst="Nye retningslinjer for NAV-loven § 14 a"
 					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
 				/>
-				<Tekstomrade className="blokk-s">{begrunnelse}</Tekstomrade>
-				<Normaltekst className="begrunnelse-felt__antall-tegn">
-					<span>{'Brukers målform: ' + malformToTekst(malform)}</span>
-					<span className="span-right"> {'Antall tegn: ' + begrunnelse.length}</span>
-				</Normaltekst>
+
+				<BodyLong size="small" style={{ whiteSpace: 'pre-wrap' }} spacing>
+					{begrunnelse}
+				</BodyLong>
+				<BodyShort size="small" textColor="subtle" className="begrunnelse-felt__antall-tegn">
+					<span>Antall tegn: {begrunnelse.length} </span>
+					<span>Brukers målform: {malformToTekst(malform)}</span>
+				</BodyShort>
 			</div>
 
 			<div className="innsatsgruppe-felt">
 				<FeltHeader tittel="Innsatsgruppe" />
-				<Normaltekst className="text--grey">
-					{innsatsgruppe && getInnsatsgruppeTekst(innsatsgruppe).tittel}
-				</Normaltekst>
+				{innsatsgruppe && <BodyShort size="small">{getInnsatsgruppeTekst(innsatsgruppe).tittel}</BodyShort>}
 			</div>
 
 			<div className="hovedmal-felt">
 				<FeltHeader tittel="Hovedmål" />
-				<Normaltekst className="text--grey">{getHovedmalNavn(hovedmal)}</Normaltekst>
+				<BodyShort size="small">{getHovedmalNavn(hovedmal)}</BodyShort>
 			</div>
 		</div>
 	);

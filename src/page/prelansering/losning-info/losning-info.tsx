@@ -1,15 +1,17 @@
-import { Innholdstittel } from 'nav-frontend-typografi';
 import TilbakemeldingEkspanderbartpanel from '../tilbakemelding-ekspanderbartpanel/tilbakemelding-ekspanderbartpanel';
 import beslutterFunksjonBilde from './beslutterfunksjon.svg';
 import hjelpesporsmalBilde from './hjelpesporsmal.svg';
 import klagebehandlingBilde from './klagebehandling.svg';
 import mellomlagreBilde from './mellomlagre.svg';
 import synlighetTilBrukerBilde from './synlighet-til-bruker.svg';
+import { Heading } from '@navikt/ds-react';
 
 export function LosningInfo() {
 	return (
 		<section className="losning-info">
-			<Innholdstittel className="losning-info__tittel">5 kjappe om den nye løsningen</Innholdstittel>
+			<Heading size="large" level="2" align="center" spacing>
+				5 kjappe om den nye løsningen
+			</Heading>
 			<div className="losning-info__paneler">
 				<TilbakemeldingEkspanderbartpanel
 					tittel="Vil det være en beslutterfunksjon?"

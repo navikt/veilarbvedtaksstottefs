@@ -1,4 +1,3 @@
-@import '~nav-frontend-core/less/_variabler';
 @import '../../../variabler';
 
 .veilarbvedtaksstottefs {
@@ -41,7 +40,7 @@
 		justify-content: space-between;
 
 		padding: var(--a-spacing-2) var(--a-spacing-8) var(--a-spacing-2) var(--a-spacing-4);
-		border-right: 1px solid @navGra40;
+		border-right: 1px solid var(--a-border-default);
 	}
 
 	.utkast-footer__dialog-innhold {
@@ -50,33 +49,6 @@
 		justify-content: space-between;
 
 		padding: var(--a-spacing-2) var(--a-spacing-8) var(--a-spacing-2) var(--a-spacing-4);
-	}
-
-	.utkast-innhold {
-		display: flex;
-		justify-content: space-between;
-
-		max-width: 1200px;
-		margin: 0 1rem;
-
-		&__lagring-tekst {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			color: @navGra80;
-
-			min-width: 150px;
-			margin: 0 1rem;
-		}
-
-		&__ikon {
-			margin-bottom: 1px;
-			margin-right: 5px;
-		}
-
-		&__taover_bilde {
-			width: 80px;
-		}
 	}
 
 	@media (min-width: 1232px) {
