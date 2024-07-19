@@ -9,4 +9,5 @@
 
 .veilarbvedtaksstottefs .felt-header__lenke {
 	margin-left: auto;
+	font-size: var(--a-font-size-medium);
 }

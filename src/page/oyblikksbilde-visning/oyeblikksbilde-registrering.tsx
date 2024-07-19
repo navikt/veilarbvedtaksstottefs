@@ -334,14 +334,6 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 				</>
 			)}
 			{props.erJournalfort && (
-				// <Link
-				// 	href="#"
-				// 	onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.ARBEIDSSOKERREGISTRET)}
-				// 	className="oyeblikksbilde-visning__pdf-lenke"
-				// >
-				// 	<FilePdfIcon className="oyeblikksbilde-visning__pdf-ikon" aria-hidden />
-				// 	Svarene_dine_fra_da_du_registrerte_deg.pdf
-				// </Link>
 				<Button
 					variant="tertiary"
 					icon={<FilePdfIcon />}

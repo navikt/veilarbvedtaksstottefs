@@ -52,7 +52,7 @@ export const DialogMelding = (props: DialogMeldingProps) => {
 			<div className="dialog-melding__tekst-wrapper">
 				<DialogMeldingBar className={cls(meldingBarClasses)} />
 				<div
-					className="typo-normal dialog-melding__tekst"
+					className="dialog-melding__tekst"
 					dangerouslySetInnerHTML={{ __html: formatAndCleanMessage(tekst) }}
 				/>
 			</div>

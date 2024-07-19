@@ -15,7 +15,7 @@ interface VedtakPanelProps<T> {
 	children: any;
 }
 
-export function VedtaklistePanel<T>(props: VedtakPanelProps<T>) {
+export function VedtaklistePanel<T>(props: Readonly<VedtakPanelProps<T>>) {
 	const { name, vedtak, posisjon, dato, ikon, children, onClick } = props;
 	const elemId = `vedtak-panel-${name}-${posisjon}`;
 
