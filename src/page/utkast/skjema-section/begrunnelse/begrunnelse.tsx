@@ -81,8 +81,8 @@ function Begrunnelse() {
 						maxRows={30}
 						maxLength={BEGRUNNELSE_ANBEFALT_LENGTH}
 						i18n={{
-							counterLeft: 'tegn igjen av anbefalt lengde',
-							counterTooMuch: 'tegn over anbefalt lengde'
+							counterLeft: 'tegn igjen av anbefalt maksimum',
+							counterTooMuch: 'tegn over anbefalt maksimum'
 						}}
 						onChange={onBegrunnelseChanged}
 						error={begrunnelseFeil}
