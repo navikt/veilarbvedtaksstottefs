@@ -43,12 +43,9 @@ spec:
             ]
           },
           "header": {
-              "csp": {
-              "connectSrc": ["'self'", "wss:", "*.nav.no", "*.adeo.no"]
-              },
-              "corp": {
+            "corp": {
               "policy": "cross-origin"
-              }
+            }
           },
           "gcs": {
             "bucketName": "obo-veilarbvedtaksstottefs-dev"
