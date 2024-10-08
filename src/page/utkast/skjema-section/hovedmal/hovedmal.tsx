@@ -23,7 +23,7 @@ function Hovedmal() {
 	}, [arbeidssoekerperiode, fnr]);
 
 	return (
-		<div className="hovedmal-felt" id="hovedmal-scroll-to">
+		<div className="hovedmal-felt" id="hovedmal__scroll-til-feil">
 			<FeltHeader tittel="Hovedmål" tittelId="hovedmal-tittel" />
 			<RadioGroup
 				size="small"

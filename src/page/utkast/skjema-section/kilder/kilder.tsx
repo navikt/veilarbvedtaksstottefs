@@ -40,7 +40,7 @@ function Kilder() {
 	}
 
 	return (
-		<div className="kilder-felt" id="kilder-scroll-to">
+		<div className="kilder-felt" id="kilder__scroll-til-feil">
 			<FeltHeader
 				id="kilder-tittel"
 				tittel="Kilder"
