@@ -1,3 +1,16 @@
+.veilarbvedtaksstottefs .begrunnelse__infoboks {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+.veilarbvedtaksstottefs .begrunnelse__infoboks .felt-header__lenke {
+	margin-left: 0;
+}
+
+.veilarbvedtaksstottefs .begrunnelse__infoboks .begrunnelse__read-more {
+	margin-bottom: 1rem;
+}
+
 .veilarbvedtaksstottefs .begrunnelse__malform {
 	text-align: end;
 	margin-top: -1.25rem;
