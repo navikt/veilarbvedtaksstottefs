@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Accordion, Alert, BodyShort, ReadMore, Switch, Textarea } from '@navikt/ds-react';
 import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
 import FeltHeader from '../felt-header/felt-header';
 import { OrNothing } from '../../../../util/type/ornothing';
@@ -7,8 +8,7 @@ import { useDataStore } from '../../../../store/data-store';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
-import { Lix, GammelnavskDictionary } from '../../../../spraksjekk-intern/components';
-import { Accordion, Alert, BodyShort, Switch, Textarea } from '@navikt/ds-react';
+import { GammelnavskDictionary, Lix } from '../../../../spraksjekk-intern/components';
 import './begrunnelse.css';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
@@ -65,11 +65,19 @@ function Begrunnelse() {
 					tittel="Begrunnelse"
 					tittelId="begrunnelse-tittel"
 					tipsId="begrunnelse-tips"
-					tipsInnhold={<BegrunnelseTipsInnhold />}
-					tipsAriaLabel="Tips for begrunnelse"
 					eksternLenketekst="Nye retningslinjer for NAV-loven § 14 a"
 					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
 				/>
+				<div className="begrunnelse__infoboks">
+					<BodyShort size="small">
+						Du må skrive begrunnelse for alle innsatsgrupper, bortsett fra standard innsats.
+						Hjelpespørsmålene under kan være nyttige når du skal skrive begrunnelsen og gjøre vurderingen
+						din.
+					</BodyShort>
+					<ReadMore header="Spørsmål til hjelp i vurderingen" size="small" className="begrunnelse__read-more">
+						<BegrunnelseTipsInnhold />
+					</ReadMore>
+				</div>
 
 				<div className="begrunnelse">
 					<Textarea

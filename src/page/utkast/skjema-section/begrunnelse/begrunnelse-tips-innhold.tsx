@@ -2,11 +2,7 @@ import { List } from '@navikt/ds-react';
 
 export const BegrunnelseTipsInnhold = () => {
 	return (
-		<List
-			size="small"
-			title="Begrunnelse"
-			description="Begrunnelse må skrives for alle innsatsgrupper, bortsett fra standard innsats. Når du skal skrive begrunnelse og gjøre vurderingen din, er følgende spørsmål nyttige å stille:"
-		>
+		<List size="small">
 			<List.Item>Hva tenker denne personen selv om mulighetene sine til å være eller komme i jobb?</List.Item>
 			<List.Item>
 				Hvilke typer arbeid ønsker denne personen seg og hva er realistisk ut fra dagens arbeidsmarked?
