@@ -4,8 +4,9 @@ export const BegrunnelseInfoboks = () => {
 	return (
 		<div className="begrunnelse__infoboks">
 			<BodyShort size="small">
-				Du må skrive begrunnelse for alle innsatsgrupper, bortsett fra standard innsats. Hjelpespørsmålene under
-				kan være nyttige når du skal skrive begrunnelsen og gjøre vurderingen din.
+				{
+					"Du må skrive begrunnelse for alle innsatsgrupper, bortsett fra 'gode muligheter'. Bruk hjelpespørsmålene når du skal skrive begrunnelsen og gjøre vurderingene dine."
+				}
 			</BodyShort>
 
 			<ReadMore header="Spørsmål til hjelp i vurderingen" size="small" className="begrunnelse__read-more">
