@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Accordion, Alert, BodyShort, ReadMore, Switch, Textarea } from '@navikt/ds-react';
-import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
+import { Accordion, Alert, BodyShort, Switch, Textarea } from '@navikt/ds-react';
+import { BegrunnelseInfoboks } from './begrunnelse-infoboks';
 import FeltHeader from '../felt-header/felt-header';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { MalformData, MalformType } from '../../../../api/veilarbperson';
@@ -68,16 +68,7 @@ function Begrunnelse() {
 					eksternLenketekst="Nye retningslinjer for NAV-loven § 14 a"
 					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
 				/>
-				<div className="begrunnelse__infoboks">
-					<BodyShort size="small">
-						Du må skrive begrunnelse for alle innsatsgrupper, bortsett fra standard innsats.
-						Hjelpespørsmålene under kan være nyttige når du skal skrive begrunnelsen og gjøre vurderingen
-						din.
-					</BodyShort>
-					<ReadMore header="Spørsmål til hjelp i vurderingen" size="small" className="begrunnelse__read-more">
-						<BegrunnelseTipsInnhold />
-					</ReadMore>
-				</div>
+				<BegrunnelseInfoboks />
 
 				<div className="begrunnelse">
 					<Textarea
