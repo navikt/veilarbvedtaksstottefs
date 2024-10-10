@@ -21,7 +21,7 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 		return <Spinner />;
 	} else if (tilhorerBrukerUtrulletEnhetFetcher.error) {
 		return (
-			<Alert variant="error" className="vedtaksstotte-alert">
+			<Alert variant="error">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
 				senere.
 			</Alert>

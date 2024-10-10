@@ -80,7 +80,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		(utkastFetcher.error && utkastFetcher.error.response?.status !== 404) // API gir 404 dersom utkast ikke eksisterer
 	) {
 		return (
-			<Alert variant="error" className="vedtaksstotte-alert">
+			<Alert variant="error">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
 				senere.
 			</Alert>

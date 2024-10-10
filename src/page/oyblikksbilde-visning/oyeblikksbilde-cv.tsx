@@ -34,7 +34,7 @@ export function OyeblikksbildeCv(props: { vedtakId: number }): JSX.Element {
 		return <Spinner />;
 	} else if (oyeblikksbildeFetcher.error) {
 		return (
-			<Alert variant="error" className="vedtaksstotte-alert">
+			<Alert variant="error">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
 				senere.
 			</Alert>

@@ -19,7 +19,7 @@ function FeatureFetcher(props: PropsWithChildren<any>) {
 		return <Spinner />;
 	} else if (featureAxiosFetcher.error) {
 		return (
-			<Alert variant="error" className="vedtaksstotte-alert">
+			<Alert variant="error">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
 				senere.
 			</Alert>

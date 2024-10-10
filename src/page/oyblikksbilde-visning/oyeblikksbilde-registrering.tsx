@@ -45,7 +45,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 		return <Spinner />;
 	} else if (registreringOyeblikksbildeFetcher.error || arbeidssokerRegistretOyeblikksbildeFetcher.error) {
 		return (
-			<Alert variant="error" className="vedtaksstotte-alert">
+			<Alert variant="error">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
 				senere.
 			</Alert>
@@ -60,11 +60,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 				/>
 			);
 		} catch (error) {
-			return (
-				<Alert variant="error" className="vedtaksstotte-alert">
-					{error}
-				</Alert>
-			);
+			return <Alert variant="error">{error}</Alert>;
 		}
 	} else if (registreringOyeblikksbildeFetcher.data?.data) {
 		try {
@@ -76,11 +72,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 				/>
 			);
 		} catch (error) {
-			return (
-				<Alert variant="error" className="vedtaksstotte-alert">
-					{error}
-				</Alert>
-			);
+			return <Alert variant="error">{error}</Alert>;
 		}
 	} else {
 		return <></>;
