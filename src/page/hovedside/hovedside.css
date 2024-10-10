@@ -1,0 +1,43 @@
+.veilarbvedtaksstottefs .hovedside {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.veilarbvedtaksstottefs .hovedside .hovedside__vedtak-paneler {
+	width: 100%;
+}
+
+.veilarbvedtaksstottefs .hovedside .hovedside__vedtak-paneler > *:not(:first-child) {
+	margin-top: 1rem;
+}
+
+.veilarbvedtaksstottefs .hovedside .hovedside__tidligere-vedtak-panel {
+	width: 100%;
+	margin-top: 1rem;
+}
+
+@media (min-width: 600px) {
+	.veilarbvedtaksstottefs .hovedside .hovedside__vedtak-paneler {
+		width: auto;
+	}
+
+	.veilarbvedtaksstottefs .hovedside .hovedside__tidligere-vedtak-panel {
+		width: auto;
+	}
+}
+
+@media (min-width: 1200px) {
+	.veilarbvedtaksstottefs .hovedside {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: start;
+	}
+
+	.veilarbvedtaksstottefs .hovedside .hovedside__tidligere-vedtak-panel {
+		margin-top: 0;
+	}
+}
