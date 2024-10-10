@@ -17,7 +17,7 @@ import { hentFattedeVedtak, lagHentForhandsvisningUrl } from '../../api/veilarbv
 import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
 import { Alert, Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
-import './forhandsvisning.less';
+import './forhandsvisning.css';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
