@@ -2,15 +2,15 @@
 	background-color: var(--a-surface-inverted);
 }
 
-.veilarbvedtaksstottefs .pdfvisning__spinner {
-	margin: 0 auto;
-	display: block;
-}
-
 .veilarbvedtaksstottefs .pdfvisning__feedback-container {
 	padding-top: var(--a-spacing-20);
 	width: 800px;
 	height: 2264px;
+}
+
+.veilarbvedtaksstottefs .pdfvisning__feedback-container .pdfvisning__spinner {
+	margin: 0 auto;
+	display: block;
 }
 
 .veilarbvedtaksstottefs .pdfvisning__header {

@@ -1,5 +1,5 @@
 import { Loader } from '@navikt/ds-react';
-import './spinner.less';
+import './spinner.css';
 
 function Spinner() {
 	return (
