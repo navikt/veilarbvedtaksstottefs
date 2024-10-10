@@ -6,7 +6,7 @@ import { useDataStore } from '../../store/data-store';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { Alert, Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
-import './vedtakskjema-visning-side.less';
+import './vedtakskjema-visning-side.css';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	const { fattedeVedtak } = useDataStore();
