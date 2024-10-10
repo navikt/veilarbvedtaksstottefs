@@ -38,7 +38,7 @@
 		margin: 0 auto;
 	}
 
-	.utkast-side__hovedinnhold--dialog {
+	.utkast-side__hovedinnhold.utkast-side__hovedinnhold--dialog {
 		max-width: @utkast-side-max-width-two-col-small;
 		grid-template-columns: @utkast-one-col-min-width 1fr;
 
@@ -52,7 +52,7 @@
 		}
 	}
 
-	.utkast-side__hovedinnhold--dialog-minified {
+	.utkast-side__hovedinnhold.utkast-side__hovedinnhold--dialog-minified {
 		max-width: 1200px;
 		grid-template-columns: 1fr @dialog-section-minified-width;
 	}
@@ -61,12 +61,12 @@
 		border-right: 1px solid var(--a-border-default);
 	}
 
+	.utkast-side__skjema-section-innhold {
+		height: 100%;
+	}
+
 	.utkast-side__dialog-section {
 		position: sticky;
 		top: 0;
-	}
-
-	.utkast-side__skjema-section-innhold {
-		height: 100%;
 	}
 }

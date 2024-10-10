@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from 'classnames';
-import './page.less';
+import './page.css';
 
 interface PageProps {
 	children: React.ReactNode;

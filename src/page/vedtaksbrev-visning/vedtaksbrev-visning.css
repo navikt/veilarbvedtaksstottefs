@@ -1,0 +1,7 @@
+.veilarbvedtaksstottefs .vedtaksbrev-visning__aksjoner {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 600px;
+	margin: 0 auto;
+}

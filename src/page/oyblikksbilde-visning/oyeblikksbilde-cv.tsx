@@ -34,7 +34,7 @@ export function OyeblikksbildeCv(props: { vedtakId: number }): JSX.Element {
 		return <Spinner />;
 	} else if (oyeblikksbildeFetcher.error) {
 		return (
-			<Alert variant="error" className="vedtaksstotte-alert">
+			<Alert variant="error">
 				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
 				senere.
 			</Alert>
@@ -109,7 +109,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 			)}
 			{data?.utdanning && data.utdanning.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Utdanning</h3>
+					<Heading level="3" size="small">
+						Utdanning
+					</Heading>
 					<ul className="json-array">
 						{data.utdanning.map((utdanning, i) => (
 							<li key={'utdanning-' + i}>
@@ -132,7 +134,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 			)}
 			{data?.arbeidserfaring && data?.arbeidserfaring.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Arbeidserfaring</h3>
+					<Heading level="3" size="small">
+						Arbeidserfaring
+					</Heading>
 					<ul className="json-array">
 						{data.arbeidserfaring.map((arbeidserfaring, i) => (
 							<li key={'arbeidserfaring-' + i}>
@@ -159,7 +163,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.fagdokumentasjoner && data?.fagdokumentasjoner.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Fagdokumentasjoner</h3>
+					<Heading level="3" size="small">
+						Fagdokumentasjoner
+					</Heading>
 					<ul className="json-array">
 						{data.fagdokumentasjoner.map((fagdokumentasjon, i) => (
 							<li key={'fagdokumentasjoner-' + i}>
@@ -175,7 +181,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.jobbprofil?.kompetanse && data?.jobbprofil?.kompetanse.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Kompetanse</h3>
+					<Heading level="3" size="small">
+						Kompetanse
+					</Heading>
 					<ul className="json-array">
 						<li key={'kompetanse-1'}>
 							{visEnkelVerdi('Tittel', data?.jobbprofil?.kompetanse.map(x => x.tittel).join(', '))}
@@ -186,7 +194,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.jobbprofil?.onsketYrke && data?.jobbprofil?.onsketYrke.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Ønsket yrke</h3>
+					<Heading level="3" size="small">
+						Ønsket yrke
+					</Heading>
 					<ul className="json-array">
 						<li key={'onsketYrke-1'}>
 							{visEnkelVerdi('Tittel', data?.jobbprofil?.onsketYrke.map(x => x.tittel).join(', '))}
@@ -197,7 +207,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.jobbprofil?.onsketArbeidssted && data?.jobbprofil?.onsketArbeidssted.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Ønsket arbeidssted</h3>
+					<Heading level="3" size="small">
+						Ønsket arbeidssted
+					</Heading>
 					<ul className="json-array">
 						<li key={'onsketArbeidssted-1'}>
 							{visEnkelVerdi(
@@ -211,7 +223,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.jobbprofil?.onsketAnsettelsesform && data?.jobbprofil?.onsketAnsettelsesform.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Ønsket ansettelsesform</h3>
+					<Heading level="3" size="small">
+						Ønsket ansettelsesform
+					</Heading>
 					<ul className="json-array">
 						<li key={'onsketAnsettelsesform-1'}>
 							{visEnkelVerdi(
@@ -227,7 +241,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.jobbprofil?.onsketArbeidstidsordning && data?.jobbprofil?.onsketArbeidstidsordning.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Ønsket arbeidstidsordning</h3>
+					<Heading level="3" size="small">
+						Ønsket arbeidstidsordning
+					</Heading>
 					<ul className="json-array">
 						<li key={'onsketArbeidstidsordning-1'}>
 							{visEnkelVerdi(
@@ -243,7 +259,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.jobbprofil?.onsketArbeidsdagordning && data?.jobbprofil?.onsketArbeidsdagordning.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Ønsket arbeidsdagordning</h3>
+					<Heading level="3" size="small">
+						Ønsket arbeidsdagordning
+					</Heading>
 					<ul className="json-array">
 						<li key={'onsketArbeidsdagordning-1'}>
 							{visEnkelVerdi(
@@ -259,7 +277,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.jobbprofil?.onsketArbeidsskiftordning && data?.jobbprofil?.onsketArbeidsskiftordning.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Ønsket arbeidsskiftordning</h3>
+					<Heading level="3" size="small">
+						Ønsket arbeidsskiftordning
+					</Heading>
 					<ul className="json-array">
 						<li key={'onsketArbeidsskiftordning-1'}>
 							{visEnkelVerdi(
@@ -275,7 +295,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.jobbprofil?.heltidDeltid && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Heltid eller deltid</h3>
+					<Heading level="3" size="small">
+						Heltid eller deltid
+					</Heading>
 					<ul className="json-array">
 						<li key={'heltidDeltid-1'}>
 							{data?.jobbprofil?.heltidDeltid.heltid && visEnkelVerdi('Heltid', 'Ja')}
@@ -287,7 +309,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.jobbprofil?.oppstart && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Oppstart</h3>
+					<Heading level="3" size="small">
+						Oppstart
+					</Heading>
 					<ul className="json-array">
 						<li key={'oppstart-1'}>{visEnkelVerdi('Oppstart', oppstartLabel(data.jobbprofil.oppstart))}</li>
 					</ul>
@@ -296,7 +320,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.sprak && data?.sprak.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Språk</h3>
+					<Heading level="3" size="small">
+						Språk
+					</Heading>
 					<ul className="json-array">
 						{data.sprak.map((sprak, i) => (
 							<li key={'sprak-' + i}>
@@ -314,7 +340,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.kurs && data?.kurs.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Kurs</h3>
+					<Heading level="3" size="small">
+						Kurs
+					</Heading>
 					<ul className="json-array">
 						{data.kurs.map((kurs, i) => (
 							<li key={'kurs-' + i}>
@@ -339,7 +367,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.forerkort && data?.forerkort.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Førerkort</h3>
+					<Heading level="3" size="small">
+						Førerkort
+					</Heading>
 					<ul className="json-array">
 						{data.forerkort.map((forerkort, i) => (
 							<li key={'forerkort-' + i}>
@@ -352,7 +382,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.annenErfaring && data?.annenErfaring.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Annen Erfaring</h3>
+					<Heading level="3" size="small">
+						Annen erfaring
+					</Heading>
 					<ul className="json-array">
 						{data.annenErfaring.map((erfaring, i) => (
 							<li key={'annenErfaring-' + i}>
@@ -371,7 +403,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.godkjenninger && data?.godkjenninger.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Godkjenninger</h3>
+					<Heading level="3" size="small">
+						Godkjenninger
+					</Heading>
 					<ul className="json-array">
 						{data.godkjenninger.map((godkjenning, i) => (
 							<li key={'godkjenninger-' + i}>
@@ -392,7 +426,9 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 
 			{data?.andreGodkjenninger && data?.andreGodkjenninger.length > 0 && (
 				<>
-					<h3 className="navds-heading navds-heading--small">Andre Godkjenninger</h3>
+					<Heading level="3" size="small">
+						Andre godkjenninger
+					</Heading>
 					<ul className="json-array">
 						{data.andreGodkjenninger.map((godkjenning, i) => (
 							<li key={'andreGodkjenninger-' + i}>

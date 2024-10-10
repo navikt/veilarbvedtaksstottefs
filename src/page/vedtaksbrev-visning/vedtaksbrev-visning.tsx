@@ -7,7 +7,7 @@ import { logMetrikk } from '../../util/logger';
 import { lagHentArenaVedtakPdfUrl, lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
-import './vedtaksbrev-visning.less';
+import './vedtaksbrev-visning.css';
 
 interface VedtaksbrevVisningProps {
 	vedtakId: number;

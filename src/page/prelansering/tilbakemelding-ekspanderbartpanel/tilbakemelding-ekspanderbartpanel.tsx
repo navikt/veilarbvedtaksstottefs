@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { logMetrikk } from '../../../util/logger';
 import { Button, ExpansionCard, Heading, HStack } from '@navikt/ds-react';
 import { FaceFrownFillIcon, FaceSmileFillIcon } from '@navikt/aksel-icons';
-import './tilbakemelding-ekspanderbartpanel.less';
+import './tilbakemelding-ekspanderbartpanel.css';
 
 interface TilbakemeldingEkspanderbartpanelProps {
 	tittel: string;

@@ -7,7 +7,7 @@ import { IngenTidligereVedtakPanel } from '../../component/panel/ingen-tidligere
 import { IngenGjeldendeVedtakPanel } from '../../component/panel/ingen-gjeldende-vedtak/ingen-gjeldende-vedtak';
 import Show from '../../component/show';
 import { VedtakFraArenaListe } from '../../component/vedtak-fra-arena-liste/vedtak-fra-arena-liste';
-import './hovedside.less';
+import './hovedside.css';
 import { useDataStore } from '../../store/data-store';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 

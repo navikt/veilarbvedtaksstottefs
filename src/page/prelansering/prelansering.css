@@ -1,0 +1,24 @@
+.veilarbvedtaksstottefs .prelansering {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background-color: var(--a-blue-500);
+	border-radius: var(--a-border-radius-large);
+	color: white;
+	padding: 4rem 0 2rem 6rem;
+}
+
+.veilarbvedtaksstottefs .prelansering .prelansering__bilde {
+	margin-top: -1.5rem;
+	margin-right: -7rem;
+	height: 360px;
+}
+
+.veilarbvedtaksstottefs .losning-info {
+	margin: 5rem auto 5rem auto;
+	width: 80%;
+}
+
+.veilarbvedtaksstottefs .losning-info .losning-info__paneler > * {
+	margin-top: 1rem;
+}
