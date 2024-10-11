@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { BegrunnelseTipsInnhold } from './begrunnelse-tips-innhold';
+import { Accordion, Alert, BodyShort, Switch, Textarea } from '@navikt/ds-react';
+import { BegrunnelseInfoboks } from './begrunnelse-infoboks';
 import FeltHeader from '../felt-header/felt-header';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { MalformData, MalformType } from '../../../../api/veilarbperson';
@@ -7,8 +8,7 @@ import { useDataStore } from '../../../../store/data-store';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
-import { Lix, GammelnavskDictionary } from '../../../../spraksjekk-intern/components';
-import { Accordion, Alert, BodyShort, Switch, Textarea } from '@navikt/ds-react';
+import { GammelnavskDictionary, Lix } from '../../../../spraksjekk-intern/components';
 import './begrunnelse.css';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
@@ -65,11 +65,10 @@ function Begrunnelse() {
 					tittel="Begrunnelse"
 					tittelId="begrunnelse-tittel"
 					tipsId="begrunnelse-tips"
-					tipsInnhold={<BegrunnelseTipsInnhold />}
-					tipsAriaLabel="Tips for begrunnelse"
 					eksternLenketekst="Nye retningslinjer for NAV-loven § 14 a"
 					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
 				/>
+				<BegrunnelseInfoboks />
 
 				<div className="begrunnelse">
 					<Textarea
