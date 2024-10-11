@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Accordion, Alert, BodyShort, Switch, Textarea } from '@navikt/ds-react';
 import { BegrunnelseInfoboks } from './begrunnelse-infoboks';
 import FeltHeader from '../felt-header/felt-header';
