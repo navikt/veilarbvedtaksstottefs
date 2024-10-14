@@ -79,7 +79,7 @@ export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
 	}
 
 	if (forsteFeilNavn) {
-		const tittelElem = document.getElementById(forsteFeilNavn + '-scroll-to');
+		const tittelElem = document.getElementById(forsteFeilNavn + '__scroll-til-feil');
 		if (tittelElem) {
 			tittelElem.scrollIntoView({ block: 'center' });
 		}

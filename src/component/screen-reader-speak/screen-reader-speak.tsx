@@ -1,4 +1,4 @@
-import './screen-reader-speak.less';
+import './screen-reader-speak.css';
 
 export function ScreenReaderSpeak(props: { tekst: string }) {
 	return (

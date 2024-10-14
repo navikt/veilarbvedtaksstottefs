@@ -1,7 +1,7 @@
 import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import { delay } from '../../util/promise-utils';
 import { Alert, AlertProps } from '@navikt/ds-react';
-import './varsel-toast.less';
+import './varsel-toast.css';
 
 interface VarselToastProps {
 	type: AlertProps['variant'];

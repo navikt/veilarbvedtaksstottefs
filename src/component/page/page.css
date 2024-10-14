@@ -1,0 +1,19 @@
+.veilarbvedtaksstottefs .page {
+	min-height: 100%;
+	padding: 2rem 1rem 6rem 1rem;
+}
+
+@media (min-width: 632px) {
+	.veilarbvedtaksstottefs .page {
+		padding: 2rem 0 6rem;
+	}
+}
+
+.veilarbvedtaksstottefs .page .page--white {
+	background-color: white;
+}
+
+.veilarbvedtaksstottefs .page .page__content {
+	margin: 0 auto;
+	max-width: 1200px;
+}

@@ -1,0 +1,5 @@
+.veilarbvedtaksstottefs .vedtakskjema-visning .vedtakskjema-visning__aksjoner {
+	display: flex;
+	justify-content: center;
+	gap: var(--a-spacing-8);
+}

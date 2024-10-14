@@ -21,17 +21,9 @@ export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
 	if (tilgangTilKontorFetcher.loading) {
 		return <Spinner />;
 	} else if (tilgangTilKontorFetcher.error) {
-		return (
-			<Alert variant="error" className="vedtaksstotte-alert">
-				Noe gikk galt, prøv igjen
-			</Alert>
-		);
+		return <Alert variant="error">Noe gikk galt, prøv igjen</Alert>;
 	} else if (!tilgangTilKontorFetcher.data?.tilgangTilBrukersKontor) {
-		return (
-			<Alert variant="warning" className="vedtaksstotte-alert">
-				Du har ikke tilgang til å se brukers oppfølgingsvedtak.
-			</Alert>
-		);
+		return <Alert variant="warning">Du har ikke tilgang til å se brukers oppfølgingsvedtak.</Alert>;
 	}
 
 	return props.children;

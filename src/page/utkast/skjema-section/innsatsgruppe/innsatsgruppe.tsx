@@ -21,7 +21,7 @@ function Innsatsgruppe() {
 	const erGjeldendeInnsatsVarig = gjeldendeVedtak && erVarigEllerGradertVarig(gjeldendeVedtak.innsatsgruppe);
 
 	return (
-		<div className="innsatsgruppe-felt" id="innsatsgruppe-scroll-to">
+		<div className="innsatsgruppe-felt" id="innsatsgruppe__scroll-til-feil">
 			<FeltHeader
 				id="innsatsgruppe-tittel"
 				tittel="Innsatsgruppe"
