@@ -83,7 +83,7 @@ export function ModalController() {
 				isOpen={modalType === ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS}
 				innsatsgruppe={modalProps.innsatsgruppe}
 			/>
-			{feilModalConfig && <FeilModal isOpen={true} config={feilModalConfig} />}
+			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>
 	);
 }
