@@ -5,7 +5,7 @@ export const BegrunnelseInfoboks = () => {
 		<div className="begrunnelse__infoboks">
 			<BodyShort size="small">
 				{
-					"Du må skrive begrunnelse for alle innsatsgrupper, bortsett fra 'gode muligheter'. Bruk hjelpespørsmålene når du skal skrive begrunnelsen og gjøre vurderingene dine."
+					"Du må skrive begrunnelse for alle innsatsgrupper, bortsett fra 'gode muligheter'. Bruk hjelpespørsmålene når du skriver begrunnelsen og gjør vurderingene dine."
 				}
 			</BodyShort>
 
