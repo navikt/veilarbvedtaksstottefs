@@ -4,9 +4,8 @@ export const BegrunnelseInfoboks = () => {
 	return (
 		<div className="begrunnelse__infoboks">
 			<BodyShort size="small">
-				{
-					"Du må skrive begrunnelse for alle innsatsgrupper, bortsett fra 'gode muligheter'. Bruk hjelpespørsmålene når du skriver begrunnelsen og gjør vurderingene dine."
-				}
+				Du må skrive begrunnelse for alle innsatsgrupper, bortsett fra «gode muligheter». Bruk hjelpespørsmålene
+				når du skriver begrunnelsen og gjør vurderingene dine.
 			</BodyShort>
 
 			<ReadMore header="Spørsmål til hjelp i vurderingen" size="small" className="begrunnelse__read-more">
