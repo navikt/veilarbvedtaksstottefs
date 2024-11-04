@@ -5,6 +5,7 @@
   "scripts": {
     "start": "cross-env REACT_APP_DEV=true craco start",
     "build": "cross-env craco build",
+    "build:ansatt": "cross-env craco build --base=https://cdn.nav.no/obo/dev/oppfolgingsvedtak-modia/build",
     "build:mock": "cross-env PUBLIC_URL=/veilarbvedtaksstottefs REACT_APP_DEV=true craco build",
     "test": "craco test",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
