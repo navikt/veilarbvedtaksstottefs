@@ -10,7 +10,7 @@ env:
 
 jobs:
     deploy-dev:
-        name: Deploy application to dev
+        name: Deploy applikasjonen til dev
         runs-on: ubuntu-latest
         permissions:
           id-token: 'write'
@@ -42,18 +42,9 @@ jobs:
               uses: google-github-actions/setup-gcloud@v2
             - name: Upload files to GCS
               run: gsutil -m rsync -r build gs://obo-veilarbvedtaksstottefs-dev
-            - name: Upload to CDN
-              uses: nais/deploy/actions/cdn-upload/v2@master
-              with:
-                team: obo
-                source: oppfolgingsvedtak-modia/build
-                destination: dev/oppfolgingsvedtak-modia
-                no_cache_paths: dev/oppfolgingsvedtak-modia/build/asset-manifest.json
-                identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-                project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
     deploy-dev-ansatt:
-      name: Deploy application to dev
+      name: Deploy applikasjonen til dev ansatt
       runs-on: ubuntu-latest
       permissions:
         id-token: 'write'
