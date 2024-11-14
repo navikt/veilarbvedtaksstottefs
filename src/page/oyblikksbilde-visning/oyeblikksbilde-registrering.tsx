@@ -246,11 +246,12 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 	return (
 		<Card className="vedlegg-card">
 			<Heading size="medium" level="2" spacing>
-				Svarene dine fra da du registrerte deg
+				Det du fortalte oss da du ble registrert som arbeidssøker
 			</Heading>
 			{(data == null || (data.opplysningerOmArbeidssoeker == null && data.profilering == null)) && (
 				<>
-					<b>Ingen registrerte data:</b> Brukeren har ikke registrert seg via den nye registreringsløsningen.
+					<b>Ingen registrerte data:</b> Personen har ikke registrert seg i Arbeidssøkerregisteret og har ikke
+					en aktiv arbeidssøkerperiode.
 				</>
 			)}
 			{data?.arbeidssoekerperiodeStartet &&
@@ -331,7 +332,7 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 					icon={<FilePdfIcon />}
 					onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.ARBEIDSSOKERREGISTRET)}
 				>
-					Svarene_dine_fra_da_du_registrerte_deg.pdf
+					Det_du_fortalte_oss_da_du_ble_registrert_som_arbeidssoker.pdf
 				</Button>
 			)}
 		</Card>

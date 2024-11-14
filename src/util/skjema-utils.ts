@@ -12,14 +12,15 @@ export interface SkjemaData {
 	begrunnelse: OrNothing<string>;
 }
 
+/* OBS: endrer du noe her så må du verifisere oyeblikksbilde-visning.tsx */
 export const kildelisteBokmal = [
-	'Svarene dine fra da du registrerte deg',
+	'Det du fortalte oss da du ble registrert som arbeidssøker',
 	'CV-en/jobbønskene din(e) på nav.no',
 	'Svarene dine om behov for veiledning'
 ];
 
 export const kildelisteNynorsk = [
-	'Svara dine frå då du registrerte deg',
+	'Det du fortalde oss da du vart registrert som arbeidssøkar',
 	'CV-en/jobbønska din(e) på nav.no',
 	'Svara dine om behov for rettleiing'
 ];

@@ -17,10 +17,10 @@ export function Oyeblikksbilde(props: { vedtakId: number }) {
 	const visCvVedleggCard = vistVedtak !== undefined && vistVedtak.opplysninger.find(x => x.indexOf('CV') >= 0);
 
 	const visRegistreringVedleggCard =
-		vistVedtak !== undefined && vistVedtak.opplysninger.includes('Svarene dine fra da du registrerte deg');
+		vistVedtak !== undefined && vistVedtak.opplysninger.find(x => x.indexOf('registrer') >= 0);
 
 	const visEgenvurderingVedleggCard =
-		vistVedtak !== undefined && vistVedtak.opplysninger.includes('Svarene dine om behov for veiledning');
+		vistVedtak !== undefined && vistVedtak.opplysninger.find(x => x.indexOf('behov') >= 0);
 
 	return (
 		<>
