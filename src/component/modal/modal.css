@@ -1,0 +1,11 @@
+.bekreft-send-vedtak-modal-personinfo {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	column-gap: 0.5rem;
+	row-gap: 0.1rem;
+}
+
+.bekreft-send-vedtak-modal-personinfo .bekreft-send-vedtak-modal-personinfo-copybutton {
+	color: var(--a-text-default);
+}
