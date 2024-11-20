@@ -1,6 +1,7 @@
 import { VarselModal } from './varsel-modal/varsel-modal';
 import { ModalProps } from './modal-props';
 import { useModalStore } from '../../store/modal-store';
+import { useDataStore } from '../../store/data-store';
 import { Button, Heading, Modal } from '@navikt/ds-react';
 
 interface VedtakSendtModalProps extends ModalProps {
@@ -9,7 +10,7 @@ interface VedtakSendtModalProps extends ModalProps {
 
 export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 	const { resetModalType } = useModalStore();
-
+	const navn = useDataStore().navn;
 	return (
 		<VarselModal
 			isOpen={props.isOpen}
@@ -21,7 +22,7 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 					Send vedtaksbrev
 				</Heading>
 			</Modal.Header>
-			<Modal.Body>Er du sikker på at du vil sende vedtaksbrev til bruker?</Modal.Body>
+			<Modal.Body>{`Er du sikker på at du vil sende vedtaksbrev til ${navn.forkortetNavn} ?`}</Modal.Body>
 			<Modal.Footer>
 				<Button size="small" onClick={props.onSendVedtakBekreftet}>
 					Send
