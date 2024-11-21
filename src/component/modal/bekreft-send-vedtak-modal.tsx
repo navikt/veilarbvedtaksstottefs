@@ -5,6 +5,7 @@ import { useDataStore } from '../../store/data-store';
 import { BodyShort, Button, CopyButton, Heading, Modal } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
 import './modal.css';
+import { formateStringInUpperAndLowerCase } from '../../util/tekst-utils';
 
 interface VedtakSendtModalProps extends ModalProps {
 	onSendVedtakBekreftet: () => void;
@@ -25,7 +26,9 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 					Send vedtaksbrev
 				</Heading>
 				<div className="bekreft-send-vedtak-modal-personinfo">
-					<BodyShort>{`${navn.forkortetNavn}`}</BodyShort>
+					<BodyShort
+						weight={'semibold'}
+					>{`${formateStringInUpperAndLowerCase(navn.fornavn)} ${formateStringInUpperAndLowerCase(navn.etternavn)}`}</BodyShort>
 					<CopyButton
 						copyText={fnr}
 						text={`F.nr.: ${fnr}`}

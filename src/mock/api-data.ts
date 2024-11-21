@@ -287,10 +287,10 @@ const oyeblikksbildeArbeidssokerRegistret: OyblikksbildeArbeidssokerRegistret = 
 	journalfort: true
 };
 const navn: Navn = {
-	fornavn: 'Ola',
-	mellomnavn: 'Nordmann',
-	etternavn: 'Nordmann',
-	forkortetNavn: 'Ola Nordmann'
+	fornavn: 'AKSELERERENDE',
+	mellomnavn: '',
+	etternavn: 'ARKIV',
+	forkortetNavn: ''
 };
 
 let mockMeldinger = [...dialogMeldinger, ...systemMeldinger];
