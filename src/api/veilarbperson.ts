@@ -27,5 +27,5 @@ export function fetchAktivArbeidssokerperiode(fnr: string): AxiosPromise<Arbeids
 }
 
 export function fetchNavn(fnr: string): AxiosPromise<Navn> {
-	return axiosInstance.post(`/veilarbperson/api/person/hent-navn`, { fnr });
+	return axiosInstance.post(`/veilarbperson/api/v3/person/hent-navn`, { fnr });
 }

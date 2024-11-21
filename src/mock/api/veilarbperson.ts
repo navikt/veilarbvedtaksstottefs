@@ -11,7 +11,7 @@ export const veilarbpersonHandlers: RequestHandler[] = [
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 		return HttpResponse.json(hentAktivArbeidssokerperiode());
 	}),
-	http.post('/veilarbperson/api/person/hent-navn', async () => {
+	http.post('/veilarbperson/api/v3/person/hent-navn', async () => {
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 		return HttpResponse.json(hentNavn());
 	})
