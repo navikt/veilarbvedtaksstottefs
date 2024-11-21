@@ -38,7 +38,7 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 					/>
 				</div>
 			</Modal.Header>
-			<Modal.Body>{`Er du sikker på at du vil sende vedtaksbrev til bruker?`}</Modal.Body>
+			<Modal.Body>{Er du sikker på at du vil sende vedtaksbrev til bruker?}</Modal.Body>
 			<Modal.Footer>
 				<Button size="small" onClick={props.onSendVedtakBekreftet}>
 					Send
