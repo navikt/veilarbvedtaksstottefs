@@ -1,9 +1,8 @@
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
 import { ArbeidssokerPeriode } from '@navikt/arbeidssokerregisteret-utils';
-import { BEHANDLINGSNUMMER } from '../util/constants';
 
-const behandlingsnummer = BEHANDLINGSNUMMER;
+const behandlingsnummer = 'B642';
 
 export enum MalformType {
 	nb = 'nb',

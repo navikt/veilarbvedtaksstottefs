@@ -26,9 +26,9 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 					Send vedtaksbrev
 				</Heading>
 				<div className="bekreft-send-vedtak-modal-personinfo">
-					<BodyShort
-						weight={'semibold'}
-					>{`${formateStringInUpperAndLowerCase(navn.fornavn)} ${formateStringInUpperAndLowerCase(navn.etternavn)}`}</BodyShort>
+					<BodyShort weight="semibold">
+						{`${formateStringInUpperAndLowerCase(navn.fornavn)} ${formateStringInUpperAndLowerCase(navn.mellomnavn)} ${formateStringInUpperAndLowerCase(navn.etternavn)}`}
+					</BodyShort>
 					<CopyButton
 						copyText={fnr}
 						text={`F.nr.: ${fnr}`}

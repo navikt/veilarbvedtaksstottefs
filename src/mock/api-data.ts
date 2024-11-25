@@ -288,7 +288,7 @@ const oyeblikksbildeArbeidssokerRegistret: OyblikksbildeArbeidssokerRegistret = 
 };
 const navn: Navn = {
 	fornavn: 'AKSELERERENDE',
-	mellomnavn: '',
+	mellomnavn: 'MIDTEN',
 	etternavn: 'ARKIV',
 	forkortetNavn: ''
 };
