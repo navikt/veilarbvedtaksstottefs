@@ -7,7 +7,7 @@ import { useTilgangStore } from '../store/tilgang-store';
 import { useAxiosFetcher } from '../util/use-axios-fetcher';
 import { hentArenaVedtak, hentFattedeVedtak } from '../api/veilarbvedtaksstotte/vedtak';
 import { fetchOppfolging } from '../api/veilarboppfolging';
-import { fetchMalform } from '../api/veilarbperson';
+import { fetchMalform, fetchNavn } from '../api/veilarbperson';
 import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../api/utils';
@@ -15,8 +15,15 @@ import { Alert } from '@navikt/ds-react';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const { initSkjema } = useSkjemaStore();
-	const { setFattedeVedtak, setOppfolgingData, setMalform, setUtkast, setInnloggetVeileder, setArenaVedtak } =
-		useDataStore();
+	const {
+		setFattedeVedtak,
+		setOppfolgingData,
+		setMalform,
+		setUtkast,
+		setInnloggetVeileder,
+		setArenaVedtak,
+		setNavn
+	} = useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
 
 	const fattedeVedtakFetcher = useAxiosFetcher(hentFattedeVedtak);
@@ -25,6 +32,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	const utkastFetcher = useAxiosFetcher(fetchUtkast);
 	const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
 	const arenaVedtakFetcher = useAxiosFetcher(hentArenaVedtak);
+	const navnFetcher = useAxiosFetcher(fetchNavn);
 
 	useEffect(() => {
 		fattedeVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setFattedeVedtak)).catch();
@@ -47,6 +55,8 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 
 		arenaVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setArenaVedtak)).catch();
 
+		navnFetcher.fetch(props.fnr).then(ifResponseHasData(setNavn)).catch();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -65,7 +75,8 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			malformFetcher,
 			utkastFetcher,
 			innloggetVeilederFetcher,
-			arenaVedtakFetcher
+			arenaVedtakFetcher,
+			navnFetcher
 		)
 	) {
 		return <Spinner />;
@@ -75,7 +86,8 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			oppfolgingFetcher,
 			malformFetcher,
 			innloggetVeilederFetcher,
-			arenaVedtakFetcher
+			arenaVedtakFetcher,
+			navnFetcher
 		) ||
 		(utkastFetcher.error && utkastFetcher.error.response?.status !== 404) // API gir 404 dersom utkast ikke eksisterer
 	) {

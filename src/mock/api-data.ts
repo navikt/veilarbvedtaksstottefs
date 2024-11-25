@@ -1,6 +1,6 @@
 import OppfolgingData from '../api/veilarboppfolging';
 import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
-import { MalformData, MalformType } from '../api/veilarbperson';
+import { MalformData, MalformType, Navn } from '../api/veilarbperson';
 import { FeatureToggles, PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../api/obo-unleash';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
@@ -286,6 +286,12 @@ const oyeblikksbildeArbeidssokerRegistret: OyblikksbildeArbeidssokerRegistret = 
 	data: opplysningerMedProfilering,
 	journalfort: true
 };
+const navn: Navn = {
+	fornavn: 'AKSELERERENDE',
+	mellomnavn: 'MIDTEN',
+	etternavn: 'ARKIV',
+	forkortetNavn: ''
+};
 
 let mockMeldinger = [...dialogMeldinger, ...systemMeldinger];
 
@@ -398,4 +404,7 @@ export function updateInnloggetVeilederMock(veileder: Veileder) {
 		navn: veileder.navn,
 		ident: veileder.ident
 	};
+}
+export function hentNavn(): Navn {
+	return navn;
 }
