@@ -122,7 +122,7 @@ export function LesSkjemaSection() {
 			<div className="begrunnelse-felt">
 				<FeltHeader
 					tittel="Begrunnelse"
-					eksternLenketekst="Nye retningslinjer for NAV-loven § 14 a"
+					eksternLenketekst="Nye retningslinjer for Nav-loven § 14 a"
 					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
 				/>
 
