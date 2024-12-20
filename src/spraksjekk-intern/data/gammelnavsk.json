@@ -69,8 +69,8 @@
 		{
 			"id": "9001845",
 			"ord": "fase ut",
-			"gammelnavsk": "Mottar du allerede ventelønn fra NAV, kan du søke om forlengelse. Ordningen med ventelønn ble faset ut fra og med 1.3.2016.",
-			"klart_språk": "Du kan søke om forlengelse hvis du allerede får ventelønn fra NAV. Ordningen med ventelønn ble stoppet fra og med 1.3.2016"
+			"gammelnavsk": "Mottar du allerede ventelønn fra Nav, kan du søke om forlengelse. Ordningen med ventelønn ble faset ut fra og med 1.3.2016.",
+			"klart_språk": "Du kan søke om forlengelse hvis du allerede får ventelønn fra Nav. Ordningen med ventelønn ble stoppet fra og med 1.3.2016"
 		},
 		{
 			"id": "7538145",
@@ -129,25 +129,25 @@
 		{
 			"id": "1219181",
 			"ord": "fremkomme",
-			"gammelnavsk": "Det fremkommer ikke opplysninger i saken som tilsier at du befinner deg i en slik situasjon at kravet om lov om sosiale tjenester i NAV § 19 ”særlige tilfeller” er oppfylt.",
-			"klart_språk": "Det er ikke opplysninger i saken som viser at du er i en slik situasjon at kravet om lov om sosiale tjenester i NAV § 19 “særlige tilfeller” er oppfylt."
+			"gammelnavsk": "Det fremkommer ikke opplysninger i saken som tilsier at du befinner deg i en slik situasjon at kravet om lov om sosiale tjenester i Nav § 19 ”særlige tilfeller” er oppfylt.",
+			"klart_språk": "Det er ikke opplysninger i saken som viser at du er i en slik situasjon at kravet om lov om sosiale tjenester i Nav § 19 “særlige tilfeller” er oppfylt."
 		},
 		{
 			"id": "7426678",
 			"ord": "befinne seg",
-			"gammelnavsk": "Det fremkommer ikke opplysninger i saken som tilsier at du befinner deg i en slik situasjon at kravet om lov om sosiale tjenester i NAV § 19 ”særlige tilfeller” er oppfylt.",
-			"klart_språk": "Det er ikke opplysninger i saken som viser at du er i en slik situasjon at kravet om lov om sosiale tjenester i NAV § 19 “særlige tilfeller” er oppfylt."
+			"gammelnavsk": "Det fremkommer ikke opplysninger i saken som tilsier at du befinner deg i en slik situasjon at kravet om lov om sosiale tjenester i Nav § 19 ”særlige tilfeller” er oppfylt.",
+			"klart_språk": "Det er ikke opplysninger i saken som viser at du er i en slik situasjon at kravet om lov om sosiale tjenester i Nav § 19 “særlige tilfeller” er oppfylt."
 		},
 		{
 			"id": "3807396",
 			"ord": "gjøre oppmerksom på",
-			"gammelnavsk": "Du må søke bostøtte på nytt for ditt nye leieforhold. Vi gjør oppmerksom på at du må gi beskjed til NAV dersom din bostøtte endres.",
-			"klart_språk": "Dette må du gjøre: Søke bostøtte på nytt og gi beskjed til NAV hvis din bostøtte endres."
+			"gammelnavsk": "Du må søke bostøtte på nytt for ditt nye leieforhold. Vi gjør oppmerksom på at du må gi beskjed til Nav dersom din bostøtte endres.",
+			"klart_språk": "Dette må du gjøre: Søke bostøtte på nytt og gi beskjed til Nav hvis din bostøtte endres."
 		},
 		{
 			"id": "9822032",
 			"ord": "gå frem av",
-			"gammelnavsk": "Du tjener på å jobbe, men husk å informere din veileder og skrive timene i meldekortet når du får lønn fra arbeidsgiveren din. Da endrer vi utbetalingen din. Dette går frem av lov om sosiale tjenester i NAV og § 37.",
+			"gammelnavsk": "Du tjener på å jobbe, men husk å informere din veileder og skrive timene i meldekortet når du får lønn fra arbeidsgiveren din. Da endrer vi utbetalingen din. Dette går frem av lov om sosiale tjenester i Nav og § 37.",
 			"klart_språk": "Du tjener på å jobbe, men husk å informere din veileder og skrive hvor mange timer du har jobbet i meldekortet. Da endrer vi utbetalingen din."
 		},
 		{
@@ -219,7 +219,7 @@
 		{
 			"id": "2066133",
 			"ord": "løpende orientert",
-			"gammelnavsk": "Du har plikt til å holde NAV løpende orientert om situasjonen din.",
+			"gammelnavsk": "Du har plikt til å holde Nav løpende orientert om situasjonen din.",
 			"klart_språk": "Du har plikt til å gi oss beskjed hvis situasjonen din endrer seg."
 		},
 		{
@@ -237,14 +237,14 @@
 		{
 			"id": "8355442",
 			"ord": "nydimmitert",
-			"gammelnavsk": "Som nydimittert vernepliktig kan du få 4 911 kroner per uke uavhengig av tidligere inntekt. Har du tjent over 319 197 kroner, kan du ha rett til mer. NAV beregner automatisk hva som lønner seg for deg.",
-			"klart_språk": "Når du er ferdig med militærtjenesten/verneplikten, kan du få 4 911 kroner per uke uavhengig av tidligere inntekt. Hvis du har tjent over 319 197 kroner, kan du ha rett til mer penger. NAV regner automatisk ut hva som gir deg mest penger."
+			"gammelnavsk": "Som nydimittert vernepliktig kan du få 4 911 kroner per uke uavhengig av tidligere inntekt. Har du tjent over 319 197 kroner, kan du ha rett til mer. Nav beregner automatisk hva som lønner seg for deg.",
+			"klart_språk": "Når du er ferdig med militærtjenesten/verneplikten, kan du få 4 911 kroner per uke uavhengig av tidligere inntekt. Hvis du har tjent over 319 197 kroner, kan du ha rett til mer penger. Nav regner automatisk ut hva som gir deg mest penger."
 		},
 		{
 			"id": "3966055",
 			"ord": "verneplikt",
-			"gammelnavsk": "Som nydimittert vernepliktig kan du få 4 911 kroner per uke uavhengig av tidligere inntekt. Har du tjent over 319 197 kroner, kan du ha rett til mer. NAV beregner automatisk hva som lønner seg for deg.",
-			"klart_språk": "Når du er ferdig med militærtjenesten/verneplikten, kan du få 4 911 kroner per uke uavhengig av tidligere inntekt. Hvis du har tjent over 319 197 kroner, kan du ha rett til mer penger. NAV regner automatisk ut hva som gir deg mest penger."
+			"gammelnavsk": "Som nydimittert vernepliktig kan du få 4 911 kroner per uke uavhengig av tidligere inntekt. Har du tjent over 319 197 kroner, kan du ha rett til mer. Nav beregner automatisk hva som lønner seg for deg.",
+			"klart_språk": "Når du er ferdig med militærtjenesten/verneplikten, kan du få 4 911 kroner per uke uavhengig av tidligere inntekt. Hvis du har tjent over 319 197 kroner, kan du ha rett til mer penger. Nav regner automatisk ut hva som gir deg mest penger."
 		},
 		{
 			"id": "5790753",
@@ -297,14 +297,14 @@
 		{
 			"id": "2481391",
 			"ord": "skjønnsmessig",
-			"gammelnavsk": "Statsforvalteren kan omgjøre dette vedtak dersom det er lovstridig eller om det bygger på en skjønnsmessig vurdering som er åpenbart urimelig. Klagefristen er 3 uker. Klagen sendes til NAV Stedby. NAV Stedby vil kunne gi nødvendig råd og veiledning.",
-			"klart_språk": "Statsforvalteren kan endre dette vedtaket hvis det ikke følger loven, eller om vurderingen er klart urimelig. Hvis du ønsker å klage, må du gjøre det innen 3 uker. Klagen sendes til NAV Stedby. Hvis du trenger hjelp med klagen, kan du ta kontakt med NAV Stedby."
+			"gammelnavsk": "Statsforvalteren kan omgjøre dette vedtak dersom det er lovstridig eller om det bygger på en skjønnsmessig vurdering som er åpenbart urimelig. Klagefristen er 3 uker. Klagen sendes til Nav Stedby. Nav Stedby vil kunne gi nødvendig råd og veiledning.",
+			"klart_språk": "Statsforvalteren kan endre dette vedtaket hvis det ikke følger loven, eller om vurderingen er klart urimelig. Hvis du ønsker å klage, må du gjøre det innen 3 uker. Klagen sendes til Nav Stedby. Hvis du trenger hjelp med klagen, kan du ta kontakt med Nav Stedby."
 		},
 		{
 			"id": "8461193",
 			"ord": "lovstridig",
-			"gammelnavsk": "Statsforvalteren kan omgjøre dette vedtak dersom det er lovstridig eller om det bygger på en skjønnsmessig vurdering som er åpenbart urimelig. Klagefristen er 3 uker. Klagen sendes til NAV Stedby. NAV Stedby vil kunne gi nødvendig råd og veiledning.",
-			"klart_språk": "Statsforvalteren kan endre dette vedtaket hvis det ikke følger loven, eller om vurderingen er klart urimelig. Hvis du ønsker å klage, må du gjøre det innen 3 uker. Klagen sendes til NAV Stedby. Hvis du trenger hjelp med klagen, kan du ta kontakt med NAV Stedby."
+			"gammelnavsk": "Statsforvalteren kan omgjøre dette vedtak dersom det er lovstridig eller om det bygger på en skjønnsmessig vurdering som er åpenbart urimelig. Klagefristen er 3 uker. Klagen sendes til Nav Stedby. Nav Stedby vil kunne gi nødvendig råd og veiledning.",
+			"klart_språk": "Statsforvalteren kan endre dette vedtaket hvis det ikke følger loven, eller om vurderingen er klart urimelig. Hvis du ønsker å klage, må du gjøre det innen 3 uker. Klagen sendes til Nav Stedby. Hvis du trenger hjelp med klagen, kan du ta kontakt med Nav Stedby."
 		},
 		{
 			"id": "2416239",
@@ -358,25 +358,25 @@
 			"id": "6957715",
 			"ord": "ta sikte på",
 			"gammelnavsk": "De som ikke kan sørge for sitt livsopphold gjennom arbeid eller ved å gjøre gjeldende økonomiske rettigheter, har krav på økonomisk stønad. Stønaden bør ta sikte på å gjøre vedkommende selvhjulpen.",
-			"klart_språk": "Du har rett på økonomisk stønad hvis du ikke har arbeidsinntekt eller andre stønader fra NAV til å betale dine levekostnader. Målet med stønaden er at du skal klare deg selv økonomisk."
+			"klart_språk": "Du har rett på økonomisk stønad hvis du ikke har arbeidsinntekt eller andre stønader fra Nav til å betale dine levekostnader. Målet med stønaden er at du skal klare deg selv økonomisk."
 		},
 		{
 			"id": "7203567",
 			"ord": "tannbehandlingsoverslag",
-			"gammelnavsk": "NAV Stedby har innvilget din søknad om dekning til tannbehandling i henhold til godkjent tannbehandlingsoverslag, som vist ovenfor med hjemmel i lov om sosiale tjenester i arbeids- og velferdsforvaltningen paragraf 18.",
-			"klart_språk": "NAV Stedby har godkjent søknaden din om å få hjelp til å betale tann- behandling. Vi har tatt utgangspunkt i den godkjente beregningen av hvor mye tannbehandlingen koster, og NAV betaler tannbehandlingen din."
+			"gammelnavsk": "Nav Stedby har innvilget din søknad om dekning til tannbehandling i henhold til godkjent tannbehandlingsoverslag, som vist ovenfor med hjemmel i lov om sosiale tjenester i arbeids- og velferdsforvaltningen paragraf 18.",
+			"klart_språk": "Nav Stedby har godkjent søknaden din om å få hjelp til å betale tann- behandling. Vi har tatt utgangspunkt i den godkjente beregningen av hvor mye tannbehandlingen koster, og Nav betaler tannbehandlingen din."
 		},
 		{
 			"id": "2039558",
 			"ord": "hjemmel",
-			"gammelnavsk": "NAV Stedby har innvilget din søknad om dekning til tannbehandling i henhold til godkjent tannbehandlingsoverslag, som vist ovenfor med hjemmel i lov om sosiale tjenester i arbeids- og velferdsforvaltningen paragraf 18.",
-			"klart_språk": "NAV Stedby har godkjent søknaden din om å få hjelp til å betale tann- behandling. Vi har tatt utgangspunkt i den godkjente beregningen av hvor mye tannbehandlingen koster, og NAV betaler tannbehandlingen din."
+			"gammelnavsk": "Nav Stedby har innvilget din søknad om dekning til tannbehandling i henhold til godkjent tannbehandlingsoverslag, som vist ovenfor med hjemmel i lov om sosiale tjenester i arbeids- og velferdsforvaltningen paragraf 18.",
+			"klart_språk": "Nav Stedby har godkjent søknaden din om å få hjelp til å betale tann- behandling. Vi har tatt utgangspunkt i den godkjente beregningen av hvor mye tannbehandlingen koster, og Nav betaler tannbehandlingen din."
 		},
 		{
 			"id": "3207769",
 			"ord": "tilegne seg",
-			"gammelnavsk": "Målet er at du sammen med NAV skal avklare mulighetene dine for å beholde eller komme i arbeid. Du bidrar til å nå det målet ved å for eksempel prøve ut ulike behandlinger, ulike jobbsituasjoner eller tilegne deg ny kompetanse.",
-			"klart_språk": "Målet er at du, sammen med NAV, skal finne ut hvilke muligheter du har for å beholde eller komme i arbeid. For å komme til dette målet, kan du for eksempel: prøve ulike behandlinger, prøve ulike jobbsituasjoner og aktiviteter, og skaffe deg ny kompetanse "
+			"gammelnavsk": "Målet er at du sammen med Nav skal avklare mulighetene dine for å beholde eller komme i arbeid. Du bidrar til å nå det målet ved å for eksempel prøve ut ulike behandlinger, ulike jobbsituasjoner eller tilegne deg ny kompetanse.",
+			"klart_språk": "Målet er at du, sammen med Nav, skal finne ut hvilke muligheter du har for å beholde eller komme i arbeid. For å komme til dette målet, kan du for eksempel: prøve ulike behandlinger, prøve ulike jobbsituasjoner og aktiviteter, og skaffe deg ny kompetanse "
 		},
 		{
 			"id": "7932593",
@@ -399,8 +399,8 @@
 		{
 			"id": "2089818",
 			"ord": "tilretteleggingsmuligheter",
-			"gammelnavsk": "Oppfølging fra NAV kan for eksempel være råd og veiledning fra NAV Hjelpemiddelsentral eller NAV Arbeidsrådgivning, dialog med arbeidsgiveren din om tilretteleggingsmuligheter og muligheter for å bli værende i jobben din.",
-			"klart_språk": "Dette kan for eksempel være råd og veiledning fra NAV Hjelpemiddelsentral eller NAV Arbeidsrådgivning, dialog med arbeidsgiveren din om muligheter for å tilpasse jobben slik at du kan bli værende i den."
+			"gammelnavsk": "Oppfølging fra Nav kan for eksempel være råd og veiledning fra Nav Hjelpemiddelsentral eller Nav Arbeidsrådgivning, dialog med arbeidsgiveren din om tilretteleggingsmuligheter og muligheter for å bli værende i jobben din.",
+			"klart_språk": "Dette kan for eksempel være råd og veiledning fra Nav Hjelpemiddelsentral eller Nav Arbeidsrådgivning, dialog med arbeidsgiveren din om muligheter for å tilpasse jobben slik at du kan bli værende i den."
 		},
 		{
 			"id": "4967713",
@@ -418,25 +418,25 @@
 			"id": "5971858",
 			"ord": "tiltakskonsulent",
 			"gammelnavsk": "Planen kan endres etter avtale mellom deltaker og tiltakskonsulent. Deltakelse i programmet forutsetter fulltidsdeltakelse i programmet slik dette er avtalt. Vesentlig fravær kan medføre stans av deltakelse i programmet.",
-			"klart_språk": "Planen kan endres etter avtale mellom deltaker og NAV. Du må være med i programmet på fulltid. Høyt fravær kan føre til at du ikke lenger får delta i programmet."
+			"klart_språk": "Planen kan endres etter avtale mellom deltaker og Nav. Du må være med i programmet på fulltid. Høyt fravær kan føre til at du ikke lenger får delta i programmet."
 		},
 		{
 			"id": "2269112",
 			"ord": "forutsette",
 			"gammelnavsk": "Planen kan endres etter avtale mellom deltaker og tiltakskonsulent. Deltakelse i programmet forutsetter fulltidsdeltakelse i programmet slik dette er avtalt. Vesentlig fravær kan medføre stans av deltakelse i programmet.",
-			"klart_språk": "Planen kan endres etter avtale mellom deltaker og NAV. Du må være med i programmet på fulltid. Høyt fravær kan føre til at du ikke lenger får delta i programmet."
+			"klart_språk": "Planen kan endres etter avtale mellom deltaker og Nav. Du må være med i programmet på fulltid. Høyt fravær kan føre til at du ikke lenger får delta i programmet."
 		},
 		{
 			"id": "8135391",
 			"ord": "medføre",
 			"gammelnavsk": "Planen kan endres etter avtale mellom deltaker og tiltakskonsulent. Deltakelse i programmet forutsetter fulltidsdeltakelse i programmet slik dette er avtalt. Vesentlig fravær kan medføre stans av deltakelse i programmet.",
-			"klart_språk": "Planen kan endres etter avtale mellom deltaker og NAV. Du må være med i programmet på fulltid. Høyt fravær kan føre til at du ikke lenger får delta i programmet."
+			"klart_språk": "Planen kan endres etter avtale mellom deltaker og Nav. Du må være med i programmet på fulltid. Høyt fravær kan føre til at du ikke lenger får delta i programmet."
 		},
 		{
 			"id": "2654780",
 			"ord": "tvil om",
-			"gammelnavsk": "Er du i tvil om du har sendt meldekortet innen fristen, kan du sjekke om du fortsatt er registrert som arbeidssøker på Ditt NAV. Er du ikke registrert som arbeidssøker, må du gjøre det på nytt. Du kan også se tidligere innsendte meldekort på Ditt NAV.",
-			"klart_språk": "Hvis du er usikker på om du har sendt meldekort innen fristen, sjekk om du fortsatt er registrert som arbeidssøker på «Ditt NAV». Hvis du ikke er registrert som arbeidssøker så må du registrere deg på nytt. Du kan også se tidligere innsendte meldekort på Ditt NAV. "
+			"gammelnavsk": "Er du i tvil om du har sendt meldekortet innen fristen, kan du sjekke om du fortsatt er registrert som arbeidssøker på Ditt Nav. Er du ikke registrert som arbeidssøker, må du gjøre det på nytt. Du kan også se tidligere innsendte meldekort på Ditt Nav.",
+			"klart_språk": "Hvis du er usikker på om du har sendt meldekort innen fristen, sjekk om du fortsatt er registrert som arbeidssøker på «Ditt Nav». Hvis du ikke er registrert som arbeidssøker så må du registrere deg på nytt. Du kan også se tidligere innsendte meldekort på Ditt Nav. "
 		},
 		{
 			"id": "5062288",
@@ -453,8 +453,8 @@
 		{
 			"id": "2751254",
 			"ord": "unnlate",
-			"gammelnavsk": "Du plikter å informere om endringer i inntekter/formue og sivilstatus. Du plikter også å informere om andre endringer som kan ha betydning for vedtaket. Dersom du unnlater å informere NAV om endringer som har betydning for vedtaket, kan urettmessig sosialhjelp bli krevd tilbake.",
-			"klart_språk": "Du må informere oss hvis du har endringer i inntekt/formue og sivilstatus, og om andre endringer som kan ha betydning for vedtaket Hvis du ikke informerer NAV om endringer som har betydning for vedtaket, kan NAV kreve at du betaler tilbake sosialhjelp."
+			"gammelnavsk": "Du plikter å informere om endringer i inntekter/formue og sivilstatus. Du plikter også å informere om andre endringer som kan ha betydning for vedtaket. Dersom du unnlater å informere Nav om endringer som har betydning for vedtaket, kan urettmessig sosialhjelp bli krevd tilbake.",
+			"klart_språk": "Du må informere oss hvis du har endringer i inntekt/formue og sivilstatus, og om andre endringer som kan ha betydning for vedtaket Hvis du ikke informerer Nav om endringer som har betydning for vedtaket, kan Nav kreve at du betaler tilbake sosialhjelp."
 		},
 		{
 			"id": "5483047",
@@ -465,8 +465,8 @@
 		{
 			"id": "6949967",
 			"ord": "utprøving av arbeidsevne",
-			"gammelnavsk": "Kjernen i tiltaket skal være en helhetlig kartlegging av deltakers nåsituasjon knyttet til deltakers evne til deltakelse i arbeidslivet. Utprøving av arbeids- evne skal som hovedregel inngå som del av kartleggingen. Kartleggingen skal ta utgangspunkt i NAV sin bestilling og bygge på annen relevant dokumentasjon knyttet til deltaker.",
-			"klart_språk": "Det viktigste med tiltaket er å finne ut hvor mye du kan jobbe. Kartleggingen skal bygge på informasjon fra NAV og annen relevant dokumentasjon."
+			"gammelnavsk": "Kjernen i tiltaket skal være en helhetlig kartlegging av deltakers nåsituasjon knyttet til deltakers evne til deltakelse i arbeidslivet. Utprøving av arbeids- evne skal som hovedregel inngå som del av kartleggingen. Kartleggingen skal ta utgangspunkt i Nav sin bestilling og bygge på annen relevant dokumentasjon knyttet til deltaker.",
+			"klart_språk": "Det viktigste med tiltaket er å finne ut hvor mye du kan jobbe. Kartleggingen skal bygge på informasjon fra Nav og annen relevant dokumentasjon."
 		},
 		{
 			"id": "7440452",
@@ -477,8 +477,8 @@
 		{
 			"id": "2764960",
 			"ord": "vesentlig",
-			"gammelnavsk": "Det er en forutsetning at du deltar på avtalte tiltak i vedtaksperioden. Planen kan endres etter avtale mellom deg og din veileder på NAV. Programmet er fulltid, og vesentlig fravær kan medføre stans av deltakelsen i kvalifiserings- programmet.",
-			"klart_språk": "Det er et krav at du skal delta på avtalte aktiviteter. Planen kan endres etter avtale mellom deg og din veileder på NAV. Programmet er på fulltid, og har du høyt fravær, kan du bli stoppet i å delta i kvalifiseringsprogrammet."
+			"gammelnavsk": "Det er en forutsetning at du deltar på avtalte tiltak i vedtaksperioden. Planen kan endres etter avtale mellom deg og din veileder på Nav. Programmet er fulltid, og vesentlig fravær kan medføre stans av deltakelsen i kvalifiserings- programmet.",
+			"klart_språk": "Det er et krav at du skal delta på avtalte aktiviteter. Planen kan endres etter avtale mellom deg og din veileder på Nav. Programmet er på fulltid, og har du høyt fravær, kan du bli stoppet i å delta i kvalifiseringsprogrammet."
 		},
 		{
 			"id": "9131780",
@@ -489,8 +489,8 @@
 		{
 			"id": "9704724",
 			"ord": "ytelse",
-			"gammelnavsk": "Du skal gjøre gjeldende andre økonomiske rettigheter, slik som å søke andre ytelser fra NAV, Husbankens bostøtte og realisere formue.",
-			"klart_språk": "Dersom du kan forsørge deg på annen måte, skal du det. Eksempler på dette kan være å søke andre stønader fra NAV, bostøtte fra Husbanken eller realisere formue. Det kan bety at du må selge noe du eier."
+			"gammelnavsk": "Du skal gjøre gjeldende andre økonomiske rettigheter, slik som å søke andre ytelser fra Nav, Husbankens bostøtte og realisere formue.",
+			"klart_språk": "Dersom du kan forsørge deg på annen måte, skal du det. Eksempler på dette kan være å søke andre stønader fra Nav, bostøtte fra Husbanken eller realisere formue. Det kan bety at du må selge noe du eier."
 		},
 		{
 			"id": "8833820",
