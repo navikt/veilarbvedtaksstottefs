@@ -65,8 +65,8 @@ function Begrunnelse() {
 					tittel="Begrunnelse"
 					tittelId="begrunnelse-tittel"
 					tipsId="begrunnelse-tips"
-					eksternLenketekst="Nye retningslinjer for Nav-loven § 14 a"
-					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsrettet-brukeroppfolging/SitePages/Oppdaterte-retningslinjer-for.aspx"
+					eksternLenketekst="Standard for arbeidsrettet oppfølging"
+					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-veileder-for-arbeidsrettet-brukeroppfolging"
 				/>
 				<BegrunnelseInfoboks />
 
