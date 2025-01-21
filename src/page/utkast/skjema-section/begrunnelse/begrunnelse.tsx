@@ -10,6 +10,7 @@ import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { GammelnavskDictionary, Lix } from '../../../../spraksjekk-intern/components';
 import './begrunnelse.css';
+import { standardForArbeidsrettetOppfolgingsLenke } from '../../../../util/constants';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
@@ -65,8 +66,8 @@ function Begrunnelse() {
 					tittel="Begrunnelse"
 					tittelId="begrunnelse-tittel"
 					tipsId="begrunnelse-tips"
-					eksternLenketekst="Standard for arbeidsrettet oppfølging"
-					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-veileder-for-arbeidsrettet-brukeroppfolging"
+					eksternLenketekst={standardForArbeidsrettetOppfolgingsLenke.tekst}
+					eksternLenke={standardForArbeidsrettetOppfolgingsLenke.url}
 				/>
 				<BegrunnelseInfoboks />
 

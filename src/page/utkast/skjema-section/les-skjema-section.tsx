@@ -17,6 +17,7 @@ import { getHovedmalNavn } from '../../../util/hovedmal';
 import { MalformData, MalformType } from '../../../api/veilarbperson';
 import { BodyLong, BodyShort, List } from '@navikt/ds-react';
 import './skjema-section.less';
+import { standardForArbeidsrettetOppfolgingsLenke } from '../../../util/constants';
 
 const TEN_SECONDS = 10000;
 
@@ -122,8 +123,8 @@ export function LesSkjemaSection() {
 			<div className="begrunnelse-felt">
 				<FeltHeader
 					tittel="Begrunnelse"
-					eksternLenketekst="Standard for arbeidsrettet oppfølging"
-					eksternLenke="https://navno.sharepoint.com/sites/fag-og-ytelser-veileder-for-arbeidsrettet-brukeroppfolging"
+					eksternLenketekst={standardForArbeidsrettetOppfolgingsLenke.tekst}
+					eksternLenke={standardForArbeidsrettetOppfolgingsLenke.url}
 				/>
 
 				<BodyLong size="small" style={{ whiteSpace: 'pre-wrap' }} spacing>
