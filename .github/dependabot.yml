@@ -17,13 +17,13 @@ updates:
     groups:
       aksel-dependencies:
         patterns:
-          - '@navikt/aksel*'
-          - '@navikt/ds*'
+          - "@navikt/aksel*"
+          - "@navikt/ds*"
       react-dependencies:
         patterns:
-          - 'react'
-          - 'react-dom'
-          - 'react-pdf'
-          - '@types/react'
-          - '@types/react-dom'
-          - '@types/react-pdf'
+          - "react"
+          - "react-dom"
+          - "react-pdf"
+          - "@types/react"
+          - "@types/react-dom"
+          - "@types/react-pdf"

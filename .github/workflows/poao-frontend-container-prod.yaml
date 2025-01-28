@@ -3,10 +3,10 @@ name: paoa frontend container prod
 on:
   push:
     branches:
-      - 'master'
+      - "master"
     paths:
-      - '.github/workflows/poao-frontend-container-prod.yaml'
-      - '.nais/nais-prod.yaml'
+      - ".github/workflows/poao-frontend-container-prod.yaml"
+      - ".nais/nais-prod.yaml"
   workflow_dispatch:
 
 concurrency:
