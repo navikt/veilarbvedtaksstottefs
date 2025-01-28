@@ -242,13 +242,16 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 
 	const data = props.data;
 	const tekst = lagHentTekstForSprak(SPORSMAL_TEKSTER, 'nb');
+	const personErRegistrert = data != null && !!data.arbeidssoekerperiodeStartet;
+	const personErKorrektRegistrert =
+		personErRegistrert && data.opplysningerOmArbeidssoeker != null && data.profilering != null;
 
 	return (
 		<Card className="vedlegg-card">
 			<Heading size="medium" level="2" spacing>
 				Det du fortalte oss da du ble registrert som arbeidssøker
 			</Heading>
-			{(data == null || (data.opplysningerOmArbeidssoeker == null && data.profilering == null)) && (
+			{personErRegistrert && personErKorrektRegistrert && (
 				<>
 					<b>Ingen registrerte data:</b> Personen har ikke registrert seg i Arbeidssøkerregisteret og har ikke
 					en aktiv arbeidssøkerperiode.
@@ -256,6 +259,10 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 			)}
 			{data?.arbeidssoekerperiodeStartet &&
 				visEnkelVerdi('Registrert', formatDates(data.arbeidssoekerperiodeStartet))}
+
+			{personErRegistrert && !personErKorrektRegistrert && (
+				<>Kunne ikke hente informasjonen du fortalte oss da du ble registrert som arbeidssøker</>
+			)}
 
 			{data?.opplysningerOmArbeidssoeker?.sendtInnAv &&
 				visEnkelVerdi('Sist oppdatert', formatDates(data.opplysningerOmArbeidssoeker.sendtInnAv.tidspunkt))}
