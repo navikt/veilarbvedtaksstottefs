@@ -47,6 +47,10 @@ export const vedtakHandlers: RequestHandler[] = [
 		return new HttpResponse(arenaVedtakBrevBlob);
 	}),
 	http.get(`${VEILARBVEDTAKSSTOTTE_API}/vedtak/:vedtakId/pdf`, async ({ params }) => {
+		if (!params.vedtakId) {
+			throw new Error('vedtakId is undefined');
+		}
+
 		const vedtakId = parseInt(params.vedtakId.toString(), 10);
 
 		const vedtak = hentFattedeVedtak().find(v => v.id === vedtakId);
