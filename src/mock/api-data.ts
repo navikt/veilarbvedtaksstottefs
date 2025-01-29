@@ -1,7 +1,7 @@
 import OppfolgingData from '../api/veilarboppfolging';
 import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { MalformData, MalformType, Navn } from '../api/veilarbperson';
-import { FeatureToggles, PRELANSERING_INFO_OM_LOSNING_TOGGLE } from '../api/obo-unleash';
+import { FeatureToggles, PRELANSERING_INFO_OM_LOSNING_TOGGLE, VIS_VEDTAKSLOSNING_14_A } from '../api/obo-unleash';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
@@ -52,8 +52,9 @@ const arbeidssokerperiode = {
 	avsluttet: null
 } as unknown as ArbeidssokerPeriode;
 
-const features: FeatureToggles = {
-	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true
+const mockFeatures: FeatureToggles = {
+	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
+	[VIS_VEDTAKSLOSNING_14_A]: true
 };
 
 let innloggetVeileder: Veileder = {
@@ -348,7 +349,7 @@ export function hentEgenvurderingOyeblikksbilde(): OyblikksbildeEgenvurdering {
 }
 
 export function hentFeatures(): FeatureToggles {
-	return features;
+	return mockFeatures;
 }
 
 export function hentInnloggetVeileder(): Veileder {
