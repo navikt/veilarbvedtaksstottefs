@@ -15,7 +15,6 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 
 	const tilhorerBrukerUtrulletEnhetFetcher = useAxiosFetcher(fetchTilhorerBrukerUtrulletEnhet);
 	const harBrukerTilgangGjennomUnleashtoggle = features[VIS_VEDTAKSLOSNING_14_A];
-	const skalViseVedtakslosning = tilhorerBrukerUtrulletEnhetFetcher.data || harBrukerTilgangGjennomUnleashtoggle;
 
 	// Siden loading = false før vi kaller fetch så vil children bli rendret et par ms med useEffect()
 	useLayoutEffect(() => {
@@ -34,5 +33,9 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 		);
 	}
 
-	return skalViseVedtakslosning ? props.children : <Prelansering />;
+	return tilhorerBrukerUtrulletEnhetFetcher.data || harBrukerTilgangGjennomUnleashtoggle ? (
+		props.children
+	) : (
+		<Prelansering />
+	);
 }
