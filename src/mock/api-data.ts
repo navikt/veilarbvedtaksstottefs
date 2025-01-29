@@ -56,7 +56,7 @@ const arbeidssokerperiode = {
 	avsluttet: null
 } as unknown as ArbeidssokerPeriode;
 
-const features: FeatureToggles = {
+const mockFeatures: FeatureToggles = {
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
 	[HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE]: false
 };
@@ -353,7 +353,7 @@ export function hentEgenvurderingOyeblikksbilde(): OyblikksbildeEgenvurdering {
 }
 
 export function hentFeatures(): FeatureToggles {
-	return features;
+	return mockFeatures;
 }
 
 export function hentInnloggetVeileder(): Veileder {
