@@ -38,7 +38,7 @@ spec:
           "cors": {
             "origin": [
               "https://veilarbpersonflate.intern.dev.nav.no",
-              "https://veilarbpersonflate.ansatt.dev.nav.no",
+              "https://veilarbpersonflate.ansatt.dev.nav.no"
             ]
           },
           "header": {
