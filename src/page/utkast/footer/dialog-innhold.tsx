@@ -165,7 +165,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 								})
 							}
 						>
-							Godkjenn
+							Fullfør kvalitetssikring
 						</Button>
 					)}
 				</div>
