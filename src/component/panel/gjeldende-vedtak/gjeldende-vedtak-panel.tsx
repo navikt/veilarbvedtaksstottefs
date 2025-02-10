@@ -22,7 +22,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 		<VedtaksstottePanel
 			tittel="Gjeldende oppfølgingsvedtak"
 			undertittel={innsatsgruppeData.tittel}
-			innsatsgruppe={innsatsgruppeData.undertekst}
+			detaljer={innsatsgruppeData.undertekst}
 			panelKlasse="gjeldende-vedtak-panel"
 			imgSrc={fullfortVedtakIcon}
 			tekstKomponent={
