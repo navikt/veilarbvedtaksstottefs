@@ -3,7 +3,7 @@ import { useViewStore, ViewType } from '../../store/view-store';
 import { SkjemaVisningHeader } from './header/skjema-visning-header';
 import { formatDateStr } from '../../util/date-utils';
 import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
-import { getHovedmalNavn } from '../../util/hovedmal';
+import { getHovedmalNavnEllerEmdash } from '../../util/hovedmal';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import './skjema-visning.css';
 
@@ -62,7 +62,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 					<Heading size="xsmall" level="2" spacing>
 						Hovedmål
 					</Heading>
-					<BodyShort size="small">{getHovedmalNavn(hovedmal)}</BodyShort>
+					<BodyShort size="small">{getHovedmalNavnEllerEmdash(hovedmal)}</BodyShort>
 				</div>
 
 				<div>

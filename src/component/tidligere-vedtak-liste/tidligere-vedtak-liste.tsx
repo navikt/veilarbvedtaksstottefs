@@ -7,13 +7,11 @@ import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { logMetrikk } from '../../util/logger';
+import { hovedmalTekst } from '../../util/hovedmal';
 import vedtakBilde from './vedtak.svg';
-import { getHovedmalNavn } from '../../util/hovedmal';
 import './tidligere-vedtak-liste.css';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
-	const hovedmalTekst = getHovedmalNavn(vedtak.hovedmal);
-
 	return (
 		<VedtaklistePanel<Vedtak>
 			name="tidligere-vedtak"
@@ -26,7 +24,7 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 			<BodyShort size="small" weight="semibold" className="tidligere-vedtak-panel__innsats--tittel">
 				{innsatsgruppeTekst[vedtak.innsatsgruppe]}
 			</BodyShort>
-			{vedtak.hovedmal && <Detail textColor="subtle">{hovedmalTekst}</Detail>}
+			{vedtak.hovedmal && <Detail textColor="subtle">{hovedmalTekst[vedtak.hovedmal]}</Detail>}
 		</VedtaklistePanel>
 	);
 }

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { VarselType } from '../../../component/varsel/varsel-type';
 import isEqual from 'lodash.isequal';
+import { BodyLong, BodyShort, List } from '@navikt/ds-react';
+import { VarselType } from '../../../component/varsel/varsel-type';
 import FeltHeader from './felt-header/felt-header';
 import { useAppStore } from '../../../store/app-store';
 import { useViewStore, ViewType } from '../../../store/view-store';
@@ -13,11 +14,10 @@ import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstott
 import { OrNothing } from '../../../util/type/ornothing';
 import { hentFattedeVedtak } from '../../../api/veilarbvedtaksstotte/vedtak';
 import { innsatsgruppeTekst } from '../../../util/innsatsgruppe';
-import { getHovedmalNavn } from '../../../util/hovedmal';
+import { getHovedmalNavnEllerEmdash } from '../../../util/hovedmal';
 import { MalformData, MalformType } from '../../../api/veilarbperson';
-import { BodyLong, BodyShort, List } from '@navikt/ds-react';
-import './skjema-section.less';
 import { standardForArbeidsrettetOppfolgingsLenke } from '../../../util/constants';
+import './skjema-section.less';
 
 const TEN_SECONDS = 10000;
 
@@ -143,7 +143,7 @@ export function LesSkjemaSection() {
 
 			<div className="hovedmal-felt">
 				<FeltHeader tittel="Hovedmål" />
-				<BodyShort size="small">{getHovedmalNavn(hovedmal)}</BodyShort>
+				<BodyShort size="small">{getHovedmalNavnEllerEmdash(hovedmal)}</BodyShort>
 			</div>
 		</div>
 	);
