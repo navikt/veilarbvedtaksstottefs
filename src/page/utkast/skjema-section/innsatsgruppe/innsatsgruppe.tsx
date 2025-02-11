@@ -6,7 +6,7 @@ import { InnsatsgruppeType } from '../../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { ModalType, useModalStore } from '../../../../store/modal-store';
 import { useDataStore } from '../../../../store/data-store';
-import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekster } from '../../../../util/innsatsgruppe';
+import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekst } from '../../../../util/innsatsgruppe';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { useDialogSection } from '../../../../store/dialog-section-store';
 import { Alert, Radio, RadioGroup } from '@navikt/ds-react';
@@ -87,9 +87,9 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 			value={props.innsatsgruppe}
 			error={errors.innsatsgruppe}
 		>
-			{innsatsgruppeTekster.map(innsatsgruppetekst => (
-				<Radio key={innsatsgruppetekst.value} value={innsatsgruppetekst.value} onKeyDown={swallowEnterKeyPress}>
-					{innsatsgruppetekst.tittel}
+			{Object.values(InnsatsgruppeType).map(innsatsgruppetype => (
+				<Radio key={innsatsgruppetype} value={innsatsgruppetype} onKeyDown={swallowEnterKeyPress}>
+					{innsatsgruppeTekst[innsatsgruppetype]}
 				</Radio>
 			))}
 		</RadioGroup>

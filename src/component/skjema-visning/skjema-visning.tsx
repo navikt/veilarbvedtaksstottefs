@@ -2,7 +2,7 @@ import { BodyLong, BodyShort, Box, Button, Heading, List, VStack } from '@navikt
 import { useViewStore, ViewType } from '../../store/view-store';
 import { SkjemaVisningHeader } from './header/skjema-visning-header';
 import { formatDateStr } from '../../util/date-utils';
-import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
+import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { getHovedmalNavn } from '../../util/hovedmal';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import './skjema-visning.css';
@@ -23,7 +23,6 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 		vedtakFattet
 	} = props.fattetVedtak;
 
-	const innsatsgruppeTekst = getInnsatsgruppeTekst(innsatsgruppe);
 	const fattetAv = `${veilederNavn}, ${oppfolgingsenhetId} ${oppfolgingsenhetNavn}`;
 
 	return (
@@ -56,7 +55,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 					<Heading size="xsmall" level="2" spacing>
 						Innsatsgruppe
 					</Heading>
-					<BodyShort size="small">{innsatsgruppeTekst.tittel}</BodyShort>
+					<BodyShort size="small">{innsatsgruppeTekst[innsatsgruppe]}</BodyShort>
 				</div>
 
 				<div>

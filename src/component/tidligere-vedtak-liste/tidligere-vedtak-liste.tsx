@@ -3,7 +3,7 @@ import { BodyShort, Detail } from '@navikt/ds-react';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';
 import { OnVedtakClicked, VedtaklistePanel } from '../vedtakliste-panel/vedtakliste-panel';
-import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
+import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { logMetrikk } from '../../util/logger';
@@ -12,7 +12,6 @@ import { getHovedmalNavn } from '../../util/hovedmal';
 import './tidligere-vedtak-liste.css';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
-	const innsatsgruppeTekst = getInnsatsgruppeTekst(vedtak.innsatsgruppe);
 	const hovedmalTekst = getHovedmalNavn(vedtak.hovedmal);
 
 	return (
@@ -25,7 +24,7 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 			ikon={vedtakBilde}
 		>
 			<BodyShort size="small" weight="semibold" className="tidligere-vedtak-panel__innsats--tittel">
-				{innsatsgruppeTekst.tittel}
+				{innsatsgruppeTekst[vedtak.innsatsgruppe]}
 			</BodyShort>
 			{vedtak.hovedmal && <Detail textColor="subtle">{hovedmalTekst}</Detail>}
 		</VedtaklistePanel>
