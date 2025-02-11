@@ -1,10 +1,10 @@
+import { BodyLong, BodyShort, Box, Button, Heading, List, VStack } from '@navikt/ds-react';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { SkjemaVisningHeader } from './header/skjema-visning-header';
 import { formatDateStr } from '../../util/date-utils';
 import { getInnsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { getHovedmalNavn } from '../../util/hovedmal';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
-import { BodyLong, BodyShort, Box, Button, Heading, Label, List, VStack } from '@navikt/ds-react';
 import './skjema-visning.css';
 
 export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
@@ -53,16 +53,16 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 				</div>
 
 				<div>
-					<Label size="small" as="p">
-						{innsatsgruppeTekst.tittel}
-					</Label>
-					<BodyShort size="small" spacing>
-						{innsatsgruppeTekst.undertekst}
-					</BodyShort>
+					<Heading size="xsmall" level="2" spacing>
+						Innsatsgruppe
+					</Heading>
+					<BodyShort size="small">{innsatsgruppeTekst.tittel}</BodyShort>
+				</div>
 
-					<Label size="small" as="p">
+				<div>
+					<Heading size="xsmall" level="2" spacing>
 						Hovedmål
-					</Label>
+					</Heading>
 					<BodyShort size="small">{getHovedmalNavn(hovedmal)}</BodyShort>
 				</div>
 
