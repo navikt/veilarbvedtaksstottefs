@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { BodyShort, Detail } from '@navikt/ds-react';
 import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';
 import { OnVedtakClicked, VedtaklistePanel } from '../vedtakliste-panel/vedtakliste-panel';
@@ -7,11 +8,13 @@ import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { logMetrikk } from '../../util/logger';
 import vedtakBilde from './vedtak.svg';
-import { BodyShort, Detail } from '@navikt/ds-react';
+import { getHovedmalNavn } from '../../util/hovedmal';
 import './tidligere-vedtak-liste.css';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
 	const innsatsgruppeTekst = getInnsatsgruppeTekst(vedtak.innsatsgruppe);
+	const hovedmalTekst = getHovedmalNavn(vedtak.hovedmal);
+
 	return (
 		<VedtaklistePanel<Vedtak>
 			name="tidligere-vedtak"
@@ -24,7 +27,7 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 			<BodyShort size="small" weight="semibold" className="tidligere-vedtak-panel__innsats--tittel">
 				{innsatsgruppeTekst.tittel}
 			</BodyShort>
-			<Detail textColor="subtle">{innsatsgruppeTekst.undertekst}</Detail>
+			{vedtak.hovedmal && <Detail textColor="subtle">{hovedmalTekst}</Detail>}
 		</VedtaklistePanel>
 	);
 }

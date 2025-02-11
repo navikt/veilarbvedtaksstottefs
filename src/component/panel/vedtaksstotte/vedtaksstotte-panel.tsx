@@ -7,15 +7,22 @@ import './vedtaksstotte-panel.css';
 interface VedtaksstottePanelProps {
 	tittel: string;
 	undertittel: string;
-	innsatsgruppe?: string;
+	detaljer?: string;
 	imgSrc: string;
 	tekstKomponent: React.ReactNode;
 	knappKomponent?: React.ReactNode;
 	panelKlasse?: string;
 }
 
-export function VedtaksstottePanel(props: VedtaksstottePanelProps) {
-	const { tittel, undertittel, imgSrc, tekstKomponent, knappKomponent, panelKlasse, innsatsgruppe } = props;
+export function VedtaksstottePanel({
+	tittel,
+	undertittel,
+	imgSrc,
+	tekstKomponent,
+	knappKomponent,
+	panelKlasse,
+	detaljer
+}: VedtaksstottePanelProps) {
 	return (
 		<HovedsidePanel className={cls('vedtakstottepanel', panelKlasse)}>
 			<Heading size="small" level="2" className="vedtakstottepanel__tittel">
@@ -28,7 +35,7 @@ export function VedtaksstottePanel(props: VedtaksstottePanelProps) {
 						<Heading size="small" level="3">
 							{undertittel}
 						</Heading>
-						{innsatsgruppe && <Detail textColor="subtle">{innsatsgruppe}</Detail>}
+						{detaljer && <Detail textColor="subtle">{detaljer}</Detail>}
 					</hgroup>
 					<div>{tekstKomponent}</div>
 					{knappKomponent}
