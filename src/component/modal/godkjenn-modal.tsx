@@ -22,13 +22,13 @@ export function GodkjennModal(props: GodkjennModalProps) {
 		>
 			<Modal.Header>
 				<Heading level="1" size="medium">
-					Godkjenn utkast
+					Fullfør kvalitetssikring
 				</Heading>
 			</Modal.Header>
-			<Modal.Body>Er du sikker på at du vil godkjenne utkastet?</Modal.Body>
+			<Modal.Body>Er du sikker på at du vil fullføre kvalitetssikringen?</Modal.Body>
 			<Modal.Footer>
 				<Button size="small" onClick={props.onGodkjennUtkastBekreftet}>
-					Godkjenn
+					Fullfør
 				</Button>
 				<Button size="small" variant="secondary" onClick={resetModalType}>
 					Avbryt
