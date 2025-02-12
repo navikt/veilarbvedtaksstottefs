@@ -99,7 +99,7 @@ export function Forhandsvisning() {
 
 					{visSendKnapp && (
 						<Button size="small" onClick={handleOnSendClicked} disabled={pdfStatus !== PDFStatus.SUCCESS}>
-							Send til bruker
+							Fatt vedtak
 						</Button>
 					)}
 					{visKvalitetssikringInfo && (
