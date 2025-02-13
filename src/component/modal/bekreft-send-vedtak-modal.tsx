@@ -23,7 +23,7 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 		>
 			<Modal.Header>
 				<Heading level="1" size="medium">
-					Fatt vedtak og send vedtaksbrev
+					Er du sikker på at du vil fatte vedtak for bruker?
 				</Heading>
 				<div className="bekreft-send-vedtak-modal-personinfo">
 					<BodyShort weight="semibold">
@@ -38,13 +38,12 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 					/>
 				</div>
 			</Modal.Header>
-			<Modal.Body>
-				<BodyShort spacing>Er du sikker på at du vil fatte vedtaket?</BodyShort>
-				<BodyShort>Vedtaksbrevet vil bli sendt til bruker.</BodyShort>
+			<Modal.Body className="bekreft-send-vedtak-modal-body">
+				<BodyShort>Vedtaksbrevet blir sendt til bruker.</BodyShort>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button size="small" onClick={props.onSendVedtakBekreftet}>
-					Fatt vedtak
+					Ja, fatt vedtak
 				</Button>
 				<Button size="small" variant="secondary" onClick={resetModalType}>
 					Avbryt

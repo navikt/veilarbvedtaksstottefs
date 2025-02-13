@@ -110,7 +110,7 @@ export function Forhandsvisning() {
 							className="forhandsvisning__utsending-varsel"
 							aria-live="polite"
 						>
-							Kvalitetssikring må gjennomføres før brev kan sendes
+							Kvalitetssikring må gjennomføres før vedtaket kan fattes
 						</Alert>
 					)}
 
@@ -122,7 +122,7 @@ export function Forhandsvisning() {
 							className="forhandsvisning__utsending-varsel"
 							aria-live="polite"
 						>
-							Kan ikke fatte vedtak fordi brukeren er inaktiv i Arena
+							Kan ikke fatte vedtaket fordi brukeren er inaktiv i Arena
 						</Alert>
 					)}
 				</div>
