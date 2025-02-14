@@ -1,19 +1,16 @@
 import { OrNothing } from './type/ornothing';
-import { EMDASH } from './index';
 import { HovedmalType } from '../api/veilarbvedtaksstotte';
+import { EMDASH } from './index';
 
-export const getHovedmalNavn = (hovedmal: OrNothing<HovedmalType>) => {
-	const hovedmalobjekt = alleHovedmal.find(h => h.value === hovedmal);
-	return (hovedmalobjekt && hovedmalobjekt.label) || EMDASH;
+export const getHovedmalNavnEllerEmdash = (hovedmal: OrNothing<HovedmalType>) => {
+	if (hovedmal) {
+		return hovedmalTekst[hovedmal];
+	}
+
+	return EMDASH;
 };
 
-export const alleHovedmal = [
-	{
-		label: 'Skaffe arbeid',
-		value: HovedmalType.SKAFFE_ARBEID
-	},
-	{
-		label: 'Beholde arbeid',
-		value: HovedmalType.BEHOLDE_ARBEID
-	}
-];
+export const hovedmalTekst: { [key in HovedmalType]: string } = {
+	[HovedmalType.SKAFFE_ARBEID]: 'Skaffe arbeid',
+	[HovedmalType.BEHOLDE_ARBEID]: 'Beholde arbeid'
+};

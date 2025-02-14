@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { VarselType } from '../../../component/varsel/varsel-type';
 import isEqual from 'lodash.isequal';
+import { BodyLong, BodyShort, List } from '@navikt/ds-react';
+import { VarselType } from '../../../component/varsel/varsel-type';
 import FeltHeader from './felt-header/felt-header';
 import { useAppStore } from '../../../store/app-store';
 import { useViewStore, ViewType } from '../../../store/view-store';
@@ -12,12 +13,11 @@ import { fetchUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../util/type/ornothing';
 import { hentFattedeVedtak } from '../../../api/veilarbvedtaksstotte/vedtak';
-import { getInnsatsgruppeTekst } from '../../../util/innsatsgruppe';
-import { getHovedmalNavn } from '../../../util/hovedmal';
+import { innsatsgruppeTekst } from '../../../util/innsatsgruppe';
+import { getHovedmalNavnEllerEmdash } from '../../../util/hovedmal';
 import { MalformData, MalformType } from '../../../api/veilarbperson';
-import { BodyLong, BodyShort, List } from '@navikt/ds-react';
-import './skjema-section.less';
 import { standardForArbeidsrettetOppfolgingsLenke } from '../../../util/constants';
+import './skjema-section.less';
 
 const TEN_SECONDS = 10000;
 
@@ -138,12 +138,12 @@ export function LesSkjemaSection() {
 
 			<div className="innsatsgruppe-felt">
 				<FeltHeader tittel="Innsatsgruppe" />
-				{innsatsgruppe && <BodyShort size="small">{getInnsatsgruppeTekst(innsatsgruppe).tittel}</BodyShort>}
+				{innsatsgruppe && <BodyShort size="small">{innsatsgruppeTekst[innsatsgruppe]}</BodyShort>}
 			</div>
 
 			<div className="hovedmal-felt">
 				<FeltHeader tittel="Hovedmål" />
-				<BodyShort size="small">{getHovedmalNavn(hovedmal)}</BodyShort>
+				<BodyShort size="small">{getHovedmalNavnEllerEmdash(hovedmal)}</BodyShort>
 			</div>
 		</div>
 	);

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
+import { Alert, Radio, RadioGroup } from '@navikt/ds-react';
+import { ArbeidssokerPeriode } from '@navikt/arbeidssokerregisteret-utils';
 import FeltHeader from '../felt-header/felt-header';
-import { alleHovedmal } from '../../../../util/hovedmal';
+import { hovedmalTekst } from '../../../../util/hovedmal';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { useAppStore } from '../../../../store/app-store';
 import { HovedmalType, InnsatsgruppeType } from '../../../../api/veilarbvedtaksstotte';
 import { swallowEnterKeyPress } from '../../../../util';
-import { ArbeidssokerPeriode } from '@navikt/arbeidssokerregisteret-utils';
 import { fetchAktivArbeidssokerperiode } from '../../../../api/veilarbperson';
-import { Alert, Radio, RadioGroup } from '@navikt/ds-react';
 import './hovedmal.css';
 
 function Hovedmal() {
@@ -45,15 +45,15 @@ function Hovedmal() {
 								arbeidssøker.
 							</Alert>
 						)}
-						{alleHovedmal.map(mal => (
+						{Object.values(HovedmalType).map(hovedmaltype => (
 							<Radio
-								key={mal.value}
-								value={mal.value}
+								key={hovedmaltype}
+								value={hovedmaltype}
 								onKeyDown={swallowEnterKeyPress}
 								// Hvis brukeren ikke har en aktiv arbeidssøkerperiode, skal ikke hovedmål "Skaffe arbeid" kunne velges
-								disabled={!arbeidssoekerperiode && mal.value === HovedmalType.SKAFFE_ARBEID}
+								disabled={!arbeidssoekerperiode && hovedmaltype === HovedmalType.SKAFFE_ARBEID}
 							>
-								{mal.label}
+								{hovedmalTekst[hovedmaltype]}
 							</Radio>
 						))}
 					</>
