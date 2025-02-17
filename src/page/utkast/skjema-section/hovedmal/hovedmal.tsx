@@ -8,6 +8,8 @@ import { useAppStore } from '../../../../store/app-store';
 import { HovedmalType, InnsatsgruppeType } from '../../../../api/veilarbvedtaksstotte';
 import { swallowEnterKeyPress } from '../../../../util';
 import { fetchAktivArbeidssokerperiode } from '../../../../api/veilarbperson';
+import { useDataStore } from '../../../../store/data-store';
+import { HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE } from '../../../../api/obo-unleash';
 import './hovedmal.css';
 
 function Hovedmal() {
@@ -16,7 +18,11 @@ function Hovedmal() {
 	const [arbeidssoekerperiode, setArbeidssoekerperiode] = useState<ArbeidssokerPeriode | null>(null);
 	const { fnr } = useAppStore();
 
-	const skaffeArbeidErIkkeValgbar = !arbeidssoekerperiode;
+	const { features } = useDataStore();
+	const skaffeArbeidUavhengigAvArbeidssokerperiode =
+		features[HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE];
+
+	const skaffeArbeidErIkkeValgbar = !skaffeArbeidUavhengigAvArbeidssokerperiode && !arbeidssoekerperiode;
 
 	useEffect(() => {
 		if (!arbeidssoekerperiode) {
@@ -52,7 +58,7 @@ function Hovedmal() {
 								key={hovedmaltype}
 								value={hovedmaltype}
 								onKeyDown={swallowEnterKeyPress}
-								// Hvis brukeren ikke har en aktiv arbeidssøkerperiode, skal ikke hovedmål "Skaffe arbeid" kunne velges
+								// Hvis brukeren ikke har en aktiv arbeidssøkerperiode (og feature-toggle er av), skal ikke hovedmål "Skaffe arbeid" kunne velges
 								disabled={skaffeArbeidErIkkeValgbar && hovedmaltype === HovedmalType.SKAFFE_ARBEID}
 							>
 								{hovedmalTekst[hovedmaltype]}
