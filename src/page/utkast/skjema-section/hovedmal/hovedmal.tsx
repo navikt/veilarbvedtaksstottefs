@@ -16,6 +16,8 @@ function Hovedmal() {
 	const [arbeidssoekerperiode, setArbeidssoekerperiode] = useState<ArbeidssokerPeriode | null>(null);
 	const { fnr } = useAppStore();
 
+	const skaffeArbeidErIkkeValgbar = !arbeidssoekerperiode;
+
 	useEffect(() => {
 		if (!arbeidssoekerperiode) {
 			fetchAktivArbeidssokerperiode(fnr).then(response => setArbeidssoekerperiode(response.data));
@@ -39,7 +41,7 @@ function Hovedmal() {
 					</span>
 				) : (
 					<>
-						{!arbeidssoekerperiode && (
+						{skaffeArbeidErIkkeValgbar && (
 							<Alert size="small" variant="warning" inline>
 								Hovedmål <i>skaffe arbeid</i> kan ikke velges fordi personen ikke er registrert som
 								arbeidssøker.
@@ -51,7 +53,7 @@ function Hovedmal() {
 								value={hovedmaltype}
 								onKeyDown={swallowEnterKeyPress}
 								// Hvis brukeren ikke har en aktiv arbeidssøkerperiode, skal ikke hovedmål "Skaffe arbeid" kunne velges
-								disabled={!arbeidssoekerperiode && hovedmaltype === HovedmalType.SKAFFE_ARBEID}
+								disabled={skaffeArbeidErIkkeValgbar && hovedmaltype === HovedmalType.SKAFFE_ARBEID}
 							>
 								{hovedmalTekst[hovedmaltype]}
 							</Radio>
