@@ -4,7 +4,8 @@ import { MalformData, MalformType, Navn } from '../api/veilarbperson';
 import {
 	FeatureToggles,
 	HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE,
-	PRELANSERING_INFO_OM_LOSNING_TOGGLE
+	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
+	NYTT_GJELDENDE_14A_VEDTAK_PAA
 } from '../api/obo-unleash';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
@@ -57,6 +58,7 @@ const arbeidssokerperiode = {
 } as unknown as ArbeidssokerPeriode;
 
 const features: FeatureToggles = {
+	[NYTT_GJELDENDE_14A_VEDTAK_PAA]: true,
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
 	[HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE]: false
 };
@@ -304,6 +306,21 @@ let utkast: Utkast | null = env.isRunningOnGhPages ? null : pabegyntUtkast;
 
 const fattedeVedtak = historisk;
 
+const gjeldende14aVedtak: Vedtak = {
+	id: 1236,
+	hovedmal: HovedmalType.BEHOLDE_ARBEID,
+	innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
+	vedtakFattet: '2020-02-10T09:55:43.716393+02:00',
+	begrunnelse: null,
+	opplysninger: ['Svarene dine fra da du registrerte deg', 'CV-en/jobbønskene dine på nav.no'],
+	gjeldende: true,
+	veilederIdent: veileder1.ident,
+	veilederNavn: veileder1.navn,
+	oppfolgingsenhetId: enhetId,
+	oppfolgingsenhetNavn: enhetNavn,
+	beslutterIdent: veileder3.ident,
+	beslutterNavn: veileder3.navn
+};
 export function hentUtkast(): Utkast | null {
 	return utkast;
 }
@@ -314,6 +331,10 @@ export function hentMeldinger(): (DialogMelding | SystemMelding)[] {
 
 export function hentFattedeVedtak(): Vedtak[] {
 	return fattedeVedtak;
+}
+
+export function hentGjeldende14aVedtak(): Vedtak {
+	return gjeldende14aVedtak;
 }
 
 export function hentTilgangTilBrukersKontor(): TilgangTilBrukersKontor {

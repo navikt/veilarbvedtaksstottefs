@@ -5,7 +5,7 @@ import { useSkjemaStore } from '../store/skjema-store';
 import { finnVeilederTilgang } from '../util/tilgang';
 import { useTilgangStore } from '../store/tilgang-store';
 import { useAxiosFetcher } from '../util/use-axios-fetcher';
-import { hentArenaVedtak, hentFattedeVedtak } from '../api/veilarbvedtaksstotte/vedtak';
+import { hentArenaVedtak, hentFattedeVedtak, hentGjeldende14aVedtak } from '../api/veilarbvedtaksstotte/vedtak';
 import { fetchOppfolging } from '../api/veilarboppfolging';
 import { fetchMalform, fetchNavn } from '../api/veilarbperson';
 import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
@@ -17,6 +17,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	const { initSkjema } = useSkjemaStore();
 	const {
 		setFattedeVedtak,
+		setGjeldende14aVedtak,
 		setOppfolgingData,
 		setMalform,
 		setUtkast,
@@ -27,6 +28,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	const { setVeilederTilgang } = useTilgangStore();
 
 	const fattedeVedtakFetcher = useAxiosFetcher(hentFattedeVedtak);
+	const gjeldendeVedtakFetcher = useAxiosFetcher(hentGjeldende14aVedtak);
 	const oppfolgingFetcher = useAxiosFetcher(fetchOppfolging);
 	const malformFetcher = useAxiosFetcher(fetchMalform);
 	const utkastFetcher = useAxiosFetcher(fetchUtkast);
@@ -36,6 +38,8 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 
 	useEffect(() => {
 		fattedeVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setFattedeVedtak)).catch();
+
+		gjeldendeVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setGjeldende14aVedtak)).catch();
 
 		oppfolgingFetcher.fetch(props.fnr).then(ifResponseHasData(setOppfolgingData)).catch();
 
@@ -71,6 +75,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	if (
 		isAnyLoadingOrNotStarted(
 			fattedeVedtakFetcher,
+			gjeldendeVedtakFetcher,
 			oppfolgingFetcher,
 			malformFetcher,
 			utkastFetcher,
@@ -83,6 +88,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	} else if (
 		hasAnyFailed(
 			fattedeVedtakFetcher,
+			gjeldendeVedtakFetcher,
 			oppfolgingFetcher,
 			malformFetcher,
 			innloggetVeilederFetcher,

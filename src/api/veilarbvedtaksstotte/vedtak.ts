@@ -17,6 +17,9 @@ export interface ArenaVedtak {
 export function hentFattedeVedtak(fnr: string): AxiosPromise<Vedtak[]> {
 	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/vedtak/hent-fattet`, { fnr });
 }
+export function hentGjeldende14aVedtak(fnr: string): AxiosPromise<Vedtak> {
+	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/hent-gjeldende-14a-vedtak`, { fnr });
+}
 
 export function hentArenaVedtak(fnr: string): AxiosPromise<ArenaVedtak[]> {
 	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/vedtak/hent-arena`, { fnr });

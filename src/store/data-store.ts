@@ -18,6 +18,7 @@ const placeholder = {} as any;
 
 export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [oppfolgingData, setOppfolgingData] = useState<Oppfolging>(placeholder);
+	const [gjeldende14aVedtak, setGjeldende14aVedtak] = useState<Vedtak>(placeholder);
 	const [malform, setMalform] = useState<MalformData>(placeholder);
 	const [features, setFeatures] = useState<FeatureToggles>(placeholder);
 	const [innloggetVeileder, setInnloggetVeileder] = useState<Veileder>(placeholder);
@@ -66,6 +67,8 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 	return {
 		oppfolgingData,
 		setOppfolgingData,
+		gjeldende14aVedtak,
+		setGjeldende14aVedtak,
 		malform,
 		setMalform,
 		features,

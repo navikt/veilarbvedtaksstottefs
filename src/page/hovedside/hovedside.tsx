@@ -12,13 +12,15 @@ import { useDataStore } from '../../store/data-store';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 
 export function Hovedside() {
-	const { fattedeVedtak, utkast, arenaVedtak, oppfolgingData } = useDataStore();
+	const { fattedeVedtak, utkast, arenaVedtak, oppfolgingData, gjeldende14aVedtak } = useDataStore();
 
 	const underOppfolging = oppfolgingData.underOppfolging;
 	const vedtakFraArena = arenaVedtak || [];
 
 	const tidligereVedtak = fattedeVedtak.filter(v => !v.gjeldende);
 	const gjeldendeVedtak = fattedeVedtak.find(v => v.gjeldende);
+
+	const gjeldendeVedtak14a = gjeldende14aVedtak as Vedtak;
 
 	const harTidligereVedtak = vedtakFraArena.length > 0 || tidligereVedtak.length > 0;
 
@@ -32,7 +34,7 @@ export function Hovedside() {
 					<Show if={underOppfolging}>
 						<UtkastPanel utkast={utkast} />
 						<Show if={gjeldendeVedtak != null}>
-							<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak as Vedtak} />
+							<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak14a as Vedtak} />
 						</Show>
 						<NyttVedtakPanel utkast={utkast} />
 					</Show>

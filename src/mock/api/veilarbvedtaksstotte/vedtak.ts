@@ -7,6 +7,7 @@ import {
 	hentCvOyeblikksbilde,
 	hentEgenvurderingOyeblikksbilde,
 	hentFattedeVedtak,
+	hentGjeldende14aVedtak,
 	hentRegistreringOyeblikksbilde
 } from '../../api-data';
 import { DEFAULT_DELAY_MILLISECONDS } from '../../index';
@@ -16,6 +17,11 @@ export const vedtakHandlers: RequestHandler[] = [
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 		return HttpResponse.json(hentFattedeVedtak());
 	}),
+	http.post(`${VEILARBVEDTAKSSTOTTE_API}/hent-gjeldende-14a-vedtak`, async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return HttpResponse.json(hentGjeldende14aVedtak());
+	}),
+
 	http.post(`${VEILARBVEDTAKSSTOTTE_API}/v2/vedtak/hent-arena`, async () => {
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 		return HttpResponse.json(hentArenaVedtak());
