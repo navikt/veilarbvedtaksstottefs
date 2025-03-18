@@ -3,7 +3,10 @@ import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { MalformData, MalformType, Navn } from '../api/veilarbperson';
 import {
 	FeatureToggles,
-	HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE,PRELANSERING_INFO_OM_LOSNING_TOGGLE, VIS_VEDTAKSLOSNING_14_A } from '../api/obo-unleash';
+	HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE,
+	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
+	VIS_VEDTAKSLOSNING_14_A
+} from '../api/obo-unleash';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
@@ -57,7 +60,7 @@ const arbeidssokerperiode = {
 const mockFeatures: FeatureToggles = {
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
 	[HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE]: false,
-	[VIS_VEDTAKSLOSNING_14_A]: true
+	[VIS_VEDTAKSLOSNING_14_A]: true // Denne er på slik at demo-løysinga skal vise vedtaksløysinga fram til lansering
 };
 
 let innloggetVeileder: Veileder = {
