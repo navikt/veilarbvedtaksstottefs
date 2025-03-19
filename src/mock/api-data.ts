@@ -4,7 +4,8 @@ import { MalformData, MalformType, Navn } from '../api/veilarbperson';
 import {
 	FeatureToggles,
 	HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE,
-	PRELANSERING_INFO_OM_LOSNING_TOGGLE
+	PRELANSERING_INFO_OM_LOSNING_TOGGLE,
+	VIS_VEDTAKSLOSNING_14_A
 } from '../api/obo-unleash';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
@@ -56,9 +57,10 @@ const arbeidssokerperiode = {
 	avsluttet: null
 } as unknown as ArbeidssokerPeriode;
 
-const features: FeatureToggles = {
+const mockFeatures: FeatureToggles = {
 	[PRELANSERING_INFO_OM_LOSNING_TOGGLE]: true,
-	[HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE]: false
+	[HOVEDMAL_SKAFFE_ARBEID_UAVHENGIG_AV_ARBEIDSSOKERPERIODE]: false,
+	[VIS_VEDTAKSLOSNING_14_A]: true // Denne er på slik at demo-løysinga skal vise vedtaksløysinga fram til lansering
 };
 
 let innloggetVeileder: Veileder = {
@@ -353,7 +355,7 @@ export function hentEgenvurderingOyeblikksbilde(): OyblikksbildeEgenvurdering {
 }
 
 export function hentFeatures(): FeatureToggles {
-	return features;
+	return mockFeatures;
 }
 
 export function hentInnloggetVeileder(): Veileder {
