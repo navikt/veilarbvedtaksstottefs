@@ -12,6 +12,7 @@ import {
 import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
 import { FeatureToggles } from '../api/obo-unleash';
+import { ArbeidssokerPeriode } from '@navikt/arbeidssokerregisteret-utils';
 
 // Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
 const placeholder = {} as any;
@@ -26,6 +27,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
 	const [meldinger, setMeldinger] = useState<(DialogMeldingData | SystemMeldingData)[]>([]);
 	const [navn, setNavn] = useState<Navn>(placeholder);
+	const [arbeidssokerperiode, setArbeidssokerperiode] = useState<ArbeidssokerPeriode | null>(null);
 
 	function leggTilSystemMelding(systemMeldingType: SystemMeldingType) {
 		const systemMeldingData: SystemMeldingData = {
@@ -86,6 +88,8 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		setBeslutterProsessStatus,
 		nullStillBeslutterProsess,
 		navn,
-		setNavn
+		setNavn,
+		arbeidssokerperiode,
+		setArbeidssokerperiode
 	};
 });

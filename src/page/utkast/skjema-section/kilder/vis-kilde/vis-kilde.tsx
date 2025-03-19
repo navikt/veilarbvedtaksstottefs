@@ -3,6 +3,7 @@ import { swallowEnterKeyPress } from '../../../../../util';
 import { Button, Checkbox } from '@navikt/ds-react';
 import { PencilIcon } from '@navikt/aksel-icons';
 import './vis-kilde.css';
+import { VisKildeArbeidssokerregisteret } from './vis-kilde-arbeidssokerregisteret';
 
 interface VisKildeProps {
 	kildenavn: string;
@@ -11,6 +12,11 @@ interface VisKildeProps {
 
 export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {
 	const kanRedigeres = !erDefaultKilde(kildenavn);
+	const erKildeArbeidssokerregister = (kildeTekst: string) => kildeTekst.includes('registrert som arbeidssøk');
+
+	if (erKildeArbeidssokerregister(kildenavn)) {
+		return <VisKildeArbeidssokerregisteret kildenavn={kildenavn} />;
+	}
 
 	return (
 		<div className="vis-kilde">

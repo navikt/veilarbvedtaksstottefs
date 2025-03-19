@@ -7,7 +7,7 @@ import { useTilgangStore } from '../store/tilgang-store';
 import { useAxiosFetcher } from '../util/use-axios-fetcher';
 import { hentArenaVedtak, hentFattedeVedtak } from '../api/veilarbvedtaksstotte/vedtak';
 import { fetchOppfolging } from '../api/veilarboppfolging';
-import { fetchMalform, fetchNavn } from '../api/veilarbperson';
+import { fetchAktivArbeidssokerperiode, fetchMalform, fetchNavn } from '../api/veilarbperson';
 import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../api/utils';
@@ -22,7 +22,8 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		setUtkast,
 		setInnloggetVeileder,
 		setArenaVedtak,
-		setNavn
+		setNavn,
+		setArbeidssokerperiode
 	} = useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
 
@@ -33,6 +34,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	const innloggetVeilederFetcher = useAxiosFetcher(fetchInnloggetVeileder);
 	const arenaVedtakFetcher = useAxiosFetcher(hentArenaVedtak);
 	const navnFetcher = useAxiosFetcher(fetchNavn);
+	const arbeidssoekerperiodeFetcher = useAxiosFetcher(fetchAktivArbeidssokerperiode);
 
 	useEffect(() => {
 		fattedeVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setFattedeVedtak)).catch();
@@ -56,6 +58,8 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		arenaVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setArenaVedtak)).catch();
 
 		navnFetcher.fetch(props.fnr).then(ifResponseHasData(setNavn)).catch();
+
+		arbeidssoekerperiodeFetcher.fetch(props.fnr).then(ifResponseHasData(setArbeidssokerperiode)).catch();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
