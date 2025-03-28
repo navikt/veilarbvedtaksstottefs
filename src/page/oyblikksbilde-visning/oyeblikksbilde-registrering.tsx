@@ -29,6 +29,7 @@ import { OpplysningerOmArbeidssokerMedProfilering } from './dto/OpplysningerOmAr
 import { lagHentTekstForSprak, SPORSMAL_TEKSTER, SporsmalId } from '@navikt/arbeidssokerregisteret-utils';
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import { Alert, Button, Heading } from '@navikt/ds-react';
+import { IkkeKontaktMedBaksystemFeilmelding } from '../../component/feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Element {
 	const registreringOyeblikksbildeFetcher = useAxiosFetcher(hentRegistreringOyblikksbilde);
@@ -44,12 +45,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 	if (registreringOyeblikksbildeFetcher.loading || arbeidssokerRegistretOyeblikksbildeFetcher.loading) {
 		return <Spinner />;
 	} else if (registreringOyeblikksbildeFetcher.error || arbeidssokerRegistretOyeblikksbildeFetcher.error) {
-		return (
-			<Alert variant="error">
-				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
-				senere.
-			</Alert>
-		);
+		return <IkkeKontaktMedBaksystemFeilmelding />;
 	} else if (arbeidssokerRegistretOyeblikksbildeFetcher.data?.data) {
 		try {
 			return (

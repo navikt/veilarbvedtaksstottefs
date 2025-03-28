@@ -11,6 +11,7 @@ import { EgenvurderingDto } from './dto/EgenvurderingDto';
 import { visEnkelVerdi } from './oyeblikksbilde-cv';
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import { Alert, Button, Heading } from '@navikt/ds-react';
+import { IkkeKontaktMedBaksystemFeilmelding } from '../../component/feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.Element {
 	const oyeblikksbildeFetcher = useAxiosFetcher(hentEgenvurderingOyblikksbilde);
@@ -24,12 +25,7 @@ export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.El
 	if (oyeblikksbildeFetcher.loading) {
 		return <Spinner />;
 	} else if (oyeblikksbildeFetcher.error) {
-		return (
-			<Alert variant="error">
-				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
-				senere.
-			</Alert>
-		);
+		return <IkkeKontaktMedBaksystemFeilmelding />;
 	} else if (oyeblikksbildeFetcher.data) {
 		return (
 			<OyeblikksdataEgenvurderingInnhold

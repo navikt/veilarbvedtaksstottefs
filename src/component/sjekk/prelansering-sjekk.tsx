@@ -7,6 +7,7 @@ import { useAppStore } from '../../store/app-store';
 import Spinner from '../spinner/spinner';
 import { VIS_VEDTAKSLOSNING_14_A } from '../../api/obo-unleash';
 import { useDataStore } from '../../store/data-store';
+import { IkkeKontaktMedBaksystemFeilmelding } from '../feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 // NB! Henting av features og populering i data store hook må flyttes til data-fetcher.tsx når denne komponenten skal fjernes
 export function PrelanseringSjekk(props: PropsWithChildren<any>) {
@@ -26,12 +27,7 @@ export function PrelanseringSjekk(props: PropsWithChildren<any>) {
 	if (tilhorerBrukerUtrulletEnhetFetcher.loading) {
 		return <Spinner />;
 	} else if (tilhorerBrukerUtrulletEnhetFetcher.error) {
-		return (
-			<Alert variant="error">
-				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
-				senere.
-			</Alert>
-		);
+		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
 
 	return skalViseVedtakslosning ? props.children : <Prelansering />;

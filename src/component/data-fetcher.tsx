@@ -12,6 +12,7 @@ import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../api/utils';
 import { Alert } from '@navikt/ds-react';
+import { IkkeKontaktMedBaksystemFeilmelding } from './feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
 	const { initSkjema } = useSkjemaStore();
@@ -95,12 +96,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		) ||
 		(utkastFetcher.error && utkastFetcher.error.response?.status !== 404) // API gir 404 dersom utkast ikke eksisterer
 	) {
-		return (
-			<Alert variant="error">
-				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
-				senere.
-			</Alert>
-		);
+		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
 
 	return props.children;
