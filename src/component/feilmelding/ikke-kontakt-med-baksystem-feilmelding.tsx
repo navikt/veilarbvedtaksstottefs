@@ -3,8 +3,8 @@ import { Alert } from '@navikt/ds-react';
 export const IkkeKontaktMedBaksystemFeilmelding = () => {
 	return (
 		<Alert variant="error">
-			Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
-			senere.
+			Vi får ikke kontakt med alle baksystemene, prøv igjen senere. Gjerne meld sak i Porten om problemet varer
+			lenge.
 		</Alert>
 	);
 };
