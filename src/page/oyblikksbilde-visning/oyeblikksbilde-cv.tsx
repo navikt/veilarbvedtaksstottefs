@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { Button, Heading } from '@navikt/ds-react';
+import { FilePdfIcon } from '@navikt/aksel-icons';
 import Spinner from '../../component/spinner/spinner';
 import Card from '../../component/card/card';
 import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
@@ -18,8 +20,7 @@ import {
 	spraakNivoLabel
 } from './oyeblikksbilde-fikser';
 import { EMDASH } from '../../util';
-import { FilePdfIcon } from '@navikt/aksel-icons';
-import { Alert, Button, Heading } from '@navikt/ds-react';
+import { IkkeKontaktMedBaksystemFeilmelding } from '../../component/feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 export function OyeblikksbildeCv(props: { vedtakId: number }): JSX.Element {
 	const oyeblikksbildeFetcher = useAxiosFetcher(hentCvOyblikksbilde);
@@ -33,12 +34,7 @@ export function OyeblikksbildeCv(props: { vedtakId: number }): JSX.Element {
 	if (oyeblikksbildeFetcher.loading) {
 		return <Spinner />;
 	} else if (oyeblikksbildeFetcher.error) {
-		return (
-			<Alert variant="error">
-				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
-				senere.
-			</Alert>
-		);
+		return <IkkeKontaktMedBaksystemFeilmelding />;
 	} else if (oyeblikksbildeFetcher.data) {
 		return (
 			<OyeblikksdataCvInnhold

@@ -5,6 +5,7 @@ import { ifResponseHasData } from '../api/utils';
 import Spinner from './spinner/spinner';
 import { useDataStore } from '../store/data-store';
 import { Alert } from '@navikt/ds-react';
+import { IkkeKontaktMedBaksystemFeilmelding } from './feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 function FeatureFetcher(props: PropsWithChildren<any>) {
 	const featureAxiosFetcher = useAxiosFetcher(fetchFeaturesToggles);
@@ -18,12 +19,7 @@ function FeatureFetcher(props: PropsWithChildren<any>) {
 	if (featureAxiosFetcher.loading) {
 		return <Spinner />;
 	} else if (featureAxiosFetcher.error) {
-		return (
-			<Alert variant="error">
-				Det oppnås for tiden ikke kontakt med alle baksystemer. Vi jobber med å løse saken. Vennligst prøv igjen
-				senere.
-			</Alert>
-		);
+		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
 
 	return featureAxiosFetcher.data ? props.children : null;
