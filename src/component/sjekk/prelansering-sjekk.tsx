@@ -1,5 +1,4 @@
 import { PropsWithChildren, useLayoutEffect } from 'react';
-import { Alert } from '@navikt/ds-react';
 import { Prelansering } from '../../page/prelansering/prelansering';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { fetchTilhorerBrukerUtrulletEnhet } from '../../api/veilarbvedtaksstotte/utrulling';
