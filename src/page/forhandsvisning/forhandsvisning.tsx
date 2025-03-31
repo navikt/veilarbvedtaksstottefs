@@ -18,12 +18,13 @@ import { fattVedtak } from '../../api/veilarbvedtaksstotte/utkast';
 import { Alert, Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import './forhandsvisning.css';
+import SpinnerModal from '../../component/modal/spinner-modal/spinner-modal';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const { changeView } = useViewStore();
 	const { utkast, setUtkast, setFattedeVedtak, oppfolgingData } = useDataStore();
-	const { showModal, resetModalType } = useModalStore();
+	const { showModal, resetModalType, modalType } = useModalStore();
 	const { showVarsel } = useVarselStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
@@ -90,6 +91,7 @@ export function Forhandsvisning() {
 
 	return (
 		<>
+			<SpinnerModal isOpen={modalType === ModalType.LASTER} />
 			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">

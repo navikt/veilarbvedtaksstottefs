@@ -11,7 +11,6 @@ import { fetchAktivArbeidssokerperiode, fetchMalform, fetchNavn } from '../api/v
 import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../api/utils';
-import { Alert } from '@navikt/ds-react';
 import { IkkeKontaktMedBaksystemFeilmelding } from './feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 export function DataFetcher(props: { fnr: string; children: any }) {

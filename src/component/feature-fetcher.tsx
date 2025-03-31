@@ -4,7 +4,6 @@ import { PropsWithChildren, useLayoutEffect } from 'react';
 import { ifResponseHasData } from '../api/utils';
 import Spinner from './spinner/spinner';
 import { useDataStore } from '../store/data-store';
-import { Alert } from '@navikt/ds-react';
 import { IkkeKontaktMedBaksystemFeilmelding } from './feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 function FeatureFetcher(props: PropsWithChildren<any>) {

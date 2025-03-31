@@ -10,7 +10,7 @@ import { formatDates } from './oyeblikksbilde-fikser';
 import { EgenvurderingDto } from './dto/EgenvurderingDto';
 import { visEnkelVerdi } from './oyeblikksbilde-cv';
 import { FilePdfIcon } from '@navikt/aksel-icons';
-import { Alert, Button, Heading } from '@navikt/ds-react';
+import { Button, Heading } from '@navikt/ds-react';
 import { IkkeKontaktMedBaksystemFeilmelding } from '../../component/feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.Element {
