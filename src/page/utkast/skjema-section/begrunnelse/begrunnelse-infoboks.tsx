@@ -17,7 +17,7 @@ export const BegrunnelseInfoboks = () => {
 						Hvilke typer arbeid ønsker denne personen seg og hva er realistisk ut fra dagens arbeidsmarked?
 					</List.Item>
 					<List.Item>Hva slags veiledning trenger denne personen?</List.Item>
-					<List.Item>Er arbeidsevnen nedsatt, og hvorfor?</List.Item>
+					<List.Item>Er jobbmulighetene begrenset, og hvorfor?</List.Item>
 					<List.Item>Trenger denne personen arbeidsrettede aktiviteter og tiltak, og hvorfor?</List.Item>
 					<List.Item>Hva har dere blitt enige om?</List.Item>
 				</List>
