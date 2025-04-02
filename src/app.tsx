@@ -1,6 +1,5 @@
 import { ViewController } from './component/view-controller';
 import { DataFetcher } from './component/data-fetcher';
-import { PrelanseringSjekk } from './component/sjekk/prelansering-sjekk';
 import { NasjonalTilgangSjekk } from './component/sjekk/nasjonal-tilgang-sjekk';
 import StoreProvider from './store/store-provider';
 import { ModalController } from './component/modal-controller';
@@ -22,19 +21,17 @@ function App(props: AppProps) {
 		<main className="app veilarbvedtaksstottefs">
 			<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
 				<FeatureFetcher>
-					<PrelanseringSjekk>
-						<NasjonalTilgangSjekk fnr={props.fnr}>
-							<DataFetcher fnr={props.fnr}>
-								<VarselController />
-								<ViewController />
-								<ModalController />
-								<TabClickedListener />
-								<Show if={!env.isProduction}>
-									<MockPanel />
-								</Show>
-							</DataFetcher>
-						</NasjonalTilgangSjekk>
-					</PrelanseringSjekk>
+					<NasjonalTilgangSjekk fnr={props.fnr}>
+						<DataFetcher fnr={props.fnr}>
+							<VarselController />
+							<ViewController />
+							<ModalController />
+							<TabClickedListener />
+							<Show if={!env.isProduction}>
+								<MockPanel />
+							</Show>
+						</DataFetcher>
+					</NasjonalTilgangSjekk>
 				</FeatureFetcher>
 			</StoreProvider>
 		</main>
