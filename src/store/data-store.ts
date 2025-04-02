@@ -14,7 +14,7 @@ import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
 import { FeatureToggles } from '../api/obo-unleash';
 import { ArbeidssokerPeriode } from '@navikt/arbeidssokerregisteret-utils';
 
-// Data med placeholder er garantert av data-fetcher.tsx (og prelansering-sjekk.tsx) å være hentet
+// Data med placeholder er garantert av data-fetcher.tsx å være hentet
 const placeholder = {} as any;
 
 export const [DataStoreProvider, useDataStore] = constate(() => {
