@@ -1,19 +1,13 @@
 {
   "files": {
-    "main.css": "/veilarbvedtaksstottefs/static/css/main.47e40faa.css",
-    "main.js": "/veilarbvedtaksstottefs/static/js/main.5b379627.js",
+    "main.css": "/veilarbvedtaksstottefs/static/css/main.15e6d244.css",
+    "main.js": "/veilarbvedtaksstottefs/static/js/main.e03a102d.js",
     "pdf.worker.js": "/veilarbvedtaksstottefs/d6247b7eac59574c837f8a9ff1ba1917.js",
-    "static/media/prelansering.png": "/veilarbvedtaksstottefs/static/media/prelansering.6b99c24ea4c6e713c84b.png",
-    "static/media/klagebehandling.svg": "/veilarbvedtaksstottefs/static/media/klagebehandling.d3ebf7211c671bd3cab04672fd187535.svg",
-    "static/media/synlighet-til-bruker.svg": "/veilarbvedtaksstottefs/static/media/synlighet-til-bruker.8ea48293278d87587abf9423410f83cc.svg",
-    "static/media/beslutterfunksjon.svg": "/veilarbvedtaksstottefs/static/media/beslutterfunksjon.6051ea8affcf5334720c30c3efb32d27.svg",
     "static/media/utkast.svg": "/veilarbvedtaksstottefs/static/media/utkast.7c2dfe3854a256b0f72475a6a6ecad40.svg",
     "static/media/fullfort.svg": "/veilarbvedtaksstottefs/static/media/fullfort.27542b3130a7eec638ea3a1bc6ebeb68.svg",
     "static/media/ingen-vedtak.svg": "/veilarbvedtaksstottefs/static/media/ingen-vedtak.4acf94ec6405a3783113b29c57e9d3e7.svg",
     "static/media/utkast-til-beslutter.svg": "/veilarbvedtaksstottefs/static/media/utkast-til-beslutter.7928a93ad20f72a505b3f8d5aac19e31.svg",
     "static/media/gjeldende-vedtak.svg": "/veilarbvedtaksstottefs/static/media/gjeldende-vedtak.9fc92b97b7b4e6f377be73fac82d7a53.svg",
-    "static/media/mellomlagre.svg": "/veilarbvedtaksstottefs/static/media/mellomlagre.638bda9b63030dcaba4df16a8b3e6e03.svg",
-    "static/media/hjelpesporsmal.svg": "/veilarbvedtaksstottefs/static/media/hjelpesporsmal.491a643f8baa0599ef0b7f3277eebf0e.svg",
     "static/media/tidligere-vedtak.svg": "/veilarbvedtaksstottefs/static/media/tidligere-vedtak.e35785a1dc9ba4f5cef9642bec3a015d.svg",
     "static/media/ingen_gjeldende_vedtak.svg": "/veilarbvedtaksstottefs/static/media/ingen_gjeldende_vedtak.69f7655f41e9caab75ba50b0d099c92c.svg",
     "static/media/vedtak.svg": "/veilarbvedtaksstottefs/static/media/vedtak.4af3759ac45c3ddf30f747677fbc40ed.svg",
@@ -22,11 +16,11 @@
     "static/media/pdf.svg": "/veilarbvedtaksstottefs/static/media/pdf.49362d2c0f442850ad99e7d5c1be2bd5.svg",
     "static/media/dialog-new-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-new-msg.e5d323644d8ef5b7e1031f1bf33e1dfc.svg",
     "static/media/dialog-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-msg.a4d77157a8e6d7a43005885ea3e8802a.svg",
-    "main.47e40faa.css.map": "/veilarbvedtaksstottefs/static/css/main.47e40faa.css.map",
-    "main.5b379627.js.map": "/veilarbvedtaksstottefs/static/js/main.5b379627.js.map"
+    "main.15e6d244.css.map": "/veilarbvedtaksstottefs/static/css/main.15e6d244.css.map",
+    "main.e03a102d.js.map": "/veilarbvedtaksstottefs/static/js/main.e03a102d.js.map"
   },
   "entrypoints": [
-    "static/css/main.47e40faa.css",
-    "static/js/main.5b379627.js"
+    "static/css/main.15e6d244.css",
+    "static/js/main.e03a102d.js"
   ]
 }
