@@ -17,7 +17,7 @@ interface UtkastAksjonerProps {
 
 function UtkastInnhold(props: UtkastAksjonerProps) {
 	const { erAnsvarligVeileder } = useTilgangStore();
-	const { malform, fattedeVedtak, utkast } = useDataStore();
+	const { malform, fattedeVedtak, utkast, innloggetVeileder } = useDataStore();
 	const { changeView } = useViewStore();
 	const { showModal } = useModalStore();
 	const { validerSkjema, setHarForsoktAForhandsvise } = useSkjemaStore();
@@ -29,6 +29,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 
 	const visKlarTilBeslutter = erKlarTilVeileder(beslutterProsessStatus);
 	const erForhandsvisHovedknapp = !visKlarTilBeslutter;
+	const veilederErBeslutter = innloggetVeileder.ident === utkast?.beslutterIdent;
 
 	function sendDataTilBackend() {
 		// Vi oppdaterer ikke lagringStatus her fordi det blir rart at dette trigges på en "urelatert" handling
@@ -87,7 +88,7 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 					</Button>
 				)}
 
-				{!erAnsvarligVeileder && (
+				{!erAnsvarligVeileder && !veilederErBeslutter && (
 					<Button
 						size="small"
 						variant="tertiary"
