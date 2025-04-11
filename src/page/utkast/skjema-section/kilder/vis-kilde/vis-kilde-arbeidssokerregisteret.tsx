@@ -16,7 +16,7 @@ export function VisKildeArbeidssokerregisteret({ kildenavn }: Readonly<VisKildeP
 				{kildenavn}
 			</Checkbox>
 			{!arbeidssokerperiode && (
-				<Alert size="small" variant="warning" inline className="vis-kilde__alert">
+				<Alert size="small" variant="info" inline className="vis-kilde__alert">
 					Ikke registrert i Arbeidssøkerregisteret
 				</Alert>
 			)}
