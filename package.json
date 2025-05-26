@@ -29,7 +29,7 @@
     "constate": "3.3.2",
     "craco-less": "3.0.1",
     "dayjs": "1.11.13",
-    "dompurify": "3.2.3",
+    "dompurify": "3.2.6",
     "lodash.debounce": "4.0.8",
     "lodash.isequal": "4.5.0",
     "react": "17.0.2",
