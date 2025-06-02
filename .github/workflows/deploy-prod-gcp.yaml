@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
 env:
   CI: true
   TZ: Europe/Amsterdam
@@ -54,6 +54,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: Release to prod
-          target_commitish: master
+          target_commitish: main
           tag_name: release/prod@${{ github.sha }}
           prerelease: false
