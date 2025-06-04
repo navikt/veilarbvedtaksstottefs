@@ -6,7 +6,9 @@ const behandlingsnummer = 'B642';
 
 export enum MalformType {
 	nb = 'nb',
-	nn = 'nn'
+	nn = 'nn',
+	en = 'en',
+	se = 'se'
 }
 
 export interface MalformData {
