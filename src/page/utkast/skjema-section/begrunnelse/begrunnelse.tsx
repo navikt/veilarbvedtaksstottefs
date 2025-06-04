@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { Accordion, Alert, BodyShort, Switch, Textarea } from '@navikt/ds-react';
 import { BegrunnelseInfoboks } from './begrunnelse-infoboks';
 import FeltHeader from '../felt-header/felt-header';
-import { OrNothing } from '../../../../util/type/ornothing';
-import { MalformData, MalformType } from '../../../../api/veilarbperson';
 import { useDataStore } from '../../../../store/data-store';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { logMetrikk } from '../../../../util/logger';
@@ -11,22 +9,11 @@ import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { GammelnavskDictionary, Lix } from '../../../../spraksjekk-intern/components';
 import './begrunnelse.css';
 import { standardForArbeidsrettetOppfolgingsLenke } from '../../../../util/constants';
+import { malformToTekst } from '../../../../util/malformToTekst';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
 const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
-
-function malformToTekst(malform: OrNothing<MalformData>): string {
-	const malformType = malform ? malform.malform : null;
-
-	if (malformType === MalformType.nn || malformType === MalformType.nb) {
-		return `Norsk (${malformType === MalformType.nn ? 'Nynorsk' : 'Bokmål'})`;
-	} else if (!malformType) {
-		return 'Ukjent';
-	}
-
-	return malformType;
-}
 
 function Begrunnelse() {
 	const { malform } = useDataStore();

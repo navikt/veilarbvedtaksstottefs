@@ -15,23 +15,11 @@ import { OrNothing } from '../../../util/type/ornothing';
 import { hentFattedeVedtak } from '../../../api/veilarbvedtaksstotte/vedtak';
 import { innsatsgruppeTekst } from '../../../util/innsatsgruppe';
 import { getHovedmalNavnEllerEmdash } from '../../../util/hovedmal';
-import { MalformData, MalformType } from '../../../api/veilarbperson';
 import { standardForArbeidsrettetOppfolgingsLenke } from '../../../util/constants';
 import './skjema-section.less';
+import { malformToTekst } from '../../../util/malformToTekst';
 
 const TEN_SECONDS = 10000;
-
-function malformToTekst(malform: OrNothing<MalformData>): string {
-	const malformType = malform ? malform.malform : null;
-
-	if (malformType === MalformType.nn || malformType === MalformType.nb) {
-		return `Norsk (${malformType === MalformType.nn ? 'Nynorsk' : 'Bokmål'})`;
-	} else if (!malformType) {
-		return 'Ukjent';
-	}
-
-	return malformType;
-}
 
 export function LesSkjemaSection() {
 	const { fnr } = useAppStore();
