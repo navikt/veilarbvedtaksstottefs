@@ -144,7 +144,7 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 
 					{visSendTilVeileder && (
 						<Button size="small" loading={laster} onClick={handleOnSendTilClicked}>
-							Send til veileder
+							Be veileder om tilbakemelding
 						</Button>
 					)}
 
