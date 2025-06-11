@@ -8,7 +8,12 @@ export const BegrunnelseInfoboks = () => {
 				når du skriver begrunnelsen og gjør vurderingene dine.
 			</BodyShort>
 
-			<ReadMore header="Spørsmål til hjelp i vurderingen" size="small" className="begrunnelse__read-more">
+			<ReadMore
+				header="Spørsmål til hjelp i vurderingen"
+				size="small"
+				className="begrunnelse__read-more"
+				defaultOpen={true}
+			>
 				<List size="small">
 					<List.Item>
 						Hva tenker denne personen selv om mulighetene sine til å være eller komme i jobb?
