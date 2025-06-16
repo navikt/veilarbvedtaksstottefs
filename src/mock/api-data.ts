@@ -6,7 +6,7 @@ import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
 import { MeldingType, SystemMeldingType } from '../util/type/melding-type';
-import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
+import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak, VedtakStatus } from '../api/veilarbvedtaksstotte';
 import { SkjemaData } from '../util/skjema-utils';
 import env from '../util/environment';
 import { ArenaVedtak } from '../api/veilarbvedtaksstotte/vedtak';
@@ -158,10 +158,34 @@ const historisk: Vedtak[] = [
 		oppfolgingsenhetId: enhetId,
 		oppfolgingsenhetNavn: enhetNavn,
 		beslutterIdent: null,
-		beslutterNavn: null
+		beslutterNavn: null,
+		vedtakStatus: VedtakStatus.SENDT,
+		utkastSistOppdatert: '2018-08-05T09:55:43.716393+02:00'
 	},
 	{
 		id: 1235,
+		hovedmal: HovedmalType.BEHOLDE_ARBEID,
+		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
+		vedtakFattet: '2018-08-05T09:55:43.716393+02:00',
+		begrunnelse:
+			'Vedtaket ble slettet 2018-08-05T09:55:43.716393+02:00 av utvikler fordi veileder1.ident bestilte sletting i FAGSYSTEM-12345',
+		opplysninger: [
+			'Svarene dine fra da du registrerte deg',
+			'CV-en/jobbønskene dine på nav.no',
+			'Svarene dine om behov for veiledning'
+		],
+		gjeldende: false,
+		veilederNavn: veileder1.navn,
+		veilederIdent: veileder1.ident,
+		oppfolgingsenhetId: enhetId,
+		oppfolgingsenhetNavn: enhetNavn,
+		beslutterIdent: null,
+		beslutterNavn: null,
+		vedtakStatus: VedtakStatus.SLETTET,
+		utkastSistOppdatert: '2018-08-05T09:55:43.716393+02:00'
+	},
+	{
+		id: 1236,
 		hovedmal: HovedmalType.SKAFFE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
 		opplysninger: [
@@ -187,7 +211,9 @@ const historisk: Vedtak[] = [
 		oppfolgingsenhetId: enhetId,
 		oppfolgingsenhetNavn: enhetNavn,
 		beslutterIdent: veileder3.ident,
-		beslutterNavn: veileder3.navn
+		beslutterNavn: veileder3.navn,
+		vedtakStatus: VedtakStatus.SENDT,
+		utkastSistOppdatert: '2018-08-05T09:55:43.716393+02:00'
 	}
 ];
 

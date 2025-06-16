@@ -10,8 +10,12 @@ import { logMetrikk } from '../../util/logger';
 import { hovedmalTekst } from '../../util/hovedmal';
 import vedtakBilde from './vedtak.svg';
 import './tidligere-vedtak-liste.css';
+import { SlettetTidligereVedtak } from './slettet-tidligere-vedtak';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
+	if (vedtak.vedtakStatus === 'SLETTET') {
+		return <SlettetTidligereVedtak posisjon={posisjon} tidspunkt={vedtak.utkastSistOppdatert} />;
+	}
 	return (
 		<VedtaklistePanel<Vedtak>
 			name="tidligere-vedtak"
