@@ -11,7 +11,7 @@ export function isAnyLoading(...fetchers: { loading: boolean }[]): boolean {
 }
 
 export function isAnyLoadingOrNotStarted(...fetchers: { data?: any; error?: any; loading: boolean }[]): boolean {
-	return fetchers.some(f => f.loading || (!f.error && !f.data));
+	return fetchers.some(f => f.loading);
 }
 
 export function hasAnyFailed(...fetchers: { error?: AxiosError }[]): boolean {

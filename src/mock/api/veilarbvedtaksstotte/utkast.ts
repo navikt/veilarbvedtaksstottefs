@@ -22,7 +22,7 @@ export const utkastHandlers: RequestHandler[] = [
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 
 		if (!hentUtkast()) {
-			return new HttpResponse(null, { status: 404 });
+			return new HttpResponse(null, { status: 204 });
 		}
 
 		return HttpResponse.json(hentUtkast());

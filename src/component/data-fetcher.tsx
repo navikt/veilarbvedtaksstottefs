@@ -91,9 +91,9 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			malformFetcher,
 			innloggetVeilederFetcher,
 			arenaVedtakFetcher,
-			navnFetcher
-		) ||
-		(utkastFetcher.error && utkastFetcher.error.response?.status !== 404) // API gir 404 dersom utkast ikke eksisterer
+			navnFetcher,
+			utkastFetcher
+		)
 	) {
 		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
