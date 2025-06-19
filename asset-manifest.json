@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/veilarbvedtaksstottefs/static/css/main.15e6d244.css",
-    "main.js": "/veilarbvedtaksstottefs/static/js/main.d884ec64.js",
+    "main.js": "/veilarbvedtaksstottefs/static/js/main.2bc9bd75.js",
     "pdf.worker.js": "/veilarbvedtaksstottefs/d6247b7eac59574c837f8a9ff1ba1917.js",
     "static/media/utkast.svg": "/veilarbvedtaksstottefs/static/media/utkast.7c2dfe3854a256b0f72475a6a6ecad40.svg",
     "static/media/fullfort.svg": "/veilarbvedtaksstottefs/static/media/fullfort.27542b3130a7eec638ea3a1bc6ebeb68.svg",
@@ -17,10 +17,10 @@
     "static/media/dialog-new-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-new-msg.e5d323644d8ef5b7e1031f1bf33e1dfc.svg",
     "static/media/dialog-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-msg.a4d77157a8e6d7a43005885ea3e8802a.svg",
     "main.15e6d244.css.map": "/veilarbvedtaksstottefs/static/css/main.15e6d244.css.map",
-    "main.d884ec64.js.map": "/veilarbvedtaksstottefs/static/js/main.d884ec64.js.map"
+    "main.2bc9bd75.js.map": "/veilarbvedtaksstottefs/static/js/main.2bc9bd75.js.map"
   },
   "entrypoints": [
     "static/css/main.15e6d244.css",
-    "static/js/main.d884ec64.js"
+    "static/js/main.2bc9bd75.js"
   ]
 }
