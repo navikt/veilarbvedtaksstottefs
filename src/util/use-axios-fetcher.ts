@@ -11,6 +11,7 @@ interface FetchState<D> {
 	loading: boolean;
 	data?: D;
 	error?: AxiosError;
+	status?: number;
 }
 
 interface UseAxiosFetcher<D = any, F = () => AxiosPromise<D>> extends FetchState<D> {
@@ -49,13 +50,13 @@ export function useAxiosFetcher<R>(fetcher: (...args: any[]) => AxiosPromise<R>)
 			return fetcher(...args)
 				.then(res => {
 					if (isMounted.current) {
-						setFetchState({ loading: false, data: res.data, error: undefined });
+						setFetchState({ loading: false, data: res.data, error: undefined, status: res.status });
 					}
 					return res;
 				})
 				.catch(err => {
 					if (isMounted.current) {
-						setFetchState({ loading: false, data: undefined, error: err });
+						setFetchState({ loading: false, data: undefined, error: err, status: err.status });
 					}
 					throw err;
 				});
