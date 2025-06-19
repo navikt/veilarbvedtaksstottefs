@@ -10,7 +10,7 @@ import { fetchOppfolging } from '../api/veilarboppfolging';
 import { fetchAktivArbeidssokerperiode, fetchMalform, fetchNavn } from '../api/veilarbperson';
 import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
-import { ifResponseHasData, hasAnyFailed, isAnyLoadingOrNotStarted } from '../api/utils';
+import { ifResponseHasData, hasAnyFailed, isAnyLoading } from '../api/utils';
 import { IkkeKontaktMedBaksystemFeilmelding } from './feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
 export function DataFetcher(props: { fnr: string; children: any }) {
@@ -73,7 +73,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 	}, [innloggetVeilederFetcher, utkastFetcher]);
 
 	if (
-		isAnyLoadingOrNotStarted(
+		isAnyLoading(
 			fattedeVedtakFetcher,
 			oppfolgingFetcher,
 			malformFetcher,
