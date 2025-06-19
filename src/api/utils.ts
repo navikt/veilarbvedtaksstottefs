@@ -11,7 +11,7 @@ export function isAnyLoading(...fetchers: { loading: boolean }[]): boolean {
 }
 
 export function isAnyLoadingOrNotStarted(
-	...fetchers: { data?: any; error?: any; loading: boolean; status?: any }[]
+	...fetchers: { data?: any; error?: any; loading: boolean; status?: number }[]
 ): boolean {
 	return fetchers.some(f => f.loading || (!f.error && !f.data && f.status !== 204));
 }
