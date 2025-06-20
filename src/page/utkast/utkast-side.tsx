@@ -54,7 +54,6 @@ export function UtkastSide() {
 	const meldingerRef = useRef(meldinger);
 	const intervalRef = useRef<number>();
 	const erBeslutterProsessStartet = !!utkast?.beslutterProsessStatus;
-	const sisteOppdatering = sistOppdatert || utkast!.utkastSistOppdatert;
 	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
 	const dialogSectionStyle = sectionHeight ? makeAbsoluteHeightStyle(sectionHeight) : undefined;
 	const hovedinnholdClassName = showSection
@@ -153,13 +152,17 @@ export function UtkastSide() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	if (utkast == null) {
+		return null;
+	}
+
 	return (
 		<div className="utkast-side">
 			<div className={cls('utkast-side__hovedinnhold', hovedinnholdClassName)}>
 				<div className="utkast-side__skjema-section">
 					<SkjemaHeader
 						veilederNavn={utkast!.veilederNavn}
-						sistOppdatert={sisteOppdatering}
+						sistOppdatert={sistOppdatert || utkast!.utkastSistOppdatert}
 						skjemaLagringStatus={lagringStatus}
 					/>
 					<div className="utkast-side__skjema-section-innhold">{utkastSkjema}</div>
