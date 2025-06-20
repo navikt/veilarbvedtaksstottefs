@@ -49,7 +49,14 @@ export interface Vedtak {
 	beslutterIdent: OrNothing<string>;
 	beslutterNavn: OrNothing<string>;
 	opplysninger: string[]; // Har blitt renamet til "kilder" i etterkant
-
+	vedtakStatus: VedtakStatus;
+	utkastSistOppdatert: string;
 	gjeldende: boolean;
 	vedtakFattet: string;
+}
+
+export enum VedtakStatus {
+	SENDT = 'SENDT',
+	UTKAST = 'UTKAST',
+	SLETTET = 'SLETTET'
 }
