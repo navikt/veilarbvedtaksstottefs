@@ -127,7 +127,8 @@ const pabegyntUtkast: Utkast = {
 		'til og fra arbeidsplassen.',
 	beslutterIdent: null,
 	beslutterNavn: null,
-	beslutterProsessStatus: null
+	beslutterProsessStatus: null,
+	kanDistribueres: false
 };
 
 const historisk: Vedtak[] = [
