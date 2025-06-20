@@ -10,6 +10,7 @@ import { VedtakFraArenaListe } from '../../component/vedtak-fra-arena-liste/vedt
 import './hovedside.css';
 import { useDataStore } from '../../store/data-store';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
+import { Alert, Link } from '@navikt/ds-react';
 
 export function Hovedside() {
 	const { fattedeVedtak, utkast, arenaVedtak, oppfolgingData } = useDataStore();
@@ -24,6 +25,13 @@ export function Hovedside() {
 
 	return (
 		<Page>
+			{!utkast?.kanDistribueres && (
+				<Alert variant="warning" id="kan-ikke-distribueres-alert">
+					Brukeren kan ikke varsles om vedtaket fordi vi ikke finner adresse eller telefonnummer. Forsøk å få
+					brukeren til å registrere kontakinformasjon før du sender ut vedtaket. <br /> Se{' '}
+					<Link href="https://www.nav.no/kontaktinformasjon">nav.no/kontaktinformasjon</Link>.
+				</Alert>
+			)}
 			<div className="hovedside">
 				<div className="hovedside__vedtak-paneler">
 					<Show if={!underOppfolging}>
