@@ -143,15 +143,12 @@ export function UtkastSide() {
 		setHarLastetMeldinger(false);
 
 		// Vis dialog seksjon når man går inn på et utkast som trenger beslutter
-
-		if (showSection == null) {
-			setShowSection(trengerKvalitetssikrer(innsatsgruppe));
-		}
+		setShowSection(trengerKvalitetssikrer(innsatsgruppe));
 
 		// Hent meldinger når utkast vises
 		refreshMeldinger();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [innsatsgruppe]);
 
 	if (utkast == null) {
 		return null;
