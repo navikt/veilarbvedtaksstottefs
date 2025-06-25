@@ -25,7 +25,7 @@ export function Hovedside() {
 
 	return (
 		<Page>
-			<KanIkkeDistribueresAlert kanDistribueres={!!utkast && utkast?.kanDistribueres} />
+			{!!utkast && <KanIkkeDistribueresAlert kanDistribueres={utkast.kanDistribueres} />}
 			<div className="hovedside">
 				<div className="hovedside__vedtak-paneler">
 					<Show if={!underOppfolging}>
