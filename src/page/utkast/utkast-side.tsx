@@ -6,7 +6,6 @@ import { DialogSectionHeader } from './dialog-section/dialog-section-header';
 import { DialogSection } from './dialog-section/dialog-section';
 import { EndreSkjemaSection } from './skjema-section/endre-skjema-section';
 import { LesSkjemaSection } from './skjema-section/les-skjema-section';
-import './utkast-side.less';
 import { useDataStore } from '../../store/data-store';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { useSkjemaStore } from '../../store/skjema-store';
@@ -18,6 +17,8 @@ import { DialogSectionMinified } from './dialog-section-minified/dialog-section-
 import { DialogSectionHeaderMinified } from './dialog-section-minified/dialog-section-header-minified';
 import { trengerKvalitetssikrer } from '../../util/skjema-utils';
 import { ScreenReaderSpeak } from '../../component/screen-reader-speak/screen-reader-speak';
+import { KanIkkeDistribueresAlert } from './kan-ikke-distribueres-alert';
+import './utkast-side.less';
 
 const FOOTER_HEIGHT = 72;
 const TEN_SECONDS = 10000;
@@ -142,15 +143,12 @@ export function UtkastSide() {
 		setHarLastetMeldinger(false);
 
 		// Vis dialog seksjon når man går inn på et utkast som trenger beslutter
-
-		if (showSection == null) {
-			setShowSection(trengerKvalitetssikrer(innsatsgruppe));
-		}
+		setShowSection(trengerKvalitetssikrer(innsatsgruppe));
 
 		// Hent meldinger når utkast vises
 		refreshMeldinger();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [innsatsgruppe]);
 
 	if (utkast == null) {
 		return null;
@@ -165,6 +163,7 @@ export function UtkastSide() {
 						sistOppdatert={sistOppdatert || utkast!.utkastSistOppdatert}
 						skjemaLagringStatus={lagringStatus}
 					/>
+					<KanIkkeDistribueresAlert kanDistribueres={!!utkast && utkast?.kanDistribueres} />
 					<div className="utkast-side__skjema-section-innhold">{utkastSkjema}</div>
 				</div>
 				<div style={dialogSectionStyle} className="utkast-side__dialog-section">

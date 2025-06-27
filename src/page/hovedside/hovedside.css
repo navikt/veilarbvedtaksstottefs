@@ -6,6 +6,10 @@
 	flex-wrap: wrap;
 }
 
+.veilarbvedtaksstottefs #kan-ikke-distribueres-alert {
+	margin-bottom: 1rem;
+}
+
 .veilarbvedtaksstottefs .hovedside .hovedside__vedtak-paneler {
 	width: 100%;
 }
