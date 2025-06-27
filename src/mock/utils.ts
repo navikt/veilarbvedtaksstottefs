@@ -4,10 +4,7 @@ import { HovedmalType, InnsatsgruppeType } from '../api/veilarbvedtaksstotte';
 export function lagVedtakBrevMockUrl(innsatsgruppe: InnsatsgruppeType, hovedmal: OrNothing<HovedmalType>): string {
 	let url = `${mockUrlPrefix()}/test-brev/`;
 
-	if (
-		innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS ||
-		innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS
-	) {
+	if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
 		url += `${innsatsgruppe}.pdf`;
 	} else {
 		url += `${innsatsgruppe}-${hovedmal}.pdf`;
