@@ -5,7 +5,7 @@ export function lagVedtakBrevMockUrl(innsatsgruppe: InnsatsgruppeType, hovedmal:
 	let url = `${mockUrlPrefix()}/test-brev/`;
 
 	if (innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS) {
-		url += `${InnsatsgruppeType.VARIG_TILPASSET_INNSATS}.pdf`;
+		url += `${innsatsgruppe}.pdf`;
 	} else {
 		url += `${innsatsgruppe}-${hovedmal}.pdf`;
 	}
