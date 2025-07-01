@@ -162,6 +162,7 @@ export function UtkastSide() {
 						veilederNavn={utkast!.veilederNavn}
 						sistOppdatert={sistOppdatert || utkast!.utkastSistOppdatert}
 						skjemaLagringStatus={lagringStatus}
+						vedtakId={utkast.id}
 					/>
 					<KanIkkeDistribueresAlert kanDistribueres={!!utkast && utkast?.kanDistribueres} />
 					<div className="utkast-side__skjema-section-innhold">{utkastSkjema}</div>

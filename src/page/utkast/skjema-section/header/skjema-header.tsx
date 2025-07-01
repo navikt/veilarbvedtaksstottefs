@@ -8,6 +8,7 @@ interface SkjemaHeaderProps {
 	veilederNavn: string;
 	sistOppdatert: string;
 	skjemaLagringStatus: SkjemaLagringStatus;
+	vedtakId: number;
 }
 
 function utledLagreTekst(status: SkjemaLagringStatus, sistOppdatert: string): string {
@@ -42,6 +43,10 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 					<div className="separator" />
 					<Detail>
 						<b>Sist endret:</b> {sistEndretTekst}
+					</Detail>
+					<div className="separator" />
+					<Detail>
+						<b>Intern vedtaks-ID:</b> {props.vedtakId}
 					</Detail>
 				</div>
 			</div>
