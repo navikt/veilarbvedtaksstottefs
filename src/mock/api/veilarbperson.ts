@@ -14,5 +14,9 @@ export const veilarbpersonHandlers: RequestHandler[] = [
 	http.post('/veilarbperson/api/v3/person/hent-navn', async () => {
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 		return HttpResponse.json(hentNavn());
+	}),
+	http.post('/veilarbperson/api/v3/person/hent-cv_jobbprofil', async () => {
+		await delay(DEFAULT_DELAY_MILLISECONDS);
+		return new HttpResponse(null, { status: 404 });
 	})
 ];

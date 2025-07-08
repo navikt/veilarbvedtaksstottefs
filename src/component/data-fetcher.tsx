@@ -122,7 +122,7 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			navnFetcher,
 			utkastFetcher
 		) ||
-		(cvFetcher.status !== undefined && ![403, 404].includes(cvFetcher.status))
+		(cvFetcher.error?.status && ![403, 404].includes(cvFetcher.error.status))
 	) {
 		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
