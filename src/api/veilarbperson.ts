@@ -22,6 +22,11 @@ export interface Navn {
 	forkortetNavn: string;
 }
 
+export interface CvKilde {
+	cvKanBrukesSomKilde: boolean;
+	begrunnelse?: string;
+}
+
 export function fetchMalform(fnr: string): AxiosPromise<MalformData> {
 	return axiosInstance.post(`/veilarbperson/api/v3/person/hent-malform`, { fnr });
 }
@@ -32,4 +37,8 @@ export function fetchAktivArbeidssokerperiode(fnr: string): AxiosPromise<Arbeids
 
 export function fetchNavn(fnr: string): AxiosPromise<Navn> {
 	return axiosInstance.post(`/veilarbperson/api/v3/person/hent-navn`, { fnr, behandlingsnummer });
+}
+
+export function fetchCv(fnr: string): AxiosPromise<string> {
+	return axiosInstance.post(`/veilarbperson/api/v3/person/hent-cv_jobbprofil`, { fnr });
 }

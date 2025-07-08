@@ -3,7 +3,7 @@ import constate from 'constate';
 import { MeldingType, SystemMeldingType } from '../util/type/melding-type';
 import { OrNothing } from '../util/type/ornothing';
 import { Veileder } from '../api/veilarbveileder';
-import { MalformData, Navn } from '../api/veilarbperson';
+import { CvKilde, MalformData, Navn } from '../api/veilarbperson';
 import Oppfolging from '../api/veilarboppfolging';
 import {
 	DialogMelding as DialogMeldingData,
@@ -28,6 +28,7 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 	const [meldinger, setMeldinger] = useState<(DialogMeldingData | SystemMeldingData)[]>([]);
 	const [navn, setNavn] = useState<Navn>(placeholder);
 	const [arbeidssokerperiode, setArbeidssokerperiode] = useState<ArbeidssokerPeriode | null>(null);
+	const [cvSomKilde, setCvSomKilde] = useState<CvKilde>(placeholder);
 
 	function leggTilSystemMelding(systemMeldingType: SystemMeldingType) {
 		const systemMeldingData: SystemMeldingData = {
@@ -90,6 +91,8 @@ export const [DataStoreProvider, useDataStore] = constate(() => {
 		navn,
 		setNavn,
 		arbeidssokerperiode,
-		setArbeidssokerperiode
+		setArbeidssokerperiode,
+		cvSomKilde,
+		setCvSomKilde
 	};
 });

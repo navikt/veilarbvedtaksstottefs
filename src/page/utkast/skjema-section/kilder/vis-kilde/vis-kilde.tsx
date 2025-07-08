@@ -4,6 +4,7 @@ import { Button, Checkbox } from '@navikt/ds-react';
 import { PencilIcon } from '@navikt/aksel-icons';
 import './vis-kilde.css';
 import { VisKildeArbeidssokerregisteret } from './vis-kilde-arbeidssokerregisteret';
+import { VisKildeCv } from './vis-kilde-cv';
 
 interface VisKildeProps {
 	kildenavn: string;
@@ -13,9 +14,14 @@ interface VisKildeProps {
 export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {
 	const kanRedigeres = !erDefaultKilde(kildenavn);
 	const erKildeArbeidssokerregister = (kildeTekst: string) => kildeTekst.includes('registrert som arbeidssøk');
+	const erKildeCv = (kildeTekst: string) => kildeTekst.includes('CV');
 
 	if (erKildeArbeidssokerregister(kildenavn)) {
 		return <VisKildeArbeidssokerregisteret kildenavn={kildenavn} />;
+	}
+
+	if (erKildeCv(kildenavn)) {
+		return <VisKildeCv kildenavn={kildenavn} />;
 	}
 
 	return (
