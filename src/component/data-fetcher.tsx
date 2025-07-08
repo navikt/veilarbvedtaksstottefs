@@ -70,19 +70,21 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 				if (response.status === 200 && response.data) {
 					console.log('CV funnet og kan brukes som kilde 200');
 					setCvSomKilde({ cvKanBrukesSomKilde: true, begrunnelse: undefined });
-				} else if (response.status === 204 || response.status === 404) {
-					console.log('CV ikke funnet 204 eller 404: ', response.status);
+				}
+			})
+			.catch(error => {
+				if (error.status === 404) {
+					console.log('CV ikke funnet 204 eller 404: ', error.status);
 					setCvSomKilde({ cvKanBrukesSomKilde: false, begrunnelse: 'ingen CV funnet' });
-				} else if (response.status === 403) {
-					console.log('CV forbidden 403: ', response.status);
+				} else if (error.status === 403) {
+					console.log('CV forbidden 403: ', error.status);
 					setCvSomKilde({
 						cvKanBrukesSomKilde: false,
 						begrunnelse: 'manglende tilgang på bruker, eller at bruker har ikke delt CVen.'
 					});
+				} else {
+					console.error('Feil ved henting av CV: ', error);
 				}
-			})
-			.catch(error => {
-				console.error('Feil ved henting av CV: ', error);
 			});
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
