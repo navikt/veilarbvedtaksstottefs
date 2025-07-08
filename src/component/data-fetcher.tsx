@@ -63,27 +63,31 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 
 		arbeidssoekerperiodeFetcher.fetch(props.fnr).then(ifResponseHasData(setArbeidssokerperiode)).catch();
 
-		cvFetcher.fetch(props.fnr)
-			.then((response) => {
+		/* eslint-disable no-console */
+		cvFetcher
+			.fetch(props.fnr)
+			.then(response => {
 				if (response.status === 200 && response.data) {
-					console.log("CV funnet og kan brukes som kilde 200");
-					setCvSomKilde( { cvKanBrukesSomKilde: true, begrunnelse: undefined });
+					console.log('CV funnet og kan brukes som kilde 200');
+					setCvSomKilde({ cvKanBrukesSomKilde: true, begrunnelse: undefined });
 				} else if (response.status === 204 || response.status === 404) {
-					console.log("CV ikke funnet 204 eller 404: ", response.status);
+					console.log('CV ikke funnet 204 eller 404: ', response.status);
 					setCvSomKilde({ cvKanBrukesSomKilde: false, begrunnelse: 'ingen CV funnet' });
-				} else if (response.status === 403 ) {
-					console.log("CV forbidden 403: ", response.status);
-					setCvSomKilde({ cvKanBrukesSomKilde: false, begrunnelse: 'manglende tilgang på bruker, eller at bruker har ikke delt CVen.' });
+				} else if (response.status === 403) {
+					console.log('CV forbidden 403: ', response.status);
+					setCvSomKilde({
+						cvKanBrukesSomKilde: false,
+						begrunnelse: 'manglende tilgang på bruker, eller at bruker har ikke delt CVen.'
+					});
 				}
 			})
-			.catch(
-				(error) => {
-					console.error("Feil ved henting av CV: ", error);
-				}
-			);
+			.catch(error => {
+				console.error('Feil ved henting av CV: ', error);
+			});
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+	/* eslint-enable no-console */
 
 	useEffect(() => {
 		if (innloggetVeilederFetcher.data && !utkastFetcher.loading) {
@@ -114,8 +118,9 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 			innloggetVeilederFetcher,
 			arenaVedtakFetcher,
 			navnFetcher,
-			utkastFetcher,
-		) || (cvFetcher.status !== undefined && ![403, 404].includes(cvFetcher.status))
+			utkastFetcher
+		) ||
+		(cvFetcher.status !== undefined && ![403, 404].includes(cvFetcher.status))
 	) {
 		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
