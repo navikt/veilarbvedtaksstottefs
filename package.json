@@ -24,7 +24,7 @@
     "@navikt/ds-react": "7.10.0",
     "@navikt/fnrvalidator": "2.1.5",
     "@navikt/navspa": "5.0.1",
-    "axios": "1.7.9",
+    "axios": "1.11.0",
     "classnames": "2.5.1",
     "constate": "3.3.2",
     "craco-less": "3.0.1",
