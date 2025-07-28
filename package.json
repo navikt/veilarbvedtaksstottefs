@@ -18,18 +18,18 @@
   ],
   "dependencies": {
     "@craco/craco": "7.1.0",
-    "@navikt/aksel-icons": "7.10.0",
-    "@navikt/arbeidssokerregisteret-utils": "1.2.0",
-    "@navikt/ds-css": "7.10.0",
-    "@navikt/ds-react": "7.10.0",
+    "@navikt/aksel-icons": "7.25.1",
+    "@navikt/arbeidssokerregisteret-utils": "1.7.0",
+    "@navikt/ds-css": "7.25.1",
+    "@navikt/ds-react": "7.25.1",
     "@navikt/fnrvalidator": "2.1.5",
     "@navikt/navspa": "5.0.1",
     "axios": "1.11.0",
     "classnames": "2.5.1",
-    "constate": "3.3.2",
+    "constate": "3.3.3",
     "craco-less": "3.0.1",
     "dayjs": "1.11.13",
-    "dompurify": "3.2.3",
+    "dompurify": "3.2.6",
     "lodash.debounce": "4.0.8",
     "lodash.isequal": "4.5.0",
     "react": "17.0.2",
@@ -39,7 +39,7 @@
     "typescript": "4.9.5"
   },
   "devDependencies": {
-    "@navikt/aksel-stylelint": "7.10.0",
+    "@navikt/aksel-stylelint": "7.25.1",
     "@types/jest": "29.5.14",
     "@types/lodash.debounce": "4.0.9",
     "@types/lodash.isequal": "4.5.8",
@@ -49,9 +49,9 @@
     "cross-env": "7.0.3",
     "husky": "9.1.7",
     "lint-staged": "15.4.3",
-    "msw": "2.7.0",
-    "prettier": "3.4.2",
-    "stylelint": "16.14.1"
+    "msw": "2.10.4",
+    "prettier": "3.6.2",
+    "stylelint": "16.22.0"
   },
   "msw": {
     "workerDirectory": "public"
