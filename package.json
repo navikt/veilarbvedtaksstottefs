@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "cross-env REACT_APP_DEV=true craco start",
-    "build": "cross-env craco build",
-    "build:mock": "cross-env PUBLIC_URL=/veilarbvedtaksstottefs REACT_APP_DEV=true craco build",
-    "test": "craco test",
+    "start": "",
+    "build": "",
+    "build:mock": "",
+    "test": "",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
     "prepare": "husky"
   },
@@ -17,7 +17,6 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@craco/craco": "7.1.0",
     "@navikt/aksel-icons": "7.25.1",
     "@navikt/arbeidssokerregisteret-utils": "1.7.0",
     "@navikt/ds-css": "7.25.1",
@@ -27,7 +26,6 @@
     "axios": "1.11.0",
     "classnames": "2.5.1",
     "constate": "3.3.3",
-    "craco-less": "3.0.1",
     "dayjs": "1.11.13",
     "dompurify": "3.2.6",
     "lodash.debounce": "4.0.8",
@@ -35,7 +33,6 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-pdf": "5.7.2",
-    "react-scripts": "5.0.1",
     "typescript": "4.9.5"
   },
   "devDependencies": {
@@ -46,12 +43,13 @@
     "@types/react": "17.0.57",
     "@types/react-dom": "17.0.19",
     "@types/react-pdf": "5.7.4",
-    "cross-env": "7.0.3",
+    "@vitejs/plugin-react": "4.7.0",
     "husky": "9.1.7",
     "lint-staged": "15.4.3",
     "msw": "2.10.4",
     "prettier": "3.6.2",
-    "stylelint": "16.22.0"
+    "stylelint": "16.22.0",
+    "vite": "7.0.6"
   },
   "msw": {
     "workerDirectory": "public"
