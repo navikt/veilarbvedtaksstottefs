@@ -13,7 +13,7 @@ interface DialogPanelHeaderProps {
 }
 
 function utledOversiktUrl(): string {
-	if (env.isRunningOnGhPages || env.isDevelopment) {
+	if (env.isRunningOnGhPages || env.isDemo) {
 		return 'https://navikt.github.io/beslutteroversikt';
 	} else if (env.erITestMiljo) {
 		return 'https://beslutteroversikt.intern.dev.nav.no';
