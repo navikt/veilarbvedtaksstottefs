@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
 import { Heading, Loader } from '@navikt/ds-react';
 import './pdf-viewer.css';
 
