@@ -8,17 +8,22 @@ import { enhetId, fnr } from './mock/data';
 
 dayjs.locale('nb');
 
-NAVSPA.eksporter('veilarbvedtaksstottefs', App);
-
-if (env.isDevelopment) {
-	const { worker } = require('./mock');
-	worker
-		.start({ serviceWorker: { url: process.env.PUBLIC_URL + '/mockServiceWorker.js' } })
-		.then(() => {
-			ReactDOM.render(<App fnr={fnr} enhet={enhetId} />, document.getElementById('veilarbvedtaksstottefs-root'));
-		})
-		.catch((e: Error) => {
-			// eslint-disable-next-line no-console
-			console.error('Unable to setup mocked API endpoints', e);
-		});
+if (env.isDemo) {
+	import('./mock/index').then(({ worker }) => {
+		worker
+			.start({ serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` } })
+			.then(() => {
+				// createRoot(document.getElementById('veilarbvedtaksstottefs-root') as HTMLElement).render();
+				ReactDOM.render(
+					<App fnr={fnr} enhet={enhetId} />,
+					document.getElementById('veilarbvedtaksstottefs-root')
+				);
+			})
+			.catch((e: Error) => {
+				// eslint-disable-next-line no-console
+				console.error('Unable to setup mocked API endpoints', e);
+			});
+	});
+} else {
+	NAVSPA.eksporter('veilarbvedtaksstottefs', App);
 }

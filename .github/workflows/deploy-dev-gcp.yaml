@@ -34,19 +34,18 @@ jobs:
         run: npm run test
 
       - name: Build application
-        run: npm run build
+        run: npm run build:dev
         env:
-          PUBLIC_URL: https://cdn.nav.no/obo/dev/veilarbvedtaksstottefs/build
+          PUBLIC_URL: https://veilarbvedtaksstottefs.intern.dev.nav.no
 
       - name: Upload to Nav CDN
         uses: nais/deploy/actions/cdn-upload/v2@master
         with:
           team: obo
-          source: ./build
+          source: ./dist
           destination: dev/veilarbvedtaksstottefs
 
       - name: Set special cache for asset-manifest.json
         shell: bash
         run: |
-          gcloud storage objects update gs://${BUCKET_NAME}/obo/dev/veilarbvedtaksstottefs/build/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=1800, stale-if-error=600"
-
+          gcloud storage objects update gs://${BUCKET_NAME}/obo/dev/veilarbvedtaksstottefs/dist/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=1800, stale-if-error=600"
