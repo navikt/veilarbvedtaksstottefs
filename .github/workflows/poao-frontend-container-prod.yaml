@@ -1,4 +1,4 @@
-name: paoa frontend container prod
+name: Poao frontend container prod
 
 on:
   push:

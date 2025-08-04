@@ -1,5 +1,5 @@
 {
-  "extends": ["react-app"],
+  "extends": ["react"],
   "rules": {
     "no-debugger": "error",
     "no-console": "error"
