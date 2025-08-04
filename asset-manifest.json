@@ -1,26 +1,45 @@
 {
-  "files": {
-    "main.css": "/veilarbvedtaksstottefs/static/css/main.68104cd1.css",
-    "main.js": "/veilarbvedtaksstottefs/static/js/main.fdf95383.js",
-    "pdf.worker.js": "/veilarbvedtaksstottefs/d6247b7eac59574c837f8a9ff1ba1917.js",
-    "static/media/utkast.svg": "/veilarbvedtaksstottefs/static/media/utkast.7c2dfe3854a256b0f72475a6a6ecad40.svg",
-    "static/media/fullfort.svg": "/veilarbvedtaksstottefs/static/media/fullfort.27542b3130a7eec638ea3a1bc6ebeb68.svg",
-    "static/media/ingen-vedtak.svg": "/veilarbvedtaksstottefs/static/media/ingen-vedtak.4acf94ec6405a3783113b29c57e9d3e7.svg",
-    "static/media/utkast-til-beslutter.svg": "/veilarbvedtaksstottefs/static/media/utkast-til-beslutter.7928a93ad20f72a505b3f8d5aac19e31.svg",
-    "static/media/gjeldende-vedtak.svg": "/veilarbvedtaksstottefs/static/media/gjeldende-vedtak.9fc92b97b7b4e6f377be73fac82d7a53.svg",
-    "static/media/tidligere-vedtak.svg": "/veilarbvedtaksstottefs/static/media/tidligere-vedtak.e35785a1dc9ba4f5cef9642bec3a015d.svg",
-    "static/media/ingen_gjeldende_vedtak.svg": "/veilarbvedtaksstottefs/static/media/ingen_gjeldende_vedtak.69f7655f41e9caab75ba50b0d099c92c.svg",
-    "static/media/vedtak.svg": "/veilarbvedtaksstottefs/static/media/vedtak.4af3759ac45c3ddf30f747677fbc40ed.svg",
-    "static/media/nytt-vedtak.svg": "/veilarbvedtaksstottefs/static/media/nytt-vedtak.5d5ce8d732e50c1db66083b77f0e0f3d.svg",
-    "index.html": "/veilarbvedtaksstottefs/index.html",
-    "static/media/pdf.svg": "/veilarbvedtaksstottefs/static/media/pdf.49362d2c0f442850ad99e7d5c1be2bd5.svg",
-    "static/media/dialog-new-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-new-msg.e5d323644d8ef5b7e1031f1bf33e1dfc.svg",
-    "static/media/dialog-msg.svg": "/veilarbvedtaksstottefs/static/media/dialog-msg.a4d77157a8e6d7a43005885ea3e8802a.svg",
-    "main.68104cd1.css.map": "/veilarbvedtaksstottefs/static/css/main.68104cd1.css.map",
-    "main.fdf95383.js.map": "/veilarbvedtaksstottefs/static/js/main.fdf95383.js.map"
+  "index.html": {
+    "file": "assets/index-Dkvx2LXS.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/mock/index.ts"
+    ],
+    "css": [
+      "assets/index-7rI0ckvV.css"
+    ],
+    "assets": [
+      "assets/utkast-EIufPGB5.svg",
+      "assets/fullfort-n6UVRxJB.svg",
+      "assets/ingen-vedtak-V0SoDF_P.svg",
+      "assets/pdf.worker-JgWQ90x2.js"
+    ]
   },
-  "entrypoints": [
-    "static/css/main.68104cd1.css",
-    "static/js/main.fdf95383.js"
-  ]
+  "node_modules/pdfjs-dist/build/pdf.worker.js": {
+    "file": "assets/pdf.worker-JgWQ90x2.js",
+    "src": "node_modules/pdfjs-dist/build/pdf.worker.js"
+  },
+  "src/component/panel/gjeldende-vedtak/fullfort.svg": {
+    "file": "assets/fullfort-n6UVRxJB.svg",
+    "src": "src/component/panel/gjeldende-vedtak/fullfort.svg"
+  },
+  "src/component/panel/ingen-tidligere-vedtak/ingen-vedtak.svg": {
+    "file": "assets/ingen-vedtak-V0SoDF_P.svg",
+    "src": "src/component/panel/ingen-tidligere-vedtak/ingen-vedtak.svg"
+  },
+  "src/component/panel/utkast/utkast.svg": {
+    "file": "assets/utkast-EIufPGB5.svg",
+    "src": "src/component/panel/utkast/utkast.svg"
+  },
+  "src/mock/index.ts": {
+    "file": "assets/index-B9N156wT.js",
+    "name": "index",
+    "src": "src/mock/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ]
+  }
 }
