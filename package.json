@@ -67,7 +67,8 @@
       "prettier --write"
     ],
     "src/**/*.{js,jsx,ts,tsx}": [
-      "prettier --write"
+      "prettier --write",
+      "eslint --config .eslintrc.lintstaged.json"
     ]
   },
   "msw": {
