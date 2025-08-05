@@ -62,7 +62,7 @@ export const visFlereVerdi = (tittel: string, verdi: string[] | undefined) => {
 		<div className="json-key-wrapper">
 			<span className="json-key">{tittel}: </span>
 			{verdi !== undefined && verdi.length > 0 ? (
-				verdi.map((key, index) => <span key={key}>{key ?? EMDASH}</span>)
+				verdi.map(key => <span key={key}>{key ?? EMDASH}</span>)
 			) : (
 				<span>{EMDASH}</span>
 			)}

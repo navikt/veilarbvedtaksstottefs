@@ -15,7 +15,7 @@ import {
 import { ProfilertTil } from '@navikt/arbeidssokerregisteret-utils';
 
 export function fagdokumentTypeLabel(type: Fagdokument) {
-	let mapping = new Map<Fagdokument, string>([
+	const mapping = new Map<Fagdokument, string>([
 		[Fagdokument.AUTORISASJON, 'Autorisasjon'],
 		[Fagdokument.MESTERBREV, 'Mesterbrev'],
 		[Fagdokument.SVENNEBREV_FAGBREV, 'Fagbrev/Svennebrev']
@@ -25,7 +25,7 @@ export function fagdokumentTypeLabel(type: Fagdokument) {
 }
 
 export function spraakNivoLabel(nivo: SprakferdighetDtoV2) {
-	let mapping = new Map<SprakferdighetDtoV2, string>([
+	const mapping = new Map<SprakferdighetDtoV2, string>([
 		[SprakferdighetDtoV2.FOERSTESPRAAK, 'Førstespråk (morsmål)'],
 		[SprakferdighetDtoV2.VELDIG_GODT, 'Veldig godt'],
 		[SprakferdighetDtoV2.GODT, 'Godt'],
@@ -37,7 +37,7 @@ export function spraakNivoLabel(nivo: SprakferdighetDtoV2) {
 }
 
 export function ansettelsestypeLabel(ansettelsestype: string | null) {
-	let mapping = new Map<string, string>([
+	const mapping = new Map<string, string>([
 		['FAST', 'Fast'],
 		['VIKARIAT', 'Vikariat'],
 		['ENGASJEMENT', 'Engasjement'],
@@ -58,7 +58,7 @@ export function ansettelsestypeLabel(ansettelsestype: string | null) {
 }
 
 export function onsketArbeidstidsordningLabel(onsketArbeidstidsordning: string | null) {
-	let mapping = new Map<string, string>([
+	const mapping = new Map<string, string>([
 		['DAGTID', 'Dagtid'],
 		['KVELD', 'Kveld'],
 		['NATT', 'Natt'],
@@ -77,7 +77,7 @@ export function onsketArbeidstidsordningLabel(onsketArbeidstidsordning: string |
 }
 
 export function onsketArbeidsskiftordningLabel(onsketArbeidsskiftordning: string | null) {
-	let mapping = new Map<string, string>([
+	const mapping = new Map<string, string>([
 		['DAGTID', 'Dagtid'],
 		['KVELD', 'Kveld'],
 		['NATT', 'Natt'],
@@ -95,8 +95,8 @@ export function onsketArbeidsskiftordningLabel(onsketArbeidsskiftordning: string
 	return onsketArbeidsskiftordning;
 }
 
-export function oppstartLabel(oppstart: String) {
-	let mapping = new Map<String, string>([
+export function oppstartLabel(oppstart: string) {
+	const mapping = new Map<string, string>([
 		['LEDIG_NAA', 'Kan begynne nå'],
 		['ETTER_TRE_MND', 'Har 3 måneders oppsigelse'],
 		['ETTER_AVTALE', 'Kan begynne etter nærmere avtale']
@@ -106,7 +106,7 @@ export function oppstartLabel(oppstart: String) {
 }
 
 export function utdanningSvarLabel(svar: UtdanningSvar) {
-	let mapping = new Map<UtdanningSvar, string>([
+	const mapping = new Map<UtdanningSvar, string>([
 		[UtdanningSvar.INGEN_UTDANNING, 'Ingen utdanning'],
 		[UtdanningSvar.GRUNNSKOLE, 'Grunnskole'],
 		[UtdanningSvar.VIDEREGAENDE_GRUNNUTDANNING, 'Videregående grunnutdanning (1 til 2 år)'],
@@ -118,7 +118,7 @@ export function utdanningSvarLabel(svar: UtdanningSvar) {
 }
 
 export function utdanningGodkjentSvarLabel(svar: UtdanningGodkjentSvar) {
-	let mapping = new Map<UtdanningGodkjentSvar, string>([
+	const mapping = new Map<UtdanningGodkjentSvar, string>([
 		[UtdanningGodkjentSvar.JA, 'Ja'],
 		[UtdanningGodkjentSvar.NEI, 'Nei'],
 		[UtdanningGodkjentSvar.VET_IKKE, 'Vet ikke'],
@@ -128,7 +128,7 @@ export function utdanningGodkjentSvarLabel(svar: UtdanningGodkjentSvar) {
 }
 
 export function utdanningBestattSvarLabel(svar: UtdanningBestattSvar) {
-	let mapping = new Map<UtdanningBestattSvar, string>([
+	const mapping = new Map<UtdanningBestattSvar, string>([
 		[UtdanningBestattSvar.JA, 'Ja'],
 		[UtdanningBestattSvar.NEI, 'Nei'],
 		[UtdanningBestattSvar.INGEN_SVAR, 'Ikke besvart']
@@ -137,7 +137,7 @@ export function utdanningBestattSvarLabel(svar: UtdanningBestattSvar) {
 }
 
 export function helseHinderLabel(svar: HelseHinderSvar) {
-	let mapping = new Map<HelseHinderSvar, string>([
+	const mapping = new Map<HelseHinderSvar, string>([
 		[HelseHinderSvar.JA, 'Ja'],
 		[HelseHinderSvar.NEI, 'Nei'],
 		[HelseHinderSvar.INGEN_SVAR, 'Ikke besvart']
@@ -146,7 +146,7 @@ export function helseHinderLabel(svar: HelseHinderSvar) {
 }
 
 export function andreForholdLabel(svar: AndreForholdSvar) {
-	let mapping = new Map<AndreForholdSvar, string>([
+	const mapping = new Map<AndreForholdSvar, string>([
 		[AndreForholdSvar.JA, 'Ja'],
 		[AndreForholdSvar.NEI, 'Nei'],
 		[AndreForholdSvar.INGEN_SVAR, 'Ikke besvart']
@@ -155,7 +155,7 @@ export function andreForholdLabel(svar: AndreForholdSvar) {
 }
 
 export function sisteStillingLabel(svar: SisteStillingSvar) {
-	let mapping = new Map<SisteStillingSvar, string>([
+	const mapping = new Map<SisteStillingSvar, string>([
 		[SisteStillingSvar.HAR_HATT_JOBB, 'Har vært i jobb'],
 		[SisteStillingSvar.HAR_IKKE_HATT_JOBB, 'Har ikke vært i jobb'],
 		[SisteStillingSvar.INGEN_SVAR, 'Ikke besvart']
@@ -164,7 +164,7 @@ export function sisteStillingLabel(svar: SisteStillingSvar) {
 }
 
 export function dinSituasjonLabel(svar: DinSituasjonSvar) {
-	let mapping = new Map<DinSituasjonSvar, string>([
+	const mapping = new Map<DinSituasjonSvar, string>([
 		[DinSituasjonSvar.MISTET_JOBBEN, 'Har mistet eller kommer til å miste jobben'],
 		[DinSituasjonSvar.HAR_SAGT_OPP, 'Har sagt opp eller kommer til å si opp'],
 		[DinSituasjonSvar.DELTIDSJOBB_VIL_MER, 'Har deltidsjobb, men vil jobbe mer'],
@@ -188,7 +188,7 @@ export function dinSituasjonLabel(svar: DinSituasjonSvar) {
 }
 
 export function fremtidigSituasjonLabel(svar: FremtidigSituasjonSvar) {
-	let mapping = new Map<FremtidigSituasjonSvar, string>([
+	const mapping = new Map<FremtidigSituasjonSvar, string>([
 		[FremtidigSituasjonSvar.SAMME_ARBEIDSGIVER, 'Jeg skal tilbake til jobben jeg har'],
 		[
 			FremtidigSituasjonSvar.SAMME_ARBEIDSGIVER_NY_STILLING,
@@ -202,7 +202,7 @@ export function fremtidigSituasjonLabel(svar: FremtidigSituasjonSvar) {
 }
 
 export function tilbakeIArbeidLabel(svar: TilbakeIArbeidSvar) {
-	let mapping = new Map<TilbakeIArbeidSvar, string>([
+	const mapping = new Map<TilbakeIArbeidSvar, string>([
 		[TilbakeIArbeidSvar.JA_FULL_STILLING, 'Ja, i full stilling'],
 		[TilbakeIArbeidSvar.JA_REDUSERT_STILLING, 'Ja, i redusert stilling'],
 		[TilbakeIArbeidSvar.USIKKER, 'Usikker'],
@@ -212,7 +212,7 @@ export function tilbakeIArbeidLabel(svar: TilbakeIArbeidSvar) {
 }
 
 export function innsatsgruppeLabel(svar: ProfilertInnsatsgruppe) {
-	let mapping = new Map<ProfilertInnsatsgruppe, string>([
+	const mapping = new Map<ProfilertInnsatsgruppe, string>([
 		[ProfilertInnsatsgruppe.STANDARD_INNSATS, 'Standard innsats'],
 		[ProfilertInnsatsgruppe.SITUASJONSBESTEMT_INNSATS, 'Situasjonsbestemt innsats'],
 		[ProfilertInnsatsgruppe.BEHOV_FOR_ARBEIDSEVNEVURDERING, 'Behov for arbeidsevnevurdering']

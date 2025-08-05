@@ -16,10 +16,10 @@ interface DatatermerInterface {
 
 function GammelnavskCheck(props: { content: string }) {
 	const value = props.content;
-	let gammelnavsk = Avløserord;
+	const gammelnavsk = Avløserord;
 	let gammelnavskResultater: AvløserordInterface[] = [];
 
-	let datatermer = Datatermer;
+	const datatermer = Datatermer;
 	let datatermerResultater: DatatermerInterface[] = [];
 
 	const keyword = value;
@@ -50,7 +50,7 @@ function GammelnavskCheck(props: { content: string }) {
 						Norske ord som kan brukes i stedet for de tilsvarende engelske:
 						{gammelnavskResultater.length > 0 && (
 							<Accordion className="gammelnavskAccordion mt-4">
-								{gammelnavskResultater.map((gammelnavsk, i) => (
+								{gammelnavskResultater.map(gammelnavsk => (
 									<Accordion.Item key="">
 										<Accordion.Header className="gammelnavskAccordion" type="button">
 											<span className="firstLetter">&quot;{gammelnavsk.importord}&quot;</span>
@@ -79,7 +79,7 @@ function GammelnavskCheck(props: { content: string }) {
 						)}
 						{datatermerResultater.length > 0 && (
 							<Accordion className="gammelnavskAccordion">
-								{datatermerResultater.map((gammelnavsk, i) => (
+								{datatermerResultater.map(gammelnavsk => (
 									<Accordion.Item key="">
 										<Accordion.Header className="gammelnavskAccordion" type="button">
 											<span className="firstLetter">{gammelnavsk.ord}</span>

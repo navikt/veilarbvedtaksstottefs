@@ -43,7 +43,7 @@ function Lix(props: { content: OrNothing<string> }) {
 
 	// Loop through the entire array of words
 	let longWordCount = 0;
-	for (let i in words) {
+	for (const i in words) {
 		if (words[i].length > LETTER_LIMIT) {
 			longWordCount++;
 		}
