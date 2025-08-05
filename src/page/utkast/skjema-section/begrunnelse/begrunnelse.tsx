@@ -21,7 +21,7 @@ function Begrunnelse() {
 	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 	const [visSprakhjelp, setVisSprakhjelp] = useState(false);
 
-	function onBegrunnelseChanged(e: any) {
+	function onBegrunnelseChanged(e: React.ChangeEvent<HTMLTextAreaElement>) {
 		const newText = e.target.value;
 		const oldText = begrunnelse || '';
 		const charDiff = newText.length - oldText.length;
@@ -102,17 +102,8 @@ function Begrunnelse() {
 				</Switch>
 				{visSprakhjelp && begrunnelse && begrunnelse.length > 0 && (
 					<Accordion>
-						{/* <LongParagraphs content={begrunnelse} /> */}
-						{/* <LongSentences content={begrunnelse} /> */}
-						{/* <LongWords content={begrunnelse} /> */}
-						{/* <DuplicateWords content={begrunnelse} /> */}
 						<GammelnavskDictionary content={begrunnelse} />
-						{/*<NrkDictionaries content={begrunnelse} /> */}
-						{/* <AvløserordDictionary content={begrunnelse} /> */}
-						{/* <Begrepskatalog content={begrunnelse} /> */}
-						{/* <PersonalData content={begrunnelse} /> */}
 						<Lix content={begrunnelse} />
-						{/* <WordCount content={begrunnelse} /> */}
 					</Accordion>
 				)}
 			</div>
