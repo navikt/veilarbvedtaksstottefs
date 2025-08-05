@@ -1,7 +1,0 @@
-{
-  "extends": ["react", "plugin:react/recommended", "plugin:react/jsx-runtime"],
-  "rules": {
-    "no-debugger": "warn",
-    "no-console": "warn"
-  }
-}
