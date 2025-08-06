@@ -13,7 +13,7 @@ import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { ifResponseHasData, hasAnyFailed, isAnyLoading } from '../api/utils';
 import { IkkeKontaktMedBaksystemFeilmelding } from './feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
-export function DataFetcher(props: { fnr: string; children: any }) {
+export function DataFetcher(props: { fnr: string; children: React.ReactNode }): JSX.Element | null {
 	const { initSkjema } = useSkjemaStore();
 	const {
 		setFattedeVedtak,
@@ -98,5 +98,5 @@ export function DataFetcher(props: { fnr: string; children: any }) {
 		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
 
-	return props.children;
+	return <>{props.children}</>;
 }

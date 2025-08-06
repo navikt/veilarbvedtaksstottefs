@@ -4,11 +4,11 @@ import env from './environment';
 
 export interface FrontendEvent {
 	name: string;
-	fields?: {};
-	tags?: {};
+	fields?: object;
+	tags?: object;
 }
 
-export const logMetrikk = (metrikkNavn: string, fields?: {}, tags?: {}): void => {
+export const logMetrikk = ({ name: metrikkNavn, fields, tags }: FrontendEvent): void => {
 	if (env.isDemo) {
 		// eslint-disable-next-line no-console
 		console.log('Event', metrikkNavn, 'Fields:', fields, 'Tags:', tags);

@@ -6,7 +6,7 @@ import Spinner from './spinner/spinner';
 import { useDataStore } from '../store/data-store';
 import { IkkeKontaktMedBaksystemFeilmelding } from './feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
-function FeatureFetcher(props: PropsWithChildren<any>) {
+function FeatureFetcher(props: PropsWithChildren<React.ReactNode>): JSX.Element | null {
 	const featureAxiosFetcher = useAxiosFetcher(fetchFeaturesToggles);
 	const { setFeatures } = useDataStore();
 
@@ -21,7 +21,7 @@ function FeatureFetcher(props: PropsWithChildren<any>) {
 		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
 
-	return featureAxiosFetcher.data ? props.children : null;
+	return featureAxiosFetcher.data ? <>{props.children}</> : null;
 }
 
 export default FeatureFetcher;

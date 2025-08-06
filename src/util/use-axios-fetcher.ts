@@ -14,7 +14,7 @@ interface FetchState<D> {
 	status?: number;
 }
 
-interface UseAxiosFetcher<D = any, F = () => AxiosPromise<D>> extends FetchState<D> {
+interface UseAxiosFetcher<D = unknown, F = () => AxiosPromise<D>> extends FetchState<D> {
 	fetch: F;
 }
 
@@ -34,7 +34,9 @@ export function useAxiosFetcher<T1, T2, T3, T4, R>(
 	fetcher: (t1: T1, t2: T2, t3: T3, t4: T4) => AxiosPromise<R>
 ): UseAxiosFetcher<R, ActionFunction4<T1, T2, T3, T4, AxiosPromise<R>>>;
 
-export function useAxiosFetcher<R>(fetcher: (...args: any[]) => AxiosPromise<R>): UseAxiosFetcher<R> {
+export function useAxiosFetcher<Args extends unknown[], R>(
+	fetcher: (...args: Args) => AxiosPromise<R>
+): UseAxiosFetcher<R, (...args: Args) => AxiosPromise<R>> {
 	const [fetchState, setFetchState] = useState<FetchState<R>>({ loading: false });
 	const isMounted = useRef<boolean>(true);
 
@@ -45,7 +47,7 @@ export function useAxiosFetcher<R>(fetcher: (...args: any[]) => AxiosPromise<R>)
 	}, []);
 
 	const axiosFetch = useCallback(
-		(...args: any[]): AxiosPromise<R> => {
+		(...args: Args): AxiosPromise<R> => {
 			setFetchState({ loading: true });
 			return fetcher(...args)
 				.then(res => {

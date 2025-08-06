@@ -35,7 +35,7 @@ export const erGodkjentAvBeslutter = (beslutterProsessStatus: OrNothing<Beslutte
 };
 
 // If the checkboxes/radios does not swallow enter, then it will propagate to the first button and trigger onClick
-export const swallowEnterKeyPress = (e: any) => {
+export const swallowEnterKeyPress = (e: React.KeyboardEvent) => {
 	if (e.keyCode === 13) {
 		e.preventDefault();
 	}

@@ -12,7 +12,7 @@ interface VedtakPanelProps<T> {
 	onClick: OnVedtakClicked<T>;
 	dato: string;
 	ikon: string;
-	children: any;
+	children?: React.ReactNode;
 }
 
 export function VedtaklistePanel<T>(props: Readonly<VedtakPanelProps<T>>) {

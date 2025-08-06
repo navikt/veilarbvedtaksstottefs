@@ -28,7 +28,7 @@ export enum ModalType {
 
 export const [ModalStoreProvider, useModalStore] = constate(() => {
 	const [modalType, setModalType] = useState<ModalType>(ModalType.INGEN);
-	const [modalProps, setModalProps] = useState<any>({});
+	const [modalProps, setModalProps] = useState<object>({});
 
 	const showModal = (type: ModalType, props: object = {}) => {
 		setModalProps(props);
