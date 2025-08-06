@@ -28,7 +28,7 @@ export function RedigerKilde({
 				onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 					let nyKilde = e.target.value;
 					if (nyKilde.length > KILDE_MAX_LENGTH) {
-						nyKilde = nyKilde.substr(0, KILDE_MAX_LENGTH);
+						nyKilde = nyKilde.slice(0, KILDE_MAX_LENGTH);
 					}
 					setTekst(nyKilde);
 				}}
