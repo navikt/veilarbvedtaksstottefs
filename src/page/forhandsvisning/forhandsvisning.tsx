@@ -91,8 +91,6 @@ export function Forhandsvisning() {
 
 	return (
 		<>
-			<SpinnerModal isOpen={modalType === ModalType.LASTER} />
-			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 			<Footer className="forhandsvisning__footer">
 				<div className="forhandsvisning__aksjoner">
 					<Button size="small" variant="tertiary" icon={<ChevronLeftIcon />} onClick={tilbakeTilSkjema}>
@@ -129,6 +127,8 @@ export function Forhandsvisning() {
 					)}
 				</div>
 			</Footer>
+			<SpinnerModal isOpen={modalType === ModalType.LASTER} />
+			<PdfViewer url={url} title="Forhåndsvisning av vedtaksbrevet" onStatusUpdate={setPdfStatus} />
 		</>
 	);
 }

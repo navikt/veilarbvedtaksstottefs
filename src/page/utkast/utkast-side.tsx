@@ -156,6 +156,7 @@ export function UtkastSide() {
 
 	return (
 		<div className="utkast-side">
+			<UtkastFooter />
 			<div className={cls('utkast-side__hovedinnhold', hovedinnholdClassName)}>
 				<div className="utkast-side__skjema-section">
 					<SkjemaHeader
@@ -181,7 +182,6 @@ export function UtkastSide() {
 					</Show>
 				</div>
 			</div>
-			<UtkastFooter />
 		</div>
 	);
 }

@@ -20,7 +20,7 @@
 	color: white;
 	padding: 0.5rem 0;
 	position: sticky;
-	top: 0;
+	top: 3rem; /* Høgd av "footer" */
 	z-index: 300;
 }
 
