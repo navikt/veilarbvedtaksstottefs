@@ -87,9 +87,122 @@ const dialogMeldinger: DialogMelding[] = [
 	},
 	{
 		melding: 'Wow, dette var en awsome nettside! https://navikt.github.io/veilarbvedtaksstottefs',
-		opprettet: '2020-02-08T14:24:10.716393+02:00',
+		opprettet: '2020-02-08T15:24:10.716393+02:00',
 		opprettetAvIdent: innloggetVeileder.ident,
 		opprettetAvNavn: innloggetVeileder.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Hei! Da har jeg gjort endringer i begrunnelsen, hva tenker du?',
+		opprettet: '2020-02-08T17:24:10.716393+02:00',
+		opprettetAvIdent: innloggetVeileder.ident,
+		opprettetAvNavn: innloggetVeileder.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Tror du har en skrivefeil i tredje avsnitt, du har et ord der som er repetert to ganger.',
+		opprettet: '2020-02-08T16:24:10.716393+02:00',
+		opprettetAvIdent: veileder3.ident,
+		opprettetAvNavn: veileder3.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Oi, det så jeg ikke, takk!',
+		opprettet: '2020-02-08T17:24:10.716393+02:00',
+		opprettetAvIdent: innloggetVeileder.ident,
+		opprettetAvNavn: innloggetVeileder.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Ellers noen tanker om innholdet?',
+		opprettet: '2020-02-08T17:26:10.716393+02:00',
+		opprettetAvIdent: innloggetVeileder.ident,
+		opprettetAvNavn: innloggetVeileder.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding:
+			'Synes det ser bra ut, du har forklart godt hva som ligger bak vurderingen du har gjert',
+		opprettet: '2020-02-09T08:24:10.716393+02:00',
+		opprettetAvIdent: veileder3.ident,
+		opprettetAvNavn: veileder3.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'gjort*',
+		opprettet: '2020-02-09T08:26:10.716393+02:00',
+		opprettetAvIdent: veileder3.ident,
+		opprettetAvNavn: veileder3.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'og jeg føler språket flyter bra.',
+		opprettet: '2020-02-09T08:26:11.716393+02:00',
+		opprettetAvIdent: veileder3.ident,
+		opprettetAvNavn: veileder3.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Jeg har lurt på om jeg burde bytte ut "inneværende periode" med et annet uttrykk som er mindre byråkratisk, har du idéer?',
+		opprettet: '2020-02-09T09:26:11.716393+02:00',
+		opprettetAvIdent: innloggetVeileder.ident,
+		opprettetAvNavn: innloggetVeileder.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Jeg tenkte på "denne perioden", men kommer det klart fram hva en periode er?',
+		opprettet: '2020-02-09T09:27:11.716393+02:00',
+		opprettetAvIdent: innloggetVeileder.ident,
+		opprettetAvNavn: innloggetVeileder.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Jeg tror "denne perioden" burde gå an å forstå fra konteksten. Bra du bytter ut "inneværende"',
+		opprettet: '2020-02-09T10:26:11.716393+02:00',
+		opprettetAvIdent: veileder3.ident,
+		opprettetAvNavn: veileder3.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Da gjør jeg det sånn.',
+		opprettet: '2020-02-09T11:26:11.716393+02:00',
+		opprettetAvIdent: innloggetVeileder.ident,
+		opprettetAvNavn: innloggetVeileder.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Takk!',
+		opprettet: '2020-02-09T11:26:13.716393+02:00',
+		opprettetAvIdent: innloggetVeileder.ident,
+		opprettetAvNavn: innloggetVeileder.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Har du forresten sett "Kansellisten" til språkrådet? Den har mange gode erstatter-ord for "fy-ord".',
+		opprettet: '2020-02-09T12:26:11.716393+02:00',
+		opprettetAvIdent: veileder3.ident,
+		opprettetAvNavn: veileder3.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Her er lenke: https://sprakradet.no/godt-og-korrekt-sprak/praktisk-sprakbruk/kansellisten/',
+		opprettet: '2020-02-09T13:26:11.716393+02:00',
+		opprettetAvIdent: veileder3.ident,
+		opprettetAvNavn: veileder3.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Oi, den har jeg ikke sett før! Takk!',
+		opprettet: '2020-02-09T14:26:11.716393+02:00',
+		opprettetAvIdent: innloggetVeileder.ident,
+		opprettetAvNavn: innloggetVeileder.navn,
+		type: MeldingType.DIALOG_MELDING
+	},
+	{
+		melding: 'Uansett, jeg ferdigstiller kvalitetssikringa, jeg. Bra jobba. Snakkes i morgen!',
+		opprettet: '2020-02-10T08:26:11.716393+02:00',
+		opprettetAvIdent: veileder3.ident,
+		opprettetAvNavn: veileder3.navn,
 		type: MeldingType.DIALOG_MELDING
 	}
 ];
