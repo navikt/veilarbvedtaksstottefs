@@ -1,6 +1,6 @@
 import { Accordion } from '@navikt/ds-react';
 
-function DuplicateWords(props: { content: any }) {
+function DuplicateWords(props: { content: string }) {
 	let value = props.content;
 	value = value.replaceAll('Kontakt', '');
 	value = value.replaceAll(/\d+(?: \d+)/g, '');
@@ -9,14 +9,16 @@ function DuplicateWords(props: { content: any }) {
 	// Find duplicate words
 	let duplicateWordsList: string | number | boolean | JSX.Element[] | null | undefined = [];
 	let duplicateWordsCount = 0;
-	if (value.match(/\b(\w{2,5})\s+\1\b/g)) {
-		duplicateWordsCount = value.match(/\b(\w{2,5})\s+\1\b/g).length;
-		// @ts-ignore
-		duplicateWordsList = value.match(/\b(\w{2,5})\s+\1\b/g).map((duplicatedword, index) => (
-			<li className="pb-2" key={index}>
-				{duplicatedword}
-			</li>
-		));
+	const matches = value.match(/\b(\w{2,5})\s+\1\b/g);
+	if (matches) {
+		duplicateWordsCount = matches.length;
+		duplicateWordsList = matches.map(
+			(duplicatedword: string, index: number): JSX.Element => (
+				<li className="pb-2" key={index}>
+					{duplicatedword}
+				</li>
+			)
+		);
 	}
 	return (
 		<>

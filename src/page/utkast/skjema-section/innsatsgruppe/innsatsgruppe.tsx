@@ -2,7 +2,7 @@ import FeltHeader from '../felt-header/felt-header';
 import { InnsatsgruppeTipsInnhold } from './innsatsgruppe-tips-innhold';
 import { harSkrevetBegrunnelse, trengerKvalitetssikrer } from '../../../../util/skjema-utils';
 import { erBeslutterProsessStartet, finnGjeldendeVedtak, swallowEnterKeyPress } from '../../../../util';
-import { InnsatsgruppeType } from '../../../../api/veilarbvedtaksstotte';
+import { HovedmalType, InnsatsgruppeType } from '../../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../../util/type/ornothing';
 import { ModalType, useModalStore } from '../../../../store/modal-store';
 import { useDataStore } from '../../../../store/data-store';
@@ -50,7 +50,7 @@ export default Innsatsgruppe;
 interface InnsatsgruppeRadioProps {
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
 	endreInnsatsgruppe: (e: InnsatsgruppeType) => void;
-	endreHovedmal: (e: any) => void;
+	endreHovedmal: (e: OrNothing<HovedmalType>) => void;
 }
 
 function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {

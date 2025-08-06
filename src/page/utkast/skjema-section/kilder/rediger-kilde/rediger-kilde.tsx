@@ -25,7 +25,7 @@ export function RedigerKilde({
 				size="small"
 				label="Legg til kilde og dato"
 				value={tekst}
-				onChange={(e: any) => {
+				onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 					let nyKilde = e.target.value;
 					if (nyKilde.length > KILDE_MAX_LENGTH) {
 						nyKilde = nyKilde.substr(0, KILDE_MAX_LENGTH);
@@ -33,6 +33,7 @@ export function RedigerKilde({
 					setTekst(nyKilde);
 				}}
 				maxLength={KILDE_MAX_LENGTH}
+				// eslint-disable-next-line jsx-a11y/no-autofocus
 				autoFocus
 			/>
 			<div className="rediger-kilde__handlinger">

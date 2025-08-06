@@ -17,12 +17,11 @@ export const [ViewStoreProvider, useViewStore] = constate(() => {
 	const [view, setView] = useState<ViewType>(() => {
 		return hasHashParam('visUtkast') ? ViewType.UTKAST : ViewType.HOVEDSIDE;
 	});
+	const [viewProps, setViewProps] = useState<object>({});
 
-	const [viewProps, setViewProps] = useState<any>({});
-
-	const changeView = (type: ViewType, props?: {}) => {
-		setViewProps(props ? props : {});
+	const changeView = (type: ViewType, props: object = {}) => {
 		setView(type);
+		setViewProps(props);
 	};
 
 	return { view, viewProps, changeView };

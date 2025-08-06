@@ -1,6 +1,6 @@
 interface ShowProps {
-	if?: any;
-	children?: any;
+	if?: boolean;
+	children?: React.ReactNode;
 }
 
 const Show = (props: ShowProps) => (props.if ? props.children : null);
