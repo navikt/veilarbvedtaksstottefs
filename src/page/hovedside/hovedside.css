@@ -23,7 +23,7 @@
 	margin-top: 1rem;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 37.5rem) {
 	.veilarbvedtaksstottefs .hovedside .hovedside__vedtak-paneler {
 		width: auto;
 	}
@@ -33,7 +33,7 @@
 	}
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 75rem) {
 	.veilarbvedtaksstottefs .hovedside {
 		flex-direction: row;
 		flex-wrap: nowrap;

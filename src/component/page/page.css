@@ -3,7 +3,7 @@
 	padding: 2rem 1rem 6rem 1rem;
 }
 
-@media (min-width: 632px) {
+@media (min-width: 39.5rem) {
 	.veilarbvedtaksstottefs .page {
 		padding: 2rem 0 6rem;
 	}
@@ -15,5 +15,5 @@
 
 .veilarbvedtaksstottefs .page .page__content {
 	margin: 0 auto;
-	max-width: 1200px;
+	max-width: 75rem;
 }
