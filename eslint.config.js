@@ -26,7 +26,7 @@ export default tseslint.config(eslint.configs.recommended, tseslint.configs.reco
 		...reactPlugin.configs.recommended.rules,
 		...reactPlugin.configs['jsx-runtime'].rules, // React >= 17
 		...reactHooks.configs.recommended.rules,
-		'react-refresh/only-export-components': 'warn',
+		'react-refresh/only-export-components': ['warn', { allowConstantExport: true }], // Vite sin HMR (Hot Module Replacement) tåler eksport av konstanter
 		'no-debugger': 'error',
 		'no-console': 'error'
 	},
