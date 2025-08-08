@@ -9,7 +9,6 @@ import { Oyeblikksbilde } from '../page/oyblikksbilde-visning/oyeblikksbilde-vis
 
 export function ViewController() {
 	const { view, viewProps } = useViewStore();
-	const { vedtakId, dokumentInfoId, journalpostId, oyeblikksbildeType } = viewProps;
 
 	switch (view) {
 		case ViewType.HOVEDSIDE:
@@ -19,15 +18,40 @@ export function ViewController() {
 		case ViewType.FORHANDSVISNING:
 			return <Forhandsvisning />;
 		case ViewType.VEDTAK:
-			return <VedtakskjemaVisningSide vedtakId={vedtakId} />;
+			if ('vedtakId' in viewProps) {
+				return <VedtakskjemaVisningSide vedtakId={viewProps.vedtakId} />;
+			}
+			return null;
 		case ViewType.OYBLIKKSBILDE_VISNING:
-			return <Oyeblikksbilde vedtakId={vedtakId} />;
+			if ('vedtakId' in viewProps) {
+				return <Oyeblikksbilde vedtakId={viewProps.vedtakId} />;
+			}
+			return null;
 		case ViewType.VEDTAK_PDF:
-			return <VedtaksbrevVisning vedtakId={vedtakId} />;
+			if ('vedtakId' in viewProps) {
+				return <VedtaksbrevVisning vedtakId={viewProps.vedtakId} />;
+			}
+			return null;
 		case ViewType.VEDTAK_OYEBLIKKSBILDE_PDF:
-			return <OyeblikksbildeVisningPDF vedtakId={vedtakId} oyeblikksbildeType={oyeblikksbildeType} />;
+			if ('vedtakId' in viewProps && 'oyeblikksbildeType' in viewProps) {
+				return (
+					<OyeblikksbildeVisningPDF
+						vedtakId={viewProps.vedtakId}
+						oyeblikksbildeType={viewProps.oyeblikksbildeType}
+					/>
+				);
+			}
+			return null;
 		case ViewType.ARENA_VEDTAK_PDF:
-			return <ArenaVedtaksbrevVisning dokumentInfoId={dokumentInfoId} journalpostId={journalpostId} />;
+			if ('dokumentInfoId' in viewProps && 'journalpostId' in viewProps) {
+				return (
+					<ArenaVedtaksbrevVisning
+						dokumentInfoId={viewProps.dokumentInfoId}
+						journalpostId={viewProps.journalpostId}
+					/>
+				);
+			}
+			return null;
 		default:
 			return <Hovedside />;
 	}
