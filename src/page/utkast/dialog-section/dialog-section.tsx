@@ -67,7 +67,10 @@ export function DialogSection() {
 	}
 
 	return (
-		<div style={innholdStyle} className="dialog-section-innhold">
+		<div
+			// style={innholdStyle}
+			className="dialog-section-innhold"
+		>
 			<div className="dialog-section-innhold__meldinger" id={MEDLINGER_ID}>
 				{harLastetMeldinger ? (
 					<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />

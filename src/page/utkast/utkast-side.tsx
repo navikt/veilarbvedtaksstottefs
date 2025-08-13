@@ -167,7 +167,10 @@ export function UtkastSide() {
 					<KanIkkeDistribueresAlert kanDistribueres={!!utkast && utkast?.kanDistribueres} />
 					<div className="utkast-side__skjema-section-innhold">{utkastSkjema}</div>
 				</div>
-				<div style={dialogSectionStyle} className="utkast-side__dialog-section">
+				<div
+					// style={dialogSectionStyle}
+					className="utkast-side__dialog-section"
+				>
 					<Show if={showSection}>
 						<DialogSectionHeader beslutterNavn={utkast?.beslutterNavn} />
 						<DialogSection />
