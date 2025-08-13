@@ -10,7 +10,7 @@ import { Button, Loader, Textarea } from '@navikt/ds-react';
 import './dialog-section.less';
 
 const MESSAGE_MAX_LENGTH = 1000;
-const DIALOG_SECTION_HEADER_HEIGHT = 64;
+const DIALOG_SECTION_HEADER_HEIGHT = 64; // px
 export const MEDLINGER_ID = 'veilarbvedtaksstottefs-melding-liste';
 
 export function DialogSection() {

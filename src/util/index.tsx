@@ -6,7 +6,8 @@ const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
 
 export const makeAbsoluteHeightStyle = (height: number): Partial<CSSProperties> => {
-	return { height: height + 'px', minHeight: height + 'px', maxHeight: height + 'px' };
+	const heightInRem = height/16;
+	return { height: heightInRem + 'rem', minHeight: heightInRem + 'rem', maxHeight: heightInRem + 'rem' };
 };
 
 export const scrollToBottom = (elem: Element | null) => {

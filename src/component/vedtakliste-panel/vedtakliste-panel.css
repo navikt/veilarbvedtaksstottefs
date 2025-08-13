@@ -8,6 +8,7 @@
 	background-color: var(--a-surface-default);
 	border: 1px solid var(--a-border-default);
 	border-radius: var(--a-border-radius-large);
+	width: max(20rem, 80vw);
 }
 
 .veilarbvedtaksstottefs .vedtak-panel:hover {
@@ -21,8 +22,8 @@
 }
 
 .veilarbvedtaksstottefs .vedtak-panel__bilde {
-	width: 26px;
-	height: 36px;
+	width: 1.625rem;
+	height: 2.25rem;
 }
 
 .veilarbvedtaksstottefs .vedtak-panel__dato {
@@ -34,8 +35,8 @@
 	width: 1.5rem;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 37.5rem) {
 	.veilarbvedtaksstottefs .vedtak-panel {
-		width: 576px;
+		width: 36rem;
 	}
 }
