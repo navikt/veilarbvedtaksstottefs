@@ -1,5 +1,3 @@
-@import '../../variabler';
-
 .veilarbvedtaksstottefs {
 	.vedtaksstotte-footer {
 		/* Legg til ekstra høgd i footer som vert vist om ein scrollar heilt nedst på sida
@@ -9,7 +7,7 @@
 		bottom: calc(
 			-1 * var(--ekstra-footer-hoyde-ved-scroll-til-bunnen-av-sida)
 		); // Skjul ekstra scroll-høgde om ein ikkje scrollar heilt nedst på sida.
-		height: calc(@footer-height + var(--ekstra-footer-hoyde-ved-scroll-til-bunnen-av-sida));
+		height: calc(var(--veilarbvedtaksstottefs-footer-height) + var(--ekstra-footer-hoyde-ved-scroll-til-bunnen-av-sida));
 
 		background-color: white;
 		width: 100%;
