@@ -10,7 +10,7 @@ import { useDataStore } from '../../store/data-store';
 import { useTilgangStore } from '../../store/tilgang-store';
 import { useSkjemaStore } from '../../store/skjema-store';
 import { useDialogSection } from '../../store/dialog-section-store';
-import { hentId, makeAbsoluteHeightStyle } from '../../util';
+import { hentId } from '../../util';
 import Show from '../../component/show';
 import { hentMeldinger } from '../../api/veilarbvedtaksstotte/meldinger';
 import { DialogSectionMinified } from './dialog-section-minified/dialog-section-minified';
@@ -20,33 +20,13 @@ import { ScreenReaderSpeak } from '../../component/screen-reader-speak/screen-re
 import { KanIkkeDistribueresAlert } from './kan-ikke-distribueres-alert';
 import './utkast-side.less';
 
-const FOOTER_HEIGHT = 72;
 const TEN_SECONDS = 10000;
-
-function calculateDialogSectionHeight(): number | undefined {
-	const elem = document.getElementsByClassName('utkast-side__dialog-section')[0];
-	if (elem) {
-		const top = elem.getBoundingClientRect().top;
-		const height = document.body.clientHeight;
-
-		return height - top - FOOTER_HEIGHT;
-	}
-
-	return undefined;
-}
 
 export function UtkastSide() {
 	const { utkast, meldinger, setMeldinger } = useDataStore();
 	const { sistOppdatert, lagringStatus, setHarForsoktAForhandsvise, innsatsgruppe } = useSkjemaStore();
-	const {
-		sectionHeight,
-		setSectionHeight,
-		showSection,
-		setShowSection,
-		harLastetMeldinger,
-		setHarLastetMeldinger,
-		setHarNyeMeldinger
-	} = useDialogSection();
+	const { showSection, setShowSection, harLastetMeldinger, setHarLastetMeldinger, setHarNyeMeldinger } =
+		useDialogSection();
 	const { erAnsvarligVeileder } = useTilgangStore();
 
 	// Bruk refs for å hente oppdatert data i refreshMeldinger()
@@ -56,7 +36,6 @@ export function UtkastSide() {
 	const intervalRef = useRef<number>();
 	const erBeslutterProsessStartet = !!utkast?.beslutterProsessStatus;
 	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
-	const dialogSectionStyle = sectionHeight ? makeAbsoluteHeightStyle(sectionHeight) : undefined;
 	const hovedinnholdClassName = showSection
 		? 'utkast-side__hovedinnhold--dialog'
 		: 'utkast-side__hovedinnhold--dialog-minified';
@@ -109,18 +88,6 @@ export function UtkastSide() {
 	}, [showSection]);
 
 	useEffect(() => {
-		const scrollListener = () => setSectionHeight(calculateDialogSectionHeight());
-
-		if (showSection) {
-			window.addEventListener('scroll', scrollListener);
-			setSectionHeight(calculateDialogSectionHeight());
-		}
-
-		return () => window.removeEventListener('scroll', scrollListener);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [showSection]);
-
-	useEffect(() => {
 		// Hvis utkastet har beslutter så henter vi meldinger periodisk for å simulere real-time kommunikasjon
 		if (erBeslutterProsessStartet) {
 			refreshMeldinger();
@@ -167,10 +134,7 @@ export function UtkastSide() {
 					<KanIkkeDistribueresAlert kanDistribueres={!!utkast && utkast?.kanDistribueres} />
 					<div className="utkast-side__skjema-section-innhold">{utkastSkjema}</div>
 				</div>
-				<div
-					// style={dialogSectionStyle}
-					className="utkast-side__dialog-section"
-				>
+				<div className="utkast-side__dialog-section">
 					<Show if={showSection}>
 						<DialogSectionHeader beslutterNavn={utkast?.beslutterNavn} />
 						<DialogSection />

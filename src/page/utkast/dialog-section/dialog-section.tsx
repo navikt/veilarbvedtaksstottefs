@@ -3,28 +3,23 @@ import { hentMeldinger, sendDialog } from '../../../api/veilarbvedtaksstotte/mel
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
 import { sortDatesAsc } from '../../../util/date-utils';
-import { hentId, makeAbsoluteHeightStyle, scrollToBottom } from '../../../util';
+import { hentId, scrollToBottom } from '../../../util';
 import { MeldingListe } from './melding-liste/melding-liste';
 import { useDialogSection } from '../../../store/dialog-section-store';
 import { Button, Loader, Textarea } from '@navikt/ds-react';
 import './dialog-section.less';
 
 const MESSAGE_MAX_LENGTH = 1000;
-const DIALOG_SECTION_HEADER_HEIGHT = 64; // px
 export const MEDLINGER_ID = 'veilarbvedtaksstottefs-melding-liste';
 
 export function DialogSection() {
-	const { sectionHeight, harLastetMeldinger } = useDialogSection();
+	const { harLastetMeldinger } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { meldinger, setMeldinger, innloggetVeileder, utkast } = useDataStore();
 
 	const [melding, setMelding] = useState<string>('');
 	const [senderMelding, setSenderMelding] = useState(false);
 	const skrivefeltRef = useRef<HTMLTextAreaElement | null>(null);
-
-	const innholdStyle = sectionHeight
-		? makeAbsoluteHeightStyle(sectionHeight - DIALOG_SECTION_HEADER_HEIGHT)
-		: undefined;
 
 	const kanSendeMelding = !senderMelding && melding.trim().length > 0 && melding.length <= MESSAGE_MAX_LENGTH;
 
@@ -67,10 +62,7 @@ export function DialogSection() {
 	}
 
 	return (
-		<div
-			// style={innholdStyle}
-			className="dialog-section-innhold"
-		>
+		<div className="dialog-section-innhold">
 			<div className="dialog-section-innhold__meldinger" id={MEDLINGER_ID}>
 				{harLastetMeldinger ? (
 					<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
