@@ -14,7 +14,7 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { id, innsatsgruppe, hovedmal, veilederNavn, vedtakFattet } = props.gjeldendeVedtak;
 
 	const handleVisVedtakClicked = () => {
-		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: id });
+		changeView(ViewType.VEDTAK, { vedtakId: id });
 		logMetrikk('vis-gjeldende-vedtak');
 	};
 
