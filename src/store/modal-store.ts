@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import constate from 'constate';
+import { InnsatsgruppeType } from '../api/veilarbvedtaksstotte';
 
 export enum ModalType {
 	INGEN = 'INGEN',
@@ -26,11 +27,17 @@ export enum ModalType {
 	FEIL_VED_VALIDERING_AV_UTKAST = 'FEIL_VED_VALIDERING_AV_UTKAST'
 }
 
+type ModalProps =
+	| { onSendVedtakBekreftet: () => void }
+	| { onGodkjennVedtakBekreftet: () => void }
+	| { innsatsgruppe: InnsatsgruppeType }
+	| object;
+
 export const [ModalStoreProvider, useModalStore] = constate(() => {
 	const [modalType, setModalType] = useState<ModalType>(ModalType.INGEN);
-	const [modalProps, setModalProps] = useState<object>({});
+	const [modalProps, setModalProps] = useState<ModalProps>({});
 
-	const showModal = (type: ModalType, props: object = {}) => {
+	const showModal = (type: ModalType, props: ModalProps = {}) => {
 		setModalProps(props);
 		setModalType(type);
 	};

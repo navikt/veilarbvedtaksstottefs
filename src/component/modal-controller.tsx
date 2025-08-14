@@ -71,17 +71,21 @@ export function ModalController() {
 			<SpinnerModal isOpen={modalType === ModalType.LASTER} />
 			<BekreftSendVedtakModal
 				isOpen={modalType === ModalType.BEKREFT_SEND_VEDTAK}
-				onSendVedtakBekreftet={modalProps.onSendVedtakBekreftet}
+				onSendVedtakBekreftet={
+					'onSendVedtakBekreftet' in modalProps ? modalProps.onSendVedtakBekreftet : () => {}
+				}
 			/>
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
 			<GodkjennModal
 				isOpen={modalType === ModalType.BEKREFT_SEND_TIL_GODKJENNING}
-				onGodkjennUtkastBekreftet={modalProps.onGodkjennVedtakBekreftet}
+				onGodkjennUtkastBekreftet={
+					'onGodkjennVedtakBekreftet' in modalProps ? modalProps.onGodkjennVedtakBekreftet : () => {}
+				}
 			/>
 			<AvbrytBeslutterProsessModal
 				isOpen={modalType === ModalType.BEKREFT_AVBRYT_BESLUTTER_PROSESS}
-				innsatsgruppe={modalProps.innsatsgruppe}
+				innsatsgruppe={'innsatsgruppe' in modalProps ? modalProps.innsatsgruppe : undefined}
 			/>
 			{feilModalConfig && <FeilModal isOpen={feilModalConfig != null} config={feilModalConfig} />}
 		</>
