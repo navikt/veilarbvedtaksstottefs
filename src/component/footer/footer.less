@@ -1,11 +1,21 @@
 .veilarbvedtaksstottefs {
 	.vedtaksstotte-footer {
-		position: fixed;
-		left: 0;
-		bottom: 0;
+		/* Legg til ekstra høgd i footer som vert vist om ein scrollar heilt nedst på sida
+         * for å løyse ein bug der sticky footer ikkje vart synleg for ein del av veiledarane i Applikasjonsportalen. */
+		--ekstra-footer-hoyde-ved-scroll-til-bunnen-av-sida: 13rem;
+		position: sticky;
+		bottom: calc(
+			-1 * var(--ekstra-footer-hoyde-ved-scroll-til-bunnen-av-sida)
+		); // Skjul ekstra scroll-høgde om ein ikkje scrollar heilt nedst på sida.
+		height: calc(
+			var(--veilarbvedtaksstottefs-footer-height) + var(--ekstra-footer-hoyde-ved-scroll-til-bunnen-av-sida)
+		);
+
 		background-color: white;
 		width: 100%;
 		padding: var(--a-spacing-2) 0;
 		box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2);
+
+		align-items: start;
 	}
 }

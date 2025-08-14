@@ -1,14 +1,8 @@
-import { CSSProperties } from 'react';
 import { OrNothing } from './type/ornothing';
 import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
-
-export const makeAbsoluteHeightStyle = (height: number): Partial<CSSProperties> => {
-	const heightInRem = height/16;
-	return { height: heightInRem + 'rem', minHeight: heightInRem + 'rem', maxHeight: heightInRem + 'rem' };
-};
 
 export const scrollToBottom = (elem: Element | null) => {
 	if (elem) {
