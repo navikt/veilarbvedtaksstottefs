@@ -7,11 +7,15 @@
 		bottom: calc(
 			-1 * var(--ekstra-footer-hoyde-ved-scroll-til-bunnen-av-sida)
 		); // Skjul ekstra scroll-høgde om ein ikkje scrollar heilt nedst på sida.
-		height: calc(var(--veilarbvedtaksstottefs-footer-height) + var(--ekstra-footer-hoyde-ved-scroll-til-bunnen-av-sida));
+		height: calc(
+			var(--veilarbvedtaksstottefs-footer-height) + var(--ekstra-footer-hoyde-ved-scroll-til-bunnen-av-sida)
+		);
 
 		background-color: white;
 		width: 100%;
 		padding: var(--a-spacing-2) 0;
 		box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2);
+
+		align-items: start;
 	}
 }
