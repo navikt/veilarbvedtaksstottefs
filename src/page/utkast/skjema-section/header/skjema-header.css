@@ -8,7 +8,7 @@
 	overflow-y: visible;
 	background-color: var(--a-blue-100);
 	border-bottom: 3px solid var(--a-blue-500);
-	height: 4rem;
+	height: var(--veilarbvedtaksstottefs-utkast-og-dialog-header-height);
 }
 
 .veilarbvedtaksstottefs .skjema-header__ikon {
