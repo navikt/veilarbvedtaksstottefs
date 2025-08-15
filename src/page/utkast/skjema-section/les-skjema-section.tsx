@@ -27,7 +27,7 @@ export function LesSkjemaSection() {
 	const { erBeslutter } = useTilgangStore();
 	const { initSkjema } = useSkjemaStore();
 	const { showVarsel } = useVarselStore();
-	const refreshUtkastIntervalRef = useRef<number>();
+	const refreshUtkastIntervalRef = useRef<number>(undefined);
 	const { malform } = useDataStore();
 
 	useEffect(() => {

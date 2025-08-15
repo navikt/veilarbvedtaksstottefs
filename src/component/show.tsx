@@ -1,5 +1,5 @@
 interface ShowProps {
-	if?: boolean;
+	if?: boolean | null;
 	children?: React.ReactNode;
 }
 

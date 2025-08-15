@@ -33,7 +33,7 @@ export function UtkastSide() {
 	const showSectionRef = useRef(showSection);
 	const harLastetMeldingerRef = useRef(harLastetMeldinger);
 	const meldingerRef = useRef(meldinger);
-	const intervalRef = useRef<number>();
+	const intervalRef = useRef<number>(-1);
 	const erBeslutterProsessStartet = !!utkast?.beslutterProsessStatus;
 	const utkastSkjema = erAnsvarligVeileder ? <EndreSkjemaSection /> : <LesSkjemaSection />;
 	const hovedinnholdClassName = showSection
@@ -43,7 +43,7 @@ export function UtkastSide() {
 	function avbrytPolling() {
 		if (intervalRef.current) {
 			clearInterval(intervalRef.current);
-			intervalRef.current = undefined;
+			intervalRef.current = -1;
 		}
 	}
 
@@ -93,7 +93,7 @@ export function UtkastSide() {
 			refreshMeldinger();
 
 			// Start polling of new dialogs
-			if (intervalRef.current === undefined) {
+			if (intervalRef.current === -1) {
 				intervalRef.current = window.setInterval(refreshMeldinger, TEN_SECONDS);
 			}
 
