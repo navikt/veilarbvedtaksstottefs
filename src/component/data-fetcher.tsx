@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, type JSX } from 'react';
 import Spinner from './spinner/spinner';
 import { useDataStore } from '../store/data-store';
 import { useSkjemaStore } from '../store/skjema-store';

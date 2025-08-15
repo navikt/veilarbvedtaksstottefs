@@ -1,4 +1,5 @@
 import { Accordion } from '@navikt/ds-react';
+import type { JSX } from 'react';
 
 function DuplicateWords(props: { content: string }) {
 	let value = props.content;

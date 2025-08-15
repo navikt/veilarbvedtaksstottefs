@@ -1,6 +1,6 @@
 import { useAxiosFetcher } from '../util/use-axios-fetcher';
 import { fetchFeaturesToggles } from '../api/obo-unleash';
-import { PropsWithChildren, useLayoutEffect } from 'react';
+import { PropsWithChildren, useLayoutEffect, type JSX } from 'react';
 import { ifResponseHasData } from '../api/utils';
 import Spinner from './spinner/spinner';
 import { useDataStore } from '../store/data-store';

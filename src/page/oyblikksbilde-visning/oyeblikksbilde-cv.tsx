@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, type JSX } from 'react';
 import { Button, Heading } from '@navikt/ds-react';
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import Spinner from '../../component/spinner/spinner';

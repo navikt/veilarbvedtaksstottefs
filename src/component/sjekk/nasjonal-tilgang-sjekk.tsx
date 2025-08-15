@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, type JSX } from 'react';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { fetchTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import Spinner from '../spinner/spinner';
