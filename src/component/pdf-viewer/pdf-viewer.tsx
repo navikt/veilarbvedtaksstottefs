@@ -1,8 +1,11 @@
 import { Component } from 'react';
-import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
+import { Document, Page, pdfjs } from 'react-pdf';
 import { Heading, Loader } from '@navikt/ds-react';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 import './pdf-viewer.css';
 
+pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
 interface PdfViewerProps {
 	url: string;
 	title: string;
@@ -33,7 +36,7 @@ function Pages(props: { numPages: number }) {
 		<>
 			{Array(props.numPages)
 				.fill(0)
-				.map((elem, index) => (
+				.map((_, index) => (
 					<Page key={index} pageNumber={index + 1} width={800} />
 				))}
 		</>

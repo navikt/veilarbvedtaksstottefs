@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import isEqual from 'lodash.isequal';
 import { BodyLong, BodyShort, List } from '@navikt/ds-react';
 import { VarselType } from '../../../component/varsel/varsel-type';
 import FeltHeader from './felt-header/felt-header';
@@ -28,7 +27,7 @@ export function LesSkjemaSection() {
 	const { erBeslutter } = useTilgangStore();
 	const { initSkjema } = useSkjemaStore();
 	const { showVarsel } = useVarselStore();
-	const refreshUtkastIntervalRef = useRef<number>();
+	const refreshUtkastIntervalRef = useRef<number>(undefined);
 	const { malform } = useDataStore();
 
 	useEffect(() => {
@@ -62,12 +61,22 @@ export function LesSkjemaSection() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkast, erBeslutter]);
 
+	function isArrayEqual(a: string[], b: string[]) {
+		if (a === b) return true;
+		if (!a || !b) return false;
+		if (a.length !== b.length) return false;
+		for (let i = 0; i < a.length; i++) {
+			if (a[i] !== b[i]) return false;
+		}
+		return true;
+	}
+
 	function erVedtakSkjemafeltEndret(v1: Utkast, v2: Utkast) {
 		return (
 			v1.begrunnelse !== v2.begrunnelse ||
 			v1.hovedmal !== v2.hovedmal ||
 			v1.innsatsgruppe !== v2.innsatsgruppe ||
-			!isEqual(v1.opplysninger, v2.opplysninger)
+			!isArrayEqual(v1.opplysninger, v2.opplysninger)
 		);
 	}
 

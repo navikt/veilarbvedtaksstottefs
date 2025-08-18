@@ -1,12 +1,12 @@
 import { useAxiosFetcher } from '../util/use-axios-fetcher';
 import { fetchFeaturesToggles } from '../api/obo-unleash';
-import { PropsWithChildren, useLayoutEffect } from 'react';
+import { PropsWithChildren, useLayoutEffect, type JSX } from 'react';
 import { ifResponseHasData } from '../api/utils';
 import Spinner from './spinner/spinner';
 import { useDataStore } from '../store/data-store';
 import { IkkeKontaktMedBaksystemFeilmelding } from './feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 
-function FeatureFetcher(props: PropsWithChildren<any>) {
+function FeatureFetcher(props: PropsWithChildren<unknown>): JSX.Element | null {
 	const featureAxiosFetcher = useAxiosFetcher(fetchFeaturesToggles);
 	const { setFeatures } = useDataStore();
 
@@ -21,7 +21,7 @@ function FeatureFetcher(props: PropsWithChildren<any>) {
 		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
 
-	return featureAxiosFetcher.data ? props.children : null;
+	return featureAxiosFetcher.data ? <>{props.children}</> : null;
 }
 
 export default FeatureFetcher;

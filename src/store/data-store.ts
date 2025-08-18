@@ -15,18 +15,22 @@ import { FeatureToggles } from '../api/obo-unleash';
 import { ArbeidssokerPeriode } from '@navikt/arbeidssokerregisteret-utils';
 
 // Data med placeholder er garantert av data-fetcher.tsx å være hentet
-const placeholder = {} as any;
+const oppfolgingPlaceholder = {} as Oppfolging;
+const malformPlaceholder = {} as MalformData;
+const featuresPlaceholder = {} as FeatureToggles;
+const veilederPlaceholder = {} as Veileder;
+const navnPlaceholder = {} as Navn;
 
 export const [DataStoreProvider, useDataStore] = constate(() => {
-	const [oppfolgingData, setOppfolgingData] = useState<Oppfolging>(placeholder);
-	const [malform, setMalform] = useState<MalformData>(placeholder);
-	const [features, setFeatures] = useState<FeatureToggles>(placeholder);
-	const [innloggetVeileder, setInnloggetVeileder] = useState<Veileder>(placeholder);
+	const [oppfolgingData, setOppfolgingData] = useState<Oppfolging>(oppfolgingPlaceholder);
+	const [malform, setMalform] = useState<MalformData>(malformPlaceholder);
+	const [features, setFeatures] = useState<FeatureToggles>(featuresPlaceholder);
+	const [innloggetVeileder, setInnloggetVeileder] = useState<Veileder>(veilederPlaceholder);
 	const [utkast, setUtkast] = useState<Utkast | null>(null);
 	const [fattedeVedtak, setFattedeVedtak] = useState<Vedtak[]>([]);
 	const [arenaVedtak, setArenaVedtak] = useState<ArenaVedtak[]>([]);
 	const [meldinger, setMeldinger] = useState<(DialogMeldingData | SystemMeldingData)[]>([]);
-	const [navn, setNavn] = useState<Navn>(placeholder);
+	const [navn, setNavn] = useState<Navn>(navnPlaceholder);
 	const [arbeidssokerperiode, setArbeidssokerperiode] = useState<ArbeidssokerPeriode | null>(null);
 
 	function leggTilSystemMelding(systemMeldingType: SystemMeldingType) {

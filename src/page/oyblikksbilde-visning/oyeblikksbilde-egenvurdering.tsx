@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, type JSX } from 'react';
 import Spinner from '../../component/spinner/spinner';
 import Card from '../../component/card/card';
 import OyblikksbildeType from '../../util/type/oyblikksbilde-type';

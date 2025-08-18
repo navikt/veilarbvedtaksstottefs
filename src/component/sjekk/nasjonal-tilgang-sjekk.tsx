@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, type JSX } from 'react';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { fetchTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
 import Spinner from '../spinner/spinner';
@@ -6,10 +6,10 @@ import { Alert } from '@navikt/ds-react';
 
 interface NasjonalTilgangSjekkProps {
 	fnr: string;
-	children?: any;
+	children?: React.ReactNode;
 }
 
-export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
+export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps): JSX.Element | null {
 	const tilgangTilKontorFetcher = useAxiosFetcher(fetchTilgangTilBrukersKontor);
 
 	// Siden loading = false før vi kaller fetch så vil advarsel alertstripen bli rendret et par ms med useEffect()
@@ -26,5 +26,5 @@ export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps) {
 		return <Alert variant="warning">Du har ikke tilgang til å se brukers oppfølgingsvedtak.</Alert>;
 	}
 
-	return props.children;
+	return props.children ? <>{props.children}</> : null;
 }

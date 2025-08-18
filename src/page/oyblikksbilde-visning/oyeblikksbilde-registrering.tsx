@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, type JSX } from 'react';
 import Spinner from '../../component/spinner/spinner';
 import Card from '../../component/card/card';
 import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
@@ -56,7 +56,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 				/>
 			);
 		} catch (error) {
-			return <Alert variant="error">{error}</Alert>;
+			return <Alert variant="error">{String(error)}</Alert>;
 		}
 	} else if (registreringOyeblikksbildeFetcher.data?.data) {
 		try {
@@ -68,7 +68,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 				/>
 			);
 		} catch (error) {
-			return <Alert variant="error">{error}</Alert>;
+			return <Alert variant="error">{String(error)}</Alert>;
 		}
 	} else {
 		return <></>;
