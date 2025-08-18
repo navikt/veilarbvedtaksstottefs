@@ -1,25 +1,35 @@
 {
+  "__vite-browser-external": {
+    "file": "assets/__vite-browser-external-BIHI7g3E.js",
+    "name": "__vite-browser-external",
+    "src": "__vite-browser-external",
+    "isDynamicEntry": true
+  },
   "index.html": {
-    "file": "assets/index-Uz4EFyDN.js",
+    "file": "assets/index-8jprcnKl.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
+      "__vite-browser-external",
+      "__vite-browser-external",
+      "__vite-browser-external",
+      "__vite-browser-external",
       "src/mock/index.ts"
     ],
     "css": [
-      "assets/index-Dvwl1sKW.css"
+      "assets/index-GMfP6WEY.css"
     ],
     "assets": [
       "assets/utkast-EIufPGB5.svg",
       "assets/fullfort-n6UVRxJB.svg",
       "assets/ingen-vedtak-V0SoDF_P.svg",
-      "assets/pdf.worker-JgWQ90x2.js"
+      "assets/pdf.worker.min-GB3t0DcA.mjs"
     ]
   },
-  "node_modules/pdfjs-dist/build/pdf.worker.js": {
-    "file": "assets/pdf.worker-JgWQ90x2.js",
-    "src": "node_modules/pdfjs-dist/build/pdf.worker.js"
+  "node_modules/pdfjs-dist/build/pdf.worker.min.mjs": {
+    "file": "assets/pdf.worker.min-GB3t0DcA.mjs",
+    "src": "node_modules/pdfjs-dist/build/pdf.worker.min.mjs"
   },
   "src/component/panel/gjeldende-vedtak/fullfort.svg": {
     "file": "assets/fullfort-n6UVRxJB.svg",
@@ -34,7 +44,7 @@
     "src": "src/component/panel/utkast/utkast.svg"
   },
   "src/mock/index.ts": {
-    "file": "assets/index-H86d8Q1F.js",
+    "file": "assets/index-CN6zgc0q.js",
     "name": "index",
     "src": "src/mock/index.ts",
     "isDynamicEntry": true,
