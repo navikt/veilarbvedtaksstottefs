@@ -8,13 +8,13 @@
 	overflow-y: visible;
 	background-color: var(--a-blue-100);
 	border-bottom: 3px solid var(--a-blue-500);
-	height: 64px;
+	height: var(--veilarbvedtaksstottefs-utkast-og-dialog-header-height);
 }
 
 .veilarbvedtaksstottefs .skjema-header__ikon {
 	margin: auto 0 auto 2rem;
-	height: 40px;
-	width: 35px;
+	height: 2.5rem;
+	width: 2.1875rem;
 }
 
 .veilarbvedtaksstottefs .skjema-header__innhold {
@@ -39,7 +39,7 @@
 
 .veilarbvedtaksstottefs .separator {
 	height: 1rem;
-	width: 1px;
+	width: 0.0625rem; /* 1px som rem, sidan det er typografi-relevant */
 	margin-top: auto;
 	margin-bottom: auto;
 	background-color: var(--a-border-strong);

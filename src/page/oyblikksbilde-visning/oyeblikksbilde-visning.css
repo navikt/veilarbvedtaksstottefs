@@ -8,7 +8,7 @@
 	width: 98%;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 75rem) {
 	.veilarbvedtaksstottefs .oyblikksbilde-visning .vedlegg-card {
 		width: 80%;
 	}

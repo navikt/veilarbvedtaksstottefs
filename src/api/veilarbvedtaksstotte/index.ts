@@ -35,6 +35,7 @@ export interface Utkast {
 	beslutterNavn: OrNothing<string>;
 	opplysninger: string[]; // Har blitt renamet til "kilder" i etterkant
 	beslutterProsessStatus: OrNothing<BeslutterProsessStatus>;
+	kanDistribueres: boolean | null;
 }
 
 export interface Vedtak {

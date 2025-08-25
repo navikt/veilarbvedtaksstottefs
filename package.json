@@ -2,13 +2,19 @@
   "name": "veilarbvedtaksstottefs",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "cross-env REACT_APP_DEV=true craco start",
-    "build": "cross-env craco build",
-    "build:mock": "cross-env PUBLIC_URL=/veilarbvedtaksstottefs REACT_APP_DEV=true craco build",
-    "test": "craco test",
+    "start": "vite --mode demo",
+    "build": "tsc && vite build --base=https://cdn.nav.no/obo/prod/veilarbvedtaksstottefs/dist",
+    "build:dev": "tsc && vite build --base=https://cdn.nav.no/obo/dev/veilarbvedtaksstottefs/dist",
+    "build:mock": "tsc && vite build --mode demo --base=/veilarbvedtaksstottefs/",
+    "lint": "eslint src --max-warnings 0",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "prepare": "husky"
+    "prettier:check": "prettier --check src --config .prettierrc.json",
+    "prettier:write": "prettier --write src --config .prettierrc.json",
+    "preview": "vite preview",
+    "prepare": "husky",
+    "test": "vitest"
   },
   "browserslist": [
     ">0.2%",
@@ -17,44 +23,45 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@craco/craco": "7.1.0",
-    "@navikt/aksel-icons": "7.10.0",
-    "@navikt/arbeidssokerregisteret-utils": "1.2.0",
-    "@navikt/ds-css": "7.10.0",
-    "@navikt/ds-react": "7.10.0",
+    "@navikt/aksel-icons": "7.28.1",
+    "@navikt/arbeidssokerregisteret-utils": "1.7.0",
+    "@navikt/ds-css": "7.28.1",
+    "@navikt/ds-react": "7.28.1",
     "@navikt/fnrvalidator": "2.1.5",
-    "@navikt/navspa": "5.0.1",
-    "axios": "1.7.9",
+    "@navikt/navspa": "7.1.0",
+    "axios": "1.11.0",
     "classnames": "2.5.1",
-    "constate": "3.3.2",
-    "craco-less": "3.0.1",
+    "constate": "3.3.3",
     "dayjs": "1.11.13",
-    "dompurify": "3.2.3",
+    "dompurify": "3.2.6",
     "lodash.debounce": "4.0.8",
-    "lodash.isequal": "4.5.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-pdf": "5.7.2",
-    "react-scripts": "5.0.1",
-    "typescript": "4.9.5"
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-pdf": "9.2.1"
   },
   "devDependencies": {
-    "@navikt/aksel-stylelint": "7.10.0",
-    "@types/jest": "29.5.14",
+    "@eslint/js": "9.33.0",
+    "@navikt/aksel-stylelint": "7.28.1",
     "@types/lodash.debounce": "4.0.9",
-    "@types/lodash.isequal": "4.5.8",
-    "@types/react": "17.0.57",
-    "@types/react-dom": "17.0.19",
-    "@types/react-pdf": "5.7.4",
-    "cross-env": "7.0.3",
+    "@types/react": "19.1.10",
+    "@types/react-dom": "19.1.7",
+    "@vitejs/plugin-react": "5.0.0",
+    "eslint": "9.33.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "globals": "16.3.0",
     "husky": "9.1.7",
-    "lint-staged": "15.4.3",
-    "msw": "2.7.0",
-    "prettier": "3.4.2",
-    "stylelint": "16.14.1"
-  },
-  "msw": {
-    "workerDirectory": "public"
+    "less": "4.4.0",
+    "lint-staged": "16.1.5",
+    "msw": "2.10.5",
+    "prettier": "3.6.2",
+    "stylelint": "16.23.1",
+    "typescript": "5.9.2",
+    "typescript-eslint": "8.39.1",
+    "vite": "7.1.2",
+    "vitest": "3.2.4"
   },
   "lint-staged": {
     "src/**/*.css": [
@@ -65,8 +72,11 @@
     ],
     "src/**/*.{js,jsx,ts,tsx}": [
       "prettier --write",
-      "eslint --config .eslintrc.lintstaged.json"
+      "eslint"
     ]
+  },
+  "msw": {
+    "workerDirectory": "public"
   },
   "stylelint": {
     "extends": "@navikt/aksel-stylelint/recommended"

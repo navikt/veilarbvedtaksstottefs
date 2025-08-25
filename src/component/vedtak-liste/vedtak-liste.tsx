@@ -5,7 +5,7 @@ interface VedtakListeProps<T> {
 	tittel: string;
 	ingenVedtakTekst: string;
 	vedtak: T[];
-	vedtakMapper: (vedtak: T, posisjon: number) => any;
+	vedtakMapper: (vedtak: T, posisjon: number) => React.ReactNode;
 }
 
 export function VedtakListe<T>(props: VedtakListeProps<T>) {

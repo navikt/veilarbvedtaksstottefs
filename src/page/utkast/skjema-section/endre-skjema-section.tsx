@@ -42,7 +42,7 @@ export function EndreSkjemaSection() {
 	} = useSkjemaStore();
 	const { showVarsel } = useVarselStore();
 
-	const pollBeslutterstatusIntervalRef = useRef<number>();
+	const pollBeslutterstatusIntervalRef = useRef<number>(undefined);
 	const isAfterFirstRender = useIsAfterFirstRender();
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,13 +1,8 @@
-import { CSSProperties } from 'react';
 import { OrNothing } from './type/ornothing';
 import { BeslutterProsessStatus, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 
 const emdashCharacterCode = 8212;
 export const EMDASH = String.fromCharCode(emdashCharacterCode);
-
-export const makeAbsoluteHeightStyle = (height: number): Partial<CSSProperties> => {
-	return { height: height + 'px', minHeight: height + 'px', maxHeight: height + 'px' };
-};
 
 export const scrollToBottom = (elem: Element | null) => {
 	if (elem) {
@@ -40,8 +35,8 @@ export const erGodkjentAvBeslutter = (beslutterProsessStatus: OrNothing<Beslutte
 };
 
 // If the checkboxes/radios does not swallow enter, then it will propagate to the first button and trigger onClick
-export const swallowEnterKeyPress = (e: any) => {
-	if (e.keyCode === 13) {
+export const swallowEnterKeyPress = (e: React.KeyboardEvent) => {
+	if (e.key === 'Enter') {
 		e.preventDefault();
 	}
 };

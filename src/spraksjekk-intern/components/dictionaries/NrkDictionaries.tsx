@@ -13,7 +13,7 @@ interface NrkInterface {
 
 function NrkDictionaries(props: { content: string }) {
 	const value = props.content;
-	let gammelnavsk = Nrkordliste;
+	const gammelnavsk = Nrkordliste;
 	let gammelnavskResultater: NrkInterface[] = [];
 
 	const keyword = value;
@@ -41,7 +41,7 @@ function NrkDictionaries(props: { content: string }) {
 						</Heading>
 						Ord i teksten som kan være støtende, eller som bør brukes med varsomhet:
 						<Accordion className="gammelnavskAccordion mt-4">
-							{gammelnavskResultater.map((gammelnavsk, i) => (
+							{gammelnavskResultater.map(gammelnavsk => (
 								<Accordion.Item key={gammelnavsk.id}>
 									<Accordion.Header className="gammelnavskAccordion" type="button">
 										<span className="firstLetter">&quot;{gammelnavsk.ord}&quot;</span>

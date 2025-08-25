@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from 'classnames';
-import './footer.less';
+import './footer.css';
 
 interface FooterProps {
 	className?: string;
