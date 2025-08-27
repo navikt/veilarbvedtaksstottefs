@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
+import { useDataStore } from '../../store/data-store';
 import { BodyShort, Heading, List, Loader } from '@navikt/ds-react';
+import { Utkast } from '../../api/veilarbvedtaksstotte';
+import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
+import { hovedmalTekst } from '../../util/hovedmal';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import './pdf-viewer.css';
-import { Utkast } from '../../api/veilarbvedtaksstotte';
-import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
-import { hovedmalTekst } from '../../util/hovedmal';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
 interface PdfViewerProps {
@@ -95,6 +96,7 @@ const PdfSpinner = () => (
 // }
 
 function PdfViewer(props: PdfViewerProps) {
+	const { utkast } = useDataStore();
 	const [numPages, setNumPages] = useState<number>();
 	// const [file, setFile] = useState<string | null>(null);
 	// const frameRef = useRef<HTMLIFrameElement>(null);
@@ -105,14 +107,14 @@ function PdfViewer(props: PdfViewerProps) {
 		window.scrollTo({ top: 0 }); // Sometimes after the PDF is loaded the page is centered, scroll back to the top
 	}
 
-	const kilder = props.utkast?.opplysninger.map((opplysning, idx) => <List.Item key={idx}>{opplysning}</List.Item>);
+	const kilder = utkast?.opplysninger.map((opplysning, idx) => <List.Item key={idx}>{opplysning}</List.Item>);
 
-	const innsatsgruppe = props.utkast?.innsatsgruppe ? innsatsgruppeTekst[props.utkast.innsatsgruppe] : '';
+	const innsatsgruppe = utkast?.innsatsgruppe ? innsatsgruppeTekst[utkast.innsatsgruppe] : '';
 
-	const hovedmal = props.utkast?.hovedmal ? hovedmalTekst[props.utkast.hovedmal] : '';
+	const hovedmal = utkast?.hovedmal ? hovedmalTekst[utkast.hovedmal] : '';
 
 	const begrunnelseAvsnitt =
-		props.utkast?.begrunnelse
+		utkast?.begrunnelse
 			?.split('\n')
 			.filter(line => line !== '')
 			.map((avsnitt, idx) => <p key={idx}>{avsnitt}</p>) ?? null; // Skal være samme formatering som i vedtaks-PDFen
