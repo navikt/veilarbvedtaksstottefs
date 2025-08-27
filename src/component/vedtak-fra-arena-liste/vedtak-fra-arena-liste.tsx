@@ -19,7 +19,7 @@ function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<Ar
 			ikon={vedtakBilde}
 		>
 			<BodyShort size="small" weight="semibold">
-				Vedtaksbrev - 14a
+				Vedtaksbrev - § 14 a
 			</BodyShort>
 		</VedtaklistePanel>
 	);
