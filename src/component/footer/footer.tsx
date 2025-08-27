@@ -8,7 +8,7 @@ interface FooterProps {
 }
 
 function Footer(props: FooterProps) {
-	return <footer className={cls('vedtaksstotte-footer', props.className)}>{props.children}</footer>;
+	return <footer className={cls('vedtaksstotte-footer skjul_ved_print', props.className)}>{props.children}</footer>;
 }
 
 export default Footer;
