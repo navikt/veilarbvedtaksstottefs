@@ -4,6 +4,8 @@ Intern applikasjon som brukes av veiledere for å opprette/sende § 14 a-vedtak 
 
 Testversjon av løsningen: [https://navikt.github.io/veilarbvedtaksstottefs](https://navikt.github.io/veilarbvedtaksstottefs)
 
+![Skjermutklipp av hvordan Vedtaksløsning § 14 a ser ut i frontend.](readme_illustrasjon_vedtakslosning14a.png)
+
 ### Installere pakker
 
 For å kunne hente ned @navikt/arbeidssokerregisteret-utils må du legge til en `.npmrc` fil i homemappen med følgende innhold:
