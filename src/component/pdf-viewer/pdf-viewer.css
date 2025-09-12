@@ -44,6 +44,10 @@
 		margin: 64px 64px 74px;
 	}
 
+	p {
+		margin: inherit;
+	}
+
 	.kun_til_print {
 		display: inherit;
 		width: 800px;
