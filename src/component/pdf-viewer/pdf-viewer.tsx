@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { useDataStore } from '../../store/data-store';
 import { BodyShort, Heading, List, Loader } from '@navikt/ds-react';
+import { useSkjemaStore } from '../../store/skjema-store';
 import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { hovedmalTekst } from '../../util/hovedmal';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
@@ -32,7 +32,7 @@ const PdfSpinner = () => (
 );
 
 function PdfViewer(props: PdfViewerProps) {
-	const { utkast } = useDataStore();
+	const { valgteKilder, innsatsgruppe, hovedmal, begrunnelse } = useSkjemaStore();
 	const [numPages, setNumPages] = useState<number>();
 
 	function onDocumentLoadSuccess({ numPages: nextNumPages }: PDFDocumentProxy): void {
@@ -41,14 +41,13 @@ function PdfViewer(props: PdfViewerProps) {
 		window.scrollTo({ top: 0 }); // Sometimes after the PDF is loaded the page is centered, scroll back to the top
 	}
 
-	const kilder = utkast?.opplysninger.map((opplysning, idx) => <List.Item key={idx}>{opplysning}</List.Item>);
+	const kilder = valgteKilder.map((opplysning, idx) => <List.Item key={idx}>{opplysning}</List.Item>);
 
-	const innsatsgruppe = utkast?.innsatsgruppe ? innsatsgruppeTekst[utkast.innsatsgruppe] : '';
+	const innsatsgruppeTekstverdi = innsatsgruppe ? innsatsgruppeTekst[innsatsgruppe] : '';
 
-	const hovedmal = utkast?.hovedmal ? hovedmalTekst[utkast.hovedmal] : '';
+	const hovedmalTekstverdi = hovedmal ? hovedmalTekst[hovedmal] : '';
 
-	const begrunnelseAvsnitt =
-		utkast?.begrunnelse?.split('\n').map((avsnitt, idx) => <p key={idx}>{avsnitt}</p>) ?? null; // Skal være samme formatering som i vedtaks-PDFen
+	const begrunnelseAvsnitt = begrunnelse?.split('\n').map((avsnitt, idx) => <p key={idx}>{avsnitt}</p>) ?? null; // Skal være samme formatering som i vedtaks-PDFen
 
 	return (
 		<div className="pdfvisning">
@@ -74,11 +73,11 @@ function PdfViewer(props: PdfViewerProps) {
 			<div className="kun_til_print">
 				<BodyShort spacing>
 					<b>Innsatsgruppe:</b>
-					{' ' + innsatsgruppe}
+					{' ' + innsatsgruppeTekstverdi}
 				</BodyShort>
 				<BodyShort spacing>
 					<b>Hovedmål:</b>
-					{' ' + hovedmal}
+					{' ' + hovedmalTekstverdi}
 				</BodyShort>
 				<Heading size="xsmall">Kilder</Heading>
 				<List>{kilder}</List>
