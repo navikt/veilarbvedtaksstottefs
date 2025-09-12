@@ -31,10 +31,6 @@ spec:
       destinations:
         - id: elastic
         - id: loki
-  gcp:
-    buckets:
-      - name: obo-veilarbvedtaksstottefs-prod
-        cascadingDelete: false
   env:
     - name: JSON_CONFIG
       value: >
@@ -46,8 +42,5 @@ spec:
             "corp": {
               "policy": "cross-origin"
             }
-          },
-          "gcs": {
-            "bucketName": "obo-veilarbvedtaksstottefs-prod"
           }
         }

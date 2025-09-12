@@ -33,3 +33,29 @@
 .veilarbvedtaksstottefs .pdfvisning__document > *:not(:last-child) {
 	margin-bottom: 0.5rem;
 }
+
+.kun_til_print {
+	display: none;
+}
+
+@media print {
+	@page {
+		size: A4 portrait;
+		margin: 64px 64px 74px;
+	}
+
+	p {
+		margin: inherit;
+	}
+
+	.kun_til_print {
+		display: inherit;
+		width: 800px;
+		margin: 2rem auto 0 auto;
+		padding-bottom: 6rem;
+	}
+
+	.skjul_ved_print {
+		display: none;
+	}
+}
