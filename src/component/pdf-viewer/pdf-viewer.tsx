@@ -1,6 +1,10 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { Heading, Loader } from '@navikt/ds-react';
+import { useDataStore } from '../../store/data-store';
+import { BodyShort, Heading, List, Loader } from '@navikt/ds-react';
+import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
+import { hovedmalTekst } from '../../util/hovedmal';
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import './pdf-viewer.css';
@@ -10,10 +14,6 @@ interface PdfViewerProps {
 	url: string;
 	title: string;
 	onStatusUpdate: (pdfStatus: PDFStatus) => void;
-}
-
-interface PdfViewerState {
-	numPages: number;
 }
 
 export enum PDFStatus {
@@ -31,62 +31,62 @@ const PdfSpinner = () => (
 	</div>
 );
 
-function Pages(props: { numPages: number }) {
+function PdfViewer(props: PdfViewerProps) {
+	const { utkast } = useDataStore();
+	const [numPages, setNumPages] = useState<number>();
+
+	function onDocumentLoadSuccess({ numPages: nextNumPages }: PDFDocumentProxy): void {
+		setNumPages(nextNumPages);
+		props.onStatusUpdate(PDFStatus.SUCCESS);
+		window.scrollTo({ top: 0 }); // Sometimes after the PDF is loaded the page is centered, scroll back to the top
+	}
+
+	const kilder = utkast?.opplysninger.map((opplysning, idx) => <List.Item key={idx}>{opplysning}</List.Item>);
+
+	const innsatsgruppe = utkast?.innsatsgruppe ? innsatsgruppeTekst[utkast.innsatsgruppe] : '';
+
+	const hovedmal = utkast?.hovedmal ? hovedmalTekst[utkast.hovedmal] : '';
+
+	const begrunnelseAvsnitt =
+		utkast?.begrunnelse?.split('\n').map((avsnitt, idx) => <p key={idx}>{avsnitt}</p>) ?? null; // Skal være samme formatering som i vedtaks-PDFen
+
 	return (
-		<>
-			{Array(props.numPages)
-				.fill(0)
-				.map((_, index) => (
-					<Page key={index} pageNumber={index + 1} width={800} />
-				))}
-		</>
-	);
-}
-
-class PdfViewer extends Component<PdfViewerProps, PdfViewerState> {
-	// Create this.file once to prevent rerender bug in react-pdf when object is created each render
-	private readonly file: { url: string };
-
-	constructor(props: PdfViewerProps) {
-		super(props);
-		this.state = { numPages: 0 };
-		this.props.onStatusUpdate(PDFStatus.LOADING);
-		this.file = { url: this.props.url };
-
-		// Scroll to the top of the screen so that the user sees the spinner
-		window.scrollTo({ top: 0 });
-	}
-
-	shouldComponentUpdate(nextProps: PdfViewerProps, nextState: PdfViewerState) {
-		return !(this.props.url === nextProps.url && this.state.numPages === nextState.numPages);
-	}
-
-	render() {
-		return (
-			<div className="pdfvisning">
-				<div aria-live="polite" className="pdfvisning__header">
-					<Heading size="small" level="1">
-						{this.props.title}
-					</Heading>
-				</div>
-				<Document
-					className="pdfvisning__document"
-					file={this.file}
-					error={<PdfError />}
-					loading={<PdfSpinner />}
-					onLoadError={() => this.props.onStatusUpdate(PDFStatus.ERROR)}
-					onLoadSuccess={(object: { numPages: number }) => {
-						this.props.onStatusUpdate(PDFStatus.SUCCESS);
-						this.setState({ numPages: object.numPages });
-						// Sometimes after the PDF is loaded the page is centered, scroll back to the top
-						window.scrollTo({ top: 0 });
-					}}
-				>
-					<Pages numPages={this.state.numPages} />
-				</Document>
+		<div className="pdfvisning">
+			<div aria-live="polite" className="pdfvisning__header">
+				<Heading size="small" level="1">
+					{props.title}
+				</Heading>
 			</div>
-		);
-	}
+			<Document
+				file={props.url}
+				loading={<PdfSpinner />}
+				onLoad={() => props.onStatusUpdate(PDFStatus.LOADING)}
+				// onLoadSuccess={onDocumentLoadSuccess}
+				onLoadError={() => props.onStatusUpdate(PDFStatus.ERROR)}
+				onLoadSuccess={onDocumentLoadSuccess}
+				error={<PdfError />}
+				className="pdfvisning__document skjul_ved_print"
+			>
+				{Array.from(new Array(numPages), (_el, index) => (
+					<Page key={`page_${index + 1}`} pageNumber={index + 1} width={800} />
+				))}
+			</Document>
+			<div className="kun_til_print">
+				<BodyShort spacing>
+					<b>Innsatsgruppe:</b>
+					{' ' + innsatsgruppe}
+				</BodyShort>
+				<BodyShort spacing>
+					<b>Hovedmål:</b>
+					{' ' + hovedmal}
+				</BodyShort>
+				<Heading size="xsmall">Kilder</Heading>
+				<List>{kilder}</List>
+				<Heading size="xsmall">Begrunnelse</Heading>
+				{begrunnelseAvsnitt}
+			</div>
+		</div>
+	);
 }
 
 export default PdfViewer;
