@@ -7,9 +7,9 @@ import { useSkjemaStore } from '../../../../store/skjema-store';
 import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
 import { GammelnavskDictionary, Lix } from '../../../../spraksjekk-intern/components';
-import './begrunnelse.css';
 import { standardForArbeidsrettetOppfolgingsLenke } from '../../../../util/constants';
 import { malformToTekst } from '../../../../util/malformToTekst';
+import './begrunnelse.css';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
