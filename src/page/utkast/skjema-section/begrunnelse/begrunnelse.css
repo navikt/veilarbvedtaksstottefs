@@ -11,6 +11,10 @@
 	margin-bottom: 1rem;
 }
 
+.veilarbvedtaksstottefs .begrunnelse textarea {
+	white-space: break-spaces;
+}
+
 .veilarbvedtaksstottefs .begrunnelse__malform {
 	text-align: end;
 	margin-top: -1.25rem;
