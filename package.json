@@ -35,16 +35,16 @@
     "dayjs": "1.11.18",
     "dompurify": "3.3.0",
     "lodash.debounce": "4.0.8",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-pdf": "9.2.1"
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-pdf": "10.2.0"
   },
   "devDependencies": {
     "@eslint/js": "9.37.0",
     "@navikt/aksel-stylelint": "7.32.2",
     "@types/lodash.debounce": "4.0.9",
-    "@types/react": "19.1.17",
-    "@types/react-dom": "19.1.11",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
     "@vitejs/plugin-react": "5.0.4",
     "eslint": "9.37.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
