@@ -39,3 +39,9 @@
 .veilarbvedtaksstottefs .oyblikksbilde-visning .json-array-wrapper {
 	margin: 1rem 0;
 }
+
+.veilarbvedtaksstottefs .oyblikksbilde-visning button {
+	white-space: normal;
+	text-align: left;
+	word-break: break-word;
+}
