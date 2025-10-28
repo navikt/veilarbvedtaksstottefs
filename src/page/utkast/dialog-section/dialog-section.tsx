@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useMemo, useRef, useState } from 'react';
 import { hentMeldinger, sendDialog } from '../../../api/veilarbvedtaksstotte/meldinger';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
@@ -10,7 +10,7 @@ import { Button, Loader, Textarea } from '@navikt/ds-react';
 import './dialog-section.less';
 
 const MESSAGE_MAX_LENGTH = 1000;
-export const MEDLINGER_ID = 'veilarbvedtaksstottefs-melding-liste';
+export const MELDINGER_ID = 'veilarbvedtaksstottefs-melding-liste';
 
 export function DialogSection() {
 	const { harLastetMeldinger } = useDialogSection();
@@ -27,10 +27,10 @@ export function DialogSection() {
 		return [...meldinger].sort((d1, d2) => sortDatesAsc(d1.opprettet, d2.opprettet));
 	}, [meldinger]);
 
-	useEffect(() => {
-		const meldingListeElem = document.getElementById(MEDLINGER_ID);
-		scrollToBottom(meldingListeElem);
-	}, [meldinger]);
+	// useEffect(() => {
+	// 	const meldingListeElem = document.getElementById(MELDINGER_ID);
+	// 	scrollToBottom(meldingListeElem);
+	// }, [meldinger]);
 
 	function sendMelding() {
 		setSenderMelding(true);
@@ -41,7 +41,7 @@ export function DialogSection() {
 				if (response.data) {
 					setMeldinger(response.data);
 
-					const meldingListeElem = document.getElementById(MEDLINGER_ID);
+					const meldingListeElem = document.getElementById(MELDINGER_ID);
 					scrollToBottom(meldingListeElem);
 				}
 				setMelding('');
@@ -63,7 +63,7 @@ export function DialogSection() {
 
 	return (
 		<div className="dialog-section-innhold">
-			<div className="dialog-section-innhold__meldinger" id={MEDLINGER_ID}>
+			<div className="dialog-section-innhold__meldinger melding-liste" id={MELDINGER_ID}>
 				{harLastetMeldinger ? (
 					<MeldingListe meldinger={sorterteMeldinger} innloggetVeilederIdent={innloggetVeileder.ident} />
 				) : (

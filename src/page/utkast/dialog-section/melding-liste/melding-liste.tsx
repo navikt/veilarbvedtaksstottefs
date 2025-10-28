@@ -58,12 +58,12 @@ export const MeldingListe = (props: MeldingListeProps) => {
 	const { innloggetVeilederIdent, meldinger } = props;
 
 	return (
-		<div className="melding-liste">
+		<>
 			{meldinger.map((melding, idx) => {
 				return melding.type === MeldingType.DIALOG_MELDING
 					? mapTilDialogMeldingView(melding as DialogMeldingData, idx, mountTime, innloggetVeilederIdent)
 					: mapTilSystemMeldingView(melding as SystemMeldingData, idx, mountTime);
 			})}
-		</div>
+		</>
 	);
 };
