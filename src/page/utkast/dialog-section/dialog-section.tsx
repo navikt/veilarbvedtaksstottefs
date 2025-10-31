@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { hentMeldinger, sendDialog } from '../../../api/veilarbvedtaksstotte/meldinger';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { useDataStore } from '../../../store/data-store';
@@ -13,7 +13,7 @@ const MESSAGE_MAX_LENGTH = 1000;
 export const MELDINGER_ID = 'veilarbvedtaksstottefs-melding-liste';
 
 export function DialogSection() {
-	const { harLastetMeldinger } = useDialogSection();
+	const { harLastetMeldinger, harNyeMeldinger } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { meldinger, setMeldinger, innloggetVeileder, utkast } = useDataStore();
 
@@ -27,10 +27,10 @@ export function DialogSection() {
 		return [...meldinger].sort((d1, d2) => sortDatesAsc(d1.opprettet, d2.opprettet));
 	}, [meldinger]);
 
-	// useEffect(() => {
-	// 	const meldingListeElem = document.getElementById(MELDINGER_ID);
-	// 	scrollToBottom(meldingListeElem);
-	// }, [meldinger]);
+	useEffect(() => {
+		const meldingListeElem = document.getElementById(MELDINGER_ID);
+		scrollToBottom(meldingListeElem);
+	}, [harNyeMeldinger]);
 
 	function sendMelding() {
 		setSenderMelding(true);
