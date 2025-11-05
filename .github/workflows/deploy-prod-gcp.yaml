@@ -16,10 +16,10 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # ratchet:actions/checkout@v5
 
       - name: Setup node
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # ratchet:actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
@@ -39,7 +39,7 @@ jobs:
           PUBLIC_URL: https://cdn.nav.no/obo/prod/veilarbvedtaksstottefs/dist
 
       - name: Upload to Nav CDN
-        uses: nais/deploy/actions/cdn-upload/v2@master
+        uses: nais/deploy/actions/cdn-upload/v2@961addd1e4d4211f1a7333ada5fde85f7c9aa5b7 # ratchet:nais/deploy/actions/cdn-upload/v2@master
         with:
           team: obo
           source: ./dist
@@ -51,7 +51,7 @@ jobs:
           gcloud storage objects update gs://${BUCKET_NAME}/obo/prod/veilarbvedtaksstottefs/dist/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=1800, stale-if-error=600"
 
       - name: Create release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@6da8fa9354ddfdc4aeace5fc48d7f679b5214090 # ratchet:softprops/action-gh-release@v2
         with:
           name: Release to prod
           target_commitish: main
