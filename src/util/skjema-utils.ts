@@ -42,15 +42,16 @@ export function mapKilderFraBokmalTilBrukersMalform(
 ): string[] {
 	if (!kildeListe) return [];
 
-	// Trenger ikke å mappe hvis vi ikke vet malform, ikke støtter oversettelse for malform, eller det allerede er på bokmål
-	if (!malformType || !Object.values(MalformType).includes(malformType) || malformType === MalformType.nb) {
-		return kildeListe;
+	// Per nå trenger vi kun mappe når målformen er nynorsk, alle andre får bokmålskilder
+	if (malformType && malformType === MalformType.nn) {
+		return kildeListe.map(kilde => {
+			const translationPos = kildelisteBokmal.indexOf(kilde);
+			return translationPos === -1 ? kilde : kildelisteNynorsk[translationPos];
+		});
 	}
 
-	return kildeListe.map(kilde => {
-		const translationPos = kildelisteBokmal.indexOf(kilde);
-		return translationPos === -1 ? kilde : kildelisteNynorsk[translationPos];
-	});
+	// Returner original liste hvis målform er bokmål, engelsk eller nord-samisk
+	return kildeListe;
 }
 
 export function mergeMedDefaultKilder(valgteKilderListe: string[]): string[] {
