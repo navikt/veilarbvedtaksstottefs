@@ -6,7 +6,7 @@
     "isDynamicEntry": true
   },
   "index.html": {
-    "file": "assets/index-C-mBI7Kw.js",
+    "file": "assets/index-C-P5Brgn.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -18,7 +18,7 @@
       "src/mock/index.ts"
     ],
     "css": [
-      "assets/index-D4BmpdrI.css"
+      "assets/index-ECSr3M02.css"
     ],
     "assets": [
       "assets/utkast-EIufPGB5.svg",
@@ -44,7 +44,7 @@
     "src": "src/component/panel/utkast/utkast.svg"
   },
   "src/mock/index.ts": {
-    "file": "assets/index-CApZA5Yk.js",
+    "file": "assets/index-BnZEOd9R.js",
     "name": "index",
     "src": "src/mock/index.ts",
     "isDynamicEntry": true,
