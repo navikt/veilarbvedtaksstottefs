@@ -6,11 +6,12 @@ import './vis-kilde.css';
 import { VisKildeArbeidssokerregisteret } from './vis-kilde-arbeidssokerregisteret';
 
 interface VisKildeProps {
+	kildeId: string;
 	kildenavn: string;
 	handleKilde: () => void;
 }
 
-export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {
+export function VisKilde({ kildeId, kildenavn, handleKilde }: Readonly<VisKildeProps>) {
 	const kanRedigeres = !erDefaultKilde(kildenavn);
 	const erKildeArbeidssokerregister = (kildeTekst: string) => kildeTekst.includes('registrert som arbeidssøk');
 
@@ -20,7 +21,7 @@ export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {
 
 	return (
 		<div className="vis-kilde">
-			<Checkbox value={kildenavn} onKeyDown={swallowEnterKeyPress}>
+			<Checkbox value={kildeId} onKeyDown={swallowEnterKeyPress}>
 				{kildenavn}
 			</Checkbox>
 			{kanRedigeres && (

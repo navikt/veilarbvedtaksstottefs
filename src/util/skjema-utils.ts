@@ -56,7 +56,7 @@ export function mapKilderFraBokmalTilBrukersMalform(
 
 export function mergeMedDefaultKilder(valgteKilderListe: string[]): string[] {
 	// Slår sammen listene og fjerner duplikater
-	return Array.from(new Set([...kildelisteBokmal, ...valgteKilderListe]));
+	return Array.from([...kildelisteBokmal, ...valgteKilderListe]);
 }
 
 export function erDefaultKilde(kilde: string) {

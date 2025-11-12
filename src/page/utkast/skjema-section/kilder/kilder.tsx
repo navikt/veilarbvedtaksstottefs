@@ -60,12 +60,13 @@ function Kilder() {
 				{kilder.map((kilde, index) =>
 					redigeringModusIndeks !== index ? (
 						<VisKilde
+							kildeId={`${kilde}_${index}`}
 							kildenavn={kilde}
 							handleKilde={() => {
 								setRedigeringModusIndeks(index);
 								setVisLeggTilNyKilde(true);
 							}}
-							key={index}
+							key={`${kilde}_${index}`}
 						/>
 					) : (
 						<RedigerKilde
