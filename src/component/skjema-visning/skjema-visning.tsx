@@ -12,7 +12,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 	const {
 		id,
 		hovedmal,
-		opplysninger,
+		kilder,
 		innsatsgruppe,
 		begrunnelse,
 		beslutterNavn,
@@ -75,8 +75,8 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 				</div>
 
 				<List size="small" title="Kilder">
-					{opplysninger.map(opplysning => (
-						<List.Item key={opplysning}>{opplysning}</List.Item>
+					{kilder.map(kilde => (
+						<List.Item key={kilde.kildeId}>{kilde.tekst}</List.Item>
 					))}
 				</List>
 

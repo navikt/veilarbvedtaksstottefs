@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import constate from 'constate';
 import { OrNothing } from '../util/type/ornothing';
-import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
+import { HovedmalType, InnsatsgruppeType, Kilde, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { SkjemaFeil } from '../util/type/skjema-feil';
 import { SkjemaLagringStatus } from '../util/type/skjema-lagring-status';
 import {
@@ -11,7 +11,7 @@ import {
 } from '../util/skjema-utils';
 
 export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
-	const [valgteKilder, setValgteKilder] = useState<string[]>([]);
+	const [valgteKilder, setValgteKilder] = useState<Kilde[]>([]);
 	const [hovedmal, setHovedmal] = useState<OrNothing<HovedmalType>>();
 	const [innsatsgruppe, setInnsatsgruppe] = useState<OrNothing<InnsatsgruppeType>>();
 	const [begrunnelse, setBegrunnelse] = useState<OrNothing<string>>('');
@@ -21,10 +21,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	const [harForsoktAForhandsvise, setHarForsoktAForhandsvise] = useState<boolean>(false);
 
 	const valider = (gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil => {
-		const feil = validerSkjema(
-			{ opplysninger: valgteKilder, hovedmal, innsatsgruppe, begrunnelse },
-			gjeldendeVedtak
-		);
+		const feil = validerSkjema({ valgteKilder, hovedmal, innsatsgruppe, begrunnelse }, gjeldendeVedtak);
 		setErrors(feil);
 		return feil;
 	};
@@ -35,7 +32,8 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	};
 
 	const initSkjema = (utkast: Utkast) => {
-		const mappetKilder = mapKilderFraForskjelligMalformTilBokmal(utkast.opplysninger);
+		// TODO 2025.11.21 fjerne nynorske kildetekster og la backenden bestemme målformen i brevet, ikke mappe fram og tilbake i frontenden
+		const mappetKilder = mapKilderFraForskjelligMalformTilBokmal(utkast.kilder);
 		setHovedmal(utkast.hovedmal);
 		setValgteKilder(mappetKilder);
 		setInnsatsgruppe(utkast.innsatsgruppe);

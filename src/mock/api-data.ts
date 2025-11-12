@@ -230,7 +230,11 @@ const pabegyntUtkast: Utkast = {
 	hovedmal: HovedmalType.BEHOLDE_ARBEID,
 	innsatsgruppe: InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS,
 	utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
-	opplysninger: ['Svarene dine om behov for veiledning', 'En annen viktig opplysning'],
+	kilder: [
+		{ tekst: 'Svarene dine om behov for veiledning', kildeId: '92109cb9-d05d-4dba-a810-4fe704615aa4' },
+		{ tekst: 'En annen viktig opplysning', kildeId: '376eab10-7a2c-4015-8d5a-037daf17881e' },
+		{ tekst: 'En annen viktig opplysning', kildeId: '0c4dac08-9838-467f-8978-e94e6685c4c0' }
+	],
 	veilederNavn: veileder2.navn,
 	veilederIdent: veileder2.ident,
 	oppfolgingsenhetId: enhetId,
@@ -262,10 +266,15 @@ const historisk: Vedtak[] = [
 			'- listepunkt 3\n' +
 			'- listepunkt 4\n' +
 			'- listepunkt 5',
-		opplysninger: [
-			'Svarene dine fra da du registrerte deg',
-			'CV-en/jobbønskene dine på nav.no',
-			'Svarene dine om behov for veiledning'
+		kilder: [
+			{
+				tekst: 'Det du fortalte oss da du ble registrert som arbeidssøker',
+				kildeId: 'e4a581e3-13fb-43d9-a8e4-f66556eff30b'
+			},
+			{ tekst: 'CV-en/jobbønskene din(e) på nav.no', kildeId: '215621f9-9e46-4e2a-b198-3833339ad625' },
+			{ tekst: 'Svarene dine om behov for veiledning', kildeId: '999391dd-66c0-4ab9-a834-8677207f80b1' },
+			{ tekst: 'Test', kildeId: '0583d3b7-83da-4687-8b5d-392be1d1ef9a' },
+			{ tekst: 'Test', kildeId: 'e29a37ab-4549-4230-ad77-3aaf2017831b' }
 		],
 		gjeldende: false,
 		veilederNavn: veileder1.navn,
@@ -284,10 +293,13 @@ const historisk: Vedtak[] = [
 		vedtakFattet: '2018-08-05T09:55:43.716393+02:00',
 		begrunnelse:
 			'Vedtaket ble slettet 2018-08-05T09:55:43.716393+02:00 av utvikler fordi veileder1.ident bestilte sletting i FAGSYSTEM-12345',
-		opplysninger: [
-			'Svarene dine fra da du registrerte deg',
-			'CV-en/jobbønskene dine på nav.no',
-			'Svarene dine om behov for veiledning'
+		kilder: [
+			{
+				tekst: 'Det du fortalte oss da du ble registrert som arbeidssøker',
+				kildeId: '6cf0d94b-5b94-45fc-8e7a-a580e3d36cc0'
+			},
+			{ tekst: 'CV-en/jobbønskene din(e) på nav.no', kildeId: '0c5a7a84-9d25-4bdf-acb6-667ec0f6cc0b' },
+			{ tekst: 'Svarene dine om behov for veiledning', kildeId: '522f4162-e0c7-402c-8a24-13661004ee40' }
 		],
 		gjeldende: false,
 		veilederNavn: veileder1.navn,
@@ -303,10 +315,13 @@ const historisk: Vedtak[] = [
 		id: 1236,
 		hovedmal: HovedmalType.SKAFFE_ARBEID,
 		innsatsgruppe: InnsatsgruppeType.STANDARD_INNSATS,
-		opplysninger: [
-			'Svarene dine fra da du registrerte deg',
-			'CV-en/jobbønskene dine på nav.no',
-			'Svarene dine om behov for veiledning'
+		kilder: [
+			{
+				tekst: 'Det du fortalte oss da du ble registrert som arbeidssøker',
+				kildeId: '958a7ba0-8155-4830-9588-dcbb8006469c'
+			},
+			{ tekst: 'CV-en/jobbønskene din(e) på nav.no', kildeId: '32ca7ed1-8687-47b7-81a7-d2fe3e7a760d' },
+			{ tekst: 'Svarene dine om behov for veiledning', kildeId: '92e33832-8bbd-46d2-b088-c9a643415567' }
 		],
 		vedtakFattet: '2019-12-12T12:58:43.716393+02:00',
 		begrunnelse:
@@ -532,7 +547,7 @@ export function oppdaterVedtakUtkastMockFraSkjema(skjemaData: SkjemaData) {
 		utkast.begrunnelse = skjemaData.begrunnelse;
 		utkast.hovedmal = skjemaData.hovedmal;
 		utkast.innsatsgruppe = skjemaData.innsatsgruppe;
-		utkast.opplysninger = skjemaData.opplysninger ? skjemaData.opplysninger : [];
+		utkast.kilder = skjemaData.valgteKilder ? skjemaData.valgteKilder : [];
 	}
 }
 

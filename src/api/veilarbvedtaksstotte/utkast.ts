@@ -2,16 +2,29 @@ import { MalformType } from '../veilarbperson';
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from '../utils';
 import { mapKilderFraBokmalTilBrukersMalform, SkjemaData } from '../../util/skjema-utils';
-import { VEILARBVEDTAKSSTOTTE_API, BeslutterProsessStatus, Utkast } from './index';
+import { VEILARBVEDTAKSSTOTTE_API, BeslutterProsessStatus, Utkast, HovedmalType, InnsatsgruppeType } from './index';
 import { FrontendEvent } from '../../util/logger';
+import { OrNothing } from '../../util/type/ornothing';
 
 export interface BeslutterprosessStatusData {
 	status: BeslutterProsessStatus;
 }
 
+interface OppdaterVedtakUtkastRequest {
+	opplysninger: string[] | undefined;
+	hovedmal: OrNothing<HovedmalType>;
+	innsatsgruppe: OrNothing<InnsatsgruppeType>;
+	begrunnelse: OrNothing<string>;
+}
+
 export function oppdaterVedtakUtkast(vedtakId: number, malform: MalformType | null, skjema: SkjemaData): AxiosPromise {
-	skjema.opplysninger = mapKilderFraBokmalTilBrukersMalform(skjema.opplysninger, malform);
-	return axiosInstance.put(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}`, skjema);
+	const request: OppdaterVedtakUtkastRequest = {
+		opplysninger: mapKilderFraBokmalTilBrukersMalform(skjema.valgteKilder, malform).map(kilde => kilde.tekst),
+		hovedmal: skjema.hovedmal,
+		innsatsgruppe: skjema.innsatsgruppe,
+		begrunnelse: skjema.begrunnelse
+	};
+	return axiosInstance.put(`${VEILARBVEDTAKSSTOTTE_API}/utkast/${vedtakId}`, request);
 }
 
 export function fattVedtak(vedtakId: number): AxiosPromise<Response> {

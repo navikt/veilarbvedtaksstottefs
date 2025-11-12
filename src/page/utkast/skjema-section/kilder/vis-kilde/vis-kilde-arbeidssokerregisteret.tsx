@@ -4,16 +4,17 @@ import './vis-kilde.css';
 import { useDataStore } from '../../../../../store/data-store';
 
 interface VisKildeProps {
-	kildenavn: string;
+	kildeId: string;
+	kildetekst: string;
 }
 
-export function VisKildeArbeidssokerregisteret({ kildenavn }: Readonly<VisKildeProps>) {
+export function VisKildeArbeidssokerregisteret({ kildeId, kildetekst }: Readonly<VisKildeProps>) {
 	const { arbeidssokerperiode } = useDataStore();
 
 	return (
 		<>
-			<Checkbox value={kildenavn} onKeyDown={swallowEnterKeyPress} disabled={!arbeidssokerperiode}>
-				{kildenavn}
+			<Checkbox value={kildeId} onKeyDown={swallowEnterKeyPress} disabled={!arbeidssokerperiode}>
+				{kildetekst}
 			</Checkbox>
 			{!arbeidssokerperiode && (
 				<Alert size="small" variant="info" inline className="vis-kilde__alert">

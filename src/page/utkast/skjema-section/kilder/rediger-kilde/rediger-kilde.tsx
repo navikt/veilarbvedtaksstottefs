@@ -1,23 +1,24 @@
 import { useState } from 'react';
 import { Button, Textarea } from '@navikt/ds-react';
 import './rediger-kilde.css';
+import { Kilde } from '../../../../../api/veilarbvedtaksstotte';
 
 interface RedigerKildeProps {
-	kildenavn: string;
+	kilde: Kilde | null;
 	negativeBtn: 'CANCEL' | 'DELETE';
-	onTekstSubmit: (kilde: string) => void;
+	onTekstSubmit: (kilde: Kilde) => void;
 	onTekstDeleteOrCancel: () => void;
 }
 
 const KILDE_MAX_LENGTH = 150;
 
 export function RedigerKilde({
-	kildenavn,
+	kilde,
 	negativeBtn,
 	onTekstSubmit,
 	onTekstDeleteOrCancel
 }: Readonly<RedigerKildeProps>) {
-	const [tekst, setTekst] = useState(kildenavn);
+	const [tekst, setTekst] = useState(kilde ? kilde.tekst : '');
 
 	return (
 		<div className="rediger-kilde">
@@ -26,11 +27,11 @@ export function RedigerKilde({
 				label="Legg til kilde og dato"
 				value={tekst}
 				onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-					let nyKilde = e.target.value;
-					if (nyKilde.length > KILDE_MAX_LENGTH) {
-						nyKilde = nyKilde.slice(0, KILDE_MAX_LENGTH);
+					let nyKildetekst = e.target.value;
+					if (nyKildetekst.length > KILDE_MAX_LENGTH) {
+						nyKildetekst = nyKildetekst.slice(0, KILDE_MAX_LENGTH);
 					}
-					setTekst(nyKilde);
+					setTekst(nyKildetekst);
 				}}
 				maxLength={KILDE_MAX_LENGTH}
 				// eslint-disable-next-line jsx-a11y/no-autofocus
@@ -40,7 +41,10 @@ export function RedigerKilde({
 				<Button size="small" variant="secondary" onClick={onTekstDeleteOrCancel}>
 					{negativeBtn === 'CANCEL' ? 'Avbryt' : 'Slett'}
 				</Button>
-				<Button size="small" onClick={() => onTekstSubmit(tekst)}>
+				<Button
+					size="small"
+					onClick={() => onTekstSubmit({ kildeId: kilde?.kildeId ?? crypto.randomUUID(), tekst })}
+				>
 					Lagre
 				</Button>
 			</div>

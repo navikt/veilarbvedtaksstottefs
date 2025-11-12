@@ -31,18 +31,22 @@ export const utkastHandlers: RequestHandler[] = [
 		const nyId =
 			hentFattedeVedtak().length > 0 ? hentFattedeVedtak().sort((fv1, fv2) => fv2.id - fv1.id)[0].id + 1 : 1;
 
-		const nyttUtkast = {
+		const nyttUtkast: Utkast = {
 			id: nyId,
 			utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
-			opplysninger: [],
+			innsatsgruppe: null,
+			hovedmal: null,
+			begrunnelse: null,
+			beslutterProsessStatus: null,
+			kilder: [],
 			veilederNavn: hentInnloggetVeileder().navn,
 			veilederIdent: hentInnloggetVeileder().ident,
 			oppfolgingsenhetId: enhetId,
 			oppfolgingsenhetNavn: enhetNavn,
 			beslutterNavn: null,
-			sendtTilBeslutter: false,
-			beslutterIdent: null
-		} as unknown as Utkast;
+			beslutterIdent: null,
+			kanDistribueres: true
+		};
 
 		byttUtUtkast(nyttUtkast);
 

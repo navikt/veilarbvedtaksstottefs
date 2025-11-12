@@ -14,6 +14,7 @@ import { Utkast, Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { fetchUtkast, lagNyttUtkast, oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 import { Button, Checkbox, Heading } from '@navikt/ds-react';
 import './nytt-vedtak-panel.css';
+import { SkjemaData } from '../../../util/skjema-utils';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { fnr } = useAppStore();
@@ -41,14 +42,14 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 				const nyttUtkast = fetchResponse.data;
 
 				if (kopierSisteVedtak && sisteVedtak) {
-					const skjema = {
-						opplysninger: sisteVedtak.opplysninger,
+					const skjema: SkjemaData = {
+						valgteKilder: sisteVedtak.kilder,
 						begrunnelse: sisteVedtak.begrunnelse,
 						hovedmal: null,
 						innsatsgruppe: null
 					};
 
-					nyttUtkast.opplysninger = sisteVedtak.opplysninger;
+					nyttUtkast.kilder = sisteVedtak.kilder;
 					nyttUtkast.begrunnelse = sisteVedtak.begrunnelse;
 
 					await oppdaterVedtakUtkast(nyttUtkast.id, null, skjema);

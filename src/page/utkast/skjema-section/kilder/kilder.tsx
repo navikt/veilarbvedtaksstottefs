@@ -6,31 +6,34 @@ import { KilderTipsInnhold } from './kilder-tips-innhold';
 import FeltHeader from '../felt-header/felt-header';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { mergeMedDefaultKilder } from '../../../../util/skjema-utils';
+import { Kilde } from '../../../../api/veilarbvedtaksstotte';
 import { CheckboxGroup } from '@navikt/ds-react';
 import './kilder.css';
 
 function Kilder() {
 	const { valgteKilder, setValgteKilder, errors } = useSkjemaStore();
-	const [kilder, setKilder] = useState<string[]>(mergeMedDefaultKilder(valgteKilder));
-	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
+	const [valgteKildeIder, setValgteKildeIder] = useState<string[]>(valgteKilder.map(kilde => kilde.kildeId));
+	const [kilder, setKilder] = useState<Kilde[]>(mergeMedDefaultKilder(valgteKilder));
+	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<string | null>(null);
 	const [visLeggTilNyKilde, setVisLeggTilNyKilde] = useState<boolean>(true);
 
 	function nullstillState() {
-		setRedigeringModusIndeks(-1);
+		setRedigeringModusIndeks(null);
 	}
 
-	function handleKildeChanged(index: number, kilde: string) {
-		if (!kilde.trim()) return;
+	function handleKildeChanged(kilde: Kilde, endringstype: 'ENDRET' | 'NY') {
+		if (!kilde.tekst.trim()) return;
 
 		setKilder(prevState => {
 			const kilderKopi = [...prevState];
 
-			if (index === kilder.length) {
+			if (endringstype === 'NY') {
 				kilderKopi.push(kilde);
 				return kilderKopi;
 			}
 
-			kilderKopi[index] = kilde;
+			const kildelisteIndex = kilderKopi.findIndex(kildekopi => kildekopi.kildeId === kilde.kildeId);
+			kilderKopi[kildelisteIndex] = kilde;
 			return kilderKopi;
 		});
 	}
@@ -53,28 +56,38 @@ function Kilder() {
 				size="small"
 				legend="Valg av kilder"
 				hideLegend
-				onChange={nyeValgteKilder => setValgteKilder(nyeValgteKilder)}
-				value={valgteKilder}
+				onChange={nyeValgteKildeIder => {
+					setValgteKildeIder(nyeValgteKildeIder);
+					setValgteKilder(prevValgteKilder =>
+						prevValgteKilder.filter(kilde => nyeValgteKildeIder.includes(kilde.kildeId))
+					);
+				}}
+				value={valgteKildeIder}
 				error={errors.kilder}
 			>
 				{kilder.map((kilde, index) =>
-					redigeringModusIndeks !== index ? (
+					redigeringModusIndeks !== kilde.kildeId ? (
 						<VisKilde
-							kildenavn={kilde}
+							kildeId={kilde.kildeId}
+							kildetekst={kilde.tekst}
 							handleKilde={() => {
-								setRedigeringModusIndeks(index);
+								setRedigeringModusIndeks(kilde.kildeId);
 								setVisLeggTilNyKilde(true);
 							}}
-							key={index}
+							key={kilde.kildeId}
 						/>
 					) : (
 						<RedigerKilde
-							key={index}
-							kildenavn={kilde}
+							key={kilde.kildeId}
+							kilde={kilde}
 							negativeBtn="DELETE"
 							onTekstSubmit={endretKilde => {
-								handleKildeChanged(index, endretKilde);
-								setValgteKilder(prevState => prevState.map(k => (k === kilde ? endretKilde : k)));
+								handleKildeChanged(endretKilde, 'ENDRET');
+								setValgteKilder(prevState =>
+									prevState.map(prevKilde =>
+										prevKilde.tekst === kilde.tekst ? endretKilde : prevKilde
+									)
+								);
 								nullstillState();
 							}}
 							onTekstDeleteOrCancel={() => {
@@ -95,11 +108,12 @@ function Kilder() {
 				/>
 			) : (
 				<RedigerKilde
-					kildenavn={''}
+					kilde={null}
 					negativeBtn="CANCEL"
 					onTekstSubmit={nyKilde => {
-						handleKildeChanged(kilder.length, nyKilde);
+						handleKildeChanged(nyKilde, 'NY');
 						setValgteKilder(prevState => [...prevState, nyKilde]);
+						setValgteKildeIder(prevState => [...prevState, nyKilde.kildeId]);
 						setVisLeggTilNyKilde(true);
 					}}
 					onTekstDeleteOrCancel={() => {

@@ -30,7 +30,7 @@ export function UtkastFooter() {
 		? 'utkast-footer__innhold--dialog'
 		: 'utkast-footer__innhold--dialog-minified';
 
-	const vedtakskjema = { opplysninger: valgteKilder, begrunnelse, innsatsgruppe, hovedmal };
+	const vedtakskjema = { valgteKilder, begrunnelse, innsatsgruppe, hovedmal };
 
 	const footerStyle = isMaxWidthOrLess ? { marginRight: `${scrollBarWidth}px` } : undefined;
 

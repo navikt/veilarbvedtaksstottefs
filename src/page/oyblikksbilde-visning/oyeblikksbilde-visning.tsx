@@ -14,13 +14,14 @@ export function Oyeblikksbilde(props: { vedtakId: number }) {
 	const { fattedeVedtak } = useDataStore();
 	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
-	const visCvVedleggCard = vistVedtak !== undefined && vistVedtak.opplysninger.find(x => x.indexOf('CV') >= 0);
+	const visCvVedleggCard =
+		vistVedtak !== undefined && vistVedtak.kilder.find(kilde => kilde.tekst.indexOf('CV') >= 0);
 
 	const visRegistreringVedleggCard =
-		vistVedtak !== undefined && vistVedtak.opplysninger.find(x => x.indexOf('registrer') >= 0);
+		vistVedtak !== undefined && vistVedtak.kilder.find(kilde => kilde.tekst.indexOf('registrer') >= 0);
 
 	const visEgenvurderingVedleggCard =
-		vistVedtak !== undefined && vistVedtak.opplysninger.find(x => x.indexOf('behov') >= 0);
+		vistVedtak !== undefined && vistVedtak.kilder.find(kilde => kilde.tekst.indexOf('behov') >= 0);
 
 	return (
 		<>

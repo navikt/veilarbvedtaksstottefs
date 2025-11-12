@@ -1,12 +1,12 @@
 import { erStandard, erVarigEllerGradertVarig } from './innsatsgruppe';
 import { OrNothing } from './type/ornothing';
-import { HovedmalType, InnsatsgruppeType, Vedtak } from '../api/veilarbvedtaksstotte';
+import { HovedmalType, InnsatsgruppeType, Kilde, Vedtak } from '../api/veilarbvedtaksstotte';
 import { MalformData, MalformType } from '../api/veilarbperson';
 import { SkjemaFeil } from './type/skjema-feil';
 import { BEGRUNNELSE_MAX_LENGTH } from '../page/utkast/skjema-section/begrunnelse/begrunnelse';
 
 export interface SkjemaData {
-	opplysninger: string[] | undefined;
+	valgteKilder: Kilde[] | undefined;
 	hovedmal: OrNothing<HovedmalType>;
 	innsatsgruppe: OrNothing<InnsatsgruppeType>;
 	begrunnelse: OrNothing<string>;
@@ -25,28 +25,34 @@ export const kildelisteNynorsk = [
 	'Svara dine om behov for rettleiing'
 ];
 
+const predefinerteKilder: Kilde[] = [
+	{ kildeId: 'placeholderId-arbeidssøker', tekst: 'Det du fortalte oss da du ble registrert som arbeidssøker' },
+	{ kildeId: 'placeholderId-CV', tekst: 'CV-en/jobbønskene din(e) på nav.no' },
+	{ kildeId: 'placeholderId-egenvurdering', tekst: 'Svarene dine om behov for veiledning' }
+];
+
 export function hentMalformFraData(malformData: MalformData | null): MalformType | null {
 	return malformData ? malformData.malform : null;
 }
 
-export function mapKilderFraForskjelligMalformTilBokmal(kildeListe: string[]): string[] {
+export function mapKilderFraForskjelligMalformTilBokmal(kildeListe: Kilde[]): Kilde[] {
 	return kildeListe.map(kilde => {
-		const translationPos = kildelisteNynorsk.indexOf(kilde);
-		return translationPos === -1 ? kilde : kildelisteBokmal[translationPos];
+		const translationPos = kildelisteNynorsk.indexOf(kilde.tekst);
+		return translationPos === -1 ? kilde : { ...kilde, tekst: kildelisteBokmal[translationPos] };
 	});
 }
 
 export function mapKilderFraBokmalTilBrukersMalform(
-	kildeListe: string[] | undefined,
+	kildeListe: Kilde[] | undefined,
 	malformType: MalformType | null
-): string[] {
+): Kilde[] {
 	if (!kildeListe) return [];
 
 	// Per nå trenger vi kun mappe når målformen er nynorsk, alle andre får bokmålskilder
 	if (malformType && malformType === MalformType.nn) {
 		return kildeListe.map(kilde => {
-			const translationPos = kildelisteBokmal.indexOf(kilde);
-			return translationPos === -1 ? kilde : kildelisteNynorsk[translationPos];
+			const translationPos = kildelisteBokmal.indexOf(kilde.tekst);
+			return translationPos === -1 ? kilde : { ...kilde, tekst: kildelisteNynorsk[translationPos] };
 		});
 	}
 
@@ -54,9 +60,17 @@ export function mapKilderFraBokmalTilBrukersMalform(
 	return kildeListe;
 }
 
-export function mergeMedDefaultKilder(valgteKilderListe: string[]): string[] {
-	// Slår sammen listene og fjerner duplikater
-	return Array.from(new Set([...kildelisteBokmal, ...valgteKilderListe]));
+export function mergeMedDefaultKilder(valgteKilderListe: Kilde[]): Kilde[] {
+	if (valgteKilderListe.length === 0) {
+		return predefinerteKilder;
+	}
+
+	// Slår sammen listene og fjern de predefinerte kildene som allerede er valgt
+	const defaultKilder = predefinerteKilder.filter(defaultKilde => {
+		return !valgteKilderListe.some(valgtKilde => valgtKilde.tekst === defaultKilde.tekst);
+	});
+
+	return [...defaultKilder, ...valgteKilderListe];
 }
 
 export function erDefaultKilde(kilde: string) {
@@ -90,7 +104,7 @@ export function scrollTilForsteFeil(skjemaFeil: SkjemaFeil): void {
 
 export function validerSkjema(skjema: SkjemaData, gjeldendeVedtak: OrNothing<Vedtak>): SkjemaFeil {
 	const errors: SkjemaFeil = {};
-	const { innsatsgruppe, opplysninger: valgteKilder, begrunnelse, hovedmal } = skjema;
+	const { innsatsgruppe, valgteKilder, begrunnelse, hovedmal } = skjema;
 
 	if (!innsatsgruppe) {
 		errors.innsatsgruppe = 'Mangler innsatsgruppe';

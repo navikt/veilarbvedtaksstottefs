@@ -41,7 +41,7 @@ function PdfViewer(props: PdfViewerProps) {
 		window.scrollTo({ top: 0 }); // Sometimes after the PDF is loaded the page is centered, scroll back to the top
 	}
 
-	const kilder = valgteKilder.map((opplysning, idx) => <List.Item key={idx}>{opplysning}</List.Item>);
+	const kilder = valgteKilder.map(kilde => <List.Item key={kilde.kildeId}>{kilde.tekst}</List.Item>);
 
 	const innsatsgruppeTekstverdi = innsatsgruppe ? innsatsgruppeTekst[innsatsgruppe] : '';
 

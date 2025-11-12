@@ -6,22 +6,23 @@ import './vis-kilde.css';
 import { VisKildeArbeidssokerregisteret } from './vis-kilde-arbeidssokerregisteret';
 
 interface VisKildeProps {
-	kildenavn: string;
+	kildeId: string;
+	kildetekst: string;
 	handleKilde: () => void;
 }
 
-export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {
-	const kanRedigeres = !erDefaultKilde(kildenavn);
+export function VisKilde({ kildeId, kildetekst, handleKilde }: Readonly<VisKildeProps>) {
+	const kanRedigeres = !erDefaultKilde(kildetekst);
 	const erKildeArbeidssokerregister = (kildeTekst: string) => kildeTekst.includes('registrert som arbeidssøk');
 
-	if (erKildeArbeidssokerregister(kildenavn)) {
-		return <VisKildeArbeidssokerregisteret kildenavn={kildenavn} />;
+	if (erKildeArbeidssokerregister(kildetekst)) {
+		return <VisKildeArbeidssokerregisteret kildeId={kildeId} kildetekst={kildetekst} />;
 	}
 
 	return (
 		<div className="vis-kilde">
-			<Checkbox value={kildenavn} onKeyDown={swallowEnterKeyPress}>
-				{kildenavn}
+			<Checkbox value={kildeId} onKeyDown={swallowEnterKeyPress}>
+				{kildetekst}
 			</Checkbox>
 			{kanRedigeres && (
 				<Button
@@ -29,7 +30,7 @@ export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {
 					variant="tertiary"
 					icon={<PencilIcon />}
 					onClick={handleKilde}
-					aria-label={'Rediger ' + kildenavn}
+					aria-label={'Rediger ' + kildetekst}
 				/>
 			)}
 		</div>

@@ -9,7 +9,7 @@ import { useTilgangStore } from '../../../store/tilgang-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import { useVarselStore } from '../../../store/varsel-store';
 import { fetchUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
-import { BeslutterProsessStatus, Utkast } from '../../../api/veilarbvedtaksstotte';
+import { BeslutterProsessStatus, Kilde, Utkast } from '../../../api/veilarbvedtaksstotte';
 import { OrNothing } from '../../../util/type/ornothing';
 import { hentFattedeVedtak } from '../../../api/veilarbvedtaksstotte/vedtak';
 import { innsatsgruppeTekst } from '../../../util/innsatsgruppe';
@@ -17,6 +17,7 @@ import { getHovedmalNavnEllerEmdash } from '../../../util/hovedmal';
 import { standardForArbeidsrettetOppfolgingsLenke } from '../../../util/constants';
 import './skjema-section.less';
 import { malformToTekst } from '../../../util/malformToTekst';
+import './skjema-section.less';
 
 const TEN_SECONDS = 10000;
 
@@ -61,12 +62,10 @@ export function LesSkjemaSection() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkast, erBeslutter]);
 
-	function isArrayEqual(a: string[], b: string[]) {
-		if (a === b) return true;
-		if (!a || !b) return false;
+	function erKilderEndret(a: Kilde[], b: Kilde[]) {
 		if (a.length !== b.length) return false;
 		for (let i = 0; i < a.length; i++) {
-			if (a[i] !== b[i]) return false;
+			if (a[i].kildeId !== b[i].kildeId) return false;
 		}
 		return true;
 	}
@@ -76,7 +75,7 @@ export function LesSkjemaSection() {
 			v1.begrunnelse !== v2.begrunnelse ||
 			v1.hovedmal !== v2.hovedmal ||
 			v1.innsatsgruppe !== v2.innsatsgruppe ||
-			!isArrayEqual(v1.opplysninger, v2.opplysninger)
+			!erKilderEndret(v1.kilder, v2.kilder)
 		);
 	}
 
@@ -104,15 +103,15 @@ export function LesSkjemaSection() {
 		return null;
 	}
 
-	const { opplysninger, innsatsgruppe, hovedmal } = utkast;
+	const { kilder, innsatsgruppe, hovedmal } = utkast;
 	const begrunnelse = utkast.begrunnelse || '';
 	return (
 		<div className="skjema-grid les-utkast-skjema">
 			<div className="kilder-felt">
 				<FeltHeader tittel="Kilder" />
 				<List size="small">
-					{opplysninger.map(kilde => {
-						return <List.Item key={kilde}>{kilde}</List.Item>;
+					{kilder.map(kilde => {
+						return <List.Item key={kilde.kildeId}>{kilde.tekst}</List.Item>;
 					})}
 				</List>
 			</div>

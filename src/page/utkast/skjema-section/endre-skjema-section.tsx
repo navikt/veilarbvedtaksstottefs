@@ -64,7 +64,7 @@ export function EndreSkjemaSection() {
 		[]
 	);
 
-	const vedtakskjema = { opplysninger: valgteKilder, begrunnelse, innsatsgruppe, hovedmal };
+	const vedtakskjema: SkjemaData = { valgteKilder, begrunnelse, innsatsgruppe, hovedmal };
 
 	useEffect(() => {
 		// Initialiser når utkastet åpnes

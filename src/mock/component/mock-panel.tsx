@@ -45,7 +45,7 @@ function InnloggetSom() {
 	const { setVeilederTilgang } = useTilgangStore();
 	const { innsatsgruppe, hovedmal, begrunnelse, valgteKilder } = useSkjemaStore();
 
-	const skjemaData = { innsatsgruppe, hovedmal, begrunnelse, opplysninger: valgteKilder };
+	const skjemaData = { innsatsgruppe, hovedmal, begrunnelse, valgteKilder };
 
 	function byttInnloggetVeileder(veilederident: string) {
 		const veileder = veiledere.find(v => v.ident === veilederident) as Veileder;
