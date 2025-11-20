@@ -21,6 +21,13 @@ export enum BeslutterProsessStatus {
 	GODKJENT_AV_BESLUTTER = 'GODKJENT_AV_BESLUTTER'
 }
 
+type UUID = string;
+
+export interface Kilde {
+	tekst: string;
+	kildeId: UUID;
+}
+
 export interface Utkast {
 	id: number;
 	hovedmal: OrNothing<HovedmalType>;
@@ -34,6 +41,7 @@ export interface Utkast {
 	beslutterIdent: OrNothing<string>;
 	beslutterNavn: OrNothing<string>;
 	opplysninger: string[]; // Har blitt renamet til "kilder" i etterkant
+	kilder: Kilde[];
 	beslutterProsessStatus: OrNothing<BeslutterProsessStatus>;
 	kanDistribueres: boolean | null;
 }
@@ -50,6 +58,7 @@ export interface Vedtak {
 	beslutterIdent: OrNothing<string>;
 	beslutterNavn: OrNothing<string>;
 	opplysninger: string[]; // Har blitt renamet til "kilder" i etterkant
+	kilder: Kilde[];
 	vedtakStatus: VedtakStatus;
 	utkastSistOppdatert: string;
 	gjeldende: boolean;
