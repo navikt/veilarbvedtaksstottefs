@@ -35,6 +35,7 @@ export const utkastHandlers: RequestHandler[] = [
 			id: nyId,
 			utkastSistOppdatert: '2019-05-07T10:22:32.98982+02:00',
 			opplysninger: [],
+			kilder: [],
 			veilederNavn: hentInnloggetVeileder().navn,
 			veilederIdent: hentInnloggetVeileder().ident,
 			oppfolgingsenhetId: enhetId,
