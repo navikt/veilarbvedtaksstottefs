@@ -3,6 +3,10 @@ class Environment {
 		return import.meta.env.MODE === 'demo';
 	}
 
+	get erIAnsattTestMiljo() {
+		return window.location.hostname.includes('ansatt.dev');
+	}
+
 	get erITestMiljo() {
 		return (
 			window.location.hostname.split('.').findIndex(domain => ['app-q1', 'app-q0', 'dev'].includes(domain)) >= 0
