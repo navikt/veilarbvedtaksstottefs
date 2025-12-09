@@ -132,7 +132,7 @@ function OyeblikksbildeEgenvurderingV2Innhold({
 			<Heading size="medium" level="2" spacing>
 				Svarene dine om behov for veiledning
 			</Heading>
-			{(data == null || data.sendtInnTidspunkt == null) && (
+			{!data?.sendtInnTidspunkt && (
 				<>
 					<b>Ingen registrerte data:</b> Personen har ikke registrert svar om behov for veiledning.
 				</>
