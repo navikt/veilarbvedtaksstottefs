@@ -20,7 +20,7 @@ interface OyeblikksbildeEgenvurderingV2InnholdProps {
 }
 
 function isEgenvurderingV2Dto(x: unknown): x is EgenvurderingV2Dto {
-	return !!x && typeof x === 'object' && 'egenvurderingId' in x;
+	return !!x && typeof x === 'object' && Object.hasOwn(x, 'egenvurderingId');
 }
 
 export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.Element {
