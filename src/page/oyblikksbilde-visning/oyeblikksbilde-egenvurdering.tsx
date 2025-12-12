@@ -68,67 +68,59 @@ function OyeblikksbildeEgenvurderingInnhold({
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
 	};
 
-	if (!data) {
-		return (
-			<>
-				<b>Ingen registrerte data:</b> Personen har ikke registrert svar om behov for veiledning.
-			</>
-		);
-	} else {
-		return (
-			<Card className="vedlegg-card">
-				<Heading size="medium" level="2" spacing>
-					Svarene dine om behov for veiledning
-				</Heading>
-				{isEgenvurderingV2(type, data) ? (
-					<>
-						{data.sendtInnTidspunkt && (
-							<>
-								<span className="json-key">Sendt inn: </span>
-								{formatDates(data.sendtInnTidspunkt)}
-							</>
-						)}
-						<div className="json-array-wrapper">
-							<h3 className="json-key">Svar</h3>
-							<ul className="json-array">
-								{data.sporsmal && visEnkelVerdi('Spørsmål', data.sporsmal)}
-								{data.svar && visEnkelVerdi('Svar', data.svar)}
-								{data.dialogId && visEnkelVerdi('DialogId', data.dialogId.toString())}
-							</ul>
-						</div>
-					</>
-				) : (
-					<>
-						{data.sistOppdatert && (
-							<>
-								<span className="json-key">Sist oppdatert: </span>
-								{formatDates(data.sistOppdatert)}
-							</>
-						)}
-						<div className="json-array-wrapper">
-							<h3 className="json-key">Svar</h3>
-							<ul className="json-array">
-								{data.svar.map((svar, i) => (
-									<li key={'svar-' + i}>
-										{svar.spm && visEnkelVerdi('Spørsmål', svar.spm)}
-										{svar.svar && visEnkelVerdi('Svar', svar.svar)}
-										{svar.dialogId && visEnkelVerdi('DialogId', svar.dialogId)}
-									</li>
-								))}
-							</ul>
-						</div>
-					</>
-				)}
-				{erJournalfort && (
-					<Button
-						variant="tertiary"
-						icon={<FilePdfIcon />}
-						onClick={() => visOyeblikkbildePdf(vedtakId, type)}
-					>
-						Svarene_dine_om_behov_for_veiledning.pdf
-					</Button>
-				)}
-			</Card>
-		);
-	}
+	return (
+		<Card className="vedlegg-card">
+			<Heading size="medium" level="2" spacing>
+				Svarene dine om behov for veiledning
+			</Heading>
+			{!data ? (
+				<>
+					<b>Ingen registrerte data:</b> Personen har ikke registrert svar om behov for veiledning.
+				</>
+			) : isEgenvurderingV2(type, data) ? (
+				<>
+					{data.sendtInnTidspunkt && (
+						<>
+							<span className="json-key">Sendt inn: </span>
+							{formatDates(data.sendtInnTidspunkt)}
+						</>
+					)}
+					<div className="json-array-wrapper">
+						<h3 className="json-key">Svar</h3>
+						<ul className="json-array">
+							{data.sporsmal && visEnkelVerdi('Spørsmål', data.sporsmal)}
+							{data.svar && visEnkelVerdi('Svar', data.svar)}
+							{data.dialogId && visEnkelVerdi('DialogId', data.dialogId.toString())}
+						</ul>
+					</div>
+				</>
+			) : (
+				<>
+					{data.sistOppdatert && (
+						<>
+							<span className="json-key">Sist oppdatert: </span>
+							{formatDates(data.sistOppdatert)}
+						</>
+					)}
+					<div className="json-array-wrapper">
+						<h3 className="json-key">Svar</h3>
+						<ul className="json-array">
+							{data.svar.map((svar, i) => (
+								<li key={'svar-' + i}>
+									{svar.spm && visEnkelVerdi('Spørsmål', svar.spm)}
+									{svar.svar && visEnkelVerdi('Svar', svar.svar)}
+									{svar.dialogId && visEnkelVerdi('DialogId', svar.dialogId)}
+								</li>
+							))}
+						</ul>
+					</div>
+				</>
+			)}
+			{erJournalfort && (
+				<Button variant="tertiary" icon={<FilePdfIcon />} onClick={() => visOyeblikkbildePdf(vedtakId, type)}>
+					Svarene_dine_om_behov_for_veiledning.pdf
+				</Button>
+			)}
+		</Card>
+	);
 }
