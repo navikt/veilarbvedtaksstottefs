@@ -1,7 +1,7 @@
 import { useEffect, type JSX } from 'react';
 import Spinner from '../../component/spinner/spinner';
 import Card from '../../component/card/card';
-import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
+import OyeblikksbildeType from '../../util/type/oyblikksbilde-type';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentEgenvurderingOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { logMetrikk } from '../../util/logger';
@@ -49,10 +49,10 @@ interface OyeblikksbildeEgenvurderingInnholdProps {
 }
 
 function isEgenvurderingV2(
-	type: OyblikksbildeType,
+	type: OyeblikksbildeType,
 	data: EgenvurderingDto | EgenvurderingV2Dto | null
 ): data is EgenvurderingV2Dto {
-	return type === OyblikksbildeType.EGENVURDERING_V2 && data != null;
+	return type === OyeblikksbildeType.EGENVURDERING_V2 && data != null;
 }
 
 function OyeblikksbildeEgenvurderingInnhold({

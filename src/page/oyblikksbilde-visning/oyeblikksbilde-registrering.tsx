@@ -1,7 +1,7 @@
 import { useEffect, type JSX } from 'react';
 import Spinner from '../../component/spinner/spinner';
 import Card from '../../component/card/card';
-import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
+import OyeblikksbildeType from '../../util/type/oyblikksbilde-type';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import {
 	hentArbeidssokerRegistretOyblikksbilde,
@@ -215,7 +215,7 @@ function OyeblikksdataRegistreringInnhold(props: {
 				<Button
 					variant="tertiary"
 					icon={<FilePdfIcon />}
-					onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.REGISTRERINGSINFO)}
+					onClick={() => visOyeblikkbildePdf(props.vedtakId, OyeblikksbildeType.REGISTRERINGSINFO)}
 				>
 					Svarene_dine_fra_da_du_registrerte_deg.pdf
 				</Button>
@@ -326,7 +326,7 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 				<Button
 					variant="tertiary"
 					icon={<FilePdfIcon />}
-					onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.ARBEIDSSOKERREGISTRET)}
+					onClick={() => visOyeblikkbildePdf(props.vedtakId, OyeblikksbildeType.ARBEIDSSOKERREGISTRET)}
 				>
 					Det_du_fortalte_oss_da_du_ble_registrert_som_arbeidssoker.pdf
 				</Button>
