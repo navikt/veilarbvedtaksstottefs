@@ -29,7 +29,7 @@ export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.El
 		return <IkkeKontaktMedBaksystemFeilmelding />;
 	} else if (oyeblikksbildeFetcher.data) {
 		return (
-			<OyeblikksbildeEgenvurderingInnhold
+			<OyeblikksbildeEgenvurderingCard
 				data={oyeblikksbildeFetcher.data.data}
 				erJournalfort={oyeblikksbildeFetcher.data.journalfort}
 				type={oyeblikksbildeFetcher.data.type}
@@ -48,14 +48,14 @@ interface OyeblikksbildeEgenvurderingInnholdProps {
 	vedtakId: number;
 }
 
-function isEgenvurderingV2(
+function isEgenvurderingV2AndHasData(
 	type: OyeblikksbildeType,
 	data: EgenvurderingDto | EgenvurderingV2Dto | null
 ): data is EgenvurderingV2Dto {
 	return type === OyeblikksbildeType.EGENVURDERING_V2 && data != null;
 }
 
-function OyeblikksbildeEgenvurderingInnhold({
+function OyeblikksbildeEgenvurderingCard({
 	data,
 	erJournalfort,
 	type,
@@ -68,16 +68,16 @@ function OyeblikksbildeEgenvurderingInnhold({
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
 	};
 
-	return (
-		<Card className="vedlegg-card">
-			<Heading size="medium" level="2" spacing>
-				Svarene dine om behov for veiledning
-			</Heading>
-			{!data ? (
-				<>
+	const innhold = () => {
+		if (!data) {
+			return (
+				<p>
 					<b>Ingen registrerte data:</b> Personen har ikke registrert svar om behov for veiledning.
-				</>
-			) : isEgenvurderingV2(type, data) ? (
+				</p>
+			);
+		}
+		if (isEgenvurderingV2AndHasData(type, data)) {
+			return (
 				<>
 					{data.sendtInnTidspunkt && (
 						<>
@@ -94,28 +94,38 @@ function OyeblikksbildeEgenvurderingInnhold({
 						</ul>
 					</div>
 				</>
-			) : (
-				<>
-					{data.sistOppdatert && (
-						<>
-							<span className="json-key">Sist oppdatert: </span>
-							{formatDates(data.sistOppdatert)}
-						</>
-					)}
-					<div className="json-array-wrapper">
-						<h3 className="json-key">Svar</h3>
-						<ul className="json-array">
-							{data.svar.map((svar, i) => (
-								<li key={'svar-' + i}>
-									{svar.spm && visEnkelVerdi('Spørsmål', svar.spm)}
-									{svar.svar && visEnkelVerdi('Svar', svar.svar)}
-									{svar.dialogId && visEnkelVerdi('DialogId', svar.dialogId)}
-								</li>
-							))}
-						</ul>
-					</div>
-				</>
-			)}
+			);
+		}
+		return (
+			<>
+				{data.sistOppdatert && (
+					<>
+						<span className="json-key">Sist oppdatert: </span>
+						{formatDates(data.sistOppdatert)}
+					</>
+				)}
+				<div className="json-array-wrapper">
+					<h3 className="json-key">Svar</h3>
+					<ul className="json-array">
+						{data.svar.map((svar, i) => (
+							<li key={'svar-' + i}>
+								{svar.spm && visEnkelVerdi('Spørsmål', svar.spm)}
+								{svar.svar && visEnkelVerdi('Svar', svar.svar)}
+								{svar.dialogId && visEnkelVerdi('DialogId', svar.dialogId)}
+							</li>
+						))}
+					</ul>
+				</div>
+			</>
+		);
+	};
+
+	return (
+		<Card className="vedlegg-card">
+			<Heading size="medium" level="2" spacing>
+				Svarene dine om behov for veiledning
+			</Heading>
+			{innhold()}
 			{erJournalfort && (
 				<Button variant="tertiary" icon={<FilePdfIcon />} onClick={() => visOyeblikkbildePdf(vedtakId, type)}>
 					Svarene_dine_om_behov_for_veiledning.pdf
