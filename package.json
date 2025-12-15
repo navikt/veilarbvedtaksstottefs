@@ -37,7 +37,7 @@
     "lodash.debounce": "4.0.8",
     "react": "19.2.1",
     "react-dom": "19.2.1",
-    "react-pdf": "9.2.1"
+    "react-pdf": "10.2.0"
   },
   "devDependencies": {
     "@eslint/js": "9.39.1",
