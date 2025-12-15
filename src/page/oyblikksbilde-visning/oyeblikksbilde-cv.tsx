@@ -3,7 +3,7 @@ import { Button, Heading } from '@navikt/ds-react';
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import Spinner from '../../component/spinner/spinner';
 import Card from '../../component/card/card';
-import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
+import OyeblikksbildeType from '../../util/type/oyblikksbilde-type';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentCvOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { CvDto } from './dto/CvDto';
@@ -446,7 +446,7 @@ function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: bool
 				<Button
 					variant="tertiary"
 					icon={<FilePdfIcon />}
-					onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.CV_OG_JOBBPROFIL)}
+					onClick={() => visOyeblikkbildePdf(props.vedtakId, OyeblikksbildeType.CV_OG_JOBBPROFIL)}
 				>
 					CV_og_jobbønsker.pdf
 				</Button>

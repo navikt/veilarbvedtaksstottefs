@@ -24,6 +24,7 @@ import {
 	ProfilertTil,
 	UtdanningGodkjentValg
 } from '@navikt/arbeidssokerregisteret-utils';
+import OyeblikksbildeType from '../util/type/oyblikksbilde-type';
 
 const tilgangTilBrukersKontor: TilgangTilBrukersKontor = {
 	tilgangTilBrukersKontor: true
@@ -121,8 +122,7 @@ const dialogMeldinger: DialogMelding[] = [
 		type: MeldingType.DIALOG_MELDING
 	},
 	{
-		melding:
-			'Synes det ser bra ut, du har forklart godt hva som ligger bak vurderingen du har gjert',
+		melding: 'Synes det ser bra ut, du har forklart godt hva som ligger bak vurderingen du har gjert',
 		opprettet: '2020-02-09T08:24:10.716393+02:00',
 		opprettetAvIdent: veileder3.ident,
 		opprettetAvNavn: veileder3.navn,
@@ -143,7 +143,8 @@ const dialogMeldinger: DialogMelding[] = [
 		type: MeldingType.DIALOG_MELDING
 	},
 	{
-		melding: 'Jeg har lurt på om jeg burde bytte ut "inneværende periode" med et annet uttrykk som er mindre byråkratisk, har du idéer?',
+		melding:
+			'Jeg har lurt på om jeg burde bytte ut "inneværende periode" med et annet uttrykk som er mindre byråkratisk, har du idéer?',
 		opprettet: '2020-02-09T09:26:11.716393+02:00',
 		opprettetAvIdent: innloggetVeileder.ident,
 		opprettetAvNavn: innloggetVeileder.navn,
@@ -357,7 +358,8 @@ const oyeblikksbildeEgenvurdering: OyblikksbildeEgenvurdering = {
 	data: JSON.parse(
 		`{"sistOppdatert":"2024-03-21T11:06:57.637Z","svar":[{"spm":"Hva slags veiledning ønsker du?","svar":"Jeg ønsker å klare meg selv","oppfolging":"STANDARD_INNSATS","dialogId":null}]}`
 	),
-	journalfort: true
+	journalfort: true,
+	type: OyeblikksbildeType.EGENVURDERING
 };
 
 const opplysninerOmArbeidssoeker: OpplysningerOmArbeidssoker = {

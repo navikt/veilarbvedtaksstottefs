@@ -1,7 +1,7 @@
 import { useEffect, type JSX } from 'react';
 import Spinner from '../../component/spinner/spinner';
 import Card from '../../component/card/card';
-import OyblikksbildeType from '../../util/type/oyblikksbilde-type';
+import OyeblikksbildeType from '../../util/type/oyblikksbilde-type';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentEgenvurderingOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { logMetrikk } from '../../util/logger';
@@ -12,16 +12,7 @@ import { visEnkelVerdi } from './oyeblikksbilde-cv';
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import { Button, Heading } from '@navikt/ds-react';
 import { IkkeKontaktMedBaksystemFeilmelding } from '../../component/feilmelding/ikke-kontakt-med-baksystem-feilmelding';
-
-interface OyeblikksbildeEgenvurderingV2InnholdProps {
-	data: EgenvurderingV2Dto;
-	erJournalfort: boolean;
-	vedtakId: number;
-}
-
-function isEgenvurderingV2Dto(x: unknown): x is EgenvurderingV2Dto {
-	return !!x && typeof x === 'object' && Object.hasOwn(x, 'egenvurderingId');
-}
+import { OyblikksbildeEgenvurdering } from '../../util/type/oyblikksbilde';
 
 export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.Element {
 	const oyeblikksbildeFetcher = useAxiosFetcher(hentEgenvurderingOyblikksbilde);
@@ -37,33 +28,39 @@ export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.El
 	} else if (oyeblikksbildeFetcher.error) {
 		return <IkkeKontaktMedBaksystemFeilmelding />;
 	} else if (oyeblikksbildeFetcher.data) {
-		if (isEgenvurderingV2Dto(oyeblikksbildeFetcher.data.data)) {
-			return (
-				<OyeblikksbildeEgenvurderingV2Innhold
-					data={oyeblikksbildeFetcher.data.data}
-					erJournalfort={oyeblikksbildeFetcher.data.journalfort}
-					vedtakId={props.vedtakId}
-				/>
-			);
-		} else {
-			return (
-				<OyeblikksdataEgenvurderingInnhold
-					data={oyeblikksbildeFetcher.data.data}
-					erJournalfort={oyeblikksbildeFetcher.data.journalfort}
-					vedtakId={props.vedtakId}
-				/>
-			);
-		}
+		return (
+			<OyeblikksbildeEgenvurderingCard
+				data={oyeblikksbildeFetcher.data.data}
+				erJournalfort={oyeblikksbildeFetcher.data.journalfort}
+				type={oyeblikksbildeFetcher.data.type}
+				vedtakId={props.vedtakId}
+			/>
+		);
 	} else {
 		return <></>;
 	}
 }
 
-function OyeblikksdataEgenvurderingInnhold(props: {
-	data: EgenvurderingDto | null;
+interface OyeblikksbildeEgenvurderingInnholdProps {
+	data: EgenvurderingDto | EgenvurderingV2Dto | null;
 	erJournalfort: boolean;
+	type: OyblikksbildeEgenvurdering['type'];
 	vedtakId: number;
-}) {
+}
+
+function isEgenvurderingV2AndHasData(
+	type: OyeblikksbildeType,
+	data: EgenvurderingDto | EgenvurderingV2Dto | null
+): data is EgenvurderingV2Dto {
+	return type === OyeblikksbildeType.EGENVURDERING_V2 && data != null;
+}
+
+function OyeblikksbildeEgenvurderingCard({
+	data,
+	erJournalfort,
+	type,
+	vedtakId
+}: OyeblikksbildeEgenvurderingInnholdProps) {
 	const { changeView } = useViewStore();
 
 	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
@@ -71,25 +68,42 @@ function OyeblikksdataEgenvurderingInnhold(props: {
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
 	};
 
-	const data = props.data;
-
-	return (
-		<Card className="vedlegg-card">
-			<Heading size="medium" level="2" spacing>
-				Svarene dine om behov for veiledning
-			</Heading>
-			{(data == null || data.sistOppdatert == null) && (
-				<>
+	const innhold = () => {
+		if (!data) {
+			return (
+				<p>
 					<b>Ingen registrerte data:</b> Personen har ikke registrert svar om behov for veiledning.
-				</>
-			)}
-			{data?.sistOppdatert && (
+				</p>
+			);
+		}
+		if (isEgenvurderingV2AndHasData(type, data)) {
+			return (
 				<>
-					<span className="json-key">Sist oppdatert: </span>
-					{formatDates(data.sistOppdatert)}
+					{data.sendtInnTidspunkt && (
+						<>
+							<span className="json-key">Sendt inn: </span>
+							{formatDates(data.sendtInnTidspunkt)}
+						</>
+					)}
+					<div className="json-array-wrapper">
+						<h3 className="json-key">Svar</h3>
+						<ul className="json-array">
+							{data.sporsmal && visEnkelVerdi('Spørsmål', data.sporsmal)}
+							{data.svar && visEnkelVerdi('Svar', data.svar)}
+							{data.dialogId && visEnkelVerdi('DialogId', data.dialogId.toString())}
+						</ul>
+					</div>
 				</>
-			)}
-			{data?.svar && data?.svar.length > 0 && (
+			);
+		}
+		return (
+			<>
+				{data.sistOppdatert && (
+					<>
+						<span className="json-key">Sist oppdatert: </span>
+						{formatDates(data.sistOppdatert)}
+					</>
+				)}
 				<div className="json-array-wrapper">
 					<h3 className="json-key">Svar</h3>
 					<ul className="json-array">
@@ -102,57 +116,18 @@ function OyeblikksdataEgenvurderingInnhold(props: {
 						))}
 					</ul>
 				</div>
-			)}
-			{props.erJournalfort && (
-				<Button
-					variant="tertiary"
-					icon={<FilePdfIcon />}
-					onClick={() => visOyeblikkbildePdf(props.vedtakId, OyblikksbildeType.EGENVURDERING)}
-				>
-					Svarene_dine_om_behov_for_veiledning.pdf
-				</Button>
-			)}
-		</Card>
-	);
-}
-
-function OyeblikksbildeEgenvurderingV2Innhold({
-	data,
-	erJournalfort,
-	vedtakId
-}: OyeblikksbildeEgenvurderingV2InnholdProps) {
-	const { changeView } = useViewStore();
-
-	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
-		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
-		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
+			</>
+		);
 	};
+
 	return (
 		<Card className="vedlegg-card">
 			<Heading size="medium" level="2" spacing>
 				Svarene dine om behov for veiledning
 			</Heading>
-			{!data?.sendtInnTidspunkt && (
-				<>
-					<b>Ingen registrerte data:</b> Personen har ikke registrert svar om behov for veiledning.
-				</>
-			)}
-			{data?.svar && (
-				<div className="json-array-wrapper">
-					<h3 className="json-key">Svar</h3>
-					<ul className="json-array">
-						{data.sporsmal && visEnkelVerdi('Spørsmål', data.sporsmal)}
-						{data.svar && visEnkelVerdi('Svar', data.svar)}
-						{data.dialogId && visEnkelVerdi('DialogId', data.dialogId.toString())}
-					</ul>
-				</div>
-			)}
+			{innhold()}
 			{erJournalfort && (
-				<Button
-					variant="tertiary"
-					icon={<FilePdfIcon />}
-					onClick={() => visOyeblikkbildePdf(vedtakId, OyblikksbildeType.EGENVURDERING_V2)}
-				>
+				<Button variant="tertiary" icon={<FilePdfIcon />} onClick={() => visOyeblikkbildePdf(vedtakId, type)}>
 					Svarene_dine_om_behov_for_veiledning.pdf
 				</Button>
 			)}

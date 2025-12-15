@@ -1,4 +1,4 @@
-enum OyblikksbildeType {
+enum OyeblikksbildeType {
 	CV_OG_JOBBPROFIL = 'CV_OG_JOBBPROFIL', // Har fått navnet jobbønsker i etterkant
 	REGISTRERINGSINFO = 'REGISTRERINGSINFO',
 	EGENVURDERING = 'EGENVURDERING',
@@ -6,4 +6,4 @@ enum OyblikksbildeType {
 	ARBEIDSSOKERREGISTRET = 'ARBEIDSSOKERREGISTRET'
 }
 
-export default OyblikksbildeType;
+export default OyeblikksbildeType;
