@@ -9,3 +9,11 @@ interface Svar {
 	oppfolging: string | null;
 	dialogId: string | null;
 }
+
+export interface EgenvurderingV2Dto {
+	egenvurderingId: string;
+	sendtInnTidspunkt: string;
+	dialogId: number | null;
+	sporsmal: string;
+	svar: string;
+}
