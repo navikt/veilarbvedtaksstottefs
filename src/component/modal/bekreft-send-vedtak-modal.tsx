@@ -7,20 +7,22 @@ import { useAppStore } from '../../store/app-store';
 import './modal.css';
 import { formateStringInUpperAndLowerCase } from '../../util/tekst-utils';
 import { InnsatsgruppeType } from '../../api/veilarbvedtaksstotte';
+import { useSkjemaStore } from '../../store/skjema-store.ts';
 
 interface VedtakSendtModalProps extends ModalProps {
 	onSendVedtakBekreftet: () => void;
-	innsatsgruppe?: InnsatsgruppeType;
 }
 
 export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 	const { resetModalType, modalType } = useModalStore();
 	const navn = useDataStore().navn;
 	const fnr = useAppStore().fnr;
+	const { innsatsgruppe } = useSkjemaStore();
 
 	const erVarigInnsats =
-		props.innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS ||
-		props.innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
+//		innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS ||
+//		innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
+	innsatsgruppe === InnsatsgruppeType.STANDARD_INNSATS;
 
 	return (
 		<VarselModal

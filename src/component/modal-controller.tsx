@@ -74,7 +74,6 @@ export function ModalController() {
 				onSendVedtakBekreftet={
 					'onSendVedtakBekreftet' in modalProps ? modalProps.onSendVedtakBekreftet : () => {}
 				}
-				innsatsgruppe={'innsatsgruppe' in modalProps ? modalProps.innsatsgruppe : undefined}
 			/>
 			<SlettUtkastModal isOpen={modalType === ModalType.BEKREFT_SLETT_UTKAST} />
 			<TaOverModal isOpen={modalType === ModalType.BEKREFT_TA_OVER_UTKAST} />
