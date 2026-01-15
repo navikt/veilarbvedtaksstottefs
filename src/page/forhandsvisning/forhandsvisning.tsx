@@ -86,7 +86,7 @@ export function Forhandsvisning() {
 	};
 
 	const handleOnSendClicked = () => {
-		showModal(ModalType.BEKREFT_SEND_VEDTAK, { onSendVedtakBekreftet: sendVedtak, innsatsgruppe });
+		showModal(ModalType.BEKREFT_SEND_VEDTAK, { onSendVedtakBekreftet: sendVedtak });
 	};
 
 	return (
