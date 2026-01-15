@@ -20,9 +20,8 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 	const { innsatsgruppe } = useSkjemaStore();
 
 	const erVarigInnsats =
-//		innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS ||
-//		innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
-	innsatsgruppe === InnsatsgruppeType.STANDARD_INNSATS;
+		innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS ||
+		innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
 
 	return (
 		<VarselModal
@@ -50,9 +49,13 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 			<Modal.Body className="bekreft-send-vedtak-modal-body">
 				<BodyShort>Vedtaksbrevet blir sendt til bruker.</BodyShort>
 				{erVarigInnsats && (
-					<Alert variant="warning" className="bekreft-send-vedtak-modal-varsel-tekst" id="paminnelse-gosysoppgave-alert">
-						Hvis brukeren skal ha AAP etter § 11-18, må du huske å sende Gosys-oppgave til Nav arbeid og ytelser,
-						se{' '}
+					<Alert
+						variant="warning"
+						className="bekreft-send-vedtak-modal-varsel-tekst"
+						id="paminnelse-gosysoppgave-alert"
+					>
+						Hvis brukeren skal ha AAP etter § 11-18, må du huske å sende Gosys-oppgave til Nav arbeid og
+						ytelser, se{' '}
 						<Link
 							href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
 							target="_blank"
