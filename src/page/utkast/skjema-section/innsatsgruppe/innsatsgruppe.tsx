@@ -57,11 +57,22 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	const { setShowSection } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { utkast } = useDataStore();
-	const { errors, innsatsgruppe } = useSkjemaStore();
+	const { errors } = useSkjemaStore();
 
-	const visVarigInnsatsAlert =
-		innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS ||
-		innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS;
+
+	const AapVarsel = () => (
+		<Alert variant="warning" size="small" className="paminnelse_i_innsatsgrupper">
+			Hvis brukeren skal ha AAP etter § 11-18, må<br/> du huske å sende Gosys-oppgave til Nav<br/> arbeid og ytelser, se{' '}
+			<Link
+				href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				servicerutine på Navet
+			</Link>
+			.
+		</Alert>
+	);
 
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
 		if (
@@ -91,25 +102,29 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 			value={props.innsatsgruppe}
 			error={errors.innsatsgruppe}
 		>
-			{Object.values(InnsatsgruppeType).map(innsatsgruppetype => (
-				<Radio key={innsatsgruppetype} value={innsatsgruppetype} onKeyDown={swallowEnterKeyPress}>
-					{innsatsgruppeTekst[innsatsgruppetype]}
-				</Radio>
-			))}
-			{visVarigInnsatsAlert && (
-				<Alert variant="warning" size="small" id="paminnelse-gosysoppgave-alert-radioknapp" style={{ marginTop: 'var(--a-spacing-4)' }}>
-					Hvis brukeren skal ha AAP etter § 11-18, må du huske å sende Gosys-oppgave til Nav arbeid og ytelser,
-					se{' '}
-					<Link
-						href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						servicerutine på Navet
-					</Link>
-					.
-				</Alert>
-			)}
+
+			<Radio key={InnsatsgruppeType.STANDARD_INNSATS} value={InnsatsgruppeType.STANDARD_INNSATS} onKeyDown={swallowEnterKeyPress}>
+				{innsatsgruppeTekst[InnsatsgruppeType.STANDARD_INNSATS]}
+			</Radio>
+
+			<Radio key={InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS} value={InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS} onKeyDown={swallowEnterKeyPress}>
+				{innsatsgruppeTekst[InnsatsgruppeType.SITUASJONSBESTEMT_INNSATS]}
+			</Radio>
+
+			<Radio key={InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS} value={InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS} onKeyDown={swallowEnterKeyPress}>
+				{innsatsgruppeTekst[InnsatsgruppeType.SPESIELT_TILPASSET_INNSATS]}
+			</Radio>
+
+			<Radio key={InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS} value={InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS} onKeyDown={swallowEnterKeyPress}>
+				{innsatsgruppeTekst[InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS]}
+			</Radio>
+			{props.innsatsgruppe === InnsatsgruppeType.GRADERT_VARIG_TILPASSET_INNSATS && AapVarsel()}
+
+			<Radio key={InnsatsgruppeType.VARIG_TILPASSET_INNSATS} value={InnsatsgruppeType.VARIG_TILPASSET_INNSATS} onKeyDown={swallowEnterKeyPress}>
+				{innsatsgruppeTekst[InnsatsgruppeType.VARIG_TILPASSET_INNSATS]}
+			</Radio>
+			{props.innsatsgruppe === InnsatsgruppeType.VARIG_TILPASSET_INNSATS && AapVarsel() }
+
 		</RadioGroup>
 	);
 }
