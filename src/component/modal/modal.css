@@ -14,3 +14,6 @@
 .bekreft-send-vedtak-modal-body {
 	margin-top: 0.5rem;
 }
+.bekreft-send-vedtak-modal-varsel-tekst {
+    margin-top: var(--a-spacing-2);
+}

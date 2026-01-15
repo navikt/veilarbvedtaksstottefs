@@ -2,7 +2,7 @@ import { VarselModal } from './varsel-modal/varsel-modal';
 import { ModalProps } from './modal-props';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { useDataStore } from '../../store/data-store';
-import { BodyShort, Button, CopyButton, Heading, Link, Modal } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, CopyButton, Heading, Link, Modal } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
 import './modal.css';
 import { formateStringInUpperAndLowerCase } from '../../util/tekst-utils';
@@ -50,8 +50,10 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 			<Modal.Body className="bekreft-send-vedtak-modal-body">
 				<BodyShort>Vedtaksbrevet blir sendt til bruker.</BodyShort>
 				{erVarigInnsats && (
-					<BodyShort className="bekreft-send-vedtak-modal-varsel-tekst">
-						Hvis brukeren skal ha AAP etter § 11-18, må du huske å sende Gosys-oppgave til Nav arbeid og ytelser,
+					<Alert variant="warning" className="bekreft-send-vedtak-modal-varsel-tekst" id="paminnelse-gosysoppgave-alert">
+						Hvis brukeren skal ha AAP etter § 11-18, må <br />
+						du huske å sende Gosys-oppgave til Nav <br />
+						arbeid og ytelser,
 						se{' '}
 						<Link
 							href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
@@ -61,7 +63,7 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 							servicerutine på Navet
 						</Link>
 						.
-					</BodyShort>
+					</Alert>
 				)}
 			</Modal.Body>
 			<Modal.Footer>
