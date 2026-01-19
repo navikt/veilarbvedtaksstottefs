@@ -2,13 +2,6 @@
 	margin: 1rem 0;
 	animation: linear 0.25s info-fade-in;
 }
-.veilarbvedtaksstottefs .paminnelse_i_innsatsgrupper {
-    width: max-content;
-    max-width: 100% ; /* AI anbefaler dette for å unngå at boksen blir for stor på små skjermer. */
-    margin-top: var(--a-spacing-2);
-    margin-bottom: var(--a-spacing-4);
-    margin-left: var(--a-spacing-8); /* AI sier dette justerer boksen likt med tekst, det tilsvarer Aksel størrelse på radio button.*/
-}
 
 @keyframes info-fade-in {
 	0% {
