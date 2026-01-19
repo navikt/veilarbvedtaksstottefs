@@ -9,7 +9,7 @@ import { useDataStore } from '../../../../store/data-store';
 import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekst } from '../../../../util/innsatsgruppe';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { useDialogSection } from '../../../../store/dialog-section-store';
-import { Alert, Radio, RadioGroup } from '@navikt/ds-react';
+import { Alert, Link, Radio, RadioGroup } from '@navikt/ds-react';
 import './innsatsgruppe.css';
 
 function Innsatsgruppe() {
@@ -57,7 +57,27 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	const { setShowSection } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { utkast } = useDataStore();
-	const { errors } = useSkjemaStore();
+	const { errors, innsatsgruppe } = useSkjemaStore();
+
+	function AapVarsel(innsatsgruppeType: InnsatsgruppeType) {
+		if (!erVarigEllerGradertVarig(innsatsgruppeType)) return null;
+
+		if (innsatsgruppe !== innsatsgruppeType) return null;
+		return (
+		<Alert variant="warning" size="small">
+			Hvis brukeren skal ha AAP etter § 11-18, må
+			<br /> du huske å sende Gosys-oppgave til Nav
+			<br /> arbeid og ytelser, se{' '}
+			<Link
+				href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				servicerutine på Navet
+			</Link>
+			.
+		</Alert>);
+	}
 
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
 		if (
@@ -90,6 +110,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 			{Object.values(InnsatsgruppeType).map(innsatsgruppetype => (
 				<Radio key={innsatsgruppetype} value={innsatsgruppetype} onKeyDown={swallowEnterKeyPress}>
 					{innsatsgruppeTekst[innsatsgruppetype]}
+					{AapVarsel(innsatsgruppetype)}
 				</Radio>
 			))}
 		</RadioGroup>
