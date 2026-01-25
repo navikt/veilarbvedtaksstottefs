@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "@navikt/aksel-icons": "7.40.0",
-    "@navikt/arbeidssokerregisteret-utils": "1.9.2",
+    "@navikt/arbeidssokerregisteret-utils": "2.0.0",
     "@navikt/ds-css": "7.40.0",
     "@navikt/ds-react": "7.40.0",
     "@navikt/fnrvalidator": "2.2.1",
