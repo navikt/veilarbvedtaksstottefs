@@ -6,7 +6,7 @@ metadata:
   labels:
     team: obo
 spec:
-  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2026.01.16_12.27-ac475e78a52a
+  image: europe-north1-docker.pkg.dev/nais-management-233d/poao/poao-frontend:2026.02.02_09.45-bfdc2ba51d46
   port: 8080
   ingresses:
     - https://veilarbvedtaksstottefs.intern.nav.no
