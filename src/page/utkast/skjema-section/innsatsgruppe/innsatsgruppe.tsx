@@ -11,6 +11,7 @@ import { useSkjemaStore } from '../../../../store/skjema-store';
 import { useDialogSection } from '../../../../store/dialog-section-store';
 import { Alert, Link, Radio, RadioGroup } from '@navikt/ds-react';
 import './innsatsgruppe.css';
+import { Fragment } from 'react';
 
 function Innsatsgruppe() {
 	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal } = useSkjemaStore();
@@ -57,26 +58,22 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	const { setShowSection } = useDialogSection();
 	const { showModal } = useModalStore();
 	const { utkast } = useDataStore();
-	const { errors, innsatsgruppe } = useSkjemaStore();
+	const { errors } = useSkjemaStore();
 
-	function AapVarsel(innsatsgruppeType: InnsatsgruppeType) {
-		if (!erVarigEllerGradertVarig(innsatsgruppeType)) return null;
-
-		if (innsatsgruppe !== innsatsgruppeType) return null;
+	function AapVarselInnhold() {
 		return (
-		<Alert variant="warning" size="small">
-			Hvis brukeren skal ha AAP etter § 11-18, må
-			<br /> du huske å sende Gosys-oppgave til Nav
-			<br /> arbeid og ytelser, se{' '}
-			<Link
-				href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				servicerutine på Navet
-			</Link>
-			.
-		</Alert>);
+			<>
+				Hvis brukeren skal ha AAP etter § 11-18, må du huske å sende Gosys-oppgave til Nav arbeid og ytelser, se{' '}
+				<Link
+					href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					servicerutine på Navet
+				</Link>
+				.
+			</>
+		);
 	}
 
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
@@ -107,12 +104,29 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 			value={props.innsatsgruppe}
 			error={errors.innsatsgruppe}
 		>
-			{Object.values(InnsatsgruppeType).map(innsatsgruppetype => (
-				<Radio key={innsatsgruppetype} value={innsatsgruppetype} onKeyDown={swallowEnterKeyPress}>
-					{innsatsgruppeTekst[innsatsgruppetype]}
-					{AapVarsel(innsatsgruppetype)}
-				</Radio>
-			))}
+			{Object.values(InnsatsgruppeType).map(innsatsgruppetype => {
+				const erValgt = props.innsatsgruppe === innsatsgruppetype;
+				const skalViseAapVarsel =
+					erValgt && erVarigEllerGradertVarig(innsatsgruppetype);
+
+				return (
+					<Fragment key={innsatsgruppetype}>
+						<Radio value={innsatsgruppetype} onKeyDown={swallowEnterKeyPress}>
+							{innsatsgruppeTekst[innsatsgruppetype]}
+						</Radio>
+
+						{skalViseAapVarsel && (
+							<Alert
+								variant="warning"
+								size="small"
+								className="innsatsgruppe__aapvarsel "
+							>
+								<AapVarselInnhold />
+							</Alert>
+						)}
+					</Fragment>
+				);
+			})}
 		</RadioGroup>
 	);
 }
