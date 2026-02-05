@@ -6,7 +6,7 @@
     "isDynamicEntry": true
   },
   "index.html": {
-    "file": "assets/index-BOPcOrQA.js",
+    "file": "assets/index-BmHS5rtI.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -44,7 +44,7 @@
     "src": "src/component/panel/utkast/utkast.svg"
   },
   "src/mock/index.ts": {
-    "file": "assets/index-DjdgD5gx.js",
+    "file": "assets/index-mlpl0cnh.js",
     "name": "index",
     "src": "src/mock/index.ts",
     "isDynamicEntry": true,
