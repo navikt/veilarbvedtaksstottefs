@@ -106,8 +106,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 		>
 			{Object.values(InnsatsgruppeType).map(innsatsgruppetype => {
 				const erValgt = props.innsatsgruppe === innsatsgruppetype;
-				const skalViseAapVarsel =
-					erValgt && erVarigEllerGradertVarig(innsatsgruppetype);
+				const skalViseAapVarsel = erValgt && erVarigEllerGradertVarig(innsatsgruppetype);
 
 				return (
 					<Fragment key={innsatsgruppetype}>
@@ -115,18 +114,26 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 							{innsatsgruppeTekst[innsatsgruppetype]}
 						</Radio>
 
-						{skalViseAapVarsel && (
-							<Alert
-								variant="warning"
-								size="small"
-								className="innsatsgruppe__aapvarsel "
-							>
-								<AapVarselInnhold />
-							</Alert>
-						)}
+						{skalViseAapVarsel && <AapVarsel />}
 					</Fragment>
 				);
 			})}
 		</RadioGroup>
+	);
+}
+
+function AapVarsel() {
+	return (
+		<Alert variant="warning" size="small" className="innsatsgruppe__aapvarsel">
+			Hvis brukeren skal ha AAP etter § 11-18, må du huske å sende Gosys-oppgave til Nav arbeid og ytelser, se{' '}
+			<Link
+				href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				servicerutine på Navet
+			</Link>
+			.
+		</Alert>
 	);
 }
