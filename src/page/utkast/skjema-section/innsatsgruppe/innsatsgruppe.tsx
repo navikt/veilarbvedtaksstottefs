@@ -59,23 +59,6 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 	const { showModal } = useModalStore();
 	const { utkast } = useDataStore();
 	const { errors } = useSkjemaStore();
-
-	function AapVarselInnhold() {
-		return (
-			<>
-				Hvis brukeren skal ha AAP etter § 11-18, må du huske å sende Gosys-oppgave til Nav arbeid og ytelser, se{' '}
-				<Link
-					href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					servicerutine på Navet
-				</Link>
-				.
-			</>
-		);
-	}
-
 	function handleInnsatsgruppeChanged(innsatsgruppe: InnsatsgruppeType) {
 		if (
 			erBeslutterProsessStartet(utkast && utkast.beslutterProsessStatus) &&

@@ -12,10 +12,6 @@
 	}
 }
 .innsatsgruppe__aapvarsel {
-    margin-top: var(--a-spacing-1);
     margin-bottom: var(--a-spacing-2);
     margin-left: var(--a-spacing-7);
-
-    /* Gjør den smalere enn full bredde */
-    max-width: 25rem; /* juster etter behov */
 }
