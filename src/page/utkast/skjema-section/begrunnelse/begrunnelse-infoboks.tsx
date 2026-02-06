@@ -24,7 +24,6 @@ export const BegrunnelseInfoboks = () => {
 					<List.Item>Hva slags veiledning trenger denne personen?</List.Item>
 					<List.Item>Er jobbmulighetene begrenset, og hvorfor?</List.Item>
 					<List.Item>Trenger denne personen arbeidsrettede aktiviteter og tiltak, og hvorfor?</List.Item>
-					<List.Item>Hva har dere blitt enige om?</List.Item>
 				</List>
 			</ReadMore>
 		</div>
