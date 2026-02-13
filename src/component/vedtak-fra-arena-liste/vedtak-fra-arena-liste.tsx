@@ -46,7 +46,7 @@ export function VedtakFraArenaListe({ vedtakListe }: { vedtakListe: ArenaVedtak[
 			ingenVedtakTekst="Ingen utsendte oppfølgingsvedtak"
 			vedtak={arenaVedtak}
 			vedtakMapper={(vedtak, posisjon) => {
-				const onClick = (v: ArenaVedtak, idx: number) => handleTidligereVedtakClicked(vedtak, idx);
+				const onClick = (_v: ArenaVedtak, idx: number) => handleTidligereVedtakClicked(vedtak, idx);
 				return mapArenaVedtakTilPanel(vedtak, onClick, posisjon);
 			}}
 		/>

@@ -27,7 +27,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 
 	return (
 		<Box
-			background={'default'}
+			background="default"
 			borderColor="neutral-subtle"
 			borderWidth="1"
 			borderRadius="2"

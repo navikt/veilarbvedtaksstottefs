@@ -1,8 +1,8 @@
 import { Accordion, BodyShort, Heading, Link } from '@navikt/ds-react';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { OrNothing } from '../../../util/type/ornothing';
-import { GammelnavskOrdliste } from '../../data';
-import { Kansellisten } from '../../data';
+import GammelnavskOrdliste from '../../data/gammelnavsk.json';
+import Kansellisten from '../../data/kansellisten.json';
 
 interface GammelnavskType {
 	id: string;

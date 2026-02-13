@@ -25,8 +25,8 @@ export function MockPanel() {
 			{visPanel && (
 				<Box
 					background="default"
-					paddingBlock="2"
-					paddingInline="4"
+					paddingBlock="space-6"
+					paddingInline="space-8"
 					borderWidth="5"
 					borderColor="brand-blue"
 					className="mock-panel__innhold"

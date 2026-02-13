@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Accordion, Alert, BodyShort, Switch, Textarea } from '@navikt/ds-react';
 import { BegrunnelseInfoboks } from './begrunnelse-infoboks';
 import FeltHeader from '../felt-header/felt-header';
@@ -6,10 +6,11 @@ import { useDataStore } from '../../../../store/data-store';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { logMetrikk } from '../../../../util/logger';
 import { validerBegrunnelseMaxLength } from '../../../../util/skjema-utils';
-import { GammelnavskDictionary, Lix } from '../../../../spraksjekk-intern/components';
 import { standardForArbeidsrettetOppfolgingsLenke } from '../../../../util/constants';
 import { malformToTekst } from '../../../../util/malformToTekst';
 import './begrunnelse.css';
+import GammelnavskDictionary from '../../../../spraksjekk-intern/components/dictionaries/GammelnavskDictionary.tsx';
+import Lix from '../../../../spraksjekk-intern/components/analysis/Lix.tsx';
 
 export const BEGRUNNELSE_ANBEFALT_LENGTH = 4000;
 export const BEGRUNNELSE_MAX_LENGTH = 10000;
@@ -18,7 +19,6 @@ const CHAR_DIFF_LIMIT_COPY_PASTE = 30;
 function Begrunnelse() {
 	const { malform } = useDataStore();
 	const { begrunnelse, setBegrunnelse, errors, innsatsgruppe } = useSkjemaStore();
-	const [begrunnelseFeil, setBegrunnelseFeil] = useState(errors.begrunnelse);
 	const [visSprakhjelp, setVisSprakhjelp] = useState(false);
 
 	function onBegrunnelseChanged(e: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -37,14 +37,10 @@ function Begrunnelse() {
 		}
 	}
 
-	useEffect(() => {
+	const begrunnelseFeil = useMemo(() => {
 		const feil = validerBegrunnelseMaxLength(begrunnelse);
-		setBegrunnelseFeil(feil.begrunnelse);
-	}, [begrunnelse]);
-
-	useEffect(() => {
-		setBegrunnelseFeil(errors.begrunnelse);
-	}, [errors.begrunnelse]);
+		return errors.begrunnelse || feil.begrunnelse;
+	}, [begrunnelse, errors.begrunnelse]);
 
 	return (
 		<>
