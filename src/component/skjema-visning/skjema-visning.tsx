@@ -27,14 +27,14 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 
 	return (
 		<Box
-			background="surface-default"
-			borderColor="border-subtle"
+			background="default"
+			borderColor="neutral-subtle"
 			borderWidth="1"
-			borderRadius="small"
-			padding="8"
+			borderRadius="2"
+			padding="space-8"
 			marginInline="space-1"
 		>
-			<VStack gap="8" className="skjema-visning">
+			<VStack gap="space-20" className="skjema-visning">
 				<SkjemaVisningHeader erGjeldende={gjeldende} />
 
 				<div>
@@ -74,11 +74,18 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 					</BodyLong>
 				</div>
 
-				<List size="small" title="Kilder">
-					{opplysninger.map(opplysning => (
-						<List.Item key={opplysning}>{opplysning}</List.Item>
-					))}
-				</List>
+				<div>
+					<Heading level="3" size="small">
+						Kilder
+					</Heading>
+					<Box marginBlock="space-16" asChild>
+						<List size="small">
+							{opplysninger.map(opplysning => (
+								<List.Item key={opplysning}>{opplysning}</List.Item>
+							))}
+						</List>
+					</Box>
+				</div>
 
 				<Button
 					variant="tertiary"

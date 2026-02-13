@@ -25,7 +25,7 @@ export function Oyeblikksbilde(props: { vedtakId: number }) {
 	return (
 		<>
 			<Page className="oyblikksbilde-visning">
-				<VStack gap="6" align="center">
+				<VStack gap="space-20" align="center">
 					<Heading size="large" level="1">
 						Journalført brukerinformasjon på vedtakstidspunktet
 					</Heading>

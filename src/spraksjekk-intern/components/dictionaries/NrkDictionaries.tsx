@@ -1,6 +1,6 @@
 import { Accordion, Heading, Link } from '@navikt/ds-react';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
-import { Nrkordliste } from '../../data';
+import Nrkordliste from '../../data/nrkordliste.json';
 
 interface NrkInterface {
 	id: string;

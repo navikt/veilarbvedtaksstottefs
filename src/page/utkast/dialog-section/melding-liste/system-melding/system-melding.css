@@ -7,6 +7,6 @@
 
 .veilarbvedtaksstottefs .system-melding__separator {
 	height: 1px;
-	background-color: var(--a-border-subtle);
+	background-color: var(--ax-border-neutral-subtle);
 	margin: auto 0.5rem;
 }

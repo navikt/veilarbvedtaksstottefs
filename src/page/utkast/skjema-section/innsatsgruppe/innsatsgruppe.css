@@ -12,6 +12,6 @@
 	}
 }
 .innsatsgruppe__aapvarsel {
-    margin-bottom: var(--a-spacing-2);
-    margin-left: var(--a-spacing-7);
+    margin-bottom: var(--ax-space-8);
+    margin-left: var(--ax-space-28);
 }

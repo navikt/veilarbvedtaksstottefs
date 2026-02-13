@@ -51,7 +51,7 @@ export function TidligereVedtakListe({ vedtakListe }: { vedtakListe: Vedtak[] })
 			ingenVedtakTekst="Ingen tidligere oppfølgingsvedtak"
 			vedtak={tidligereVedtak}
 			vedtakMapper={(vedtak, posisjon) => {
-				const onClick = (v: Vedtak, idx: number) => handleTidligereVedtakClicked(vedtak, idx);
+				const onClick = (_v: Vedtak, idx: number) => handleTidligereVedtakClicked(vedtak, idx);
 				return mapVedtakTilPanel(vedtak, onClick, posisjon);
 			}}
 		/>

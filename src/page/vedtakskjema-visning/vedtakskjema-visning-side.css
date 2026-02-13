@@ -1,5 +1,5 @@
 .veilarbvedtaksstottefs .vedtakskjema-visning__aksjoner {
 	display: flex;
 	justify-content: center;
-	gap: var(--a-spacing-8);
+	gap: var(--ax-space-32);
 }

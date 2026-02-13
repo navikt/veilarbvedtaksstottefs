@@ -1,9 +1,10 @@
+
 .veilarbvedtaksstottefs .pdfvisning {
-	background-color: var(--a-surface-inverted);
+	background-color: var(--ax-neutral-900);
 }
 
 .veilarbvedtaksstottefs .pdfvisning__feedback-container {
-	padding-top: var(--a-spacing-20);
+	padding-top: var(--ax-space-80);
 	width: 800px;
 	height: 2264px;
 }

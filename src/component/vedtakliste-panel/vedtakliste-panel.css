@@ -3,22 +3,17 @@
 	flex-direction: row;
 	align-items: center;
 	text-align: start;
-	gap: var(--a-spacing-4);
+	gap: var(--ax-space-16);
 	padding: 0.75rem 1rem;
-	background-color: var(--a-surface-default);
-	border: 1px solid var(--a-border-default);
-	border-radius: var(--a-border-radius-large);
+	background-color: var(--ax-bg-default);
+	border: 1px solid var(--ax-border-neutral);
+	border-radius: var(--ax-radius-8);
 	width: max(20rem, 80vw);
 }
 
 .veilarbvedtaksstottefs .vedtak-panel:hover {
 	cursor: pointer;
-	border: 1px solid var(--a-surface-action-hover);
-	box-shadow: var(--a-shadow-small);
-}
-
-.veilarbvedtaksstottefs .vedtak-panel:focus {
-	box-shadow: var(--a-shadow-focus);
+	border: 1px solid var(--ax-bg-accent-strong-hover);
 }
 
 .veilarbvedtaksstottefs .vedtak-panel__bilde {
