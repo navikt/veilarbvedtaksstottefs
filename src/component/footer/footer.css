@@ -12,7 +12,7 @@
 	width: 100%;
 	z-index: 10;
 	align-items: start;
-	padding: var(--a-spacing-2) 0;
+	padding: var(--ax-space-8) 0;
 	background-color: white;
 	box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2);
 }
