@@ -1,4 +1,5 @@
-@import '@navikt/ds-css' layer(aksel);
+@layer aksel, aksel-v8;
+@import '@navikt/ds-css' layer(aksel-v8);
 
 .veilarbvedtaksstottefs {
 	/* Veilarbpersonflatefs setter display: flex på elementet ovenfor slik at vi kan bruke den resterende høyden */

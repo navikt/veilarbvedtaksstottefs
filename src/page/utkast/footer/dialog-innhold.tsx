@@ -131,7 +131,12 @@ export function DialogInnhold(props: DialogFooterInnholdProps) {
 			{showSection && (
 				<div className="utkast-footer--innhold-sidestilt">
 					{visStartBeslutterProsess && (
-						<Button size="small" loading={laster} onClick={handleOnStartBeslutterProsessClicked}>
+						<Button
+							variant="primary"
+							size="small"
+							loading={laster}
+							onClick={handleOnStartBeslutterProsessClicked}
+						>
 							Start kvalitetssikring
 						</Button>
 					)}
