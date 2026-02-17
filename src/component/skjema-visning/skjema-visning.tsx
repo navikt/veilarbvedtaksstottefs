@@ -31,7 +31,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 			borderColor="neutral-subtle"
 			borderWidth="1"
 			borderRadius="2"
-			padding="space-8"
+			padding="space-32"
 			marginInline="space-1"
 		>
 			<VStack gap="space-20" className="skjema-visning">
