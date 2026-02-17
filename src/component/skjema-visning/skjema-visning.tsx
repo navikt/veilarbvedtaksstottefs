@@ -34,7 +34,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 			padding="space-32"
 			marginInline="space-1"
 		>
-			<VStack gap="space-20" className="skjema-visning">
+			<VStack gap="space-32" className="skjema-visning">
 				<SkjemaVisningHeader erGjeldende={gjeldende} />
 
 				<div>
