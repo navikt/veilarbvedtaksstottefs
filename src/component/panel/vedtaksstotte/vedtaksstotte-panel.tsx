@@ -30,7 +30,7 @@ export function VedtaksstottePanel({
 			</Heading>
 			<div className="vedtakstottepanel__content">
 				<img src={imgSrc} className="vedtakstottepanel__ikon" alt="" />
-				<VStack gap="2" align="start">
+				<VStack gap="space-8" align="start">
 					<hgroup>
 						<Heading size="small" level="3">
 							{undertittel}

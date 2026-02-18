@@ -3,13 +3,10 @@
 .veilarbvedtaksstottefs {
 	/* Veilarbpersonflatefs setter display: flex på elementet ovenfor slik at vi kan bruke den resterende høyden */
 	flex-grow: 1;
-	background-color: var(--a-bg-subtle);
+	background-color: var(--ax-bg-neutral-soft);
 
 	--veilarbvedtaksstottefs-footer-height: 3rem;
 	--veilarbvedtaksstottefs-utkast-og-dialog-header-height: 4rem;
 }
 
-/* Må fjernes/justeres når vi oppdaterer til navds@v6 */
-.veilarbvedtaksstottefs .navds-textarea__counter {
-	margin-top: var(--a-spacing-05);
-}
+

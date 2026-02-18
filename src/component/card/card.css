@@ -1,6 +1,6 @@
 .veilarbvedtaksstottefs .card {
 	padding: 1.5rem;
-	background-color: var(--a-surface-default);
-	border: 1px solid var(--a-border-default);
-	border-radius: var(--a-border-radius-medium);
+	background-color: var(--ax-bg-default);
+	border: 1px solid var(--ax-border-neutral);
+	border-radius: var(--ax-radius-4);
 }

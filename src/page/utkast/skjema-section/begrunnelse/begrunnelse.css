@@ -21,7 +21,7 @@
 }
 
 .veilarbvedtaksstottefs .begrunnelse-for-langt-varsel {
-	margin: var(--a-spacing-2) 0 0;
+	margin: var(--ax-space-8) 0 0;
 }
 
 .veilarbvedtaksstottefs .spraksjekk-felt #skriverad-liste {

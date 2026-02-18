@@ -9,6 +9,7 @@ import { MockPanel } from './mock/component/mock-panel';
 import FeatureFetcher from './component/feature-fetcher';
 import env from './util/environment';
 import './app.css';
+import { Theme } from '@navikt/ds-react';
 
 interface AppProps {
 	fnr: string;
@@ -17,21 +18,23 @@ interface AppProps {
 
 function App(props: AppProps) {
 	return (
-		<main className="app veilarbvedtaksstottefs">
-			<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
-				<FeatureFetcher>
-					<NasjonalTilgangSjekk fnr={props.fnr}>
-						<DataFetcher fnr={props.fnr}>
-							<VarselController />
-							<ViewController />
-							<ModalController />
-							<TabClickedListener />
-							{env.isDemo && <MockPanel />}
-						</DataFetcher>
-					</NasjonalTilgangSjekk>
-				</FeatureFetcher>
-			</StoreProvider>
-		</main>
+		<Theme theme="light" asChild>
+			<main className="app veilarbvedtaksstottefs">
+				<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
+					<FeatureFetcher>
+						<NasjonalTilgangSjekk fnr={props.fnr}>
+							<DataFetcher fnr={props.fnr}>
+								<VarselController />
+								<ViewController />
+								<ModalController />
+								<TabClickedListener />
+								{env.isDemo && <MockPanel />}
+							</DataFetcher>
+						</NasjonalTilgangSjekk>
+					</FeatureFetcher>
+				</StoreProvider>
+			</main>
+		</Theme>
 	);
 }
 

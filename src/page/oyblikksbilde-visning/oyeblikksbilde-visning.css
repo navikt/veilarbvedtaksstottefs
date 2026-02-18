@@ -1,7 +1,7 @@
 .veilarbvedtaksstottefs .oyblikksbilde-visning__footer {
 	display: flex;
 	justify-content: center;
-	padding: var(--a-spacing-2) 0;
+	padding: var(--ax-space-8) 0;
 }
 
 .veilarbvedtaksstottefs .oyblikksbilde-visning .vedlegg-card {

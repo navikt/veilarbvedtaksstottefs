@@ -5,5 +5,5 @@
 .veilarbvedtaksstottefs .rediger-kilde__handlinger {
 	display: flex;
 	justify-content: flex-end;
-	gap: var(--a-spacing-2);
+	gap: var(--ax-space-8);
 }

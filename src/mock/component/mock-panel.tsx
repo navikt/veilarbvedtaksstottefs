@@ -22,14 +22,13 @@ export function MockPanel() {
 					Vis valg
 				</Button>
 			)}
-
 			{visPanel && (
 				<Box
-					background="bg-default"
-					paddingBlock="2"
-					paddingInline="4"
+					background="default"
+					paddingBlock="space-8"
+					paddingInline="space-16"
 					borderWidth="5"
-					borderColor="border-alt-3"
+					borderColor="brand-blue"
 					className="mock-panel__innhold"
 				>
 					<Button size="small" variant="secondary" icon={<XMarkIcon aria-hidden />} onClick={toggle} />
