@@ -41,6 +41,17 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 				>
 					Vis vedtaksbrev
 				</Button>
+				<Button
+					size="small"
+					variant="tertiary"
+					onClick={() =>
+						changeView(ViewType.KLAGEBEHANDLING, {
+							vedtakId: vistVedtak.id
+						})
+					}
+				>
+					Start klagebehandling
+				</Button>
 			</Footer>
 		</>
 	);

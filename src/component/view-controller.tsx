@@ -6,6 +6,7 @@ import { ArenaVedtaksbrevVisning, VedtaksbrevVisning } from '../page/vedtaksbrev
 import { UtkastSide } from '../page/utkast/utkast-side';
 import { OyeblikksbildeVisningPDF } from '../page/oyblikksbilde-visning/oyeblikksbilde-visning-pdf';
 import { Oyeblikksbilde } from '../page/oyblikksbilde-visning/oyeblikksbilde-visning';
+import { KlagebehandlingSide } from '../page/klagebehandling/klagebehandling-side.tsx';
 
 export function ViewController() {
 	const { view, viewProps } = useViewStore();
@@ -50,6 +51,11 @@ export function ViewController() {
 						journalpostId={viewProps.journalpostId}
 					/>
 				);
+			}
+			return null;
+		case ViewType.KLAGEBEHANDLING:
+			if ('vedtakId' in viewProps) {
+				return <KlagebehandlingSide vedtakId={viewProps.vedtakId} />;
 			}
 			return null;
 		default:
