@@ -1,8 +1,8 @@
 import React from 'react';
-import cls from 'classnames';
-import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
+
 import { Detail, Heading, VStack } from '@navikt/ds-react';
 import './vedtaksstotte-panel.css';
+import { HovedsidePanelBox } from '../hovedside-panel/hovedside-panel.tsx';
 
 interface VedtaksstottePanelProps {
 	tittel: string;
@@ -11,7 +11,7 @@ interface VedtaksstottePanelProps {
 	imgSrc: string;
 	tekstKomponent: React.ReactNode;
 	knappKomponent?: React.ReactNode;
-	panelKlasse?: string;
+	panelKlasse?: 'accent' | 'success';
 }
 
 export function VedtaksstottePanel({
@@ -24,7 +24,7 @@ export function VedtaksstottePanel({
 	detaljer
 }: VedtaksstottePanelProps) {
 	return (
-		<HovedsidePanel className={cls('vedtakstottepanel', panelKlasse)}>
+		<HovedsidePanelBox panelKlasse={panelKlasse}>
 			<Heading size="small" level="2" className="vedtakstottepanel__tittel">
 				{tittel}
 			</Heading>
@@ -41,6 +41,6 @@ export function VedtaksstottePanel({
 					{knappKomponent}
 				</VStack>
 			</div>
-		</HovedsidePanel>
+		</HovedsidePanelBox>
 	);
 }

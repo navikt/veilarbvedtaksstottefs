@@ -46,7 +46,7 @@ export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 		<VedtaksstottePanel
 			tittel="Utkast til oppfølgingsvedtak"
 			undertittel={lagUtkastUnderTittle()}
-			panelKlasse="utkast-panel"
+			panelKlasse="success"
 			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
 			tekstKomponent={
 				<>
