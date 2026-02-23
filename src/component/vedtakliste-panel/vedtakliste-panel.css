@@ -3,7 +3,7 @@
 	flex-direction: row;
 	align-items: center;
 	text-align: start;
-	gap: var(--ax-space-16);
+
 	padding: 0.75rem 1rem;
 	background-color: var(--ax-bg-default);
 	border: 1px solid var(--ax-border-neutral);
