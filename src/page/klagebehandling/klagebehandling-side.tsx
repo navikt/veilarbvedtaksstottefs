@@ -10,6 +10,7 @@ import KlageHeader from './klage-header-section/klage-header-section.tsx';
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import PdfViewer from '../../component/pdf-viewer/pdf-viewer.tsx';
 import { lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak.ts';
+import { lagreKlagebehandling } from '../../api/veilarbvedtaksstotte/klagebehandling.ts';
 
 const Datovelger = () => {
 	const [, setKlageDato] = useState<Date | undefined>();
@@ -37,12 +38,14 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const [begrunnelse, setBegrunnelse] = useState('');
 
 	const fnr = useAppStore().fnr;
-
+	const veilederIdent = useDataStore().innloggetVeileder.ident;
 	const gjeldendeVedtak = useDataStore().fattedeVedtak.find(v => v.gjeldende);
 	const { sistOppdatert, lagringStatus } = useSkjemaStore();
 
 	const overfoerKlage = () => {
 		//		{ fnr, vedtakId: props.vedtakId, klageDato, journalId, begrunnelse }
+		const klagebehandling = { fnr, vedtakId: props.vedtakId, veilederIdent };
+		lagreKlagebehandling(klagebehandling)
 	};
 	return (
 		<div>
