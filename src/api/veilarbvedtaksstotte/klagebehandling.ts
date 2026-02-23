@@ -9,7 +9,7 @@ export interface Klagebehandling {
 
 }
 export function lagreKlagebehandling(klagebehandling: Klagebehandling): AxiosPromise<Response> {
-	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/${klagebehandling}/opprettKlage`);
+	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/${klagebehandling}/opprett-klage`);
 }
 
 
