@@ -50,7 +50,7 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 						})
 					}
 				>
-					Start klagebehandling
+					Til klagebehandling
 				</Button>
 			</Footer>
 		</>
