@@ -5,7 +5,7 @@ import { useAppStore } from '../../store/app-store.ts';
 import { useState } from 'react';
 
 import './klagebehandling.css';
-import { Button, Detail, HGrid, Stepper, TextField, VStack } from '@navikt/ds-react';
+import { Button, HGrid, Stepper, TextField, VStack } from '@navikt/ds-react';
 import { KlageHeader } from './klage-header-section/klage-header-section.tsx';
 
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
@@ -16,28 +16,11 @@ import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
 import { FormkravSection } from './formkrav-section/formkrav-section.tsx';
-
-const Datovelger = () => {
-	const [, setKlageDato] = useState<Date | undefined>();
-	const { datepickerProps, inputProps, selectedDay } = useDatepicker({
-		fromDate: new Date(new Date().setMonth(new Date().getMonth() - 2)),
-		// eslint-disable-next-line no-console
-		onDateChange: console.info
-	});
-
-	return (
-		<DatePicker {...datepickerProps}>
-			<DatePicker.Input
-				{...inputProps}
-				onChange={() => setKlageDato(selectedDay)}
-				label="Klage innsendt dato"
-				description="Format: dd.mm.åååå"
-			/>
-		</DatePicker>
-	);
-};
+import { journalpostIdHarRiktigFormat } from '../../api/utils.ts';
 
 export function KlagebehandlingSide(props: { vedtakId: number }) {
+
+	const [klageDato, setKlageDato] = useState<Date | undefined>();
 	const [journalId, setJournalId] = useState('');
 	const [aktivtSteg, setAktivtSteg] = useState(1);
 	const [formkravFerdig, setFormkravFerdig] = useState(false);
@@ -47,37 +30,57 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const gjeldendeVedtak = useDataStore().fattedeVedtak.find(v => v.gjeldende);
 	const { sistOppdatert, lagringStatus } = useSkjemaStore();
 	const { changeView } = useViewStore();
-	const overfoerKlage = () => {
-		//		{ fnr, vedtakId: props.vedtakId, klageDato, journalId, begrunnelse }
-		const klagebehandling = { fnr, vedtakId: props.vedtakId, veilederIdent };
+	const lagreKlage = () => {
+		const klagebehandling = { vedtakId: props.vedtakId, fnr, veilederIdent, klagedato: klageDato!, klageJournalpostid: journalId };
 		lagreKlagebehandling(klagebehandling)
 	};
+	const { datepickerProps, inputProps } = useDatepicker({
+		fromDate: new Date(new Date().setMonth(new Date().getMonth() - 2)),
+		onDateChange: setKlageDato
+	});
 	return (
 		<>
 			<KlageHeader
-				veilederNavn="testklagebehandleren"
+				veilederNavn={veilederIdent}
 				sistOppdatert={sistOppdatert}
 				KlageStatus={lagringStatus}
 				vedtakId={props.vedtakId}
 			/>
 			<HGrid columns="40% 60%" gap="4">
 				<VStack gap="space-16">
-					<Detail>{fnr}</Detail>
+					<Stepper activeStep={aktivtSteg} orientation="horizontal">
+						<Stepper.Step completed={!!(klageDato && journalId && aktivtSteg > 1)}>Start</Stepper.Step>
+						<Stepper.Step completed={formkravFerdig && aktivtSteg > 2}>Formkrav</Stepper.Step>
+						<Stepper.Step>Utfall</Stepper.Step>
+					</Stepper>
 
 					<HGrid columns={3} gap="4">
-						<Datovelger />
+						<DatePicker {...datepickerProps}>
+							<DatePicker.Input
+								{...inputProps}
+								label="Klage innsendt dato"
+								description="Format: dd.mm.åååå"
+							/>
+						</DatePicker>
 						<TextField
-							label="Gosys journalpostID"
+							label="Gosys journalpostId"
 							value={journalId}
 							onChange={e => setJournalId(e.target.value)}
 							description="Format: 111 222 333"
 						/>
 					</HGrid>
-					<Stepper activeStep={aktivtSteg} orientation="horizontal">
-						<Stepper.Step completed={formkravFerdig && aktivtSteg > 1}>Formkrav</Stepper.Step>
-						<Stepper.Step>Utfall</Stepper.Step>
-					</Stepper>
-					{aktivtSteg === 1 && (
+					{klageDato && journalpostIdHarRiktigFormat(journalId) && (
+						<Button
+							onClick={() => {
+								lagreKlage();
+								setAktivtSteg(2);
+							}}
+						>
+							Start klagebehandling
+						</Button>
+					)}
+
+					{aktivtSteg === 2 && (
 						<VStack gap="4">
 							<FormkravSection onChange={setFormkravFerdig} />
 							<Button onClick={() => setAktivtSteg(2)} disabled={!formkravFerdig}>
@@ -88,14 +91,8 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 					{aktivtSteg === 2 && (
 						<VStack gap="4">
 							Her kommer innhold for utfall (medhold eller klageinstans)
-							<Button variant="secondary" onClick={() => setAktivtSteg(1)}>
-								Tilbake
-							</Button>
 						</VStack>
 					)}
-					<Button onClick={overfoerKlage} variant="primary">
-						Lagre klage
-					</Button>
 				</VStack>
 
 				{gjeldendeVedtak && (

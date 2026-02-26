@@ -17,7 +17,7 @@ export function KlageHeader(props: KlageHeaderProps) {
 				</Heading>
 
 				<div className="skjema-header__info">
-					<Detail>Åpne klagen fra Gosys, i eget vindu for å se innsendt dato og klagers begrunnelse</Detail>
+					<Detail>Finn klagen i Gosys, åpne dokumentet for å se klagedato og begrunnelse for klagen</Detail>
 					<div className="separator" />
 					<Detail>
 						<b>Ansvarlig:</b> {props.veilederNavn}

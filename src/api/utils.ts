@@ -5,7 +5,7 @@ export const axiosInstance = axios.create({
 	withCredentials: true,
 	headers: { 'Nav-Consumer-Id': APP_NAME }
 });
-
+export const journalpostIdHarRiktigFormat = (id: string) => /^\d{9}$/.test(id.replace(/\s/g, ''));
 export function isAnyLoading(...fetchers: { loading: boolean }[]): boolean {
 	return fetchers.some(f => f.loading);
 }
