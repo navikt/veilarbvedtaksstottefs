@@ -5,8 +5,8 @@ import { useAppStore } from '../../store/app-store.ts';
 import { useState } from 'react';
 
 import './klagebehandling.css';
-import { Button, Detail, HGrid, Textarea, TextField, VStack } from '@navikt/ds-react';
-import KlageHeader from './klage-header-section/klage-header-section.tsx';
+import { Button, Detail, HGrid, Stepper, TextField, VStack } from '@navikt/ds-react';
+import { KlageHeader } from './klage-header-section/klage-header-section.tsx';
 
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
 import PdfViewer from '../../component/pdf-viewer/pdf-viewer.tsx';
@@ -15,6 +15,7 @@ import { lagreKlagebehandling } from '../../api/veilarbvedtaksstotte/klagebehand
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
+import { FormkravSection } from './formkrav-section/formkrav-section.tsx';
 
 const Datovelger = () => {
 	const [, setKlageDato] = useState<Date | undefined>();
@@ -38,7 +39,8 @@ const Datovelger = () => {
 
 export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const [journalId, setJournalId] = useState('');
-	const [begrunnelse, setBegrunnelse] = useState('');
+	const [aktivtSteg, setAktivtSteg] = useState(1);
+	const [formkravFerdig, setFormkravFerdig] = useState(false);
 
 	const fnr = useAppStore().fnr;
 	const veilederIdent = useDataStore().innloggetVeileder.ident;
@@ -61,6 +63,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 			<HGrid columns="40% 60%" gap="4">
 				<VStack gap="space-16">
 					<Detail>{fnr}</Detail>
+
 					<HGrid columns={3} gap="4">
 						<Datovelger />
 						<TextField
@@ -70,12 +73,26 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 							description="Format: 111 222 333"
 						/>
 					</HGrid>
-					<Textarea
-						label="Klagers begrunnelse"
-						value={begrunnelse}
-						onChange={e => setBegrunnelse(e.target.value)}
-					/>
-					Under her kommer vurdering av formkrav, innstilling medhold, oversendelse klageinstans med mer
+					<Stepper activeStep={aktivtSteg} orientation="horizontal">
+						<Stepper.Step completed={formkravFerdig && aktivtSteg > 1}>Formkrav</Stepper.Step>
+						<Stepper.Step>Utfall</Stepper.Step>
+					</Stepper>
+					{aktivtSteg === 1 && (
+						<VStack gap="4">
+							<FormkravSection onChange={setFormkravFerdig} />
+							<Button onClick={() => setAktivtSteg(2)} disabled={!formkravFerdig}>
+								Neste
+							</Button>
+						</VStack>
+					)}
+					{aktivtSteg === 2 && (
+						<VStack gap="4">
+							Her kommer innhold for utfall (medhold eller klageinstans)
+							<Button variant="secondary" onClick={() => setAktivtSteg(1)}>
+								Tilbake
+							</Button>
+						</VStack>
+					)}
 					<Button onClick={overfoerKlage} variant="primary">
 						Lagre klage
 					</Button>

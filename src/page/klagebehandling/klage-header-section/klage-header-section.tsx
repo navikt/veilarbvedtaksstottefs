@@ -1,4 +1,4 @@
-import utkastBilde from '../../utkast/skjema-section/header/utkast.svg';
+import tidligereVedtakBilde from '../../../component/skjema-visning/header/tidligere-vedtak.svg'
 import { Detail, Heading } from '@navikt/ds-react';
 
 interface KlageHeaderProps {
@@ -7,15 +7,18 @@ interface KlageHeaderProps {
 	KlageStatus: string;
 	vedtakId: number;
 }
-function KlageHeader(props: KlageHeaderProps) {
+export function KlageHeader(props: KlageHeaderProps) {
 	return (
 		<header className="skjema-header">
-			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon" />
+			<img src={tidligereVedtakBilde} alt="paragraf ikon" className="skjema-header__ikon" />
 			<div className="skjema-header__innhold">
 				<Heading size="medium" level="1">
 					Behandling av klage
 				</Heading>
+
 				<div className="skjema-header__info">
+					<Detail>Åpne klagen fra Gosys, i eget vindu for å se innsendt dato og klagers begrunnelse</Detail>
+					<div className="separator" />
 					<Detail>
 						<b>Ansvarlig:</b> {props.veilederNavn}
 					</Detail>
@@ -28,5 +31,3 @@ function KlageHeader(props: KlageHeaderProps) {
 		</header>
 	);
 }
-
-export default KlageHeader;
