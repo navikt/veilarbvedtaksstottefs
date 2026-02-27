@@ -24,14 +24,14 @@ import { lagreKlagebehandling } from '../../api/veilarbvedtaksstotte/klagebehand
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
-import { FormkravSection } from './formkrav-section/formkrav-section.tsx';
+import { FormkravSection, Formkrav } from './formkrav-section/formkrav-section.tsx';
 import { journalpostIdHarRiktigFormat } from '../../api/utils.ts';
 
 export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const [klageDato, setKlageDato] = useState<Date | undefined>();
 	const [journalId, setJournalId] = useState('');
 	const [aktivtSteg, setAktivtSteg] = useState(1);
-	const [formkravFerdig, setFormkravFerdig] = useState(false);
+	const [formkrav, setFormkrav] = useState<Formkrav | undefined>();
 
 	const fnr = useAppStore().fnr;
 	const veilederIdent = useDataStore().innloggetVeileder.ident;
@@ -71,7 +71,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 									<Stepper.Step completed={!!(klageDato && journalId && aktivtSteg > 1)}>
 										Start
 									</Stepper.Step>
-									<Stepper.Step completed={formkravFerdig && aktivtSteg > 2}>Formkrav</Stepper.Step>
+									<Stepper.Step completed={!!formkrav && aktivtSteg > 2}>Formkrav</Stepper.Step>
 									<Stepper.Step>Utfall</Stepper.Step>
 								</Stepper>
 							</Box>
@@ -104,8 +104,8 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 
 							{aktivtSteg === 2 && (
 								<VStack gap="space-16">
-									<FormkravSection onChange={setFormkravFerdig} />
-									<Button onClick={() => setAktivtSteg(2)} disabled={!formkravFerdig}>
+									<FormkravSection onChange={setFormkrav} />
+									<Button onClick={() => setAktivtSteg(2)} disabled={!formkrav}>
 										Neste
 									</Button>
 								</VStack>
