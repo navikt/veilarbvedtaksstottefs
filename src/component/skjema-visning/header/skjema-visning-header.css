@@ -18,7 +18,7 @@
 }
 
 .veilarbvedtaksstottefs .skjema-visning-header__separator {
-	background-color: var(--a-border-strong);
+	background-color: var(--ax-border-neutral-strong);
 	height: 1px;
 	flex-grow: 1;
 }

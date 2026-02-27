@@ -8,12 +8,12 @@
 }
 
 .bekreft-send-vedtak-modal-personinfo .bekreft-send-vedtak-modal-personinfo-copybutton {
-	color: var(--a-text-default);
+	color: var(--ax-text-neutral);
 }
 
 .bekreft-send-vedtak-modal-body {
 	margin-top: 0.5rem;
 }
 .bekreft-send-vedtak-modal-varsel-tekst {
-    margin-top: var(--a-spacing-2);
+    margin-top: var(--ax-space-8);
 }

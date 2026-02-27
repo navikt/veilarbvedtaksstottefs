@@ -33,7 +33,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 		<header className="skjema-header">
 			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon" />
 			<div className="skjema-header__innhold">
-				<Heading size="medium" level="1">
+				<Heading size="small" level="1">
 					Utkast
 				</Heading>
 				<div className="skjema-header__info">

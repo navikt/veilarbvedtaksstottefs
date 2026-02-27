@@ -1,6 +1,7 @@
 import { Accordion, Heading, Link } from '@navikt/ds-react';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
-import { Avløserord, Datatermer } from '../../data';
+import Avløserord from '../../data/avløserord.json';
+import Datatermer from '../../data/datatermer.json';
 
 interface AvløserordInterface {
 	importord: string;

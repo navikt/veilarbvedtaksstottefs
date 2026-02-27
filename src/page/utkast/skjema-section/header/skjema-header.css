@@ -6,8 +6,8 @@
 	flex-direction: row;
 	justify-content: space-between;
 	overflow-y: visible;
-	background-color: var(--a-blue-100);
-	border-bottom: 3px solid var(--a-blue-500);
+	background-color: var(--ax-accent-200);
+	border-bottom: 3px solid var(--ax-accent-600);
 	height: var(--veilarbvedtaksstottefs-utkast-og-dialog-header-height);
 }
 
@@ -42,5 +42,5 @@
 	width: 0.0625rem; /* 1px som rem, sidan det er typografi-relevant */
 	margin-top: auto;
 	margin-bottom: auto;
-	background-color: var(--a-border-strong);
+	background-color: var(--ax-border-neutral-strong);
 }
