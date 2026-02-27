@@ -3,10 +3,6 @@ import cls from 'classnames';
 import './hovedside-panel.less';
 import { Box } from '@navikt/ds-react';
 
-export function HovedsidePanel(props: { children: React.ReactNode; className?: string }) {
-	return <section className={cls('hovedside-panel', props.className)}>{props.children}</section>;
-}
-
 export function HovedsidePanelBox(props: {
 	children: React.ReactNode;
 	className?: string;
