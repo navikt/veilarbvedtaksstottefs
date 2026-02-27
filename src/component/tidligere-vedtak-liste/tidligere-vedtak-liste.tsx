@@ -8,9 +8,9 @@ import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { logMetrikk } from '../../util/logger';
 import { hovedmalTekst } from '../../util/hovedmal';
-import vedtakBilde from './vedtak.svg';
 import './tidligere-vedtak-liste.css';
 import { SlettetTidligereVedtak } from './slettet-tidligere-vedtak';
+import { VedtakSvg } from './VedtakSvg.tsx';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
 	if (vedtak.vedtakStatus === 'SLETTET') {
@@ -23,7 +23,7 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 			vedtak={vedtak}
 			dato={vedtak.vedtakFattet}
 			posisjon={posisjon}
-			ikon={vedtakBilde}
+			ikon={<VedtakSvg />}
 		>
 			<BodyShort size="small" weight="semibold" className="tidligere-vedtak-panel__innsats--tittel">
 				{innsatsgruppeTekst[vedtak.innsatsgruppe]}

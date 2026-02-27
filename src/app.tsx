@@ -18,7 +18,7 @@ interface AppProps {
 
 function App(props: AppProps) {
 	return (
-		<Theme theme="dark" asChild>
+		<Theme theme="light" asChild>
 			<main className="app veilarbvedtaksstottefs">
 				<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
 					<FeatureFetcher>
