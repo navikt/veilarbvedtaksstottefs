@@ -2,11 +2,13 @@ import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
 
 export const EKSEMPELTOGGLE = 'togglenavn-eksempeltoggle';
+export const VIS_DARKMODE_TOGGLE = 'veilarbvedtaksstottefs.vis-darkmode-toggle';
 
-export const ALL_TOGGLES = [EKSEMPELTOGGLE];
+export const ALL_TOGGLES = [EKSEMPELTOGGLE, VIS_DARKMODE_TOGGLE];
 
 export interface FeatureToggles {
 	[EKSEMPELTOGGLE]: boolean;
+	[VIS_DARKMODE_TOGGLE]: boolean;
 }
 
 export function fetchFeaturesToggles(): AxiosPromise<FeatureToggles> {
