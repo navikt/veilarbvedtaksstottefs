@@ -7,7 +7,6 @@ import fullfortVedtakIcon from './fullfort.svg';
 import { logMetrikk } from '../../../util/logger';
 import { Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { formatDateStr } from '../../../util/date-utils';
-import './gjeldende-vedtak-panel.css';
 
 export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 	const { changeView } = useViewStore();

@@ -1,5 +1,5 @@
 .veilarbvedtaksstottefs .vedtakstottepanel {
-	background-color: white;
+	background-color: var(--ax-bg-default);
 	border-radius: var(--ax-radius-8);
 }
 
