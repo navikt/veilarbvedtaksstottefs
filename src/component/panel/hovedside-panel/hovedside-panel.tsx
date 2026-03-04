@@ -6,15 +6,13 @@ import { Box } from '@navikt/ds-react';
 export function HovedsidePanelBox(props: {
 	children: React.ReactNode;
 	className?: string;
-	panelKlasse?: 'accent' | 'success' | 'neutral';
+	background?: 'raised' | 'sunken';
 }) {
-	const { panelKlasse } = props;
+	const { background } = props;
 	return (
 		<Box
-			background={panelKlasse === 'neutral' ? 'sunken' : 'raised'}
+			background={background ? background : 'raised'}
 			borderRadius="12"
-			borderWidth={panelKlasse === 'neutral' ? '2' : '4'}
-			borderColor={panelKlasse}
 			className={cls('hovedside-panel', props.className)}
 		>
 			{props.children}

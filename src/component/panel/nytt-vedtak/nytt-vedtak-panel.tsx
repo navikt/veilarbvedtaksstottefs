@@ -75,7 +75,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 	}
 
 	return (
-		<HovedsidePanelBox className="nytt-vedtak-panel" panelKlasse={'neutral'}>
+		<HovedsidePanelBox className="nytt-vedtak-panel">
 			<div className="vedtakstottepanel__tittel">
 				<Heading size="small" level="2">
 					Opprett nytt oppfølgingsvedtak

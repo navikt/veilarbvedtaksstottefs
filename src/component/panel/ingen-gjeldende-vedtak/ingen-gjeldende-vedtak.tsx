@@ -5,7 +5,7 @@ import './ingen-gjeldende-vedtak-panel.css';
 
 export function IngenGjeldendeVedtakPanel() {
 	return (
-		<HovedsidePanelBox panelKlasse="neutral" className="ingen-gjeldende-vedtak-panel">
+		<HovedsidePanelBox className="ingen-gjeldende-vedtak-panel">
 			<img src={ingenGjeldendeVedtakBilde} alt="" className="ingen-gjeldende-vedtak-panel__bilde" />
 			<Heading size="small" level="2" spacing>
 				Ingen gjeldende oppfølgingsvedtak

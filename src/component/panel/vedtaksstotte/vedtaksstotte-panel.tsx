@@ -11,7 +11,7 @@ interface VedtaksstottePanelProps {
 	imgSrc: string;
 	tekstKomponent: React.ReactNode;
 	knappKomponent?: React.ReactNode;
-	panelKlasse?: 'accent' | 'success';
+	className?: string;
 }
 
 export function VedtaksstottePanel({
@@ -20,11 +20,11 @@ export function VedtaksstottePanel({
 	imgSrc,
 	tekstKomponent,
 	knappKomponent,
-	panelKlasse,
+	className,
 	detaljer
 }: VedtaksstottePanelProps) {
 	return (
-		<HovedsidePanelBox panelKlasse={panelKlasse}>
+		<HovedsidePanelBox className={className}>
 			<Heading size="small" level="2" className="vedtakstottepanel__tittel">
 				{tittel}
 			</Heading>

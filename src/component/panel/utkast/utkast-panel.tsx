@@ -15,6 +15,7 @@ import {
 import { Utkast } from '../../../api/veilarbvedtaksstotte';
 import { formatDateTime } from '../../../util/date-utils';
 import { Button, Detail } from '@navikt/ds-react';
+import './utkast-panel.css';
 
 export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { changeView } = useViewStore();
@@ -45,7 +46,7 @@ export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 		<VedtaksstottePanel
 			tittel="Utkast til oppfølgingsvedtak"
 			undertittel={lagUtkastUnderTittle()}
-			panelKlasse="success"
+			className="utkast-panel"
 			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
 			tekstKomponent={
 				<>
