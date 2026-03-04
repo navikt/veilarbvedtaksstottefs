@@ -4,7 +4,7 @@ import nyttVedtakBilde from './nytt-vedtak.svg';
 import { useViewStore, ViewType } from '../../../store/view-store';
 import { useAppStore } from '../../../store/app-store';
 import { ModalType, useModalStore } from '../../../store/modal-store';
-import { HovedsidePanel } from '../hovedside-panel/hovedside-panel';
+import { HovedsidePanelBox } from '../hovedside-panel/hovedside-panel';
 import { useDataStore } from '../../../store/data-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import { VeilederTilgang } from '../../../util/tilgang';
@@ -75,7 +75,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 	}
 
 	return (
-		<HovedsidePanel className="vedtakstottepanel nytt-vedtak-panel">
+		<HovedsidePanelBox className="nytt-vedtak-panel">
 			<div className="vedtakstottepanel__tittel">
 				<Heading size="small" level="2">
 					Opprett nytt oppfølgingsvedtak
@@ -97,6 +97,6 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 					</Button>
 				</div>
 			</div>
-		</HovedsidePanel>
+		</HovedsidePanelBox>
 	);
 }
