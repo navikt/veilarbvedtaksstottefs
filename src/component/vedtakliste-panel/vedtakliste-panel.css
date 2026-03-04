@@ -1,38 +1,33 @@
 .veilarbvedtaksstottefs .vedtak-panel {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: start;
-    gap: var(--ax-space-16);
-    padding: 0.75rem 1rem;
-    background-color: var(--ax-bg-default);
-    border: 1px solid var(--ax-border-neutral);
-    border-radius: var(--ax-radius-8);
-    width: max(20rem, 80vw);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	text-align: start;
+	gap: var(--ax-space-16);
+	padding: 0.75rem 1rem;
+	background-color: var(--ax-bg-default);
+	border: 1px solid var(--ax-border-neutral);
+	border-radius: var(--ax-radius-8);
+	width: max(20rem, 80vw);
 }
 
 .veilarbvedtaksstottefs .vedtak-panel:hover {
-    cursor: pointer;
-    border: 1px solid var(--ax-bg-accent-strong-hover);
-    box-shadow: 0 0 0 1px var(--ax-border-default)
-}
-
-.veilarbvedtaksstottefs .vedtak-panel__bilde {
-    width: 1.625rem;
-    height: 2.25rem;
+	cursor: pointer;
+	border: 1px solid var(--ax-bg-accent-strong-hover);
+	box-shadow: 0 0 0 1px var(--ax-border-default);
 }
 
 .veilarbvedtaksstottefs .vedtak-panel__dato {
-    margin-left: auto;
+	margin-left: auto;
 }
 
 .veilarbvedtaksstottefs .vedtak-panel__chevron {
-    height: 1.5rem;
-    width: 1.5rem;
+	height: 1.5rem;
+	width: 1.5rem;
 }
 
 @media (min-width: 37.5rem) {
-    .veilarbvedtaksstottefs .vedtak-panel {
-        width: 36rem;
-    }
+	.veilarbvedtaksstottefs .vedtak-panel {
+		width: 36rem;
+	}
 }
