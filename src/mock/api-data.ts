@@ -1,7 +1,7 @@
 import OppfolgingData from '../api/veilarboppfolging';
 import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { MalformData, MalformType, Navn } from '../api/veilarbperson';
-import { EKSEMPELTOGGLE, FeatureToggles } from '../api/obo-unleash';
+import { EKSEMPELTOGGLE, FeatureToggles, VIS_KLAGE_TOGGLE } from '../api/obo-unleash';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
@@ -54,7 +54,8 @@ const arbeidssokerperiode = {
 } as unknown as ArbeidssokerPeriode;
 
 const mockFeatures: FeatureToggles = {
-	[EKSEMPELTOGGLE]: false
+	[EKSEMPELTOGGLE]: false,
+	[VIS_KLAGE_TOGGLE]: true
 };
 
 let innloggetVeileder: Veileder = {

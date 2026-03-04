@@ -2,11 +2,13 @@ import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
 
 export const EKSEMPELTOGGLE = 'togglenavn-eksempeltoggle';
+export const VIS_KLAGE_TOGGLE = 'veilarbvedtaksstottefs.vis_klage';
 
-export const ALL_TOGGLES = [EKSEMPELTOGGLE];
+export const ALL_TOGGLES = [EKSEMPELTOGGLE, VIS_KLAGE_TOGGLE];
 
 export interface FeatureToggles {
 	[EKSEMPELTOGGLE]: boolean;
+	[VIS_KLAGE_TOGGLE]: boolean;
 }
 
 export function fetchFeaturesToggles(): AxiosPromise<FeatureToggles> {
