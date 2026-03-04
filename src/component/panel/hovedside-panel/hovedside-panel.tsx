@@ -8,13 +8,9 @@ export function HovedsidePanelBox(props: {
 	className?: string;
 	background?: 'raised' | 'sunken';
 }) {
-	const { background } = props;
+	const { background = 'raised' } = props;
 	return (
-		<Box
-			background={background ? background : 'raised'}
-			borderRadius="12"
-			className={cls('hovedside-panel', props.className)}
-		>
+		<Box background={background} borderRadius="12" className={cls('hovedside-panel', props.className)}>
 			{props.children}
 		</Box>
 	);
