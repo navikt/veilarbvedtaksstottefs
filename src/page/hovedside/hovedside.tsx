@@ -28,7 +28,7 @@ export function Hovedside() {
 			{!!utkast && <KanIkkeDistribueresAlert kanDistribueres={utkast.kanDistribueres} />}
 			<div className="hovedside">
 				<div className="hovedside__vedtak-paneler">
-					<Show if={underOppfolging}>
+					<Show if={!underOppfolging}>
 						<IngenGjeldendeVedtakPanel />
 					</Show>
 					<Show if={underOppfolging}>
@@ -36,11 +36,11 @@ export function Hovedside() {
 						<Show if={gjeldendeVedtak != null}>
 							<GjeldendeVedtakPanel gjeldendeVedtak={gjeldendeVedtak as Vedtak} />
 						</Show>
-						<NyttVedtakPanel utkast={null} />
+						<NyttVedtakPanel utkast={utkast} />
 					</Show>
 				</div>
 				<div className="hovedside__tidligere-vedtak-panel">
-					<Show if={harTidligereVedtak}>
+					<Show if={!harTidligereVedtak}>
 						<IngenTidligereVedtakPanel />
 					</Show>
 					<Show if={harTidligereVedtak}>
