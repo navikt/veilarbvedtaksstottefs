@@ -12,18 +12,32 @@ export interface SkjemaData {
 	begrunnelse: OrNothing<string>;
 }
 
+export const kildeliste = {
+	arbeidssoeker: {
+		bokmal: 'Det du fortalte oss da du ble registrert som arbeidssøker',
+		nynorsk: 'Det du fortalde oss da du vart registrert som arbeidssøkar'
+	},
+	cvJobbonsker: {
+		bokmal: 'CV-en/jobbønskene din(e) på nav.no',
+		nynorsk: 'CV-en/jobbønska din(e) på nav.no'
+	},
+	egenvurdering: {
+		bokmal: 'Svarene dine om behov for veiledning',
+		nynorsk: 'Svara dine om behov for rettleiing'
+	}
+} as const;
 /* OBS: endrer du noe her så må du verifisere oyeblikksbilde-visning.tsx */
 export const kildelisteBokmal = [
-	'Det du fortalte oss da du ble registrert som arbeidssøker',
-	'CV-en/jobbønskene din(e) på nav.no',
-	'Svarene dine om behov for veiledning'
-];
+	kildeliste.arbeidssoeker.bokmal,
+	kildeliste.cvJobbonsker.bokmal,
+	kildeliste.egenvurdering.bokmal
+] as const;
 
 export const kildelisteNynorsk = [
-	'Det du fortalde oss da du vart registrert som arbeidssøkar',
-	'CV-en/jobbønska din(e) på nav.no',
-	'Svara dine om behov for rettleiing'
-];
+	kildeliste.arbeidssoeker.nynorsk,
+	kildeliste.cvJobbonsker.nynorsk,
+	kildeliste.egenvurdering.nynorsk
+] as const;
 
 export function hentMalformFraData(malformData: MalformData | null): MalformType | null {
 	return malformData ? malformData.malform : null;
