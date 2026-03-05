@@ -4,11 +4,7 @@ import { OrNothing } from '../util/type/ornothing';
 import { HovedmalType, InnsatsgruppeType, Utkast, Vedtak } from '../api/veilarbvedtaksstotte';
 import { SkjemaFeil } from '../util/type/skjema-feil';
 import { SkjemaLagringStatus } from '../util/type/skjema-lagring-status';
-import {
-	mapKilderFraForskjelligMalformTilBokmal,
-	validerBegrunnelseMaxLength,
-	validerSkjema
-} from '../util/skjema-utils';
+import { mapKilderFraNynorskTilBokmal, validerBegrunnelseMaxLength, validerSkjema } from '../util/skjema-utils';
 
 export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	const [valgteKilder, setValgteKilder] = useState<string[]>([]);
@@ -35,7 +31,7 @@ export const [SkjemaStoreProvider, useSkjemaStore] = constate(() => {
 	};
 
 	const initSkjema = (utkast: Utkast) => {
-		const mappetKilder = mapKilderFraForskjelligMalformTilBokmal(utkast.opplysninger);
+		const mappetKilder = mapKilderFraNynorskTilBokmal(utkast.opplysninger);
 		setHovedmal(utkast.hovedmal);
 		setValgteKilder(mappetKilder);
 		setInnsatsgruppe(utkast.innsatsgruppe);

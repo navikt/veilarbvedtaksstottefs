@@ -32,20 +32,21 @@ export const kildelisteBokmal = [
 	kildeliste.cvJobbonsker.bokmal,
 	kildeliste.egenvurdering.bokmal
 ] as const;
-
 export const kildelisteNynorsk = [
 	kildeliste.arbeidssoeker.nynorsk,
 	kildeliste.cvJobbonsker.nynorsk,
 	kildeliste.egenvurdering.nynorsk
 ] as const;
+type BokmalKilde = (typeof kildelisteBokmal)[number];
+type NynorskKilde = (typeof kildelisteNynorsk)[number];
 
 export function hentMalformFraData(malformData: MalformData | null): MalformType | null {
 	return malformData ? malformData.malform : null;
 }
 
-export function mapKilderFraForskjelligMalformTilBokmal(kildeListe: string[]): string[] {
+export function mapKilderFraNynorskTilBokmal(kildeListe: string[]): (string | BokmalKilde)[] {
 	return kildeListe.map(kilde => {
-		const translationPos = kildelisteNynorsk.indexOf(kilde);
+		const translationPos = kildelisteNynorsk.findIndex(k => k === kilde);
 		return translationPos === -1 ? kilde : kildelisteBokmal[translationPos];
 	});
 }
@@ -53,14 +54,14 @@ export function mapKilderFraForskjelligMalformTilBokmal(kildeListe: string[]): s
 export function mapKilderFraBokmalTilBrukersMalform(
 	kildeListe: string[] | undefined,
 	malformType: MalformType | null
-): string[] {
+): (string | NynorskKilde)[] {
 	if (!kildeListe) return [];
 
 	// Per nå trenger vi kun mappe når målformen er nynorsk, alle andre får bokmålskilder
 	if (malformType && malformType === MalformType.nn) {
 		return kildeListe.map(kilde => {
-			const translationPos = kildelisteBokmal.indexOf(kilde);
-			return translationPos === -1 ? kilde : kildelisteNynorsk[translationPos];
+			const pos = kildelisteBokmal.findIndex(k => k === kilde);
+			return pos === -1 ? kilde : kildelisteNynorsk[pos];
 		});
 	}
 
