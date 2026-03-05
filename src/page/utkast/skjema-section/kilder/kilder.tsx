@@ -36,7 +36,7 @@ function Kilder() {
 	}
 
 	function handleKildeDeleted(index: number) {
-		setKilder(prevState => [...prevState].filter((o, idx) => idx !== index));
+		setKilder(prevState => [...prevState].filter((_, idx) => idx !== index));
 	}
 
 	return (
