@@ -11,7 +11,7 @@ interface VedtakPanelProps<T> {
 	posisjon: number;
 	onClick: OnVedtakClicked<T>;
 	dato: string;
-	ikon: string;
+	ikon?: React.ReactNode;
 	children?: React.ReactNode;
 }
 
@@ -21,7 +21,7 @@ export function VedtaklistePanel<T>(props: Readonly<VedtakPanelProps<T>>) {
 
 	return (
 		<button aria-describedby={elemId} className="vedtak-panel" onClick={() => onClick(vedtak, posisjon)}>
-			<img src={ikon} alt="" className="vedtak-panel__bilde" />
+			{ikon}
 			<div id={elemId}>{children}</div>
 			<Detail textColor="subtle" className="vedtak-panel__dato">
 				{lagVedtakDatoTekst(dato)}

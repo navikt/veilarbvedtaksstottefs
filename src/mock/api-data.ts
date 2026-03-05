@@ -1,7 +1,7 @@
 import OppfolgingData from '../api/veilarboppfolging';
 import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { MalformData, MalformType, Navn } from '../api/veilarbperson';
-import { EKSEMPELTOGGLE, FeatureToggles, VIS_KLAGE_TOGGLE } from '../api/obo-unleash';
+import { EKSEMPELTOGGLE, VIS_KLAGE_TOGGLE, VIS_DARKMODE_TOGGLE, FeatureToggles } from '../api/obo-unleash';
 import { Veileder } from '../api/veilarbveileder';
 import { enhetId, enhetNavn, veileder1, veileder2, veileder3 } from './data';
 import { DialogMelding, SystemMelding } from '../api/veilarbvedtaksstotte/meldinger';
@@ -55,7 +55,8 @@ const arbeidssokerperiode = {
 
 const mockFeatures: FeatureToggles = {
 	[EKSEMPELTOGGLE]: false,
-	[VIS_KLAGE_TOGGLE]: true
+	[VIS_KLAGE_TOGGLE]: true,
+	[VIS_DARKMODE_TOGGLE]: true
 };
 
 let innloggetVeileder: Veileder = {

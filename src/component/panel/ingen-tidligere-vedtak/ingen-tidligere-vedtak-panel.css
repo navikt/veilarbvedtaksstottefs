@@ -3,9 +3,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-
 	border: 2px solid var(--ax-border-neutral);
-	border-radius: var(--ax-radius-8);
 }
 
 .veilarbvedtaksstottefs .ingen-tidligere-vedtak-panel__bilde {

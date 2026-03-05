@@ -3,9 +3,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-
-	border: 2px solid var(--ax-border-neutral-subtle);
-	border-radius: var(--ax-radius-8);
+	border: 2px solid var(--ax-border-neutral);
 }
 
 .veilarbvedtaksstottefs .ingen-gjeldende-vedtak-panel__bilde {

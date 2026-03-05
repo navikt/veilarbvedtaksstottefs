@@ -4,9 +4,9 @@ import { sortDatesDesc } from '../../util/date-utils';
 import { OnVedtakClicked, VedtaklistePanel } from '../vedtakliste-panel/vedtakliste-panel';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
 import { ArenaVedtak } from '../../api/veilarbvedtaksstotte/vedtak';
-import vedtakBilde from './pdf.svg';
 import { logMetrikk } from '../../util/logger';
 import { BodyShort } from '@navikt/ds-react';
+import { PdfSvg } from './PdfSvg.tsx';
 
 function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<ArenaVedtak>, posisjon: number) {
 	return (
@@ -16,7 +16,7 @@ function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<Ar
 			vedtak={vedtak}
 			dato={vedtak.dato}
 			posisjon={posisjon}
-			ikon={vedtakBilde}
+			ikon={<PdfSvg />}
 		>
 			<BodyShort size="small" weight="semibold">
 				Vedtaksbrev - § 14 a

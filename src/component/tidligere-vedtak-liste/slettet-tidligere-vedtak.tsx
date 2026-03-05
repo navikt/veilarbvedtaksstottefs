@@ -1,13 +1,13 @@
 import { BodyShort, Box, Detail } from '@navikt/ds-react';
-import vedtakBilde from './vedtak.svg';
 import { formatDateStr } from '../../util/date-utils';
+import { VedtakSvg } from './VedtakSvg.tsx';
 
 export const SlettetTidligereVedtak = ({ posisjon, tidspunkt }: { posisjon: number; tidspunkt: string }) => {
 	const elemId = `vedtak-panel-tidligere-vedtak-${posisjon}`;
 
 	return (
 		<Box aria-describedby={elemId} className="vedtak-panel">
-			<img src={vedtakBilde} alt="" className="vedtak-panel__bilde" />
+			<VedtakSvg />
 			<div id={elemId}>
 				<BodyShort size="small" weight="semibold" className="tidligere-vedtak-panel__innsats--tittel">
 					Feilregistrert
