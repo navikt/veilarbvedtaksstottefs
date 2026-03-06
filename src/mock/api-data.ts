@@ -244,7 +244,7 @@ const pabegyntUtkast: Utkast = {
 	beslutterIdent: null,
 	beslutterNavn: null,
 	beslutterProsessStatus: null,
-	kanDistribueres: false
+	kanDistribueres: true
 };
 
 const historisk: Vedtak[] = [
