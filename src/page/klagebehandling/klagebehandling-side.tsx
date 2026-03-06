@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import './klagebehandling.css';
 import {
+	Alert,
 	Box,
 	Button,
 	DatePicker,
@@ -20,7 +21,7 @@ import {
 import { KlageHeader } from './klage-header-section/klage-header-section.tsx';
 import PdfViewer from '../../component/pdf-viewer/pdf-viewer.tsx';
 import { lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak.ts';
-import { lagreKlagebehandling } from '../../api/veilarbvedtaksstotte/klagebehandling.ts';
+import { lagreKlagebehandling, lagreKlagebehandlingFormkrav } from '../../api/veilarbvedtaksstotte/klagebehandling.ts';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
@@ -32,22 +33,52 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const [journalId, setJournalId] = useState('');
 	const [aktivtSteg, setAktivtSteg] = useState(1);
 	const [formkrav, setFormkrav] = useState<Formkrav | undefined>();
+	const [lagrerKlage, setLagrerKlage] = useState(false);
+	const [lagringFeilet, setLagringFeilet] = useState(false);
 
 	const fnr = useAppStore().fnr;
 	const veilederIdent = useDataStore().innloggetVeileder.ident;
 	const gjeldendeVedtak = useDataStore().fattedeVedtak.find(v => v.gjeldende);
 	const { sistOppdatert, lagringStatus } = useSkjemaStore();
 	const { changeView } = useViewStore();
-	const lagreKlage = () => {
+
+	const utforLagring = async (lagreFn: () => Promise<unknown>) => {
+		setLagrerKlage(true);
+		setLagringFeilet(false);
+
+		try {
+			await lagreFn();
+			return true;
+		} catch {
+			setLagringFeilet(true);
+			return false;
+		} finally {
+			setLagrerKlage(false);
+		}
+	};
+
+	const lagreKlage = async () => {
+		if (!klageDato) {
+			return false;
+		}
+
 		const klagebehandling = {
 			vedtakId: props.vedtakId,
 			fnr,
 			veilederIdent,
-			klagedato: klageDato!,
+			klagedato: klageDato,
 			klageJournalpostid: journalId
 		};
-		lagreKlagebehandling(klagebehandling);
+
+		return utforLagring(() => lagreKlagebehandling(klagebehandling));
 	};
+
+	const lagreFormkrav = async (formkravData: Formkrav) => {
+		return utforLagring(() => lagreKlagebehandlingFormkrav(props.vedtakId, formkravData));
+	};
+
+	const kanStarteKlagebehandling = !!(klageDato && journalpostIdHarRiktigFormat(journalId));
+
 	const { datepickerProps, inputProps } = useDatepicker({
 		fromDate: new Date(new Date().setMonth(new Date().getMonth() - 2)),
 		onDateChange: setKlageDato
@@ -91,26 +122,44 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 									description="Format: 111 222 333"
 								/>
 							</HStack>
-							{klageDato && journalpostIdHarRiktigFormat(journalId) && (
+							{kanStarteKlagebehandling && (
 								<Button
-									onClick={() => {
-										lagreKlage();
-										setAktivtSteg(2);
+									loading={lagrerKlage}
+									onClick={async () => {
+										const lagret = await lagreKlage();
+										if (lagret) {
+											setAktivtSteg(2);
+										}
 									}}
 								>
 									Start klagebehandling
 								</Button>
 							)}
 
+							{lagringFeilet && <Alert variant="error">Klarte ikke å lagre klagebehandlingen.</Alert>}
+
 							{aktivtSteg === 2 && (
 								<VStack gap="space-16">
 									<FormkravSection onChange={setFormkrav} />
-									<Button onClick={() => setAktivtSteg(2)} disabled={!formkrav}>
+									<Button
+										loading={lagrerKlage}
+										onClick={async () => {
+											if (!formkrav) {
+												return;
+											}
+
+											const lagret = await lagreFormkrav(formkrav);
+											if (lagret) {
+												setAktivtSteg(3);
+											}
+										}}
+										disabled={!formkrav}
+									>
 										Neste
 									</Button>
 								</VStack>
 							)}
-							{aktivtSteg === 2 && (
+							{aktivtSteg === 3 && (
 								<VStack gap="space-16">
 									Her kommer innhold for utfall (medhold eller klageinstans)
 								</VStack>
