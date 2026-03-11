@@ -1,33 +1,68 @@
 import { Radio, RadioGroup, Stack, TextField, VStack } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
+import { KlagefristUnntakSvar } from '../../../api/veilarbvedtaksstotte/klagebehandling.ts';
 
 interface Formkrav {
 	klagefristOverholdt: boolean;
-	klagefristOverstyres?: boolean;
+	klagefristOverstyres?: KlagefristUnntakSvar;
 	klagerPartISaken: boolean;
 	klagePaaKonkreteElementer: boolean;
 	erKlagenSignert: boolean;
 	avvisningsAarsak?: string;
 }
-interface FormkravSectionProps {
-	onChange: (formkrav: Formkrav | undefined) => void;
+
+interface FormkravUtkast {
+	klagefristOverholdt?: boolean;
+	klagefristOverstyres?: KlagefristUnntakSvar;
+	klagerPartISaken?: boolean;
+	klagePaaKonkreteElementer?: boolean;
+	erKlagenSignert?: boolean;
+	avvisningsAarsak?: string;
 }
 
-export type { Formkrav };
+interface FormkravSectionProps {
+	onChange: (formkrav: Formkrav | undefined) => void;
+	onDraftChange: (formkrav: FormkravUtkast) => void;
+}
 
-export function FormkravSection({ onChange }: FormkravSectionProps) {
+export type { Formkrav, FormkravUtkast };
+
+export function FormkravSection({ onChange, onDraftChange }: FormkravSectionProps) {
 	const [klagefristOverholdt, setKlagefristOverholdt] = useState<boolean | undefined>();
-	const [klagefristOverstyres, setKlagefristOverstyres] = useState<boolean | undefined>();
+	const [klagefristOverstyres, setKlagefristOverstyres] = useState<KlagefristUnntakSvar | undefined>();
 	const [klagerPartISaken, setKlagerPartISaken] = useState<boolean | undefined>();
 	const [klagePaaKonkreteElementer, setKlagePaaKonkreteElementer] = useState<boolean | undefined>();
 	const [erKlagenSignert, setErKlagenSignert] = useState<boolean | undefined>();
 	const [avvisningsAarsak, setAvvisningsAarsak] = useState<string | undefined>();
 
+	const klagefristUnntakErOppfylt =
+		klagefristOverstyres === KlagefristUnntakSvar.JA_KLAGER_KAN_IKKE_LASTES ||
+		klagefristOverstyres === KlagefristUnntakSvar.JA_SAERLIGE_GRUNNER;
+
 	const skalAvvises =
-		!(klagefristOverstyres || klagefristOverholdt) ||
+		!(klagefristOverholdt || klagefristUnntakErOppfylt) ||
 		!klagerPartISaken ||
 		!klagePaaKonkreteElementer ||
 		!erKlagenSignert;
+
+	useEffect(() => {
+		onDraftChange({
+			klagefristOverholdt,
+			klagefristOverstyres: klagefristOverholdt ? undefined : klagefristOverstyres,
+			klagerPartISaken,
+			klagePaaKonkreteElementer,
+			erKlagenSignert,
+			avvisningsAarsak: avvisningsAarsak?.trim() || undefined
+		});
+	}, [
+		klagefristOverholdt,
+		klagefristOverstyres,
+		klagerPartISaken,
+		klagePaaKonkreteElementer,
+		erKlagenSignert,
+		avvisningsAarsak,
+		onDraftChange
+	]);
 
 	useEffect(() => {
 		const harValgtKlagefristUnntak = klagefristOverholdt !== false || klagefristOverstyres !== undefined;
@@ -85,9 +120,13 @@ export function FormkravSection({ onChange }: FormkravSectionProps) {
 					onChange={setKlagefristOverstyres}
 				>
 					<Stack direction="column">
-						<Radio value={true}>Ja, klager kan ikke lastes for å ha sendt inn klage etter fristen</Radio>
-						<Radio value={true}>Ja, av særlige grunner er det rimelig at klagen blir behandlet</Radio>
-						<Radio value={false}>Nei</Radio>
+						<Radio value={KlagefristUnntakSvar.JA_KLAGER_KAN_IKKE_LASTES}>
+							Ja, klager kan ikke lastes for å ha sendt inn klage etter fristen
+						</Radio>
+						<Radio value={KlagefristUnntakSvar.JA_SAERLIGE_GRUNNER}>
+							Ja, av særlige grunner er det rimelig at klagen blir behandlet
+						</Radio>
+						<Radio value={KlagefristUnntakSvar.NEI}>Nei</Radio>
 					</Stack>
 				</RadioGroup>
 			)}

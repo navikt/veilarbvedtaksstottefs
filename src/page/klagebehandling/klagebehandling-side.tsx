@@ -25,7 +25,7 @@ import { lagreKlagebehandling, lagreKlagebehandlingFormkrav } from '../../api/ve
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
-import { FormkravSection, Formkrav } from './formkrav-section/formkrav-section.tsx';
+import { FormkravSection, Formkrav, FormkravUtkast } from './formkrav-section/formkrav-section.tsx';
 import { journalpostIdHarRiktigFormat } from '../../api/utils.ts';
 
 export function KlagebehandlingSide(props: { vedtakId: number }) {
@@ -33,6 +33,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const [journalId, setJournalId] = useState('');
 	const [aktivtSteg, setAktivtSteg] = useState(1);
 	const [formkrav, setFormkrav] = useState<Formkrav | undefined>();
+	const [formkravUtkast, setFormkravUtkast] = useState<FormkravUtkast>({});
 	const [lagrerKlage, setLagrerKlage] = useState(false);
 	const [lagringFeilet, setLagringFeilet] = useState(false);
 
@@ -73,7 +74,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		return utforLagring(() => lagreKlagebehandling(klagebehandling));
 	};
 
-	const lagreFormkrav = async (formkravData: Formkrav) => {
+	const lagreFormkrav = async (formkravData: FormkravUtkast) => {
 		return utforLagring(() => lagreKlagebehandlingFormkrav(props.vedtakId, formkravData));
 	};
 
@@ -107,56 +108,76 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 								</Stepper>
 							</Box>
 
-							<HStack gap="space-24">
-								<DatePicker {...datepickerProps}>
-									<DatePicker.Input
-										{...inputProps}
-										label="Klage innsendt dato"
-										description="Format: dd.mm.åååå"
-									/>
-								</DatePicker>
-								<TextField
-									label="Gosys journalpostId"
-									value={journalId}
-									onChange={e => setJournalId(e.target.value)}
-									description="Format: 111 222 333"
-								/>
-							</HStack>
-							{kanStarteKlagebehandling && (
-								<Button
-									loading={lagrerKlage}
-									onClick={async () => {
-										const lagret = await lagreKlage();
-										if (lagret) {
-											setAktivtSteg(2);
-										}
-									}}
-								>
-									Start klagebehandling
-								</Button>
+							{aktivtSteg === 1 && (
+								<>
+									<HStack gap="space-24">
+										<DatePicker {...datepickerProps}>
+											<DatePicker.Input
+												{...inputProps}
+												label="Klage innsendt dato"
+												description="Format: dd.mm.åååå"
+											/>
+										</DatePicker>
+										<TextField
+											label="Gosys journalpostId"
+											value={journalId}
+											onChange={e => setJournalId(e.target.value)}
+											description="Format: 111 222 333"
+										/>
+									</HStack>
+									{kanStarteKlagebehandling && (
+										<Button
+											loading={lagrerKlage}
+											onClick={async () => {
+												const lagret = await lagreKlage();
+												if (lagret) {
+													setAktivtSteg(2);
+												}
+											}}
+										>
+											Start klagebehandling
+										</Button>
+									)}
+								</>
 							)}
 
 							{lagringFeilet && <Alert variant="error">Klarte ikke å lagre klagebehandlingen.</Alert>}
 
 							{aktivtSteg === 2 && (
 								<VStack gap="space-16">
-									<FormkravSection onChange={setFormkrav} />
-									<Button
-										loading={lagrerKlage}
-										onClick={async () => {
-											if (!formkrav) {
-												return;
-											}
+									<FormkravSection onChange={setFormkrav} onDraftChange={setFormkravUtkast} />
+									<div className="klagebehandling__formkrav-actions">
+										<Button variant="tertiary" onClick={() => changeView(ViewType.HOVEDSIDE)}>
+											Avbryt klagebehandling
+										</Button>
+										<div className="klagebehandling__formkrav-actions-right">
+											<Button
+												variant="secondary"
+												loading={lagrerKlage}
+												onClick={async () => {
+													await lagreFormkrav(formkravUtkast);
+												}}
+											>
+												Lagre
+											</Button>
+											<Button
+												loading={lagrerKlage}
+												onClick={async () => {
+													if (!formkrav) {
+														return;
+													}
 
-											const lagret = await lagreFormkrav(formkrav);
-											if (lagret) {
-												setAktivtSteg(3);
-											}
-										}}
-										disabled={!formkrav}
-									>
-										Neste
-									</Button>
+													const lagret = await lagreFormkrav(formkrav);
+													if (lagret) {
+														setAktivtSteg(3);
+													}
+												}}
+												disabled={!formkrav}
+											>
+												Lagre og gå videre
+											</Button>
+										</div>
+									</div>
 								</VStack>
 							)}
 							{aktivtSteg === 3 && (
