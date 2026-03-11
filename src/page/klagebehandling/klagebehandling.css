@@ -4,3 +4,16 @@
 	justify-content: center;
 	margin: 0 auto;
 }
+
+.veilarbvedtaksstottefs .klagebehandling__formkrav-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.veilarbvedtaksstottefs .klagebehandling__formkrav-actions-right {
+	display: flex;
+	gap: var(--a-spacing-3);
+	justify-content: flex-end;
+}
