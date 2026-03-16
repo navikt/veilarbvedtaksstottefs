@@ -7,12 +7,18 @@ import { useState } from 'react';
 import './klagebehandling.css';
 import {
 	Alert,
+	BodyLong,
 	Box,
 	Button,
 	DatePicker,
 	HGrid,
 	HStack,
+	Heading,
+	HelpText,
+	List,
+	Modal,
 	Page,
+	Select,
 	Stepper,
 	TextField,
 	useDatepicker,
@@ -21,8 +27,12 @@ import {
 import { KlageHeader } from './klage-header-section/klage-header-section.tsx';
 import PdfViewer from '../../component/pdf-viewer/pdf-viewer.tsx';
 import { lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak.ts';
-import { lagreKlagebehandling, lagreKlagebehandlingFormkrav } from '../../api/veilarbvedtaksstotte/klagebehandling.ts';
-import { ChevronLeftIcon } from '@navikt/aksel-icons';
+import {
+	KlagefristUnntakSvar,
+	lagreKlagebehandling,
+	lagreKlagebehandlingFormkrav
+} from '../../api/veilarbvedtaksstotte/klagebehandling.ts';
+import { CheckmarkCircleFillIcon, ChevronLeftIcon, PadlockLockedIcon } from '@navikt/aksel-icons';
 import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
 import { FormkravSection, Formkrav, FormkravUtkast } from './formkrav-section/formkrav-section.tsx';
@@ -34,6 +44,9 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const [aktivtSteg, setAktivtSteg] = useState(1);
 	const [formkrav, setFormkrav] = useState<Formkrav | undefined>();
 	const [formkravUtkast, setFormkravUtkast] = useState<FormkravUtkast>({});
+	const [utfallJournalpostId, setUtfallJournalpostId] = useState('');
+	const [visFullfortModal, setVisFullfortModal] = useState(false);
+	const [harForsoktAFullfore, setHarForsoktAFullfore] = useState(false);
 	const [lagrerKlage, setLagrerKlage] = useState(false);
 	const [lagringFeilet, setLagringFeilet] = useState(false);
 
@@ -78,12 +91,40 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		return utforLagring(() => lagreKlagebehandlingFormkrav(props.vedtakId, formkravData));
 	};
 
+	const klagefristUnntakErOppfylt =
+		formkrav?.klagefristOverstyres === KlagefristUnntakSvar.JA_KLAGER_KAN_IKKE_LASTES ||
+		formkrav?.klagefristOverstyres === KlagefristUnntakSvar.JA_SAERLIGE_GRUNNER;
+
+	const utfallErAvvisning =
+		!!formkrav &&
+		(!(formkrav.klagefristOverholdt || klagefristUnntakErOppfylt) ||
+			!formkrav.klagerPartISaken ||
+			!formkrav.klagePaaKonkreteElementer ||
+			!formkrav.erKlagenSignert);
+
+	const begrunnelseForAvvisningTilBruker = formkrav?.avvisningsAarsak || formkravUtkast.avvisningsAarsak || '';
+	const kanFullforeAvvistKlage = journalpostIdHarRiktigFormat(utfallJournalpostId);
+	const utfallJournalpostIdFeil =
+		harForsoktAFullfore && !kanFullforeAvvistKlage ? 'Må være på formatet 111 222 333' : undefined;
+
 	const kanStarteKlagebehandling = !!(klageDato && journalpostIdHarRiktigFormat(journalId));
 
 	const { datepickerProps, inputProps } = useDatepicker({
 		fromDate: new Date(new Date().setMonth(new Date().getMonth() - 2)),
 		onDateChange: setKlageDato
 	});
+
+	const tilbakeTilStart = () => {
+		setVisFullfortModal(false);
+		setHarForsoktAFullfore(false);
+		setAktivtSteg(1);
+		setKlageDato(undefined);
+		setJournalId('');
+		setFormkrav(undefined);
+		setFormkravUtkast({});
+		setUtfallJournalpostId('');
+		setLagringFeilet(false);
+	};
 
 	return (
 		<>
@@ -182,7 +223,99 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 							)}
 							{aktivtSteg === 3 && (
 								<VStack gap="space-16">
-									Her kommer innhold for utfall (medhold eller klageinstans)
+									{utfallErAvvisning ? (
+										<>
+											<Select
+												disabled
+												defaultValue="KLAGEN_AVVISES"
+												label={
+													<span className="klagebehandling__locked-label">
+														<PadlockLockedIcon aria-hidden />
+														<span>Utfall av klagebehandlingen</span>
+													</span>
+												}
+											>
+												<option value="KLAGEN_AVVISES">Klagen avvises</option>
+											</Select>
+											<TextField
+												disabled
+												value={begrunnelseForAvvisningTilBruker}
+												label={
+													<span className="klagebehandling__locked-label">
+														<PadlockLockedIcon aria-hidden />
+														<span>
+															Begrunnelse for avvisning som skal sendes til bruker
+														</span>
+													</span>
+												}
+											/>
+											<div>
+												<h3 className="klagebehandling__utfall-actions-title">
+													Det du må gjøre
+												</h3>
+												<List size="small" className="klagebehandling__utfall-actions-list">
+													<List.Item>
+														Skriv brev til personen om hvorfor klagen er avvist, og
+														journalfør i Gosys. Se servicerutinen for mer informasjon.
+													</List.Item>
+													<List.Item>
+														Legg inn Gosys journalpostID for brevet til personenog fullfør
+														klagebehandlingen.
+													</List.Item>
+												</List>
+											</div>
+											<TextField
+												className="klagebehandling__utfall-journalpost"
+												label={
+													<div className="klagebehandling__question-label">
+														<span>Gosys JournalpostID</span>
+														<HelpText title="Hjelp">Format: 111 222 333</HelpText>
+													</div>
+												}
+												value={utfallJournalpostId}
+												onChange={e => {
+													setUtfallJournalpostId(e.target.value);
+													setHarForsoktAFullfore(false);
+												}}
+												error={utfallJournalpostIdFeil}
+											/>
+											<div className="klagebehandling__formkrav-actions">
+												<Button variant="tertiary" onClick={() => setAktivtSteg(2)}>
+													Gå tilbake
+												</Button>
+												<div className="klagebehandling__formkrav-actions-right">
+													<Button
+														variant="secondary"
+														loading={lagrerKlage}
+														onClick={async () => {
+															await lagreFormkrav(formkravUtkast);
+														}}
+													>
+														Lagre
+													</Button>
+													<Button
+														loading={lagrerKlage}
+														onClick={async () => {
+															setHarForsoktAFullfore(true);
+
+															if (!kanFullforeAvvistKlage) {
+																return;
+															}
+
+															const lagret = await lagreFormkrav(formkravUtkast);
+															if (lagret) {
+																setVisFullfortModal(true);
+															}
+														}}
+													>
+														Fullfør klagebehandlingen
+													</Button>
+												</div>
+											</div>
+										</>
+									) : (
+										<>Her kommer innhold for utfall (medhold eller klageinstans)</>
+									)}
 								</VStack>
 							)}
 						</VStack>
@@ -197,6 +330,20 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 					)}
 				</HGrid>
 			</Page>
+			<Modal open={visFullfortModal} onClose={tilbakeTilStart} aria-label="Klagebehandling fullført">
+				<Modal.Body className="klagebehandling__fullfort-modal-body">
+					<CheckmarkCircleFillIcon aria-hidden className="klagebehandling__fullfort-modal-icon" />
+					<Heading level="1" size="medium">
+						Klagebehandling fullført
+					</Heading>
+					<BodyLong>
+						Klagebehandlingen er fullført. Du finner de journalførte dokumentene knytte til saken i Gosys.
+					</BodyLong>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button onClick={tilbakeTilStart}>OK</Button>
+				</Modal.Footer>
+			</Modal>
 			<Footer className="vedtakskjema-visning__aksjoner">
 				<Button
 					size="small"
