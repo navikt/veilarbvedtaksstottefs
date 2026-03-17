@@ -18,7 +18,6 @@ import {
 	Modal,
 	Page,
 	Select,
-	Stepper,
 	TextField,
 	useDatepicker,
 	VStack
@@ -126,6 +125,13 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		changeView(ViewType.HOVEDSIDE);
 	};
 
+	const stegTittel =
+		aktivtSteg === 1
+			? 'Start klagebehandling'
+			: aktivtSteg === 2
+				? 'Frist og Formkrav'
+				: 'Resultat av klagebehandlingen';
+
 	return (
 		<>
 			<Page>
@@ -138,20 +144,14 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 
 				<HGrid columns={2} gap="space-16">
 					<Box padding="space-16">
-						<VStack gap="space-16">
-							<Box padding={'space-16'}>
-								<Stepper activeStep={aktivtSteg} orientation="horizontal">
-									<Stepper.Step completed={!!(klageDato && journalId && aktivtSteg > 1)}>
-										Start
-									</Stepper.Step>
-									<Stepper.Step completed={!!formkrav && aktivtSteg > 2}>Formkrav</Stepper.Step>
-									<Stepper.Step>Utfall</Stepper.Step>
-								</Stepper>
-							</Box>
+						<VStack gap="space-32">
+							<Heading level="1" size="large">
+								{stegTittel}
+							</Heading>
 
 							{aktivtSteg === 1 && (
 								<>
-									<HStack gap="space-24">
+									<VStack gap="space-32">
 										<DatePicker {...datepickerProps}>
 											<DatePicker.Input
 												{...inputProps}
@@ -163,9 +163,10 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 											label="Gosys journalpostId"
 											value={journalId}
 											onChange={e => setJournalId(e.target.value)}
-											description="Format: 111 222 333"
+											description="Format: 111 222 333 (9 siffer)"
+											style={{ maxWidth: '14rem' }}
 										/>
-									</HStack>
+									</VStack>
 									{kanStarteKlagebehandling && (
 										<Button
 											loading={lagrerKlage}
@@ -185,7 +186,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 							{lagringFeilet && <Alert variant="error">Klarte ikke å lagre klagebehandlingen.</Alert>}
 
 							{aktivtSteg === 2 && (
-								<VStack gap="space-16">
+								<VStack gap="space-32">
 									<FormkravSection onChange={setFormkrav} onDraftChange={setFormkravUtkast} />
 									<HStack justify="space-between" align="center" width="100%">
 										<Button variant="tertiary" onClick={() => changeView(ViewType.HOVEDSIDE)}>
@@ -222,7 +223,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 								</VStack>
 							)}
 							{aktivtSteg === 3 && (
-								<VStack gap="space-16">
+								<VStack gap="space-32">
 									{utfallErAvvisning ? (
 										<>
 											<Select
