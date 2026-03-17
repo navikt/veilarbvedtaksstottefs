@@ -9,6 +9,7 @@ import {
 	BodyLong,
 	Box,
 	Button,
+	CopyButton,
 	DatePicker,
 	HGrid,
 	HStack,
@@ -18,6 +19,7 @@ import {
 	Modal,
 	Page,
 	Select,
+	Textarea,
 	TextField,
 	useDatepicker,
 	VStack
@@ -30,7 +32,7 @@ import {
 	lagreKlagebehandling,
 	lagreKlagebehandlingFormkrav
 } from '../../api/veilarbvedtaksstotte/klagebehandling.ts';
-import { CheckmarkCircleIcon, ChevronLeftIcon, PadlockLockedIcon } from '@navikt/aksel-icons';
+import { CheckmarkCircleIcon, ChevronLeftIcon } from '@navikt/aksel-icons';
 import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
 import { FormkravSection, Formkrav, FormkravUtkast } from './formkrav-section/formkrav-section.tsx';
@@ -226,30 +228,46 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 								<VStack gap="space-32">
 									{utfallErAvvisning ? (
 										<>
-											<Select
-												disabled
-												defaultValue="KLAGEN_AVVISES"
-												label={
-													<HStack as="span" align="center" gap="space-2">
-														<PadlockLockedIcon aria-hidden />
-														<span>Utfall av klagebehandlingen</span>
-													</HStack>
-												}
-											>
-												<option value="KLAGEN_AVVISES">Klagen avvises</option>
-											</Select>
-											<TextField
-												disabled
-												value={begrunnelseForAvvisningTilBruker}
-												label={
-													<HStack as="span" align="center" gap="space-2">
-														<PadlockLockedIcon aria-hidden />
-														<span>
-															Begrunnelse for avvisning som skal sendes til bruker
-														</span>
-													</HStack>
-												}
-											/>
+											<Box width="100%" maxWidth="25%" minWidth="14rem">
+												<Select
+													readOnly
+													defaultValue="KLAGEN_AVVISES"
+													label={
+														<HStack as="span" align="center" gap="space-2">
+															<span>Resultat</span>
+														</HStack>
+													}
+												>
+													<option value="KLAGEN_AVVISES">Klagen avvises</option>
+												</Select>
+											</Box>
+											<Box width="100%" maxWidth="85%" minWidth="18rem">
+												<HStack align="end" gap="space-4" style={{ flexWrap: 'wrap' }}>
+													<Box width="100%" style={{ flex: 1 }}>
+														<Textarea
+															readOnly
+															size="small"
+															resize
+															value={begrunnelseForAvvisningTilBruker}
+															label={
+																<HStack as="span" align="center" gap="space-2">
+																	<span>
+																		Begrunnelse for avvisning som skal sendes til
+																		bruker
+																	</span>
+																</HStack>
+															}
+														/>
+													</Box>
+													<CopyButton
+														copyText={begrunnelseForAvvisningTilBruker}
+														text="Kopier tekst"
+														size="small"
+														iconPosition="right"
+														disabled={!begrunnelseForAvvisningTilBruker}
+													/>
+												</HStack>
+											</Box>
 											<VStack gap="space-2">
 												<Heading level="3" size="small">
 													Det du må gjøre
