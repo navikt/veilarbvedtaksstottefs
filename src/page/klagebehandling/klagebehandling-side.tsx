@@ -167,19 +167,19 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 											style={{ maxWidth: '14rem' }}
 										/>
 									</VStack>
-									{kanStarteKlagebehandling && (
-										<Button
-											loading={lagrerKlage}
-											onClick={async () => {
-												const lagret = await lagreKlage();
-												if (lagret) {
-													setAktivtSteg(2);
-												}
-											}}
-										>
-											Start klagebehandling
-										</Button>
-									)}
+									<Button
+										loading={lagrerKlage}
+										disabled={!kanStarteKlagebehandling}
+										style={{ width: '14rem' }}
+										onClick={async () => {
+											const lagret = await lagreKlage();
+											if (lagret) {
+												setAktivtSteg(2);
+											}
+										}}
+									>
+										Start klagebehandling
+									</Button>
 								</>
 							)}
 
