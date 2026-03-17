@@ -131,7 +131,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		aktivtSteg === 1
 			? 'Start klagebehandling'
 			: aktivtSteg === 2
-				? 'Frist og Formkrav'
+				? 'Frist og formkrav'
 				: 'Resultat av klagebehandlingen';
 
 	return (
