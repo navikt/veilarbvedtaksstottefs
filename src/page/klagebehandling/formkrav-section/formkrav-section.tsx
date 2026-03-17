@@ -35,15 +35,11 @@ export function FormkravSection({ onChange, onDraftChange }: FormkravSectionProp
 	const [erKlagenSignert, setErKlagenSignert] = useState<boolean | undefined>();
 	const [avvisningsAarsak, setAvvisningsAarsak] = useState<string | undefined>();
 
-	const klagefristUnntakErOppfylt =
-		klagefristOverstyres === KlagefristUnntakSvar.JA_KLAGER_KAN_IKKE_LASTES ||
-		klagefristOverstyres === KlagefristUnntakSvar.JA_SAERLIGE_GRUNNER;
-
 	const skalAvvises =
-		!(klagefristOverholdt || klagefristUnntakErOppfylt) ||
-		!klagerPartISaken ||
-		!klagePaaKonkreteElementer ||
-		!erKlagenSignert;
+		(klagefristOverholdt === false && klagefristOverstyres === KlagefristUnntakSvar.NEI) ||
+		klagerPartISaken === false ||
+		klagePaaKonkreteElementer === false ||
+		erKlagenSignert === false;
 
 	useEffect(() => {
 		onDraftChange({
@@ -97,7 +93,7 @@ export function FormkravSection({ onChange, onDraftChange }: FormkravSectionProp
 	]);
 
 	return (
-		<VStack>
+		<VStack gap="space-32">
 			<RadioGroup
 				legend="Er klagefristen overholdt?"
 				size="small"
