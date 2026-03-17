@@ -1,4 +1,4 @@
-import { Radio, RadioGroup, Stack, TextField, VStack } from '@navikt/ds-react';
+import { Box, Radio, RadioGroup, Stack, Textarea, VStack } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
 import { KlagefristUnntakSvar } from '../../../api/veilarbvedtaksstotte/klagebehandling.ts';
 
@@ -35,15 +35,11 @@ export function FormkravSection({ onChange, onDraftChange }: FormkravSectionProp
 	const [erKlagenSignert, setErKlagenSignert] = useState<boolean | undefined>();
 	const [avvisningsAarsak, setAvvisningsAarsak] = useState<string | undefined>();
 
-	const klagefristUnntakErOppfylt =
-		klagefristOverstyres === KlagefristUnntakSvar.JA_KLAGER_KAN_IKKE_LASTES ||
-		klagefristOverstyres === KlagefristUnntakSvar.JA_SAERLIGE_GRUNNER;
-
 	const skalAvvises =
-		!(klagefristOverholdt || klagefristUnntakErOppfylt) ||
-		!klagerPartISaken ||
-		!klagePaaKonkreteElementer ||
-		!erKlagenSignert;
+		(klagefristOverholdt === false && klagefristOverstyres === KlagefristUnntakSvar.NEI) ||
+		klagerPartISaken === false ||
+		klagePaaKonkreteElementer === false ||
+		erKlagenSignert === false;
 
 	useEffect(() => {
 		onDraftChange({
@@ -97,39 +93,43 @@ export function FormkravSection({ onChange, onDraftChange }: FormkravSectionProp
 	]);
 
 	return (
-		<VStack>
-			<RadioGroup
-				legend="Er klagefristen overholdt?"
-				size="small"
-				onChange={value => {
-					setKlagefristOverholdt(value);
-					if (value) {
-						setKlagefristOverstyres(undefined);
-					}
-				}}
-			>
-				<Stack direction="column">
-					<Radio value={true}>Ja</Radio>
-					<Radio value={false}>Nei</Radio>
-				</Stack>
-			</RadioGroup>
-			{klagefristOverholdt === false && (
+		<VStack gap="space-32">
+			<VStack gap="space-4">
 				<RadioGroup
-					legend="Er unntak for klagefristen oppfylt?"
+					legend="Er klagefristen overholdt?"
 					size="small"
-					onChange={setKlagefristOverstyres}
+					onChange={value => {
+						setKlagefristOverholdt(value);
+						if (value) {
+							setKlagefristOverstyres(undefined);
+						}
+					}}
 				>
 					<Stack direction="column">
-						<Radio value={KlagefristUnntakSvar.JA_KLAGER_KAN_IKKE_LASTES}>
-							Ja, klager kan ikke lastes for å ha sendt inn klage etter fristen
-						</Radio>
-						<Radio value={KlagefristUnntakSvar.JA_SAERLIGE_GRUNNER}>
-							Ja, av særlige grunner er det rimelig at klagen blir behandlet
-						</Radio>
-						<Radio value={KlagefristUnntakSvar.NEI}>Nei</Radio>
+						<Radio value={true}>Ja</Radio>
+						<Radio value={false}>Nei</Radio>
 					</Stack>
 				</RadioGroup>
-			)}
+				{klagefristOverholdt === false && (
+					<Box paddingInline="space-28">
+						<RadioGroup
+							legend="Er unntak for klagefristen oppfylt?"
+							size="small"
+							onChange={setKlagefristOverstyres}
+						>
+							<Stack direction="column">
+								<Radio value={KlagefristUnntakSvar.JA_KLAGER_KAN_IKKE_LASTES}>
+									Ja, klager kan ikke lastes for å ha sendt inn klage etter fristen
+								</Radio>
+								<Radio value={KlagefristUnntakSvar.JA_SAERLIGE_GRUNNER}>
+									Ja, av særlige grunner er det rimelig at klagen blir behandlet
+								</Radio>
+								<Radio value={KlagefristUnntakSvar.NEI}>Nei</Radio>
+							</Stack>
+						</RadioGroup>
+					</Box>
+				)}
+			</VStack>
 			<RadioGroup legend="Er klager part i saken?" size="small" onChange={setKlagerPartISaken}>
 				<Stack direction="column">
 					<Radio value={true}>Ja</Radio>
@@ -153,12 +153,16 @@ export function FormkravSection({ onChange, onDraftChange }: FormkravSectionProp
 				</Stack>
 			</RadioGroup>
 			{skalAvvises && (
-				<TextField
-					label="Begrunnelse for å avvise klage"
-					value={avvisningsAarsak || ''}
-					onChange={e => setAvvisningsAarsak(e.target.value)}
-					required
-				/>
+				<Box width="100%" maxWidth="60%">
+					<Textarea
+						label="Begrunnelse for avvisning som skal sendes til bruker"
+						size="small"
+						resize
+						value={avvisningsAarsak || ''}
+						onChange={e => setAvvisningsAarsak(e.target.value)}
+						required
+					/>
+				</Box>
 			)}
 		</VStack>
 	);

@@ -4,12 +4,12 @@ import { useAppStore } from '../../store/app-store.ts';
 
 import { useState } from 'react';
 
-import './klagebehandling.css';
 import {
 	Alert,
 	BodyLong,
 	Box,
 	Button,
+	CopyButton,
 	DatePicker,
 	HGrid,
 	HStack,
@@ -19,7 +19,7 @@ import {
 	Modal,
 	Page,
 	Select,
-	Stepper,
+	Textarea,
 	TextField,
 	useDatepicker,
 	VStack
@@ -32,7 +32,7 @@ import {
 	lagreKlagebehandling,
 	lagreKlagebehandlingFormkrav
 } from '../../api/veilarbvedtaksstotte/klagebehandling.ts';
-import { CheckmarkCircleFillIcon, ChevronLeftIcon, PadlockLockedIcon } from '@navikt/aksel-icons';
+import { CheckmarkCircleIcon, ChevronLeftIcon } from '@navikt/aksel-icons';
 import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
 import { FormkravSection, Formkrav, FormkravUtkast } from './formkrav-section/formkrav-section.tsx';
@@ -114,7 +114,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		onDateChange: setKlageDato
 	});
 
-	const tilbakeTilStart = () => {
+	const avsluttKlagebehandling = () => {
 		setVisFullfortModal(false);
 		setHarForsoktAFullfore(false);
 		setAktivtSteg(1);
@@ -124,7 +124,15 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		setFormkravUtkast({});
 		setUtfallJournalpostId('');
 		setLagringFeilet(false);
+		changeView(ViewType.HOVEDSIDE);
 	};
+
+	const stegTittel =
+		aktivtSteg === 1
+			? 'Start klagebehandling'
+			: aktivtSteg === 2
+				? 'Frist og formkrav'
+				: 'Resultat av klagebehandlingen';
 
 	return (
 		<>
@@ -138,20 +146,14 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 
 				<HGrid columns={2} gap="space-16">
 					<Box padding="space-16">
-						<VStack gap="space-16">
-							<Box padding={'space-16'}>
-								<Stepper activeStep={aktivtSteg} orientation="horizontal">
-									<Stepper.Step completed={!!(klageDato && journalId && aktivtSteg > 1)}>
-										Start
-									</Stepper.Step>
-									<Stepper.Step completed={!!formkrav && aktivtSteg > 2}>Formkrav</Stepper.Step>
-									<Stepper.Step>Utfall</Stepper.Step>
-								</Stepper>
-							</Box>
+						<VStack gap="space-32">
+							<Heading level="1" size="large">
+								{stegTittel}
+							</Heading>
 
 							{aktivtSteg === 1 && (
 								<>
-									<HStack gap="space-24">
+									<VStack gap="space-32">
 										<DatePicker {...datepickerProps}>
 											<DatePicker.Input
 												{...inputProps}
@@ -163,35 +165,36 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 											label="Gosys journalpostId"
 											value={journalId}
 											onChange={e => setJournalId(e.target.value)}
-											description="Format: 111 222 333"
+											description="Format: 111 222 333 (9 siffer)"
+											style={{ maxWidth: '14rem' }}
 										/>
-									</HStack>
-									{kanStarteKlagebehandling && (
-										<Button
-											loading={lagrerKlage}
-											onClick={async () => {
-												const lagret = await lagreKlage();
-												if (lagret) {
-													setAktivtSteg(2);
-												}
-											}}
-										>
-											Start klagebehandling
-										</Button>
-									)}
+									</VStack>
+									<Button
+										loading={lagrerKlage}
+										disabled={!kanStarteKlagebehandling}
+										style={{ width: '14rem' }}
+										onClick={async () => {
+											const lagret = await lagreKlage();
+											if (lagret) {
+												setAktivtSteg(2);
+											}
+										}}
+									>
+										Start klagebehandling
+									</Button>
 								</>
 							)}
 
 							{lagringFeilet && <Alert variant="error">Klarte ikke å lagre klagebehandlingen.</Alert>}
 
 							{aktivtSteg === 2 && (
-								<VStack gap="space-16">
+								<VStack gap="space-32">
 									<FormkravSection onChange={setFormkrav} onDraftChange={setFormkravUtkast} />
-									<div className="klagebehandling__formkrav-actions">
+									<HStack justify="space-between" align="center" width="100%">
 										<Button variant="tertiary" onClick={() => changeView(ViewType.HOVEDSIDE)}>
 											Avbryt klagebehandling
 										</Button>
-										<div className="klagebehandling__formkrav-actions-right">
+										<HStack gap="space-6" justify="end">
 											<Button
 												variant="secondary"
 												loading={lagrerKlage}
@@ -217,43 +220,59 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 											>
 												Lagre og gå videre
 											</Button>
-										</div>
-									</div>
+										</HStack>
+									</HStack>
 								</VStack>
 							)}
 							{aktivtSteg === 3 && (
-								<VStack gap="space-16">
+								<VStack gap="space-32">
 									{utfallErAvvisning ? (
 										<>
-											<Select
-												disabled
-												defaultValue="KLAGEN_AVVISES"
-												label={
-													<span className="klagebehandling__locked-label">
-														<PadlockLockedIcon aria-hidden />
-														<span>Utfall av klagebehandlingen</span>
-													</span>
-												}
-											>
-												<option value="KLAGEN_AVVISES">Klagen avvises</option>
-											</Select>
-											<TextField
-												disabled
-												value={begrunnelseForAvvisningTilBruker}
-												label={
-													<span className="klagebehandling__locked-label">
-														<PadlockLockedIcon aria-hidden />
-														<span>
-															Begrunnelse for avvisning som skal sendes til bruker
-														</span>
-													</span>
-												}
-											/>
-											<div>
-												<h3 className="klagebehandling__utfall-actions-title">
+											<Box width="100%" maxWidth="25%" minWidth="14rem">
+												<Select
+													readOnly
+													defaultValue="KLAGEN_AVVISES"
+													label={
+														<HStack as="span" align="center" gap="space-2">
+															<span>Resultat</span>
+														</HStack>
+													}
+												>
+													<option value="KLAGEN_AVVISES">Klagen avvises</option>
+												</Select>
+											</Box>
+											<Box width="100%" maxWidth="85%" minWidth="18rem">
+												<HStack align="end" gap="space-4" style={{ flexWrap: 'wrap' }}>
+													<Box width="100%" style={{ flex: 1 }}>
+														<Textarea
+															readOnly
+															size="small"
+															resize
+															value={begrunnelseForAvvisningTilBruker}
+															label={
+																<HStack as="span" align="center" gap="space-2">
+																	<span>
+																		Begrunnelse for avvisning som skal sendes til
+																		bruker
+																	</span>
+																</HStack>
+															}
+														/>
+													</Box>
+													<CopyButton
+														copyText={begrunnelseForAvvisningTilBruker}
+														text="Kopier tekst"
+														size="small"
+														iconPosition="right"
+														disabled={!begrunnelseForAvvisningTilBruker}
+													/>
+												</HStack>
+											</Box>
+											<VStack gap="space-2">
+												<Heading level="3" size="small">
 													Det du må gjøre
-												</h3>
-												<List size="small" className="klagebehandling__utfall-actions-list">
+												</Heading>
+												<List size="small">
 													<List.Item>
 														Skriv brev til personen om hvorfor klagen er avvist, og
 														journalfør i Gosys. Se servicerutinen for mer informasjon.
@@ -263,27 +282,28 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 														klagebehandlingen.
 													</List.Item>
 												</List>
-											</div>
-											<TextField
-												className="klagebehandling__utfall-journalpost"
-												label={
-													<div className="klagebehandling__question-label">
-														<span>Gosys JournalpostID</span>
-														<HelpText title="Hjelp">Format: 111 222 333</HelpText>
-													</div>
-												}
-												value={utfallJournalpostId}
-												onChange={e => {
-													setUtfallJournalpostId(e.target.value);
-													setHarForsoktAFullfore(false);
-												}}
-												error={utfallJournalpostIdFeil}
-											/>
-											<div className="klagebehandling__formkrav-actions">
+											</VStack>
+											<Box width="100%" maxWidth="20rem">
+												<TextField
+													label={
+														<HStack as="div" align="center" gap="space-2">
+															<span>Gosys JournalpostID</span>
+															<HelpText title="Hjelp">Format: 111 222 333</HelpText>
+														</HStack>
+													}
+													value={utfallJournalpostId}
+													onChange={e => {
+														setUtfallJournalpostId(e.target.value);
+														setHarForsoktAFullfore(false);
+													}}
+													error={utfallJournalpostIdFeil}
+												/>
+											</Box>
+											<HStack justify="space-between" align="center" width="100%">
 												<Button variant="tertiary" onClick={() => setAktivtSteg(2)}>
 													Gå tilbake
 												</Button>
-												<div className="klagebehandling__formkrav-actions-right">
+												<HStack gap="space-6" justify="end">
 													<Button
 														variant="secondary"
 														loading={lagrerKlage}
@@ -310,8 +330,8 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 													>
 														Fullfør klagebehandlingen
 													</Button>
-												</div>
-											</div>
+												</HStack>
+											</HStack>
 										</>
 									) : (
 										<>Her kommer innhold for utfall (medhold eller klageinstans)</>
@@ -330,18 +350,26 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 					)}
 				</HGrid>
 			</Page>
-			<Modal open={visFullfortModal} onClose={tilbakeTilStart} aria-label="Klagebehandling fullført">
-				<Modal.Body className="klagebehandling__fullfort-modal-body">
-					<CheckmarkCircleFillIcon aria-hidden className="klagebehandling__fullfort-modal-icon" />
-					<Heading level="1" size="medium">
-						Klagebehandling fullført
-					</Heading>
-					<BodyLong>
-						Klagebehandlingen er fullført. Du finner de journalførte dokumentene knytte til saken i Gosys.
-					</BodyLong>
+			<Modal open={visFullfortModal} onClose={avsluttKlagebehandling} aria-label="Klagebehandling fullført">
+				<Modal.Body>
+					<VStack align="center" gap="space-4">
+						<CheckmarkCircleIcon
+							aria-hidden
+							width="2rem"
+							height="2rem"
+							style={{ color: 'var(--a-icon-success)' }}
+						/>
+						<Heading level="1" size="medium">
+							Klagebehandling fullført
+						</Heading>
+						<BodyLong style={{ textAlign: 'center' }}>
+							Klagebehandlingen er fullført. Du finner de journalførte dokumentene knytte til saken i
+							Gosys.
+						</BodyLong>
+					</VStack>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={tilbakeTilStart}>OK</Button>
+					<Button onClick={avsluttKlagebehandling}>OK</Button>
 				</Modal.Footer>
 			</Modal>
 			<Footer className="vedtakskjema-visning__aksjoner">
