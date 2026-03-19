@@ -72,18 +72,16 @@ function boolskTilJaNeiEllerNull(verdi: boolean | undefined): JaNei | null {
 	return boolskTilJaNei(verdi);
 }
 
-function formatDatoSomLokalIsoDato(dato: Date): string {
-	const aar = dato.getFullYear();
-	const maaned = String(dato.getMonth() + 1).padStart(2, '0');
-	const dag = String(dato.getDate()).padStart(2, '0');
+function formatDatoSomIsoMidtPaDagenUtc(dato: Date): string {
+	const datoMidtPaDagenUtc = new Date(Date.UTC(dato.getFullYear(), dato.getMonth(), dato.getDate(), 12, 0, 0, 0));
 
-	return `${aar}-${maaned}-${dag}`;
+	return datoMidtPaDagenUtc.toISOString();
 }
 
 function tilKlagebehandlingRequest(klagebehandling: Klagebehandling): KlagebehandlingRequest {
 	return {
 		...klagebehandling,
-		klagedato: formatDatoSomLokalIsoDato(klagebehandling.klagedato)
+		klagedato: formatDatoSomIsoMidtPaDagenUtc(klagebehandling.klagedato)
 	};
 }
 
