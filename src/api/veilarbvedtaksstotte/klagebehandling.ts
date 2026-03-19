@@ -39,6 +39,11 @@ interface KlagebehandlingFormkravRequest {
 	formkravBegrunnelseBrev: string | null;
 }
 
+interface FullforAvvisningRequest {
+	journalpostId: string;
+	vedtakId: number;
+}
+
 export interface Klagebehandling {
 	vedtakId: number;
 	fnr: string;
@@ -79,4 +84,35 @@ export function lagreKlagebehandlingFormkrav(
 	};
 
 	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/formkrav`, payload);
+}
+
+export function avvisKlagebehandling(
+	vedtakId: number,
+	formkrav: KlagebehandlingFormkravUtkast
+): AxiosPromise<Response> {
+	const payload: KlagebehandlingFormkravRequest = {
+		vedtakId,
+		signert: boolskTilJaNeiEllerNull(formkrav.erKlagenSignert),
+		part: boolskTilJaNeiEllerNull(formkrav.klagerPartISaken),
+		konkret: boolskTilJaNeiEllerNull(formkrav.klagePaaKonkreteElementer),
+		klagefristOpprettholdt: boolskTilJaNeiEllerNull(formkrav.klagefristOverholdt),
+		klagefristUnntak: formkrav.klagefristOverholdt === true ? null : formkrav.klagefristOverstyres || null,
+		formkravBegrunnelseIntern: formkrav.avvisningsAarsak?.trim() || null,
+		formkravBegrunnelseBrev: null
+	};
+
+	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/avvis`, payload);
+}
+
+export function fullforAvvisningKlagebehandling(journalpostId: string, vedtakId: number): AxiosPromise<Response> {
+	const payload: FullforAvvisningRequest = {
+		journalpostId,
+		vedtakId
+	};
+
+	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/fullfor-avvisning`, payload);
+}
+
+export function hentKlagebehandling(klagebehandling: Klagebehandling): AxiosPromise<Response> {
+	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/hent-klage`, klagebehandling);
 }
