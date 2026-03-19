@@ -52,6 +52,14 @@ export interface Klagebehandling {
 	klageJournalpostid: string;
 }
 
+interface KlagebehandlingRequest {
+	vedtakId: number;
+	fnr: string;
+	veilederIdent: string;
+	klagedato: string;
+	klageJournalpostid: string;
+}
+
 function boolskTilJaNei(verdi: boolean): JaNei {
 	return verdi ? 'JA' : 'NEI';
 }
@@ -64,8 +72,26 @@ function boolskTilJaNeiEllerNull(verdi: boolean | undefined): JaNei | null {
 	return boolskTilJaNei(verdi);
 }
 
+function formatDatoSomLokalIsoDato(dato: Date): string {
+	const aar = dato.getFullYear();
+	const maaned = String(dato.getMonth() + 1).padStart(2, '0');
+	const dag = String(dato.getDate()).padStart(2, '0');
+
+	return `${aar}-${maaned}-${dag}`;
+}
+
+function tilKlagebehandlingRequest(klagebehandling: Klagebehandling): KlagebehandlingRequest {
+	return {
+		...klagebehandling,
+		klagedato: formatDatoSomLokalIsoDato(klagebehandling.klagedato)
+	};
+}
+
 export function lagreKlagebehandling(klagebehandling: Klagebehandling): AxiosPromise<Response> {
-	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/opprett-klage`, klagebehandling);
+	return axiosInstance.post(
+		`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/opprett-klage`,
+		tilKlagebehandlingRequest(klagebehandling)
+	);
 }
 
 export function lagreKlagebehandlingFormkrav(
@@ -114,5 +140,8 @@ export function fullforAvvisningKlagebehandling(journalpostId: string, vedtakId:
 }
 
 export function hentKlagebehandling(klagebehandling: Klagebehandling): AxiosPromise<Response> {
-	return axiosInstance.post(`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/hent-klage`, klagebehandling);
+	return axiosInstance.post(
+		`${VEILARBVEDTAKSSTOTTE_API}/klagebehandling/hent-klage`,
+		tilKlagebehandlingRequest(klagebehandling)
+	);
 }
