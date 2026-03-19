@@ -59,15 +59,6 @@ const fullforFeilkodeTilMelding: Record<string, string> = {
 	UKJENT_FEIL: 'Det oppstod en ukjent feil ved fullføring av klagebehandlingen.'
 };
 
-function hentTekstFeilkode(verdi: unknown): string | undefined {
-	if (typeof verdi !== 'string') {
-		return undefined;
-	}
-
-	const trimmet = verdi.trim();
-	return trimmet.length > 0 ? trimmet : undefined;
-}
-
 function hentStatusFraFeil(error: unknown): number | undefined {
 	if (!isAxiosError(error)) {
 		return undefined;
@@ -78,47 +69,12 @@ function hentStatusFraFeil(error: unknown): number | undefined {
 	return error.response?.status ?? error.status ?? requestStatus;
 }
 
-function hentFeilkode(error: unknown): string | undefined {
-	if (!isAxiosError(error)) {
-		return undefined;
-	}
-
-	const data = error.response?.data as
-		| {
-				feilkode?: string;
-				errorCode?: string;
-				code?: string;
-				status?: number;
-		  }
-		| string
-		| undefined;
-	const dataSomObjekt = typeof data === 'object' && data !== null ? data : undefined;
-
-	const feilkodeFraData =
-		hentTekstFeilkode(data) ??
-		hentTekstFeilkode(dataSomObjekt?.feilkode) ??
-		hentTekstFeilkode(dataSomObjekt?.errorCode) ??
-		hentTekstFeilkode(dataSomObjekt?.code);
-
-	if (feilkodeFraData) {
-		return feilkodeFraData;
-	}
-
-	const status = hentStatusFraFeil(error) ?? dataSomObjekt?.status;
-	if (!status) {
-		return undefined;
-	}
-
-	return FEILKODE_FRA_STATUS[status] ?? 'UKJENT_FEIL';
-}
-
 function hentMeldingFraFullforFeil(error: unknown): string {
-	const feilkode = hentFeilkode(error) || 'UKJENT_FEIL';
+	const statuskode = hentStatusFraFeil(error) ?? 500;
+	const feilkode = FEILKODE_FRA_STATUS[statuskode] ?? 'UKJENT_FEIL';
 	const melding = fullforFeilkodeTilMelding[feilkode] ?? fullforFeilkodeTilMelding.UKJENT_FEIL;
-	const statuskode = hentStatusFraFeil(error);
-	const kodeSomVises = statuskode ? String(statuskode) : feilkode;
 
-	return `${melding} Feilkode: ${kodeSomVises}.`;
+	return `${melding} Feilkode: ${statuskode}.`;
 }
 
 export function KlagebehandlingSide(props: { vedtakId: number }) {
