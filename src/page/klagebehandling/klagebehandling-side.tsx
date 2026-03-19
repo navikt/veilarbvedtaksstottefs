@@ -1,6 +1,7 @@
 import { useSkjemaStore } from '../../store/skjema-store';
 import { useDataStore } from '../../store/data-store.ts';
 import { useAppStore } from '../../store/app-store.ts';
+import { isAxiosError } from 'axios';
 
 import { useState } from 'react';
 
@@ -29,6 +30,7 @@ import PdfViewer from '../../component/pdf-viewer/pdf-viewer.tsx';
 import { lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak.ts';
 import {
 	KlagefristUnntakSvar,
+	fullforAvvisningKlagebehandling,
 	lagreKlagebehandling,
 	lagreKlagebehandlingFormkrav
 } from '../../api/veilarbvedtaksstotte/klagebehandling.ts';
@@ -37,6 +39,43 @@ import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
 import { FormkravSection, Formkrav, FormkravUtkast } from './formkrav-section/formkrav-section.tsx';
 import { journalpostIdHarRiktigFormat } from '../../api/utils.ts';
+
+const FEILKODE_FRA_STATUS: Record<number, string> = {
+	400: 'KLAGEDATO_ER_FREM_I_TID',
+	403: 'PÅKLAGET_VEDTAK_TILHØRER_IKKE_BRUKER',
+	404: 'PÅKLAGET_VEDTAK_IKKE_FUNNET',
+	409: 'ULOVLIG_NÅVÆRENDE_KLAGEBEHANDLING_TILSTAND',
+	500: 'UKJENT_FEIL'
+};
+
+const fullforFeilkodeTilMelding: Record<string, string> = {
+	KLAGEDATO_ER_FREM_I_TID: 'Klagen kan ikke fullføres fordi klagedato er frem i tid.',
+	PÅKLAGET_VEDTAK_TILHØRER_IKKE_BRUKER: 'Du har ikke tilgang til å fullføre klagebehandlingen for dette vedtaket.',
+	PAAKLAGET_VEDTAK_TILHORER_IKKE_BRUKER: 'Du har ikke tilgang til å fullføre klagebehandlingen for dette vedtaket.',
+	PÅKLAGET_VEDTAK_IKKE_FUNNET: 'Fant ikke det påklagede vedtaket.',
+	PAAKLAGET_VEDTAK_IKKE_FUNNET: 'Fant ikke det påklagede vedtaket.',
+	ULOVLIG_NÅVÆRENDE_KLAGEBEHANDLING_TILSTAND: 'Klagebehandlingen kan ikke fullføres i nåværende tilstand.',
+	ULOVLIG_NAAVAERENDE_KLAGEBEHANDLING_TILSTAND: 'Klagebehandlingen kan ikke fullføres i nåværende tilstand.',
+	UKJENT_FEIL: 'Det oppstod en ukjent feil ved fullføring av klagebehandlingen.'
+};
+
+function hentStatusFraFeil(error: unknown): number | undefined {
+	if (!isAxiosError(error)) {
+		return undefined;
+	}
+
+	const requestStatus = (error.request as { status?: number } | undefined)?.status;
+
+	return error.response?.status ?? error.status ?? requestStatus;
+}
+
+function hentMeldingFraFullforFeil(error: unknown): string {
+	const statuskode = hentStatusFraFeil(error) ?? 500;
+	const feilkode = FEILKODE_FRA_STATUS[statuskode] ?? 'UKJENT_FEIL';
+	const melding = fullforFeilkodeTilMelding[feilkode] ?? fullforFeilkodeTilMelding.UKJENT_FEIL;
+
+	return `${melding} Feilkode: ${statuskode}.`;
+}
 
 export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const [klageDato, setKlageDato] = useState<Date | undefined>();
@@ -49,6 +88,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const [harForsoktAFullfore, setHarForsoktAFullfore] = useState(false);
 	const [lagrerKlage, setLagrerKlage] = useState(false);
 	const [lagringFeilet, setLagringFeilet] = useState(false);
+	const [fullforingFeilmelding, setFullforingFeilmelding] = useState<string>();
 
 	const fnr = useAppStore().fnr;
 	const veilederIdent = useDataStore().innloggetVeileder.ident;
@@ -91,6 +131,22 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		return utforLagring(() => lagreKlagebehandlingFormkrav(props.vedtakId, formkravData));
 	};
 
+	const fullforAvvisning = async () => {
+		setLagrerKlage(true);
+		setLagringFeilet(false);
+		setFullforingFeilmelding(undefined);
+
+		try {
+			await fullforAvvisningKlagebehandling(utfallJournalpostId.replace(/\s/g, ''), props.vedtakId);
+			return true;
+		} catch (error) {
+			setFullforingFeilmelding(hentMeldingFraFullforFeil(error));
+			return false;
+		} finally {
+			setLagrerKlage(false);
+		}
+	};
+
 	const klagefristUnntakErOppfylt =
 		formkrav?.klagefristOverstyres === KlagefristUnntakSvar.JA_KLAGER_KAN_IKKE_LASTES ||
 		formkrav?.klagefristOverstyres === KlagefristUnntakSvar.JA_SAERLIGE_GRUNNER;
@@ -124,6 +180,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		setFormkravUtkast({});
 		setUtfallJournalpostId('');
 		setLagringFeilet(false);
+		setFullforingFeilmelding(undefined);
 		changeView(ViewType.HOVEDSIDE);
 	};
 
@@ -147,9 +204,21 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 				<HGrid columns={2} gap="space-16">
 					<Box padding="space-16">
 						<VStack gap="space-32">
-							<Heading level="1" size="large">
-								{stegTittel}
-							</Heading>
+							{aktivtSteg === 1 ? (
+								<HStack as="div" align="center" gap="space-2">
+									<Heading level="1" size="large">
+										{stegTittel}
+									</Heading>
+									<HelpText title="Hjelp">
+										Legg inn klage mottatt-dato og Gosys journalpostID for å starte
+										klagebehandlingen.
+									</HelpText>
+								</HStack>
+							) : (
+								<Heading level="1" size="large">
+									{stegTittel}
+								</Heading>
+							)}
 
 							{aktivtSteg === 1 && (
 								<>
@@ -157,12 +226,28 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 										<DatePicker {...datepickerProps}>
 											<DatePicker.Input
 												{...inputProps}
-												label="Klage innsendt dato"
+												label={
+													<HStack as="span" align="center" gap="space-2">
+														<span>Klage mottatt</span>
+														<HelpText title="Hjelp">
+															Datoen klagen er mottatt av Nav. Klagen kan mottas på flere
+															måter. Se servicerutinen for mer informasjon.
+														</HelpText>
+													</HStack>
+												}
 												description="Format: dd.mm.åååå"
 											/>
 										</DatePicker>
 										<TextField
-											label="Gosys journalpostId"
+											label={
+												<HStack as="span" align="center" gap="space-2">
+													<span>Gosys journalpostID</span>
+													<HelpText title="Hjelp">
+														Gå til journalposten for den journalførte klagen i Gosys. Der
+														finner du et felt med en 11-sifret journalpostID.
+													</HelpText>
+												</HStack>
+											}
 											value={journalId}
 											onChange={e => setJournalId(e.target.value)}
 											description="Format: 111 222 333 (9 siffer)"
@@ -295,10 +380,16 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 													onChange={e => {
 														setUtfallJournalpostId(e.target.value);
 														setHarForsoktAFullfore(false);
+														setFullforingFeilmelding(undefined);
 													}}
 													error={utfallJournalpostIdFeil}
 												/>
 											</Box>
+											{fullforingFeilmelding && (
+												<Alert variant="info" size="small">
+													{fullforingFeilmelding}
+												</Alert>
+											)}
 											<HStack justify="space-between" align="center" width="100%">
 												<Button variant="tertiary" onClick={() => setAktivtSteg(2)}>
 													Gå tilbake
@@ -322,8 +413,8 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 																return;
 															}
 
-															const lagret = await lagreFormkrav(formkravUtkast);
-															if (lagret) {
+															const fullfort = await fullforAvvisning();
+															if (fullfort) {
 																setVisFullfortModal(true);
 															}
 														}}
