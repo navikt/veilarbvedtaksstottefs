@@ -89,6 +89,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const [lagrerKlage, setLagrerKlage] = useState(false);
 	const [lagringFeilet, setLagringFeilet] = useState(false);
 	const [fullforingFeilmelding, setFullforingFeilmelding] = useState<string>();
+	const [startKlageFeilmelding, setStartKlageFeilmelding] = useState<string>();
 
 	const fnr = useAppStore().fnr;
 	const veilederIdent = useDataStore().innloggetVeileder.ident;
@@ -124,7 +125,24 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 			klageJournalpostid: journalId
 		};
 
-		return utforLagring(() => lagreKlagebehandling(klagebehandling));
+		setLagrerKlage(true);
+		setLagringFeilet(false);
+		setStartKlageFeilmelding(undefined);
+
+		try {
+			await lagreKlagebehandling(klagebehandling);
+			return true;
+		} catch (error) {
+			if (hentStatusFraFeil(error) === 409) {
+				setStartKlageFeilmelding('Klage innsendt dato er for tidlig.');
+			} else {
+				setLagringFeilet(true);
+			}
+
+			return false;
+		} finally {
+			setLagrerKlage(false);
+		}
 	};
 
 	const lagreFormkrav = async (formkravData: FormkravUtkast) => {
@@ -167,7 +185,11 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 
 	const { datepickerProps, inputProps } = useDatepicker({
 		fromDate: new Date(new Date().setMonth(new Date().getMonth() - 2)),
-		onDateChange: setKlageDato
+		onDateChange: nyDato => {
+			setKlageDato(nyDato);
+			setStartKlageFeilmelding(undefined);
+			setLagringFeilet(false);
+		}
 	});
 
 	const avsluttKlagebehandling = () => {
@@ -181,6 +203,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		setUtfallJournalpostId('');
 		setLagringFeilet(false);
 		setFullforingFeilmelding(undefined);
+		setStartKlageFeilmelding(undefined);
 		changeView(ViewType.HOVEDSIDE);
 	};
 
@@ -249,11 +272,16 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 												</HStack>
 											}
 											value={journalId}
-											onChange={e => setJournalId(e.target.value)}
+											onChange={e => {
+												setJournalId(e.target.value);
+												setStartKlageFeilmelding(undefined);
+												setLagringFeilet(false);
+											}}
 											description="Format: 111 222 333 (9 siffer)"
 											style={{ maxWidth: '14rem' }}
 										/>
 									</VStack>
+									{startKlageFeilmelding && <Alert variant="error">{startKlageFeilmelding}</Alert>}
 									<Button
 										loading={lagrerKlage}
 										disabled={!kanStarteKlagebehandling}
