@@ -51,7 +51,7 @@ jobs:
           gcloud storage objects update gs://${BUCKET_NAME}/obo/prod/veilarbvedtaksstottefs/dist/asset-manifest.json --cache-control="public, max-age=120, stale-while-revalidate=1800, stale-if-error=600"
 
       - name: Create release
-        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # ratchet:softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # ratchet:softprops/action-gh-release@v2
         with:
           name: Release to prod
           target_commitish: main
