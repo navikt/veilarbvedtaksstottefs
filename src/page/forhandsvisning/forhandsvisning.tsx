@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import PdfViewer, { PDFStatus } from '../../component/pdf-viewer/pdf-viewer';
+import PdfViewer from '../../component/pdf-viewer/pdf-viewer';
+import { PDFStatus } from '../../component/pdf-viewer/pdf-status';
 import Footer from '../../component/footer/footer';
 import { trengerKvalitetssikrer } from '../../util/skjema-utils';
 import { useAppStore } from '../../store/app-store';
