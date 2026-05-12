@@ -10,9 +10,9 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import './pdf-viewer.css';
 import { PDFStatus } from './pdf-status';
 
-pdfjs.GlobalWorkerOptions.workerPort = new Worker(new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url), {
-	type: 'module'
-});
+const workerUrl = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url);
+const workerBlob = new Blob([`import "${workerUrl}";`], { type: 'text/javascript' });
+pdfjs.GlobalWorkerOptions.workerPort = new Worker(URL.createObjectURL(workerBlob), { type: 'module' });
 
 interface PdfViewerProps {
 	url: string;
