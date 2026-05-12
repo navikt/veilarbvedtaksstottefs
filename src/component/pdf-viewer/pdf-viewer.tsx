@@ -8,19 +8,16 @@ import type { PDFDocumentProxy } from 'pdfjs-dist';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import './pdf-viewer.css';
+import { PDFStatus } from './pdf-status';
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
+const workerUrl = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url);
+const workerBlob = new Blob([`import "${workerUrl}";`], { type: 'text/javascript' });
+pdfjs.GlobalWorkerOptions.workerPort = new Worker(URL.createObjectURL(workerBlob), { type: 'module' });
+
 interface PdfViewerProps {
 	url: string;
 	title: string;
 	onStatusUpdate: (pdfStatus: PDFStatus) => void;
-}
-
-export enum PDFStatus {
-	NOT_STARTED = 'NOT_STARTED',
-	LOADING = 'LOADING',
-	SUCCESS = 'SUCCESS',
-	ERROR = 'ERROR'
 }
 
 const PdfError = () => <div className="pdfvisning__feedback-container" />;
