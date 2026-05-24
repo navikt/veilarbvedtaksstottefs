@@ -39,7 +39,7 @@ jobs:
           PUBLIC_URL: https://veilarbvedtaksstottefs.intern.dev.nav.no
 
       - name: Upload to Nav CDN
-        uses: nais/deploy/actions/cdn-upload/v2@fa754451577294aae42872a69b888b3470478ec1 # ratchet:nais/deploy/actions/cdn-upload/v2@master
+        uses: nais/deploy/actions/cdn-upload/v2@a7f8690f9b367fcbf5348a0a1e21d44f1aae50eb # ratchet:nais/deploy/actions/cdn-upload/v2@master
         with:
           team: obo
           source: ./dist
