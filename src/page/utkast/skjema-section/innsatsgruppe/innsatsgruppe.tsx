@@ -9,7 +9,7 @@ import { useDataStore } from '../../../../store/data-store';
 import { erStandard, erVarigEllerGradertVarig, innsatsgruppeTekst } from '../../../../util/innsatsgruppe';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { useDialogSection } from '../../../../store/dialog-section-store';
-import { Alert, Link, Radio, RadioGroup } from '@navikt/ds-react';
+import { Alert, InfoCard, Link, List, Radio, RadioGroup } from '@navikt/ds-react';
 import './innsatsgruppe.css';
 import { Fragment } from 'react';
 
@@ -107,16 +107,38 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 
 function AapVarsel() {
 	return (
-		<Alert variant="warning" size="small" className="innsatsgruppe__aapvarsel">
-			Hvis brukeren skal ha AAP etter § 11-18, må du huske å sende Gosys-oppgave til Nav arbeid og ytelser, se{' '}
-			<Link
-				href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				servicerutine på Navet
-			</Link>
-			.
-		</Alert>
+		<InfoCard data-color="info" size="small">
+			<InfoCard.Header>
+				<InfoCard.Title>
+					Gjør dette når bruker skal ha AAP under vurdering for uføretrygd (§ 11-18):
+				</InfoCard.Title>
+			</InfoCard.Header>
+			<InfoCard.Content>
+				<List size="small">
+					<List.Item>
+						<strong>Arena-sak:</strong> Send Gosys-oppgave til Nav arbeid og ytelser, se{' '}
+						<Link
+							href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							servicerutine på Navet
+						</Link>
+						.
+					</List.Item>
+					<List.Item>
+						<strong>Kelvin-sak:</strong> Opprett revurderingsoppgave, se{' '}
+						<Link
+							href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsavklaringspenger/SitePages/Vurdering-for-uf%C3%B8retrygd.aspx"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Kelvinrutine på Navet
+						</Link>
+						.
+					</List.Item>
+				</List>
+			</InfoCard.Content>
+		</InfoCard>
 	);
 }
