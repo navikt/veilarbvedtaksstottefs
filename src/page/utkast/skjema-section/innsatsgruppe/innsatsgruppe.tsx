@@ -107,7 +107,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 
 function AapVarsel() {
 	return (
-		<InfoCard data-color="info" size="small">
+		<InfoCard data-color="info">
 			<InfoCard.Header>
 				<InfoCard.Title>
 					Gjør dette når bruker skal ha AAP under vurdering for uføretrygd (§ 11-18):
