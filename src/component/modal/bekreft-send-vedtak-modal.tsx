@@ -2,12 +2,13 @@ import { VarselModal } from './varsel-modal/varsel-modal';
 import { ModalProps } from './modal-props';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { useDataStore } from '../../store/data-store';
-import { BodyShort, Button, CopyButton, Heading, InfoCard, Link, List, Modal } from '@navikt/ds-react';
+import { BodyShort, Button, CopyButton, Heading, Modal } from '@navikt/ds-react';
 import { useAppStore } from '../../store/app-store';
 import './modal.css';
 import { formateStringInUpperAndLowerCase } from '../../util/tekst-utils';
 import { InnsatsgruppeType } from '../../api/veilarbvedtaksstotte';
 import { useSkjemaStore } from '../../store/skjema-store.ts';
+import AAPvarsel from '../AAP-varsel/AAP-varsel.tsx';
 
 interface VedtakSendtModalProps extends ModalProps {
 	onSendVedtakBekreftet: () => void;
@@ -48,41 +49,7 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 			</Modal.Header>
 			<Modal.Body className="bekreft-send-vedtak-modal-body">
 				<BodyShort>Vedtaksbrevet blir sendt til bruker.</BodyShort>
-				{erVarigInnsats && (
-					<InfoCard data-color="info">
-						<InfoCard.Header>
-							<InfoCard.Title>
-								Gjør dette når bruker skal ha AAP under vurdering for uføretrygd (§ 11-18):
-							</InfoCard.Title>
-						</InfoCard.Header>
-						<InfoCard.Content>
-							<List size="small">
-								<List.Item>
-									<strong>Arena-sak:</strong> Send Gosys-oppgave til Nav arbeid og ytelser, se{' '}
-									<Link
-										href="https://navno.sharepoint.com/sites/fag-og-ytelser-regelverk-og-rutiner/SitePages/Arbeidsevnen%20avklart%20mot%20varig%20tilpasset%20innsats.aspx?web=1"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										servicerutine på Navet
-									</Link>
-									.
-								</List.Item>
-								<List.Item>
-									<strong>Kelvin-sak:</strong> Opprett revurderingsoppgave, se{' '}
-									<Link
-										href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-arbeidsavklaringspenger/SitePages/Vurdering-for-uf%C3%B8retrygd.aspx"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										Kelvinrutine på Navet
-									</Link>
-									.
-								</List.Item>
-							</List>
-						</InfoCard.Content>
-					</InfoCard>
-				)}
+				{erVarigInnsats && AAPvarsel()}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button size="small" onClick={props.onSendVedtakBekreftet} loading={modalType === ModalType.LASTER}>
