@@ -1,4 +1,4 @@
-.veilarbvedtaksstottefs .innsatsgruppe__alertstripe {
+.veilarbvedtaksstottefs.innsatsgruppe__alertstripe {
 	margin: 1rem 0;
 	animation: linear 0.25s info-fade-in;
 }
@@ -11,7 +11,7 @@
 		opacity: 1;
 	}
 }
-.innsatsgruppe__aapvarsel {
-    margin-bottom: var(--ax-space-8);
-    margin-left: var(--ax-space-28);
+
+.veilarbvedtaksstottefs .AAPvarsel--formattering {
+	margin: 0 0 0.5rem 1.75rem;
 }
