@@ -12,7 +12,7 @@ import { useDialogSection } from '../../../../store/dialog-section-store';
 import { Alert, Radio, RadioGroup } from '@navikt/ds-react';
 import './innsatsgruppe.css';
 import { Fragment } from 'react';
-import AAPvarsel from '../../../../component/AAP-varsel/AAP-varsel.tsx';
+import { AAPvarsel } from '../../../../component/AAP-varsel/AAP-varsel.tsx';
 
 function Innsatsgruppe() {
 	const { innsatsgruppe, begrunnelse, setInnsatsgruppe, setHovedmal } = useSkjemaStore();
@@ -98,7 +98,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 							{innsatsgruppeTekst[innsatsgruppetype]}
 						</Radio>
 
-						{skalViseAapVarsel && AAPvarsel()}
+						{skalViseAapVarsel && AAPvarsel('AAPvarsel--formattering')}
 					</Fragment>
 				);
 			})}

@@ -8,7 +8,7 @@ import './modal.css';
 import { formateStringInUpperAndLowerCase } from '../../util/tekst-utils';
 import { InnsatsgruppeType } from '../../api/veilarbvedtaksstotte';
 import { useSkjemaStore } from '../../store/skjema-store.ts';
-import AAPvarsel from '../AAP-varsel/AAP-varsel.tsx';
+import { AAPvarsel } from '../AAP-varsel/AAP-varsel.tsx';
 
 interface VedtakSendtModalProps extends ModalProps {
 	onSendVedtakBekreftet: () => void;
@@ -48,7 +48,7 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 				</div>
 			</Modal.Header>
 			<Modal.Body className="bekreft-send-vedtak-modal-body">
-				<BodyShort>Vedtaksbrevet blir sendt til bruker.</BodyShort>
+				<BodyShort spacing>Vedtaksbrevet blir sendt til bruker.</BodyShort>
 				{erVarigInnsats && AAPvarsel()}
 			</Modal.Body>
 			<Modal.Footer>
