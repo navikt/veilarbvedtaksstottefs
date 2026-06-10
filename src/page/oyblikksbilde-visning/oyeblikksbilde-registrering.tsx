@@ -1,4 +1,4 @@
-import { useEffect, type JSX } from 'react';
+import { type JSX, useEffect } from 'react';
 import Spinner from '../../component/spinner/spinner';
 import Card from '../../component/card/card';
 import OyeblikksbildeType from '../../util/type/oyblikksbilde-type';
@@ -8,7 +8,6 @@ import {
 	hentRegistreringOyblikksbilde
 } from '../../api/veilarbvedtaksstotte/vedtak';
 import { logMetrikk } from '../../util/logger';
-import { useViewStore, ViewType } from '../../store/view-store';
 import {
 	andreForholdLabel,
 	dinSituasjonLabel,
@@ -30,6 +29,8 @@ import { lagHentTekstForSprak, SPORSMAL_TEKSTER, SporsmalId } from '@navikt/arbe
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import { Alert, Button, Heading } from '@navikt/ds-react';
 import { IkkeKontaktMedBaksystemFeilmelding } from '../../component/feilmelding/ikke-kontakt-med-baksystem-feilmelding';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Element {
 	const registreringOyeblikksbildeFetcher = useAxiosFetcher(hentRegistreringOyblikksbilde);
@@ -49,6 +50,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 	} else if (arbeidssokerRegistretOyeblikksbildeFetcher.data?.data) {
 		try {
 			return (
+				// eslint-disable-next-line react-hooks/error-boundaries
 				<OyeblikksdataArbeidssokerInnhold
 					data={arbeidssokerRegistretOyeblikksbildeFetcher.data.data}
 					erJournalfort={arbeidssokerRegistretOyeblikksbildeFetcher.data.journalfort}
@@ -61,6 +63,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 	} else if (registreringOyeblikksbildeFetcher.data?.data) {
 		try {
 			return (
+				// eslint-disable-next-line react-hooks/error-boundaries
 				<OyeblikksdataRegistreringInnhold
 					data={registreringOyeblikksbildeFetcher.data.data}
 					erJournalfort={registreringOyeblikksbildeFetcher.data.journalfort}
@@ -80,10 +83,10 @@ function OyeblikksdataRegistreringInnhold(props: {
 	erJournalfort: boolean;
 	vedtakId: number;
 }) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
-		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
+		navigate(routes.oyeblikksbildePdf(vedtakId, oyeblikksbildeType));
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
 	};
 	const data = props.data?.registrering;
@@ -229,10 +232,10 @@ function OyeblikksdataArbeidssokerInnhold(props: {
 	erJournalfort: boolean;
 	vedtakId: number;
 }) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
-		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
+		navigate(routes.oyeblikksbildePdf(vedtakId, oyeblikksbildeType));
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
 	};
 

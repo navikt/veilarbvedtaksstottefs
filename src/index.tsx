@@ -6,6 +6,10 @@ import * as dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import { enhetId, fnr } from './mock/data';
 
+if (window.location.hash === '#visUtkast') {
+	window.location.hash = '#/utkast';
+}
+
 dayjs.locale('nb');
 
 if (env.isDemo) {
