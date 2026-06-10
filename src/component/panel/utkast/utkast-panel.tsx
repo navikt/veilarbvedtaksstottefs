@@ -2,7 +2,6 @@ import { OrNothing } from '../../../util/type/ornothing';
 import utkastIkon from './utkast.svg';
 import utkastTilBeslutterIkon from './utkast-til-beslutter.svg';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
-import { useViewStore, ViewType } from '../../../store/view-store';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
 import {
@@ -16,9 +15,11 @@ import { Utkast } from '../../../api/veilarbvedtaksstotte';
 import { formatDateTime } from '../../../util/date-utils';
 import { Button, Detail } from '@navikt/ds-react';
 import './utkast-panel.css';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../../routes.ts';
 
 export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 	const { kanEndreUtkast } = useTilgangStore();
 	const { sistOppdatert } = useSkjemaStore();
 
@@ -64,7 +65,7 @@ export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 				</>
 			}
 			knappKomponent={
-				<Button size="small" onClick={() => changeView(ViewType.UTKAST)}>
+				<Button size="small" onClick={() => navigate(routes.utkast)}>
 					{kanEndreUtkast ? 'Fortsett' : 'Åpne'}
 				</Button>
 			}
