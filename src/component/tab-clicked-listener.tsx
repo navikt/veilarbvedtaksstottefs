@@ -1,12 +1,13 @@
 import { useEventListener } from '../util/hooks';
-import { useViewStore, ViewType } from '../store/view-store';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../routes.ts';
 
 export const TabClickedListener = () => {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	useEventListener('veilarbpersonflatefs.tab-clicked', event => {
 		if (event instanceof CustomEvent && event.detail.tabId === 'VEDTAKSSTOTTE') {
-			changeView(ViewType.HOVEDSIDE);
+			navigate(routes.hovedside);
 		}
 	});
 

@@ -1,9 +1,9 @@
 import { VarselModal } from '../varsel-modal/varsel-modal';
 import { ModalProps } from '../modal-props';
 import { useModalStore } from '../../../store/modal-store';
-import { useViewStore } from '../../../store/view-store';
 import { FeilModalConfig } from './feil-modal-config';
 import { Button, Heading, Modal } from '@navikt/ds-react';
+import { useNavigate } from 'react-router-dom';
 
 interface FeilmodalProps extends ModalProps {
 	config: FeilModalConfig;
@@ -12,14 +12,14 @@ interface FeilmodalProps extends ModalProps {
 export function FeilModal(props: FeilmodalProps) {
 	const {
 		isOpen,
-		config: { tittel, beskrivelse, viewAction, knappeTekst }
+		config: { tittel, beskrivelse, route, knappeTekst }
 	} = props;
 	const { resetModalType } = useModalStore();
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	function handleRequestClose() {
-		if (viewAction) {
-			changeView(viewAction);
+		if (route) {
+			navigate(route);
 		}
 		resetModalType();
 	}
