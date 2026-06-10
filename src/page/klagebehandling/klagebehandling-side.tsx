@@ -12,10 +12,10 @@ import {
 	Button,
 	CopyButton,
 	DatePicker,
-	HGrid,
-	HStack,
 	Heading,
 	HelpText,
+	HGrid,
+	HStack,
 	List,
 	Modal,
 	Page,
@@ -29,16 +29,17 @@ import { KlageHeader } from './klage-header-section/klage-header-section.tsx';
 import PdfViewer from '../../component/pdf-viewer/pdf-viewer.tsx';
 import { lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak.ts';
 import {
-	KlagefristUnntakSvar,
 	fullforAvvisningKlagebehandling,
+	KlagefristUnntakSvar,
 	lagreKlagebehandling,
 	lagreKlagebehandlingFormkrav
 } from '../../api/veilarbvedtaksstotte/klagebehandling.ts';
 import { CheckmarkCircleIcon, ChevronLeftIcon } from '@navikt/aksel-icons';
-import { useViewStore, ViewType } from '../../store/view-store.ts';
 import Footer from '../../component/footer/footer.tsx';
-import { FormkravSection, Formkrav, FormkravUtkast } from './formkrav-section/formkrav-section.tsx';
+import { Formkrav, FormkravSection, FormkravUtkast } from './formkrav-section/formkrav-section.tsx';
 import { journalpostIdHarRiktigFormat } from '../../api/utils.ts';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 const FEILKODE_FRA_STATUS: Record<number, string> = {
 	400: 'KLAGEDATO_ER_FREM_I_TID',
@@ -95,7 +96,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const veilederIdent = useDataStore().innloggetVeileder.ident;
 	const gjeldendeVedtak = useDataStore().fattedeVedtak.find(v => v.gjeldende);
 	const { sistOppdatert, lagringStatus } = useSkjemaStore();
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	const utforLagring = async (lagreFn: () => Promise<unknown>) => {
 		setLagrerKlage(true);
@@ -204,7 +205,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 		setLagringFeilet(false);
 		setFullforingFeilmelding(undefined);
 		setStartKlageFeilmelding(undefined);
-		changeView(ViewType.HOVEDSIDE);
+		navigate(routes.hovedside);
 	};
 
 	const stegTittel =
@@ -304,7 +305,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 								<VStack gap="space-32">
 									<FormkravSection onChange={setFormkrav} onDraftChange={setFormkravUtkast} />
 									<HStack justify="space-between" align="center" width="100%">
-										<Button variant="tertiary" onClick={() => changeView(ViewType.HOVEDSIDE)}>
+										<Button variant="tertiary" onClick={() => navigate(routes.hovedside)}>
 											Avbryt klagebehandling
 										</Button>
 										<HStack gap="space-6" justify="end">
@@ -496,7 +497,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 					size="small"
 					variant="tertiary"
 					icon={<ChevronLeftIcon />}
-					onClick={() => changeView(ViewType.HOVEDSIDE)}
+					onClick={() => navigate(routes.hovedside)}
 				>
 					Tilbake
 				</Button>
