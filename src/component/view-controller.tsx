@@ -8,6 +8,7 @@ import { OyeblikksbildeVisningPDF } from '../page/oyblikksbilde-visning/oyeblikk
 import { Oyeblikksbilde } from '../page/oyblikksbilde-visning/oyeblikksbilde-visning';
 import { KlagebehandlingSide } from '../page/klagebehandling/klagebehandling-side.tsx';
 import { routePatterns } from '../routes.ts';
+import { hasHashParam } from '../util';
 
 function VedtakRoute() {
 	const { vedtakId } = useParams();
@@ -39,6 +40,11 @@ function KlagebehandlingRoute() {
 	return <KlagebehandlingSide vedtakId={Number(vedtakId)} />;
 }
 
+function FallbackRedirect() {
+	const target = hasHashParam('visUtkast') ? routePatterns.utkast : '/';
+	return <Navigate to={target} replace />;
+}
+
 export function ViewController() {
 	return (
 		<Routes>
@@ -51,7 +57,7 @@ export function ViewController() {
 			<Route path={routePatterns.oyeblikksbildePdf} element={<OyeblikksbildePdfRoute />} />
 			<Route path={routePatterns.klagebehandling} element={<KlagebehandlingRoute />} />
 			<Route path={routePatterns.arenaVedtakPdf} element={<ArenaVedtakPdfRoute />} />
-			<Route path="*" element={<Navigate to="/" replace />} />
+			<Route path="*" element={<FallbackRedirect />} />
 		</Routes>
 	);
 }
