@@ -22,7 +22,10 @@ function VedtakPdfRoute() {
 
 function ArenaVedtakPdfRoute() {
 	const { dokumentInfoId, journalpostId } = useParams();
-	return <ArenaVedtaksbrevVisning dokumentInfoId={dokumentInfoId!} journalpostId={journalpostId!} />;
+	if (!dokumentInfoId || !journalpostId) {
+		return FallbackRedirect();
+	}
+	return <ArenaVedtaksbrevVisning dokumentInfoId={dokumentInfoId} journalpostId={journalpostId} />;
 }
 
 function OyeblikksbildeRoute() {
@@ -32,7 +35,10 @@ function OyeblikksbildeRoute() {
 
 function OyeblikksbildePdfRoute() {
 	const { vedtakId, oyeblikksbildeType } = useParams();
-	return <OyeblikksbildeVisningPDF vedtakId={Number(vedtakId)} oyeblikksbildeType={oyeblikksbildeType!} />;
+	if (!oyeblikksbildeType) {
+		return FallbackRedirect();
+	}
+	return <OyeblikksbildeVisningPDF vedtakId={Number(vedtakId)} oyeblikksbildeType={oyeblikksbildeType} />;
 }
 
 function KlagebehandlingRoute() {
