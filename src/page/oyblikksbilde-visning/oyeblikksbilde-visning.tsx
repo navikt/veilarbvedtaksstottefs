@@ -1,6 +1,5 @@
 import Page from '../../component/page/page';
 import Footer from '../../component/footer/footer';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { useDataStore } from '../../store/data-store';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { OyeblikksbildeCv } from './oyeblikksbilde-cv';
@@ -8,9 +7,11 @@ import { OyeblikksbildeRegistrering } from './oyeblikksbilde-registrering';
 import { OyeblikksbildeEgenvurdering } from './oyeblikksbilde-egenvurdering';
 import { Button, Heading, VStack } from '@navikt/ds-react';
 import './oyeblikksbilde-visning.css';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 export function Oyeblikksbilde(props: { vedtakId: number }) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 	const { fattedeVedtak } = useDataStore();
 	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 
@@ -35,7 +36,7 @@ export function Oyeblikksbilde(props: { vedtakId: number }) {
 				</VStack>
 			</Page>
 			<Footer className="oyblikksbilde-visning__footer">
-				<Button size="small" onClick={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}>
+				<Button size="small" onClick={() => navigate(routes.vedtak(props.vedtakId))}>
 					Tilbake til vedtak
 				</Button>
 			</Footer>

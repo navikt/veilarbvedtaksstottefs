@@ -4,7 +4,6 @@ import { PDFStatus } from '../../component/pdf-viewer/pdf-status';
 import Footer from '../../component/footer/footer';
 import { trengerKvalitetssikrer } from '../../util/skjema-utils';
 import { useAppStore } from '../../store/app-store';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { useSkjemaStore } from '../../store/skjema-store';
 import { erGodkjentAvBeslutter } from '../../util';
@@ -20,10 +19,12 @@ import { Alert, Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import './forhandsvisning.css';
 import SpinnerModal from '../../component/modal/spinner-modal/spinner-modal';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 	const { utkast, setUtkast, setFattedeVedtak, oppfolgingData } = useDataStore();
 	const { showModal, resetModalType, modalType } = useModalStore();
 	const { showVarsel } = useVarselStore();
@@ -46,7 +47,7 @@ export function Forhandsvisning() {
 		!erGodkjentAvBeslutter(utkast?.beslutterProsessStatus);
 
 	const tilbakeTilSkjema = () => {
-		changeView(ViewType.UTKAST);
+		navigate(routes.utkast);
 		logMetrikk('tilbake-fra-forhandsvisning');
 	};
 
@@ -78,7 +79,7 @@ export function Forhandsvisning() {
 						.finally(() => {
 							resetSkjema();
 							resetModalType();
-							changeView(ViewType.HOVEDSIDE);
+							navigate(routes.hovedside);
 							showVarsel(VarselType.VEDTAK_SENT_SUKSESS);
 							setUtkast(null);
 						})

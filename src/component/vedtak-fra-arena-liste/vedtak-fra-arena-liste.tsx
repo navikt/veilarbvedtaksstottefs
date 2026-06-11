@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';
 import { OnVedtakClicked, VedtaklistePanel } from '../vedtakliste-panel/vedtakliste-panel';
 import { VedtakListe } from '../vedtak-liste/vedtak-liste';
@@ -7,6 +6,8 @@ import { ArenaVedtak } from '../../api/veilarbvedtaksstotte/vedtak';
 import { logMetrikk } from '../../util/logger';
 import { BodyShort } from '@navikt/ds-react';
 import { PdfSvg } from './PdfSvg.tsx';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<ArenaVedtak>, posisjon: number) {
 	return (
@@ -26,17 +27,14 @@ function mapArenaVedtakTilPanel(vedtak: ArenaVedtak, onClick: OnVedtakClicked<Ar
 }
 
 export function VedtakFraArenaListe({ vedtakListe }: { vedtakListe: ArenaVedtak[] }) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	const arenaVedtak = useMemo(() => {
 		return [...vedtakListe].sort((v1, v2) => sortDatesDesc(v1.dato, v2.dato));
 	}, [vedtakListe]);
 
 	function handleTidligereVedtakClicked(vedtakData: ArenaVedtak, idx: number) {
-		changeView(ViewType.ARENA_VEDTAK_PDF, {
-			journalpostId: vedtakData.journalpostId,
-			dokumentInfoId: vedtakData.dokumentInfoId
-		});
+		navigate(routes.arenaVedtakPdf(vedtakData.journalpostId, vedtakData.dokumentInfoId));
 		logMetrikk('vis-arena-vedtak', { index: idx });
 	}
 

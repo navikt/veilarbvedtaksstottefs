@@ -1,17 +1,19 @@
 import { VarselModal } from './varsel-modal/varsel-modal';
 import { ModalProps } from './modal-props';
 import { ModalType, useModalStore } from '../../store/modal-store';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { useSkjemaStore } from '../../store/skjema-store';
 import { useDataStore } from '../../store/data-store';
 import { hentId } from '../../util';
 import { slettUtkast } from '../../api/veilarbvedtaksstotte/utkast';
 import { Button, Heading, Modal } from '@navikt/ds-react';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 function SlettUtkastModal(props: ModalProps) {
 	const { resetModalType, showModal } = useModalStore();
 	const { utkast, setUtkast } = useDataStore();
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
+
 	const { resetSkjema } = useSkjemaStore();
 
 	function handleOnDeleteClicked() {
@@ -20,7 +22,7 @@ function SlettUtkastModal(props: ModalProps) {
 			.then(() => {
 				resetSkjema();
 				resetModalType();
-				changeView(ViewType.HOVEDSIDE);
+				navigate(routes.hovedside);
 				setUtkast(null);
 			})
 			.catch(() => {

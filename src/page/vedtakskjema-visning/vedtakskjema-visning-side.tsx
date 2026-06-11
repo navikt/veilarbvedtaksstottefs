@@ -1,17 +1,18 @@
 import Page from '../../component/page/page';
 import Footer from '../../component/footer/footer';
 import { SkjemaVisning } from '../../component/skjema-visning/skjema-visning';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { useDataStore } from '../../store/data-store';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import { Alert, Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import './vedtakskjema-visning-side.css';
 import { VIS_KLAGE_TOGGLE } from '../../api/obo-unleash.ts';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 	const { fattedeVedtak, features } = useDataStore();
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 	const vistVedtak = fattedeVedtak.find((v: Vedtak) => v.id === props.vedtakId);
 	const visKlage = features[VIS_KLAGE_TOGGLE];
 
@@ -29,32 +30,22 @@ export function VedtakskjemaVisningSide(props: { vedtakId: number }) {
 					size="small"
 					variant="tertiary"
 					icon={<ChevronLeftIcon />}
-					onClick={() => changeView(ViewType.HOVEDSIDE)}
+					onClick={() => navigate(routes.hovedside)}
 				>
 					Tilbake
 				</Button>
-				<Button
-					size="small"
-					onClick={() =>
-						changeView(ViewType.VEDTAK_PDF, {
-							vedtakId: vistVedtak.id
-						})
-					}
-				>
+				<Button size="small" onClick={() => navigate(routes.vedtakPdf(vistVedtak.id))}>
 					Vis vedtaksbrev
 				</Button>
-				{ visKlage &&
-				<Button
-					size="small"
-					variant="tertiary"
-					onClick={() =>
-						changeView(ViewType.KLAGEBEHANDLING, {
-							vedtakId: vistVedtak.id
-						})
-					}
-				>
-					Til klagebehandling
-				</Button> }
+				{visKlage && (
+					<Button
+						size="small"
+						variant="tertiary"
+						onClick={() => navigate(routes.klagebehandling(vistVedtak.id))}
+					>
+						Til klagebehandling
+					</Button>
+				)}
 			</Footer>
 		</>
 	);

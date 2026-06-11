@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { harFeil, hentMalformFraData, scrollTilForsteFeil, SkjemaData } from '../../../util/skjema-utils';
 import { useSkjemaStore } from '../../../store/skjema-store';
-import { useViewStore, ViewType } from '../../../store/view-store';
 import { useDataStore } from '../../../store/data-store';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { Utkast } from '../../../api/veilarbvedtaksstotte';
@@ -10,6 +9,8 @@ import { erKlarTilVeileder, finnGjeldendeVedtak } from '../../../util';
 import { oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 import { Button } from '@navikt/ds-react';
 import { ChevronLeftIcon, PersonPencilIcon, TrashIcon } from '@navikt/aksel-icons';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../../routes.ts';
 
 interface UtkastAksjonerProps {
 	vedtakskjema: SkjemaData;
@@ -18,7 +19,7 @@ interface UtkastAksjonerProps {
 function UtkastInnhold(props: UtkastAksjonerProps) {
 	const { erAnsvarligVeileder } = useTilgangStore();
 	const { malform, fattedeVedtak, utkast, innloggetVeileder } = useDataStore();
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 	const { showModal } = useModalStore();
 	const { validerSkjema, setHarForsoktAForhandsvise } = useSkjemaStore();
 	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
@@ -51,10 +52,10 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 		if (erAnsvarligVeileder) {
 			setLaster(true);
 			sendDataTilBackend()
-				.then(() => changeView(ViewType.FORHANDSVISNING))
+				.then(() => navigate(routes.forhandsvisning))
 				.catch();
 		} else {
-			changeView(ViewType.FORHANDSVISNING);
+			navigate(routes.forhandsvisning);
 		}
 	}
 
@@ -62,10 +63,10 @@ function UtkastInnhold(props: UtkastAksjonerProps) {
 		if (erAnsvarligVeileder) {
 			setLaster(true);
 			sendDataTilBackend()
-				.then(() => changeView(ViewType.HOVEDSIDE))
+				.then(() => navigate(routes.hovedside))
 				.catch();
 		} else {
-			changeView(ViewType.HOVEDSIDE);
+			navigate(routes.hovedside);
 		}
 	}
 
