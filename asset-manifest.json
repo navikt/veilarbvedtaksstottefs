@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/index-krZdJ7rC.js",
+    "file": "assets/index-cvFD0TeW.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -34,7 +34,7 @@
     "src": "src/component/panel/utkast/utkast.svg"
   },
   "src/mock/index.ts": {
-    "file": "assets/mock-D-WjzxcB.js",
+    "file": "assets/mock-C1YwTuXy.js",
     "name": "mock",
     "src": "src/mock/index.ts",
     "isDynamicEntry": true,
