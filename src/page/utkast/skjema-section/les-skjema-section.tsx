@@ -3,7 +3,6 @@ import { BodyLong, BodyShort, List } from '@navikt/ds-react';
 import { VarselType } from '../../../component/varsel/varsel-type';
 import FeltHeader from './felt-header/felt-header';
 import { useAppStore } from '../../../store/app-store';
-import { useViewStore, ViewType } from '../../../store/view-store';
 import { useDataStore } from '../../../store/data-store';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
@@ -17,49 +16,20 @@ import { getHovedmalNavnEllerEmdash } from '../../../util/hovedmal';
 import { standardForArbeidsrettetOppfolgingsLenke } from '../../../util/constants';
 import './skjema-section.less';
 import { malformToTekst } from '../../../util/malformToTekst';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../../routes.ts';
 
 const TEN_SECONDS = 10000;
 
 export function LesSkjemaSection() {
 	const { fnr } = useAppStore();
 	const { utkast, setUtkast, setFattedeVedtak } = useDataStore();
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 	const { erBeslutter } = useTilgangStore();
 	const { initSkjema } = useSkjemaStore();
 	const { showVarsel } = useVarselStore();
 	const refreshUtkastIntervalRef = useRef<number>(undefined);
 	const { malform } = useDataStore();
-
-	useEffect(() => {
-		/*
-			Hvis beslutterprosessen har startet og innlogget bruker er beslutter så skal vi periodisk hente
-			det nyeste utkastet slik at man ikke må refreshe manuelt når ansvarlig veileder gjør en endring
-		 */
-		if (utkast && utkast.beslutterProsessStatus != null && erBeslutter) {
-			refreshUtkastIntervalRef.current = window.setInterval(() => {
-				fetchUtkast(fnr)
-					.then(response => {
-						if (response.data) {
-							if (erVedtakSkjemafeltEndret(utkast, response.data)) {
-								showVarsel(VarselType.UTKAST_OPPDATERT);
-							}
-							varsleBeslutterProsessStatusEndring(response.data.beslutterProsessStatus);
-							setUtkast(response.data);
-							initSkjema(response.data);
-						}
-					})
-					.catch();
-			}, TEN_SECONDS);
-		}
-
-		return () => {
-			if (refreshUtkastIntervalRef.current) {
-				clearInterval(refreshUtkastIntervalRef.current);
-				refreshUtkastIntervalRef.current = undefined;
-			}
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [utkast, erBeslutter]);
 
 	function isArrayEqual(a: string[], b: string[]) {
 		if (a === b) return true;
@@ -91,6 +61,36 @@ export function LesSkjemaSection() {
 		}
 	}
 
+	useEffect(() => {
+		/*
+			Hvis beslutterprosessen har startet og innlogget bruker er beslutter så skal vi periodisk hente
+			det nyeste utkastet slik at man ikke må refreshe manuelt når ansvarlig veileder gjør en endring
+		 */
+		if (utkast && utkast.beslutterProsessStatus != null && erBeslutter) {
+			refreshUtkastIntervalRef.current = window.setInterval(() => {
+				fetchUtkast(fnr)
+					.then(response => {
+						if (response.data) {
+							if (erVedtakSkjemafeltEndret(utkast, response.data)) {
+								showVarsel(VarselType.UTKAST_OPPDATERT);
+							}
+							varsleBeslutterProsessStatusEndring(response.data.beslutterProsessStatus);
+							setUtkast(response.data);
+							initSkjema(response.data);
+						}
+					})
+					.catch();
+			}, TEN_SECONDS);
+		}
+
+		return () => {
+			if (refreshUtkastIntervalRef.current) {
+				clearInterval(refreshUtkastIntervalRef.current);
+				refreshUtkastIntervalRef.current = undefined;
+			}
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [utkast, erBeslutter]);
 	// Utkast kan bli satt til null hvis man er beslutter og veileder fatter et vedtak
 	if (utkast == null) {
 		hentFattedeVedtak(fnr)
@@ -98,7 +98,7 @@ export function LesSkjemaSection() {
 				if (response.data) {
 					setFattedeVedtak(response.data);
 				}
-				changeView(ViewType.HOVEDSIDE);
+				navigate(routes.hovedside);
 			})
 			.catch();
 		return null;

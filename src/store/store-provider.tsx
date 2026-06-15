@@ -1,7 +1,6 @@
 import React from 'react';
 import { AppStoreProvider } from './app-store';
 import { DataStoreProvider } from './data-store';
-import { ViewStoreProvider } from './view-store';
 import { ModalStoreProvider } from './modal-store';
 import { SkjemaStoreProvider } from './skjema-store';
 import { TilgangStoreProvider } from './tilgang-store';
@@ -19,15 +18,13 @@ const StoreProvider = (props: StoreProviderProps) => {
 		<AppStoreProvider fnr={props.fnr} enhetId={props.enhetId}>
 			<DataStoreProvider>
 				<TilgangStoreProvider>
-					<ViewStoreProvider>
-						<ModalStoreProvider>
-							<VarselStoreProvider>
-								<DialogSectionProvider>
-									<SkjemaStoreProvider>{props.children}</SkjemaStoreProvider>
-								</DialogSectionProvider>
-							</VarselStoreProvider>
-						</ModalStoreProvider>
-					</ViewStoreProvider>
+					<ModalStoreProvider>
+						<VarselStoreProvider>
+							<DialogSectionProvider>
+								<SkjemaStoreProvider>{props.children}</SkjemaStoreProvider>
+							</DialogSectionProvider>
+						</VarselStoreProvider>
+					</ModalStoreProvider>
 				</TilgangStoreProvider>
 			</DataStoreProvider>
 		</AppStoreProvider>

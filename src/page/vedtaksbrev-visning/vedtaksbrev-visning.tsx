@@ -2,20 +2,21 @@ import { useEffect, useState } from 'react';
 import PdfViewer from '../../component/pdf-viewer/pdf-viewer';
 import { PDFStatus } from '../../component/pdf-viewer/pdf-status';
 import Footer from '../../component/footer/footer';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { logMetrikk } from '../../util/logger';
 import { lagHentArenaVedtakPdfUrl, lagHentVedtakPdfUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import './vedtaksbrev-visning.css';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 interface VedtaksbrevVisningProps {
 	vedtakId: number;
 }
 
 export function VedtaksbrevVisning(props: VedtaksbrevVisningProps) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	const vedtaksbrevUrl = lagHentVedtakPdfUrl(props.vedtakId);
 
@@ -23,7 +24,7 @@ export function VedtaksbrevVisning(props: VedtaksbrevVisningProps) {
 		<GenericVedtaksbrevVisning
 			vedtaksbrevUrl={vedtaksbrevUrl}
 			tilbakeTekst="Tilbake  til vedtak"
-			handleOnTilbakeClicked={() => changeView(ViewType.VEDTAK, { vedtakId: props.vedtakId })}
+			handleOnTilbakeClicked={() => navigate(routes.vedtak(props.vedtakId))}
 		/>
 	);
 }
@@ -34,15 +35,14 @@ interface ArenaVedtaksbrevVisningProps {
 }
 
 export function ArenaVedtaksbrevVisning(props: ArenaVedtaksbrevVisningProps) {
-	const { changeView } = useViewStore();
-
+	const navigate = useNavigate();
 	const vedtaksbrevUrl = lagHentArenaVedtakPdfUrl(props.dokumentInfoId, props.journalpostId);
 
 	return (
 		<GenericVedtaksbrevVisning
 			vedtaksbrevUrl={vedtaksbrevUrl}
 			tilbakeTekst="Tilbake til hovedside"
-			handleOnTilbakeClicked={() => changeView(ViewType.HOVEDSIDE)}
+			handleOnTilbakeClicked={() => navigate(routes.hovedside)}
 		/>
 	);
 }

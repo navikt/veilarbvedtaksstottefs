@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { BodyShort, Detail } from '@navikt/ds-react';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { sortDatesDesc } from '../../util/date-utils';
 import { OnVedtakClicked, VedtaklistePanel } from '../vedtakliste-panel/vedtakliste-panel';
 import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
@@ -11,6 +10,8 @@ import { hovedmalTekst } from '../../util/hovedmal';
 import './tidligere-vedtak-liste.css';
 import { SlettetTidligereVedtak } from './slettet-tidligere-vedtak';
 import { VedtakSvg } from './VedtakSvg.tsx';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, posisjon: number) {
 	if (vedtak.vedtakStatus === 'SLETTET') {
@@ -34,14 +35,14 @@ function mapVedtakTilPanel(vedtak: Vedtak, onClick: OnVedtakClicked<Vedtak>, pos
 }
 
 export function TidligereVedtakListe({ vedtakListe }: { vedtakListe: Vedtak[] }) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	const tidligereVedtak = useMemo(() => {
 		return [...vedtakListe].sort((v1, v2) => sortDatesDesc(v1.vedtakFattet, v2.vedtakFattet));
 	}, [vedtakListe]);
 
 	function handleTidligereVedtakClicked(vedtakData: Vedtak, idx: number) {
-		changeView(ViewType.VEDTAK, { vedtakId: (vedtakData as Vedtak).id });
+		navigate(routes.vedtak(vedtakData.id));
 		logMetrikk('vis-tidligere-vedtak', { index: idx });
 	}
 

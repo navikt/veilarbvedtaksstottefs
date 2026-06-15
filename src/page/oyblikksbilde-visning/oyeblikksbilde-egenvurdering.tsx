@@ -1,11 +1,10 @@
-import { useEffect, type JSX } from 'react';
+import { type JSX, useEffect } from 'react';
 import Spinner from '../../component/spinner/spinner';
 import Card from '../../component/card/card';
 import OyeblikksbildeType from '../../util/type/oyblikksbilde-type';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentEgenvurderingOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { logMetrikk } from '../../util/logger';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { formatDates } from './oyeblikksbilde-fikser';
 import { EgenvurderingDto, EgenvurderingV2Dto } from './dto/EgenvurderingDto';
 import { visEnkelVerdi } from './oyeblikksbilde-cv';
@@ -13,6 +12,8 @@ import { FilePdfIcon } from '@navikt/aksel-icons';
 import { Button, Heading } from '@navikt/ds-react';
 import { IkkeKontaktMedBaksystemFeilmelding } from '../../component/feilmelding/ikke-kontakt-med-baksystem-feilmelding';
 import { OyblikksbildeEgenvurdering } from '../../util/type/oyblikksbilde';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.Element {
 	const oyeblikksbildeFetcher = useAxiosFetcher(hentEgenvurderingOyblikksbilde);
@@ -61,10 +62,10 @@ function OyeblikksbildeEgenvurderingCard({
 	type,
 	vedtakId
 }: OyeblikksbildeEgenvurderingInnholdProps) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
-		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
+		navigate(routes.oyeblikksbildePdf(vedtakId, oyeblikksbildeType));
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
 	};
 

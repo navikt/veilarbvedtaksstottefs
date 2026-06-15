@@ -1,9 +1,9 @@
-import { ViewType } from '../../../store/view-store';
+import { routes } from '../../../routes.ts';
 
 export interface FeilModalConfig {
 	tittel: string;
 	beskrivelse: string;
-	viewAction?: ViewType;
+	route?: string;
 	knappeTekst?: string;
 }
 
@@ -15,14 +15,14 @@ export const feilVedOpprettingAvUtkastConfig: FeilModalConfig = {
 export const feilVedSendingConfig: FeilModalConfig = {
 	tittel: 'Problemer med å sende',
 	beskrivelse: 'Vedtaksbrevet kan dessverre ikke sendes for øyeblikket. Vennligst prøv igjen senere.',
-	viewAction: ViewType.UTKAST,
+	route: routes.utkast,
 	knappeTekst: 'Tilbake til vedtakskjema'
 };
 
 export const stoppeUtsendingFeatureToggleConfig: FeilModalConfig = {
 	tittel: 'Problemer med å sende',
 	beskrivelse: 'Det er problemer med å sende vedtak for øyeblikket. Vennligst prøv igjen senere.',
-	viewAction: ViewType.UTKAST,
+	route: routes.utkast,
 	knappeTekst: 'Tilbake til utkast'
 };
 
@@ -30,14 +30,14 @@ export const feilVedForhandsvisnigConfig: FeilModalConfig = {
 	tittel: 'Problemer med forhåndsvisning',
 	beskrivelse:
 		'Vi får dessverre ikke forhåndsvist vedtaksbrevet for øyeblikket. Vennligst gå tilbake til utkastet og prøv igjen senere.',
-	viewAction: ViewType.UTKAST,
+	route: routes.utkast,
 	knappeTekst: 'Tilbake til utkast'
 };
 
 export const feilVedVisningConfig: FeilModalConfig = {
 	tittel: 'Kan ikke vise vedtaksbrev',
 	beskrivelse: 'Det er problemer med å vise vedtaksbrev for øyeblikket. Vennligst prøv igjen senere.',
-	viewAction: ViewType.HOVEDSIDE,
+	route: routes.hovedside,
 	knappeTekst: 'Tilbake til hovedside'
 };
 

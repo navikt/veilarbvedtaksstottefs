@@ -1,64 +1,67 @@
+import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { Hovedside } from '../page/hovedside/hovedside';
 import { VedtakskjemaVisningSide } from '../page/vedtakskjema-visning/vedtakskjema-visning-side';
 import { Forhandsvisning } from '../page/forhandsvisning/forhandsvisning';
-import { useViewStore, ViewType } from '../store/view-store';
 import { ArenaVedtaksbrevVisning, VedtaksbrevVisning } from '../page/vedtaksbrev-visning/vedtaksbrev-visning';
 import { UtkastSide } from '../page/utkast/utkast-side';
 import { OyeblikksbildeVisningPDF } from '../page/oyblikksbilde-visning/oyeblikksbilde-visning-pdf';
 import { Oyeblikksbilde } from '../page/oyblikksbilde-visning/oyeblikksbilde-visning';
 import { KlagebehandlingSide } from '../page/klagebehandling/klagebehandling-side.tsx';
+import { routePatterns } from '../routes.ts';
+
+function VedtakRoute() {
+	const { vedtakId } = useParams();
+	return <VedtakskjemaVisningSide vedtakId={Number(vedtakId)} />;
+}
+
+function VedtakPdfRoute() {
+	const { vedtakId } = useParams();
+	return <VedtaksbrevVisning vedtakId={Number(vedtakId)} />;
+}
+
+function ArenaVedtakPdfRoute() {
+	const { dokumentInfoId, journalpostId } = useParams();
+	if (!dokumentInfoId || !journalpostId) {
+		return FallbackRedirect();
+	}
+	return <ArenaVedtaksbrevVisning dokumentInfoId={dokumentInfoId} journalpostId={journalpostId} />;
+}
+
+function OyeblikksbildeRoute() {
+	const { vedtakId } = useParams();
+	return <Oyeblikksbilde vedtakId={Number(vedtakId)} />;
+}
+
+function OyeblikksbildePdfRoute() {
+	const { vedtakId, oyeblikksbildeType } = useParams();
+	if (!oyeblikksbildeType) {
+		return FallbackRedirect();
+	}
+	return <OyeblikksbildeVisningPDF vedtakId={Number(vedtakId)} oyeblikksbildeType={oyeblikksbildeType} />;
+}
+
+function KlagebehandlingRoute() {
+	const { vedtakId } = useParams();
+	return <KlagebehandlingSide vedtakId={Number(vedtakId)} />;
+}
+
+function FallbackRedirect() {
+	return <Navigate to={'/'} replace />;
+}
 
 export function ViewController() {
-	const { view, viewProps } = useViewStore();
-
-	switch (view) {
-		case ViewType.HOVEDSIDE:
-			return <Hovedside />;
-		case ViewType.UTKAST:
-			return <UtkastSide />;
-		case ViewType.FORHANDSVISNING:
-			return <Forhandsvisning />;
-		case ViewType.VEDTAK:
-			if ('vedtakId' in viewProps) {
-				return <VedtakskjemaVisningSide vedtakId={viewProps.vedtakId} />;
-			}
-			return null;
-		case ViewType.OYBLIKKSBILDE_VISNING:
-			if ('vedtakId' in viewProps) {
-				return <Oyeblikksbilde vedtakId={viewProps.vedtakId} />;
-			}
-			return null;
-		case ViewType.VEDTAK_PDF:
-			if ('vedtakId' in viewProps) {
-				return <VedtaksbrevVisning vedtakId={viewProps.vedtakId} />;
-			}
-			return null;
-		case ViewType.VEDTAK_OYEBLIKKSBILDE_PDF:
-			if ('vedtakId' in viewProps && 'oyeblikksbildeType' in viewProps) {
-				return (
-					<OyeblikksbildeVisningPDF
-						vedtakId={viewProps.vedtakId}
-						oyeblikksbildeType={viewProps.oyeblikksbildeType}
-					/>
-				);
-			}
-			return null;
-		case ViewType.ARENA_VEDTAK_PDF:
-			if ('dokumentInfoId' in viewProps && 'journalpostId' in viewProps) {
-				return (
-					<ArenaVedtaksbrevVisning
-						dokumentInfoId={viewProps.dokumentInfoId}
-						journalpostId={viewProps.journalpostId}
-					/>
-				);
-			}
-			return null;
-		case ViewType.KLAGEBEHANDLING:
-			if ('vedtakId' in viewProps) {
-				return <KlagebehandlingSide vedtakId={viewProps.vedtakId} />;
-			}
-			return null;
-		default:
-			return <Hovedside />;
-	}
+	return (
+		<Routes>
+			<Route path={routePatterns.hovedside} element={<Hovedside />} />
+			<Route path={routePatterns.utkast} element={<UtkastSide />} />
+			<Route path={routePatterns.forhandsvisning} element={<Forhandsvisning />} />
+			<Route path={routePatterns.vedtak} element={<VedtakRoute />} />
+			<Route path={routePatterns.vedtakPdf} element={<VedtakPdfRoute />} />
+			<Route path={routePatterns.oyeblikksbilde} element={<OyeblikksbildeRoute />} />
+			<Route path={routePatterns.oyeblikksbildePdf} element={<OyeblikksbildePdfRoute />} />
+			<Route path={routePatterns.klagebehandling} element={<KlagebehandlingRoute />} />
+			<Route path={routePatterns.arenaVedtakPdf} element={<ArenaVedtakPdfRoute />} />
+			<Route path="*" element={<FallbackRedirect />} />
+		</Routes>
+	);
 }
