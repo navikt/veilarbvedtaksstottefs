@@ -31,6 +31,17 @@ export function Forhandsvisning() {
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
 	const { kanEndreUtkast } = useTilgangStore();
 	const [pdfStatus, setPdfStatus] = useState<PDFStatus>(PDFStatus.NOT_STARTED);
+
+	useEffect(() => {
+		if (pdfStatus === PDFStatus.ERROR) {
+			showModal(ModalType.FEIL_VED_FORHANDSVISNING);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pdfStatus]);
+
+	if (utkast == null) {
+		return navigate(routes.utkast);
+	}
 	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
 	const url = lagHentForhandsvisningUrl(utkastId);
@@ -50,13 +61,6 @@ export function Forhandsvisning() {
 		navigate(routes.utkast);
 		logMetrikk('tilbake-fra-forhandsvisning');
 	};
-
-	useEffect(() => {
-		if (pdfStatus === PDFStatus.ERROR) {
-			showModal(ModalType.FEIL_VED_FORHANDSVISNING);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pdfStatus]);
 
 	const sendVedtak = () => {
 		showModal(ModalType.LASTER);
