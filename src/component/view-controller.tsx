@@ -8,7 +8,6 @@ import { OyeblikksbildeVisningPDF } from '../page/oyblikksbilde-visning/oyeblikk
 import { Oyeblikksbilde } from '../page/oyblikksbilde-visning/oyeblikksbilde-visning';
 import { KlagebehandlingSide } from '../page/klagebehandling/klagebehandling-side.tsx';
 import { routePatterns } from '../routes.ts';
-import { hasHashParam } from '../util';
 
 function VedtakRoute() {
 	const { vedtakId } = useParams();
@@ -47,8 +46,7 @@ function KlagebehandlingRoute() {
 }
 
 function FallbackRedirect() {
-	const target = hasHashParam('visUtkast') ? routePatterns.utkast : '/';
-	return <Navigate to={target} replace />;
+	return <Navigate to={'/'} replace />;
 }
 
 export function ViewController() {

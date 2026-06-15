@@ -11,7 +11,7 @@ import env from './util/environment';
 import './app.css';
 import { Theme } from '@navikt/ds-react';
 import { useState } from 'react';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 interface AppProps {
 	fnr: string;
@@ -26,7 +26,7 @@ function App(props: AppProps) {
 	return (
 		<Theme theme={darkmode ? 'dark' : 'light'} asChild>
 			<main className="app veilarbvedtaksstottefs">
-				<HashRouter>
+				<BrowserRouter>
 					<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
 						<FeatureFetcher>
 							<NasjonalTilgangSjekk fnr={props.fnr}>
@@ -44,7 +44,7 @@ function App(props: AppProps) {
 							</NasjonalTilgangSjekk>
 						</FeatureFetcher>
 					</StoreProvider>
-				</HashRouter>
+				</BrowserRouter>
 			</main>
 		</Theme>
 	);

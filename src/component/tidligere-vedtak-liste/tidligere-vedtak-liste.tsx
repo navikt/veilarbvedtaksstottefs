@@ -42,7 +42,7 @@ export function TidligereVedtakListe({ vedtakListe }: { vedtakListe: Vedtak[] })
 	}, [vedtakListe]);
 
 	function handleTidligereVedtakClicked(vedtakData: Vedtak, idx: number) {
-		navigate(routes.vedtak((vedtakData as Vedtak).id));
+		navigate(routes.vedtak(vedtakData.id));
 		logMetrikk('vis-tidligere-vedtak', { index: idx });
 	}
 
