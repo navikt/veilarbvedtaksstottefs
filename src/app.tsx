@@ -11,6 +11,7 @@ import env from './util/environment';
 import './app.css';
 import { Theme } from '@navikt/ds-react';
 import { useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 interface AppProps {
 	fnr: string;
@@ -25,23 +26,25 @@ function App(props: AppProps) {
 	return (
 		<Theme theme={darkmode ? 'dark' : 'light'} asChild>
 			<main className="app veilarbvedtaksstottefs">
-				<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
-					<FeatureFetcher>
-						<NasjonalTilgangSjekk fnr={props.fnr}>
-							<DataFetcher
-								fnr={props.fnr}
-								darkmode={darkmode}
-								setDarkmode={darkmode => setDarkmode(darkmode)}
-							>
-								<VarselController />
-								<ViewController />
-								<ModalController />
-								<TabClickedListener />
-								{env.isDemo && <MockPanel />}
-							</DataFetcher>
-						</NasjonalTilgangSjekk>
-					</FeatureFetcher>
-				</StoreProvider>
+				<BrowserRouter basename="/vedtaksstotte">
+					<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
+						<FeatureFetcher>
+							<NasjonalTilgangSjekk fnr={props.fnr}>
+								<DataFetcher
+									fnr={props.fnr}
+									darkmode={darkmode}
+									setDarkmode={darkmode => setDarkmode(darkmode)}
+								>
+									<VarselController />
+									<ViewController />
+									<ModalController />
+									<TabClickedListener />
+									{env.isDemo && <MockPanel />}
+								</DataFetcher>
+							</NasjonalTilgangSjekk>
+						</FeatureFetcher>
+					</StoreProvider>
+				</BrowserRouter>
 			</main>
 		</Theme>
 	);

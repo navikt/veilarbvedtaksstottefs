@@ -1,14 +1,15 @@
 import { BodyLong, BodyShort, Box, Button, Heading, List, VStack } from '@navikt/ds-react';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { SkjemaVisningHeader } from './header/skjema-visning-header';
 import { formatDateStr } from '../../util/date-utils';
 import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { getHovedmalNavnEllerEmdash } from '../../util/hovedmal';
 import { Vedtak } from '../../api/veilarbvedtaksstotte';
 import './skjema-visning.css';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 	const {
 		id,
 		hovedmal,
@@ -89,7 +90,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 
 				<Button
 					variant="tertiary"
-					onClick={() => changeView(ViewType.OYBLIKKSBILDE_VISNING, { vedtakId: id })}
+					onClick={() => navigate(routes.oyeblikksbilde(id))}
 					id="journalfort-info-knapp"
 				>
 					Journalført brukerinformasjon på vedtakstidspunktet

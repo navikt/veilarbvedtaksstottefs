@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { OrNothing } from '../../../util/type/ornothing';
 import nyttVedtakBilde from './nytt-vedtak.svg';
-import { useViewStore, ViewType } from '../../../store/view-store';
 import { useAppStore } from '../../../store/app-store';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { HovedsidePanelBox } from '../hovedside-panel/hovedside-panel';
@@ -14,13 +13,16 @@ import { Utkast, Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { fetchUtkast, lagNyttUtkast, oppdaterVedtakUtkast } from '../../../api/veilarbvedtaksstotte/utkast';
 import { Button, Checkbox, Heading } from '@navikt/ds-react';
 import './nytt-vedtak-panel.css';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../../routes.ts';
 
 export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 	const { fnr } = useAppStore();
 	const { showModal, resetModalType } = useModalStore();
 	const { oppfolgingData, fattedeVedtak, setMeldinger, setUtkast } = useDataStore();
 	const { setVeilederTilgang } = useTilgangStore();
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
+
 	const { initSkjema } = useSkjemaStore();
 
 	const [kopierSisteVedtak, setKopierSisteVedtak] = useState(false);
@@ -61,7 +63,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 				setMeldinger([]); // Rydd opp hvis det ligger gamle meldinger mellomlagret
 
 				resetModalType();
-				changeView(ViewType.UTKAST);
+				navigate(routes.utkast);
 
 				logMetrikk('lag-nytt-vedtak', { kopierteFraSisteVedtak: kopierSisteVedtak });
 			})

@@ -1,4 +1,4 @@
-import tidligereVedtakBilde from '../../../component/skjema-visning/header/tidligere-vedtak.svg'
+import tidligereVedtakBilde from '../../../component/skjema-visning/header/tidligere-vedtak.svg';
 import { Detail, Heading } from '@navikt/ds-react';
 
 interface KlageHeaderProps {

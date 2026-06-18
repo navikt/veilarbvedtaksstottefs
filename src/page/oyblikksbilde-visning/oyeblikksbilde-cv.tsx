@@ -1,4 +1,4 @@
-import { useEffect, type JSX } from 'react';
+import { type JSX, useEffect } from 'react';
 import { Button, Heading } from '@navikt/ds-react';
 import { FilePdfIcon } from '@navikt/aksel-icons';
 import Spinner from '../../component/spinner/spinner';
@@ -8,7 +8,6 @@ import { useAxiosFetcher } from '../../util/use-axios-fetcher';
 import { hentCvOyblikksbilde } from '../../api/veilarbvedtaksstotte/vedtak';
 import { CvDto } from './dto/CvDto';
 import { logMetrikk } from '../../util/logger';
-import { useViewStore, ViewType } from '../../store/view-store';
 import {
 	ansettelsestypeLabel,
 	fagdokumentTypeLabel,
@@ -21,6 +20,8 @@ import {
 } from './oyeblikksbilde-fikser';
 import { EMDASH } from '../../util';
 import { IkkeKontaktMedBaksystemFeilmelding } from '../../component/feilmelding/ikke-kontakt-med-baksystem-feilmelding';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 export function OyeblikksbildeCv(props: { vedtakId: number }): JSX.Element {
 	const oyeblikksbildeFetcher = useAxiosFetcher(hentCvOyblikksbilde);
@@ -71,10 +72,10 @@ export const visFlereVerdi = (tittel: string, verdi: string[] | undefined) => {
 };
 
 function OyeblikksdataCvInnhold(props: { data: CvDto | null; erJournalfort: boolean; vedtakId: number }) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	const visOyeblikkbildePdf = (vedtakId: number, oyeblikksbildeType: string) => {
-		changeView(ViewType.VEDTAK_OYEBLIKKSBILDE_PDF, { vedtakId: vedtakId, oyeblikksbildeType: oyeblikksbildeType });
+		navigate(routes.oyeblikksbildePdf(vedtakId, oyeblikksbildeType));
 		logMetrikk('vis-oyeblikksbilde-vedtak', { oyeblikksbildeType: oyeblikksbildeType });
 	};
 

@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import PdfViewer from '../../component/pdf-viewer/pdf-viewer';
 import { PDFStatus } from '../../component/pdf-viewer/pdf-status';
 import Footer from '../../component/footer/footer';
-import { useViewStore, ViewType } from '../../store/view-store';
 import { ModalType, useModalStore } from '../../store/modal-store';
 import { lagHentOyeblikksbildePdfUrl } from '../../api/veilarbvedtaksstotte/vedtak';
 import { Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../routes.ts';
 
 interface OyeblikksbildeVisningPDFProps {
 	vedtakId: number;
@@ -14,7 +15,7 @@ interface OyeblikksbildeVisningPDFProps {
 }
 
 export function OyeblikksbildeVisningPDF(props: OyeblikksbildeVisningPDFProps) {
-	const { changeView } = useViewStore();
+	const navigate = useNavigate();
 
 	const oyeblikksbildePdfUrl = lagHentOyeblikksbildePdfUrl(props.vedtakId, props.oyeblikksbildeType);
 
@@ -22,7 +23,7 @@ export function OyeblikksbildeVisningPDF(props: OyeblikksbildeVisningPDFProps) {
 		<GenericVedtaksbrevVisning
 			oyeblikksbildeUrl={oyeblikksbildePdfUrl}
 			tilbakeTekst="Tilbake  til oyeblikksbilde"
-			handleOnTilbakeClicked={() => changeView(ViewType.OYBLIKKSBILDE_VISNING, { vedtakId: props.vedtakId })}
+			handleOnTilbakeClicked={() => navigate(routes.oyeblikksbilde(props.vedtakId))}
 		/>
 	);
 }

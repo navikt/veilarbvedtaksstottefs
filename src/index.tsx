@@ -5,7 +5,6 @@ import NAVSPA from '@navikt/navspa';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import { enhetId, fnr } from './mock/data';
-
 dayjs.locale('nb');
 
 if (env.isDemo) {
