@@ -26,7 +26,7 @@ function App(props: AppProps) {
 	return (
 		<Theme theme={darkmode ? 'dark' : 'light'} asChild>
 			<main className="app veilarbvedtaksstottefs">
-				<BrowserRouter basename="/vedtaksstotte">
+				<BrowserRouter basename={env.isRunningOnGhPages ? '/veilarbvedtaksstottefs' : '/vedtaksstotte'}>
 					<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
 						<FeatureFetcher>
 							<NasjonalTilgangSjekk fnr={props.fnr}>
