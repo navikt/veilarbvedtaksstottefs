@@ -9,24 +9,26 @@ import { MockPanel } from './mock/component/mock-panel';
 import FeatureFetcher from './component/feature-fetcher';
 import env from './util/environment';
 import './app.css';
-import { Theme } from '@navikt/ds-react';
 import { BrowserRouter } from 'react-router-dom';
+import { Theme } from '@navikt/ds-react';
+
+export type AppTheme = 'light' | 'dark';
 
 interface AppProps {
 	fnr: string;
 	enhet: string;
-	theme?: 'light' | 'dark';
+	theme: AppTheme;
 }
 
-function App(props: AppProps) {
+function App({ fnr, enhet, theme }: AppProps) {
 	return (
-		<Theme theme={props.theme ?? 'light'} asChild>
+		<Theme theme={theme}>
 			<main className="app veilarbvedtaksstottefs">
 				<BrowserRouter basename={env.isRunningOnGhPages ? '/veilarbvedtaksstottefs' : '/vedtaksstotte'}>
-					<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
+					<StoreProvider fnr={fnr} enhetId={enhet}>
 						<FeatureFetcher>
-							<NasjonalTilgangSjekk fnr={props.fnr}>
-								<DataFetcher fnr={props.fnr}>
+							<NasjonalTilgangSjekk fnr={fnr}>
+								<DataFetcher fnr={fnr}>
 									<VarselController />
 									<ViewController />
 									<ModalController />
