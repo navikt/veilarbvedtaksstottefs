@@ -17,7 +17,7 @@
 	box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.2);
 }
 
-.dark.veilarbvedtaksstottefs .vedtaksstotte-footer {
+.dark .veilarbvedtaksstottefs .vedtaksstotte-footer {
 	background-color: var(--ax-bg-raised);
 	border-top: 1px solid var(--ax-border-neutral);
 	box-shadow: none;
