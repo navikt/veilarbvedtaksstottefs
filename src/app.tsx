@@ -10,31 +10,23 @@ import FeatureFetcher from './component/feature-fetcher';
 import env from './util/environment';
 import './app.css';
 import { Theme } from '@navikt/ds-react';
-import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 interface AppProps {
 	fnr: string;
 	enhet: string;
+	theme?: 'light' | 'dark';
 }
 
 function App(props: AppProps) {
-	// Settes enkelt her mens vi gradvis skriver oss over til å støtte darkmode.
-	// Visning av toggelen styres av en feature-toggle. Toggelen bør flyttes til en mer fornuftig plass når vi er klare til å lansere.
-	const [darkmode, setDarkmode] = useState(false);
-
 	return (
-		<Theme theme={darkmode ? 'dark' : 'light'} asChild>
+		<Theme theme={props.theme ?? 'light'} asChild>
 			<main className="app veilarbvedtaksstottefs">
 				<BrowserRouter basename={env.isRunningOnGhPages ? '/veilarbvedtaksstottefs' : '/vedtaksstotte'}>
 					<StoreProvider fnr={props.fnr} enhetId={props.enhet}>
 						<FeatureFetcher>
 							<NasjonalTilgangSjekk fnr={props.fnr}>
-								<DataFetcher
-									fnr={props.fnr}
-									darkmode={darkmode}
-									setDarkmode={darkmode => setDarkmode(darkmode)}
-								>
+								<DataFetcher fnr={props.fnr}>
 									<VarselController />
 									<ViewController />
 									<ModalController />

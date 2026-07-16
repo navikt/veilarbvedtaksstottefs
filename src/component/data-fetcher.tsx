@@ -12,15 +12,7 @@ import { fetchUtkast } from '../api/veilarbvedtaksstotte/utkast';
 import { fetchInnloggetVeileder } from '../api/veilarbveileder';
 import { hasAnyFailed, ifResponseHasData, isAnyLoading } from '../api/utils';
 import { IkkeKontaktMedBaksystemFeilmelding } from './feilmelding/ikke-kontakt-med-baksystem-feilmelding';
-import { VIS_DARKMODE_TOGGLE } from '../api/obo-unleash.ts';
-import { DarkmodeToggle } from './DarkmodeToggle.tsx';
-
-export function DataFetcher(props: {
-	fnr: string;
-	darkmode: boolean;
-	setDarkmode: (value: boolean) => void;
-	children: React.ReactNode;
-}): JSX.Element | null {
+export function DataFetcher(props: { fnr: string; children: React.ReactNode }): JSX.Element | null {
 	const { initSkjema } = useSkjemaStore();
 	const {
 		setFattedeVedtak,
@@ -42,8 +34,6 @@ export function DataFetcher(props: {
 	const arenaVedtakFetcher = useAxiosFetcher(hentArenaVedtak);
 	const navnFetcher = useAxiosFetcher(fetchNavn);
 	const arbeidssoekerperiodeFetcher = useAxiosFetcher(fetchAktivArbeidssokerperiode);
-	const visDarkmodeToggle = useDataStore().features[VIS_DARKMODE_TOGGLE];
-
 	useEffect(() => {
 		fattedeVedtakFetcher.fetch(props.fnr).then(ifResponseHasData(setFattedeVedtak)).catch();
 
@@ -106,10 +96,5 @@ export function DataFetcher(props: {
 		return <IkkeKontaktMedBaksystemFeilmelding />;
 	}
 
-	return (
-		<>
-			{visDarkmodeToggle && <DarkmodeToggle darkmode={props.darkmode} setDarkmode={props.setDarkmode} />}
-			{props.children}
-		</>
-	);
+	return <>{props.children}</>;
 }
