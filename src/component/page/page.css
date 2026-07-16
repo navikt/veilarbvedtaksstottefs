@@ -10,7 +10,7 @@
 }
 
 .veilarbvedtaksstottefs .page .page--white {
-	background-color: white;
+	background-color: var(--ax-bg-default);
 }
 
 .veilarbvedtaksstottefs .page .page__content {
