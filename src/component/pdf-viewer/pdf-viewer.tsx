@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { BodyShort, Heading, List, Loader } from '@navikt/ds-react';
+import { BodyShort, Heading, List, Loader, Theme } from '@navikt/ds-react';
 import { useSkjemaStore } from '../../store/skjema-store';
 import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { hovedmalTekst } from '../../util/hovedmal';
@@ -47,41 +47,43 @@ function PdfViewer(props: PdfViewerProps) {
 	const begrunnelseAvsnitt = begrunnelse?.split('\n').map((avsnitt, idx) => <p key={idx}>{avsnitt}</p>) ?? null; // Skal være samme formatering som i vedtaks-PDFen
 
 	return (
-		<div className="pdfvisning">
-			<div aria-live="polite" className="pdfvisning__header">
-				<Heading size="small" level="1">
-					{props.title}
-				</Heading>
+		<Theme theme="light" asChild>
+			<div className="pdfvisning">
+				<div aria-live="polite" className="pdfvisning__header">
+					<Heading size="small" level="1">
+						{props.title}
+					</Heading>
+				</div>
+				<Document
+					file={props.url}
+					loading={<PdfSpinner />}
+					onLoad={() => props.onStatusUpdate(PDFStatus.LOADING)}
+					// onLoadSuccess={onDocumentLoadSuccess}
+					onLoadError={() => props.onStatusUpdate(PDFStatus.ERROR)}
+					onLoadSuccess={onDocumentLoadSuccess}
+					error={<PdfError />}
+					className="pdfvisning__document skjul_ved_print"
+				>
+					{Array.from(new Array(numPages), (_el, index) => (
+						<Page key={`page_${index + 1}`} pageNumber={index + 1} width={800} />
+					))}
+				</Document>
+				<div className="kun_til_print">
+					<BodyShort spacing>
+						<b>Innsatsgruppe:</b>
+						{' ' + innsatsgruppeTekstverdi}
+					</BodyShort>
+					<BodyShort spacing>
+						<b>Hovedmål:</b>
+						{' ' + hovedmalTekstverdi}
+					</BodyShort>
+					<Heading size="xsmall">Kilder</Heading>
+					<List>{kilder}</List>
+					<Heading size="xsmall">Begrunnelse</Heading>
+					{begrunnelseAvsnitt}
+				</div>
 			</div>
-			<Document
-				file={props.url}
-				loading={<PdfSpinner />}
-				onLoad={() => props.onStatusUpdate(PDFStatus.LOADING)}
-				// onLoadSuccess={onDocumentLoadSuccess}
-				onLoadError={() => props.onStatusUpdate(PDFStatus.ERROR)}
-				onLoadSuccess={onDocumentLoadSuccess}
-				error={<PdfError />}
-				className="pdfvisning__document skjul_ved_print"
-			>
-				{Array.from(new Array(numPages), (_el, index) => (
-					<Page key={`page_${index + 1}`} pageNumber={index + 1} width={800} />
-				))}
-			</Document>
-			<div className="kun_til_print">
-				<BodyShort spacing>
-					<b>Innsatsgruppe:</b>
-					{' ' + innsatsgruppeTekstverdi}
-				</BodyShort>
-				<BodyShort spacing>
-					<b>Hovedmål:</b>
-					{' ' + hovedmalTekstverdi}
-				</BodyShort>
-				<Heading size="xsmall">Kilder</Heading>
-				<List>{kilder}</List>
-				<Heading size="xsmall">Begrunnelse</Heading>
-				{begrunnelseAvsnitt}
-			</div>
-		</div>
+		</Theme>
 	);
 }
 
