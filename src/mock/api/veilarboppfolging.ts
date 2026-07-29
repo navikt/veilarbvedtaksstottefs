@@ -8,8 +8,17 @@ export const veilarboppfolgingHandlers: RequestHandler[] = [
 		await delay(DEFAULT_DELAY_MILLISECONDS);
 		return HttpResponse.json(hentTilgangTilBrukersKontor());
 	}),
-	http.post('/veilarboppfolging/api/v3/oppfolging/hent-status', async () => {
+	http.post('/veilarboppfolging/api/graphql', async () => {
 		await delay(DEFAULT_DELAY_MILLISECONDS);
-		return HttpResponse.json(hentOppfolgingData());
+		const { reservasjonKRR, underOppfolging, inaktivIArena } = hentOppfolgingData();
+		return HttpResponse.json({
+			data: {
+				brukerStatus: {
+					krr: { reservertIKrr: reservasjonKRR },
+					arena: { inaktivIArena }
+				},
+				oppfolging: { erUnderOppfolging: underOppfolging }
+			}
+		});
 	})
 ];
