@@ -13,8 +13,6 @@ registries:
 updates:
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
-    registries:
-      - npm-github
     schedule:
       interval: "weekly"
     cooldown:
