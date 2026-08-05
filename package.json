@@ -29,7 +29,7 @@
     "@navikt/ds-react": "8.10.5",
     "@navikt/fnrvalidator": "2.2.1",
     "@navikt/navspa": "7.5.0",
-    "axios": "1.16.0",
+    "axios": "1.18.0",
     "classnames": "2.5.1",
     "constate": "3.3.3",
     "dayjs": "1.11.20",
