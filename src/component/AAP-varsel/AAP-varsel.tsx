@@ -1,6 +1,10 @@
 import { InfoCard, Link, List } from '@navikt/ds-react';
 
-export function AAPvarsel(className?: string) {
+interface AAPvarselProps {
+	className?: string;
+}
+
+export function AAPvarsel({ className }: AAPvarselProps) {
 	return (
 		<InfoCard data-color="info" size="small" className={className}>
 			<InfoCard.Header>
