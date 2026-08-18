@@ -13,13 +13,11 @@ function DuplicateWords(props: { content: string }) {
 	const matches = value.match(/\b(\w{2,5})\s+\1\b/g);
 	if (matches) {
 		duplicateWordsCount = matches.length;
-		duplicateWordsList = matches.map(
-			(duplicatedword: string, index: number): JSX.Element => (
-				<li className="pb-2" key={index}>
-					{duplicatedword}
-				</li>
-			)
-		);
+		duplicateWordsList = matches.map((duplicatedword: string, index: number): JSX.Element => (
+			<li className="pb-2" key={index}>
+				{duplicatedword}
+			</li>
+		));
 	}
 	return (
 		<>
