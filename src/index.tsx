@@ -14,7 +14,7 @@ if (env.isDemo) {
 				.start({ serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` } })
 				.then(() => {
 					createRoot(document.getElementById('veilarbvedtaksstottefs-root') as HTMLElement).render(
-						<App fnr={fnr} enhet={enhetId} />
+						<App fnr={fnr} enhet={enhetId} theme="light" />
 					);
 				})
 				.catch((e: Error) => {

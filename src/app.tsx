@@ -8,9 +8,10 @@ import { VarselController } from './component/varsel/varsel-controller';
 import { MockPanel } from './mock/component/mock-panel';
 import FeatureFetcher from './component/feature-fetcher';
 import env from './util/environment';
-import './app.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Theme } from '@navikt/ds-react';
+import { useState } from 'react';
+import './app.css';
 
 export type AppTheme = 'light' | 'dark';
 
@@ -21,8 +22,11 @@ interface AppProps {
 }
 
 function App({ fnr, enhet, theme }: AppProps) {
+	const [temaOverride, setTemaOverride] = useState<AppTheme | null>(null);
+	const valgtTema = temaOverride ?? theme;
+
 	return (
-		<Theme theme={theme} asChild>
+		<Theme theme={valgtTema} asChild>
 			<main className="app veilarbvedtaksstottefs">
 				<BrowserRouter basename={env.isRunningOnGhPages ? '/veilarbvedtaksstottefs' : '/vedtaksstotte'}>
 					<StoreProvider fnr={fnr} enhetId={enhet}>
@@ -33,7 +37,7 @@ function App({ fnr, enhet, theme }: AppProps) {
 									<ViewController />
 									<ModalController />
 									<TabClickedListener />
-									{env.isDemo && <MockPanel />}
+									{env.isDemo && <MockPanel tema={valgtTema} setTema={setTemaOverride} />}
 								</DataFetcher>
 							</NasjonalTilgangSjekk>
 						</FeatureFetcher>
