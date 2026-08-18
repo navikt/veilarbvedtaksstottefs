@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { logMetrikk } from '../../util/logger';
 import { Button, Popover, PopoverProps } from '@navikt/ds-react';
 import { InformationIcon } from '@navikt/aksel-icons';
@@ -20,7 +20,7 @@ I test/prod skal ikke dette være et problem.
 
 export const TipsPopover = ({ id, placement, ariaLabel, tipsInnhold }: TipsPopoverProps) => {
 	const [popoverTrigger, setPopoverTrigger] = useState<HTMLButtonElement>();
-	const buttonRef = useRef<HTMLButtonElement>(null);
+	const [buttonEl, setButtonEl] = useState<HTMLButtonElement | null>(null);
 
 	function logToggleMetrikk(apnet: boolean) {
 		logMetrikk('tips-togglet', { id, apnet });
@@ -44,7 +44,7 @@ export const TipsPopover = ({ id, placement, ariaLabel, tipsInnhold }: TipsPopov
 				icon={<InformationIcon title={ariaLabel} />}
 				className="tips-popover__button"
 				onClick={togglePopoverOpen}
-				ref={buttonRef}
+				ref={setButtonEl}
 				type="button"
 				aria-controls={id}
 				aria-expanded={popoverTrigger !== undefined}
@@ -53,7 +53,7 @@ export const TipsPopover = ({ id, placement, ariaLabel, tipsInnhold }: TipsPopov
 			<Popover
 				open={!!popoverTrigger}
 				onClose={handleOnRequestClose}
-				anchorEl={buttonRef.current}
+				anchorEl={buttonEl}
 				placement={placement}
 				id={id}
 			>

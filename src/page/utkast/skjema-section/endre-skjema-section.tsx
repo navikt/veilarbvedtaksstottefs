@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import debounce from 'lodash.debounce';
 import Kilder from './kilder/kilder';
 import Begrunnelse from './begrunnelse/begrunnelse';
@@ -45,22 +45,23 @@ export function EndreSkjemaSection() {
 	const pollBeslutterstatusIntervalRef = useRef<number>(undefined);
 	const isAfterFirstRender = useIsAfterFirstRender();
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const oppdaterUtkast = useCallback(
-		debounce((skjema: SkjemaData) => {
-			const malformType = hentMalformFraData(malform);
+	const oppdaterUtkast = useMemo(
+		() =>
+			debounce((skjema: SkjemaData) => {
+				const malformType = hentMalformFraData(malform);
 
-			setLagringStatus(SkjemaLagringStatus.LAGRER);
-			oppdaterVedtakUtkast(hentId(utkast), malformType, skjema)
-				.then(() => {
-					setLagringStatus(SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET);
-					setSistOppdatert(new Date().toISOString());
-				})
-				.catch(() => {
-					showModal(ModalType.FEIL_VED_LAGRING);
-					setLagringStatus(SkjemaLagringStatus.LAGRING_FEILET);
-				});
-		}, 3000),
+				setLagringStatus(SkjemaLagringStatus.LAGRER);
+				oppdaterVedtakUtkast(hentId(utkast), malformType, skjema)
+					.then(() => {
+						setLagringStatus(SkjemaLagringStatus.ALLE_ENDRINGER_LAGRET);
+						setSistOppdatert(new Date().toISOString());
+					})
+					.catch(() => {
+						showModal(ModalType.FEIL_VED_LAGRING);
+						setLagringStatus(SkjemaLagringStatus.LAGRING_FEILET);
+					});
+			}, 3000),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 
@@ -88,6 +89,19 @@ export function EndreSkjemaSection() {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [valgteKilder, begrunnelse, innsatsgruppe, hovedmal]);
+
+	function varsleBeslutterProsessStatusEndring(nyStatus: BeslutterProsessStatus) {
+		if (utkast && nyStatus !== utkast.beslutterProsessStatus) {
+			switch (nyStatus) {
+				case BeslutterProsessStatus.KLAR_TIL_VEILEDER:
+					showVarsel(VarselType.BESLUTTERPROSESS_TIL_VEILEDER);
+					break;
+				case BeslutterProsessStatus.GODKJENT_AV_BESLUTTER:
+					showVarsel(VarselType.BESLUTTERPROSESS_GODKJENT);
+					break;
+			}
+		}
+	}
 
 	useEffect(() => {
 		if (!utkast) {
@@ -131,19 +145,6 @@ export function EndreSkjemaSection() {
 		return stopPolling;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [utkast]);
-
-	function varsleBeslutterProsessStatusEndring(nyStatus: BeslutterProsessStatus) {
-		if (utkast && nyStatus !== utkast.beslutterProsessStatus) {
-			switch (nyStatus) {
-				case BeslutterProsessStatus.KLAR_TIL_VEILEDER:
-					showVarsel(VarselType.BESLUTTERPROSESS_TIL_VEILEDER);
-					break;
-				case BeslutterProsessStatus.GODKJENT_AV_BESLUTTER:
-					showVarsel(VarselType.BESLUTTERPROSESS_GODKJENT);
-					break;
-			}
-		}
-	}
 
 	useEffect(() => {
 		// Det kan bli problemer hvis gamle oppdateringer henger igjen etter at brukeren har forlatt redigeringssiden.
