@@ -22,7 +22,7 @@ interface AppProps {
 
 function App({ fnr, enhet, theme }: AppProps) {
 	return (
-		<Theme theme={theme}>
+		<Theme theme={theme} asChild>
 			<main className="app veilarbvedtaksstottefs">
 				<BrowserRouter basename={env.isRunningOnGhPages ? '/veilarbvedtaksstottefs' : '/vedtaksstotte'}>
 					<StoreProvider fnr={fnr} enhetId={enhet}>
