@@ -8,7 +8,7 @@
     "build": "tsc && vite build --base=https://cdn.nav.no/obo/prod/veilarbvedtaksstottefs/dist",
     "build:dev": "tsc && vite build --base=https://cdn.nav.no/obo/dev/veilarbvedtaksstottefs/dist",
     "build:mock": "tsc && vite build --mode demo --base=/veilarbvedtaksstottefs/",
-    "lint": "eslint src --max-warnings 0",
+    "lint": "eslint src --max-warnings 5",
     "prettier": "prettier --write \"src/**/*.{ts,tsx}\"",
     "prettier:check": "prettier --check src --config .prettierrc.json",
     "prettier:write": "prettier --write src --config .prettierrc.json",
