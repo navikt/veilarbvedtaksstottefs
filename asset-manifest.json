@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/index-Zfp65IMb.js",
+    "file": "assets/index-BaQzLcK8.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -8,7 +8,7 @@
       "src/mock/index.ts"
     ],
     "css": [
-      "assets/index-DDRSSIXM.css"
+      "assets/index-bvye7_EJ.css"
     ],
     "assets": [
       "assets/utkast-EIufPGB5.svg",
@@ -34,7 +34,7 @@
     "src": "src/component/panel/utkast/utkast.svg"
   },
   "src/mock/index.ts": {
-    "file": "assets/mock-Bpheobrr.js",
+    "file": "assets/mock-DRcgWUdy.js",
     "name": "mock",
     "src": "src/mock/index.ts",
     "isDynamicEntry": true,
