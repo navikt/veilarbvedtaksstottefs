@@ -6,19 +6,25 @@ import { useSkjemaStore } from '../../store/skjema-store';
 import { Veileder } from '../../api/veilarbveileder';
 import { hentUtkast, oppdaterVedtakUtkastMockFraSkjema, updateInnloggetVeilederMock } from '../api-data';
 import { veiledere } from '../data';
-import { Box, Button, Radio, RadioGroup } from '@navikt/ds-react';
+import { Box, Button, Radio, RadioGroup, Switch } from '@navikt/ds-react';
 import { XMarkIcon } from '@navikt/aksel-icons';
+import { AppTheme } from '../../app';
 import './mock-panel.css';
 
-export function MockPanel() {
+interface MockPanelProps {
+	tema: AppTheme;
+	setTema: (tema: AppTheme) => void;
+}
+
+export function MockPanel({ tema, setTema }: MockPanelProps) {
 	const [visPanel, setVisPanel] = useState(false);
 
-	const toggle = () => setVisPanel(prevVisPanel => !prevVisPanel);
+	const toggleMockPanel = () => setVisPanel(prevVisPanel => !prevVisPanel);
 
 	return (
 		<div className="mock-panel">
 			{!visPanel && (
-				<Button size="small" className="mock-panel__apne-knapp" onClick={toggle}>
+				<Button size="small" className="mock-panel__apne-knapp" onClick={toggleMockPanel}>
 					Vis valg
 				</Button>
 			)}
@@ -31,7 +37,15 @@ export function MockPanel() {
 					borderColor="brand-blue"
 					className="mock-panel__innhold"
 				>
-					<Button size="small" variant="secondary" icon={<XMarkIcon aria-hidden />} onClick={toggle} />
+					<Button
+						size="small"
+						variant="secondary"
+						icon={<XMarkIcon aria-hidden />}
+						onClick={toggleMockPanel}
+					/>
+					<Switch checked={tema === 'dark'} onChange={e => setTema(e.target.checked ? 'dark' : 'light')}>
+						Mørk modus
+					</Switch>
 					<InnloggetSom />
 				</Box>
 			)}

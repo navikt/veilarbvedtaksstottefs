@@ -1,22 +1,27 @@
-import { DependencyList, useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function useIsAfterFirstRender(): boolean {
-	const hasRenderedOnce = useRef(false);
+	const [isAfterFirstRender, setIsAfterFirstRender] = useState(false);
 
 	useEffect(() => {
-		if (!hasRenderedOnce.current) {
-			hasRenderedOnce.current = true;
-		}
-	});
+		// setState her er tilsiktet - hooken skal nettopp signalisere at et render nummer to har skjedd
+		// eslint-disable-next-line react-hooks/set-state-in-effect
+		setIsAfterFirstRender(true);
+	}, []);
 
-	return hasRenderedOnce.current;
+	return isAfterFirstRender;
 }
 
-export function useEventListener(name: string, listener: EventListener, deps?: DependencyList) {
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const callback: EventListener = useCallback(listener, deps ? deps : []);
+export function useEventListener(name: string, listener: EventListener) {
+	const listenerRef = useRef(listener);
+
 	useEffect(() => {
-		window.addEventListener(name, callback);
-		return () => window.removeEventListener(name, callback);
-	}, [callback, name]);
+		listenerRef.current = listener;
+	});
+
+	useEffect(() => {
+		const handler: EventListener = event => listenerRef.current(event);
+		window.addEventListener(name, handler);
+		return () => window.removeEventListener(name, handler);
+	}, [name]);
 }

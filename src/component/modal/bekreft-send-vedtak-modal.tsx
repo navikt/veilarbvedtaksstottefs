@@ -49,7 +49,7 @@ export default function BekreftSendVedtakModal(props: VedtakSendtModalProps) {
 			</Modal.Header>
 			<Modal.Body className="bekreft-send-vedtak-modal-body">
 				<BodyShort spacing>Vedtaksbrevet blir sendt til bruker.</BodyShort>
-				{erVarigInnsats && AAPvarsel()}
+				{erVarigInnsats && <AAPvarsel />}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button size="small" onClick={props.onSendVedtakBekreftet} loading={modalType === ModalType.LASTER}>

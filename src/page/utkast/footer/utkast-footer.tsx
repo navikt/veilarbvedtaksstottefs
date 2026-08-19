@@ -34,8 +34,8 @@ export function UtkastFooter() {
 
 	const footerStyle = isMaxWidthOrLess ? { marginRight: `${scrollBarWidth}px` } : undefined;
 
-	useEventListener('scroll', () => setScrollBarWidth(calculateScrollBarWidth()), [showSection]);
-	useEventListener('resize', () => setIsMaxWidthOrLess(checkIsMaxWidthOrLess(showSection)), [showSection]);
+	useEventListener('scroll', () => setScrollBarWidth(calculateScrollBarWidth()));
+	useEventListener('resize', () => setIsMaxWidthOrLess(checkIsMaxWidthOrLess(showSection)));
 
 	return (
 		<Footer className="utkast-footer">

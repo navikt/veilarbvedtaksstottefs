@@ -112,8 +112,10 @@ export function UtkastSide() {
 		// Vis dialog seksjon når man går inn på et utkast som trenger beslutter
 		setShowSection(trengerKvalitetssikrer(innsatsgruppe));
 
-		// Hent meldinger når utkast vises
-		refreshMeldinger();
+		// Hent meldinger når utkast vises (utkast er ikke nødvendigvis lastet enda ved første render)
+		if (utkast) {
+			refreshMeldinger();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [innsatsgruppe]);
 

@@ -98,7 +98,7 @@ function InnsatsgruppeRadioButtons(props: InnsatsgruppeRadioProps) {
 							{innsatsgruppeTekst[innsatsgruppetype]}
 						</Radio>
 
-						{skalViseAapVarsel && AAPvarsel('AAPvarsel--formattering')}
+						{skalViseAapVarsel && <AAPvarsel className="AAPvarsel--formattering" />}
 					</Fragment>
 				);
 			})}
