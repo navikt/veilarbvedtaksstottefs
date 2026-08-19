@@ -4,12 +4,16 @@ on:
   push:
     branches:
       - main
+
 jobs:
   update-gh-pages:
     name: Update GitHub pages
-    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     permissions:
-      contents: write
+      id-token: write
+      pages: write
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # ratchet:actions/checkout@v7.0.1
@@ -25,8 +29,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Build mock application
         run: npm run build:mock
-      - name: Update GitHub pages
-        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # ratchet:peaceiris/actions-gh-pages@v4
+      - name: Upload static files as artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # ratchet:actions/upload-pages-artifact@v5.0.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          path: ./dist
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # ratchet:actions/deploy-pages@v5.0.0
