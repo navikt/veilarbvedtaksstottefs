@@ -23,10 +23,10 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@navikt/aksel-icons": "8.10.5",
+    "@navikt/aksel-icons": "8.16.1",
     "@navikt/arbeidssokerregisteret-utils": "2.1.0",
-    "@navikt/ds-css": "8.10.5",
-    "@navikt/ds-react": "8.10.5",
+    "@navikt/ds-css": "8.16.1",
+    "@navikt/ds-react": "8.16.1",
     "@navikt/fnrvalidator": "2.2.1",
     "@navikt/navspa": "7.5.0",
     "axios": "1.19.0",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@eslint/js": "9.39.4",
-    "@navikt/aksel-stylelint": "8.10.5",
+    "@navikt/aksel-stylelint": "8.16.1",
     "@types/lodash.debounce": "4.0.9",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
