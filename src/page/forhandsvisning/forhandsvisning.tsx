@@ -19,7 +19,7 @@ import { Alert, Button } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import './forhandsvisning.css';
 import SpinnerModal from '../../component/modal/spinner-modal/spinner-modal';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { routes } from '../../routes.ts';
 
 export function Forhandsvisning() {
@@ -40,7 +40,7 @@ export function Forhandsvisning() {
 	}, [pdfStatus]);
 
 	if (utkast == null) {
-		return navigate(routes.utkast);
+		return <Navigate to={routes.hovedside} replace />;
 	}
 	const { id: utkastId, beslutterProsessStatus } = utkast as Utkast;
 
@@ -83,9 +83,9 @@ export function Forhandsvisning() {
 						.finally(() => {
 							resetSkjema();
 							resetModalType();
-							navigate(routes.hovedside);
-							showVarsel(VarselType.VEDTAK_SENT_SUKSESS);
 							setUtkast(null);
+							showVarsel(VarselType.VEDTAK_SENT_SUKSESS);
+							navigate(routes.hovedside, { replace: true });
 						})
 				);
 			});
