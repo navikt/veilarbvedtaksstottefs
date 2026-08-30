@@ -37,7 +37,7 @@
     "lodash.debounce": "4.0.8",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-pdf": "10.4.1",
+    "react-pdf": "10.5.0",
     "react-router-dom": "7.18.2"
   },
   "devDependencies": {
