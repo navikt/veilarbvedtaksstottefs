@@ -93,7 +93,7 @@ export function SkjemaVisning(props: { fattetVedtak: Vedtak }) {
 					onClick={() => navigate(routes.oyeblikksbilde(id))}
 					id="journalfort-info-knapp"
 				>
-					Journalført brukerinformasjon på vedtakstidspunktet
+					Vis journalført brukerinformasjon på vedtakstidspunktet
 				</Button>
 			</VStack>
 		</Box>
