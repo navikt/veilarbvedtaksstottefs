@@ -10,12 +10,11 @@ export const veilarboppfolgingHandlers: RequestHandler[] = [
 	}),
 	http.post('/veilarboppfolging/api/graphql', async () => {
 		await delay(DEFAULT_DELAY_MILLISECONDS);
-		const { reservasjonKRR, underOppfolging, inaktivIArena } = hentOppfolgingData();
+		const { reservasjonKRR, underOppfolging } = hentOppfolgingData();
 		return HttpResponse.json({
 			data: {
 				brukerStatus: {
-					krr: { reservertIKrr: reservasjonKRR },
-					arena: { inaktivIArena }
+					krr: { reservertIKrr: reservasjonKRR }
 				},
 				oppfolging: { erUnderOppfolging: underOppfolging }
 			}
