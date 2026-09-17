@@ -25,7 +25,7 @@ import { routes } from '../../routes.ts';
 export function Forhandsvisning() {
 	const { fnr } = useAppStore();
 	const navigate = useNavigate();
-	const { utkast, setUtkast, setFattedeVedtak, oppfolgingData } = useDataStore();
+	const { utkast, setUtkast, setFattedeVedtak } = useDataStore();
 	const { showModal, resetModalType, modalType } = useModalStore();
 	const { showVarsel } = useVarselStore();
 	const { innsatsgruppe, resetSkjema } = useSkjemaStore();
@@ -50,7 +50,7 @@ export function Forhandsvisning() {
 		? erGodkjentAvBeslutter(beslutterProsessStatus)
 		: true;
 
-	const visSendKnapp = kanEndreUtkast && erUtkastKlartTilUtsending && !oppfolgingData.inaktivIArena;
+	const visSendKnapp = kanEndreUtkast && erUtkastKlartTilUtsending;
 
 	const visKvalitetssikringInfo =
 		!visSendKnapp &&
@@ -119,18 +119,6 @@ export function Forhandsvisning() {
 							aria-live="polite"
 						>
 							Kvalitetssikring må gjennomføres før vedtaket kan fattes
-						</Alert>
-					)}
-
-					{oppfolgingData.inaktivIArena && (
-						<Alert
-							size="small"
-							variant="info"
-							inline
-							className="forhandsvisning__utsending-varsel"
-							aria-live="polite"
-						>
-							Kan ikke fatte vedtaket fordi brukeren er inaktiv i Arena
 						</Alert>
 					)}
 				</div>
