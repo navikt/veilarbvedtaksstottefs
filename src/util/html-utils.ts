@@ -5,8 +5,17 @@ const urlRegex = new RegExp(
 	'gi'
 );
 
-export function purfiyUnsafeHtml(dirtyHtml: string): string {
-	return DOMPurify.sanitize(dirtyHtml, { ALLOWED_TAGS: ['a', 'br'], ALLOWED_ATTR: ['target', 'href'] });
+export function purifyUnsafeHtml(dirtyHtml: string): string {
+	const sanitizedHtml = DOMPurify.sanitize(dirtyHtml, {
+		ALLOWED_TAGS: ['a', 'br'],
+		ALLOWED_ATTR: ['target', 'href']
+	});
+	const template = document.createElement('template');
+	template.innerHTML = sanitizedHtml;
+	template.content.querySelectorAll('a[target="_blank"]').forEach(link => {
+		link.setAttribute('rel', 'noopener noreferrer');
+	});
+	return template.innerHTML;
 }
 
 export function replaceNewLineWithBr(tekst: string): string {
@@ -23,7 +32,7 @@ export function replaceTextUrlsWithTags(dialogTekst: string): string {
 
 		const matchedUrl = urlMatch[0];
 		const isInternalUrl = matchedUrl.includes('.adeo.no/'); // This could be made more robust if the need arises
-		const target = isInternalUrl ? '' : 'target="_blank"';
+		const target = isInternalUrl ? '' : 'target="_blank" rel="noopener noreferrer"';
 
 		const urlTag = `<a ${target} href="${matchedUrl}">${matchedUrl}</a>`;
 		tekst = tekst.replace(matchedUrl, urlTag);
