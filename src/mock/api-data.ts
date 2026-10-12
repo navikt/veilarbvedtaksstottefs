@@ -1,5 +1,4 @@
 import OppfolgingData from '../api/veilarboppfolging';
-import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { MalformData, MalformType, Navn } from '../api/veilarbperson';
 import { EKSEMPELTOGGLE, VIS_KLAGE_TOGGLE, FeatureToggles } from '../api/obo-unleash';
 import { Veileder } from '../api/veilarbveileder';
@@ -26,9 +25,7 @@ import {
 } from '@navikt/arbeidssokerregisteret-utils';
 import OyeblikksbildeType from '../util/type/oyblikksbilde-type';
 
-const tilgangTilBrukersKontor: TilgangTilBrukersKontor = {
-	tilgangTilBrukersKontor: true
-};
+const tilgangTilBrukersKontor = true;
 
 const oppfolgingData: OppfolgingData = {
 	reservasjonKRR: false,
@@ -453,7 +450,7 @@ export function hentFattedeVedtak(): Vedtak[] {
 	return fattedeVedtak;
 }
 
-export function hentTilgangTilBrukersKontor(): TilgangTilBrukersKontor {
+export function hentTilgangTilBrukersKontor(): boolean {
 	return tilgangTilBrukersKontor;
 }
 
