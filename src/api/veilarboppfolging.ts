@@ -1,4 +1,3 @@
-import TilgangTilBrukersKontor from '../util/type/tilgang-til-brukers-kontor';
 import { AxiosPromise } from 'axios';
 import { axiosInstance } from './utils';
 
@@ -40,8 +39,4 @@ export function fetchOppfolging(fnr: string): AxiosPromise<OppfolgingData> {
 				underOppfolging: res.data.data.oppfolging?.erUnderOppfolging ?? false
 			}
 		}));
-}
-
-export function fetchTilgangTilBrukersKontor(fnr: string): AxiosPromise<TilgangTilBrukersKontor> {
-	return axiosInstance.post(`/veilarboppfolging/api/v3/oppfolging/hent-veilederTilgang`, { fnr });
 }
