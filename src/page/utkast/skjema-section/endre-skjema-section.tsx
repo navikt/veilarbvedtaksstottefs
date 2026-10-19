@@ -149,7 +149,7 @@ export function EndreSkjemaSection() {
 	useEffect(() => {
 		// Det kan bli problemer hvis gamle oppdateringer henger igjen etter at brukeren har forlatt redigeringssiden.
 		// Oppdateringen kan f.eks bli sendt etter at vedtaket har blitt fattet, eller at utkastet blir oppdatert med gammel data.
-		return oppdaterUtkast.cancel;
+		return () => oppdaterUtkast.cancel();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
