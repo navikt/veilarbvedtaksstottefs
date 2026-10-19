@@ -33,7 +33,7 @@
     "classnames": "2.5.1",
     "constate": "4.0.0",
     "dayjs": "1.11.23",
-    "dompurify": "3.4.16",
+    "dompurify": "3.4.17",
     "lodash.debounce": "4.0.8",
     "react": "19.3.0",
     "react-dom": "19.3.0",
