@@ -33,7 +33,7 @@
     "classnames": "2.5.1",
     "constate": "4.0.0",
     "dayjs": "1.11.23",
-    "dompurify": "3.4.16",
+    "dompurify": "3.4.17",
     "lodash.debounce": "4.0.8",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -50,13 +50,13 @@
     "less": "4.9.1",
     "lint-staged": "17.6.0",
     "msw": "3.0.3",
-    "oxlint": "1.87.0",
+    "oxlint": "1.88.0",
     "oxlint-tsgolint": "7.0.2004",
     "prettier": "3.9.10",
     "stylelint": "17.16.0",
     "typescript": "6.0.3",
     "vite": "8.3.4",
-    "vitest": "5.0.3"
+    "vitest": "5.0.4"
   },
   "lint-staged": {
     "src/**/*.css": [
