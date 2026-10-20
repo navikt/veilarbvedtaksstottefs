@@ -13,10 +13,6 @@ export function lagVedtakBrevMockUrl(innsatsgruppe: InnsatsgruppeType, hovedmal:
 	return url;
 }
 
-function isRunningOnGhPages(): boolean {
-	return window.location.hostname === 'navikt.github.io';
-}
-
 export function mockUrlPrefix(): string {
-	return isRunningOnGhPages() ? '/veilarbvedtaksstottefs' : '';
+	return import.meta.env.BASE_URL.replace(/\/$/, '');
 }
