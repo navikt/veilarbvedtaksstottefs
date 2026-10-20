@@ -15,7 +15,7 @@ export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps): JSX.Elem
 	// Siden loading = false før vi kaller fetch så vil advarsel alertstripen bli rendret et par ms med useEffect()
 	useLayoutEffect(() => {
 		tilgangTilKontorFetcher.fetch(props.fnr).catch();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, []);
 
 	if (tilgangTilKontorFetcher.loading) {

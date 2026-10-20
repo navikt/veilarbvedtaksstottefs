@@ -89,7 +89,7 @@ export function LesSkjemaSection() {
 				refreshUtkastIntervalRef.current = undefined;
 			}
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [utkast, erBeslutter]);
 	// Utkast kan bli satt til null hvis man er beslutter og veileder fatter et vedtak
 	if (utkast == null) {
