@@ -21,7 +21,7 @@ export function OyeblikksbildeEgenvurdering(props: { vedtakId: number }): JSX.El
 	useEffect(() => {
 		oyeblikksbildeFetcher.fetch(props.vedtakId);
 		logMetrikk('vis-oyblikksbilde-egenvurdering');
-		// eslint-disable-next-line
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [props.vedtakId]);
 
 	if (oyeblikksbildeFetcher.loading) {
