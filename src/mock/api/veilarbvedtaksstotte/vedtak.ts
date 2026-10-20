@@ -1,4 +1,7 @@
-import { bypass, delay, http, HttpResponse, RequestHandler } from 'msw';
+import { RequestHandler } from 'msw';
+import { http, HttpResponse } from 'msw/http';
+import { delay } from 'msw/utils/delay';
+import { bypass } from 'msw/utils/bypass';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { lagVedtakBrevMockUrl, mockUrlPrefix } from '../../utils';
 import {

@@ -1,7 +1,9 @@
 import { BeslutterProsessStatus, VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { hentInnloggetVeileder, hentUtkast, leggTilMockSystemMelding, oppdaterUtkast } from '../../api-data';
-import { delay, http, HttpResponse, RequestHandler } from 'msw';
+import { RequestHandler } from 'msw';
+import { http, HttpResponse } from 'msw/http';
+import { delay } from 'msw/utils/delay';
 import { DEFAULT_DELAY_MILLISECONDS } from '../../index';
 
 export const beslutterHandlers: RequestHandler[] = [
