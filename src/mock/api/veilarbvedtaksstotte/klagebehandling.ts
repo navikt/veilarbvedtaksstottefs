@@ -1,5 +1,7 @@
 import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
-import { delay, http, HttpResponse, RequestHandler } from 'msw';
+import { RequestHandler } from 'msw';
+import { http, HttpResponse } from 'msw/http';
+import { delay } from 'msw/utils/delay';
 import { DEFAULT_DELAY_MILLISECONDS } from '../../index';
 
 export const klagebehandlingHandlers: RequestHandler[] = [

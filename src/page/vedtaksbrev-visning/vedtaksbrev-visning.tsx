@@ -63,7 +63,7 @@ function GenericVedtaksbrevVisning(props: GenericVedtaksbrevVisningProps) {
 		if (pdfStatus === PDFStatus.ERROR) {
 			showModal(ModalType.FEIL_VED_VISNING);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [pdfStatus]);
 
 	return (

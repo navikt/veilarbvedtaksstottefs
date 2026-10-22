@@ -84,7 +84,7 @@ export function UtkastSide() {
 		if (showSection) {
 			setHarNyeMeldinger(false);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [showSection]);
 
 	useEffect(() => {
@@ -101,7 +101,7 @@ export function UtkastSide() {
 				avbrytPolling();
 			};
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [erBeslutterProsessStartet]);
 
 	useEffect(() => {
@@ -116,7 +116,7 @@ export function UtkastSide() {
 		if (utkast) {
 			refreshMeldinger();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [innsatsgruppe]);
 
 	if (utkast == null) {

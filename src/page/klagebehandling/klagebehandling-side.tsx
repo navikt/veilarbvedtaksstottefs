@@ -79,6 +79,11 @@ function hentMeldingFraFullforFeil(error: unknown): string {
 }
 
 export function KlagebehandlingSide(props: { vedtakId: number }) {
+	const [fromDate] = useState(() => {
+		const date = new Date();
+		date.setMonth(date.getMonth() - 2);
+		return date;
+	});
 	const [klageDato, setKlageDato] = useState<Date | undefined>();
 	const [journalId, setJournalId] = useState('');
 	const [aktivtSteg, setAktivtSteg] = useState(1);
@@ -185,7 +190,7 @@ export function KlagebehandlingSide(props: { vedtakId: number }) {
 	const kanStarteKlagebehandling = !!(klageDato && journalpostIdHarRiktigFormat(journalId));
 
 	const { datepickerProps, inputProps } = useDatepicker({
-		fromDate: new Date(new Date().setMonth(new Date().getMonth() - 2)),
+		fromDate,
 		onDateChange: nyDato => {
 			setKlageDato(nyDato);
 			setStartKlageFeilmelding(undefined);

@@ -36,7 +36,7 @@ export function Forhandsvisning() {
 		if (pdfStatus === PDFStatus.ERROR) {
 			showModal(ModalType.FEIL_VED_FORHANDSVISNING);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [pdfStatus]);
 
 	if (utkast == null) {

@@ -40,7 +40,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 		registreringOyeblikksbildeFetcher.fetch(props.vedtakId);
 		arbeidssokerRegistretOyeblikksbildeFetcher.fetch(props.vedtakId);
 		logMetrikk('vis-oyblikksbilde-registering');
-		// eslint-disable-next-line
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [props.vedtakId]);
 
 	if (registreringOyeblikksbildeFetcher.loading || arbeidssokerRegistretOyeblikksbildeFetcher.loading) {
@@ -50,7 +50,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 	} else if (arbeidssokerRegistretOyeblikksbildeFetcher.data?.data) {
 		try {
 			return (
-				// eslint-disable-next-line react-hooks/error-boundaries
+				// oxlint-disable-next-line react/error-boundaries
 				<OyeblikksdataArbeidssokerInnhold
 					data={arbeidssokerRegistretOyeblikksbildeFetcher.data.data}
 					erJournalfort={arbeidssokerRegistretOyeblikksbildeFetcher.data.journalfort}
@@ -63,7 +63,7 @@ export function OyeblikksbildeRegistrering(props: { vedtakId: number }): JSX.Ele
 	} else if (registreringOyeblikksbildeFetcher.data?.data) {
 		try {
 			return (
-				// eslint-disable-next-line react-hooks/error-boundaries
+				// oxlint-disable-next-line react/error-boundaries
 				<OyeblikksdataRegistreringInnhold
 					data={registreringOyeblikksbildeFetcher.data.data}
 					erJournalfort={registreringOyeblikksbildeFetcher.data.journalfort}

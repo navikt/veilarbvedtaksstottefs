@@ -33,7 +33,7 @@ export function RedigerKilde({
 					setTekst(nyKilde);
 				}}
 				maxLength={KILDE_MAX_LENGTH}
-				// eslint-disable-next-line jsx-a11y/no-autofocus
+				// oxlint-disable-next-line jsx-a11y/no-autofocus
 				autoFocus
 			/>
 			<div className="rediger-kilde__handlinger">

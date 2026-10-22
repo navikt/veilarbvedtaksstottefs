@@ -10,7 +10,7 @@ export interface FrontendEvent {
 
 export const logMetrikk = (metrikkNavn: string, fields?: object, tags?: object): void => {
 	if (env.isDemo) {
-		// eslint-disable-next-line no-console
+		// oxlint-disable-next-line no-console
 		console.log('Event', metrikkNavn, 'Fields:', fields, 'Tags:', tags);
 	} else {
 		sendEventTilVeilarbvedtaksstotte({ name: `${APP_NAME}.metrikker.${metrikkNavn}`, fields, tags });

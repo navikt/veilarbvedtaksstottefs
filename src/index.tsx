@@ -18,10 +18,10 @@ if (env.isDemo) {
 					);
 				})
 				.catch((e: Error) => {
-					// eslint-disable-next-line no-console
+					// oxlint-disable-next-line no-console
 					console.error('Unable to setup mocked API endpoints', e);
 				});
-		}) // eslint-disable-next-line no-console
+		}) // oxlint-disable-next-line no-console
 		.catch(e => console.log('MSW - failed to import', e));
 } else {
 	NAVSPA.eksporter('veilarbvedtaksstottefs', App);

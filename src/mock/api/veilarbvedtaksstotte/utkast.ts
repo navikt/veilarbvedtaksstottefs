@@ -2,7 +2,10 @@ import { enhetId, enhetNavn } from '../../data';
 import { Utkast, Vedtak, VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
 import { SystemMeldingType } from '../../../util/type/melding-type';
 import { SkjemaData } from '../../../util/skjema-utils';
-import { bypass, delay, http, HttpResponse, RequestHandler } from 'msw';
+import { RequestHandler } from 'msw';
+import { http, HttpResponse } from 'msw/http';
+import { delay } from 'msw/utils/delay';
+import { bypass } from 'msw/utils/bypass';
 import { lagVedtakBrevMockUrl } from '../../utils';
 import {
 	byttUtUtkast,

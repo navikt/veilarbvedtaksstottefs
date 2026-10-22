@@ -11,6 +11,10 @@ updates:
       interval: "weekly"
     cooldown:
       default-days: 7
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
@@ -30,3 +34,9 @@ updates:
           - "react-dom"
           - "@types/react"
           - "@types/react-dom"
+      minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"

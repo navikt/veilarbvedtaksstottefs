@@ -59,7 +59,7 @@ export function DataFetcher(props: { fnr: string; children: React.ReactNode }): 
 
 		arbeidssoekerperiodeFetcher.fetch(props.fnr).then(ifResponseHasData(setArbeidssokerperiode)).catch();
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -67,7 +67,7 @@ export function DataFetcher(props: { fnr: string; children: React.ReactNode }): 
 			setVeilederTilgang(finnVeilederTilgang(innloggetVeilederFetcher.data, utkastFetcher.data));
 		}
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [innloggetVeilederFetcher, utkastFetcher]);
 
 	if (

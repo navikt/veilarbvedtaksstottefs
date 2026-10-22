@@ -12,7 +12,7 @@ function FeatureFetcher(props: PropsWithChildren<unknown>): JSX.Element | null {
 
 	useLayoutEffect(() => {
 		featureAxiosFetcher.fetch().then(ifResponseHasData(setFeatures)).catch();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, []);
 
 	if (featureAxiosFetcher.loading) {
