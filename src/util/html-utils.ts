@@ -31,10 +31,8 @@ export function replaceTextUrlsWithTags(dialogTekst: string): string {
 		if (!urlMatch) break;
 
 		const matchedUrl = urlMatch[0];
-		const isInternalUrl = matchedUrl.includes('.adeo.no/'); // This could be made more robust if the need arises
-		const target = isInternalUrl ? '' : 'target="_blank" rel="noopener noreferrer"';
 
-		const urlTag = `<a ${target} href="${matchedUrl}">${matchedUrl}</a>`;
+		const urlTag = `<a target="_blank" href="${matchedUrl}">${matchedUrl}</a>`;
 		tekst = tekst.replace(matchedUrl, urlTag);
 	}
 
