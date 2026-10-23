@@ -60,7 +60,7 @@ function NrkDictionaries(props: { content: string }) {
 											Kilde
 										</Heading>
 										{
-											<Link target="_blank" href={gammelnavsk.lenke}>
+											<Link target="_blank" rel="noopener noreferrer" href={gammelnavsk.lenke}>
 												{gammelnavsk.kilde}
 												<ExternalLinkIcon />
 											</Link>

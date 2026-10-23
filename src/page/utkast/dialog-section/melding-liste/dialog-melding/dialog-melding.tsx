@@ -1,6 +1,6 @@
 import cls from 'classnames';
 import { formatDayMonthTime } from '../../../../../util/date-utils';
-import { purfiyUnsafeHtml, replaceNewLineWithBr, replaceTextUrlsWithTags } from '../../../../../util/html-utils';
+import { purifyUnsafeHtml, replaceNewLineWithBr, replaceTextUrlsWithTags } from '../../../../../util/html-utils';
 import { BodyShort, Detail } from '@navikt/ds-react';
 import './dialog-melding.less';
 
@@ -21,7 +21,7 @@ function formatAndCleanMessage(message: string): string {
 	formattedMessage = replaceTextUrlsWithTags(formattedMessage);
 	formattedMessage = replaceNewLineWithBr(formattedMessage);
 
-	return purfiyUnsafeHtml(formattedMessage);
+	return purifyUnsafeHtml(formattedMessage);
 }
 
 export const DialogMelding = (props: DialogMeldingProps) => {

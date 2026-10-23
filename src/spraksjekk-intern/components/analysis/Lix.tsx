@@ -63,7 +63,11 @@ function Lix(props: { content: OrNothing<string> }) {
 						<BodyShort size="small">
 							Liks: {lix}. Teksten kan anses{' '}
 							<span style={{ textTransform: 'lowercase' }}>{lixResultMessage(lix)}</span> ifølge{' '}
-							<Link target="_blank" href="https://no.wikipedia.org/wiki/Lesbarhetsindeks">
+							<Link
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://no.wikipedia.org/wiki/Lesbarhetsindeks"
+							>
 								lesbarhetsindeksen Liks
 								<ExternalLinkIcon />
 							</Link>
