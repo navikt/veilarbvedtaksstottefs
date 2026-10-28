@@ -18,7 +18,7 @@ export function VisKildeEgenvurdering({ kildenavn }: Readonly<VisKildeProps>) {
 				{kildenavn}
 			</Checkbox>
 			{skruAvEgenvurderingskilde && (
-				<Alert size="small" variant="info" inline className="vis-kilde__alert">
+				<Alert size="small" variant="warning" inline className="vis-kilde__alert">
 					Du kan ikke bruke denne kilden akkurat nå. Teknisk vedlikehold pågår, se driftsmelding.
 				</Alert>
 			)}
