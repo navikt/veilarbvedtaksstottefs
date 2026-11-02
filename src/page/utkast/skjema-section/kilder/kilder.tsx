@@ -5,13 +5,14 @@ import { LeggTilKilde } from './legg-til-kilde/legg-til-kilde';
 import { KilderTipsInnhold } from './kilder-tips-innhold';
 import FeltHeader from '../felt-header/felt-header';
 import { useSkjemaStore } from '../../../../store/skjema-store';
-import { mergeMedDefaultKilder } from '../../../../util/skjema-utils';
+import { erDefaultKilde, kildelisteBokmal } from '../../../../util/skjema-utils';
 import { CheckboxGroup } from '@navikt/ds-react';
+import { oppdaterKildevalg } from './kilder-utils';
 import './kilder.css';
 
 function Kilder() {
 	const { valgteKilder, setValgteKilder, errors } = useSkjemaStore();
-	const [kilder, setKilder] = useState<string[]>(mergeMedDefaultKilder(valgteKilder));
+	const [kilder, setKilder] = useState<string[]>(valgteKilder.filter(kilde => !erDefaultKilde(kilde)));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
 	const [visLeggTilNyKilde, setVisLeggTilNyKilde] = useState<boolean>(true);
 
@@ -42,19 +43,43 @@ function Kilder() {
 	return (
 		<div className="kilder-felt" id="kilder__scroll-til-feil">
 			<FeltHeader
+				id="automatiske-kilder-tittel"
+				tittel="Automatisk journalførte kilder"
+				beskrivelse="Disse kildene journalføres automatisk på vedtakstidspunktet dersom de er valgt."
+			/>
+			<CheckboxGroup
+				id="automatiske-kilder__checkboxgroup"
+				size="small"
+				legend="Automatisk journalførte kilder"
+				hideLegend
+				onChange={(nyeValgteKilder: string[]) =>
+					setValgteKilder(prevState => oppdaterKildevalg(prevState, nyeValgteKilder, erDefaultKilde))
+				}
+				value={valgteKilder.filter(erDefaultKilde)}
+			>
+				{kildelisteBokmal.map(kilde => (
+					<VisKilde key={kilde} kildenavn={kilde} />
+				))}
+			</CheckboxGroup>
+			<FeltHeader
 				id="kilder-tittel"
-				tittel="Kilder"
+				tittel="Andre kilder"
 				tipsId="kilder-tips"
 				tipsInnhold={<KilderTipsInnhold />}
 				tipsAriaLabel="Tips for kilder"
+				beskrivelse="Andre kilder må du selv sørge for er journalført"
 			/>
 			<CheckboxGroup
 				id="kilder__checkboxgroup"
 				size="small"
-				legend="Valg av kilder"
+				legend="Andre kilder"
 				hideLegend
-				onChange={nyeValgteKilder => setValgteKilder(nyeValgteKilder)}
-				value={valgteKilder}
+				onChange={(nyeValgteKilder: string[]) =>
+					setValgteKilder(prevState =>
+						oppdaterKildevalg(prevState, nyeValgteKilder, kilde => !erDefaultKilde(kilde))
+					)
+				}
+				value={valgteKilder.filter(kilde => !erDefaultKilde(kilde))}
 				error={errors.kilder}
 			>
 				{kilder.map((kilde, index) =>

@@ -7,7 +7,7 @@ import { VisKildeArbeidssokerregisteret } from './vis-kilde-arbeidssokerregister
 
 interface VisKildeProps {
 	kildenavn: string;
-	handleKilde: () => void;
+	handleKilde?: () => void;
 }
 
 export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {

@@ -1,4 +1,5 @@
 .veilarbvedtaksstottefs .tips-popover__button {
+	margin-left: 1rem;
 	align-self: center;
 	height: 1.5rem;
 	border-radius: var(--ax-radius-full);

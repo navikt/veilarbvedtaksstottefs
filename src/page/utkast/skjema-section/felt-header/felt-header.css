@@ -1,10 +1,9 @@
 .veilarbvedtaksstottefs .felt-header {
-	display: flex;
 	margin-bottom: 1rem;
 }
 
 .veilarbvedtaksstottefs .felt-header__tittel {
-	margin-right: 1rem;
+	display: flex;
 }
 
 .veilarbvedtaksstottefs .felt-header__lenke {
