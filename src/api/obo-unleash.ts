@@ -3,13 +3,11 @@ import { axiosInstance } from './utils';
 
 export const EKSEMPELTOGGLE = 'togglenavn-eksempeltoggle';
 export const VIS_KLAGE_TOGGLE = 'veilarbvedtaksstottefs.vis_klage';
-export const SKRU_AV_EGENVURDERINGSKILDE_TOGGLE = 'veilarbvedtaksstottefs.skru_av_egenvurderingskilde';
-export const ALL_TOGGLES = [EKSEMPELTOGGLE, VIS_KLAGE_TOGGLE, SKRU_AV_EGENVURDERINGSKILDE_TOGGLE];
+export const ALL_TOGGLES = [EKSEMPELTOGGLE, VIS_KLAGE_TOGGLE];
 
 export interface FeatureToggles {
 	[EKSEMPELTOGGLE]: boolean;
 	[VIS_KLAGE_TOGGLE]: boolean;
-	[SKRU_AV_EGENVURDERINGSKILDE_TOGGLE]: boolean;
 }
 
 export function fetchFeaturesToggles(): AxiosPromise<FeatureToggles> {
