@@ -29,7 +29,7 @@
     "@navikt/ds-react": "8.20.1",
     "@navikt/fnrvalidator": "2.2.1",
     "@navikt/navspa": "7.5.0",
-    "axios": "1.20.0",
+    "axios": "1.21.0",
     "classnames": "2.5.1",
     "constate": "4.0.0",
     "dayjs": "1.11.23",
@@ -38,7 +38,7 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-pdf": "11.0.0",
-    "react-router-dom": "7.18.4"
+    "react-router-dom": "7.18.5"
   },
   "devDependencies": {
     "@navikt/aksel-stylelint": "8.20.1",
@@ -50,7 +50,7 @@
     "less": "4.9.1",
     "lint-staged": "17.6.0",
     "msw": "3.0.3",
-    "oxlint": "1.89.0",
+    "oxlint": "1.90.0",
     "oxlint-tsgolint": "7.0.2005",
     "prettier": "3.9.10",
     "stylelint": "17.16.0",
