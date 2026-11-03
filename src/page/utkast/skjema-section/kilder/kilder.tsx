@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { VisKilde } from './vis-kilde/vis-kilde';
 import { RedigerKilde } from './rediger-kilde/rediger-kilde';
 import { LeggTilKilde } from './legg-til-kilde/legg-til-kilde';
-import { KilderTipsInnhold } from './kilder-tips-innhold';
+import { AndreKilderTipsInnhold } from './andre-kilder-tips-innhold';
 import FeltHeader from '../felt-header/felt-header';
 import { useSkjemaStore } from '../../../../store/skjema-store';
 import { erDefaultKilde, kildelisteBokmal } from '../../../../util/skjema-utils';
 import { CheckboxGroup } from '@navikt/ds-react';
 import { oppdaterKildevalg } from './kilder-utils';
+import { AutomatiskeKilderTipsInnhold } from './automatiske-kilder-tips-innhold';
 import './kilder.css';
 
 function Kilder() {
@@ -45,6 +46,8 @@ function Kilder() {
 			<FeltHeader
 				id="automatiske-kilder-tittel"
 				tittel="Automatisk journalførte kilder"
+				tipsInnhold={<AutomatiskeKilderTipsInnhold />}
+				tipsAriaLabel="Tips for automatisk journalførte kilder"
 				beskrivelse="Disse kildene journalføres automatisk på vedtakstidspunktet dersom de er valgt."
 			/>
 			<CheckboxGroup
@@ -64,13 +67,12 @@ function Kilder() {
 			<FeltHeader
 				id="kilder-tittel"
 				tittel="Andre kilder"
-				tipsId="kilder-tips"
-				tipsInnhold={<KilderTipsInnhold />}
-				tipsAriaLabel="Tips for kilder"
-				beskrivelse="Andre kilder må du selv sørge for er journalført"
+				tipsInnhold={<AndreKilderTipsInnhold />}
+				tipsAriaLabel="Tips for andre kilder"
+				beskrivelse="Andre kilder må du selv sørge for er journalført."
 			/>
 			<CheckboxGroup
-				id="kilder__checkboxgroup"
+				id="andre-kilder__checkboxgroup"
 				size="small"
 				legend="Andre kilder"
 				hideLegend
