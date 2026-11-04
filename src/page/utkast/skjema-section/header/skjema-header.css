@@ -17,6 +17,13 @@
 	width: 2.1875rem;
 }
 
+.veilarbvedtaksstottefs .skjema-header__ikon--utkast {
+	flex-shrink: 0;
+	width: 3rem;
+	height: 3rem;
+	color: var(--ax-text-accent-decoration);
+}
+
 .veilarbvedtaksstottefs .skjema-header__innhold {
 	display: flex;
 	flex-direction: row;

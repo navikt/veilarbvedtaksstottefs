@@ -2,11 +2,12 @@ import { Button, Detail } from '@navikt/ds-react';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { innsatsgruppeTekst } from '../../../util/innsatsgruppe';
 import { hovedmalTekst } from '../../../util/hovedmal';
-import fullfortVedtakIcon from './fullfort.svg';
+import { FileCheckmarkIcon } from '@navikt/aksel-icons';
 import { logMetrikk } from '../../../util/logger';
 import { Vedtak } from '../../../api/veilarbvedtaksstotte';
 import { formatDateStr } from '../../../util/date-utils';
 import './gjeldende-vedtak-panel.css';
+import '../../vedtak-ikon.css';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../routes.ts';
 
@@ -25,7 +26,8 @@ export function GjeldendeVedtakPanel(props: { gjeldendeVedtak: Vedtak }) {
 			undertittel={innsatsgruppeTekst[innsatsgruppe]}
 			detaljer={hovedmal ? hovedmalTekst[hovedmal] : undefined}
 			className="gjeldende-vedtak-panel"
-			imgSrc={fullfortVedtakIcon}
+			ikon={FileCheckmarkIcon}
+			ikonClassName="vedtak-ikon--success"
 			tekstKomponent={
 				<>
 					<Detail>

@@ -1,12 +1,12 @@
 import { HovedsidePanelBox } from '../hovedside-panel/hovedside-panel';
-import ingenGjeldendeVedtakBilde from './ingen_gjeldende_vedtak.svg';
+import { FileXMarkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading } from '@navikt/ds-react';
 import './ingen-gjeldende-vedtak-panel.css';
 
 export function IngenGjeldendeVedtakPanel() {
 	return (
 		<HovedsidePanelBox className="ingen-gjeldende-vedtak-panel">
-			<img src={ingenGjeldendeVedtakBilde} alt="" className="ingen-gjeldende-vedtak-panel__bilde" />
+			<FileXMarkIcon aria-hidden className="ingen-gjeldende-vedtak-panel__bilde" />
 			<Heading size="small" level="2" spacing>
 				Ingen gjeldende oppfølgingsvedtak
 			</Heading>

@@ -1,4 +1,5 @@
 import React from 'react';
+import cls from 'classnames';
 
 import { Detail, Heading, VStack } from '@navikt/ds-react';
 import './vedtaksstotte-panel.css';
@@ -8,7 +9,8 @@ interface VedtaksstottePanelProps {
 	tittel: string;
 	undertittel: string;
 	detaljer?: string;
-	imgSrc: string;
+	ikon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+	ikonClassName?: string;
 	tekstKomponent: React.ReactNode;
 	knappKomponent?: React.ReactNode;
 	className?: string;
@@ -17,7 +19,8 @@ interface VedtaksstottePanelProps {
 export function VedtaksstottePanel({
 	tittel,
 	undertittel,
-	imgSrc,
+	ikon: Ikon,
+	ikonClassName,
 	tekstKomponent,
 	knappKomponent,
 	className,
@@ -29,7 +32,7 @@ export function VedtaksstottePanel({
 				{tittel}
 			</Heading>
 			<div className="vedtakstottepanel__content">
-				<img src={imgSrc} className="vedtakstottepanel__ikon" alt="" />
+				<Ikon className={cls('vedtakstottepanel__ikon', ikonClassName)} aria-hidden />
 				<VStack gap="space-8" align="start">
 					<hgroup>
 						<Heading size="small" level="3">
