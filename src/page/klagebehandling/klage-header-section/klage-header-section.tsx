@@ -1,5 +1,7 @@
-import tidligereVedtakBilde from '../../../component/skjema-visning/header/tidligere-vedtak.svg';
+import { FileParagraphIcon } from '@navikt/aksel-icons';
 import { Detail, Heading } from '@navikt/ds-react';
+import '../../../component/vedtak-ikon.css';
+import './klage-header-section.css';
 
 interface KlageHeaderProps {
 	veilederNavn: string;
@@ -10,7 +12,7 @@ interface KlageHeaderProps {
 export function KlageHeader(props: KlageHeaderProps) {
 	return (
 		<header className="skjema-header">
-			<img src={tidligereVedtakBilde} alt="paragraf ikon" className="skjema-header__ikon" />
+			<FileParagraphIcon title="paragraf ikon" className="skjema-header__ikon vedtak-ikon--neutral" />
 			<div className="skjema-header__innhold">
 				<Heading size="medium" level="1">
 					Behandling av klage

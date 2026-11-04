@@ -1,4 +1,4 @@
-import utkastBilde from './utkast.svg';
+import { DocPencilIcon } from '@navikt/aksel-icons';
 import { SkjemaLagringStatus } from '../../../../util/type/skjema-lagring-status';
 import { formatDateTime } from '../../../../util/date-utils';
 import { Detail, Heading } from '@navikt/ds-react';
@@ -31,7 +31,7 @@ function SkjemaHeader(props: SkjemaHeaderProps) {
 
 	return (
 		<header className="skjema-header">
-			<img src={utkastBilde} alt="Vedtak ikon" className="skjema-header__ikon" />
+			<DocPencilIcon title="Vedtak ikon" className="skjema-header__ikon skjema-header__ikon--utkast" />
 			<div className="skjema-header__innhold">
 				<Heading size="small" level="1">
 					Utkast

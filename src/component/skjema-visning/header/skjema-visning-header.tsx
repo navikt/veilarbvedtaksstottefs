@@ -1,7 +1,8 @@
-import gjeldendeVedtakBilde from './gjeldende-vedtak.svg';
-import tidligereVedtakBilde from './tidligere-vedtak.svg';
+import { FileCheckmarkIcon, FileParagraphIcon } from '@navikt/aksel-icons';
 import { Heading } from '@navikt/ds-react';
+import cls from 'classnames';
 import './skjema-visning-header.css';
+import '../../vedtak-ikon.css';
 
 interface SkjemaVisningHeaderProps {
 	erGjeldende: boolean;
@@ -9,11 +10,17 @@ interface SkjemaVisningHeaderProps {
 
 export function SkjemaVisningHeader(props: SkjemaVisningHeaderProps) {
 	const tittelTekst = props.erGjeldende ? 'Gjeldende vedtak' : 'Tidligere vedtak';
-	const vedtakBilde = props.erGjeldende ? gjeldendeVedtakBilde : tidligereVedtakBilde;
+	const VedtakIkon = props.erGjeldende ? FileCheckmarkIcon : FileParagraphIcon;
 
 	return (
 		<div className="skjema-visning-header">
-			<img src={vedtakBilde} alt="" className="skjema-visning-header__bilde" />
+			<VedtakIkon
+				aria-hidden
+				className={cls(
+					'skjema-visning-header__bilde',
+					props.erGjeldende ? 'vedtak-ikon--success' : 'vedtak-ikon--neutral'
+				)}
+			/>
 			<div className="skjema-visning-header__vedtak">
 				<span className="skjema-visning-header__separator" />
 				<Heading size="medium" level="1" className="skjema-visning-header__tittel">

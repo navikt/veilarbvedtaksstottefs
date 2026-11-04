@@ -1,0 +1,26 @@
+.veilarbvedtaksstottefs .vedtak-ikon--success,
+.veilarbvedtaksstottefs .vedtak-ikon--accent,
+.veilarbvedtaksstottefs .vedtak-ikon--neutral {
+	box-sizing: border-box;
+	border: 4px solid;
+	border-radius: 50%;
+	padding: 1rem;
+}
+
+.veilarbvedtaksstottefs .vedtak-ikon--success {
+	border-color: var(--ax-border-success);
+	background-color: var(--ax-bg-success-moderate);
+	color: var(--ax-bg-success-strong);
+}
+
+.veilarbvedtaksstottefs .vedtak-ikon--accent {
+	border-color: var(--ax-border-accent);
+	background-color: var(--ax-bg-accent-moderate);
+	color: var(--ax-bg-accent-strong);
+}
+
+.veilarbvedtaksstottefs .vedtak-ikon--neutral {
+	border-color: var(--ax-border-neutral);
+	background-color: var(--ax-bg-neutral-moderate);
+	color: var(--ax-bg-neutral-strong);
+}

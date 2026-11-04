@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { OrNothing } from '../../../util/type/ornothing';
-import nyttVedtakBilde from './nytt-vedtak.svg';
+import { FilePlusIcon } from '@navikt/aksel-icons';
 import { useAppStore } from '../../../store/app-store';
 import { ModalType, useModalStore } from '../../../store/modal-store';
 import { HovedsidePanelBox } from '../hovedside-panel/hovedside-panel';
@@ -84,7 +84,7 @@ export function NyttVedtakPanel(props: { utkast: OrNothing<Utkast> }) {
 				</Heading>
 			</div>
 			<div className="vedtakstottepanel__content">
-				<img src={nyttVedtakBilde} className="vedtakstottepanel__ikon" alt="" />
+				<FilePlusIcon className="vedtakstottepanel__ikon" aria-hidden />
 				<div className="vedtakstottepanel__buttons">
 					<Checkbox
 						size="small"

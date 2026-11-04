@@ -1,6 +1,5 @@
 import { OrNothing } from '../../../util/type/ornothing';
-import utkastIkon from './utkast.svg';
-import utkastTilBeslutterIkon from './utkast-til-beslutter.svg';
+import { DocPencilIcon, TasklistSendIcon } from '@navikt/aksel-icons';
 import { VedtaksstottePanel } from '../vedtaksstotte/vedtaksstotte-panel';
 import { useTilgangStore } from '../../../store/tilgang-store';
 import { useSkjemaStore } from '../../../store/skjema-store';
@@ -15,6 +14,7 @@ import { Utkast } from '../../../api/veilarbvedtaksstotte';
 import { formatDateTime } from '../../../util/date-utils';
 import { Button, Detail } from '@navikt/ds-react';
 import './utkast-panel.css';
+import '../../vedtak-ikon.css';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../routes.ts';
 
@@ -48,7 +48,8 @@ export function UtkastPanel(props: { utkast: OrNothing<Utkast> }) {
 			tittel="Utkast til oppfølgingsvedtak"
 			undertittel={lagUtkastUnderTittle()}
 			className="utkast-panel"
-			imgSrc={beslutterNavn ? utkastTilBeslutterIkon : utkastIkon}
+			ikon={beslutterNavn ? TasklistSendIcon : DocPencilIcon}
+			ikonClassName="vedtak-ikon--accent"
 			tekstKomponent={
 				<>
 					{beslutterNavn && (
