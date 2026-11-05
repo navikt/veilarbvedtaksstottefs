@@ -1,10 +1,11 @@
 import gjeldendeVedtakBilde from './gjeldende-vedtak.svg';
 import tidligereVedtakBilde from './tidligere-vedtak.svg';
-import { Heading } from '@navikt/ds-react';
+import { Detail, Heading } from '@navikt/ds-react';
 import './skjema-visning-header.css';
 
 interface SkjemaVisningHeaderProps {
 	erGjeldende: boolean;
+	vedtakId: number;
 }
 
 export function SkjemaVisningHeader(props: SkjemaVisningHeaderProps) {
@@ -14,6 +15,9 @@ export function SkjemaVisningHeader(props: SkjemaVisningHeaderProps) {
 	return (
 		<div className="skjema-visning-header">
 			<img src={vedtakBilde} alt="" className="skjema-visning-header__bilde" />
+			<Detail className="skjema-visning-header__vedtakId">
+				<b>Intern vedtaks-ID:</b> {props.vedtakId}
+			</Detail>
 			<div className="skjema-visning-header__vedtak">
 				<span className="skjema-visning-header__separator" />
 				<Heading size="medium" level="1" className="skjema-visning-header__tittel">

@@ -26,3 +26,7 @@
 .veilarbvedtaksstottefs .skjema-visning-header__tittel {
 	margin: 0 1rem;
 }
+
+.veilarbvedtaksstottefs .skjema-visning-header__vedtakId {
+	align-self: flex-end;
+}
