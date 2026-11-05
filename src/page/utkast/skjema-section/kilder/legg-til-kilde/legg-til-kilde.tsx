@@ -7,7 +7,7 @@ interface LeggTilKildeProps {
 
 export function LeggTilKilde(props: LeggTilKildeProps) {
 	return (
-		<Button data-color="neutral" size="small" variant="tertiary" icon={<PlusIcon />} onClick={props.leggTilKilde}>
+		<Button data-color="neutral" size="small" variant="secondary" icon={<PlusIcon />} onClick={props.leggTilKilde}>
 			Legg til andre kilder
 		</Button>
 	);

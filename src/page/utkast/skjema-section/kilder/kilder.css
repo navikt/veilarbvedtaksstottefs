@@ -1,3 +1,7 @@
-.veilarbvedtaksstottefs #kilder__checkboxgroup {
-	margin-bottom: var(--ax-space-8);
+.veilarbvedtaksstottefs #automatiske-kilder__checkboxgroup {
+	margin-bottom: 1.5rem;
+}
+
+.veilarbvedtaksstottefs #andre-kilder__checkboxgroup {
+	margin-bottom: 0.5rem;
 }

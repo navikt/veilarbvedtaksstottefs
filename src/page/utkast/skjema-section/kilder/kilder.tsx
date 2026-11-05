@@ -2,16 +2,19 @@ import { useState } from 'react';
 import { VisKilde } from './vis-kilde/vis-kilde';
 import { RedigerKilde } from './rediger-kilde/rediger-kilde';
 import { LeggTilKilde } from './legg-til-kilde/legg-til-kilde';
-import { KilderTipsInnhold } from './kilder-tips-innhold';
+import { AndreKilderTipsInnhold } from './andre-kilder-tips-innhold';
 import FeltHeader from '../felt-header/felt-header';
 import { useSkjemaStore } from '../../../../store/skjema-store';
-import { mergeMedDefaultKilder } from '../../../../util/skjema-utils';
+import { erDefaultKilde, kildelisteBokmal } from '../../../../util/skjema-utils';
 import { CheckboxGroup } from '@navikt/ds-react';
+import { oppdaterKildevalg } from './kilder-utils';
+import { AutomatiskeKilderTipsInnhold } from './automatiske-kilder-tips-innhold';
 import './kilder.css';
 
 function Kilder() {
 	const { valgteKilder, setValgteKilder, errors } = useSkjemaStore();
-	const [kilder, setKilder] = useState<string[]>(mergeMedDefaultKilder(valgteKilder));
+	const kilderFeil = valgteKilder.length === 0 ? errors.kilder : undefined;
+	const [kilder, setKilder] = useState<string[]>(valgteKilder.filter(kilde => !erDefaultKilde(kilde)));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
 	const [visLeggTilNyKilde, setVisLeggTilNyKilde] = useState<boolean>(true);
 
@@ -42,20 +45,48 @@ function Kilder() {
 	return (
 		<div className="kilder-felt" id="kilder__scroll-til-feil">
 			<FeltHeader
-				id="kilder-tittel"
-				tittel="Kilder"
-				tipsId="kilder-tips"
-				tipsInnhold={<KilderTipsInnhold />}
-				tipsAriaLabel="Tips for kilder"
+				id="automatiske-kilder-tittel"
+				tittel="Automatisk journalførte kilder"
+				tipsInnhold={<AutomatiskeKilderTipsInnhold />}
+				tipsId="automatiske-kilder-tips"
+				tipsAriaLabel="Tips for automatisk journalførte kilder"
+				beskrivelse="Disse kildene journalføres automatisk på vedtakstidspunktet dersom de er valgt."
 			/>
 			<CheckboxGroup
-				id="kilder__checkboxgroup"
+				id="automatiske-kilder__checkboxgroup"
 				size="small"
-				legend="Valg av kilder"
+				legend="Automatisk journalførte kilder"
 				hideLegend
-				onChange={nyeValgteKilder => setValgteKilder(nyeValgteKilder)}
-				value={valgteKilder}
-				error={errors.kilder}
+				onChange={(nyeValgteKilder: string[]) =>
+					setValgteKilder(prevState => oppdaterKildevalg(prevState, nyeValgteKilder, erDefaultKilde))
+				}
+				value={valgteKilder.filter(erDefaultKilde)}
+				error={kilderFeil}
+			>
+				{kildelisteBokmal.map(kilde => (
+					<VisKilde key={kilde} kildenavn={kilde} />
+				))}
+			</CheckboxGroup>
+			<FeltHeader
+				id="kilder-tittel"
+				tittel="Andre kilder"
+				tipsInnhold={<AndreKilderTipsInnhold />}
+				tipsId="andre-kilder-tips"
+				tipsAriaLabel="Tips for andre kilder"
+				beskrivelse="Andre kilder må du selv sørge for er journalført."
+			/>
+			<CheckboxGroup
+				id="andre-kilder__checkboxgroup"
+				size="small"
+				legend="Andre kilder"
+				hideLegend
+				onChange={(nyeValgteKilder: string[]) =>
+					setValgteKilder(prevState =>
+						oppdaterKildevalg(prevState, nyeValgteKilder, kilde => !erDefaultKilde(kilde))
+					)
+				}
+				value={valgteKilder.filter(kilde => !erDefaultKilde(kilde))}
+				error={kilderFeil}
 			>
 				{kilder.map((kilde, index) =>
 					redigeringModusIndeks !== index ? (
