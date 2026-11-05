@@ -13,6 +13,7 @@ import './kilder.css';
 
 function Kilder() {
 	const { valgteKilder, setValgteKilder, errors } = useSkjemaStore();
+	const kilderFeil = valgteKilder.length === 0 ? errors.kilder : undefined;
 	const [kilder, setKilder] = useState<string[]>(valgteKilder.filter(kilde => !erDefaultKilde(kilde)));
 	const [redigeringModusIndeks, setRedigeringModusIndeks] = useState<number>(-1);
 	const [visLeggTilNyKilde, setVisLeggTilNyKilde] = useState<boolean>(true);
@@ -47,6 +48,7 @@ function Kilder() {
 				id="automatiske-kilder-tittel"
 				tittel="Automatisk journalførte kilder"
 				tipsInnhold={<AutomatiskeKilderTipsInnhold />}
+				tipsId="automatiske-kilder-tips"
 				tipsAriaLabel="Tips for automatisk journalførte kilder"
 				beskrivelse="Disse kildene journalføres automatisk på vedtakstidspunktet dersom de er valgt."
 			/>
@@ -59,6 +61,7 @@ function Kilder() {
 					setValgteKilder(prevState => oppdaterKildevalg(prevState, nyeValgteKilder, erDefaultKilde))
 				}
 				value={valgteKilder.filter(erDefaultKilde)}
+				error={kilderFeil}
 			>
 				{kildelisteBokmal.map(kilde => (
 					<VisKilde key={kilde} kildenavn={kilde} />
@@ -68,6 +71,7 @@ function Kilder() {
 				id="kilder-tittel"
 				tittel="Andre kilder"
 				tipsInnhold={<AndreKilderTipsInnhold />}
+				tipsId="andre-kilder-tips"
 				tipsAriaLabel="Tips for andre kilder"
 				beskrivelse="Andre kilder må du selv sørge for er journalført."
 			/>
@@ -82,7 +86,7 @@ function Kilder() {
 					)
 				}
 				value={valgteKilder.filter(kilde => !erDefaultKilde(kilde))}
-				error={errors.kilder}
+				error={kilderFeil}
 			>
 				{kilder.map((kilde, index) =>
 					redigeringModusIndeks !== index ? (
