@@ -4,6 +4,7 @@ import { Button, Checkbox } from '@navikt/ds-react';
 import { PencilIcon } from '@navikt/aksel-icons';
 import './vis-kilde.css';
 import { VisKildeArbeidssokerregisteret } from './vis-kilde-arbeidssokerregisteret';
+import { VisKildeEgenvurdering } from './vis-kilde-egenvurdering';
 
 interface VisKildeProps {
 	kildenavn: string;
@@ -16,6 +17,10 @@ export function VisKilde({ kildenavn, handleKilde }: Readonly<VisKildeProps>) {
 
 	if (erKildeArbeidssokerregister(kildenavn)) {
 		return <VisKildeArbeidssokerregisteret kildenavn={kildenavn} />;
+	}
+
+	if (kildenavn === 'Svarene dine om behov for veiledning') {
+		return <VisKildeEgenvurdering kildenavn={kildenavn} />;
 	}
 
 	return (

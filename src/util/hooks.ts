@@ -5,7 +5,7 @@ export function useIsAfterFirstRender(): boolean {
 
 	useEffect(() => {
 		// setState her er tilsiktet - hooken skal nettopp signalisere at et render nummer to har skjedd
-		// eslint-disable-next-line react-hooks/set-state-in-effect
+		// oxlint-disable-next-line react/set-state-in-effect
 		setIsAfterFirstRender(true);
 	}, []);
 

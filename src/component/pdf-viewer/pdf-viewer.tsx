@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { BodyShort, Heading, List, Loader, Theme } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Heading, List, Loader, Theme } from '@navikt/ds-react';
 import { useSkjemaStore } from '../../store/skjema-store';
 import { innsatsgruppeTekst } from '../../util/innsatsgruppe';
 import { hovedmalTekst } from '../../util/hovedmal';
@@ -44,8 +44,6 @@ function PdfViewer(props: PdfViewerProps) {
 
 	const hovedmalTekstverdi = hovedmal ? hovedmalTekst[hovedmal] : '';
 
-	const begrunnelseAvsnitt = begrunnelse?.split('\n').map((avsnitt, idx) => <p key={idx}>{avsnitt}</p>) ?? null; // Skal være samme formatering som i vedtaks-PDFen
-
 	return (
 		<Theme theme="light" asChild>
 			<div className="pdfvisning">
@@ -56,6 +54,7 @@ function PdfViewer(props: PdfViewerProps) {
 				</div>
 				<Document
 					file={props.url}
+					suspense={false}
 					loading={<PdfSpinner />}
 					onLoad={() => props.onStatusUpdate(PDFStatus.LOADING)}
 					// onLoadSuccess={onDocumentLoadSuccess}
@@ -80,7 +79,9 @@ function PdfViewer(props: PdfViewerProps) {
 					<Heading size="xsmall">Kilder</Heading>
 					<List>{kilder}</List>
 					<Heading size="xsmall">Begrunnelse</Heading>
-					{begrunnelseAvsnitt}
+					<BodyLong size="small" style={{ whiteSpace: 'pre-wrap' }}>
+						{begrunnelse ?? ''}
+					</BodyLong>
 				</div>
 			</div>
 		</Theme>

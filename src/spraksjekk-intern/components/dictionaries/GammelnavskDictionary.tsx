@@ -75,6 +75,7 @@ function GammelnavskDictionary(props: { content: OrNothing<string> }) {
 									</Heading>
 									<Link
 										target="_blank"
+										rel="noopener noreferrer"
 										href="https://navno.sharepoint.com/:b:/r/sites/intranett-kommunikasjon/Delte%20dokumenter/Spr%C3%A5k/gammelnavsk_ordliste_2utgave.pdf?csf=1&web=1&e=2LfhY8"
 									>
 										Gammelnavsk ordliste
@@ -105,6 +106,7 @@ function GammelnavskDictionary(props: { content: OrNothing<string> }) {
 									</Heading>
 									<Link
 										target="_blank"
+										rel="noopener noreferrer"
 										href="https://www.sprakradet.no/klarsprak/om-skriving/kansellisten/"
 									>
 										Kansellisten

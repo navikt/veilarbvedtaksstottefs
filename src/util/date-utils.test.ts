@@ -1,5 +1,6 @@
 import { lagVedtakDatoTekst } from './date-utils';
 import dayjs from 'dayjs';
+import { expect, test } from 'vitest';
 
 test('riktig antall dager siden', () => {
 	const today = dayjs();

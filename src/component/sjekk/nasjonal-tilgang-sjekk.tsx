@@ -1,6 +1,6 @@
 import { useLayoutEffect, type JSX } from 'react';
 import { useAxiosFetcher } from '../../util/use-axios-fetcher';
-import { fetchTilgangTilBrukersKontor } from '../../api/veilarboppfolging';
+import { fetchTilgangTilBrukersKontor } from '../../api/veilarbvedtaksstotte/tilgang';
 import Spinner from '../spinner/spinner';
 import { Alert } from '@navikt/ds-react';
 
@@ -15,14 +15,14 @@ export function NasjonalTilgangSjekk(props: NasjonalTilgangSjekkProps): JSX.Elem
 	// Siden loading = false før vi kaller fetch så vil advarsel alertstripen bli rendret et par ms med useEffect()
 	useLayoutEffect(() => {
 		tilgangTilKontorFetcher.fetch(props.fnr).catch();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, []);
 
 	if (tilgangTilKontorFetcher.loading) {
 		return <Spinner />;
 	} else if (tilgangTilKontorFetcher.error) {
 		return <Alert variant="error">Noe gikk galt, prøv igjen</Alert>;
-	} else if (!tilgangTilKontorFetcher.data?.tilgangTilBrukersKontor) {
+	} else if (!tilgangTilKontorFetcher.data) {
 		return <Alert variant="warning">Du har ikke tilgang til å se brukers oppfølgingsvedtak.</Alert>;
 	}
 

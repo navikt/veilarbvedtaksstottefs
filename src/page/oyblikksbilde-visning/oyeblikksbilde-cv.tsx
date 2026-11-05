@@ -29,7 +29,7 @@ export function OyeblikksbildeCv(props: { vedtakId: number }): JSX.Element {
 	useEffect(() => {
 		oyeblikksbildeFetcher.fetch(props.vedtakId);
 		logMetrikk('vis-oyblikksbilde-cv');
-		// eslint-disable-next-line
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [props.vedtakId]);
 
 	if (oyeblikksbildeFetcher.loading) {

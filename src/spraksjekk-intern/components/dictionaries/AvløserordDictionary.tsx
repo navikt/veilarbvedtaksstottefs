@@ -67,6 +67,7 @@ function GammelnavskCheck(props: { content: string }) {
 											{
 												<Link
 													target="_blank"
+													rel="noopener noreferrer"
 													href="https://www.sprakradet.no/sprakhjelp/Skriverad/Avloeysarord/"
 												>
 													På godt norsk – avløserord
@@ -100,6 +101,7 @@ function GammelnavskCheck(props: { content: string }) {
 											{
 												<Link
 													target="_blank"
+													rel="noopener noreferrer"
 													href="https://www.sprakradet.no/sprakhjelp/Skriverad/Ordlister/Datatermar/"
 												>
 													Språkrådets datatermer <ExternalLinkIcon />

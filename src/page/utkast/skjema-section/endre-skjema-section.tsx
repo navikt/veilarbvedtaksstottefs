@@ -61,7 +61,7 @@ export function EndreSkjemaSection() {
 						setLagringStatus(SkjemaLagringStatus.LAGRING_FEILET);
 					});
 			}, 3000),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 		[]
 	);
 
@@ -70,7 +70,7 @@ export function EndreSkjemaSection() {
 	useEffect(() => {
 		// Initialiser når utkastet åpnes
 		setLagringStatus(SkjemaLagringStatus.INGEN_ENDRING);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -87,7 +87,7 @@ export function EndreSkjemaSection() {
 
 			oppdaterUtkast(vedtakskjema);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [valgteKilder, begrunnelse, innsatsgruppe, hovedmal]);
 
 	function varsleBeslutterProsessStatusEndring(nyStatus: BeslutterProsessStatus) {
@@ -143,14 +143,14 @@ export function EndreSkjemaSection() {
 		}
 
 		return stopPolling;
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, [utkast]);
 
 	useEffect(() => {
 		// Det kan bli problemer hvis gamle oppdateringer henger igjen etter at brukeren har forlatt redigeringssiden.
 		// Oppdateringen kan f.eks bli sendt etter at vedtaket har blitt fattet, eller at utkastet blir oppdatert med gammel data.
-		return oppdaterUtkast.cancel;
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		return () => oppdaterUtkast.cancel();
+		// oxlint-disable-next-line react/exhaustive-deps
 	}, []);
 
 	return (

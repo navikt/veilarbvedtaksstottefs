@@ -1,4 +1,6 @@
-import { delay, http, HttpResponse, RequestHandler } from 'msw';
+import { RequestHandler } from 'msw';
+import { http, HttpResponse } from 'msw/http';
+import { delay } from 'msw/utils/delay';
 import { MeldingType } from '../../../util/type/melding-type';
 import { DialogMelding } from '../../../api/veilarbvedtaksstotte/meldinger';
 import { VEILARBVEDTAKSSTOTTE_API } from '../../../api/veilarbvedtaksstotte';
