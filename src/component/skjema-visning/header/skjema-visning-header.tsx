@@ -5,7 +5,7 @@ import './skjema-visning-header.css';
 
 interface SkjemaVisningHeaderProps {
 	erGjeldende: boolean;
-	vedtakId: number
+	vedtakId: number;
 }
 
 export function SkjemaVisningHeader(props: SkjemaVisningHeaderProps) {
