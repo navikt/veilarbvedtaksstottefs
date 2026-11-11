@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 export function formatDayMonthTime(dateStr: string) {
-	return dayjs(dateStr).format('DD.MM HH:mm');
+	return dayjs(dateStr).format('DD.MM. HH:mm');
 }
 
 export function formatDateTime(dateStr: string) {
